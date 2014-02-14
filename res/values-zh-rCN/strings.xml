@@ -3,7 +3,7 @@
     <string name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
     <string name="app_notenabled">XPrivacy 没有在 Xposed 框架中启用</string>
     <string name="app_wrongandroid">仅支持 Android 4.0 以上的版本</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">XPrivacy 与 %s 不兼容</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_description">终级隐私管理器</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
@@ -22,14 +22,14 @@
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
     <string name="menu_select_all">选择全部</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_sort">分类</string>
+    <string name="menu_filter">过滤器</string>
     <string name="menu_all">全部权限</string>
     <string name="menu_restriction_all">全选/不选列表中的应用</string>
     <string name="menu_clear_all">清除限制</string>
     <string name="menu_restrict_all">限制所有权限</string>
     <string name="menu_clear_usage">清除权限使用记录</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_clear_db">清除全部数据</string>
     <string name="menu_usage_all">过滤器开关</string>
     <string name="menu_apply">应用默认权限模板</string>
     <string name="menu_clear">清除所有权限限制</string>
@@ -41,10 +41,10 @@
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="menu_tutorial">界面功能指引</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="menu_exclude">排除</string>
+    <string name="menu_close">关闭</string>
+    <string name="msg_abort">正在中止</string>
+    <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>
     <string name="msg_update">已更新</string>
     <string name="msg_licensed" formatted="false">已授权给: %s</string>
@@ -62,15 +62,15 @@
     <string name="msg_random_access">访问时随机生成数值</string>
     <string name="msg_random_boot">设备启动时重新生成随机数值</string>
     <string name="msg_restart">需要重启应用使规则生效</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_register">请注册你的设备</string>
+    <string name="msg_email">请输入你的电子邮件地址:</string>
+    <string name="msg_registered">查看激活邮件来激活你的设备</string>
+    <string name="msg_service">更新服务正在运行</string>
+    <string name="msg_migrating" formatted="false">正在移动 %s</string>
+    <string name="msg_randomizing" formatted="false">正在随机化 %s</string>
+    <string name="msg_upgrading" formatted="false">正在升级 %s</string>
+    <string name="msg_support_info">内部检查出现错误, 要发送支持信息吗?</string>
+    <string name="msg_restrictedby">由 XPrivacy 限制</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -103,28 +103,28 @@
     <string name="title_fpermission">含有权限</string>
     <string name="title_frestricted">限制使用</string>
     <string name="title_fuser">用户应用</string>
-    <string name="title_fondemand">Filter by on-demand</string>
+    <string name="title_fondemand">按需过滤</string>
     <string name="title_fsystem">系统应用</string>
-    <string name="title_fnot">←反选</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
-    <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
-    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
+    <string name="title_fnot">反选</string>
+    <string name="title_sname">按 名称</string>
+    <string name="title_suid">按 UID</string>
+    <string name="title_sinstalled">按 安装日期</string>
+    <string name="title_supdated">按 更新日期</string>
+    <string name="title_smodified">按 修改日期 (XPrivacy)</string>
+    <string name="title_sinvert">反转分类次序</string>
+    <string name="title_attempt">权限使用尝试:</string>
+    <string name="title_category">权限类别:</string>
+    <string name="title_function">功能:</string>
+    <string name="title_parameters">参数:</string>
+    <string name="title_applycat">应用到整个权限类别</string>
+    <string name="title_once">一次操作生效 %1$s 秒</string>
+    <string name="title_allow">允许</string>
+    <string name="title_deny">拒绝</string>
+    <string name="title_pleasesubmit">请发送你的应用限制信息来帮助其他人</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">海拔</string>
     <string name="settings_mac">MAC 地址</string>
     <string name="settings_ip">IP 地址</string>
     <string name="settings_phone">电话号码</string>
@@ -137,17 +137,17 @@
     <string name="settings_general">一般设置</string>
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_notify">通知栏提示</string>
-    <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_ondemand">按需限制权限</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_dangerous">限制可能导致应用异常的权限</string>
     <string name="settings_confidence">最大采样置信区间</string>
     <string name="settings_experimental">实验性功能</string>
     <string name="settings_https">使用安全连接(https)</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
-    <string name="help_longpress">Long press name to select</string>
-    <string name="help_ondemand">restrictions will be asked</string>
+    <string name="settings_syscomponents">限制系统组件 (Android) (需要重启)</string>
+    <string name="settings_usagedata">显示应用权限使用情况 (需要重启)</string>
+    <string name="help_longpress">长按名称进行选择</string>
+    <string name="help_ondemand">限制将被请求</string>
     <string name="help_application">请输入应用名称</string>
     <string name="help_internet">应用含有网络访问权限</string>
     <string name="help_granted">应用已经含有这种权限</string>
@@ -159,7 +159,7 @@
     <string name="help_attention">可以下载限制规则的应用</string>
     <string name="help_restricted">限制规则已经生效的应用</string>
     <string name="help_shared">已经分享限制规则的应用</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="tutorial_mainheader">选择权限类别进行限制</string>
     <string name="tutorial_mainlist">勾选应用后的复选框以限制所选类别的权限\n
 \n被限制的应用请求该权限时会接收到空或伪造的数据\n
 \n点击应用图标以查看详细权限限制规则和设置</string>
