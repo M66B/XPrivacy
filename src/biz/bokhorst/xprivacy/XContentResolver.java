@@ -67,8 +67,8 @@ public class XContentResolver extends XHook {
 		listHook.add(new XContentResolver(Methods.getCurrentSync, PrivacyManager.cAccounts));
 		listHook.add(new XContentResolver(Methods.getCurrentSyncs, PrivacyManager.cAccounts));
 		listHook.add(new XContentResolver(Methods.getSyncAdapterTypes, PrivacyManager.cAccounts));
-		//listHook.add(new XContentResolver(Methods.query, null, 1));
-		//listHook.add(new XContentResolver(Methods.cquery, null, 1));
+		listHook.add(new XContentResolver(Methods.query, null, 1));
+		listHook.add(new XContentResolver(Methods.cquery, null, 1));
 		return listHook;
 	}
 
@@ -112,7 +112,6 @@ public class XContentResolver extends XHook {
 		// Check URI
 		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
-			Util.log(this, Log.WARN, "Before uri=" + uri + " uid=" + Binder.getCallingUid());
 			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
 
 			if (uri.startsWith("content://com.android.contacts/contacts")
@@ -146,7 +145,6 @@ public class XContentResolver extends XHook {
 		// Check URI
 		if (param.args.length > 1 && param.args[0] instanceof Uri && param.getResult() != null) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
-			Util.log(this, Log.WARN, "After uri=" + uri + " uid=" + Binder.getCallingUid());
 			Cursor cursor = (Cursor) param.getResult();
 
 			if (uri.startsWith("content://applications")) {
