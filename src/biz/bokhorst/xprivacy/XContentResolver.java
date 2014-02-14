@@ -134,7 +134,8 @@ public class XContentResolver extends XHook {
 						}
 						param.args[1] = listProjection.toArray(new String[0]);
 					}
-					param.setObjectExtra("column_added", added);
+					if (added)
+						param.setObjectExtra("column_added", added);
 				}
 			}
 		}
