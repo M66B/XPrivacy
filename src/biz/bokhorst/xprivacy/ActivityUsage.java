@@ -259,8 +259,7 @@ public class ActivityUsage extends ActivityBase {
 							ApplicationInfo app = pm.getApplicationInfo(packages[0], 0);
 							icon = pm.getApplicationIcon(app);
 						}
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
+					} catch (Throwable ignored) {
 					}
 					return holder;
 				}
