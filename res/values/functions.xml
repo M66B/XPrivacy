@@ -141,9 +141,9 @@
     <string name="network_getConnectionInfo" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
     <string name="network_getDhcpInfo" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getDhcpInfo()">Google documentation</a>]]></string>
     <string name="network_getScanResults" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getScanResults()">Google documentation</a>]]></string>
-    <string name="network_getWifiApConfiguration" translatable="false"><![CDATA[Hidden function to get <a href="http://developer.android.com/reference/android/net/wifi/WifiConfiguration.html">WifiConfiguration</a>]]></string>
+    <string name="network_getWifiApConfiguration" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="http://developer.android.com/reference/android/net/wifi/WifiConfiguration.html">WifiConfiguration</a>]]></string>
     <!-- nfc -->
-    <string name="nfc_getNfcAdapter" translatable="false"><![CDATA[Hidden fcuntion to get <a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html">NfcAdapter</a>]]></string>
+    <string name="nfc_getNfcAdapter" translatable="false"><![CDATA[Will restrict access to hidden funtion to get <a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html">NfcAdapter</a>]]></string>
     <string name="nfc_getDefaultAdapter" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#getDefaultAdapter(android.content.Context)">Google documentation</a>]]></string>
     <string name="nfc_android_nfc_action_ADAPTER_STATE_CHANGED" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_ADAPTER_STATE_CHANGED">Google documentation</a>]]></string>
     <string name="nfc_android_nfc_action_NDEF_DISCOVERED" translatable="false"><![CDATA[<a href=http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_NDEF_DISCOVERED">Google documentation</a>]]></string>
@@ -158,6 +158,40 @@
     <string name="overlay_removeView" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#removeView(android.view.View)">Google documentation</a>]]></string>
     <string name="overlay_updateViewLayout" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#updateViewLayout(android.view.View,%20android.view.ViewGroup.LayoutParams)">Google documentation</a>]]></string>
     <!-- phone -->
+    <string name="phone_getDeviceId" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getDeviceId()">Google documentation</a>]]></string>
+    <string name="phone_getIsimDomain" translatable="false"><![CDATA[Will restrict access to hidden funtion to get <a href="http://en.wikipedia.org/wiki/IP_Multimedia_Services_Identity_Module">ISIM information</a>]]></string>
+    <string name="phone_getIsimImpi" translatable="false"><![CDATA[Will restrict access to hidden funtion to get <a href="http://en.wikipedia.org/wiki/IP_Multimedia_Services_Identity_Module">ISIM information</a>]]></string>
+    <string name="phone_getIsimImpu" translatable="false"><![CDATA[Will restrict access to hidden funtion to get <a href="http://en.wikipedia.org/wiki/IP_Multimedia_Services_Identity_Module">ISIM information</a>]]></string>
+    <string name="phone_getLine1AlphaTag" translatable="false"><![CDATA[Will restrict access to hidden function to get the alpha identifier for line 1]]></string>
+    <string name="phone_getLine1Number" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getLine1Number()">Google documentation</a>]]></string>
+    <string name="phone_getMsisdn" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="http://en.wikipedia.org/wiki/MSISDN">MSISDN</a>]]></string>
+    <string name="phone_getSimSerialNumber" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimSerialNumber()">Google documentation</a>]]></string>
+    <string name="phone_getSubscriberId" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getSubscriberId()">Google documentation</a>]]></string>
+    <string name="phone_getVoiceMailAlphaTag" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getVoiceMailAlphaTag()">Google documentation</a>]]></string>
+    <string name="phone_getVoiceMailNumber" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getVoiceMailNumber()">Google documentation</a>]]></string>
+    <string name="phone_listen" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#listen(android.telephony.PhoneStateListener,%20int)">Google documentation</a>]]></string>
+    <string name="phone_getNetworkCountryIso" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkCountryIso()">Google documentation</a>]]></string>
+    <string name="phone_getNetworkOperator" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperator()">Google documentation</a>]]></string>
+    <string name="phone_getNetworkOperatorName" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperatorName()">Google documentation</a>]]></string>
+    <string name="phone_getNetworkType" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkType()">Google documentation</a>]]></string>
+    <string name="phone_getPhoneType" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getPhoneType()">Google documentation</a>]]></string>
+    <string name="phone_getSimCountryIso" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimCountryIso()">Google documentation</a>]]></string>
+    <string name="phone_getSimOperator" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimOperator()">Google documentation</a>]]></string>
+    <string name="phone_getSimOperatorName" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimOperatorName()">Google documentation</a>]]></string>
+    <string name="phone_getGroupIdLevel1" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getGroupIdLevel1()">Google documentation</a>]]></string>
+    <string name="phone_android_intent_action_NEW_OUTGOING_CALL" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/Intent.html#ACTION_NEW_OUTGOING_CALL">Google documentation</a>]]></string>
+    <string name="phone_android_intent_action_PHONE_STATE" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_PHONE_STATE_CHANGED">Google documentation</a>]]></string>
+    <string name="phone_TelephonyProvider" translatable="false"><![CDATA[Will restrict access to carrier and <a href="http://en.wikipedia.org/wiki/Access_Point_Name">APN</a> information]]></string>
+    <string name="phone_CallLogProvider" translatable="false"><![CDATA[Will restrict access to the call log]]></string>
+    <string name="phone_gsm_operator_iso_country" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkCountryIso()">Google documentation</a>]]></string>
+    <string name="phone_gsm_operator_numeric" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperator()">Google documentation</a>]]></string>
+    <string name="phone_gsm_operator_alpha" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperatorName()">Google documentation</a>]]></string>
+    <string name="phone_gsm_current_phone_type" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getPhoneType()">Google documentation</a>]]></string>
+    <string name="phone_gsm_sim_operator_iso_country" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimOperator()">Google documentation</a>]]></string>
+    <string name="phone_gsm_sim_operator_numeric" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimOperator()">Google documentation</a>]]></string>
+    <string name="phone_gsm_sim_operator_alpha" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimOperatorName()">Google documentation</a>]]></string>
+    <string name="phone_Configuration_MCC" translatable="false"><![CDATA[Will restrict access to the <a href="http://en.wikipedia.org/wiki/Mobile_country_code">MCC</a>]]></string>
+    <string name="phone_Configuration_MNC" translatable="false"><![CDATA[Will restrict access to the <a href="http://en.wikipedia.org/wiki/Mobile_Network_Code">MNC</a>]]></string>
     <!-- sensors -->
     <string name="sensors_getDefaultSensor" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/hardware/SensorManager.html#getDefaultSensor(int)">Google documentation</a>]]></string>
     <string name="sensors_getSensorList" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/hardware/SensorManager.html#getSensorList(int)">Google documentation</a>]]></string>

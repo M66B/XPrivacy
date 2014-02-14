@@ -273,7 +273,7 @@ public class Meta {
 		String self = Meta.class.getPackage().getName();
 		for (Hook hook : get()) {
 			String name = hook.getRestrictionName() + "_" + hook.getName();
-			name = name.replace(".", "_").replace("/", "_").replace("%", "_");
+			name = name.replace(".", "_").replace("/", "_").replace("%", "_").replace("-", "_");
 			int resId = context.getResources().getIdentifier(name, "string", self);
 			if (resId > 0)
 				hook.annotate(context.getString(resId));
