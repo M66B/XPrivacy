@@ -143,6 +143,12 @@
     <string name="network_getScanResults" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getScanResults()">Google documentation</a>]]></string>
     <string name="network_getWifiApConfiguration" translatable="false"><![CDATA[Hidden function to get <a href="http://developer.android.com/reference/android/net/wifi/WifiConfiguration.html">WifiConfiguration</a>]]></string>
     <!-- nfc -->
+    <string name="nfc_getNfcAdapter" translatable="false"><![CDATA[Hidden fcuntion to get <a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html">NfcAdapter</a>]]></string>
+    <string name="nfc_getDefaultAdapter" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#getDefaultAdapter(android.content.Context)">Google documentation</a>]]></string>
+    <string name="nfc_android_nfc_action_ADAPTER_STATE_CHANGED" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_ADAPTER_STATE_CHANGED">Google documentation</a>]]></string>
+    <string name="nfc_android_nfc_action_NDEF_DISCOVERED" translatable="false"><![CDATA[<a href=http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_NDEF_DISCOVERED">Google documentation</a>]]></string>
+    <string name="nfc_android_nfc_action_TAG_DISCOVERED" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_TAG_DISCOVERED">Google documentation</a>]]></string>
+    <string name="nfc_android_nfc_action_TECH_DISCOVERED" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_TECH_DISCOVERED">Google documentation</a>]]></string>
     <!-- notifications -->
     <!-- overlay -->
     <string name="overlay_addView" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#addView(android.view.View,%20android.view.ViewGroup.LayoutParams)">Google documentation</a>]]></string>

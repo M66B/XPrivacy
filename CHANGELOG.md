@@ -10,7 +10,7 @@ Changelog
 **Next release**
 
 * Added documentation for sensors and overlay, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/838))
-* Added documentation for network
+* Added documentation for network, NFC ([issue](/../../issues/838))
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 
