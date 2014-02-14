@@ -36,6 +36,7 @@ public class XIoBridge extends XHook {
 	// public static FileDescriptor open(String path, int flags)
 	// public static void connect(FileDescriptor fd, InetAddress inetAddress, int port) throws SocketException
 	// public static void connect(FileDescriptor fd, InetAddress inetAddress, int port, int timeoutMs) throws SocketException, SocketTimeoutException
+	// Research: public static FileDescriptor socket(boolean stream)
 	// libcore/luni/src/main/java/libcore/io/IoBridge.java
 
 	// @formatter:on
