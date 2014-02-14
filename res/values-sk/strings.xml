@@ -63,7 +63,7 @@
     <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
     <string name="msg_restart">Vyžadovaný reštart aplikácie</string>
     <string name="msg_register">Zaregistruje prosím vaše zariadenie</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
+    <string name="msg_email">Zadajte prosím vašu e-mailovú adresu:</string>
     <string name="msg_registered">Skontrolujte váš e-mail pre aktiváciu vášho zariadenia</string>
     <string name="msg_service">Aktualizačná služba je spustená</string>
     <string name="msg_migrating" formatted="false">Migrovanie %s</string>
@@ -103,7 +103,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_fpermission">Filter na povolenie</string>
     <string name="title_frestricted">Filter na obmedzené</string>
     <string name="title_fuser">Filter na užívateľské aplikácie</string>
-    <string name="title_fondemand">Filter by on-demand</string>
+    <string name="title_fondemand">Filter podľa požiadavkov</string>
     <string name="title_fsystem">Filter na systémové aplikácie</string>
     <string name="title_fnot">Obrátene</string>
     <string name="title_sname">Podľa názvu</string>
@@ -117,7 +117,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_function">Funkcia:</string>
     <string name="title_parameters">Parametre:</string>
     <string name="title_applycat">Aplikovať na celú kategóriu</string>
-    <string name="title_once">Raz za %1$s sek.</string>
+    <string name="title_once">Raz za %1$s sekúnd</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
