@@ -63,7 +63,7 @@ public class XClipboardManager extends XHook {
 				param.setResult(null);
 
 		} else if (mMethod == Methods.removePrimaryClipChangedListener)
-			if (isRestricted(param, PrivacyManager.cClipboard, "removePrimaryClipChangedListener"))
+			if (isRestricted(param, PrivacyManager.cClipboard, "addPrimaryClipChangedListener"))
 				param.setResult(null);
 	}
 
