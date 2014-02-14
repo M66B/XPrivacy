@@ -110,23 +110,21 @@ public class XContentResolver extends XHook {
 					|| uri.startsWith("content://com.android.contacts/phone_lookup")
 					|| uri.startsWith("content://com.android.contacts/raw_contacts")) {
 				String[] components = uri.replace("content://com.android.", "").split("/");
-				if (components.length >= 2) {
-					String methodName = components[0] + "/" + components[1].split("\\?")[0];
-					if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
-						// Modify projection
-						boolean added = false;
-						if (projection != null) {
-							List<String> listProjection = new ArrayList<String>();
-							listProjection.addAll(Arrays.asList(projection));
-							ContactID id = getIdForUri(uri);
-							if (id != null && !listProjection.contains(id.name)) {
-								added = true;
-								listProjection.add(id.name);
-							}
-							param.args[1] = listProjection.toArray(new String[0]);
+				String methodName = components[0] + "/" + components[1].split("\\?")[0];
+				if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
+					// Modify projection
+					boolean added = false;
+					if (projection != null) {
+						List<String> listProjection = new ArrayList<String>();
+						listProjection.addAll(Arrays.asList(projection));
+						ContactID id = getIdForUri(uri);
+						if (id != null && !listProjection.contains(id.name)) {
+							added = true;
+							listProjection.add(id.name);
 						}
-						param.setObjectExtra("column_added", added);
+						param.args[1] = listProjection.toArray(new String[0]);
 					}
+					param.setObjectExtra("column_added", added);
 				}
 			}
 		}
@@ -174,8 +172,8 @@ public class XContentResolver extends XHook {
 						|| uri.startsWith("content://com.android.contacts/phone_lookup")
 						|| uri.startsWith("content://com.android.contacts/raw_contacts")) {
 					// Contacts provider: allow selected contacts
-					String methodName = "contacts/"
-							+ uri.replace("content://com.android.contacts/", "").split("/")[0].split("\\?")[0];
+					String[] components = uri.replace("content://com.android.", "").split("/");
+					String methodName = components[0] + "/" + components[1].split("\\?")[0];
 					if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
 						// Modify column names back
 						boolean added = (Boolean) param.getObjectExtra("column_added");
