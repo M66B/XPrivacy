@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.lang.IllegalArgumentException;
 import java.lang.SecurityException;
 import java.net.SocketException;
 import java.net.SocketTimeoutException;
@@ -99,6 +100,8 @@ public class Util {
 		else if (ex instanceof ActivityShare.AbortException)
 			priority = Log.WARN;
 		else if (ex instanceof ConnectTimeoutException)
+			priority = Log.WARN;
+		else if (ex instanceof IllegalArgumentException)
 			priority = Log.WARN;
 		else if (ex instanceof IOException)
 			priority = Log.WARN;
