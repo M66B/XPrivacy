@@ -9,6 +9,7 @@ Changelog
 
 **Next release**
 
+* Added documentation for sensors and overlay, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/838))
 * Updated Simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
