@@ -272,7 +272,6 @@ Limitations
 * Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825)).
 * Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857)).
 * It is not possible to restrict hardware MAC addresses or the external IP address.
-* With LBE Security Master installed, Android cannot be restricted.
 * You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions (only [pro version](http://www.xprivacy.eu/)).
 * You cannot restrict *IPC* for XPrivacy because it is needed for internal checks.
 * You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file.
