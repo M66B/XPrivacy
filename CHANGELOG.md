@@ -9,6 +9,8 @@ Changelog
 
 **Next release**
 
+* Updated Simplified Chinese translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.43 BETA**
