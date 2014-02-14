@@ -299,8 +299,6 @@ public class XContentResolver extends XHook {
 
 				// Check if know / restricted
 				if (restrictionName != null && methodName != null) {
-					Util.log(this, Log.WARN, "restriction=" + restrictionName + "/" + methodName + " uri=" + uri
-							+ " uid=" + Binder.getCallingUid());
 					if (isRestrictedExtra(param, restrictionName, methodName, uri)) {
 						// Return empty cursor
 						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
