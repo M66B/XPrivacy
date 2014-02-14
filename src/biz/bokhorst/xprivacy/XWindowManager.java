@@ -22,6 +22,12 @@ public class XWindowManager extends XHook {
 		mClassName = className;
 	}
 
+	private XWindowManager(Methods method, String restrictionName, String className, int sdk) {
+		super(restrictionName, method.name(), null, sdk);
+		mMethod = method;
+		mClassName = className;
+	}
+
 	public String getClassName() {
 		return mClassName;
 	}
@@ -44,8 +50,8 @@ public class XWindowManager extends XHook {
 		String className = instance.getClass().getName();
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XWindowManager(Methods.addView, PrivacyManager.cOverlay, className));
-		listHook.add(new XWindowManager(Methods.removeView, PrivacyManager.cOverlay, className));
-		listHook.add(new XWindowManager(Methods.updateViewLayout, PrivacyManager.cOverlay, className));
+		listHook.add(new XWindowManager(Methods.removeView, null, className, 1));
+		listHook.add(new XWindowManager(Methods.updateViewLayout, null, className, 1));
 		return listHook;
 	}
 
@@ -69,7 +75,12 @@ public class XWindowManager extends XHook {
 				if (wmParams != null)
 					if (wmParams.type == WindowManager.LayoutParams.TYPE_SYSTEM_ALERT
 							|| wmParams.type == WindowManager.LayoutParams.TYPE_SYSTEM_OVERLAY)
-						if (isRestricted(param))
+						if (mMethod == Methods.removeView || mMethod == Methods.updateViewLayout) {
+							if (isRestricted(param, PrivacyManager.cOverlay, "addView"))
+								param.setResult(null);
+						}
+
+						else if (isRestricted(param))
 							param.setResult(null);
 			}
 		} else

@@ -173,8 +173,6 @@ public class Meta {
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.RECEIVE", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
 
 		mListHook.add(new Hook("overlay", "addView", "SYSTEM_ALERT_WINDOW", 1, null, null));
-		mListHook.add(new Hook("overlay", "removeView", "SYSTEM_ALERT_WINDOW", 1, null, null));
-		mListHook.add(new Hook("overlay", "updateViewLayout", "SYSTEM_ALERT_WINDOW", 1, null, null));
 
 		mListHook.add(new Hook("phone", "getDeviceId", "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "getIsimDomain", "READ_PRIVILEGED_PHONE_STATE", 14, null, null));
