@@ -150,6 +150,9 @@
     <string name="nfc_android_nfc_action_TAG_DISCOVERED" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_TAG_DISCOVERED">Google documentation</a>]]></string>
     <string name="nfc_android_nfc_action_TECH_DISCOVERED" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/nfc/NfcAdapter.html#ACTION_TECH_DISCOVERED">Google documentation</a>]]></string>
     <!-- notifications -->
+    <string name="notifications_android_service_notification_NotificationListenerService" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/service/notification/NotificationListenerService.html">Google documentation</a>]]></string>
+    <string name="notifications_com_google_android_c2dm_intent_REGISTRATION" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/gcm/GoogleCloudMessaging.html">Google documentation</a>]]></string>
+    <string name="notifications_com_google_android_c2dm_intent_RECEIVE" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/gcm/GoogleCloudMessaging.html">Google documentation</a>]]></string>
     <!-- overlay -->
     <string name="overlay_addView" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#addView(android.view.View,%20android.view.ViewGroup.LayoutParams)">Google documentation</a>]]></string>
     <string name="overlay_removeView" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/view/ViewManager.html#removeView(android.view.View)">Google documentation</a>]]></string>
