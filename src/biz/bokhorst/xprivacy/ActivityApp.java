@@ -960,7 +960,8 @@ public class ActivityApp extends ActivityBase {
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 							if (!next.restricted)
 								PrivacyManager.deleteRestrictions(mAppInfo.getUid(), restrictionName);
-							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, next.restricted, next.asked);
+							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, next.restricted,
+									next.asked);
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Refresh display
@@ -1161,8 +1162,8 @@ public class ActivityApp extends ActivityBase {
 							// Set change
 							RState next = rstate.next();
 
-							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(), next.restricted,
-									next.asked);
+							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(),
+									next.restricted, next.asked);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
