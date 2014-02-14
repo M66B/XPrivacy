@@ -289,7 +289,7 @@ Compatibility
 XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
 and is reported to work with most Android variants, including stock ROMs.
 
-**XPrivacy is not compatible with LBE Security Master**  ([issue](https://github.com/M66B/XPrivacy/issues/1340))
+**XPrivacy is not compatible with LBE Security Master**  ([issue](https://github.com/M66B/XPrivacy/issues/1231))
 
 **XPrivacy is not compatible with [Poweramp Full Version Unlocker](https://play.google.com/store/apps/details?id=com.maxmpz.audioplayer.unlock)** ([issue](https://github.com/M66B/XPrivacy/issues/1340))
 
