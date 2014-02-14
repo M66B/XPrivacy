@@ -23,7 +23,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 public class Requirements {
-	private static String[] cIncompatible = new String[] { "com.lbe.security" };
+	private static String[] cIncompatible = new String[] { "com.lbe.security", "com.maxmpz.audioplayer.unlock" };
 
 	@SuppressWarnings("unchecked")
 	public static void check(final ActivityBase context) {
