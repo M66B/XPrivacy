@@ -196,6 +196,12 @@
     <string name="sensors_getDefaultSensor" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/hardware/SensorManager.html#getDefaultSensor(int)">Google documentation</a>]]></string>
     <string name="sensors_getSensorList" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/hardware/SensorManager.html#getSensorList(int)">Google documentation</a>]]></string>
     <!-- shell -->
+    <string name="shell_sh" translatable="false"><![CDATA[Will restrict access to a Linux shell]]></string>
+    <string name="shell_su" translatable="false"><![CDATA[Will restrict access to a root Linux shell]]></string>
+    <string name="shell_exec" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/lang/Runtime.html#exec(java.lang.String[],%20java.lang.String[])">Google documentation</a>]]></string>
+    <string name="shell_load" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/lang/Runtime.html#load(java.lang.String)">Google documentation</a>]]></string>
+    <string name="shell_loadLibrary" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/lang/Runtime.html#loadLibrary(java.lang.String)">Google documentation</a>]]></string>
+    <string name="shell_start" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/lang/ProcessBuilder.html#start()">Google documentation</a>]]></string>
     <!-- storage -->
     <string name="storage_media" translatable="false"><![CDATA[Will restrict access to secondary external storage(s) (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)]]></string>
     <string name="storage_sdcard" translatable="false"><![CDATA[Will restrict access to primary external storage (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)]]></string>
