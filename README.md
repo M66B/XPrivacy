@@ -275,8 +275,8 @@ Limitations
 * You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions (only [pro version](http://www.xprivacy.eu/)).
 * You cannot restrict *IPC* for XPrivacy because it is needed for internal checks.
 * You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file.
-* You cannot restrict *system* fro XPrivacy because it is needed to get an application list.
-* You cannot restrict *view* for XPrivacy because it is needed to open links to the crowdsourced restrictions.
+* You cannot restrict *system* for XPrivacy because it is needed to get an application list.
+* You cannot restrict *view* for XPrivacy because it is needed to open links to the crowd sourced restrictions.
 * You cannot restrict *Configuration.MCC/MNC* on demand.
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?).
 
