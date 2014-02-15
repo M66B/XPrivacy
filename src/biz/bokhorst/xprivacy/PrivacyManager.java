@@ -286,14 +286,19 @@ public class PrivacyManager {
 			try {
 				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 				query.extra = extra;
-				restricted = PrivacyService.getRestriction(query, true, secret).restricted;
+				PRestriction result = PrivacyService.getRestriction(query, true, secret);
+				restricted = result.restricted;
 
 				// Add to cache
-				key.restricted = restricted;
-				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(key))
-						mRestrictionCache.remove(key);
-					mRestrictionCache.put(key, key);
+				if (result.time >= 0) {
+					key.restricted = restricted;
+					if (result.time > 0)
+						key.setExpiry(result.time);
+					synchronized (mRestrictionCache) {
+						if (mRestrictionCache.containsKey(key))
+							mRestrictionCache.remove(key);
+						mRestrictionCache.put(key, key);
+					}
 				}
 			} catch (Throwable ex) {
 				Util.bug(hook, ex);

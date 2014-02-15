@@ -1401,9 +1401,10 @@ public class PrivacyService {
 							result.restricted = true;
 							mSelectCategory = cbCategory.isChecked();
 							mSelectOnce = cbOnce.isChecked();
-							if (cbOnce.isChecked())
+							if (cbOnce.isChecked()) {
 								Util.log(null, Log.WARN, "Deny once " + restriction);
-							else
+								result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
+							} else
 								onDemandChoice(restriction, cbCategory.isChecked(), true);
 							latch.countDown();
 						}
@@ -1416,9 +1417,10 @@ public class PrivacyService {
 							result.restricted = false;
 							mSelectCategory = cbCategory.isChecked();
 							mSelectOnce = cbOnce.isChecked();
-							if (cbOnce.isChecked())
+							if (cbOnce.isChecked()) {
 								Util.log(null, Log.WARN, "Allow once " + restriction);
-							else
+								result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
+							} else
 								onDemandChoice(restriction, cbCategory.isChecked(), false);
 							latch.countDown();
 						}

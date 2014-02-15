@@ -26,6 +26,10 @@ public class CRestriction {
 		asked = restriction.asked;
 	}
 
+	public void setExpiry(long time) {
+		mTimestamp = time;
+	}
+
 	public boolean isExpired() {
 		return (mTimestamp + PrivacyManager.cRestrictionCacheTimeoutMs < new Date().getTime());
 	}
