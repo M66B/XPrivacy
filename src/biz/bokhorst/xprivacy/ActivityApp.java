@@ -1137,7 +1137,7 @@ public class ActivityApp extends ActivityBase {
 								DateUtils.SECOND_IN_MILLIS, 0);
 						holder.tvMethodName.setText(String.format("%s (%s)", md.getName(), sLastUsage));
 					}
-					holder.tvMethodName.setEnabled(parent.restricted || !parent.asked);
+					holder.rlMethodName.setEnabled(parent.restricted || !parent.asked);
 					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() ? R.attr.icon_used
 							: R.attr.icon_used_grayed));
 					holder.imgUsed.setVisibility(lastUsage == 0 && md.hasUsageData() ? View.INVISIBLE : View.VISIBLE);
