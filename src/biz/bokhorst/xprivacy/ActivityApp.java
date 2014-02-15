@@ -960,7 +960,7 @@ public class ActivityApp extends ActivityBase {
 
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
-							rstate.apply(next, "AppCategory");
+							rstate.apply(next);
 
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
@@ -1169,7 +1169,7 @@ public class ActivityApp extends ActivityBase {
 							// Get proposed change
 							RState next = rstate.next();
 
-							rstate.apply(next, "AppMethod");
+							rstate.apply(next);
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent

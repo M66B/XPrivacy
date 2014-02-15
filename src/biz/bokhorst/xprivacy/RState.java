@@ -70,11 +70,11 @@ public class RState {
 		return next;
 	}
 
-	public RState apply(RState next, String from) {
+	public RState apply(RState next) {
 		RState newState = this.next();
 
 		// Apply changes
-		if (from.equals("Main")) {
+		if (mMethodName == null) {
 
 			// Get restrictions to change
 			List<String> listRestriction;
@@ -91,19 +91,11 @@ public class RState {
 			else
 				PrivacyManager.deleteRestrictions(mUid, mRestrictionName);
 
-		} else if (from.equals("AppCategory")) {
-
-			if (next.restricted)
-				PrivacyManager.setRestriction(mUid, mRestrictionName, null, next.restricted, next.asked);
-			else
-				PrivacyManager.deleteRestrictions(mUid, mRestrictionName);
-
-		} else if (from.equals("AppMethod")) {
+		} else {
 
 			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, next.restricted, next.asked);
 
-		} else
-			Util.log(null, Log.ERROR, "Change request of unknown provenance");
+		}
 
 		return newState;
 	}

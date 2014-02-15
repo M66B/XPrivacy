@@ -1507,7 +1507,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
 
-									rstate.apply(next, "Main");
+									rstate.apply(next);
 
 									List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
