@@ -66,6 +66,19 @@ public class ActivityBase extends Activity {
 		return mCheck[3];
 	}
 
+	protected Bitmap getCheckBoxImage(RState state) {
+		Bitmap checkbox;
+
+		if (state.partial)
+			checkbox = getHalfCheckBox();
+		else if (state.restricted)
+			checkbox = getFullCheckBox();
+		else
+			checkbox = getOffCheckBox();
+
+		return checkbox;
+	}
+
 	private void buildCheckBoxes() {
 		mCheck = new Bitmap[4];
 

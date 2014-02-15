@@ -1403,12 +1403,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							.setVisibility(xAppInfo.isFrozen(ActivityMain.this) ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					if (rstate.partial)
-						holder.imgCBName.setImageBitmap(getHalfCheckBox());
-					else if (rstate.restricted)
-						holder.imgCBName.setImageBitmap(getFullCheckBox());
-					else
-						holder.imgCBName.setImageBitmap(getOffCheckBox());
+					holder.imgCBName.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Display on demand
@@ -1512,12 +1507,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 									// Update restriction display
 									rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
-									if (rstate.partial)
-										holder.imgCBName.setImageBitmap(getHalfCheckBox());
-									else if (rstate.restricted)
-										holder.imgCBName.setImageBitmap(getFullCheckBox());
-									else
-										holder.imgCBName.setImageBitmap(getOffCheckBox());
+									holder.imgCBName.setImageBitmap(getCheckBoxImage(rstate));
 									holder.imgCBName.setVisibility(View.VISIBLE);
 
 									// Update on demand

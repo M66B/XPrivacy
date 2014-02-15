@@ -940,12 +940,7 @@ public class ActivityApp extends ActivityBase {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					if (rstate.partial)
-						holder.imgCBName.setImageBitmap(getHalfCheckBox());
-					else if (rstate.restricted)
-						holder.imgCBName.setImageBitmap(getFullCheckBox());
-					else
-						holder.imgCBName.setImageBitmap(getOffCheckBox());
+					holder.imgCBName.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCBName.setVisibility(View.VISIBLE);
 
 					// Display on demand
@@ -1149,12 +1144,7 @@ public class ActivityApp extends ActivityBase {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					if (rstate.partial)
-						holder.imgCBMethodName.setImageBitmap(getHalfCheckBox());
-					else if (rstate.restricted)
-						holder.imgCBMethodName.setImageBitmap(getFullCheckBox());
-					else
-						holder.imgCBMethodName.setImageBitmap(getOffCheckBox());
+					holder.imgCBMethodName.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCBMethodName.setVisibility(View.VISIBLE);
 
 					// Display on demand
