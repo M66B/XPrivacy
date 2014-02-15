@@ -263,11 +263,11 @@ public class Meta {
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null));
 		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null));
-		mListHook.add(new Hook("view", "getUserAgent", "", 1, null, null));
-		mListHook.add(new Hook("view", "getUserAgentString", "", 1, null, null));
-		mListHook.add(new Hook("view", "setUserAgent", "", 1, null, null));
-		mListHook.add(new Hook("view", "setUserAgentString", "", 1, null, null));
-		mListHook.add(new Hook("view", "android.intent.action.VIEW", "", 10, null, null).doNotify());
+		mListHook.add(new Hook("view", "getUserAgent", "", 3, null, null));
+		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null));
+		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null));
+		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null));
+		mListHook.add(new Hook("view", "android.intent.action.VIEW", "", 1, null, null).doNotify());
 		// @formatter:on
 		return mListHook;
 	}
