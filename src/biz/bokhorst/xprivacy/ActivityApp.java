@@ -425,8 +425,6 @@ public class ActivityApp extends ActivityBase {
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
 		imgHelpHalf.setImageBitmap(getHalfCheckBox());
-		ImageView imgHelpOnDemand = (ImageView) dialog.findViewById(R.id.imgHelpOnDemand);
-		imgHelpOnDemand.setImageBitmap(getOnDemandCheckBox());
 		dialog.setCancelable(true);
 		dialog.show();
 	}
@@ -889,6 +887,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgInfo;
 			public TextView tvName;
 			public ImageView imgCBName;
+			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
 			public GroupViewHolder(View theRow, int thePosition) {
@@ -900,6 +899,7 @@ public class ActivityApp extends ActivityBase {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
+				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -940,15 +940,16 @@ public class ActivityApp extends ActivityBase {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					if (!rstate.asked)
-						holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
-					else if (rstate.partial)
+					if (rstate.partial)
 						holder.imgCBName.setImageBitmap(getHalfCheckBox());
 					else if (rstate.restricted)
 						holder.imgCBName.setImageBitmap(getFullCheckBox());
 					else
 						holder.imgCBName.setImageBitmap(getOffCheckBox());
 					holder.imgCBName.setVisibility(View.VISIBLE);
+
+					// Display on demand
+					holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1025,6 +1026,7 @@ public class ActivityApp extends ActivityBase {
 
 			// Display restriction
 			holder.imgCBName.setVisibility(View.INVISIBLE);
+			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
@@ -1080,6 +1082,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgInfo;
 			public TextView tvMethodName;
 			public ImageView imgCBMethodName;
+			public TextView tvOnDemand;
 			public RelativeLayout rlMethodName;
 
 			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
@@ -1091,6 +1094,7 @@ public class ActivityApp extends ActivityBase {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
 				imgCBMethodName = (ImageView) row.findViewById(R.id.imgCBMethodName);
+				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlMethodName = (RelativeLayout) row.findViewById(R.id.rlMethodName);
 			}
 		}
@@ -1137,7 +1141,10 @@ public class ActivityApp extends ActivityBase {
 								DateUtils.SECOND_IN_MILLIS, 0);
 						holder.tvMethodName.setText(String.format("%s (%s)", md.getName(), sLastUsage));
 					}
-					holder.rlMethodName.setEnabled(parent.restricted || !parent.asked);
+					holder.rlMethodName.setEnabled(parent.restricted);
+					holder.tvMethodName.setEnabled(parent.restricted);
+					holder.tvOnDemand.setEnabled(parent.restricted);
+
 					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() ? R.attr.icon_used
 							: R.attr.icon_used_grayed));
 					holder.imgUsed.setVisibility(lastUsage == 0 && md.hasUsageData() ? View.INVISIBLE : View.VISIBLE);
@@ -1145,15 +1152,16 @@ public class ActivityApp extends ActivityBase {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					if (!rstate.asked)
-						holder.imgCBMethodName.setImageBitmap(getOnDemandCheckBox());
-					else if (rstate.partial)
+					if (rstate.partial)
 						holder.imgCBMethodName.setImageBitmap(getHalfCheckBox());
 					else if (rstate.restricted)
 						holder.imgCBMethodName.setImageBitmap(getFullCheckBox());
 					else
 						holder.imgCBMethodName.setImageBitmap(getOffCheckBox());
 					holder.imgCBMethodName.setVisibility(View.VISIBLE);
+
+					// Display on demand
+					holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
@@ -1221,7 +1229,9 @@ public class ActivityApp extends ActivityBase {
 
 			// Display method name
 			holder.tvMethodName.setText(md.getName());
+			holder.rlMethodName.setEnabled(false);
 			holder.tvMethodName.setEnabled(false);
+			holder.tvOnDemand.setEnabled(false);
 			holder.tvMethodName.setTypeface(null, Typeface.NORMAL);
 
 			// Display if used
@@ -1278,6 +1288,7 @@ public class ActivityApp extends ActivityBase {
 
 			// Display restriction
 			holder.tvMethodName.setClickable(false);
+			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,

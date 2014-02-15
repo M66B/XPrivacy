@@ -13,50 +13,38 @@ public class RState {
 		if (onDemand)
 			onDemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
 
-		boolean crestricted = false;
 		boolean allRestricted = true;
 		boolean someRestricted = false;
-		boolean someToAsk = false;
+		boolean asked = false;
 
-		if (methodName != null) {
+		if (methodName == null) {
+			// Examine the category/method states
+			PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
+			someRestricted = query.restricted;
+			for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
+				allRestricted = (allRestricted && restriction.restricted);
+				someRestricted = (someRestricted || restriction.restricted);
+			}
+			asked = query.asked;
+		} else {
 			// Examine the method state
 			PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, methodName);
 			allRestricted = query.restricted;
-			someToAsk = !query.asked;
-		} else {
-			// Examine the category/method states
-			for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
-				boolean asked = (restriction.asked || !onDemand);
-				allRestricted = (allRestricted && (restriction.restricted && asked));
-				someRestricted = (someRestricted || (restriction.restricted && asked));
-				someToAsk = (someToAsk || !restriction.asked);
-			}
-			// Get the category state, if relevant
-			if (restrictionName != null) {
-				PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
-				crestricted = query.restricted;
-			}
+			someRestricted = false;
+			asked = query.asked;
 		}
 
-		state.restricted = crestricted || allRestricted || someRestricted;
-		state.partial = (state.restricted && !allRestricted);
-		state.asked = !(onDemand && someToAsk);
+		state.restricted = (allRestricted || someRestricted);
+		state.partial = (!allRestricted && someRestricted);
+		state.asked = (!onDemand || asked);
 
 		return state;
 	}
 
 	public RState next() {
 		RState next = new RState();
-		if (this.restricted) {
-			next.restricted = false;
-			next.asked = false;
-		} else if (!this.asked) {
-			next.restricted = false;
-			next.asked = true;
-		} else {
-			next.restricted = true;
-			next.asked = true;
-		}
+		next.restricted = !this.restricted;
+		next.asked = true;
 		return next;
 	}
 }
