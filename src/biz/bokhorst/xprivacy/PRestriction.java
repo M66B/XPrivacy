@@ -117,6 +117,7 @@ public class PRestriction implements Parcelable {
 
 	@Override
 	public String toString() {
-		return "uid=" + uid + " " + restrictionName + "/" + methodName + "=" + restricted + (asked ? "!" : "?");
+		return "uid=" + uid + " " + restrictionName + "/" + methodName + "=" + restricted + (asked ? "!" : "?")
+				+ " extra=" + extra;
 	}
 }
