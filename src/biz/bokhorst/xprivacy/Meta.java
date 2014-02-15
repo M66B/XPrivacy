@@ -230,6 +230,7 @@ public class Meta {
 		mListHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getPackagesHoldingPermissions", "", 18, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("system", "getPreferredActivities", "", 1, "1.99.44", null).dangerous());
 		mListHook.add(new Hook("system", "getPreferredPackages", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "queryBroadcastReceivers", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "queryContentProviders", "", 1, null, null).dangerous());
@@ -237,23 +238,26 @@ public class Meta {
 		mListHook.add(new Hook("system", "queryIntentActivityOptions", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "queryIntentContentProviders", "", 19, "1.99.1", null).dangerous());
 		mListHook.add(new Hook("system", "queryIntentServices", "", 1, null, null).dangerous());
+
 		mListHook.add(new Hook("system", "getInstalledProviders", "", 3, null, null).dangerous());
+
 		mListHook.add(new Hook("system", "getRecentTasks", "GET_TASKS", 10, null, null).dangerous());
 		mListHook.add(new Hook("system", "getRunningAppProcesses", "GET_TASKS", 10, null, null).dangerous());
 		mListHook.add(new Hook("system", "getRunningServices", "GET_TASKS", 10, null, null).dangerous());
 		mListHook.add(new Hook("system", "getRunningTasks", "GET_TASKS", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_ADDED", "", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_REPLACED", "", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_RESTARTED", "", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_REMOVED", "", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_CHANGED", "", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_DATA_CLEARED", "", 10, null, null).dangerous());
+
+		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_ADDED", "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_REPLACED", "", 3, null, null).dangerous());
+		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_RESTARTED", "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_REMOVED", "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_CHANGED", "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_DATA_CLEARED", "", 3, null, null).dangerous());
 		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_FIRST_LAUNCH", "", 12, null, null).dangerous());
 		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_FULLY_REMOVED", "", 14, null, null).dangerous());
 		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_NEEDS_VERIFICATION", "", 14, null, null).dangerous());
 		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_VERIFIED", "", 17, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE", "", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE", "", 10, null, null).dangerous());
+		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE", "", 8, null, null).dangerous());
+		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE", "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null));
 
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null));

@@ -5,6 +5,8 @@ import java.util.List;
 
 import android.os.Binder;
 import android.util.Log;
+import android.content.ComponentName;
+import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.ProviderInfo;
@@ -31,6 +33,7 @@ public class XPackageManager extends XHook {
 	// public List<ApplicationInfo> getInstalledApplications(int flags)
 	// public List<PackageInfo> getInstalledPackages(int flags)
 	// public List<PackageInfo> getPackagesHoldingPermissions(String[] permissions, int flags)
+	// abstract int getPreferredActivities(List<IntentFilter> outFilters, List<ComponentName> outActivities, String packageName)
 	// public List<PackageInfo> getPreferredPackages(int flags)
 	// public List<ResolveInfo> queryBroadcastReceivers(Intent intent, int flags)
 	// public List<ProviderInfo> queryContentProviders(String processName, int uid, int flags)
@@ -42,9 +45,16 @@ public class XPackageManager extends XHook {
 	
 	// @formatter:on
 
+	// @formatter:off
 	private enum Methods {
-		getInstalledApplications, getInstalledPackages, getPackagesHoldingPermissions, getPreferredPackages, queryBroadcastReceivers, queryContentProviders, queryIntentActivities, queryIntentActivityOptions, queryIntentContentProviders, queryIntentServices
+		getInstalledApplications, getInstalledPackages,
+		getPackagesHoldingPermissions,
+		getPreferredActivities, getPreferredPackages,
+		queryBroadcastReceivers, queryContentProviders,
+		queryIntentActivities, queryIntentActivityOptions,
+		queryIntentContentProviders, queryIntentServices
 	};
+	// @formatter:on
 
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
@@ -59,12 +69,19 @@ public class XPackageManager extends XHook {
 		// Do nothing
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
+	@SuppressWarnings("unchecked")
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.getInstalledApplications) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
+
+		} else if (mMethod == Methods.getPreferredActivities) {
+			if (param.args.length > 1 && isRestricted(param)) {
+				param.args[0] = new ArrayList<IntentFilter>();
+				param.args[1] = new ArrayList<ComponentName>();
+				param.setResult(0);
+			}
 
 		} else if (mMethod == Methods.getInstalledPackages || mMethod == Methods.getPackagesHoldingPermissions
 				|| mMethod == Methods.getPreferredPackages) {

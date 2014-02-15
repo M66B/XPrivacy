@@ -10,8 +10,9 @@ Changelog
 **Next release**
 
 * Added restriction for connecting to the internet (experimental)
+* Added restriction for *system/getPreferredActivities*
 * Added documentation for sensors and overlay, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/838))
-* Added documentation for network, NFC, notifications, phone, shell ([issue](/../../issues/838))
+* Added documentation for network, NFC, notifications, phone, shell, system ([issue](/../../issues/838))
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 
