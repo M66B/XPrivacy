@@ -121,6 +121,7 @@
     <string name="title_allow">許可</string>
     <string name="title_deny">拒否</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
+    <string name="title_permissions">Permissions</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>

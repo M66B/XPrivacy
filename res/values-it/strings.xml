@@ -121,6 +121,7 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
+    <string name="title_permissions">Permissions</string>
     <string name="settings_serial">Numero di serie#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>

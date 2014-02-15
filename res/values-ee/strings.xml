@@ -122,6 +122,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
+    <string name="title_permissions">Permissions</string>
     <string name="settings_serial">Seeria#</string>
     <string name="settings_lat">Laiuskraad</string>
     <string name="settings_lon">Pikkuskraad</string>

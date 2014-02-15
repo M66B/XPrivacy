@@ -1246,9 +1246,9 @@ public class ActivityApp extends ActivityBase {
 						String text = md.getAnnotation();
 						String[] permissions = md.getPermissions();
 						if (permissions != null && permissions.length > 0) {
-							text += "<br /><br /><b>Permissions</b><br /><br />";
+							text += "<br /><br /><b>" + getString(R.string.title_permissions) + "</b><br /><br />";
 							if (permissions[0].equals(""))
-								text += "None";
+								text += "-";
 							else
 								text += TextUtils.join("<br />", permissions);
 						}

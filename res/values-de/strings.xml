@@ -121,6 +121,7 @@
     <string name="title_allow">Zulassen</string>
     <string name="title_deny">Blockieren</string>
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter um anderen zu helfen</string>
+    <string name="title_permissions">Permissions</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
