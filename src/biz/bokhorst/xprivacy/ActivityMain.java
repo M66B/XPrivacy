@@ -777,8 +777,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
 		imgHelpHalf.setImageBitmap(getHalfCheckBox());
-		ImageView imgHelpOnDemand = (ImageView) dialog.findViewById(R.id.imgHelpOnDemand);
-		imgHelpOnDemand.setImageBitmap(getOnDemandCheckBox());
 		dialog.setCancelable(true);
 		dialog.show();
 	}
@@ -1302,6 +1300,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ImageView imgFrozen;
 			public TextView tvName;
 			public ImageView imgCBName;
+			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
 			public ViewHolder(View theRow, int thePosition) {
@@ -1316,6 +1315,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
+				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -1403,15 +1403,16 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							.setVisibility(xAppInfo.isFrozen(ActivityMain.this) ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					if (!rstate.asked)
-						holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
-					else if (rstate.partial)
+					if (rstate.partial)
 						holder.imgCBName.setImageBitmap(getHalfCheckBox());
 					else if (rstate.restricted)
 						holder.imgCBName.setImageBitmap(getFullCheckBox());
 					else
 						holder.imgCBName.setImageBitmap(getOffCheckBox());
 					holder.imgCBName.setVisibility(View.VISIBLE);
+
+					// Display on demand
+					holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 					// Display enabled state
 					holder.tvName.setEnabled(enabled);
@@ -1475,12 +1476,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 															PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
 													// Update visible state
-													holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
 													holder.vwState.setBackgroundColor(getResources().getColor(
 															getThemed(R.attr.color_state_attention)));
 
 													// Update stored state
 													rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
+													holder.imgCBName.setImageBitmap(getOffCheckBox());
+													holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE
+															: View.VISIBLE);
 
 													// Notify restart
 													if (oldState.contains(true))
@@ -1512,25 +1515,27 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 									List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
-									if (mRestrictionName != null && !next.restricted)
+									if (next.restricted)
+										for (String restrictionName : listRestriction)
+											PrivacyManager.setRestriction(xAppInfo.getUid(), restrictionName, null,
+													next.restricted, next.asked);
+									else
 										PrivacyManager.deleteRestrictions(xAppInfo.getUid(), mRestrictionName);
-									for (String restrictionName : listRestriction)
-										PrivacyManager.setRestriction(xAppInfo.getUid(), restrictionName, null,
-												next.restricted, next.asked);
 									List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
 
 									// Update restriction display
 									rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
-									if (!rstate.asked)
-										holder.imgCBName.setImageBitmap(getOnDemandCheckBox());
-									else if (rstate.partial)
+									if (rstate.partial)
 										holder.imgCBName.setImageBitmap(getHalfCheckBox());
 									else if (rstate.restricted)
 										holder.imgCBName.setImageBitmap(getFullCheckBox());
 									else
 										holder.imgCBName.setImageBitmap(getOffCheckBox());
 									holder.imgCBName.setVisibility(View.VISIBLE);
+
+									// Update on demand
+									holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 									// Notify restart
 									if (!newState.equals(oldState))
@@ -1594,6 +1599,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCBName.setVisibility(View.INVISIBLE);
+			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);
 			holder.imgCBName.setEnabled(false);
 			holder.rlName.setEnabled(false);

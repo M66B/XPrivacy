@@ -9,6 +9,7 @@ Changelog
 
 **Next release**
 
+* Fixed function restrictions not sticking
 * Fixed size of documentation popup ([issue](/../../issues/1341))
 * Added restriction for connecting to the internet (experimental)
 * Added restriction for *system/getPreferredActivities*
