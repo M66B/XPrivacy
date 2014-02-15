@@ -9,6 +9,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.44 TEST**
+
 * Fixed function restrictions not sticking
 * Fixed size of documentation popup ([issue](/../../issues/1341))
 * Added restriction for connecting to the internet (experimental)
@@ -18,8 +22,6 @@ Changelog
 * Updated Lithuanian translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.43 BETA**
 
