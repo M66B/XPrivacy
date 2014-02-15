@@ -692,7 +692,7 @@ To prevent a malicious application maker from automatically submitting a lot of 
 <a name="FAQ47"></a>
 **(47) What is IPC?**
 
-See [here](http://forum.xda-developers.com/showpost.php?p=50274730&postcount=7006) for more information.
+See [here](http://forum.xda-developers.com/showpost.php?p=50274730&postcount=7006) and [here](http://forum.xda-developers.com/showpost.php?p=50352683&postcount=7206) for more information.
 
 <a name="FAQ48"></a>
 **(48) Can XPrivacy be detected by other application?**
