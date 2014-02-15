@@ -1,18 +1,23 @@
 package biz.bokhorst.xprivacy;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import android.util.Log;
+
 public class RState {
-	public int uid;
-	public String restrictionName;
-	public String methodName;
+	private int mUid;
+	private String mRestrictionName;
+	private String mMethodName;
 	public boolean restricted;
 	public boolean asked;
 	public boolean partial = false;
 
 	public static RState get(int uid, String restrictionName, String methodName) {
 		RState state = new RState();
-		state.uid = uid;
-		state.restrictionName = restrictionName;
-		state.methodName = methodName;
+		state.mUid = uid;
+		state.mRestrictionName = restrictionName;
+		state.mMethodName = methodName;
 
 		// Get if on demand
 		boolean onDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
@@ -63,5 +68,43 @@ public class RState {
 		next.restricted = !this.restricted;
 		next.asked = true;
 		return next;
+	}
+
+	public RState apply(RState next, String from) {
+		RState newState = this.next();
+
+		// Apply changes
+		if (from.equals("Main")) {
+
+			// Get restrictions to change
+			List<String> listRestriction;
+			if (mRestrictionName == null)
+				listRestriction = PrivacyManager.getRestrictions();
+			else {
+				listRestriction = new ArrayList<String>();
+				listRestriction.add(mRestrictionName);
+			}
+
+			if (next.restricted)
+				for (String restrictionName : listRestriction)
+					PrivacyManager.setRestriction(mUid, restrictionName, null, next.restricted, next.asked);
+			else
+				PrivacyManager.deleteRestrictions(mUid, mRestrictionName);
+
+		} else if (from.equals("AppCategory")) {
+
+			if (next.restricted)
+				PrivacyManager.setRestriction(mUid, mRestrictionName, null, next.restricted, next.asked);
+			else
+				PrivacyManager.deleteRestrictions(mUid, mRestrictionName);
+
+		} else if (from.equals("AppMethod")) {
+
+			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, next.restricted, next.asked);
+
+		} else
+			Util.log(null, Log.ERROR, "Change request of unknown provenance");
+
+		return newState;
 	}
 }

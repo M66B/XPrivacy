@@ -1501,26 +1501,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									AlertDialog alertDialog = alertDialogBuilder.create();
 									alertDialog.show();
 								} else {
-									// Set change
+									// Get proposed change
 									RState next = rstate.next();
-
-									// Get restrictions to change
-									List<String> listRestriction;
-									if (mRestrictionName == null)
-										listRestriction = PrivacyManager.getRestrictions();
-									else {
-										listRestriction = new ArrayList<String>();
-										listRestriction.add(mRestrictionName);
-									}
 
 									List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
-									if (next.restricted)
-										for (String restrictionName : listRestriction)
-											PrivacyManager.setRestriction(xAppInfo.getUid(), restrictionName, null,
-													next.restricted, next.asked);
-									else
-										PrivacyManager.deleteRestrictions(xAppInfo.getUid(), mRestrictionName);
+
+									rstate.apply(next, "Main");
+
 									List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
 

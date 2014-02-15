@@ -955,15 +955,13 @@ public class ActivityApp extends ActivityBase {
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Set change
+							// Get proposed change
 							RState next = rstate.next();
 
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
-							if (next.restricted)
-								PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null,
-										next.restricted, next.asked);
-							else
-								PrivacyManager.deleteRestrictions(mAppInfo.getUid(), restrictionName);
+
+							rstate.apply(next, "AppCategory");
+
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Refresh display
@@ -1168,11 +1166,10 @@ public class ActivityApp extends ActivityBase {
 					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Set change
+							// Get proposed change
 							RState next = rstate.next();
 
-							PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, md.getName(),
-									next.restricted, next.asked);
+							rstate.apply(next, "AppMethod");
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
