@@ -1257,9 +1257,11 @@ public class ActivityApp extends ActivityBase {
 						tvInfo.setText(Html.fromHtml(text));
 						tvInfo.setMovementMethod(LinkMovementMethod.getInstance());
 
+						View parent = ActivityApp.this.findViewById(android.R.id.content);
+
 						final PopupWindow popup = new PopupWindow(layout);
 						popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-						popup.setWidth(WindowManager.LayoutParams.WRAP_CONTENT);
+						popup.setWidth(90 * parent.getWidth() / 100);
 
 						Button btnOk = (Button) layout.findViewById(R.id.btnOk);
 						btnOk.setOnClickListener(new View.OnClickListener() {
@@ -1269,7 +1271,7 @@ public class ActivityApp extends ActivityBase {
 							}
 						});
 
-						popup.showAtLocation(view, Gravity.CENTER_HORIZONTAL | Gravity.CENTER_VERTICAL, 0, 0);
+						popup.showAtLocation(parent, Gravity.CENTER, 0, 0);
 					}
 				});
 			}

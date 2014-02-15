@@ -9,6 +9,7 @@ Changelog
 
 **Next release**
 
+* Fixed size of documentation popup ([issue](/../../issues/1341))
 * Added restriction for connecting to the internet (experimental)
 * Added restriction for *system/getPreferredActivities*
 * Added documentation for sensors, overlay, system and view thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/838))
