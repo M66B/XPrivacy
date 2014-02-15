@@ -924,7 +924,7 @@ public class ActivityApp extends ActivityBase {
 					// Get info
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
-					rstate = RState.get(mAppInfo.getUid(), restrictionName, null);
+					rstate = new RState(mAppInfo.getUid(), restrictionName, null);
 
 					return holder;
 				}
@@ -955,12 +955,10 @@ public class ActivityApp extends ActivityBase {
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Get proposed change
-							RState next = rstate.next();
 
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
-							rstate.apply(next);
+							rstate.apply();
 
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
@@ -1124,7 +1122,7 @@ public class ActivityApp extends ActivityBase {
 					lastUsage = PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName());
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
-					rstate = RState.get(mAppInfo.getUid(), restrictionName, md.getName());
+					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName());
 
 					return holder;
 				}
@@ -1166,10 +1164,8 @@ public class ActivityApp extends ActivityBase {
 					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Get proposed change
-							RState next = rstate.next();
 
-							rstate.apply(next);
+							rstate.apply();
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent

@@ -1356,7 +1356,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							granted = false;
 
 					// Get restriction/ask state
-					rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
+					rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 
 					return holder;
 				}
@@ -1480,7 +1480,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 															getThemed(R.attr.color_state_attention)));
 
 													// Update stored state
-													rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
+													rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 													holder.imgCBName.setImageBitmap(getOffCheckBox());
 													holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE
 															: View.VISIBLE);
@@ -1501,19 +1501,17 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									AlertDialog alertDialog = alertDialogBuilder.create();
 									alertDialog.show();
 								} else {
-									// Get proposed change
-									RState next = rstate.next();
 
 									List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
 
-									rstate.apply(next);
+									rstate.apply();
 
 									List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
 
 									// Update restriction display
-									rstate = RState.get(xAppInfo.getUid(), mRestrictionName, null);
+									rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 									if (rstate.partial)
 										holder.imgCBName.setImageBitmap(getHalfCheckBox());
 									else if (rstate.restricted)

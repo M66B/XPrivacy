@@ -3,21 +3,21 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 public class RState {
-	private int mUid;
-	private String mRestrictionName;
-	private String mMethodName;
+	public int mUid;
+	public String mRestrictionName;
+	public String mMethodName;
+	public boolean crestricted;
 	public boolean restricted;
 	public boolean asked;
 	public boolean partial = false;
+	public boolean proposeRestricted;
+	public boolean proposeAsked;
 
-	public static RState get(int uid, String restrictionName, String methodName) {
-		RState state = new RState();
-		state.mUid = uid;
-		state.mRestrictionName = restrictionName;
-		state.mMethodName = methodName;
+	public RState(int uid, String restrictionName, String methodName) {
+		mUid = uid;
+		mRestrictionName = restrictionName;
+		mMethodName = methodName;
 
 		// Get if on demand
 		boolean onDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
@@ -42,6 +42,7 @@ public class RState {
 			} else {
 				// Examine the category/method states
 				PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
+				crestricted = query.restricted;
 				someRestricted = query.restricted;
 				for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
 					allRestricted = (allRestricted && restriction.restricted);
@@ -57,21 +58,15 @@ public class RState {
 			asked = query.asked;
 		}
 
-		state.restricted = (allRestricted || someRestricted);
-		state.partial = (!allRestricted && someRestricted);
-		state.asked = (!onDemand || asked);
-		return state;
+		restricted = (allRestricted || someRestricted);
+		partial = (!allRestricted && someRestricted);
+		asked = (!onDemand || asked);
+
+		proposeRestricted = !this.restricted;
+		proposeAsked = true;
 	}
 
-	public RState next() {
-		RState next = new RState();
-		next.restricted = !this.restricted;
-		next.asked = true;
-		return next;
-	}
-
-	public RState apply(RState next) {
-		RState newState = this.next();
+	public void apply() {
 
 		// Apply changes
 		if (mMethodName == null) {
@@ -85,18 +80,19 @@ public class RState {
 				listRestriction.add(mRestrictionName);
 			}
 
-			if (next.restricted)
+			if (proposeRestricted)
 				for (String restrictionName : listRestriction)
-					PrivacyManager.setRestriction(mUid, restrictionName, null, next.restricted, next.asked);
+					PrivacyManager.setRestriction(mUid, restrictionName, null, proposeRestricted, proposeAsked);
 			else
 				PrivacyManager.deleteRestrictions(mUid, mRestrictionName);
 
 		} else {
 
-			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, next.restricted, next.asked);
+			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, proposeRestricted, proposeAsked);
 
+			if (!crestricted) {
+				// We should restrict the category too
+			}
 		}
-
-		return newState;
 	}
 }
