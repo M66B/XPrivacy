@@ -3,7 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.Date;
 
 public class CRestriction {
-	private long mTimestamp;
+	private long mExpiry;
 	public int uid;
 	public String restrictionName;
 	public String methodName;
@@ -11,14 +11,14 @@ public class CRestriction {
 	public boolean asked;
 
 	public CRestriction(int _uid, String _restrictioName, String _methodName) {
-		mTimestamp = new Date().getTime();
+		mExpiry = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 		uid = _uid;
 		restrictionName = _restrictioName;
 		methodName = _methodName;
 	}
 
 	public CRestriction(PRestriction restriction) {
-		mTimestamp = new Date().getTime();
+		mExpiry = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 		uid = restriction.uid;
 		restrictionName = restriction.restrictionName;
 		methodName = restriction.methodName;
@@ -27,11 +27,11 @@ public class CRestriction {
 	}
 
 	public void setExpiry(long time) {
-		mTimestamp = time;
+		mExpiry = time;
 	}
 
 	public boolean isExpired() {
-		return (mTimestamp + PrivacyManager.cRestrictionCacheTimeoutMs < new Date().getTime());
+		return (new Date().getTime() > mExpiry);
 	}
 
 	@Override
