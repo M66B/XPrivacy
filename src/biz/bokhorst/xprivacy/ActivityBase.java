@@ -54,13 +54,13 @@ public class ActivityBase extends Activity {
 		return mCheck[1];
 	}
 
-	protected Bitmap getFullCheckBox() {
+	private Bitmap getFullCheckBox() {
 		if (mCheck == null)
 			buildCheckBoxes();
 		return mCheck[2];
 	}
 
-	protected Bitmap _getOnDemandCheckBox() {
+	private Bitmap getOnDemandCheckBox() {
 		if (mCheck == null)
 			buildCheckBoxes();
 		return mCheck[3];

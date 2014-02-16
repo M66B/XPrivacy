@@ -7,12 +7,9 @@ public class RState {
 	public int mUid;
 	public String mRestrictionName;
 	public String mMethodName;
-	public boolean crestricted;
 	public boolean restricted;
 	public boolean asked;
 	public boolean partial = false;
-	public boolean proposeRestricted;
-	public boolean proposeAsked;
 
 	public RState(int uid, String restrictionName, String methodName) {
 		mUid = uid;
@@ -42,7 +39,6 @@ public class RState {
 			} else {
 				// Examine the category/method states
 				PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
-				crestricted = query.restricted;
 				someRestricted = query.restricted;
 				for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
 					allRestricted = (allRestricted && restriction.restricted);
@@ -61,16 +57,10 @@ public class RState {
 		restricted = (allRestricted || someRestricted);
 		partial = (!allRestricted && someRestricted);
 		asked = (!onDemand || asked);
-
-		proposeRestricted = !this.restricted;
-		proposeAsked = true;
 	}
 
 	public void apply() {
-
-		// Apply changes
 		if (mMethodName == null) {
-
 			// Get restrictions to change
 			List<String> listRestriction;
 			if (mRestrictionName == null)
@@ -80,19 +70,13 @@ public class RState {
 				listRestriction.add(mRestrictionName);
 			}
 
-			if (proposeRestricted)
-				for (String restrictionName : listRestriction)
-					PrivacyManager.setRestriction(mUid, restrictionName, null, proposeRestricted, proposeAsked);
-			else
+			// Change restriction
+			if (restricted)
 				PrivacyManager.deleteRestrictions(mUid, mRestrictionName);
-
-		} else {
-
-			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, proposeRestricted, proposeAsked);
-
-			if (!crestricted) {
-				// We should restrict the category too
-			}
-		}
+			else
+				for (String restrictionName : listRestriction)
+					PrivacyManager.setRestriction(mUid, restrictionName, null, true, false);
+		} else
+			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, !restricted, false);
 	}
 }
