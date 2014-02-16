@@ -96,7 +96,7 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
 
-		mListHook.add(new Hook("internet", "connect", null, 1, null, null));
+		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous());
 
 		mListHook.add(new Hook("ipc", "android.accounts.IAccountManager", "", 1, "1.99.1", null));
 		mListHook.add(new Hook("ipc", "android.app.IActivityManager", "", 1, "1.99.1", null));
