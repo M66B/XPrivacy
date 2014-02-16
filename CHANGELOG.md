@@ -11,7 +11,7 @@ Changelog
 
 * Fixed contacts permissions (reported on XDA)
 * Made *internet/connect* dangerous ([issue](/../../issues/1354))
-* Only check for enabled (not frozen) incompatible applications
+* Only check for enabled (not frozen) incompatible applications ([issue](/../../issues/1358))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
