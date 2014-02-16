@@ -50,13 +50,13 @@ public class Meta {
 		mListHook.add(new Hook("clipboard", "hasPrimaryClip", "", 11, null, null));
 		mListHook.add(new Hook("clipboard", "hasText", "", 10, null, null));
 
-		mListHook.add(new Hook("contacts", "contacts/contacts", "READ_CONTACTS", 1, null, null));
-		mListHook.add(new Hook("contacts", "contacts/data", "READ_CONTACTS", 1, null, null));
-		mListHook.add(new Hook("contacts", "contacts/phone_lookup", "READ_CONTACTS", 1, null, null));
-		mListHook.add(new Hook("contacts", "contacts/profile", "READ_PROFILE", 1, "1.99.38", null).dangerous());
-		mListHook.add(new Hook("contacts", "contacts/raw_contacts", "READ_CONTACTS", 1, null, null));
-		mListHook.add(new Hook("contacts", "ContactsProvider2", "READ_CONTACTS,READ_PROFILE", 1, "1.99.38", null).dangerous());
-		mListHook.add(new Hook("contacts", "IccProvider", "", 1, "1.99.38", null));
+		mListHook.add(new Hook("contacts", "contacts/contacts", "READ_CONTACTS,WRITE_CONTACTS", 1, null, null));
+		mListHook.add(new Hook("contacts", "contacts/data", "READ_CONTACTS,WRITE_CONTACTS", 1, null, null));
+		mListHook.add(new Hook("contacts", "contacts/phone_lookup", "READ_CONTACTS,WRITE_CONTACTS", 1, null, null));
+		mListHook.add(new Hook("contacts", "contacts/profile", "READ_PROFILE,WRITE_PROFILE", 1, "1.99.38", null).dangerous());
+		mListHook.add(new Hook("contacts", "contacts/raw_contacts", "READ_CONTACTS,WRITE_CONTACTS", 1, null, null));
+		mListHook.add(new Hook("contacts", "ContactsProvider2", "READ_CONTACTS,WRITE_CONTACTS,READ_PROFILE,WRITE_PROFILE", 1, "1.99.38", null).dangerous());
+		mListHook.add(new Hook("contacts", "IccProvider", "READ_CONTACTS,WRITE_CONTACTS", 1, "1.99.38", null));
 
 		mListHook.add(new Hook("dictionary", "UserDictionary", "READ_USER_DICTIONARY", 1, null, null));
 
