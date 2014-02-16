@@ -127,21 +127,22 @@ public class Requirements {
 		for (String packageName : cIncompatible)
 			try {
 				ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(packageName, 0);
-				String name = context.getPackageManager().getApplicationLabel(appInfo).toString();
+				if (appInfo.enabled) {
+					String name = context.getPackageManager().getApplicationLabel(appInfo).toString();
 
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-				alertDialogBuilder.setTitle(R.string.app_name);
-				alertDialogBuilder.setMessage(String.format(context.getString(R.string.app_incompatible), name));
-				alertDialogBuilder.setIcon(context.getThemed(R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+					alertDialogBuilder.setTitle(R.string.app_name);
+					alertDialogBuilder.setMessage(String.format(context.getString(R.string.app_incompatible), name));
+					alertDialogBuilder.setIcon(context.getThemed(R.attr.icon_launcher));
+					alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
+							new DialogInterface.OnClickListener() {
+								@Override
+								public void onClick(DialogInterface dialog, int which) {
+								}
+							});
+					AlertDialog alertDialog = alertDialogBuilder.create();
+					alertDialog.show();
+				}
 			} catch (NameNotFoundException ex) {
 			}
 
