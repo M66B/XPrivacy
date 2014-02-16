@@ -836,6 +836,7 @@ Current translations:
 1. Japanese (ja)
 1. Kurdish (ku-rIR, ku-rIQ)
 1. Lithuanian (lt)
+1. Malay (ms)
 1. Norwegian (nb-rNO, nn-rNO, no-rNO)
 1. Polish (pl)
 1. Portuguese (pt)

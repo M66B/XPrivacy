@@ -1,0 +1,171 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_notxposed" formatted="false">Rangka Xposed versi %d+ tidak dipasang</string>
+    <string name="app_notenabled">XPrivacy tidak diaktifkan di dalam pemasang Xposed</string>
+    <string name="app_wrongandroid">Hanya untuk Android versi 4.0.3+</string>
+    <string name="app_incompatible" formatted="false">XPrivacy tidak serasi dengan %s</string>
+    <string name="app_version" formatted="false">XPrivacy versi: %s (%d)</string>
+    <string name="app_description">Pengurus Privasi Yang Muktamad</string>
+    <string name="app_xversion" formatted="false">Rangka Xposed versi: %d</string>
+    <string name="app_copyright">Hak Cipta \u00A9 2013–2014 oleh M. Bokhorst (M66B)</string>
+    <string name="menu_usage">Penggunaan data</string>
+    <string name="menu_refresh">Penyegaran</string>
+    <string name="menu_settings">Tetapan</string>
+    <string name="menu_template">Template</string>
+    <string name="menu_report">Lapor Isu</string>
+    <string name="menu_export">Eksport</string>
+    <string name="menu_import">Import</string>
+    <string name="menu_submit">Kemuka Sekatan</string>
+    <string name="menu_fetch">Peroleh Sekatan</string>
+    <string name="menu_theme">Tukar Tema</string>
+    <string name="menu_pro">Versi Pakar</string>
+    <string name="menu_about">Tentang</string>
+    <string name="menu_help">Bantuan</string>
+    <string name="menu_select_all">Pilih semua</string>
+    <string name="menu_sort">Susun</string>
+    <string name="menu_filter">Tapis</string>
+    <string name="menu_all">Semua</string>
+    <string name="menu_restriction_all">Aktif sekatan</string>
+    <string name="menu_clear_all">Bersih semua</string>
+    <string name="menu_restrict_all">Sekat semua</string>
+    <string name="menu_clear_usage">Bersih</string>
+    <string name="menu_clear_db">Bersih semua data XPrivacy</string>
+    <string name="menu_usage_all">Aktif tapisan</string>
+    <string name="menu_apply">Pasang template</string>
+    <string name="menu_clear">Bersih</string>
+    <string name="menu_app_launch">Lancar</string>
+    <string name="menu_app_settings">Tetapan</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Matikan</string>
+    <string name="menu_accounts">Pilih akaun yang dibenarkan</string>
+    <string name="menu_applications">Pilih aplikasi yang dibenarkan</string>
+    <string name="menu_contacts">Pilih hubungan yang dibenarkan</string>
+    <string name="menu_tutorial">Bimbingan</string>
+    <string name="menu_exclude">Kecualikan</string>
+    <string name="menu_close">Tutup</string>
+    <string name="msg_abort">Sedang dibatalkan</string>
+    <string name="msg_aborted">Dibatalkan</string>
+    <string name="msg_new">Baru</string>
+    <string name="msg_update">Mengemaskini</string>
+    <string name="msg_licensed" formatted="false">Dilesenkan kepada: %s</string>
+    <string name="msg_loading">Memuatkan …</string>
+    <string name="msg_applying">Melaksanakan …</string>
+    <string name="msg_applied">Template dilaksanakan</string>
+    <string name="msg_saved_to" formatted="false">Disimpan di %s</string>
+    <string name="msg_no_restrictions">Tiada sekatan ditemui</string>
+    <string name="msg_sure">Anda pasti?</string>
+    <string name="msg_select">Sila pilih beberapa aplikasi</string>
+    <string name="msg_limit">Sila pilih kurang daripada %d applikasi</string>
+    <string name="msg_done">Selesai</string>
+    <string name="msg_reboot">Peranti perlu dimulakan semula</string>
+    <string name="msg_random_now">Rawakkan sekarang</string>
+    <string name="msg_random_access">Rawakkan bila diakses</string>
+    <string name="msg_random_boot">Rawakkan semasa peranti dihidupkan</string>
+    <string name="msg_restart">Perlu mula semula</string>
+    <string name="msg_register">Sila daftarkan peranti anda</string>
+    <string name="msg_email">Sila isikan e-mel anda:</string>
+    <string name="msg_registered">Sila semak e-mel untuk mengaktifkan peranti</string>
+    <string name="msg_service">Perkhidmatan mengemaskini sedang berjalan</string>
+    <string name="msg_migrating" formatted="false">Menghijrahkan %s</string>
+    <string name="msg_randomizing" formatted="false">Merawakkan %s</string>
+    <string name="msg_upgrading" formatted="false">Mengemaskinikan %s</string>
+    <string name="msg_support_info">Satu pemeriksaan dalaman gagal, hantar maklumat sokongan?</string>
+    <string name="msg_restrictedby">Disekatkan oleh XPrivacy</string>
+    <string name="msg_first"><b>Penjagaan rapi telah diambil untuk membangunkan dan menguji XPrivacy,
+namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap peranti dan untuk semua applikasi.
+\n\nPenggunaan adalah sepenuhnya di atas risiko sendiri.</b>\n\nLihat juga lesen:</string>
+    <string name="restrict_accounts" tools:ignore="UnusedResources">Akaun (Google, Facebook, dll)</string>
+    <string name="restrict_browser" tools:ignore="UnusedResources">Pelayar (penanda buku/sejarah)</string>
+    <string name="restrict_calendar" tools:ignore="UnusedResources">Kalendar</string>
+    <string name="restrict_calling" tools:ignore="UnusedResources">Panggilan (telefon, SMS, MMS)</string>
+    <string name="restrict_clipboard" tools:ignore="UnusedResources">Papan klip</string>
+    <string name="restrict_contacts" tools:ignore="UnusedResources">Hubungan</string>
+    <string name="restrict_dictionary" tools:ignore="UnusedResources">Kamus (pengguna)</string>
+    <string name="restrict_email" tools:ignore="UnusedResources">E-mel</string>
+    <string name="restrict_identification" tools:ignore="UnusedResources">Identiti (peranti)</string>
+    <string name="restrict_internet" tools:ignore="UnusedResources">Internet</string>
+    <string name="restrict_location" tools:ignore="UnusedResources">Lokasi (terperinci/am)</string>
+    <string name="restrict_media" tools:ignore="UnusedResources">Media (bunyi, gambar, video)</string>
+    <string name="restrict_messages" tools:ignore="UnusedResources">Mesej (SMS, MMS)</string>
+    <string name="restrict_network" tools:ignore="UnusedResources">Rangkaian (alamat)</string>
+    <string name="restrict_notifications" tools:ignore="UnusedResources">Pemberitahuan</string>
+    <string name="restrict_overlay" tools:ignore="UnusedResources">Lapisan</string>
+    <string name="restrict_phone" tools:ignore="UnusedResources">Telefon (identiti, nombor, panggilan)</string>
+    <string name="restrict_sensors" tools:ignore="UnusedResources">Penderia</string>
+    <string name="restrict_storage" tools:ignore="UnusedResources">Simpanan (media, kad SD)</string>
+    <string name="restrict_shell" tools:ignore="UnusedResources">Cengkerang (arahan, pengguna berkuasa)</string>
+    <string name="restrict_system" tools:ignore="UnusedResources">Sistem (aplikasi yang dipasangkan)</string>
+    <string name="restrict_view" tools:ignore="UnusedResources">Tinjauan (pelayar)</string>
+    <string name="title_categories" tools:ignore="UnusedResources">Kategori</string>
+    <string name="title_restrict">Tanda untuk sekat:</string>
+    <string name="title_fused">Tapis data digunakan</string>
+    <string name="title_finternet">Tapis internet diakses</string>
+    <string name="title_fpermission">Tapis kebenaran</string>
+    <string name="title_frestricted">Tapis sekatan</string>
+    <string name="title_fuser">Tapis aplikasi pengguna</string>
+    <string name="title_fondemand">Tapis atas permintaan</string>
+    <string name="title_fsystem">Tapis aplikasi sistem</string>
+    <string name="title_fnot">Sangkalan</string>
+    <string name="title_sname">Mengikut nama</string>
+    <string name="title_suid">Mengikut uid</string>
+    <string name="title_sinstalled">Mengikut tarikh dipasang</string>
+    <string name="title_supdated">Mengikut tarikh dikemaskini</string>
+    <string name="title_smodified">Mengikut tarikh diubahsuai (XPrivacy)</string>
+    <string name="title_sinvert">Terbalikkan susunan</string>
+    <string name="title_attempt">Percubaan penggunaan:</string>
+    <string name="title_category">Kategori:</string>
+    <string name="title_function">Fungsi:</string>
+    <string name="title_parameters">Parameter:</string>
+    <string name="title_applycat">Laksanakan ke seluruh kategori</string>
+    <string name="title_once">Sekali untuk %1$s saat</string>
+    <string name="title_allow">Benarkan</string>
+    <string name="title_deny">Tidak dibenarkan</string>
+    <string name="title_pleasesubmit">Sila kemukakan sekatan anda untuk menolong orang lain</string>
+    <string name="title_permissions">Kebenaran</string>
+    <string name="settings_serial">Siri#</string>
+    <string name="settings_lat">Latitud</string>
+    <string name="settings_lon">Longitud</string>
+    <string name="settings_alt">Altitud</string>
+    <string name="settings_mac">Alamat MAC</string>
+    <string name="settings_ip">Alamat IP</string>
+    <string name="settings_phone">Nombor telefon</string>
+    <string name="settings_id">Identiti Android</string>
+    <string name="settings_adid">Identiti iklan</string>
+    <string name="settings_country">Negara</string>
+    <string name="settings_operator">Pengendali</string>
+    <string name="settings_subscriber">Identiti pelanggan</string>
+    <string name="settings_ua">Ejen pengguna</string>
+    <string name="settings_general">Am</string>
+    <string name="settings_fake_data">Data palsu</string>
+    <string name="settings_notify">Pemberitahuan pengemaskinian</string>
+    <string name="settings_ondemand">Sekatan di atas permintaan</string>
+    <string name="settings_log">Log nyahsilap (perlu mula semula)</string>
+    <string name="settings_expert">Mod pakar</string>
+    <string name="settings_dangerous">Sekat fungsi bahaya</string>
+    <string name="settings_confidence">Selang keyakinan pengambilan maxima</string>
+    <string name="settings_experimental">Fungsi dalam percubaan (perlu mula semula)</string>
+    <string name="settings_https">Guna sambungan terjamin</string>
+    <string name="settings_syscomponents">Sekat komponen sistem (Android)</string>
+    <string name="settings_usagedata">Tunjuk penggunaan data aplikasi</string>
+    <string name="help_longpress">Tekan lama pada nama untuk pilih</string>
+    <string name="help_ondemand">sekatan akan diminta</string>
+    <string name="help_application">Aplikasi</string>
+    <string name="help_internet">mempunyai kebenaran internet</string>
+    <string name="help_granted">mempunyai kebenaran Android</string>
+    <string name="help_used">telah guna data ini</string>
+    <string name="help_used_grayed">tiada penggunaan data</string>
+    <string name="help_frozen">telah dilumpuhkan</string>
+    <string name="help_dangerous">adalah bahaya, sekatan boleh menimbulkan masalah</string>
+    <string name="help_half">sebahagiannya disekat</string>
+    <string name="help_attention">sekatan memerlukan perhatian</string>
+    <string name="help_restricted">sekatan telah berubah</string>
+    <string name="help_shared">sekatan telah dikemukakan</string>
+    <string name="tutorial_mainheader">Pilih kategori untuk sekat</string>
+    <string name="tutorial_mainlist">Tanda kotak untuk sekat kategori yang dipilih untuk aplikasi\n
+\nAplikasi akan diberikan data kosong atau palsu untuk kategori yang disekat\n
+\nTekan ikon aplikasi untuk sekatan terperinci dan tetapan</string>
+    <string name="tutorial_detailsheader">Tekan ikon aplikasi untuk lebih lagi tindakan</string>
+    <string name="tutorial_detailslist">Tekan anak panah ke bawah untuk lihat pengecualian fungsi sekatan kategori</string>
+    <string name="permission_manage">Menguruskan aplikasi, termasuk mematikan</string>
+
+</resources>

@@ -12,6 +12,7 @@ Changelog
 * Fixed contacts permissions (reported on XDA)
 * Made *internet/connect* dangerous ([issue](/../../issues/1354))
 * Only check for enabled (not frozen) incompatible applications ([issue](/../../issues/1358))
+* Added Malay translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
