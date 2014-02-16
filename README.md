@@ -505,6 +505,9 @@ This means XPrivacy's apk file is corrupt. Try disabling your popup blocker or d
 * Power on your device
 * Reproduce the problem
 
+Upload the capture logcat somewhere, for example using Google Drive,
+and link to it from the issue you (should) have created.
+
 <a name="FAQ15"></a>
 **(15) Where are XPrivacy's settings stored?**
 
@@ -717,6 +720,8 @@ Things to do / check:
 * Disable and then enable XPrivacy again in the Xposed installer
 * Clear the (Dalvik) cache using the recovery
 
+If these suggestion don't help, please create an issue and provide a logcat (see *Support* below).
+
 Support
 -------
 
@@ -724,7 +729,7 @@ Support
 
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-Include a [logcat](#FAQ22) when relevant
+Include a [logcat](#FAQ14) when relevant
 (use [pastebin](http://pastebin.com/) or a similar service).
 
 **Do not forget to enable XPrivacy logging using the settings menu!**
