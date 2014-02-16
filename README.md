@@ -497,7 +497,13 @@ This means XPrivacy's apk file is corrupt. Try disabling your popup blocker or d
 <a name="FAQ14"></a>
 **(14) How can I make a logcat?**
 
-Enable "Settings > Debug log (requires restart)" and see [here](http://forum.xda-developers.com/showthread.php?t=1726238).
+* Install the [Android SDK](http://developer.android.com/sdk/index.html) (Click *Download for other platforms* for a minimal download)
+* Make sure you can connect to your device via USB (see [here](http://developer.android.com/sdk/win-usb.html) for drivers and instructions)
+* Enable XPrivacy debug logging in the main settings
+* Power off your device
+* Start logging by entering this command on the command line: *adb logcat >log.txt*
+* Power on your device
+* Reproduce the problem
 
 <a name="FAQ15"></a>
 **(15) Where are XPrivacy's settings stored?**
@@ -699,6 +705,17 @@ See [here](http://forum.xda-developers.com/showpost.php?p=50274730&postcount=700
 
 Yes, but I don't see this as a problem,
 since [security through obscurity](http://en.wikipedia.org/wiki/Security_through_obscurity) is not a good principle.
+
+<a name="FAQ49"></a>
+**(49) I keep getting 'restart required'**
+
+Things to do / check:
+
+* Make sure the Xposed framework is (still) installed using the Xposed installer
+* Make sure the XPrivacy application is not moved to the SD card
+* Make sure LBE Security Master is not installed
+* Disable and then enable XPrivacy again in the Xposed installer
+* Clear the (Dalvik) cache using the recovery
 
 Support
 -------
