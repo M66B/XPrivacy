@@ -1496,12 +1496,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									AlertDialog alertDialog = alertDialogBuilder.create();
 									alertDialog.show();
 								} else {
-
+									// Change restriction
 									List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
-
-									rstate.apply();
-
+									rstate.toggleRestriction();
 									List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
 											mRestrictionName);
 

@@ -950,11 +950,9 @@ public class ActivityApp extends ActivityBase {
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-
+							// Change restriction
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
-
-							rstate.apply();
-
+							rstate.toggleRestriction();
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Refresh display
@@ -1154,8 +1152,8 @@ public class ActivityApp extends ActivityBase {
 					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-
-							rstate.apply();
+							// Change restriction
+							rstate.toggleRestriction();
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent

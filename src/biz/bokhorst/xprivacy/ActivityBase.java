@@ -60,6 +60,7 @@ public class ActivityBase extends Activity {
 		return mCheck[2];
 	}
 
+	@SuppressWarnings("unused")
 	private Bitmap getOnDemandCheckBox() {
 		if (mCheck == null)
 			buildCheckBoxes();

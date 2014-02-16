@@ -59,7 +59,7 @@ public class RState {
 		asked = (!onDemand || asked);
 	}
 
-	public void apply() {
+	public void toggleRestriction() {
 		if (mMethodName == null) {
 			// Get restrictions to change
 			List<String> listRestriction;
@@ -78,5 +78,10 @@ public class RState {
 					PrivacyManager.setRestriction(mUid, restrictionName, null, true, false);
 		} else
 			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, !restricted, false);
+	}
+
+	public void toggleAsked() {
+		asked = !asked;
+		PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, restricted, asked);
 	}
 }
