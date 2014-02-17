@@ -190,7 +190,7 @@ public class ActivityApp extends ActivityBase {
 				@Override
 				public void onClick(View view) {
 					boolean ondemand = !PrivacyManager.getSettingBool(-mAppInfo.getUid(),
-							PrivacyManager.cSettingOnDemand, true, false);
+							PrivacyManager.cSettingOnDemand, false, false);
 					PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 							Boolean.toString(ondemand));
 					imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());

@@ -875,7 +875,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		boolean fUser = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUser, true, false);
 		boolean fSystem = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFSystem, false, false);
 
-		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, false, false);
+		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 
 		// Setup checkboxes
 		cbFUsed.setChecked(fUsed);
