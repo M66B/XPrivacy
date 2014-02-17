@@ -579,6 +579,7 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 * Android version
 * vibration
 * checks for root
+* lockscreen
 
 No, because I don't consider these privacy-sensitive data, i.e., able to identify you and collect data about you. I am happy to add new restrictions for data that is really privacy-sensitive.
 
