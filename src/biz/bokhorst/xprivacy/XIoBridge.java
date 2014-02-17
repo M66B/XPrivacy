@@ -6,6 +6,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.os.Process;
 import android.util.Log;
 
@@ -33,10 +34,10 @@ public class XIoBridge extends XHook {
 
 	// @formatter:off
 
-	// public static FileDescriptor open(String path, int flags)
 	// public static void connect(FileDescriptor fd, InetAddress inetAddress, int port) throws SocketException
 	// public static void connect(FileDescriptor fd, InetAddress inetAddress, int port, int timeoutMs) throws SocketException, SocketTimeoutException
-	// Research: public static FileDescriptor socket(boolean stream)
+	// TODO: public static FileDescriptor socket(boolean stream)
+	// public static FileDescriptor open(String path, int flags) throws FileNotFoundException
 	// libcore/luni/src/main/java/libcore/io/IoBridge.java
 
 	// @formatter:on
@@ -47,6 +48,7 @@ public class XIoBridge extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cStorage));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/proc"));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/system/build.prop"));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/sys/block/.../cid"));
@@ -56,13 +58,21 @@ public class XIoBridge extends XHook {
 	}
 
 	@Override
+	@SuppressLint("SdCardPath")
 	protected void before(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.open) {
-			if (param.args.length > 0) {
+			if (param.args.length > 0 && param.args[0] != null) {
 				String fileName = (String) param.args[0];
-				if (fileName != null && (fileName.startsWith(mFileName) || mFileName.contains("..."))) {
+				if (mFileName == null) {
+					if (fileName.startsWith("/sdcard") || fileName.startsWith(System.getenv("EXTERNAL_STORAGE"))
+							|| fileName.startsWith(System.getenv("EMULATED_STORAGE_SOURCE"))
+							|| fileName.startsWith(System.getenv("EMULATED_STORAGE_TARGET")))
+						if (isRestrictedExtra(param, fileName))
+							param.setThrowable(new FileNotFoundException("XPrivacy"));
+
+				} else if (fileName.startsWith(mFileName) || mFileName.contains("...")) {
 					// Zygote, Android
-					if (Process.myUid() <= 0 || Util.getAppId(Process.myUid()) == Process.SYSTEM_UID)
+					if (Util.getAppId(Process.myUid()) == Process.SYSTEM_UID)
 						return;
 
 					// Allow command line
@@ -75,15 +85,15 @@ public class XIoBridge extends XHook {
 						String[] component = mFileName.split("\\.\\.\\.");
 						if (fileName.startsWith(component[0]) && fileName.endsWith(component[1]))
 							if (isRestricted(param, mFileName))
-								param.setThrowable(new FileNotFoundException());
+								param.setThrowable(new FileNotFoundException("XPrivacy"));
 
 					} else if (mFileName.equals("/proc")) {
 						if (isRestrictedExtra(param, mFileName, fileName))
-							param.setThrowable(new FileNotFoundException());
+							param.setThrowable(new FileNotFoundException("XPrivacy"));
 
 					} else {
 						if (isRestricted(param, mFileName))
-							param.setThrowable(new FileNotFoundException());
+							param.setThrowable(new FileNotFoundException("XPrivacy"));
 					}
 				}
 			}

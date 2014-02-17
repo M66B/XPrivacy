@@ -227,6 +227,7 @@ public class Meta {
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null));
+		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous());
 
 		mListHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).dangerous());
