@@ -71,6 +71,7 @@
                 android:id="@+id/imgCbAsk"
                 android:layout_width="32dip"
                 android:layout_height="32dip"
+                android:layout_marginLeft="3dip"
                 android:contentDescription="@string/title_restrict"
                 android:visibility="invisible" />
         </LinearLayout>
