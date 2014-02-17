@@ -164,11 +164,13 @@ public class ActivityUsage extends ActivityBase {
 	// Adapters
 
 	private class UsageAdapter extends ArrayAdapter<PRestriction> {
+		private boolean mHasProLicense = false;
 		private List<PRestriction> mListUsageData;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public UsageAdapter(Context context, int textViewResourceId, List<PRestriction> objects) {
 			super(context, textViewResourceId, objects);
+			mHasProLicense = (Util.hasProLicense(ActivityUsage.this) != null);
 			mListUsageData = new ArrayList<PRestriction>();
 			mListUsageData.addAll(objects);
 		}
@@ -297,7 +299,7 @@ public class ActivityUsage extends ActivityBase {
 			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.imgRestricted.setVisibility(usageData.restricted ? View.VISIBLE : View.INVISIBLE);
 			holder.tvApp.setText(Integer.toString(usageData.uid));
-			if (usageData.extra == null)
+			if (usageData.extra == null || !mHasProLicense)
 				holder.tvRestriction.setText(String.format("%s/%s", usageData.restrictionName, usageData.methodName));
 			else
 				holder.tvRestriction.setText(String.format("%s/%s(%s)", usageData.restrictionName,

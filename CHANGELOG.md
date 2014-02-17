@@ -11,7 +11,7 @@ Changelog
 
 * Fixed function name overlapping information icon
 * Clear all data will also clear local caches
-* Show parameters in usage data
+* Show parameters in usage data (only [Pro license](http://www.xprivacy.eu/))
 * Added restriction for deprecated *contacts/people* ([issue](/../../issues/1367))
 * Added restriction for open file on common storage (sdcard or internal storage)
 * Updated Lithuanian translation
