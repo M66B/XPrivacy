@@ -74,9 +74,13 @@ public class XIoBridge extends XHook {
 			if (param.args.length > 0 && param.args[0] != null) {
 				String fileName = (String) param.args[0];
 				if (mFileName == null) {
-					if (fileName.startsWith("/sdcard") || fileName.startsWith(System.getenv("EXTERNAL_STORAGE"))
-							|| fileName.startsWith(System.getenv("EMULATED_STORAGE_SOURCE"))
-							|| fileName.startsWith(System.getenv("EMULATED_STORAGE_TARGET")))
+					String externalStorage = System.getenv("EXTERNAL_STORAGE");
+					String emulatedSource = System.getenv("EMULATED_STORAGE_SOURCE");
+					String emulatedTarget = System.getenv("EMULATED_STORAGE_TARGET");
+					if (fileName.startsWith("/sdcard")
+							|| (externalStorage != null && fileName.startsWith(externalStorage))
+							|| (emulatedSource != null && fileName.startsWith(emulatedSource))
+							|| (emulatedTarget != null && fileName.startsWith(emulatedTarget)))
 						if (isRestrictedExtra(param, fileName))
 							param.setThrowable(new FileNotFoundException("XPrivacy"));
 
