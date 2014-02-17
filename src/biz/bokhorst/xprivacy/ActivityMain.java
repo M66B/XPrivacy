@@ -879,16 +879,21 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		boolean fUser = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUser, true, false);
 		boolean fSystem = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFSystem, false, false);
 
+		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, false, false);
+
 		// Setup checkboxes
 		cbFUsed.setChecked(fUsed);
 		cbFInternet.setChecked(fInternet);
 		cbFPermission.setChecked(fPermission);
 		cbFRestriction.setChecked(fRestriction);
 		cbFRestrictionNot.setChecked(fRestrictionNot);
-		cbFOnDemand.setChecked(fOnDemand);
-		cbFOnDemandNot.setChecked(fOnDemandNot);
+		cbFOnDemand.setChecked(fOnDemand && ondemand);
+		cbFOnDemandNot.setChecked(fOnDemandNot && ondemand);
 		cbFUser.setChecked(fUser);
 		cbFSystem.setChecked(fSystem);
+
+		cbFOnDemand.setEnabled(ondemand);
+		cbFOnDemandNot.setEnabled(ondemand);
 
 		// Manage user/system filter exclusivity
 		OnCheckedChangeListener checkListener = new OnCheckedChangeListener() {
