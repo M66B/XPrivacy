@@ -35,16 +35,6 @@ public class PRestriction implements Parcelable {
 		time = 0;
 	}
 
-	public PRestriction(int _uid, String category, String method, String _extra) {
-		uid = _uid;
-		restrictionName = category;
-		methodName = method;
-		extra = _extra;
-		restricted = false;
-		asked = false;
-		time = 0;
-	}
-
 	public PRestriction(int _uid, String category, String method, boolean _restricted) {
 		uid = _uid;
 		restrictionName = category;
