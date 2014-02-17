@@ -886,8 +886,8 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgGranted;
 			public ImageView imgInfo;
 			public TextView tvName;
-			public ImageView imgCBName;
-			public TextView tvOnDemand;
+			public ImageView imgCbRestricted;
+			public ImageView imgCbAsk;
 			public RelativeLayout rlName;
 
 			public GroupViewHolder(View theRow, int thePosition) {
@@ -898,8 +898,8 @@ public class ActivityApp extends ActivityBase {
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvName);
-				imgCBName = (ImageView) row.findViewById(R.id.imgCBName);
-				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
+				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
+				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -940,11 +940,10 @@ public class ActivityApp extends ActivityBase {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					holder.imgCBName.setImageBitmap(getCheckBoxImage(rstate));
-					holder.imgCBName.setVisibility(View.VISIBLE);
-
-					// Display on demand
-					holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
+					holder.imgCbRestricted.setVisibility(View.VISIBLE);
+					holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+					holder.imgCbAsk.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -953,6 +952,25 @@ public class ActivityApp extends ActivityBase {
 							// Change restriction
 							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 							rstate.toggleRestriction();
+							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+
+							// Refresh display
+							notifyDataSetChanged(); // Needed to update children
+
+							// Notify restart
+							if (!newState.equals(oldState))
+								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+										.show();
+						}
+					});
+
+					// Listen for ask changes
+					holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							// Change restriction
+							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+							rstate.toggleAsked();
 							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 
 							// Refresh display
@@ -1015,8 +1033,8 @@ public class ActivityApp extends ActivityBase {
 			holder.tvName.setText(title);
 
 			// Display restriction
-			holder.imgCBName.setVisibility(View.INVISIBLE);
-			holder.tvOnDemand.setVisibility(View.INVISIBLE);
+			holder.imgCbRestricted.setVisibility(View.INVISIBLE);
+			holder.imgCbAsk.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
@@ -1071,8 +1089,8 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgGranted;
 			public ImageView imgInfo;
 			public TextView tvMethodName;
-			public ImageView imgCBMethodName;
-			public TextView tvOnDemand;
+			public ImageView imgCbMethodRestricted;
+			public ImageView imgCbMethodAsk;
 			public RelativeLayout rlMethodName;
 
 			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
@@ -1083,8 +1101,8 @@ public class ActivityApp extends ActivityBase {
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
-				imgCBMethodName = (ImageView) row.findViewById(R.id.imgCBMethodName);
-				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
+				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
+				imgCbMethodAsk = (ImageView) row.findViewById(R.id.imgCbMethodAsk);
 				rlMethodName = (RelativeLayout) row.findViewById(R.id.rlMethodName);
 			}
 		}
@@ -1133,7 +1151,6 @@ public class ActivityApp extends ActivityBase {
 					}
 					holder.rlMethodName.setEnabled(parent.restricted);
 					holder.tvMethodName.setEnabled(parent.restricted);
-					holder.tvOnDemand.setEnabled(parent.restricted);
 
 					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() ? R.attr.icon_used
 							: R.attr.icon_used_grayed));
@@ -1142,11 +1159,10 @@ public class ActivityApp extends ActivityBase {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Display restriction
-					holder.imgCBMethodName.setImageBitmap(getCheckBoxImage(rstate));
-					holder.imgCBMethodName.setVisibility(View.VISIBLE);
-
-					// Display on demand
-					holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate));
+					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
+					holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+					holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
@@ -1154,6 +1170,23 @@ public class ActivityApp extends ActivityBase {
 						public void onClick(View view) {
 							// Change restriction
 							rstate.toggleRestriction();
+
+							// Refresh display
+							notifyDataSetChanged(); // Needed to update parent
+
+							// Notify restart
+							if (md.isRestartRequired())
+								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+										.show();
+						}
+					});
+
+					// Listen for ask changes
+					holder.imgCbMethodAsk.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							// Change restriction
+							rstate.toggleAsked();
 
 							// Refresh display
 							notifyDataSetChanged(); // Needed to update parent
@@ -1211,7 +1244,6 @@ public class ActivityApp extends ActivityBase {
 
 			holder.rlMethodName.setEnabled(false);
 			holder.tvMethodName.setEnabled(false);
-			holder.tvOnDemand.setEnabled(false);
 
 			// Display method name
 			holder.tvMethodName.setText(md.getName());
@@ -1271,7 +1303,6 @@ public class ActivityApp extends ActivityBase {
 
 			// Display restriction
 			holder.tvMethodName.setClickable(false);
-			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,

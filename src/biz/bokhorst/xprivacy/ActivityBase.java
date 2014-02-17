@@ -60,7 +60,6 @@ public class ActivityBase extends Activity {
 		return mCheck[2];
 	}
 
-	@SuppressWarnings("unused")
 	private Bitmap getOnDemandCheckBox() {
 		if (mCheck == null)
 			buildCheckBoxes();
@@ -76,6 +75,17 @@ public class ActivityBase extends Activity {
 			checkbox = getFullCheckBox();
 		else
 			checkbox = getOffCheckBox();
+
+		return checkbox;
+	}
+
+	protected Bitmap getAskBoxImage(RState state) {
+		Bitmap checkbox;
+
+		if (state.asked)
+			checkbox = getOffCheckBox();
+		else
+			checkbox = getOnDemandCheckBox();
 
 		return checkbox;
 	}
