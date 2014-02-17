@@ -17,6 +17,8 @@ public class CRestriction {
 		restrictionName = _restrictioName;
 		methodName = _methodName;
 		extra = _extra;
+		restricted = false;
+		asked = false;
 	}
 
 	public CRestriction(PRestriction restriction) {

@@ -19,7 +19,7 @@ public class PRestriction implements Parcelable {
 		uid = other.uid;
 		restrictionName = other.restrictionName;
 		methodName = other.methodName;
-		extra = null;
+		extra = other.extra;
 		restricted = other.restricted;
 		asked = other.asked;
 		time = other.time;
