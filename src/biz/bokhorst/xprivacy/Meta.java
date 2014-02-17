@@ -76,7 +76,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getString", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getDescriptor", "", 16, null, null));
-		mListHook.add(new Hook("identification", "GservicesProvider", "com.google.android.providers.gsf.permission.READ_GSERVICES", 1, null, null).dangerous());
+		mListHook.add(new Hook("identification", "GservicesProvider", "com.google.android.providers.gsf.permission.READ_GSERVICES,com.google.android.providers.gsf.permission.WRITE_GSERVICES", 1, null, null).dangerous());
 		mListHook.add(new Hook("identification", "SERIAL", "", 1, null, null).restart().noUsageData());
 
 		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, null, null));

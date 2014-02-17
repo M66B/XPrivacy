@@ -272,13 +272,14 @@ public class PrivacyService {
 			synchronized (mListError) {
 				int c = 0;
 				int i = 0;
-				while (i++ < mListError.size()) {
+				while (i < mListError.size()) {
 					String msg = mListError.get(i);
 					c += msg.length();
 					if (c < 5000)
 						listError.add(msg);
 					else
 						break;
+					i++;
 				}
 			}
 

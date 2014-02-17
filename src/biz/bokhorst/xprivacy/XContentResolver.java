@@ -168,30 +168,24 @@ public class XContentResolver extends XHook {
 
 			} else if (uri.startsWith("content://com.google.android.gsf.gservices")) {
 				// Google services provider: block only android_id
-				if (param.args.length > 3 && param.args[3] != null) {
-					List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
-					if (selectionArgs.contains("android_id")) {
-						int ikey = cursor.getColumnIndex("key");
-						int ivalue = cursor.getColumnIndex("value");
-						if (ikey == 0 && ivalue == 1 && cursor.getColumnCount() == 2) {
-							if (isRestrictedExtra(param, PrivacyManager.cIdentification, "GservicesProvider", uri)) {
-								MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
-								while (cursor.moveToNext()) {
-									if ("android_id".equals(cursor.getString(ikey)))
-										result.addRow(new Object[] { "android_id",
-												PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
-									else
-										copyColumns(cursor, result);
-								}
-								result.respond(cursor.getExtras());
-								param.setResult(result);
-								cursor.close();
-							}
-						} else
-							Util.log(this, Log.ERROR,
-									"Unexpected result uri=" + uri + " columns=" + cursor.getColumnNames());
+				int ikey = cursor.getColumnIndex("key");
+				int ivalue = cursor.getColumnIndex("value");
+				if (ikey == 0 && ivalue == 1 && cursor.getColumnCount() == 2) {
+					if (isRestrictedExtra(param, PrivacyManager.cIdentification, "GservicesProvider", uri)) {
+						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+						while (cursor.moveToNext()) {
+							if ("android_id".equals(cursor.getString(ikey)))
+								result.addRow(new Object[] { "android_id",
+										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
+							else
+								copyColumns(cursor, result);
+						}
+						result.respond(cursor.getExtras());
+						param.setResult(result);
+						cursor.close();
 					}
-				}
+				} else
+					Util.log(this, Log.ERROR, "Unexpected result uri=" + uri + " columns=" + cursor.getColumnNames());
 
 			} else if (uri.startsWith("content://com.android.contacts/contacts")
 					|| uri.startsWith("content://com.android.contacts/data")
