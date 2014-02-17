@@ -48,6 +48,7 @@ public class XContentResolver extends XHook {
 	// http://developer.android.com/reference/android/content/ContentResolver.html
 	// http://developer.android.com/reference/android/content/ContentProviderClient.html
 
+	// http://developer.android.com/reference/android/provider/Contacts.People.html
 	// http://developer.android.com/reference/android/provider/ContactsContract.Contacts.html
 	// http://developer.android.com/reference/android/provider/ContactsContract.Data.html
 	// http://developer.android.com/reference/android/provider/ContactsContract.PhoneLookup.html
@@ -113,6 +114,7 @@ public class XContentResolver extends XHook {
 		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
 			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
+			Util.log(this, Log.INFO, "Before uri=" + uri);
 
 			if (uri.startsWith("content://com.android.contacts/contacts")
 					|| uri.startsWith("content://com.android.contacts/data")
@@ -147,6 +149,7 @@ public class XContentResolver extends XHook {
 		if (param.args.length > 1 && param.args[0] instanceof Uri && param.getResult() != null) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
 			Cursor cursor = (Cursor) param.getResult();
+			Util.log(this, Log.INFO, "After uri=" + uri);
 
 			if (uri.startsWith("content://applications")) {
 				// Applications provider: allow selected applications
@@ -236,6 +239,11 @@ public class XContentResolver extends XHook {
 				else if (uri.startsWith("content://call_log")) {
 					restrictionName = PrivacyManager.cPhone;
 					methodName = "CallLogProvider";
+				}
+
+				else if (uri.startsWith("content://contacts/people")) {
+					restrictionName = PrivacyManager.cContacts;
+					methodName = "contacts/people";
 				}
 
 				else if (uri.startsWith("content://com.android.contacts/profile")) {
