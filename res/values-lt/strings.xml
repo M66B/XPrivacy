@@ -8,7 +8,7 @@
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed programos versija: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_licensed">Licenzijuota, ačiū už Jūsų paramą!</string>
     <string name="menu_usage">Duomenų naudojimas</string>
     <string name="menu_refresh">Atnaujinti</string>
     <string name="menu_settings">Parametrai</string>
@@ -120,7 +120,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_once">Vieną kartą %1$s sekundžių</string>
     <string name="title_allow">Leisti</string>
     <string name="title_deny">Drausti</string>
-    <string name="title_pleasesubmit">Prašome pateikti savo apribojimus padėti kitiems</string>
+    <string name="title_pleasesubmit">Prašome pateikti savo leidimą</string>
     <string name="title_permissions">Leidimai</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
@@ -139,11 +139,11 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_fake_data">Netikri duomenys</string>
     <string name="settings_notify">Atnaujinimų Pranešimas</string>
     <string name="settings_ondemand">Riboti pagal reikalavimą</string>
-    <string name="settings_log">DEBUG žurnalas (Perkrauti prietaisą)</string>
+    <string name="settings_log">DEBUG žurnalas (perkrauti prietaisą)</string>
     <string name="settings_expert">Eksperto režimas</string>
     <string name="settings_dangerous">Apriboti pavojingas funkcijas</string>
     <string name="settings_confidence">Maks. pasitikėjimo gavimo intervalas</string>
-    <string name="settings_experimental">Eksperimentinės funkcijos (Perkrauti prietaisą)</string>
+    <string name="settings_experimental">Eksperimentinės funkcijos (perkrauti prietaisą)</string>
     <string name="settings_https">Naudojamas saugus ryšys</string>
     <string name="settings_syscomponents">Riboti sistemos komponentus (Android) (reikia perkrauti)</string>
     <string name="settings_usagedata">Rodyti programos duomenų naudojimą (reikia perkrauti)</string>
