@@ -220,7 +220,7 @@ public class UpdateService extends Service {
 				if (md.getFrom() != null)
 					if (sVersion.compareTo(md.getFrom()) < 0) {
 						// Disable new dangerous restrictions
-						if (!dangerous && md.isDangerous()) {
+						if (md.isDangerous()) {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " uid="
 									+ uid);
 							listWork.add(new PRestriction(uid, md.getRestrictionName(), md.getName(), false));
