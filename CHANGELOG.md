@@ -12,7 +12,7 @@ Changelog
 * Fixed function name overlapping information icon
 * Clear all data will also clear local caches
 * Show parameters in usage data
-* Added restriction for deprecated *contacts/people*
+* Added restriction for deprecated *contacts/people* ([issue](/../../issues/1367))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
