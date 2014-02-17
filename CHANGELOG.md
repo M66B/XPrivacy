@@ -9,6 +9,9 @@ Changelog
 
 **Next release**
 
+* Fixed function name overlapping information icon
+* Clear all data will also clear local caches
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.45 BETA**
