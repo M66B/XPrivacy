@@ -187,7 +187,8 @@ public class XContentResolver extends XHook {
 						result.respond(cursor.getExtras());
 						param.setResult(result);
 						cursor.close();
-					}
+					} else
+						cursor.moveToFirst();
 				} else
 					Util.log(this, Log.ERROR, "Unexpected result uri=" + uri + " columns=" + cursor.getColumnNames());
 
