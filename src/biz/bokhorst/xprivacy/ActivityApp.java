@@ -178,6 +178,28 @@ public class ActivityApp extends ActivityBase {
 			}
 		});
 
+		final ImageView imgCbOnDemand = (ImageView) findViewById(R.id.imgCbOnDemand);
+		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false)) {
+			// Display on-demand state
+			boolean ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, true,
+					false);
+			imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
+
+			imgCbOnDemand.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					boolean ondemand = !PrivacyManager.getSettingBool(-mAppInfo.getUid(),
+							PrivacyManager.cSettingOnDemand, true, false);
+					PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+							Boolean.toString(ondemand));
+					imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
+					if (mPrivacyListAdapter != null)
+						mPrivacyListAdapter.notifyDataSetChanged();
+				}
+			});
+		} else
+			imgCbOnDemand.setVisibility(View.GONE);
+
 		// Add context menu to icon
 		registerForContextMenu(imgIcon);
 
