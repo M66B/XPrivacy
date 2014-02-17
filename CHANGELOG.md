@@ -15,6 +15,7 @@ Changelog
 * Added restriction for deprecated *contacts/people* ([issue](/../../issues/1367))
 * Added restriction for storage/open file on common storage (sdcard or internal storage)
 * Added restriction for internet/socket
+* Updated Dutch translation
 * Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

@@ -367,7 +367,7 @@ public class Requirements {
 	}
 
 	public static void sendSupportInfo(final String text, final ActivityBase context) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+		if (Util.hasValidFingerPrint(context) || Util.isDebuggable(context)) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(R.string.app_name);
 			alertDialogBuilder.setMessage(R.string.msg_support_info);

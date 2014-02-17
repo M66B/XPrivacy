@@ -31,6 +31,7 @@ import org.apache.http.conn.ConnectTimeoutException;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -441,6 +442,36 @@ public class Util {
 		for (byte b : bytes)
 			sb.append(String.format("%02X", b));
 		return sb.toString();
+	}
+
+	@SuppressLint("DefaultLocale")
+	public static boolean hasValidFingerPrint(Context context) {
+		try {
+			PackageManager pm = context.getPackageManager();
+			String packageName = context.getPackageName();
+			PackageInfo packageInfo = pm.getPackageInfo(packageName, PackageManager.GET_SIGNATURES);
+			byte[] cert = packageInfo.signatures[0].toByteArray();
+			MessageDigest digest = MessageDigest.getInstance("SHA1");
+			byte[] bytes = digest.digest(cert);
+			StringBuilder sb = new StringBuilder();
+			for (int i = 0; i < bytes.length; ++i)
+				sb.append((Integer.toHexString((bytes[i] & 0xFF) | 0x100)).substring(1, 3).toLowerCase());
+			String calculated = sb.toString();
+			String expected = context.getString(R.string.fingerprint);
+			boolean valid = calculated.equals(expected);
+			if (valid)
+				log(null, Log.INFO, "Valid fingerprint");
+			else
+				log(null, Log.ERROR, "Invalid fingerprint calculate=" + calculated + " expected=" + expected);
+			return valid;
+		} catch (Throwable ex) {
+			bug(null, ex);
+			return false;
+		}
+	}
+
+	public static boolean isDebuggable(Context context) {
+		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
 	}
 
 	public static boolean containsIgnoreCase(List<String> strings, String value) {
