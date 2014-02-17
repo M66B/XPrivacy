@@ -14,6 +14,7 @@ Changelog
 * Only check for enabled (not frozen) incompatible applications ([issue](/../../issues/1358))
 * Show notification for restricted *getPrimaryClipDescription*, *hasPrimaryClip* and *hasText* (clipboard)
 * Allow/deny once with parameter will be asked always (time to allow/deny does not apply in this case)
+* Added check box to enable/disable on demand restricting asking in application details view, thanks @[jpeg729](https://github.com/jpeg729)
 * Added Malay translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -24,7 +25,7 @@ Changelog
 * Fixed size of documentation popup ([issue](/../../issues/1341))
 * Added restriction for connecting to the internet (experimental)
 * Added restriction for *system/getPreferredActivities*
-* Added documentation for sensors, overlay, system and view thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/838))
+* Added documentation for sensors, overlay, system and view, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/838))
 * Added documentation for network, NFC, notifications, phone and shell ([issue](/../../issues/838))
 * Updated Lithuanian translation
 * Updated Simplified Chinese translation
