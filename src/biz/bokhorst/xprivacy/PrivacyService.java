@@ -1741,6 +1741,23 @@ public class PrivacyService {
 							}
 						}
 
+						if (db.needUpgrade(8)) {
+							mLock.writeLock().lock();
+							db.beginTransaction();
+							try {
+								db.execSQL("DROP INDEX idx_usage");
+								db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method, extra)");
+								db.setVersion(8);
+								db.setTransactionSuccessful();
+							} finally {
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
+							}
+						}
+
 						Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 						mDatabase = db;
 					} catch (Throwable ex) {
