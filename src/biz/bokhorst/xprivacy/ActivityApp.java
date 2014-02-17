@@ -968,18 +968,8 @@ public class ActivityApp extends ActivityBase {
 					holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Change restriction
-							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
 							rstate.toggleAsked();
-							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
-
-							// Refresh display
 							notifyDataSetChanged(); // Needed to update children
-
-							// Notify restart
-							if (!newState.equals(oldState))
-								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-										.show();
 						}
 					});
 				}
@@ -1186,16 +1176,8 @@ public class ActivityApp extends ActivityBase {
 					holder.imgCbMethodAsk.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Change restriction
 							rstate.toggleAsked();
-
-							// Refresh display
-							notifyDataSetChanged(); // Needed to update parent
-
-							// Notify restart
-							if (md.isRestartRequired())
-								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-										.show();
+							holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
 						}
 					});
 
