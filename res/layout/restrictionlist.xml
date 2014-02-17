@@ -164,17 +164,17 @@
 
     <!-- Title -->
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:orientation="horizontal" >
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_marginTop="6dip"
+            android:layout_weight="1"
             android:text="@string/title_restrict"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false" />
@@ -183,9 +183,16 @@
             android:id="@+id/swEnable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_marginTop="6dip" />
-    </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/imgCbOnDemand"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_marginLeft="3dip"
+            android:layout_marginTop="4dip"
+            android:contentDescription="@string/title_restrict" />
+    </LinearLayout>
 
     <!-- Thin divider -->
 

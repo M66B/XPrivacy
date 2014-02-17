@@ -60,7 +60,7 @@ public class ActivityBase extends Activity {
 		return mCheck[2];
 	}
 
-	private Bitmap getOnDemandCheckBox() {
+	protected Bitmap getOnDemandCheckBox() {
 		if (mCheck == null)
 			buildCheckBoxes();
 		return mCheck[3];
