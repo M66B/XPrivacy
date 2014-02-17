@@ -186,9 +186,9 @@ public class Util {
 			// Verify license
 			boolean licensed = verifyData(bEmail, bSignature, getPublicKey(context));
 			if (licensed)
-				Util.log(null, Log.INFO, "Licensing: ok for " + name);
+				Util.log(null, Log.INFO, "Licensing: ok");
 			else
-				Util.log(null, Log.ERROR, "Licensing: invalid for " + name);
+				Util.log(null, Log.ERROR, "Licensing: invalid");
 
 			// Return result
 			if (licensed)
