@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,31 +37,40 @@ public class XIoBridge extends XHook {
 
 	// public static void connect(FileDescriptor fd, InetAddress inetAddress, int port) throws SocketException
 	// public static void connect(FileDescriptor fd, InetAddress inetAddress, int port, int timeoutMs) throws SocketException, SocketTimeoutException
-	// TODO: public static FileDescriptor socket(boolean stream)
 	// public static FileDescriptor open(String path, int flags) throws FileNotFoundException
+	// public static FileDescriptor socket(boolean stream) throws SocketException
 	// libcore/luni/src/main/java/libcore/io/IoBridge.java
 
 	// @formatter:on
 
 	private enum Methods {
-		open, connect
+		open, connect, socket
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XIoBridge(Methods.connect, PrivacyManager.cInternet));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cStorage));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/proc"));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/system/build.prop"));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/sys/block/.../cid"));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/sys/class/.../cid"));
-		listHook.add(new XIoBridge(Methods.connect, PrivacyManager.cInternet));
+		listHook.add(new XIoBridge(Methods.socket, PrivacyManager.cInternet));
 		return listHook;
 	}
 
 	@Override
 	@SuppressLint("SdCardPath")
 	protected void before(MethodHookParam param) throws Throwable {
-		if (mMethod == Methods.open) {
+		if (mMethod == Methods.connect) {
+			if (param.args.length > 2 && param.args[1] instanceof InetAddress) {
+				InetAddress address = (InetAddress) param.args[1];
+				int port = (Integer) param.args[2];
+				if (isRestrictedExtra(param, address.toString() + ":" + port))
+					param.setThrowable(new IOException("XPrivacy"));
+			}
+
+		} else if (mMethod == Methods.open) {
 			if (param.args.length > 0 && param.args[0] != null) {
 				String fileName = (String) param.args[0];
 				if (mFileName == null) {
@@ -98,13 +108,9 @@ public class XIoBridge extends XHook {
 				}
 			}
 
-		} else if (mMethod == Methods.connect) {
-			if (param.args.length > 2 && param.args[1] instanceof InetAddress) {
-				InetAddress address = (InetAddress) param.args[1];
-				int port = (Integer) param.args[2];
-				if (isRestrictedExtra(param, address.toString() + ":" + port))
-					param.setThrowable(new IOException("XPrivacy"));
-			}
+		} else if (mMethod == Methods.socket) {
+			if (isRestricted(param))
+				param.setThrowable(new SocketException("XPrivacy"));
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());

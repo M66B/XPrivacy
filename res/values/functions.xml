@@ -79,6 +79,7 @@
     <string name="internet_isConnectedOrConnecting" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/NetworkInfo.html#isConnectedOrConnecting()">Google documentation</a>]]></string>
     <string name="internet_getConnectionInfo" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
     <string name="internet_connect" translatable="false"><![CDATA[Will restrict access to the internet]]></string>
+    <string name="internet_socket" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/net/Socket.html">Google documentation</a>]]></string>
     <!-- ipc -->
     <string name="ipc_android_accounts_IAccountManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="http://developer.android.com/reference/android/accounts/AccountManager.html">account manager</a>]]></string>
     <string name="ipc_android_app_IActivityManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="http://developer.android.com/reference/android/app/ActivityManager.html">activity manager</a>]]></string>
