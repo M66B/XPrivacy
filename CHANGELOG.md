@@ -9,16 +9,18 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.45 BETA**
+
 * Fixed contacts permissions (reported on XDA)
 * Made *internet/connect* dangerous ([issue](/../../issues/1354))
 * Only check for enabled (not frozen) incompatible applications ([issue](/../../issues/1358))
 * Show notification for restricted *getPrimaryClipDescription*, *hasPrimaryClip* and *hasText* (clipboard)
 * Allow/deny once with parameter will be asked always (time to allow/deny does not apply in this case)
-* Added check box to enable/disable on demand restricting asking in application details view, thanks @[jpeg729](https://github.com/jpeg729)
+* Added check boxes to enable/disable on demand restricting asking in application details view, thanks @[jpeg729](https://github.com/jpeg729)
 * Hide name from licensed info ([issue](/../../issues/1347))
 * Added Malay translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.44 TEST**
 
