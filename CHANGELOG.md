@@ -13,6 +13,7 @@ Changelog
 * Made *internet/connect* dangerous ([issue](/../../issues/1354))
 * Only check for enabled (not frozen) incompatible applications ([issue](/../../issues/1358))
 * Show notification for restricted *getPrimaryClipDescription*, *hasPrimaryClip* and *hasText* (clipboard)
+* Take into account parameter for on demand allow/deny once (especially for IP addresses)
 * Added Malay translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
