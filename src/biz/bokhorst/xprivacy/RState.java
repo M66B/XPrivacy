@@ -23,7 +23,7 @@ public class RState {
 
 		boolean allRestricted = true;
 		boolean someRestricted = false;
-		boolean asked = false;
+		asked = false;
 
 		if (methodName == null) {
 			if (restrictionName == null) {
