@@ -549,6 +549,27 @@ public class PrivacyManager {
 		}
 	}
 
+	public static void clear() {
+		try {
+			PrivacyService.getClient().clear();
+
+			synchronized (mSettingsCache) {
+				mSettingsCache.clear();
+			}
+			synchronized (mRestrictionCache) {
+				mRestrictionCache.clear();
+			}
+			synchronized (mPermissionRestrictionCache) {
+				mPermissionRestrictionCache.clear();
+			}
+			synchronized (mPermissionHookCache) {
+				mPermissionHookCache.clear();
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
 	// Defacing
 
 	// TODO: change name to integer parameter
