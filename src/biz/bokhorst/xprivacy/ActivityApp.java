@@ -45,7 +45,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
@@ -65,8 +64,6 @@ import android.widget.Toast;
 public class ActivityApp extends ActivityBase {
 	private ApplicationInfoEx mAppInfo = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
-	private Integer mCbMargin = null;
-	private Integer mCbWidth = null;
 
 	public static final String cUid = "Uid";
 	public static final String cRestrictionName = "RestrictionName";
@@ -904,10 +901,6 @@ public class ActivityApp extends ActivityBase {
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
-				if (mCbMargin == null)
-					mCbMargin = ((RelativeLayout.LayoutParams) imgCbAsk.getLayoutParams()).leftMargin;
-				if (mCbWidth == null)
-					mCbWidth = imgCbAsk.getLayoutParams().width;
 			}
 		}
 
@@ -918,7 +911,6 @@ public class ActivityApp extends ActivityBase {
 			private boolean used;
 			private boolean permission;
 			private RState rstate;
-			private boolean onDemand;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -933,12 +925,6 @@ public class ActivityApp extends ActivityBase {
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, null);
-
-					// Get if on demand
-					onDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
-					if (onDemand)
-						onDemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
-								false, false);
 
 					return holder;
 				}
@@ -956,18 +942,8 @@ public class ActivityApp extends ActivityBase {
 					// Display restriction
 					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCbRestricted.setVisibility(View.VISIBLE);
-					if (onDemand) {
-						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
-						holder.imgCbAsk.setVisibility(View.VISIBLE);
-						holder.imgCbAsk.getLayoutParams().width = mCbWidth;
-						((RelativeLayout.LayoutParams) holder.imgCbAsk.getLayoutParams()).setMargins(mCbMargin,
-								0, mCbMargin * 2, 0);
-					} else {
-						holder.imgCbAsk.setVisibility(View.INVISIBLE);
-						holder.imgCbAsk.getLayoutParams().width = 0;
-						((RelativeLayout.LayoutParams) holder.imgCbAsk.getLayoutParams()).setMargins(0, 0, 0, 0);
-					}
-					holder.rlName.requestLayout();
+					holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+					holder.imgCbAsk.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1118,10 +1094,6 @@ public class ActivityApp extends ActivityBase {
 				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
 				imgCbMethodAsk = (ImageView) row.findViewById(R.id.imgCbMethodAsk);
 				rlMethodName = (RelativeLayout) row.findViewById(R.id.rlMethodName);
-				if (mCbMargin == null)
-					mCbMargin = ((RelativeLayout.LayoutParams) imgCbMethodAsk.getLayoutParams()).leftMargin;
-				if (mCbWidth == null)
-					mCbWidth = imgCbMethodAsk.getLayoutParams().width;
 			}
 		}
 
@@ -1135,7 +1107,6 @@ public class ActivityApp extends ActivityBase {
 			private PRestriction parent;
 			private boolean permission;
 			private RState rstate;
-			private boolean onDemand;
 
 			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
@@ -1153,12 +1124,6 @@ public class ActivityApp extends ActivityBase {
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName());
-
-					// Get if on demand
-					onDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
-					if (onDemand)
-						onDemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
-								false, false);
 
 					return holder;
 				}
@@ -1187,18 +1152,8 @@ public class ActivityApp extends ActivityBase {
 					// Display restriction
 					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
-					if (onDemand) {
-						holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
-						holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
-						holder.imgCbMethodAsk.getLayoutParams().width = mCbWidth;
-						((RelativeLayout.LayoutParams) holder.imgCbMethodAsk.getLayoutParams()).setMargins(
-								mCbMargin, 0, mCbMargin * 2, 0);
-					} else {
-						holder.imgCbMethodAsk.setVisibility(View.INVISIBLE);
-						holder.imgCbMethodAsk.getLayoutParams().width = 0;
-						((RelativeLayout.LayoutParams) holder.imgCbMethodAsk.getLayoutParams()).setMargins(0, 0, 0, 0);
-					}
-					holder.rlMethodName.requestLayout();
+					holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+					holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
@@ -1332,10 +1287,6 @@ public class ActivityApp extends ActivityBase {
 
 			// Display restriction
 			holder.tvMethodName.setClickable(false);
-
-			// Display restriction
-			holder.imgCbMethodRestricted.setVisibility(View.INVISIBLE);
-			holder.imgCbMethodAsk.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,
