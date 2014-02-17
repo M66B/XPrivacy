@@ -1300,7 +1300,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ImageView imgFrozen;
 			public TextView tvName;
 			public ImageView imgCbRestricted;
-			public ImageView imgCbAsk;
+			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
 			public ViewHolder(View theRow, int thePosition) {
@@ -1315,7 +1315,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
-				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
+				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -1394,6 +1394,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.imgIcon.setImageDrawable(xAppInfo.getIcon(ActivityMain.this));
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
+					// Display on demand
+					holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+
 					// Display usage
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
@@ -1412,13 +1415,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Display restriction
 					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCbRestricted.setVisibility(View.VISIBLE);
-					holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
-					holder.imgCbAsk.setVisibility(View.VISIBLE);
 
 					// Display enabled state
 					holder.tvName.setEnabled(enabled);
 					holder.imgCbRestricted.setEnabled(enabled);
-					holder.imgCbAsk.setEnabled(enabled && onDemand && mRestrictionName != null);
 					holder.rlName.setEnabled(enabled);
 
 					// Display selection
@@ -1484,7 +1484,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 													// Update stored state
 													rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 													holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-													holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+													holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE
+															: View.VISIBLE);
 
 													// Notify restart
 													if (oldState.contains(true))
@@ -1512,60 +1513,15 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									// Update restriction display
 									rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 									holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-									holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+
+									// Update on demand
+									holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 									// Notify restart
 									if (!newState.equals(oldState))
 										Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
 												Toast.LENGTH_SHORT).show();
 								}
-
-								// Display new state
-								state = xAppInfo.getState(ActivityMain.this);
-								if (state == STATE_ATTENTION)
-									holder.vwState.setBackgroundColor(getResources().getColor(
-											getThemed(R.attr.color_state_attention)));
-								else if (state == STATE_SHARED)
-									holder.vwState.setBackgroundColor(getResources().getColor(
-											getThemed(R.attr.color_state_shared)));
-								else
-									holder.vwState.setBackgroundColor(getResources().getColor(
-											getThemed(R.attr.color_state_restricted)));
-							}
-						}
-					});
-
-					// Listen for ask changes
-					holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(final View view) {
-							if (mSelecting) {
-								if (mListAppSelected.contains(xAppInfo)) {
-									mListAppSelected.remove(xAppInfo);
-									holder.row.setBackgroundColor(Color.TRANSPARENT);
-									if (mListAppSelected.size() == 0)
-										mSelecting = false;
-								} else {
-									mListAppSelected.add(xAppInfo);
-									holder.row.setBackgroundColor(mHighlightColor);
-								}
-							} else if (mRestrictionName != null) {
-								// Change asked state
-								List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
-										mRestrictionName);
-								rstate.toggleAsked();
-								List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
-										mRestrictionName);
-
-								// Update restriction display
-								rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
-								holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-								holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
-
-								// Notify restart
-								if (!newState.equals(oldState))
-									Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
-											Toast.LENGTH_SHORT).show();
 
 								// Display new state
 								state = xAppInfo.getState(ActivityMain.this);
@@ -1623,10 +1579,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCbRestricted.setVisibility(View.INVISIBLE);
-			holder.imgCbAsk.setVisibility(View.INVISIBLE);
+			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);
 			holder.imgCbRestricted.setEnabled(false);
-			holder.imgCbAsk.setEnabled(false);
 			holder.rlName.setEnabled(false);
 
 			// Async update
