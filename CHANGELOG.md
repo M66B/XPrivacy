@@ -9,7 +9,12 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.46 TEST**
+
 * Fixed function name overlapping information icon
+* Fixed defaults for some on demand restricting settings
 * Clear all data will also clear local caches
 * Show parameters in usage data (only [Pro license](http://www.xprivacy.eu/))
 * Added restriction for deprecated *contacts/people* ([issue](/../../issues/1367))
@@ -17,8 +22,6 @@ Changelog
 * Added restriction for internet/socket
 * Updated Dutch translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.45 BETA**
 
