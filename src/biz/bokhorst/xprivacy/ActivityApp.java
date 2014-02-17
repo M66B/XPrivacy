@@ -1151,6 +1151,7 @@ public class ActivityApp extends ActivityBase {
 					}
 					holder.rlMethodName.setEnabled(parent.restricted);
 					holder.tvMethodName.setEnabled(parent.restricted);
+					holder.imgCbMethodAsk.setEnabled(!parent.asked);
 
 					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() ? R.attr.icon_used
 							: R.attr.icon_used_grayed));
@@ -1244,6 +1245,7 @@ public class ActivityApp extends ActivityBase {
 
 			holder.rlMethodName.setEnabled(false);
 			holder.tvMethodName.setEnabled(false);
+			holder.imgCbMethodAsk.setEnabled(false);
 
 			// Display method name
 			holder.tvMethodName.setText(md.getName());
