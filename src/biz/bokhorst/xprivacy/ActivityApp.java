@@ -889,7 +889,6 @@ public class ActivityApp extends ActivityBase {
 			public TextView tvName;
 			public ImageView imgCbRestricted;
 			public ImageView imgCbAsk;
-			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
 			public GroupViewHolder(View theRow, int thePosition) {
@@ -902,7 +901,6 @@ public class ActivityApp extends ActivityBase {
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
-				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -947,10 +945,6 @@ public class ActivityApp extends ActivityBase {
 					holder.imgCbRestricted.setVisibility(View.VISIBLE);
 					holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 					holder.imgCbAsk.setVisibility(View.VISIBLE);
-
-					// Display witness text
-					holder.tvOnDemand.setText((rstate.restricted ? "1" : "0") + (rstate.asked ? " " : "?"));
-					holder.tvOnDemand.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -1042,7 +1036,6 @@ public class ActivityApp extends ActivityBase {
 			// Display restriction
 			holder.imgCbRestricted.setVisibility(View.INVISIBLE);
 			holder.imgCbAsk.setVisibility(View.INVISIBLE);
-			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
@@ -1099,7 +1092,6 @@ public class ActivityApp extends ActivityBase {
 			public TextView tvMethodName;
 			public ImageView imgCbMethodRestricted;
 			public ImageView imgCbMethodAsk;
-			public TextView tvOnDemand;
 			public RelativeLayout rlMethodName;
 
 			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
@@ -1112,7 +1104,6 @@ public class ActivityApp extends ActivityBase {
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
 				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
 				imgCbMethodAsk = (ImageView) row.findViewById(R.id.imgCbMethodAsk);
-				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlMethodName = (RelativeLayout) row.findViewById(R.id.rlMethodName);
 			}
 		}
@@ -1161,7 +1152,6 @@ public class ActivityApp extends ActivityBase {
 					}
 					holder.rlMethodName.setEnabled(parent.restricted);
 					holder.tvMethodName.setEnabled(parent.restricted);
-					holder.tvOnDemand.setEnabled(parent.restricted);
 
 					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() ? R.attr.icon_used
 							: R.attr.icon_used_grayed));
@@ -1174,10 +1164,6 @@ public class ActivityApp extends ActivityBase {
 					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
 					holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
 					holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
-
-					// Display witness text
-					holder.tvOnDemand.setText((rstate.restricted ? "1" : "0") + (rstate.asked ? " " : "?"));
-					holder.tvOnDemand.setVisibility(View.VISIBLE);
 
 					// Listen for restriction changes
 					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
@@ -1259,7 +1245,6 @@ public class ActivityApp extends ActivityBase {
 
 			holder.rlMethodName.setEnabled(false);
 			holder.tvMethodName.setEnabled(false);
-			holder.tvOnDemand.setEnabled(false);
 
 			// Display method name
 			holder.tvMethodName.setText(md.getName());
@@ -1319,7 +1304,6 @@ public class ActivityApp extends ActivityBase {
 
 			// Display restriction
 			holder.tvMethodName.setClickable(false);
-			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,

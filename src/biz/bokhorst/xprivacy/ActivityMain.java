@@ -1301,7 +1301,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public TextView tvName;
 			public ImageView imgCbRestricted;
 			public ImageView imgCbAsk;
-			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
 			public ViewHolder(View theRow, int thePosition) {
@@ -1317,7 +1316,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
-				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
 		}
@@ -1417,10 +1415,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 					holder.imgCbAsk.setVisibility(View.VISIBLE);
 
-					// Display witness text
-					holder.tvOnDemand.setText((rstate.restricted ? "1" : "0") + (rstate.asked ? " " : "?"));
-					holder.tvOnDemand.setVisibility(View.VISIBLE);
-
 					// Display enabled state
 					holder.tvName.setEnabled(enabled);
 					holder.imgCbRestricted.setEnabled(enabled);
@@ -1491,9 +1485,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 													rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 													holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 													holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
-													holder.tvOnDemand.setText((rstate.restricted ? "1" : "0")
-															+ (rstate.asked ? " " : "?"));
-													holder.tvOnDemand.setVisibility(View.VISIBLE);
 
 													// Notify restart
 													if (oldState.contains(true))
@@ -1522,11 +1513,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 									holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 									holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
-
-									// Update witness text
-									holder.tvOnDemand.setText((rstate.restricted ? "1" : "0")
-											+ (rstate.asked ? " " : "?"));
-									holder.tvOnDemand.setVisibility(View.VISIBLE);
 
 									// Notify restart
 									if (!newState.equals(oldState))
@@ -1575,10 +1561,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 								holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 								holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
-
-								// Update witness text
-								holder.tvOnDemand.setText((rstate.restricted ? "1" : "0") + (rstate.asked ? " " : "?"));
-								holder.tvOnDemand.setVisibility(View.VISIBLE);
 
 								// Notify restart
 								if (!newState.equals(oldState))
@@ -1642,7 +1624,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCbRestricted.setVisibility(View.INVISIBLE);
 			holder.imgCbAsk.setVisibility(View.INVISIBLE);
-			holder.tvOnDemand.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);
 			holder.imgCbRestricted.setEnabled(false);
 			holder.imgCbAsk.setEnabled(false);
