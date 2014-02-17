@@ -179,10 +179,11 @@ public class ActivityApp extends ActivityBase {
 		});
 
 		final ImageView imgCbOnDemand = (ImageView) findViewById(R.id.imgCbOnDemand);
-		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false)) {
+		if (PrivacyManager.isApplication(mAppInfo.getUid())
+				&& PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false)) {
 			// Display on-demand state
-			boolean ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, true,
-					false);
+			boolean ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+					false, false);
 			imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
 
 			imgCbOnDemand.setOnClickListener(new View.OnClickListener() {
@@ -948,7 +949,8 @@ public class ActivityApp extends ActivityBase {
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, null);
-					ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+					ondemand = (PrivacyManager.isApplication(mAppInfo.getUid()) && PrivacyManager.getSettingBool(0,
+							PrivacyManager.cSettingOnDemand, true, false));
 					if (ondemand)
 						ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false, false);
@@ -1157,7 +1159,8 @@ public class ActivityApp extends ActivityBase {
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName());
-					ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+					ondemand = (PrivacyManager.isApplication(mAppInfo.getUid()) && PrivacyManager.getSettingBool(0,
+							PrivacyManager.cSettingOnDemand, true, false));
 					if (ondemand)
 						ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false, false);

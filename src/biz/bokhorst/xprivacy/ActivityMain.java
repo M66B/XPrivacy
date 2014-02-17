@@ -1207,7 +1207,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 					// Get if onDemand
 					boolean onDemand = false;
-					if (fOnDemand) {
+					if (fOnDemand && PrivacyManager.isApplication(xAppInfo.getUid())) {
 						onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false, false);
 						if (onDemand && mRestrictionName != null)
@@ -1352,7 +1352,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							false);
 
 					// Get if on demand
-					ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+					ondemand = (PrivacyManager.isApplication(xAppInfo.getUid()) && PrivacyManager.getSettingBool(0,
+							PrivacyManager.cSettingOnDemand, true, false));
 
 					// Get if granted
 					granted = true;
