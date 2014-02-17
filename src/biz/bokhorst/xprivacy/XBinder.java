@@ -17,8 +17,9 @@ public class XBinder extends XHook {
 	private Methods mMethod;
 
 	private static long mToken = 0;
-	private static int BITS_TOKEN = 8;
-	private static int MASK_TOKEN = 0xFFFFFF;
+	private static int BITS_TOKEN = 16;
+	private static int FLAG_ALL = 0xFFFF;
+	private static int MASK_TOKEN = 0xFFFF;
 
 	// Service name should one-to-one correspond to a service descriptor
 	// TODO: sensor interface
@@ -119,50 +120,43 @@ public class XBinder extends XHook {
 		param.args[3] = flags;
 	}
 
-	private void checkIPC(MethodHookParam param) {
+	private void checkIPC(MethodHookParam param) throws Throwable {
 		// Entry point from android_util_Binder.cpp's onTransact
 		int flags = (Integer) param.args[3];
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
-		flags &= IBinder.FLAG_ONEWAY;
+		flags &= FLAG_ALL;
 		param.args[3] = flags;
 
-		try {
-			if (Process.myUid() > 0) {
-				int uid = Binder.getCallingUid();
-				if (token != mToken && PrivacyManager.isApplication(uid)) {
-					// Get interface name
-					Binder binder = (Binder) param.thisObject;
-					String descriptor = binder.getInterfaceDescriptor();
-					if (cServiceDescriptor.contains(descriptor)) {
-						Util.log(this, Log.WARN,
-								"restrict name=" + descriptor + " uid=" + uid + " my=" + Process.myUid());
-						if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
-							// Get reply parcel
-							Parcel reply = null;
-							try {
-								// static protected final Parcel obtain(int obj)
-								// frameworks/base/core/java/android/os/Parcel.java
-								Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
-								methodObtain.setAccessible(true);
-								reply = (Parcel) methodObtain.invoke(null, param.args[2]);
-							} catch (NoSuchMethodException ex) {
-								Util.bug(this, ex);
-							}
-
-							// Block IPC
-							if (reply == null)
-								Util.log(this, Log.ERROR, "reply is null uid=" + uid);
-							else {
-								reply.setDataPosition(0);
-								reply.writeException(new SecurityException("XPrivacy"));
-							}
-							param.setResult(true);
-						}
+		int uid = Binder.getCallingUid();
+		if (token != mToken && PrivacyManager.isApplication(uid)) {
+			// Get interface name
+			Binder binder = (Binder) param.thisObject;
+			String descriptor = binder.getInterfaceDescriptor();
+			if (cServiceDescriptor.contains(descriptor)) {
+				Util.log(this, Log.WARN, "restrict name=" + descriptor + " uid=" + uid + " my=" + Process.myUid());
+				if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
+					// Get reply parcel
+					Parcel reply = null;
+					try {
+						// static protected final Parcel obtain(int obj)
+						// frameworks/base/core/java/android/os/Parcel.java
+						Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
+						methodObtain.setAccessible(true);
+						reply = (Parcel) methodObtain.invoke(null, param.args[2]);
+					} catch (NoSuchMethodException ex) {
+						Util.bug(this, ex);
 					}
+
+					// Block IPC
+					if (reply == null)
+						Util.log(this, Log.ERROR, "reply is null uid=" + uid);
+					else {
+						reply.setDataPosition(0);
+						reply.writeException(new SecurityException("XPrivacy"));
+					}
+					param.setResult(true);
 				}
 			}
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
 		}
 	}
 
