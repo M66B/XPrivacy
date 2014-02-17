@@ -51,7 +51,7 @@
         android:paddingLeft="6dip" >
 
         <LinearLayout
-            android:id="@+id/llName"
+            android:id="@+id/llChecks"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/llName"
+            android:layout_toLeftOf="@id/llChecks"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 

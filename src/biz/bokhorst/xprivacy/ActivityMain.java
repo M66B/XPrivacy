@@ -1334,7 +1334,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			private boolean enabled;
 			private boolean granted;
 			private RState rstate;
-			private boolean onDemand;
+			private boolean ondemand;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
@@ -1356,10 +1356,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							false);
 
 					// Get if on demand
-					onDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
-					if (onDemand)
-						onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
-								false, false);
+					ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 
 					// Get if granted
 					granted = true;
@@ -1400,7 +1397,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
 					// Display on demand
-					holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+					if (ondemand)
+						holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+					else
+						holder.tvOnDemand.setVisibility(View.GONE);
 
 					// Display usage
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
