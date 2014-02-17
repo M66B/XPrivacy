@@ -20,6 +20,7 @@ Changelog
 * Added restriction for deprecated *contacts/people* ([issue](/../../issues/1367))
 * Added restriction for storage/open file on common storage (sdcard or internal storage)
 * Added restriction for internet/socket
+* Compatible with Poweramp unlocker again ([issue](/../../issues/1340))
 * Updated Dutch translation
 * Updated Lithuanian translation
 
