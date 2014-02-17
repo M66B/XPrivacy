@@ -36,10 +36,21 @@
         android:paddingLeft="6dip" >
 
         <ImageView
-            android:id="@+id/imgCBMethodName"
+            android:id="@+id/imgCbMethodAsk"
             android:layout_width="32dip"
             android:layout_height="32dip"
             android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="3dip"
+            android:layout_marginRight="6dip"
+            android:contentDescription="@string/title_restrict"
+            android:visibility="invisible" />
+
+        <ImageView
+            android:id="@+id/imgCbMethodRestricted"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_toLeftOf="@+id/imgCbMethodAsk"
             android:layout_centerVertical="true"
             android:layout_marginLeft="3dip"
             android:layout_marginRight="6dip"
@@ -51,10 +62,10 @@
             android:layout_width="32dip"
             android:layout_height="32dip"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/imgCBMethodName"
+            android:layout_toLeftOf="@id/imgCbMethodRestricted"
             android:contentDescription="@string/help_application"
             android:src="?attr/icon_info"
-            android:visibility="gone" />
+            android:visibility="invisible" />
 
         <TextView
             android:id="@+id/tvOnDemand"

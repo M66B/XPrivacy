@@ -76,13 +76,24 @@
             android:paddingLeft="6dip" >
 
             <ImageView
-                android:id="@+id/imgCBName"
+                android:id="@+id/imgCbAsk"
                 android:layout_width="32dip"
                 android:layout_height="32dip"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="3dip"
                 android:layout_marginRight="6dip"
+                android:contentDescription="@string/title_restrict"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/imgCbRestricted"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="6dip"
+                android:layout_toLeftOf="@+id/imgCbAsk"
                 android:contentDescription="@string/title_restrict"
                 android:visibility="invisible" />
 
@@ -103,7 +114,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/imgCBName"
+                android:layout_toLeftOf="@id/imgCbRestricted"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RelativeLayout>
     </LinearLayout>
