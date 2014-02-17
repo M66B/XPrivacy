@@ -126,7 +126,7 @@ For easy usage, data is restricted by category:
 	* return a fake device serial number
 	* return a fake host name
 	* return a fake Google services framework ID
-	* return file not found for folder /proc
+	* return file not found for folder [/proc](http://linux.die.net/man/5/proc)
 	* return a fake Google advertising ID
 	* return a fake system property CID (Card Identification Register = SD card serial number)
 	* return file not found for /sys/block/.../cid
@@ -263,7 +263,7 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* /proc, CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops.
+* [/proc](http://linux.die.net/man/5/proc), CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops.
 * /proc/self/cmdline will not be restricted by /proc, because it will result in instability.
 * The phone number cannot be restricted for the standard phone application.
 * Internet and storage can only be restricted for applications, providers, and services started by the Android package manager.
