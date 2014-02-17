@@ -579,6 +579,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public void onClick(DialogInterface dialog, int which) {
 				PrivacyManager.clear();
 				spRestriction.setSelection(0);
+				((EditText) findViewById(R.id.etFilter)).setText("");
 				ActivityMain.this.recreate();
 			}
 		});
