@@ -911,6 +911,7 @@ public class ActivityApp extends ActivityBase {
 			private boolean used;
 			private boolean permission;
 			private RState rstate;
+			private boolean ondemand;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -925,6 +926,8 @@ public class ActivityApp extends ActivityBase {
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, null);
+					ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+							false, false);
 
 					return holder;
 				}
@@ -942,8 +945,11 @@ public class ActivityApp extends ActivityBase {
 					// Display restriction
 					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCbRestricted.setVisibility(View.VISIBLE);
-					holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
-					holder.imgCbAsk.setVisibility(View.VISIBLE);
+					if (ondemand) {
+						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+						holder.imgCbAsk.setVisibility(View.VISIBLE);
+					} else
+						holder.imgCbAsk.setVisibility(View.GONE);
 
 					// Listen for restriction changes
 					holder.rlName.setOnClickListener(new View.OnClickListener() {
@@ -965,13 +971,15 @@ public class ActivityApp extends ActivityBase {
 					});
 
 					// Listen for ask changes
-					holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							rstate.toggleAsked();
-							notifyDataSetChanged(); // Needed to update children
-						}
-					});
+					if (ondemand)
+						holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								rstate.toggleAsked();
+								notifyDataSetChanged();
+								// Needed to update children
+							}
+						});
 				}
 			}
 		}
@@ -1107,6 +1115,7 @@ public class ActivityApp extends ActivityBase {
 			private PRestriction parent;
 			private boolean permission;
 			private RState rstate;
+			private boolean ondemand;
 
 			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
@@ -1124,6 +1133,8 @@ public class ActivityApp extends ActivityBase {
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName());
+					ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+							false, false);
 
 					return holder;
 				}
@@ -1152,8 +1163,12 @@ public class ActivityApp extends ActivityBase {
 					// Display restriction
 					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
-					holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
-					holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
+
+					if (ondemand) {
+						holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+						holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
+					} else
+						holder.imgCbMethodAsk.setVisibility(View.GONE);
 
 					// Listen for restriction changes
 					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
@@ -1173,13 +1188,14 @@ public class ActivityApp extends ActivityBase {
 					});
 
 					// Listen for ask changes
-					holder.imgCbMethodAsk.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							rstate.toggleAsked();
-							holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
-						}
-					});
+					if (ondemand)
+						holder.imgCbMethodAsk.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								rstate.toggleAsked();
+								holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+							}
+						});
 
 					// Listen for long press
 					holder.rlMethodName.setOnLongClickListener(new View.OnLongClickListener() {

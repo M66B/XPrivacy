@@ -50,27 +50,30 @@
         android:clickable="true"
         android:paddingLeft="6dip" >
 
-        <ImageView
-            android:id="@+id/imgCbAsk"
-            android:layout_width="32dip"
-            android:layout_height="32dip"
+        <LinearLayout
+            android:id="@+id/llName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="3dip"
             android:layout_marginRight="6dip"
-            android:contentDescription="@string/title_restrict"
-            android:visibility="invisible" />
+            android:orientation="horizontal" >
 
-        <ImageView
-            android:id="@+id/imgCbRestricted"
-            android:layout_width="32dip"
-            android:layout_height="32dip"
-            android:layout_toLeftOf="@+id/imgCbAsk"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="3dip"
-            android:layout_marginRight="6dip"
-            android:contentDescription="@string/title_restrict"
-            android:visibility="invisible" />
+            <ImageView
+                android:id="@+id/imgCbRestricted"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                android:layout_marginLeft="3dip"
+                android:contentDescription="@string/title_restrict"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/imgCbAsk"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                android:contentDescription="@string/title_restrict"
+                android:visibility="invisible" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvName"
@@ -78,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/imgCbRestricted"
+            android:layout_toLeftOf="@id/llName"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
