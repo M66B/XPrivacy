@@ -3,8 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 public class RState {
 	public int mUid;
 	public String mRestrictionName;
