@@ -271,7 +271,7 @@ public class PrivacyManager {
 
 		// Check cache
 		boolean cached = false;
-		CRestriction key = new CRestriction(uid, restrictionName, methodName);
+		CRestriction key = new CRestriction(uid, restrictionName, methodName, extra);
 		synchronized (mRestrictionCache) {
 			if (mRestrictionCache.containsKey(key)) {
 				CRestriction entry = mRestrictionCache.get(key);
@@ -285,8 +285,7 @@ public class PrivacyManager {
 		// Get restriction
 		if (!cached)
 			try {
-				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
-				query.extra = extra;
+				PRestriction query = new PRestriction(uid, restrictionName, methodName, extra);
 				PRestriction result = PrivacyService.getRestriction(query, true, secret);
 				restricted = result.restricted;
 

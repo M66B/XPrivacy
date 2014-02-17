@@ -7,14 +7,16 @@ public class CRestriction {
 	public int uid;
 	public String restrictionName;
 	public String methodName;
+	public String extra;
 	public boolean restricted;
 	public boolean asked;
 
-	public CRestriction(int _uid, String _restrictioName, String _methodName) {
+	public CRestriction(int _uid, String _restrictioName, String _methodName, String _extra) {
 		mExpiry = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 		uid = _uid;
 		restrictionName = _restrictioName;
 		methodName = _methodName;
+		extra = _extra;
 	}
 
 	public CRestriction(PRestriction restriction) {
@@ -22,6 +24,7 @@ public class CRestriction {
 		uid = restriction.uid;
 		restrictionName = restriction.restrictionName;
 		methodName = restriction.methodName;
+		extra = restriction.extra;
 		restricted = restriction.restricted;
 		asked = restriction.asked;
 	}
@@ -37,10 +40,12 @@ public class CRestriction {
 	@Override
 	public boolean equals(Object obj) {
 		CRestriction other = (CRestriction) obj;
+		// @formatter:off
 		return (uid == other.uid
-				&& (restrictionName == null ? other.restrictionName == null : restrictionName
-						.equals(other.restrictionName)) && (methodName == null ? other.methodName == null : methodName
-				.equals(other.methodName)));
+				&& (restrictionName == null ? other.restrictionName == null : restrictionName.equals(other.restrictionName))
+				&& (methodName == null ? other.methodName == null : methodName.equals(other.methodName))
+				&& (extra == null ? other.extra == null : extra.equals(other.extra)));
+		// @formatter:on
 	}
 
 	@Override
@@ -50,6 +55,8 @@ public class CRestriction {
 			hash = hash ^ restrictionName.hashCode();
 		if (methodName != null)
 			hash = hash ^ methodName.hashCode();
+		if (extra != null)
+			hash = hash ^ extra.hashCode();
 		return hash;
 	}
 }
