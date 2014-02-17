@@ -209,7 +209,7 @@
     <string name="storage_media" translatable="false"><![CDATA[Will restrict access to secondary external storage(s) (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)]]></string>
     <string name="storage_sdcard" translatable="false"><![CDATA[Will restrict access to primary external storage (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)]]></string>
     <string name="storage_getExternalStorageState" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/os/Environment.html#getExternalStorageState()">Google documentation</a>]]></string>
-    <string name="storage_open" translatable="false"><![CDATA[Will restrict access to files on the SD card (or innternal storage for devices without)]]></string>
+    <string name="storage_open" translatable="false"><![CDATA[Will restrict access to files on the SD card (or internal storage for devices without)]]></string>
     <!-- system -->
     <string name="system_getInstalledApplications" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#getInstalledApplications(int)">Google documentation</a>]]></string>
     <string name="system_getInstalledPackages" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#getInstalledPackages(int)">Google documentation</a>]]></string>
