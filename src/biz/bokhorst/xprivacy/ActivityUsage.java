@@ -297,7 +297,11 @@ public class ActivityUsage extends ActivityBase {
 			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.imgRestricted.setVisibility(usageData.restricted ? View.VISIBLE : View.INVISIBLE);
 			holder.tvApp.setText(Integer.toString(usageData.uid));
-			holder.tvRestriction.setText(String.format("%s/%s", usageData.restrictionName, usageData.methodName));
+			if (usageData.extra == null)
+				holder.tvRestriction.setText(String.format("%s/%s", usageData.restrictionName, usageData.methodName));
+			else
+				holder.tvRestriction.setText(String.format("%s/%s(%s)", usageData.restrictionName,
+						usageData.methodName, usageData.extra));
 
 			// Async update
 			new HolderTask(position, holder, usageData).executeOnExecutor(mExecutor, (Object) null);

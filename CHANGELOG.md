@@ -11,6 +11,7 @@ Changelog
 
 * Fixed function name overlapping information icon
 * Clear all data will also clear local caches
+* Show parameters in usage data
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

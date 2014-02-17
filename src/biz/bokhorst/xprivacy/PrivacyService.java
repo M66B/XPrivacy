@@ -589,6 +589,7 @@ public class PrivacyService {
 												values.put("method", restriction.methodName);
 												values.put("restricted", mresult.restricted);
 												values.put("time", new Date().getTime());
+												values.put("extra", restriction.extra);
 												db.insertWithOnConflict(cTableUsage, null, values,
 														SQLiteDatabase.CONFLICT_REPLACE);
 
@@ -755,10 +756,11 @@ public class PrivacyService {
 					Cursor cursor;
 					if (uid == 0)
 						cursor = db.query(cTableUsage, new String[] { "uid", "restriction", "method", "restricted",
-								"time" }, null, new String[] {}, null, null, "time DESC LIMIT " + cMaxUsageData);
+								"time", "extra" }, null, new String[] {}, null, null, "time DESC LIMIT "
+								+ cMaxUsageData);
 					else
 						cursor = db.query(cTableUsage, new String[] { "uid", "restriction", "method", "restricted",
-								"time" }, "uid=?", new String[] { Integer.toString(uid) }, null, null,
+								"time", "extra" }, "uid=?", new String[] { Integer.toString(uid) }, null, null,
 								"time DESC LIMIT " + cMaxUsageData);
 					if (cursor == null)
 						Util.log(null, Log.WARN, "Database cursor null (usage data)");
@@ -771,6 +773,7 @@ public class PrivacyService {
 								data.methodName = cursor.getString(2);
 								data.restricted = (cursor.getInt(3) > 0);
 								data.time = cursor.getLong(4);
+								data.extra = cursor.getString(5);
 								result.add(data);
 							}
 						} finally {
@@ -1712,6 +1715,22 @@ public class PrivacyService {
 							try {
 								db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
 								db.setVersion(6);
+								db.setTransactionSuccessful();
+							} finally {
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
+							}
+						}
+
+						if (db.needUpgrade(7)) {
+							mLock.writeLock().lock();
+							db.beginTransaction();
+							try {
+								db.execSQL("ALTER TABLE usage ADD COLUMN extra TEXT");
+								db.setVersion(7);
 								db.setTransactionSuccessful();
 							} finally {
 								try {
