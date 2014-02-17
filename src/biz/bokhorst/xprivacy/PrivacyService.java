@@ -365,17 +365,14 @@ public class PrivacyService {
 				// Update cache
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
-						if (restriction.methodName == null) {
-							// Clear method cache
-							synchronized (mRestrictionCache) {
-								for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName)) {
-									CRestriction key = new CRestriction(new PRestriction(restriction.uid,
-											restriction.restrictionName, hook.getName()));
-									if (mRestrictionCache.containsKey(key))
-										mRestrictionCache.remove(key);
-								}
+						// Clear method cache
+						if (restriction.methodName == null)
+							for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName)) {
+								CRestriction key = new CRestriction(new PRestriction(restriction.uid,
+										restriction.restrictionName, hook.getName()));
+								if (mRestrictionCache.containsKey(key))
+									mRestrictionCache.remove(key);
 							}
-						}
 
 						// Update cache
 						CRestriction key = new CRestriction(restriction);
@@ -523,6 +520,8 @@ public class PrivacyService {
 						}
 					}
 
+					// Default dangerous
+					// TODO: check if exceptions for dangerous are still needed
 					if (!methodFound && hook != null && hook.isDangerous())
 						if (!getSettingBool(0, PrivacyManager.cSettingDangerous, false)) {
 							mresult.restricted = false;
