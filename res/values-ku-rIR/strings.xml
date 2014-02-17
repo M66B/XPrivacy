@@ -8,6 +8,7 @@
     <string name="app_description">به هیز ترین به رنامه ی نیهینی پاریز</string>
     <string name="app_xversion" formatted="false">ویرژه نی اکپوسید فریمورک: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 خاوه نی M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">زانیاری به کار هینراو</string>
     <string name="menu_refresh">نوی کردنه وه</string>
     <string name="menu_settings">ریک خستن</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">پاشگه ز کرا</string>
     <string name="msg_new">نوی</string>
     <string name="msg_update">نوی کردنه وه ی ویرژه ن</string>
-    <string name="msg_licensed" formatted="false">ناوی کریار: %s</string>
     <string name="msg_loading">بارکردن &#8230;</string>
     <string name="msg_applying">به کارده هیندریت &#8230;</string>
     <string name="msg_applied">قالبه کان به کارهینران</string>

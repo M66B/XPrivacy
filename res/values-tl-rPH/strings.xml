@@ -8,6 +8,7 @@
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework na salin: %d</string>
     <string name="app_copyright">Ang karapatan \u00A9 2013–2014 nito ay pag-aari ni M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Kaalaman tungkol sa mga pahintulot na nagamit</string>
     <string name="menu_refresh">Paulitin ang nakatakdang kaalaman</string>
     <string name="menu_settings">Palitan ang paglalagay</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Bago</string>
     <string name="msg_update">Pabaguhin</string>
-    <string name="msg_licensed" formatted="false">Nakalisensya kay: %s</string>
     <string name="msg_loading">Naglo-load</string>
     <string name="msg_applying">Tinatakda</string>
     <string name="msg_applied">Nakahandang paghihigpit ay ngayon na nakatakda</string>

@@ -8,6 +8,7 @@
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework वर्शन: %d</string>
     <string name="app_copyright">सर्वाधिकार \u00A9 2013–2014 द्वारा M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">उपयोग</string>
     <string name="menu_refresh">पुन: करे</string>
     <string name="menu_settings">सेटिंग्स</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">नया</string>
     <string name="msg_update">अद्यतन</string>
-    <string name="msg_licensed" formatted="false">अधिकारी: %s</string>
     <string name="msg_loading">लोडिंग</string>
     <string name="msg_applying">लागु हो रहा हैं</string>
     <string name="msg_applied">टेम्पलेट लागु हो गया</string>

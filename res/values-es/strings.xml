@@ -8,6 +8,7 @@
     <string name="app_description">El administrador de permisos definitivo</string>
     <string name="app_xversion" formatted="false">Versión de Xposed Framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 por M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Uso</string>
     <string name="menu_refresh">Actualizar</string>
     <string name="menu_settings">Configuración</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">Abortado</string>
     <string name="msg_new">Nuevo</string>
     <string name="msg_update">Actualizar</string>
-    <string name="msg_licensed">Con licencia para: %s</string>
     <string name="msg_loading">Cargando</string>
     <string name="msg_applying">Aplicando</string>
     <string name="msg_applied">Plantilla aplicada</string>

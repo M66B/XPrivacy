@@ -8,6 +8,7 @@
     <string name="app_description">终级隐私管理器</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013–2014 M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">权限使用记录</string>
     <string name="menu_refresh">刷新应用列表</string>
     <string name="menu_settings">用于被限制应用的模拟信息</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>
     <string name="msg_update">已更新</string>
-    <string name="msg_licensed" formatted="false">已授权给: %s</string>
     <string name="msg_loading">加载中…</string>
     <string name="msg_applying">正在应用过滤器…</string>
     <string name="msg_applied">已应用模版</string>

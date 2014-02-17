@@ -15,6 +15,7 @@ Changelog
 * Show notification for restricted *getPrimaryClipDescription*, *hasPrimaryClip* and *hasText* (clipboard)
 * Allow/deny once with parameter will be asked always (time to allow/deny does not apply in this case)
 * Added check box to enable/disable on demand restricting asking in application details view, thanks @[jpeg729](https://github.com/jpeg729)
+* Hide name from licensed info ([issue](/../../issues/1347))
 * Added Malay translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

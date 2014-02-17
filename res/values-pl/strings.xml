@@ -8,6 +8,7 @@
     <string name="app_description">Kompleksowy menadżer prywatności</string>
     <string name="app_xversion" formatted="false">Wersja frameworka Xposed: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Dostęp do danych</string>
     <string name="menu_refresh">Odśwież</string>
     <string name="menu_settings">Ustawienia</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">Przerwano</string>
     <string name="msg_new">Nowa aplikacja</string>
     <string name="msg_update">Aktualizacja</string>
-    <string name="msg_licensed" formatted="false">Licencjonowane dla: %s</string>
     <string name="msg_loading">Ładowanie</string>
     <string name="msg_applying">Stosowanie</string>
     <string name="msg_applied">Zastosowano szablon</string>

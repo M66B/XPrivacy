@@ -8,6 +8,7 @@
     <string name="app_description">Pengurus Privasi Yang Muktamad</string>
     <string name="app_xversion" formatted="false">Rangka Xposed versi: %d</string>
     <string name="app_copyright">Hak Cipta \u00A9 2013–2014 oleh M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Penggunaan data</string>
     <string name="menu_refresh">Penyegaran</string>
     <string name="menu_settings">Tetapan</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">Dibatalkan</string>
     <string name="msg_new">Baru</string>
     <string name="msg_update">Mengemaskini</string>
-    <string name="msg_licensed" formatted="false">Dilesenkan kepada: %s</string>
     <string name="msg_loading">Memuatkan …</string>
     <string name="msg_applying">Melaksanakan …</string>
     <string name="msg_applied">Template dilaksanakan</string>

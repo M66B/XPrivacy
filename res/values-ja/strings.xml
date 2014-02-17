@@ -8,6 +8,7 @@
     <string name="app_description">ザ・ベスト・プライバシー・マネージャー</string>
     <string name="app_xversion" formatted="false">Xposedフレームワークバージョン: %d</string>
     <string name="app_copyright">著作権 \u00A9 2013–2014、 M. Bokhorst より(M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">利用履歴</string>
     <string name="menu_refresh">更新</string>
     <string name="menu_settings">設定</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">中断されました</string>
     <string name="msg_new">新規</string>
     <string name="msg_update">更新されました</string>
-    <string name="msg_licensed" formatted="false">ライセンス先: %s</string>
     <string name="msg_loading">読み込み中</string>
     <string name="msg_applying">適用中</string>
     <string name="msg_applied">テンプレートを適用しました</string>

@@ -11,6 +11,7 @@
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy?mobile=0#xprivacy</string>
     <string name="app_support" translatable="false">http://forum.xda-developers.com/showthread.php?t=2320783</string>
     <string name="menu_usage">Usage data</string>
@@ -52,7 +53,6 @@
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_licensed" formatted="false">Licensed to: %s</string>
     <string name="msg_loading">Loading &#8230;</string>
     <string name="msg_applying">Applying &#8230;</string>
     <string name="msg_applied">Template applied</string>

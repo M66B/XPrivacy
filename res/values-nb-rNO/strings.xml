@@ -8,6 +8,7 @@
     <string name="app_description">Den ultimative personvernbehandleren</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013–2014</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Databruk</string>
     <string name="menu_refresh">Oppdater</string>
     <string name="menu_settings">Innstillinger</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">Avbrutt</string>
     <string name="msg_new">Nytt</string>
     <string name="msg_update">Oppdater</string>
-    <string name="msg_licensed" formatted="false">Lisensert til: %s</string>
     <string name="msg_loading">Lader</string>
     <string name="msg_applying">Legger til endringer</string>
     <string name="msg_applied">Skjema i bruk</string>

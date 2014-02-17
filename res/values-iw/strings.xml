@@ -8,6 +8,7 @@
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">גרסת מסגרת Xposed: %d</string>
     <string name="app_copyright">כל הזכויות שמורות \ u00A9 2013–2014 על ידי מ \'Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Usage</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">הגדרות</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">New</string>
     <string name="msg_update">Update</string>
-    <string name="msg_licensed" formatted="false">יישום מורשה ל: %s</string>
     <string name="msg_loading">טוען</string>
     <string name="msg_applying">Applying</string>
     <string name="msg_applied">Template applied</string>

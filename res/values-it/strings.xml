@@ -8,6 +8,7 @@
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_xversion" formatted="false">Versione di Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Utilizzo</string>
     <string name="menu_refresh">Aggiorna</string>
     <string name="menu_settings">Impostazioni</string>
@@ -47,7 +48,6 @@
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Nuovo</string>
     <string name="msg_update">Aggiorna</string>
-    <string name="msg_licensed" formatted="false">Licenziato a: %s</string>
     <string name="msg_loading">Caricamento in corso</string>
     <string name="msg_applying">Applicazione in corso</string>
     <string name="msg_applied">Template applied</string>
