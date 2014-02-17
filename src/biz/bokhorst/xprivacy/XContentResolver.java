@@ -170,15 +170,27 @@ public class XContentResolver extends XHook {
 				// Google services provider: block only android_id
 				if (param.args.length > 3 && param.args[3] != null) {
 					List<String> selectionArgs = Arrays.asList((String[]) param.args[3]);
-					if (Util.containsIgnoreCase(selectionArgs, "android_id"))
-						if (isRestrictedExtra(param, PrivacyManager.cIdentification, "GservicesProvider", uri)) {
-							MatrixCursor gsfCursor = new MatrixCursor(cursor.getColumnNames());
-							gsfCursor.addRow(new Object[] { "android_id",
-									PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
-							gsfCursor.respond(cursor.getExtras());
-							param.setResult(gsfCursor);
-							cursor.close();
-						}
+					if (selectionArgs.contains("android_id")) {
+						int ikey = cursor.getColumnIndex("key");
+						int ivalue = cursor.getColumnIndex("value");
+						if (ikey == 0 && ivalue == 1 && cursor.getColumnCount() == 2) {
+							if (isRestrictedExtra(param, PrivacyManager.cIdentification, "GservicesProvider", uri)) {
+								MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+								while (cursor.moveToNext()) {
+									if ("android_id".equals(cursor.getString(ikey)))
+										result.addRow(new Object[] { "android_id",
+												PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
+									else
+										copyColumns(cursor, result);
+								}
+								result.respond(cursor.getExtras());
+								param.setResult(result);
+								cursor.close();
+							}
+						} else
+							Util.log(this, Log.ERROR,
+									"Unexpected result uri=" + uri + " columns=" + cursor.getColumnNames());
+					}
 				}
 
 			} else if (uri.startsWith("content://com.android.contacts/contacts")

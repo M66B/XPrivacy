@@ -9,6 +9,9 @@ Changelog
 
 **Next release**
 
+* Fixed null pointer in storage/option
+* Fixed restricting GSF ID in some cases ([issue](/../../issues/1374))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.46 TEST**

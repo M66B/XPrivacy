@@ -22,7 +22,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -467,13 +466,6 @@ public class Util {
 
 	public static boolean isDebuggable(Context context) {
 		return ((context.getApplicationContext().getApplicationInfo().flags & ApplicationInfo.FLAG_DEBUGGABLE) != 0);
-	}
-
-	public static boolean containsIgnoreCase(List<String> strings, String value) {
-		for (String string : strings)
-			if (string.equalsIgnoreCase(value))
-				return true;
-		return false;
 	}
 
 	public static boolean isIntentAvailable(Context context, Intent intent) {
