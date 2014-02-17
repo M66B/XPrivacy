@@ -171,15 +171,19 @@ public class XContentResolver extends XHook {
 				int ikey = cursor.getColumnIndex("key");
 				int ivalue = cursor.getColumnIndex("value");
 				if (ikey == 0 && ivalue == 1 && cursor.getColumnCount() == 2) {
-					if (isRestrictedExtra(param, PrivacyManager.cIdentification, "GservicesProvider", uri)) {
-						MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
-						while (cursor.moveToNext()) {
-							if ("android_id".equals(cursor.getString(ikey)))
+					boolean restricted = false;
+					MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+					while (cursor.moveToNext()) {
+						if ("android_id".equals(cursor.getString(ikey))) {
+							if (isRestrictedExtra(param, PrivacyManager.cIdentification, "GservicesProvider", uri)) {
+								restricted = true;
 								result.addRow(new Object[] { "android_id",
 										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
-							else
-								copyColumns(cursor, result);
-						}
+							}
+						} else
+							copyColumns(cursor, result);
+					}
+					if (restricted) {
 						result.respond(cursor.getExtras());
 						param.setResult(result);
 						cursor.close();
