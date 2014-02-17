@@ -458,12 +458,7 @@ public class Util {
 				sb.append((Integer.toHexString((bytes[i] & 0xFF) | 0x100)).substring(1, 3).toLowerCase());
 			String calculated = sb.toString();
 			String expected = context.getString(R.string.fingerprint);
-			boolean valid = calculated.equals(expected);
-			if (valid)
-				log(null, Log.INFO, "Valid fingerprint");
-			else
-				log(null, Log.ERROR, "Invalid fingerprint calculate=" + calculated + " expected=" + expected);
-			return valid;
+			return calculated.equals(expected);
 		} catch (Throwable ex) {
 			bug(null, ex);
 			return false;
