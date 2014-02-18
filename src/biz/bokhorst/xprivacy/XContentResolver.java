@@ -116,7 +116,10 @@ public class XContentResolver extends XHook {
 			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
 			Util.log(this, Log.INFO, "Before uri=" + uri);
 
-			if (uri.startsWith("content://com.android.contacts/contacts")
+			if (uri.startsWith("content://com.android.contacts/contacts/name_phone_or_email")) {
+				// Do nothing
+
+			} else if (uri.startsWith("content://com.android.contacts/contacts")
 					|| uri.startsWith("content://com.android.contacts/data")
 					|| uri.startsWith("content://com.android.contacts/phone_lookup")
 					|| uri.startsWith("content://com.android.contacts/raw_contacts")) {
@@ -191,6 +194,9 @@ public class XContentResolver extends XHook {
 										"Unexpected result uri=" + uri + " columns=" + cursor.getColumnNames());
 						}
 				}
+
+			} else if (uri.startsWith("content://com.android.contacts/contacts/name_phone_or_email")) {
+				// Do nothing
 
 			} else if (uri.startsWith("content://com.android.contacts/contacts")
 					|| uri.startsWith("content://com.android.contacts/data")
