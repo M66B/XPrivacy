@@ -12,6 +12,7 @@ Changelog
 * White list */proc/cpuinfo* and */proc/meminfo* ([issue](/../../issues/1320))
 * Added option to fake [GSM CID/LAC](http://en.wikipedia.org/wiki/Cell_ID) ([issue](/../../issues/1289))
 	* Note: only [cell locations](http://developer.android.com/reference/android/telephony/CellLocation.html) can be faked, not [cell info](http://developer.android.com/reference/android/telephony/CellInfo.html)
+* *Apply to entire category* and *Once for ... seconds* exclude each other ([issue](/../../issues/1381))
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -20,7 +21,6 @@ Changelog
 
 * Fixed null pointer in storage/open
 * Fixed restricting GSF ID in some cases ([issue](/../../issues/1374))
-* Make it clear that *Apply to entire category* and *Once for ... seconds* exclude each other ([issue](/../../issues/1381))
 * Improved filter view layout ([issue](/../../issues/1335))
 
 **Version 1.99.46 TEST**
