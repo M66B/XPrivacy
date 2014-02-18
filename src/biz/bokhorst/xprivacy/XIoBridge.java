@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -16,6 +17,14 @@ import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 public class XIoBridge extends XHook {
 	private Methods mMethod;
 	private String mFileName;
+
+	// @formatter:off
+	public static List<String> cProcWhiteList = Arrays.asList(new String[] {
+		"/proc/cpuinfo",
+		"/proc/meminfo",
+		"/proc/self/cmdline"
+	});
+	// @formatter:on
 
 	private XIoBridge(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), null);
@@ -89,9 +98,9 @@ public class XIoBridge extends XHook {
 					if (Util.getAppId(Process.myUid()) == Process.SYSTEM_UID)
 						return;
 
-					// Allow command line
+					// Proc white list
 					if (mFileName.equals("/proc"))
-						if (fileName.equals("/proc/self/cmdline"))
+						if (cProcWhiteList.contains(fileName))
 							return;
 
 					// Check if restricted

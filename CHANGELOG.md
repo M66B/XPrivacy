@@ -16,6 +16,7 @@ Changelog
 * Fixed null pointer in storage/open
 * Fixed restricting GSF ID in some cases ([issue](/../../issues/1374))
 * Improved filter view layout ([issue](/../../issues/1335))
+* White list */proc/cpuinfo* and */proc/meminfo* ([issue](/../../issues/1320))
 
 **Version 1.99.46 TEST**
 
