@@ -44,6 +44,7 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -1363,12 +1364,28 @@ public class PrivacyService {
 			// Once check box
 			final CheckBox cbOnce = new CheckBox(context);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
-					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
+					(restriction.extra == null ? PrivacyManager.cRestrictionCacheTimeoutMs : 0) / 1000));
 			cbOnce.setChecked(mSelectOnce);
 			LinearLayout.LayoutParams llOnceParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 			cbOnce.setLayoutParams(llOnceParams);
 			llContainer.addView(cbOnce);
+
+			// Category and once exclude each other
+			cbCategory.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked)
+						cbOnce.setChecked(false);
+				}
+			});
+			cbOnce.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked)
+						cbCategory.setChecked(false);
+				}
+			});
 
 			// Message
 			TextView tvPlease = new TextView(context);
