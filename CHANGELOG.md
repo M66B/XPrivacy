@@ -14,6 +14,8 @@ Changelog
 	* Note: only [cell locations](http://developer.android.com/reference/android/telephony/CellLocation.html) can be faked, not [cell info](http://developer.android.com/reference/android/telephony/CellInfo.html)
 * *Apply to entire category* and *Once for ... seconds* exclude each other ([issue](/../../issues/1381))
 * Notification *Restart required* will ask to reboot ([issue](/../../issues/1382))
+* New dangerous functions will not be unrestricted on update if you have *restrict dangerous functions* enabled
+	* If you want this, disable this setting before upgrading
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
