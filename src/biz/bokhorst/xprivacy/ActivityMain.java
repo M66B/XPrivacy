@@ -78,6 +78,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private Handler mProHandler = new Handler();
 
+	public static final String cAction = "Action";
+	public static final int cActionReboot = 1;
+
 	public static final int STATE_ATTENTION = 0;
 	public static final int STATE_CHANGED = 1;
 	public static final int STATE_SHARED = 2;
@@ -287,6 +290,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		};
 		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
 		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
+
+		// Process actions
+		Bundle extras = getIntent().getExtras();
+		if (extras != null && extras.containsKey(cAction))
+			if (extras.getInt(cAction) == cActionReboot)
+				reboot();
 	}
 
 	@Override
@@ -298,6 +307,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	@Override
 	protected void onNewIntent(Intent intent) {
+		Bundle extras = intent.getExtras();
+		if (extras != null && extras.containsKey(cAction))
+			if (extras.getInt(cAction) == cActionReboot) {
+				setIntent(intent);
+				recreate();
+				return;
+			}
+
 		if (mAppAdapter != null)
 			mAppAdapter.notifyDataSetChanged();
 	}
@@ -978,6 +995,30 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
 		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialMain, Boolean.FALSE.toString());
+	}
+
+	private void reboot() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+		alertDialogBuilder.setTitle(R.string.msg_reboot);
+		alertDialogBuilder.setMessage(R.string.msg_sure);
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				try {
+					PrivacyService.getClient().reboot();
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	// Tasks

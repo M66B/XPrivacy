@@ -35,6 +35,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.os.PowerManager;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.StrictMode;
@@ -1085,6 +1086,18 @@ public class PrivacyService {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
+			}
+		}
+
+		@Override
+		public void reboot() throws RemoteException {
+			try {
+				enforcePermission();
+				Binder.clearCallingIdentity();
+				PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
+				pm.reboot(null);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
 			}
 		}
 

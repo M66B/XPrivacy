@@ -13,6 +13,7 @@ Changelog
 * Added option to fake [GSM CID/LAC](http://en.wikipedia.org/wiki/Cell_ID) ([issue](/../../issues/1289))
 	* Note: only [cell locations](http://developer.android.com/reference/android/telephony/CellLocation.html) can be faked, not [cell info](http://developer.android.com/reference/android/telephony/CellInfo.html)
 * *Apply to entire category* and *Once for ... seconds* exclude each other ([issue](/../../issues/1381))
+* Notification *Restart required* will ask to reboot ([issue](/../../issues/1382))
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
