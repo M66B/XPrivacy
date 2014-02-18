@@ -198,6 +198,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		Util.log(hook, Log.INFO,
 				"getSystemService " + name + "=" + instance.getClass().getName() + " uid=" + Binder.getCallingUid());
 
+		if ("android.telephony.MSimTelephonyManager".equals(instance.getClass().getName())) {
+			Util.log(hook, Log.WARN, "Telephone service=" + Context.TELEPHONY_SERVICE);
+			for (Method method : instance.getClass().getDeclaredMethods())
+				Util.log(hook, Log.WARN, "Declared " + method);
+		}
+
 		if (name.equals(Context.ACCOUNT_SERVICE)) {
 			// Account manager
 			if (!mAccountManagerHooked) {
