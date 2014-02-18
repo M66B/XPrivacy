@@ -1451,8 +1451,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								mListAppSelected.add(xAppInfo);
 								holder.row.setBackgroundColor(mHighlightColor);
 							}
-
-							AppListAdapter.this.showStats();
+							showStats();
 							return true;
 						}
 					});
@@ -1471,6 +1470,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									mListAppSelected.add(xAppInfo);
 									holder.row.setBackgroundColor(mHighlightColor);
 								}
+								showStats();
 							} else {
 								if (mRestrictionName == null && rstate.restricted != false) {
 									AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
