@@ -118,6 +118,19 @@ public class PackageChange extends BroadcastReceiver {
 						Notification notification = notificationBuilder.build();
 						notificationManager.notify(appInfo.getUid(), notification);
 					}
+
+				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
+					// Package removed
+					notificationManager.cancel(uid);
+
+					// Delete restrictions
+					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
+					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 0) {
+						PrivacyManager.deleteRestrictions(uid, null);
+						PrivacyManager.deleteSettings(uid);
+						PrivacyManager.deleteUsage(uid);
+					}
+
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
 					// Notify reboot required
 					String packageName = inputUri.getSchemeSpecificPart();
@@ -139,17 +152,6 @@ public class PackageChange extends BroadcastReceiver {
 
 						// Notify
 						notificationManager.notify(Util.NOTIFY_RESTART, notification);
-					}
-				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
-					// Package removed
-					notificationManager.cancel(uid);
-
-					// Delete restrictions
-					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
-					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 0) {
-						PrivacyManager.deleteRestrictions(uid, null);
-						PrivacyManager.deleteSettings(uid);
-						PrivacyManager.deleteUsage(uid);
 					}
 				}
 			}
