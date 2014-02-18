@@ -26,6 +26,7 @@ Changelog
 * Compatible with Poweramp unlocker again ([issue](/../../issues/1340))
 * Updated Dutch translation
 * Updated Lithuanian translation
+* Updated Polish translation
 
 **Version 1.99.45 BETA**
 
