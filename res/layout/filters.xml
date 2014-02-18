@@ -25,7 +25,6 @@
             android:layout_height="24dip"
             android:layout_marginLeft="3dip"
             android:ellipsize="end"
-            android:saveEnabled="false"
             android:singleLine="true"
             android:text="@string/title_fused"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -48,7 +47,6 @@
             android:layout_height="24dip"
             android:layout_marginLeft="3dip"
             android:ellipsize="end"
-            android:saveEnabled="false"
             android:singleLine="true"
             android:text="@string/title_finternet"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -56,7 +54,8 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
 
         <ImageView
             android:layout_width="24dip"
@@ -70,7 +69,6 @@
             android:layout_height="24dip"
             android:layout_marginLeft="3dip"
             android:ellipsize="end"
-            android:saveEnabled="false"
             android:singleLine="true"
             android:text="@string/title_fpermission"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -85,7 +83,8 @@
 
     <LinearLayout
         android:layout_width="wrap_content"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:orientation="horizontal" >
 
         <ImageView
             android:layout_width="24dip"
@@ -99,26 +98,25 @@
             android:layout_height="24dip"
             android:layout_marginLeft="3dip"
             android:ellipsize="end"
-            android:saveEnabled="false"
             android:singleLine="true"
             android:text="@string/title_frestricted"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <CheckBox
-            android:id="@+id/cbFRestrictionNot"
-            android:layout_width="wrap_content"
-            android:layout_height="24dip"
-            android:layout_marginLeft="3dip"
-            android:ellipsize="end"
-            android:saveEnabled="false"
-            android:singleLine="true"
-            android:text="@string/title_fnot"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cbFRestrictionNot"
+        android:layout_width="wrap_content"
+        android:layout_height="24dip"
+        android:layout_marginLeft="50dip"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="@string/title_fnot"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <ImageView
             android:layout_width="24dip"
@@ -132,22 +130,20 @@
             android:layout_height="24dip"
             android:layout_marginLeft="3dip"
             android:ellipsize="end"
-            android:saveEnabled="false"
             android:singleLine="true"
             android:text="@string/title_fondemand"
             android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <CheckBox
-            android:id="@+id/cbFOnDemandNot"
-            android:layout_width="wrap_content"
-            android:layout_height="24dip"
-            android:layout_marginLeft="3dip"
-            android:ellipsize="end"
-            android:saveEnabled="false"
-            android:singleLine="true"
-            android:text="@string/title_fnot"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/cbFOnDemandNot"
+        android:layout_width="wrap_content"
+        android:layout_height="24dip"
+        android:layout_marginLeft="50dip"
+        android:ellipsize="end"
+        android:singleLine="true"
+        android:text="@string/title_fnot"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <View
         android:layout_width="match_parent"
@@ -158,7 +154,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <ImageView
             android:layout_width="24dip"
@@ -172,7 +169,6 @@
             android:layout_height="24dip"
             android:layout_marginLeft="3dip"
             android:ellipsize="end"
-            android:saveEnabled="false"
             android:singleLine="true"
             android:text="@string/title_fuser"
             android:textAppearance="?android:attr/textAppearanceSmall" />
@@ -180,7 +176,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
 
         <ImageView
             android:layout_width="24dip"
@@ -194,7 +191,6 @@
             android:layout_height="24dip"
             android:layout_marginLeft="3dip"
             android:ellipsize="end"
-            android:saveEnabled="false"
             android:singleLine="true"
             android:text="@string/title_fsystem"
             android:textAppearance="?android:attr/textAppearanceSmall" />

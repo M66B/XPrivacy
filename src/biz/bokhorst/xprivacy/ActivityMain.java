@@ -889,8 +889,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		cbFUser.setChecked(fUser);
 		cbFSystem.setChecked(fSystem);
 
+		cbFRestrictionNot.setEnabled(fRestriction);
+
 		cbFOnDemand.setEnabled(ondemand);
-		cbFOnDemandNot.setEnabled(ondemand);
+		cbFOnDemandNot.setEnabled(fRestriction && ondemand);
 
 		// Manage user/system filter exclusivity
 		OnCheckedChangeListener checkListener = new OnCheckedChangeListener() {
@@ -899,13 +901,19 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				if (buttonView == cbFUser) {
 					if (isChecked)
 						cbFSystem.setChecked(false);
-				} else if (buttonView == cbFSystem)
+				} else if (buttonView == cbFSystem) {
 					if (isChecked)
 						cbFUser.setChecked(false);
+				} else if (buttonView == cbFRestriction)
+					cbFRestrictionNot.setEnabled(cbFRestriction.isChecked());
+				else if (buttonView == cbFOnDemand)
+					cbFOnDemandNot.setEnabled(cbFOnDemand.isChecked());
 			}
 		};
 		cbFUser.setOnCheckedChangeListener(checkListener);
 		cbFSystem.setOnCheckedChangeListener(checkListener);
+		cbFRestriction.setOnCheckedChangeListener(checkListener);
+		cbFOnDemand.setOnCheckedChangeListener(checkListener);
 
 		// Clear button
 		btnClear.setOnClickListener(new OnClickListener() {
