@@ -1094,8 +1094,7 @@ public class PrivacyService {
 			try {
 				enforcePermission();
 				Binder.clearCallingIdentity();
-				PowerManager pm = (PowerManager) getContext().getSystemService(Context.POWER_SERVICE);
-				pm.reboot(null);
+				((PowerManager) getContext().getSystemService(Context.POWER_SERVICE)).reboot(null);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
