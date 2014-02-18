@@ -581,11 +581,6 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 
 No, because I don't consider these privacy-sensitive data, i.e., able to identify you and collect data about you. I am happy to add new restrictions for data that is really privacy-sensitive.
 
-<a name="FAQ26"></a>
-**(26) What are the "Experimental functions"?**
-
-See the [change log](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md)
-
 <a name="FAQ27"></a>
 **(27) Does XPrivacy work with SELinux (Fort Knox)?**
 
@@ -680,11 +675,6 @@ Yes, it is not feasible to add other donation methods at this moment.
 
 Only for the pro enabler, not for the pro license.
 See [here](http://www.xprivacy.eu/) for the differences between the pro enabler and pro license.
-
-<a name="FAQ38"></a>
-**(38) What are the experimental functions?**
-
-None at this time.
 
 <a name="FAQ38"></a>
 **(38) What does the update service do?**
