@@ -8,7 +8,7 @@
     <string name="app_description">Správca súkromia</string>
     <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013–2014 od M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_licensed">Licencované. Ďakujeme za vašu podporu!</string>
     <string name="menu_usage">Využitie dát</string>
     <string name="menu_refresh">Obnoviť</string>
     <string name="menu_settings">Nastavenia</string>
@@ -45,7 +45,7 @@
     <string name="menu_exclude">Vylúčiť</string>
     <string name="menu_close">Zavrieť</string>
     <string name="msg_abort">Rušenie</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="msg_aborted">Zrušené</string>
     <string name="msg_new">Nové</string>
     <string name="msg_update">Aktualizácia</string>
     <string name="msg_loading">Načítavanie &#8230;</string>
@@ -120,8 +120,8 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_once">Raz za %1$s sekúnd</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
-    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
-    <string name="title_permissions">Permissions</string>
+    <string name="title_pleasesubmit">Odošlite prosím vaše obmedzenia na pomoc ostatným</string>
+    <string name="title_permissions">Povolenia</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
