@@ -147,6 +147,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_https">Utiliser des connexions sécurisée</string>
     <string name="settings_syscomponents">Restreindre composants système (Android) (redémarrage requis)</string>
     <string name="settings_usagedata">Montrer les données d\'usage pour chaque application (redémarrage requis)</string>
+    <string name="settings_cid">GSM Cell ID</string>
+    <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Maintenez appuyé le nom de l\'appli pour le selectionner</string>
     <string name="help_ondemand">Détermination des restrictions sur demande</string>
     <string name="help_application">Application</string>

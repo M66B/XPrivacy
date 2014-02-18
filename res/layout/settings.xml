@@ -471,6 +471,38 @@
 
                 <TableRow>
 
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_cid"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etCid"
+                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:maxLength="5"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow>
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_lac"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etLac"
+                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:maxLength="5"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow>
+
                     <CheckBox android:id="@+id/cbSubscriber" />
 
                     <TextView

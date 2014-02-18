@@ -13,6 +13,7 @@ import android.telephony.ServiceState;
 import android.telephony.SignalStrength;
 import android.telephony.CellInfo;
 import android.telephony.TelephonyManager;
+import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
@@ -178,7 +179,7 @@ public class XTelephonyManager extends XHook {
 
 			} else if (mMethod == Methods.getCellLocation) {
 				if (param.getResult() != null && isRestricted(param))
-					param.setResult(CellLocation.getEmpty());
+					param.setResult(getDefacedCellLocation(Binder.getCallingUid()));
 
 			} else if (mMethod == Methods.getIsimImpu) {
 				if (param.getResult() != null && isRestricted(param))
@@ -200,6 +201,17 @@ public class XTelephonyManager extends XHook {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mMethod.name()));
 			}
+	}
+
+	private static CellLocation getDefacedCellLocation(int uid) {
+		int cid = (Integer) PrivacyManager.getDefacedProp(uid, "CID");
+		int lac = (Integer) PrivacyManager.getDefacedProp(uid, "LAC");
+		if (cid > 0 && lac > 0) {
+			GsmCellLocation cellLocation = new GsmCellLocation();
+			cellLocation.setLacAndCid(lac, cid);
+			return cellLocation;
+		} else
+			return CellLocation.getEmpty();
 	}
 
 	private class XPhoneStateListener extends PhoneStateListener {
@@ -227,7 +239,7 @@ public class XTelephonyManager extends XHook {
 
 		@Override
 		public void onCellLocationChanged(CellLocation location) {
-			mListener.onCellLocationChanged(CellLocation.getEmpty());
+			mListener.onCellLocationChanged(getDefacedCellLocation(Binder.getCallingUid()));
 		}
 
 		@Override

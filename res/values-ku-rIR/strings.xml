@@ -146,6 +146,8 @@
     <string name="settings_https">به کارهینانی هیلی پاریزراو</string>
     <string name="settings_syscomponents">سنوردار کردنی شته بنچینه یه کانی سیسته مه که ت (موبایله که ت)</string>
     <string name="settings_usagedata">پیشاندنی ئه و زانياريانه ى به كارهينراون</string>
+    <string name="settings_cid">GSM Cell ID</string>
+    <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">په نجه ت دابگره له سه ر ئه و ناوه ى كه ده ته ویت هه لی بژیریت</string>
     <string name="help_ondemand">داوات لیده کریت بو سنوردار کردن</string>
     <string name="help_application">به رنامه کان</string>

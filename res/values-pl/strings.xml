@@ -147,6 +147,8 @@
     <string name="settings_https">Użyj bezpiecznych połaczeń</string>
     <string name="settings_syscomponents">Ogranicz komponenty systemowe (Android) (wymaga restartu)</string>
     <string name="settings_usagedata">Pokaż użycie danych przez aplikacje (wymaga restartu)</string>
+    <string name="settings_cid">GSM Cell ID</string>
+    <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Przytrzymaj na nazwie aby wybrać</string>
     <string name="help_ondemand">będą pytania o ograniczenia</string>
     <string name="help_application">Aplikacja</string>

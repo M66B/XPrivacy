@@ -117,6 +117,8 @@ public class PrivacyManager {
 	public final static String cSettingRestricted = "Retricted";
 	public final static String cSettingOnDemand = "OnDemand";
 	public final static String cSettingMigrated = "Migrated";
+	public final static String cSettingCid = "Cid";
+	public final static String cSettingLac = "Lac";
 
 	public final static String cSettingTemplate = "Template";
 	public final static String cSettingAccount = "Account.";
@@ -749,6 +751,20 @@ public class PrivacyManager {
 
 		if (name.equals("MNC"))
 			return getSetting(uid, cSettingMnc, "01", true);
+
+		if (name.equals("CID"))
+			try {
+				return Integer.parseInt(getSetting(uid, cSettingCid, "0", true)) & 0xFFFF;
+			} catch (Throwable ignored) {
+				return -1;
+			}
+
+		if (name.equals("LAC"))
+			try {
+				return Integer.parseInt(getSetting(uid, cSettingLac, "0", true)) & 0xFFFF;
+			} catch (Throwable ignored) {
+				return -1;
+			}
 
 		// Fallback
 		Util.log(null, Log.WARN, "Fallback value name=" + name);
