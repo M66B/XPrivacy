@@ -858,18 +858,18 @@ Restrict new data:
 
 * Find the package/class/method that exposes the data (look into the Android documentation/sources)
 * Create a class that extends [XHook](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XHook.java)
-* Hook the method in [XPrivacy](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java)
+* Hook the methods in [XPrivacy](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java)
 * Write a before and/or after method to restrict the data
 * Do a [pull request](https://help.github.com/articles/using-pull-requests) if you want to contribute
 
 Using Eclipse:
 
+* Download and install the [ADT Bundle](http://developer.android.com/sdk/index.html)
 * Clone the GitHub project to a temporary location
 * Import the GitHub project into Eclipse, copy the files
 * Close Eclipse and copy the project from the temporary location over the imported project
-	* Make sure you copy all hidden files
-* Add the Xposed library to the build path as described [here](https://github.com/rovo89/XposedBridge/wiki/Development-tutorial#making-the-project-an-xposed-module)
-* Add the Google Play services library as described [here](https://developer.android.com/google/play-services/setup.html)
+	* Make sure you copy all hidden files and folders
+	* This step might not be necessary anymore for recent Eclipse releases
 
 Testing:
 
