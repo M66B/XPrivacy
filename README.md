@@ -714,7 +714,8 @@ since [security through obscurity](http://en.wikipedia.org/wiki/Security_through
 Things to do / check:
 
 * Make sure the Xposed framework is (still) installed using the Xposed installer
-* Make sure the XPrivacy application is not moved to the SD card
+* Make sure the XPrivacy application is stored on the internal storage and not moved to the SD card or somewhere else
+	* Fairphone users, see [here](https://fairphone.zendesk.com/hc/en-us/articles/201154666-How-can-I-see-all-the-different-places-where-information-is-stored-on-my-phone-SD-Card-Internal-Storage-and-Phone-Storage-)
 * Make sure LBE Security Master is not installed
 * Disable and then enable XPrivacy again in the Xposed installer
 * Clear the (Dalvik) cache using the recovery
