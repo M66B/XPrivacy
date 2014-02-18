@@ -65,11 +65,11 @@
                 android:gravity="center_vertical|center_horizontal"
                 android:orientation="horizontal" >
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/msg_question"
-                    android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/imgHelpOnDemand"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:contentDescription="@string/help_ondemand" />
             </LinearLayout>
 
             <TextView

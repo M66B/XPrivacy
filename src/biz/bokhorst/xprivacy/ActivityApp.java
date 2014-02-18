@@ -446,8 +446,8 @@ public class ActivityApp extends ActivityBase {
 		dialog.setTitle(R.string.menu_help);
 		dialog.setContentView(R.layout.help);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-		ImageView imgHelpHalf = (ImageView) dialog.findViewById(R.id.imgHelpHalf);
-		imgHelpHalf.setImageBitmap(getHalfCheckBox());
+		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
+		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());
 		dialog.setCancelable(true);
 		dialog.show();
 	}
