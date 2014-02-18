@@ -158,6 +158,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Process reboot action
+		Bundle extras = getIntent().getExtras();
+		if (extras != null && extras.containsKey(cAction))
+			if (extras.getInt(cAction) == cActionReboot)
+				reboot();
+
 		// Check privacy service client
 		if (!PrivacyService.checkClient())
 			return;
@@ -290,12 +296,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		};
 		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
 		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
-
-		// Process actions
-		Bundle extras = getIntent().getExtras();
-		if (extras != null && extras.containsKey(cAction))
-			if (extras.getInt(cAction) == cActionReboot)
-				reboot();
 	}
 
 	@Override
