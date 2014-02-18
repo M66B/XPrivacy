@@ -96,6 +96,12 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="biz.bokhorst.xprivacy.ActivityMain" />
+
+            <intent-filter>
+                <action android:name="biz.bokhorst.xprivacy.action.USAGE" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".ActivityShare"
