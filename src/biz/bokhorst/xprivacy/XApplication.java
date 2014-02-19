@@ -56,15 +56,16 @@ public class XApplication extends XHook {
 	@Override
 	protected void after(MethodHookParam param) throws Throwable {
 		if (mMethod == Methods.onCreate) {
-			Application app = (Application) param.thisObject;
-
 			// Install receiver for package management
 			if (PrivacyManager.isApplication(Process.myUid()) && !mReceiverInstalled)
 				try {
-					mReceiverInstalled = true;
-					Util.log(this, Log.INFO, "Installing receiver uid=" + Process.myUid());
-					app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE),
-							PERMISSION_MANAGE_PACKAGES, null);
+					Application app = (Application) param.thisObject;
+					if (app != null) {
+						mReceiverInstalled = true;
+						Util.log(this, Log.INFO, "Installing receiver uid=" + Process.myUid());
+						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE),
+								PERMISSION_MANAGE_PACKAGES, null);
+					}
 				} catch (Throwable ex) {
 					Util.bug(this, ex);
 				}
