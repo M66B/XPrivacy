@@ -12,6 +12,8 @@ public class PRestriction implements Parcelable {
 	public boolean asked;
 	public long time;
 
+	// The extra is never needed in the result
+
 	public PRestriction() {
 	}
 

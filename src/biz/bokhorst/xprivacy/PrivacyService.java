@@ -252,7 +252,7 @@ public class PrivacyService {
 		private boolean mSelectOnce = false;
 
 		private Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
-		private Map<CRestriction, CRestriction> mAskedCache = new HashMap<CRestriction, CRestriction>();
+		private Map<CRestriction, CRestriction> mAskedOnceCache = new HashMap<CRestriction, CRestriction>();
 		private Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
 		private ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -369,15 +369,19 @@ public class PrivacyService {
 				// Update cache
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
-						// Clear cache
-						if (restriction.restrictionName != null)
+						if (restriction.methodName == null) {
+							// Clear cache
 							for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
-								if (restriction.restrictionName.equals(key.getRestrictionName()))
+								if (restriction.uid == key.getUid()
+										&& restriction.restrictionName.equals(key.getRestrictionName()))
 									mRestrictionCache.remove(key);
-
-						// Update cache
-						CRestriction key = new CRestriction(restriction);
-						mRestrictionCache.put(key, key);
+						} else {
+							// Update cache
+							CRestriction key = new CRestriction(restriction, restriction.extra);
+							if (mRestrictionCache.containsKey(key))
+								mRestrictionCache.remove(key);
+							mRestrictionCache.put(key, key);
+						}
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -446,7 +450,7 @@ public class PrivacyService {
 				// Check cache
 				boolean cached = false;
 				if (mUseCache) {
-					CRestriction key = new CRestriction(restriction);
+					CRestriction key = new CRestriction(restriction, restriction.extra);
 					synchronized (mRestrictionCache) {
 						if (mRestrictionCache.containsKey(key)) {
 							cached = true;
@@ -538,16 +542,11 @@ public class PrivacyService {
 
 					// Update cache
 					if (mUseCache) {
-						// The category is cached for on demand restricting
-						CRestriction ckey = new CRestriction(cresult);
-						CRestriction mkey = new CRestriction(mresult);
+						CRestriction key = new CRestriction(mresult, restriction.extra);
 						synchronized (mRestrictionCache) {
-							if (mRestrictionCache.containsKey(ckey))
-								mRestrictionCache.remove(ckey);
-							mRestrictionCache.put(ckey, ckey);
-							if (mRestrictionCache.containsKey(mkey))
-								mRestrictionCache.remove(mkey);
-							mRestrictionCache.put(mkey, mkey);
+							if (mRestrictionCache.containsKey(key))
+								mRestrictionCache.remove(key);
+							mRestrictionCache.put(key, key);
 						}
 					}
 				}
@@ -1145,7 +1144,7 @@ public class PrivacyService {
 						Util.log(null, Log.WARN, "On demanding " + restriction);
 
 						// Check if not asked before
-						CRestriction key = new CRestriction(restriction);
+						CRestriction key = new CRestriction(restriction, restriction.extra);
 						synchronized (mRestrictionCache) {
 							if (mRestrictionCache.containsKey(key))
 								if (mRestrictionCache.get(key).asked) {
@@ -1153,7 +1152,7 @@ public class PrivacyService {
 									return;
 								}
 						}
-						if (mAskedCache.containsKey(key) && !mAskedCache.get(key).isExpired()) {
+						if (mAskedOnceCache.containsKey(key) && !mAskedOnceCache.get(key).isExpired()) {
 							Util.log(null, Log.WARN, "Already asked once " + restriction);
 							return;
 						}
@@ -1461,10 +1460,10 @@ public class PrivacyService {
 		private void onDemandOnce(final PRestriction restriction, final PRestriction result) {
 			Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction);
 			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
-			CRestriction key = new CRestriction(restriction);
-			if (mAskedCache.containsKey(key))
-				mAskedCache.remove(key);
-			mAskedCache.put(key, key);
+			CRestriction key = new CRestriction(restriction, restriction.extra);
+			if (mAskedOnceCache.containsKey(key))
+				mAskedOnceCache.remove(key);
+			mAskedOnceCache.put(key, key);
 		}
 
 		private void onDemandChoice(PRestriction restriction, boolean category, boolean restrict) {

@@ -21,12 +21,12 @@ public class CRestriction {
 		asked = false;
 	}
 
-	public CRestriction(PRestriction restriction) {
+	public CRestriction(PRestriction restriction, String extra) {
 		mExpiry = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 		mUid = restriction.uid;
 		mRestrictionName = restriction.restrictionName;
 		mMethodName = restriction.methodName;
-		mExtra = restriction.extra;
+		mExtra = extra;
 		restricted = restriction.restricted;
 		asked = restriction.asked;
 	}
@@ -37,6 +37,10 @@ public class CRestriction {
 
 	public boolean isExpired() {
 		return (new Date().getTime() > mExpiry);
+	}
+
+	public int getUid() {
+		return mUid;
 	}
 
 	public String getRestrictionName() {
