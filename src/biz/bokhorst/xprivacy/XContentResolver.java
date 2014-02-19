@@ -349,13 +349,9 @@ public class XContentResolver extends XHook {
 
 	private ContactID getIdForUri(String uri) {
 		if (uri.startsWith("content://com.android.contacts/contacts"))
-			return new ContactID("name_raw_contact_id", true);
-		else if (uri.startsWith("content://com.android.contacts/data/emails"))
-			return new ContactID("contact_id", false);
-		else if (uri.startsWith("content://com.android.contacts/data/phones"))
-			return new ContactID("raw_contact_id", true);
+			return new ContactID("_id", false);
 		else if (uri.startsWith("content://com.android.contacts/data"))
-			return new ContactID("raw_contact_id", true);
+			return new ContactID("contact_id", false);
 		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
 			return new ContactID("_id", false);
 		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
