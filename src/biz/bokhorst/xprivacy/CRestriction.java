@@ -4,29 +4,29 @@ import java.util.Date;
 
 public class CRestriction {
 	private long mExpiry;
-	public int uid;
-	public String restrictionName;
-	public String methodName;
-	public String extra;
+	public int mUid;
+	public String mRestrictionName;
+	public String mMethodName;
+	public String mExtra;
 	public boolean restricted;
 	public boolean asked;
 
 	public CRestriction(int _uid, String _restrictioName, String _methodName, String _extra) {
 		mExpiry = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
-		uid = _uid;
-		restrictionName = _restrictioName;
-		methodName = _methodName;
-		extra = _extra;
+		mUid = _uid;
+		mRestrictionName = _restrictioName;
+		mMethodName = _methodName;
+		mExtra = _extra;
 		restricted = false;
 		asked = false;
 	}
 
 	public CRestriction(PRestriction restriction) {
 		mExpiry = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
-		uid = restriction.uid;
-		restrictionName = restriction.restrictionName;
-		methodName = restriction.methodName;
-		extra = restriction.extra;
+		mUid = restriction.uid;
+		mRestrictionName = restriction.restrictionName;
+		mMethodName = restriction.methodName;
+		mExtra = restriction.extra;
 		restricted = restriction.restricted;
 		asked = restriction.asked;
 	}
@@ -39,26 +39,30 @@ public class CRestriction {
 		return (new Date().getTime() > mExpiry);
 	}
 
+	public String getRestrictionName() {
+		return mRestrictionName;
+	}
+
 	@Override
 	public boolean equals(Object obj) {
 		CRestriction other = (CRestriction) obj;
 		// @formatter:off
-		return (uid == other.uid
-				&& (restrictionName == null ? other.restrictionName == null : restrictionName.equals(other.restrictionName)) 
-				&& (methodName == null ? other.methodName == null : methodName.equals(other.methodName))
-				&& (extra == null ? other.extra == null : extra.equals(other.extra)));
+		return (mUid == other.mUid
+				&& (mRestrictionName == null ? other.mRestrictionName == null : mRestrictionName.equals(other.mRestrictionName)) 
+				&& (mMethodName == null ? other.mMethodName == null : mMethodName.equals(other.mMethodName))
+				&& (mExtra == null ? other.mExtra == null : mExtra.equals(other.mExtra)));
 		// @formatter:on
 	}
 
 	@Override
 	public int hashCode() {
-		int hash = uid;
-		if (restrictionName != null)
-			hash = hash ^ restrictionName.hashCode();
-		if (methodName != null)
-			hash = hash ^ methodName.hashCode();
-		if (extra != null)
-			hash = hash ^ extra.hashCode();
+		int hash = mUid;
+		if (mRestrictionName != null)
+			hash = hash ^ mRestrictionName.hashCode();
+		if (mMethodName != null)
+			hash = hash ^ mMethodName.hashCode();
+		if (mExtra != null)
+			hash = hash ^ mExtra.hashCode();
 		return hash;
 	}
 }

@@ -371,7 +371,7 @@ public class PrivacyService {
 					synchronized (mRestrictionCache) {
 						// Clear cache
 						for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
-							if (key.restrictionName.equals(restriction.restrictionName))
+							if (key.getRestrictionName().equals(restriction.restrictionName))
 								mRestrictionCache.remove(key);
 
 						// Update cache
@@ -1472,8 +1472,7 @@ public class PrivacyService {
 
 				// Get current category restriction state
 				boolean prevRestricted = false;
-				CRestriction key = new CRestriction(restriction);
-				key.methodName = null;
+				CRestriction key = new CRestriction(restriction.uid, restriction.restrictionName, null, null);
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(key))
 						prevRestricted = mRestrictionCache.get(key).restricted;
