@@ -2,6 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.util.Date;
 
+import android.util.Log;
+
 public class CRestriction {
 	private long mExpiry;
 	public int mUid;
@@ -11,12 +13,12 @@ public class CRestriction {
 	public boolean restricted;
 	public boolean asked;
 
-	public CRestriction(int _uid, String _restrictioName, String _methodName, String _extra) {
+	public CRestriction(int uid, String restrictionName, String methodName, String extra) {
 		mExpiry = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
-		mUid = _uid;
-		mRestrictionName = _restrictioName;
-		mMethodName = _methodName;
-		mExtra = _extra;
+		mUid = uid;
+		mRestrictionName = restrictionName;
+		mMethodName = methodName;
+		mExtra = extra;
 		restricted = false;
 		asked = false;
 	}
@@ -47,8 +49,7 @@ public class CRestriction {
 	public boolean equals(Object obj) {
 		CRestriction other = (CRestriction) obj;
 		// @formatter:off
-		return (mUid == other.mUid
-				&& (mRestrictionName == null ? other.mRestrictionName == null : mRestrictionName.equals(other.mRestrictionName)) 
+		return (mUid == other.mUid && mRestrictionName.equals(other.mRestrictionName)
 				&& (mMethodName == null ? other.mMethodName == null : mMethodName.equals(other.mMethodName))
 				&& (mExtra == null ? other.mExtra == null : mExtra.equals(other.mExtra)));
 		// @formatter:on
