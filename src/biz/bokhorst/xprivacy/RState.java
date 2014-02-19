@@ -76,8 +76,10 @@ public class RState {
 			else
 				for (String restrictionName : listRestriction)
 					PrivacyManager.setRestriction(mUid, restrictionName, null, true, false);
-		} else
-			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, !restricted, false);
+		} else {
+			PRestriction query = PrivacyManager.getRestrictionEx(mUid, mRestrictionName, null);
+			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, !restricted, query.asked);
+		}
 	}
 
 	public void toggleAsked() {
