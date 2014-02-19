@@ -370,9 +370,10 @@ public class PrivacyService {
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
 						// Clear cache
-						for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
-							if (key.getRestrictionName().equals(restriction.restrictionName))
-								mRestrictionCache.remove(key);
+						if (restriction.restrictionName != null)
+							for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
+								if (restriction.restrictionName.equals(key.getRestrictionName()))
+									mRestrictionCache.remove(key);
 
 						// Update cache
 						CRestriction key = new CRestriction(restriction);
