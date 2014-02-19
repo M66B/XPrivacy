@@ -72,8 +72,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			Util.bug(null, ex);
 		}
 
-		// hookCheckNative();
-
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances(), mSecret);
 
@@ -373,15 +371,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				} else
 					for (Method method : clazz.getDeclaredMethods())
 						if (method.getName().equals(hook.getMethodName())
-								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible())) {
-							// After hooking the method becomes native
-							// boolean isNative =
-							// Modifier.isNative(method.getModifiers());
-							XC_MethodHook.Unhook unhook = XposedBridge.hookMethod(method, methodHook);
-							hookSet.add(unhook);
-							// if (isNative)
-							// registerNativeMethod(hook, method, unhook);
-						}
+								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
+							hookSet.add(XposedBridge.hookMethod(method, methodHook));
 				clazz = clazz.getSuperclass();
 			}
 
