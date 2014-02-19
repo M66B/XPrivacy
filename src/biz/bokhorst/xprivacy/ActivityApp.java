@@ -55,7 +55,6 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -911,7 +910,7 @@ public class ActivityApp extends ActivityBase {
 			public TextView tvName;
 			public ImageView imgCbRestricted;
 			public ImageView imgCbAsk;
-			public RelativeLayout rlName;
+			public LinearLayout llName;
 
 			public GroupViewHolder(View theRow, int thePosition) {
 				row = theRow;
@@ -923,7 +922,7 @@ public class ActivityApp extends ActivityBase {
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
-				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
+				llName = (LinearLayout) row.findViewById(R.id.llName);
 			}
 		}
 
@@ -978,7 +977,7 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbAsk.setVisibility(View.GONE);
 
 					// Listen for restriction changes
-					holder.rlName.setOnClickListener(new View.OnClickListener() {
+					holder.llName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
 							// Change restriction
@@ -1115,7 +1114,7 @@ public class ActivityApp extends ActivityBase {
 			public TextView tvMethodName;
 			public ImageView imgCbMethodRestricted;
 			public ImageView imgCbMethodAsk;
-			public RelativeLayout rlMethodName;
+			public LinearLayout llMethodName;
 
 			private ChildViewHolder(View theRow, int gPosition, int cPosition) {
 				row = theRow;
@@ -1127,7 +1126,7 @@ public class ActivityApp extends ActivityBase {
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
 				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
 				imgCbMethodAsk = (ImageView) row.findViewById(R.id.imgCbMethodAsk);
-				rlMethodName = (RelativeLayout) row.findViewById(R.id.rlMethodName);
+				llMethodName = (LinearLayout) row.findViewById(R.id.llMethodName);
 			}
 		}
 
@@ -1179,7 +1178,7 @@ public class ActivityApp extends ActivityBase {
 								DateUtils.SECOND_IN_MILLIS, 0);
 						holder.tvMethodName.setText(String.format("%s (%s)", md.getName(), sLastUsage));
 					}
-					holder.rlMethodName.setEnabled(parent.restricted);
+					holder.llMethodName.setEnabled(parent.restricted);
 					holder.tvMethodName.setEnabled(parent.restricted);
 					holder.imgCbMethodAsk.setEnabled(!parent.asked);
 
@@ -1200,7 +1199,7 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodAsk.setVisibility(View.GONE);
 
 					// Listen for restriction changes
-					holder.rlMethodName.setOnClickListener(new View.OnClickListener() {
+					holder.llMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
 							// Change restriction
@@ -1227,7 +1226,7 @@ public class ActivityApp extends ActivityBase {
 						});
 
 					// Listen for long press
-					holder.rlMethodName.setOnLongClickListener(new View.OnLongClickListener() {
+					holder.llMethodName.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
 							md.toggleDangerous();
@@ -1270,7 +1269,7 @@ public class ActivityApp extends ActivityBase {
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 
-			holder.rlMethodName.setEnabled(false);
+			holder.llMethodName.setEnabled(false);
 			holder.tvMethodName.setEnabled(false);
 			holder.imgCbMethodAsk.setEnabled(false);
 
