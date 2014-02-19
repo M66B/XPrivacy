@@ -22,6 +22,7 @@ Changelog
 * Notification *Restart required* will ask to reboot ([issue](/../../issues/1382))
 * New dangerous functions will not be unrestricted on update if you have *restrict dangerous functions* enabled
 	* If you want this, disable this setting before upgrading
+* Updated info icons, thanks @[Phylon](https://github.com/Phylon)
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
