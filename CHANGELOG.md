@@ -12,6 +12,7 @@ Changelog
 * Fixed restriction caching (performance)
 * Fixed allowing contacts for contact aggregation
 * Fixed select/unselect all ([issue](/../../issues/1390))
+* Fixed some more repeated asking on demand, thanks @[jpeg729](https://github.com/jpeg729)
 * Improved tutorial/info background ([issue](/../../issues/1391))
 * Updated German translation
 * Updated French translation
