@@ -81,7 +81,7 @@ public class XNetworkInterface extends XHook {
 		} else if (getRestrictionName().equals(PrivacyManager.cNetwork)) {
 			// Network
 			NetworkInterface ni = (NetworkInterface) param.thisObject;
-			if (!ni.isLoopback())
+			if (ni != null && !ni.isLoopback())
 				if (param.getResult() != null && isRestricted(param))
 					if (mMethod == Methods.getHardwareAddress) {
 						String mac = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC");

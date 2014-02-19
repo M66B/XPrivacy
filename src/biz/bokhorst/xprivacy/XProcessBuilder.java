@@ -40,7 +40,7 @@ public class XProcessBuilder extends XHook {
 		if (methodName.equals("start")) {
 			// Get commands
 			ProcessBuilder builder = (ProcessBuilder) param.thisObject;
-			List<String> listProg = builder.command();
+			List<String> listProg = (builder == null ? null : builder.command());
 
 			// Check commands
 			if (listProg != null) {

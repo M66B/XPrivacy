@@ -190,21 +190,23 @@ public class XActivityThread extends XHook {
 
 	private void finish(MethodHookParam param) {
 		// unscheduleGcIdler
-		try {
-			Method unschedule = param.thisObject.getClass().getDeclaredMethod("unscheduleGcIdler");
-			unschedule.invoke(param.thisObject);
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
-		}
+		if (param.thisObject != null)
+			try {
+				Method unschedule = param.thisObject.getClass().getDeclaredMethod("unscheduleGcIdler");
+				unschedule.invoke(param.thisObject);
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
+			}
 
 		// data.finish
-		try {
-			BroadcastReceiver.PendingResult pr = (BroadcastReceiver.PendingResult) param.args[0];
-			pr.finish();
-		} catch (IllegalStateException ignored) {
-			// No receivers for action ...
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
-		}
+		if (param.args[0] instanceof BroadcastReceiver.PendingResult)
+			try {
+				BroadcastReceiver.PendingResult pr = (BroadcastReceiver.PendingResult) param.args[0];
+				pr.finish();
+			} catch (IllegalStateException ignored) {
+				// No receivers for action ...
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
+			}
 	}
 }

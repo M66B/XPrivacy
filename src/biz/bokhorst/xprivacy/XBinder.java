@@ -131,7 +131,7 @@ public class XBinder extends XHook {
 		if (token != mToken && PrivacyManager.isApplication(uid)) {
 			// Get interface name
 			Binder binder = (Binder) param.thisObject;
-			String descriptor = binder.getInterfaceDescriptor();
+			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 			if (cServiceDescriptor.contains(descriptor)) {
 				Util.log(this, Log.WARN, "restrict name=" + descriptor + " uid=" + uid + " my=" + Process.myUid());
 				if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
