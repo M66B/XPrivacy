@@ -72,7 +72,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			Util.bug(null, ex);
 		}
 
-		hookCheckNative();
+		// hookCheckNative();
 
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances(), mSecret);
@@ -370,11 +370,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						if (method.getName().equals(hook.getMethodName())
 								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible())) {
 							// After hooking the method becomes native
-							boolean isNative = Modifier.isNative(method.getModifiers());
+							// boolean isNative =
+							// Modifier.isNative(method.getModifiers());
 							XC_MethodHook.Unhook unhook = XposedBridge.hookMethod(method, methodHook);
 							hookSet.add(unhook);
-							if (isNative)
-								registerNativeMethod(hook, method, unhook);
+							// if (isNative)
+							// registerNativeMethod(hook, method, unhook);
 						}
 				clazz = (hookSet.isEmpty() ? clazz.getSuperclass() : null);
 			}
@@ -400,6 +401,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	private static List<XC_MethodHook.Unhook> mUnhookNativeMethod = new ArrayList<XC_MethodHook.Unhook>();
 
+	@SuppressWarnings("unused")
 	private static void registerNativeMethod(final XHook hook, Method method, XC_MethodHook.Unhook unhook) {
 		if (Process.myUid() > 0) {
 			synchronized (mUnhookNativeMethod) {
@@ -409,6 +411,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
+	@SuppressWarnings("unused")
 	private static void hookCheckNative() {
 		try {
 			XC_MethodHook hook = new XC_MethodHook() {
