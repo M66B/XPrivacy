@@ -99,6 +99,8 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof ActivityShare.AbortException)
 			priority = Log.WARN;
+		else if (ex instanceof ActivityShare.ServerException)
+			priority = Log.WARN;
 		else if (ex instanceof ConnectTimeoutException)
 			priority = Log.WARN;
 		else if (ex instanceof IllegalArgumentException)

@@ -1748,7 +1748,7 @@ public class ActivityShare extends ActivityBase {
 		}
 	}
 
-	private static class ServerException extends Exception {
+	public static class ServerException extends Exception {
 		private int mErrorNo;
 		private Context mContext = null;
 		private static final long serialVersionUID = 1L;
