@@ -147,7 +147,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_https">Naudojamas saugus ryšys</string>
     <string name="settings_syscomponents">Riboti sistemos komponentus (Android) (reikia perkrauti)</string>
     <string name="settings_usagedata">Rodyti programos duomenų naudojimą (reikia perkrauti)</string>
-    <string name="settings_cid">GSM Cell ID</string>
+    <string name="settings_cid">GSM stoties ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>
     <string name="help_ondemand">apribojimai bus paprašyti</string>
