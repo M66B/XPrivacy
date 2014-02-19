@@ -273,7 +273,7 @@ public class PrivacyManager {
 
 		// Check cache
 		boolean cached = false;
-		CRestriction key = new CRestriction(uid, restrictionName, methodName);
+		CRestriction key = new CRestriction(uid, restrictionName, methodName, extra);
 		synchronized (mRestrictionCache) {
 			if (mRestrictionCache.containsKey(key)) {
 				CRestriction entry = mRestrictionCache.get(key);
