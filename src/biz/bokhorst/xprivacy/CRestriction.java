@@ -2,8 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.util.Date;
 
-import android.util.Log;
-
 public class CRestriction {
 	private long mExpiry;
 	public int mUid;
