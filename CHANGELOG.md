@@ -15,7 +15,7 @@ Changelog
 * Fixed touch sensitivity on demand restricting check box
 * Fixed on demand getting set for functions, when category on demand not set
 * Attempt to fix hooking of native functions ([issue](/../../issues/1366))
-* White list */proc/meminfo* and */proc/stat* ([issue](/../../issues/1320))
+* White list */proc/meminfo* ([issue](/../../issues/1320))
 * Added option to fake [GSM CID/LAC](http://en.wikipedia.org/wiki/Cell_ID) ([issue](/../../issues/1289))
 	* Note: only [cell locations](http://developer.android.com/reference/android/telephony/CellLocation.html) can be faked, not [cell info](http://developer.android.com/reference/android/telephony/CellInfo.html)
 * *Apply to entire category* and *Once for ... seconds* exclude each other ([issue](/../../issues/1381))
