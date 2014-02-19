@@ -76,7 +76,7 @@ public class Requirements {
 		if (Util.isXposedEnabled()) {
 			// Check privacy client
 			try {
-				if (PrivacyService.getClient() != null) {
+				if (PrivacyService.checkClient()) {
 					List<String> listError = (List<String>) PrivacyService.getClient().check();
 					if (listError.size() > 0)
 						sendSupportInfo(TextUtils.join("\r\n", listError), context);
