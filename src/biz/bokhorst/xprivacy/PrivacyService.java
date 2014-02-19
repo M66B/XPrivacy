@@ -1503,6 +1503,7 @@ public class PrivacyService {
 					result.methodName = restriction.methodName;
 					result.restricted = restrict;
 					result.asked = true;
+					result.extra = restriction.extra;
 					setRestrictionInternal(result);
 				}
 
