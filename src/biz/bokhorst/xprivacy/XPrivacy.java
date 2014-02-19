@@ -377,7 +377,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 							// if (isNative)
 							// registerNativeMethod(hook, method, unhook);
 						}
-				clazz = (hookSet.isEmpty() ? clazz.getSuperclass() : null);
+				clazz = clazz.getSuperclass();
 			}
 
 			// Check if found
