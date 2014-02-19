@@ -20,9 +20,9 @@ public class XIoBridge extends XHook {
 
 	// @formatter:off
 	public static List<String> cProcWhiteList = Arrays.asList(new String[] {
-		"/proc/cpuinfo",
 		"/proc/meminfo",
-		"/proc/self/cmdline"
+		"/proc/self/cmdline",
+		"/proc/stat",
 	});
 	// @formatter:on
 
