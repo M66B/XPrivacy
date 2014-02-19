@@ -9,6 +9,9 @@ Changelog
 
 **Next release**
 
+* Fixed a null pointer exception for some ROMs (support info)
+* Fixed not all parameters appearing in the usage data
+* Attempt to fix hooking of native functions ([issue](/../../issues/1366))
 * White list */proc/cpuinfo* and */proc/meminfo* ([issue](/../../issues/1320))
 * Added option to fake [GSM CID/LAC](http://en.wikipedia.org/wiki/Cell_ID) ([issue](/../../issues/1289))
 	* Note: only [cell locations](http://developer.android.com/reference/android/telephony/CellLocation.html) can be faked, not [cell info](http://developer.android.com/reference/android/telephony/CellInfo.html)
