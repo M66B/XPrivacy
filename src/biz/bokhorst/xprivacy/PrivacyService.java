@@ -458,7 +458,7 @@ public class PrivacyService {
 				}
 
 				if (!cached) {
-					PRestriction cresult = new PRestriction(restriction);
+					PRestriction cresult = new PRestriction(restriction.uid, restriction.restrictionName, null);
 					boolean methodFound = false;
 
 					// No permissions required
@@ -539,7 +539,7 @@ public class PrivacyService {
 					// Update cache
 					if (mUseCache) {
 						// The category is cached for on demand restricting
-						CRestriction ckey = new CRestriction(cresult.uid, cresult.restrictionName, null, null);
+						CRestriction ckey = new CRestriction(cresult);
 						CRestriction mkey = new CRestriction(mresult);
 						synchronized (mRestrictionCache) {
 							if (mRestrictionCache.containsKey(ckey))
