@@ -1144,15 +1144,15 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		public void selectAllVisible() {
 			// Look through the visible apps to figure out what to do
-			boolean addThem = false;
+			mSelecting = false;
 			for (int i = 0; i < this.getCount(); i++) {
 				if (!mListAppSelected.contains(this.getItem(i))) {
-					addThem = true;
+					mSelecting = true;
 					break;
 				}
 			}
 
-			if (addThem) {
+			if (mSelecting) {
 				// Add the visible apps not already selected
 				for (int i = 0; i < this.getCount(); i++)
 					if (!mListAppSelected.contains(this.getItem(i)))

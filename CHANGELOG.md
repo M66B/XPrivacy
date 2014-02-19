@@ -11,6 +11,7 @@ Changelog
 
 * Fixed restriction caching (performance)
 * Fixed allowing contacts for contact aggregation
+* Fixed select/unselect all ([issue](/../../issues/1390))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
