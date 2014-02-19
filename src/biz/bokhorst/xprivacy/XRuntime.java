@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.os.Process;
-
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -36,8 +34,8 @@ public class XRuntime extends XHook {
 	// public Process exec(String prog)
 	// public Process exec(String prog, String[] envp)
 	// public Process exec(String prog, String[] envp, File directory)
-	// void load(String filename, ClassLoader loader)
-	// void loadLibrary(String libraryName, ClassLoader loader)
+	// public void load(String pathName)
+	// public void loadLibrary(String libName)
 	// libcore/luni/src/main/java/java/lang/Runtime.java
 	// http://developer.android.com/reference/java/lang/Runtime.html
 
@@ -77,10 +75,8 @@ public class XRuntime extends XHook {
 			}
 
 		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
-			// Skip pre Android
-			if (Process.myUid() > 0)
-				if (isRestrictedExtra(param, (String) param.args[0]))
-					param.setResult(new UnsatisfiedLinkError());
+			if (isRestrictedExtra(param, (String) param.args[0]))
+				param.setResult(new UnsatisfiedLinkError());
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
