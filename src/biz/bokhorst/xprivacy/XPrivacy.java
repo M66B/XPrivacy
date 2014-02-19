@@ -28,6 +28,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 @SuppressLint("DefaultLocale")
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static String mSecret = null;
+
 	private static boolean mAccountManagerHooked = false;
 	private static boolean mActivityManagerHooked = false;
 	private static boolean mClipboardManagerHooked = false;
@@ -38,6 +39,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mTelephonyManagerHooked = false;
 	private static boolean mWindowManagerHooked = false;
 	private static boolean mWiFiManagerHooked = false;
+
 	private static List<String> mListHookError = new ArrayList<String>();
 
 	// http://developer.android.com/reference/android/Manifest.permission.html
@@ -69,6 +71,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+
+		hookCheckNative();
 
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances(), mSecret);
@@ -364,8 +368,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				} else
 					for (Method method : clazz.getDeclaredMethods())
 						if (method.getName().equals(hook.getMethodName())
-								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
-							hookSet.add(XposedBridge.hookMethod(method, methodHook));
+								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible())) {
+							XC_MethodHook.Unhook unhook = XposedBridge.hookMethod(method, methodHook);
+							hookSet.add(unhook);
+							checkNativeMethod(hook, method, unhook);
+						}
 				clazz = (hookSet.isEmpty() ? clazz.getSuperclass() : null);
 			}
 
@@ -383,6 +390,55 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			mListHookError.add(ex.toString());
+		}
+	}
+
+	// WORKAROUND: when a native lib is loaded after hooking, the hook is undone
+
+	private static List<XC_MethodHook.Unhook> mUnhookNativeMethod = new ArrayList<XC_MethodHook.Unhook>();
+
+	private static void checkNativeMethod(final XHook hook, Method method, XC_MethodHook.Unhook unhook) {
+		if (Process.myUid() > 0)
+			if (Modifier.isNative(method.getModifiers())) {
+				int uid = Process.myUid();
+				synchronized (mUnhookNativeMethod) {
+					mUnhookNativeMethod.add(unhook);
+					Util.log(hook, Log.INFO, "Native " + method + " uid=" + uid);
+				}
+			}
+	}
+
+	private static void hookCheckNative() {
+		try {
+			XC_MethodHook hook = new XC_MethodHook() {
+				@Override
+				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+					if (Process.myUid() > 0)
+						try {
+							int uid = Process.myUid();
+							synchronized (mUnhookNativeMethod) {
+								Util.log(null, Log.INFO, "Loading " + param.args[0] + " uid=" + uid + " count="
+										+ mUnhookNativeMethod.size());
+								for (XC_MethodHook.Unhook unhook : mUnhookNativeMethod) {
+									Util.log(null, Log.INFO, "Rehooking " + unhook.getHookedMethod() + " uid=" + uid);
+									XposedBridge.hookMethod(unhook.getHookedMethod(), unhook.getCallback());
+									unhook.unhook();
+								}
+							}
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+				}
+			};
+
+			Class<?> runtimeClass = Class.forName("java.lang.Runtime");
+			for (Method method : runtimeClass.getDeclaredMethods())
+				if (method.getName().equals("load") || method.getName().equals("loadLibrary")) {
+					XposedBridge.hookMethod(method, hook);
+					Util.log(null, Log.WARN, "Hooked " + method);
+				}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
 		}
 	}
 }
