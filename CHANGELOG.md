@@ -9,6 +9,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.48 TEST**
+
 * Fixed a null pointer exception for some ROMs (support info)
 * Fixed not all parameters appearing in the usage data
 * Fixed asking again when allowing/denying once
@@ -24,8 +28,6 @@ Changelog
 	* If you want this, disable this setting before upgrading
 * Updated info icons, thanks @[Phylon](https://github.com/Phylon)
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.47 BETA**
 
