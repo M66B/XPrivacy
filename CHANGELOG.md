@@ -11,6 +11,7 @@ Changelog
 
 * Fixed a null pointer exception for some ROMs (support info)
 * Fixed not all parameters appearing in the usage data
+* Fixed asking again when allowing/denying once
 * Attempt to fix hooking of native functions ([issue](/../../issues/1366))
 * White list */proc/cpuinfo* and */proc/meminfo* ([issue](/../../issues/1320))
 * Added option to fake [GSM CID/LAC](http://en.wikipedia.org/wiki/Cell_ID) ([issue](/../../issues/1289))

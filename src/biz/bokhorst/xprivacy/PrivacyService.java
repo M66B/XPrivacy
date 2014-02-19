@@ -252,6 +252,7 @@ public class PrivacyService {
 		private boolean mSelectOnce = false;
 
 		private Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
+		private Map<CRestriction, CRestriction> mAskedCache = new HashMap<CRestriction, CRestriction>();
 		private Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
 		private ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
@@ -1157,6 +1158,10 @@ public class PrivacyService {
 									return;
 								}
 						}
+						if (mAskedCache.containsKey(key) && !mAskedCache.get(key).isExpired()) {
+							Util.log(null, Log.WARN, "Already asked once " + restriction);
+							return;
+						}
 
 						final AlertDialogHolder holder = new AlertDialogHolder();
 						final CountDownLatch latch = new CountDownLatch(1);
@@ -1376,7 +1381,7 @@ public class PrivacyService {
 			// Once check box
 			final CheckBox cbOnce = new CheckBox(context);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
-					(restriction.extra == null ? PrivacyManager.cRestrictionCacheTimeoutMs : 0) / 1000));
+					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
 			cbOnce.setChecked(mSelectOnce);
 			LinearLayout.LayoutParams llOnceParams = new LinearLayout.LayoutParams(
 					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
@@ -1433,13 +1438,9 @@ public class PrivacyService {
 							result.restricted = true;
 							mSelectCategory = cbCategory.isChecked();
 							mSelectOnce = cbOnce.isChecked();
-							if (cbOnce.isChecked()) {
-								Util.log(null, Log.WARN, "Deny once " + restriction);
-								if (restriction.extra == null)
-									result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
-								else
-									result.time = -1;
-							} else
+							if (cbOnce.isChecked())
+								onDemandOnce(restriction, result);
+							else
 								onDemandChoice(restriction, cbCategory.isChecked(), true);
 							latch.countDown();
 						}
@@ -1452,18 +1453,23 @@ public class PrivacyService {
 							result.restricted = false;
 							mSelectCategory = cbCategory.isChecked();
 							mSelectOnce = cbOnce.isChecked();
-							if (cbOnce.isChecked()) {
-								Util.log(null, Log.WARN, "Allow once " + restriction);
-								if (restriction.extra == null)
-									result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
-								else
-									result.time = -1;
-							} else
+							if (cbOnce.isChecked())
+								onDemandOnce(restriction, result);
+							else
 								onDemandChoice(restriction, cbCategory.isChecked(), false);
 							latch.countDown();
 						}
 					});
 			return alertDialogBuilder;
+		}
+
+		private void onDemandOnce(final PRestriction restriction, final PRestriction result) {
+			Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction);
+			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
+			CRestriction key = new CRestriction(restriction);
+			if (mAskedCache.containsKey(key))
+				mAskedCache.remove(key);
+			mAskedCache.put(key, key);
 		}
 
 		private void onDemandChoice(PRestriction restriction, boolean category, boolean restrict) {
