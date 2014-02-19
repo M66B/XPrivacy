@@ -15,6 +15,7 @@ Changelog
 * Improved tutorial/info background ([issue](/../../issues/1391))
 * Updated German translation
 * Updated French translation
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
