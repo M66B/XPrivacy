@@ -1,27 +1,25 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Member;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
 
 import android.annotation.SuppressLint;
-import android.app.AndroidAppHelper;
 import android.content.Context;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
 
-import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.IXposedHookZygoteInit;
+import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
@@ -60,7 +58,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// System server
 		try {
 			// frameworks/base/services/java/com/android/server/SystemServer.java
-			Class<?> cSystemServer = findClass("com.android.server.SystemServer", null);
+			Class<?> cSystemServer = Class.forName("com.android.server.SystemServer");
 			Method mMain = cSystemServer.getDeclaredMethod("main", String[].class);
 			XposedBridge.hookMethod(mMain, new XC_MethodHook() {
 				@Override
@@ -352,51 +350,45 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			};
 
 			// Find class
-			Class<?> hookClass;
+			Class<?> hookClass = null;
 			try {
+				// hookClass = Class.forName(hook.getClassName());
 				hookClass = findClass(hook.getClassName(), classLoader);
-				if (hookClass == null)
-					throw new ClassNotFoundException(hook.getClassName());
 			} catch (Throwable ex) {
-				String packageName = AndroidAppHelper.currentPackageName();
-				String restrictionName = hook.getRestrictionName();
-				String message = String.format("%s: class not found: %s for %s/%s uid=%d", packageName,
-						hook.getClassName(), restrictionName, hook.getSpecifier(), Process.myUid());
+				String message = String.format("Class not found for %s", hook);
 				mListHookError.add(message);
 				Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, message);
-				return;
 			}
 
-			// Add hook
-			Set<XC_MethodHook.Unhook> hookSet = new HashSet<XC_MethodHook.Unhook>();
-
+			// Get members
+			List<Member> listMember = new ArrayList<Member>();
 			Class<?> clazz = hookClass;
 			while (clazz != null) {
 				if (hook.getMethodName() == null) {
 					for (Constructor<?> constructor : clazz.getDeclaredConstructors())
 						if (Modifier.isPublic(constructor.getModifiers()) ? hook.isVisible() : !hook.isVisible())
-							hookSet.add(XposedBridge.hookMethod(constructor, methodHook));
-				} else
+							listMember.add(constructor);
+				} else {
 					for (Method method : clazz.getDeclaredMethods())
 						if (method.getName().equals(hook.getMethodName())
 								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
-							hookSet.add(XposedBridge.hookMethod(method, methodHook));
+							listMember.add(method);
+				}
 				clazz = clazz.getSuperclass();
 			}
 
-			// Check if found
-			if (hookSet.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
-				String packageName = AndroidAppHelper.currentPackageName();
-				String restrictionName = hook.getRestrictionName();
-				String message = String.format("%s: method not found: %s.%s for %s/%s uid=%d", packageName,
-						hookClass.getName(), hook.getMethodName(), restrictionName, hook.getSpecifier(),
-						Process.myUid());
+			// Hook members
+			for (Member member : listMember)
+				XposedBridge.hookMethod(member, methodHook);
+
+			// Check if members found
+			if (listMember.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
+				String message = String.format("Method not found for %s", hook);
 				mListHookError.add(message);
 				Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, message);
-				return;
 			}
 		} catch (Throwable ex) {
-			Util.bug(null, ex);
+			Util.bug(hook, ex);
 			mListHookError.add(ex.toString());
 		}
 	}

@@ -108,4 +108,9 @@ public abstract class XHook {
 	protected boolean getRestricted(int uid, String restrictionName, String methodName) throws Throwable {
 		return PrivacyManager.getRestriction(this, uid, restrictionName, methodName, mSecret);
 	}
+
+	@Override
+	public String toString() {
+		return getRestrictionName() + "/" + getSpecifier() + " (" + getClassName() + ")";
+	}
 }
