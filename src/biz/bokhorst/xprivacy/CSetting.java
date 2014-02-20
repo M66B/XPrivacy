@@ -35,6 +35,10 @@ public class CSetting {
 		return (willExpire() ? (mTimestamp + PrivacyManager.cSettingCacheTimeoutMs < new Date().getTime()) : false);
 	}
 
+	public int getUid() {
+		return mUid;
+	}
+
 	public String getValue() {
 		return mValue;
 	}
@@ -49,4 +53,10 @@ public class CSetting {
 	public int hashCode() {
 		return mUid ^ mName.hashCode();
 	}
+
+	@Override
+	public String toString() {
+		return mUid + ":" + mName + "=" + mValue;
+	}
+
 }

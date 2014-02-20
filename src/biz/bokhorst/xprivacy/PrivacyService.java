@@ -1106,6 +1106,11 @@ public class PrivacyService {
 						if (crestriction.getUid() == uid && !crestriction.isExpired())
 							Util.log(null, Log.WARN, "Dump asked=" + crestriction);
 				}
+				synchronized (mSettingCache) {
+					for (CSetting csetting : mSettingCache.keySet())
+						if (csetting.getUid() == uid)
+							Util.log(null, Log.WARN, "Dump csetting=" + csetting);
+				}
 			}
 		}
 
