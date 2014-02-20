@@ -15,8 +15,10 @@ Changelog
 **Next release**
 
 * Attempt to fix interaction between on demand dialog and status bar 
+* Explicitly check return types I/O bridge ([issue](/../../issues/1398))
 * Removed more dependencies on Xposed
 * Improved on demand restricting dialog layout
+* Show SDK version and XPrivacy version from in info popup
 * Prevent on demand restricting after being powered down
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
