@@ -14,6 +14,9 @@ Changelog
 
 **Next release**
 
+* Reduced more dependency on Xposed
+* Improved on demand restricting dialog layout
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.49 TEST**

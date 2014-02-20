@@ -49,7 +49,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="6dip"
-            android:shrinkColumns="*" >
+            android:shrinkColumns="1" >
 
             <TableRow
                 android:layout_width="wrap_content"
@@ -65,9 +65,7 @@
                     android:id="@+id/tvCategory"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="end"
                     android:paddingLeft="6dip"
-                    android:singleLine="true"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -85,9 +83,7 @@
                     android:id="@+id/tvFunction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="start"
                     android:paddingLeft="6dip"
-                    android:singleLine="true"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -106,9 +102,7 @@
                     android:id="@+id/tvParameters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:ellipsize="middle"
                     android:paddingLeft="6dip"
-                    android:singleLine="true"
                     android:textStyle="bold" />
             </TableRow>
         </TableLayout>
