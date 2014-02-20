@@ -6,7 +6,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.os.Binder;
-import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
 import android.util.Log;
@@ -112,8 +111,8 @@ public class XBinder extends XHook {
 
 	private void markIPC(XParam param) {
 		int flags = (Integer) param.args[3];
-		if (flags != 0 && flags != IBinder.FLAG_ONEWAY)
-			Util.log(this, Log.ERROR, "flags=" + Integer.toHexString(flags));
+		if ((flags & ~FLAG_ALL) != 0)
+			Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags));
 		flags |= (mToken << BITS_TOKEN);
 		param.args[3] = flags;
 	}
