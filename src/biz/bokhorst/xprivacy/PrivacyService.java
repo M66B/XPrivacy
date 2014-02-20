@@ -1187,7 +1187,7 @@ public class PrivacyService {
 									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
 											dangerous, result, context, latch);
 									AlertDialog alertDialog = builder.create();
-									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_SYSTEM_DIALOG);
+									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_PHONE);
 									alertDialog.getWindow().setSoftInputMode(
 											WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 									alertDialog.setCancelable(false);

@@ -14,6 +14,7 @@ Changelog
 
 **Next release**
 
+* Attempt to fix interaction between on demand dialog and status bar 
 * Removed more dependencies on Xposed
 * Improved on demand restricting dialog layout
 * Prevent on demand restricting after being powered down
