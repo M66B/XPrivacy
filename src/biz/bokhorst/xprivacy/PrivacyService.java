@@ -587,7 +587,7 @@ public class PrivacyService {
 												values.put("method", restriction.methodName);
 												values.put("restricted", mresult.restricted);
 												values.put("time", new Date().getTime());
-												values.put("extra", restriction.extra);
+												values.put("extra", restriction.extra == null ? "" : restriction.extra);
 												db.insertWithOnConflict(cTableUsage, null, values,
 														SQLiteDatabase.CONFLICT_REPLACE);
 
