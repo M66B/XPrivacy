@@ -9,6 +9,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.49 TEST**
+
 * Fixed restriction caching (performance)
 * Fixed allowing contacts for contact aggregation
 * Fixed select/unselect all ([issue](/../../issues/1390))
@@ -21,8 +25,6 @@ Changelog
 * Updated German translation
 * Updated French translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.48 TEST**
 
