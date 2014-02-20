@@ -716,8 +716,7 @@ public class ActivityShare extends ActivityBase {
 							for (PSetting setting : listAppSetting) {
 								// Bind accounts/contacts to same device
 								if (setting.name.startsWith(PrivacyManager.cSettingAccount)
-										|| setting.name.startsWith(PrivacyManager.cSettingContact)
-										|| setting.name.startsWith(PrivacyManager.cSettingRawContact))
+										|| setting.name.startsWith(PrivacyManager.cSettingContact))
 									setting.name += "." + android_id;
 
 								// Serialize setting
@@ -965,8 +964,7 @@ public class ActivityShare extends ActivityBase {
 
 					// Import accounts/contacts only for same device
 					if (name.startsWith(PrivacyManager.cSettingAccount)
-							|| name.startsWith(PrivacyManager.cSettingContact)
-							|| name.startsWith(PrivacyManager.cSettingRawContact))
+							|| name.startsWith(PrivacyManager.cSettingContact))
 						if (name.endsWith("." + android_id))
 							name = name.replace("." + android_id, "");
 						else
@@ -1789,7 +1787,7 @@ public class ActivityShare extends ActivityBase {
 			// 'errno' => 304, 'error' => 'Too many packages for application'
 			// 'errno' => 305, 'error' => 'No restrictions available'
 			// 'errno' => 306, 'error' => 'Error retrieving restrictions'
-			// 'errno' => 307, 'error' => 'There is a maximum of five devices per license'
+			// 'errno' => 307, 'error' => 'There is a maximum of ...'
 		}
 	}
 }

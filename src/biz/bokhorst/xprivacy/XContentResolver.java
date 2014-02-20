@@ -130,10 +130,10 @@ public class XContentResolver extends XHook {
 					if (projection != null) {
 						List<String> listProjection = new ArrayList<String>();
 						listProjection.addAll(Arrays.asList(projection));
-						ContactID cid = getIdForUri(uri);
-						if (cid != null && !listProjection.contains(cid.name)) {
+						String cid = getIdForUri(uri);
+						if (cid != null && !listProjection.contains(cid)) {
 							added = true;
-							listProjection.add(cid.name);
+							listProjection.add(cid);
 						}
 						param.args[1] = listProjection.toArray(new String[0]);
 					}
@@ -216,16 +216,14 @@ public class XContentResolver extends XHook {
 					MatrixCursor result = new MatrixCursor(listColumn.toArray(new String[0]));
 
 					// Filter rows
-					ContactID cid = getIdForUri(uri);
-					int iid = (cid == null ? -1 : cursor.getColumnIndex(cid.name));
+					String cid = getIdForUri(uri);
+					int iid = (cid == null ? -1 : cursor.getColumnIndex(cid));
 					if (iid >= 0)
 						while (cursor.moveToNext()) {
 							// Check if allowed
 							long id = cursor.getLong(iid);
-							String settingName = (cid.raw ? PrivacyManager.cSettingRawContact
-									: PrivacyManager.cSettingContact);
-							boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(), settingName + id,
-									false, true);
+							boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(),
+									PrivacyManager.cSettingContact + id, false, true);
 							if (allowed)
 								copyColumns(cursor, result, listColumn.size());
 						}
@@ -335,25 +333,15 @@ public class XContentResolver extends XHook {
 		}
 	}
 
-	private static class ContactID {
-		public String name;
-		public boolean raw;
-
-		public ContactID(String _name, boolean _raw) {
-			name = _name;
-			raw = _raw;
-		}
-	}
-
-	private ContactID getIdForUri(String uri) {
+	private String getIdForUri(String uri) {
 		if (uri.startsWith("content://com.android.contacts/contacts"))
-			return new ContactID("_id", false);
+			return "_id";
 		else if (uri.startsWith("content://com.android.contacts/data"))
-			return new ContactID("contact_id", false);
+			return "contact_id";
 		else if (uri.startsWith("content://com.android.contacts/phone_lookup"))
-			return new ContactID("_id", false);
+			return "_id";
 		else if (uri.startsWith("content://com.android.contacts/raw_contacts"))
-			return new ContactID("contact_id", false);
+			return "contact_id";
 		else
 			Util.log(this, Log.ERROR, "Unexpected uri=" + uri);
 		return null;

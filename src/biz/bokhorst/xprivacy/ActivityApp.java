@@ -814,19 +814,6 @@ public class ActivityApp extends ActivityBase {
 								// Contact
 								PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingContact
 										+ mIds[whichButton], Boolean.toString(isChecked));
-
-								// Raw contacts
-								Cursor cursor = getContentResolver().query(ContactsContract.RawContacts.CONTENT_URI,
-										new String[] { ContactsContract.RawContacts._ID },
-										ContactsContract.RawContacts.CONTACT_ID + "=?",
-										new String[] { String.valueOf(mIds[whichButton]) }, null);
-								try {
-									while (cursor.moveToNext())
-										PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingRawContact
-												+ cursor.getLong(0), Boolean.toString(isChecked));
-								} finally {
-									cursor.close();
-								}
 							}
 						});
 				alertDialogBuilder.setPositiveButton(getString(R.string.msg_done),
