@@ -54,7 +54,7 @@ public class ActivityBase extends Activity {
 		return mCheck[1];
 	}
 
-	private Bitmap getFullCheckBox() {
+	protected Bitmap getFullCheckBox() {
 		if (mCheck == null)
 			buildCheckBoxes();
 		return mCheck[2];

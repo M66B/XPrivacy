@@ -416,8 +416,9 @@ public class PrivacyManager {
 		// Apply template
 		for (String restrictionName : PrivacyManager.getRestrictions()) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-			if (PrivacyManager.getSettingBool(0, templateName, !ondemand, false))
-				PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
+			String templateValue = PrivacyManager.getSetting(0, templateName, "false+ask", false);
+			PrivacyManager.setRestriction(uid, restrictionName, null, templateValue.contains("true"),
+					!ondemand || templateValue.contains("asked"));
 		}
 	}
 
