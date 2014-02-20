@@ -142,7 +142,6 @@ public class XPackageManager extends XHook {
 			return false;
 		}
 
-		String name = PrivacyManager.cSettingApplication + packageName;
-		return PrivacyManager.getSettingBool(uid, name, false, true);
+		return PrivacyManager.isWhitelisted(uid, PrivacyManager.cWhitelistApplication, packageName, true);
 	}
 }

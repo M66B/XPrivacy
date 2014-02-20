@@ -715,8 +715,8 @@ public class ActivityShare extends ActivityBase {
 							List<PSetting> listAppSetting = PrivacyManager.getSettingList(uid);
 							for (PSetting setting : listAppSetting) {
 								// Bind accounts/contacts to same device
-								if (setting.name.startsWith(PrivacyManager.cSettingAccount)
-										|| setting.name.startsWith(PrivacyManager.cSettingContact))
+								if (setting.name.startsWith(PrivacyManager.cWhitelistAccount)
+										|| setting.name.startsWith(PrivacyManager.cWhitelistContact))
 									setting.name += "." + android_id;
 
 								// Serialize setting
@@ -963,8 +963,8 @@ public class ActivityShare extends ActivityBase {
 					String value = attributes.getValue("Value");
 
 					// Import accounts/contacts only for same device
-					if (name.startsWith(PrivacyManager.cSettingAccount)
-							|| name.startsWith(PrivacyManager.cSettingContact))
+					if (name.startsWith(PrivacyManager.cWhitelistAccount)
+							|| name.startsWith(PrivacyManager.cWhitelistContact))
 						if (name.endsWith("." + android_id))
 							name = name.replace("." + android_id, "");
 						else
@@ -1321,8 +1321,8 @@ public class ActivityShare extends ActivityBase {
 						AccountManager accountManager = AccountManager.get(ActivityShare.this);
 						for (Account account : accountManager.getAccounts()) {
 							String sha1 = Util.sha1(account.name + account.type);
-							boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
-									PrivacyManager.cSettingAccount + sha1, false, false);
+							boolean allowed = PrivacyManager.isWhitelisted(appInfo.getUid(),
+									PrivacyManager.cWhitelistAccount, sha1, false);
 							if (allowed) {
 								allowedAccounts = true;
 								break;
@@ -1334,8 +1334,8 @@ public class ActivityShare extends ActivityBase {
 						for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this,
 								null))
 							for (String packageName : aAppInfo.getPackageName()) {
-								boolean allowed = PrivacyManager.getSettingBool(aAppInfo.getUid(),
-										PrivacyManager.cSettingApplication + packageName, false, false);
+								boolean allowed = PrivacyManager.isWhitelisted(aAppInfo.getUid(),
+										PrivacyManager.cWhitelistApplication, packageName, false);
 								if (allowed) {
 									allowedApplications = true;
 									break;
@@ -1350,8 +1350,8 @@ public class ActivityShare extends ActivityBase {
 							try {
 								while (cursor.moveToNext()) {
 									long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-									boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
-											PrivacyManager.cSettingContact + id, false, false);
+									boolean allowed = PrivacyManager.isWhitelisted(appInfo.getUid(),
+											PrivacyManager.cWhitelistContact, Long.toString(id), false);
 									if (allowed) {
 										allowedContacts = true;
 										break;
