@@ -388,6 +388,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
+		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
 		menu.findItem(R.id.menu_export).setEnabled(mounted);
 		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
@@ -446,6 +447,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
 			switch (item.getItemId()) {
+			case R.id.menu_dump:
+				optionDump();
+				return true;
 			case R.id.menu_help:
 				optionHelp();
 				return true;
@@ -780,6 +784,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
+	}
+
+	private void optionDump() {
+		try {
+			PrivacyService.getClient().dump(0);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 	}
 
 	private void optionHelp() {

@@ -26,4 +26,5 @@ interface IPrivacyService {
 
 	void clear();
 	void reboot();
+	void dump(int uid);
 }

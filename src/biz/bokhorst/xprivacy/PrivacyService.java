@@ -1095,6 +1095,24 @@ public class PrivacyService {
 			}
 		}
 
+		@Override
+		public void dump(int uid) throws RemoteException {
+			if (uid == 0) {
+
+			} else {
+				synchronized (mRestrictionCache) {
+					for (CRestriction crestriction : mRestrictionCache.keySet())
+						if (crestriction.getUid() == uid)
+							Util.log(null, Log.WARN, "Dump crestriction=" + crestriction);
+				}
+				synchronized (mAskedOnceCache) {
+					for (CRestriction crestriction : mAskedOnceCache.keySet())
+						if (crestriction.getUid() == uid && !crestriction.isExpired())
+							Util.log(null, Log.WARN, "Dump asked=" + crestriction);
+				}
+			}
+		}
+
 		// Helper methods
 
 		private void onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
@@ -1152,9 +1170,11 @@ public class PrivacyService {
 									return;
 								}
 						}
-						if (mAskedOnceCache.containsKey(key) && !mAskedOnceCache.get(key).isExpired()) {
-							Util.log(null, Log.WARN, "Already asked once " + restriction);
-							return;
+						synchronized (mAskedOnceCache) {
+							if (mAskedOnceCache.containsKey(key) && !mAskedOnceCache.get(key).isExpired()) {
+								Util.log(null, Log.WARN, "Already asked once " + restriction);
+								return;
+							}
 						}
 
 						final AlertDialogHolder holder = new AlertDialogHolder();
@@ -1461,9 +1481,11 @@ public class PrivacyService {
 			Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction);
 			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 			CRestriction key = new CRestriction(restriction, restriction.extra);
-			if (mAskedOnceCache.containsKey(key))
-				mAskedOnceCache.remove(key);
-			mAskedOnceCache.put(key, key);
+			synchronized (mAskedOnceCache) {
+				if (mAskedOnceCache.containsKey(key))
+					mAskedOnceCache.remove(key);
+				mAskedOnceCache.put(key, key);
+			}
 		}
 
 		private void onDemandChoice(PRestriction restriction, boolean category, boolean restrict) {

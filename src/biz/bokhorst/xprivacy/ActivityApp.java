@@ -322,11 +322,11 @@ public class ActivityApp extends ActivityBase {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		// Accounts
 		boolean accountsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cAccounts, null).restricted;
 		boolean appsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cSystem, null).restricted;
 		boolean contactsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cContacts, null).restricted;
 
+		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
 		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
 		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
@@ -374,6 +374,9 @@ public class ActivityApp extends ActivityBase {
 					TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
 				else
 					NavUtils.navigateUpTo(this, upIntent);
+			return true;
+		case R.id.menu_dump:
+			optionDump();
 			return true;
 		case R.id.menu_help:
 			optionHelp();
@@ -437,6 +440,14 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	// Options
+
+	private void optionDump() {
+		try {
+			PrivacyService.getClient().dump(mAppInfo.getUid());
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
 
 	private void optionHelp() {
 		// Show help

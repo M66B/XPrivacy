@@ -4,10 +4,10 @@ import java.util.Date;
 
 public class CRestriction {
 	private long mExpiry;
-	public int mUid;
-	public String mRestrictionName;
-	public String mMethodName;
-	public String mExtra;
+	private int mUid;
+	private String mRestrictionName;
+	private String mMethodName;
+	private String mExtra;
 	public boolean restricted;
 	public boolean asked;
 
@@ -67,5 +67,10 @@ public class CRestriction {
 		if (mExtra != null)
 			hash = hash ^ mExtra.hashCode();
 		return hash;
+	}
+
+	@Override
+	public String toString() {
+		return mUid + ":" + mRestrictionName + "/" + mMethodName + "(" + mExtra + ")" + "=" + restricted + "/" + asked;
 	}
 }
