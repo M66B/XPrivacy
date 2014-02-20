@@ -14,8 +14,9 @@ Changelog
 
 **Next release**
 
-* Reduced more dependency on Xposed
+* Removed more dependencies on Xposed
 * Improved on demand restricting dialog layout
+* Prevent on demand restricting after being powered down
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
