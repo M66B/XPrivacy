@@ -41,6 +41,7 @@
     <string name="menu_accounts">許可するアカウントを選択</string>
     <string name="menu_applications">許可するアプリを選択</string>
     <string name="menu_contacts">許可する電話の連絡先を選択</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">チュートリアル</string>
     <string name="menu_exclude">除外する</string>
     <string name="menu_close">閉じる</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">テンプレートを適用しました</string>
     <string name="msg_saved_to" formatted="false">%sに保存されました</string>
     <string name="msg_no_restrictions">アクティブな制限は見つかりませんでした</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">続行しますか</string>
     <string name="msg_select">アプリケーションを選択して下さい</string>
     <string name="msg_limit">%dより少ないアプリを選択して下さい</string>
@@ -98,6 +100,7 @@
     <string name="restrict_view">表示 (ブラウザ)</string>
     <string name="title_categories">カテゴリー</string>
     <string name="title_restrict">チェックで制限:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">データ使用有りを表示</string>
     <string name="title_finternet">ネットアクセス有りを表示</string>
     <string name="title_fpermission">権限有りを表示</string>
@@ -118,6 +121,7 @@
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">カテゴリー全体に適用する</string>
     <string name="title_once">%1$s秒で一回</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">許可</string>
     <string name="title_deny">拒否</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

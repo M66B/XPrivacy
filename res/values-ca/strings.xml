@@ -41,6 +41,7 @@
     <string name="menu_accounts">Selecciona comptes a permetre</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Selecciona contactes a permetre</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Esteu segur?</string>
     <string name="msg_select">Please select some applications</string>
     <string name="msg_limit">Please select fewer than %d applications</string>
@@ -96,6 +98,7 @@
     <string name="restrict_view">Vista (navegador)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Activa per a restringir:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtra per ús de dades</string>
     <string name="title_finternet">Filtra per accés a Internet</string>
     <string name="title_fpermission">Filtra per permís</string>
@@ -116,6 +119,7 @@
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

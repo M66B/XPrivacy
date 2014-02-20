@@ -636,9 +636,9 @@ public class PrivacyProvider extends ContentProvider {
 
 					// Decode setting
 					String[] component = name.split("\\.");
-					if (name.startsWith(PrivacyManager.cWhitelistAccount)
-							|| name.startsWith(PrivacyManager.cWhitelistApplication)
-							|| name.startsWith(PrivacyManager.cWhitelistContact)) {
+					if (name.startsWith(Meta.cWhitelistAccount)
+							|| name.startsWith(Meta.cWhitelistApplication)
+							|| name.startsWith(Meta.cWhitelistContact)) {
 						try {
 							// name.uid.key
 							uid = Integer.parseInt(component[1]);

@@ -41,6 +41,7 @@
     <string name="menu_accounts">Valitse sallittavat tilit</string>
     <string name="menu_applications">Valitse sallittavat applikaatiot</string>
     <string name="menu_contacts">Valitse sallittavat kontaktit</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">Template applied</string>
     <string name="msg_saved_to" formatted="false">Saved to %s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Oletko varma?</string>
     <string name="msg_select">Please select some applications</string>
     <string name="msg_limit">Please select fewer than %d applications</string>
@@ -97,6 +99,7 @@
     <string name="restrict_view">Katso (selaimessa)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Valitse rajoittaaksesi:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Suodata datan käyttöön</string>
     <string name="title_finternet">Suodata internet yhteyksiin</string>
     <string name="title_fpermission">Suodata käyttöoikeuksiin</string>
@@ -117,6 +120,7 @@
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

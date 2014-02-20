@@ -41,6 +41,7 @@
     <string name="menu_accounts">Оберіть дозволені облікові записи</string>
     <string name="menu_applications">Оберіть дозволені програми</string>
     <string name="menu_contacts">Оберіть дозволені контакти</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Навчання</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">Шаблон застосовано</string>
     <string name="msg_saved_to" formatted="false">Збережено в %s</string>
     <string name="msg_no_restrictions">Не знайдено обмежень</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Ви впевнені?</string>
     <string name="msg_select">Please select some applications</string>
     <string name="msg_limit">Please select fewer than %d applications</string>
@@ -98,6 +100,7 @@
     <string name="restrict_view">Перегляд (браузер)</string>
     <string name="title_categories">Категорії</string>
     <string name="title_restrict">Позначте для заборони:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">що використовують дані</string>
     <string name="title_finternet">з доступом до Інтернету</string>
     <string name="title_fpermission">з дозволами</string>
@@ -118,6 +121,7 @@
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

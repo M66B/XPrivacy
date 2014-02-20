@@ -41,6 +41,7 @@
     <string name="menu_accounts">Velg konto som skal tillates</string>
     <string name="menu_applications">Velg apper som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Innføring</string>
     <string name="menu_exclude">Ekskluder</string>
     <string name="menu_close">Lukk</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">Skjema i bruk</string>
     <string name="msg_saved_to" formatted="false">Lagre till %s</string>
     <string name="msg_no_restrictions">Ingen restriksjoner funnet</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Er du sikker?</string>
     <string name="msg_select">Vennligst velg noen apper</string>
     <string name="msg_limit">Vennligst velg mindre enn %d apper</string>
@@ -96,6 +98,7 @@
     <string name="restrict_view">Betrakte (nettleser)</string>
     <string name="title_categories">Kategorier</string>
     <string name="title_restrict">Marker for å blokkere:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtrer etter databruk</string>
     <string name="title_finternet">Filtrer etter Internett bruk</string>
     <string name="title_fpermission">Filtrer etter tillatelse</string>
@@ -116,6 +119,7 @@
     <string name="title_parameters">Parametere:</string>
     <string name="title_applycat">Bruk for hele kategorien</string>
     <string name="title_once">En gang i %1$s sekunder</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Tillat</string>
     <string name="title_deny">Nekt</string>
     <string name="title_pleasesubmit">Vennligst last opp restriksjonene dine for å hjelpe andre</string>

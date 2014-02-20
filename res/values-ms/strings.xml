@@ -41,6 +41,7 @@
     <string name="menu_accounts">Pilih akaun yang dibenarkan</string>
     <string name="menu_applications">Pilih aplikasi yang dibenarkan</string>
     <string name="menu_contacts">Pilih hubungan yang dibenarkan</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Bimbingan</string>
     <string name="menu_exclude">Kecualikan</string>
     <string name="menu_close">Tutup</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">Template dilaksanakan</string>
     <string name="msg_saved_to" formatted="false">Disimpan di %s</string>
     <string name="msg_no_restrictions">Tiada sekatan ditemui</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Anda pasti?</string>
     <string name="msg_select">Sila pilih beberapa aplikasi</string>
     <string name="msg_limit">Sila pilih kurang daripada %d applikasi</string>
@@ -98,6 +100,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="restrict_view" tools:ignore="UnusedResources">Tinjauan (pelayar)</string>
     <string name="title_categories" tools:ignore="UnusedResources">Kategori</string>
     <string name="title_restrict">Tanda untuk sekat:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Tapis data digunakan</string>
     <string name="title_finternet">Tapis internet diakses</string>
     <string name="title_fpermission">Tapis kebenaran</string>
@@ -118,6 +121,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="title_parameters">Parameter:</string>
     <string name="title_applycat">Laksanakan ke seluruh kategori</string>
     <string name="title_once">Sekali untuk %1$s saat</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Benarkan</string>
     <string name="title_deny">Tidak dibenarkan</string>
     <string name="title_pleasesubmit">Sila kemukakan sekatan anda untuk menolong orang lain</string>

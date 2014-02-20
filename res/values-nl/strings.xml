@@ -41,6 +41,7 @@
     <string name="menu_accounts">Sta accounts toe</string>
     <string name="menu_applications">Sta applicaties toe</string>
     <string name="menu_contacts">Sta contacten toe</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Zelfstudie</string>
     <string name="menu_exclude">Sluit uit</string>
     <string name="menu_close">Sluiten</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">Sjabloon toegepast</string>
     <string name="msg_saved_to" formatted="false">Bewaard als %s</string>
     <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Zeker weten?</string>
     <string name="msg_select">Selecter a.u.b enige applicaties</string>
     <string name="msg_limit">Selecteer a.u.b. minder dan %d applicaties</string>
@@ -98,6 +100,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_view">Tonen (browser)</string>
     <string name="title_categories">Categorieën</string>
     <string name="title_restrict">Vink aan om te beperken:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filter op gegevensgebruik</string>
     <string name="title_finternet">Filter op internettoegang</string>
     <string name="title_fpermission">Filter op rechten</string>
@@ -118,6 +121,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Pas toe op gehele categorie</string>
     <string name="title_once">Één keer voor %1$s seconden</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Toestaan</string>
     <string name="title_deny">Blokkeren</string>
     <string name="title_pleasesubmit">Stuur a.u.b. uw beperkingen op om anderen te helpen</string>

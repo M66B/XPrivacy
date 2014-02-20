@@ -41,6 +41,7 @@
     <string name="menu_accounts">选择允许访问的帐号</string>
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">界面功能指引</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">关闭</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">已应用模版</string>
     <string name="msg_saved_to" formatted="false">保存到%s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">是否确定？</string>
     <string name="msg_select">请选择一些应用程序</string>
     <string name="msg_limit">请不要选择%d个以上应用程序</string>
@@ -98,6 +100,7 @@
     <string name="restrict_view">显示网页（内置浏览器）</string>
     <string name="title_categories">类别</string>
     <string name="title_restrict">勾选表示限制:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">曾经使用</string>
     <string name="title_finternet">网络权限</string>
     <string name="title_fpermission">含有权限</string>
@@ -118,6 +121,7 @@
     <string name="title_parameters">参数:</string>
     <string name="title_applycat">应用到整个权限类别</string>
     <string name="title_once">一次操作生效 %1$s 秒</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>
     <string name="title_pleasesubmit">请发送你的应用限制信息来帮助其他人</string>

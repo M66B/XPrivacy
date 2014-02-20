@@ -41,6 +41,7 @@
     <string name="menu_accounts">ریپیدان به به کار هینانی ئه م حيسابانه</string>
     <string name="menu_applications">ریپیدان به به کارهینانی ئه م به رنامانه</string>
     <string name="menu_contacts">ریپیدان به به کارهینانی ئه م ژماره ته له فونانه</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">فیربون</string>
     <string name="menu_exclude">جیاکردن</string>
     <string name="menu_close">داخستن</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">قالبه کان به کارهینران</string>
     <string name="msg_saved_to" formatted="false">زانیاریه کان هه ل گیران له %s</string>
     <string name="msg_no_restrictions">هیچ زانیارییه کی سنوردار کراو نه دوزرایه وه</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">ئایا دلنیایت؟</string>
     <string name="msg_select">ته کایه چه ند به رنامه یک هه لبژیره</string>
     <string name="msg_limit">ته کایه ژماره یه کی که متر له %d به رنامه هه لبژیره</string>
@@ -97,6 +99,7 @@
     <string name="restrict_view" tools:ignore="UnusedResources">View (browser)</string>
     <string name="title_categories" tools:ignore="UnusedResources">پولین کردن</string>
     <string name="title_restrict">هه ل بژیره بوو سنوردارکردنی:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">پالاوتن به هوی داتا به کارهینراوه کان</string>
     <string name="title_finternet">پالاوتنی ئه و به رنامانه ی ئينته ر نيت به كاردينن</string>
     <string name="title_fpermission">پالاوتنی ئه و زانياريانه ى كه ده توانريت به كاربهينرين</string>
@@ -117,6 +120,7 @@
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">بو هه موو به شه که</string>
     <string name="title_once">ته نیا جاریک بو %1$s چرکه</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">ریگه دان</string>
     <string name="title_deny">ریگه نه دان</string>
     <string name="title_pleasesubmit">ته کایه بو یارمه تی دانی که سانی تریش ئه و شتانه ى سنوردارتكردوون به لاو بكه </string>

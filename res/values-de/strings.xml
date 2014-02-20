@@ -41,6 +41,7 @@
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
     <string name="menu_applications">Apps für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Anleitung</string>
     <string name="menu_exclude">Ausschließen</string>
     <string name="menu_close">Schließen</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">Template übernommen</string>
     <string name="msg_saved_to" formatted="false">Gespeichert nach %s</string>
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_select">Bitte wählen Sie einige Apps aus</string>
     <string name="msg_limit">Bitte wählen Sie weniger als %d App(s) aus</string>
@@ -98,6 +100,7 @@
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
     <string name="title_categories">Kategorien</string>
     <string name="title_restrict">Zum Beschränken markieren:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Datennutzung</string>
     <string name="title_finternet">Internetzugang</string>
     <string name="title_fpermission">Berechtigungen</string>
@@ -118,6 +121,7 @@
     <string name="title_parameters">Parameter:</string>
     <string name="title_applycat">Auf die gesamte Kategorie anwenden</string>
     <string name="title_once">Nur einmal für %1$s Sekunden</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Zulassen</string>
     <string name="title_deny">Blockieren</string>
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter um anderen zu helfen</string>

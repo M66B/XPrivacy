@@ -121,9 +121,6 @@ public class PrivacyManager {
 	public final static String cSettingLac = "Lac";
 
 	public final static String cSettingTemplate = "Template";
-	public final static String cWhitelistAccount = "Account.";
-	public final static String cWhitelistApplication = "Application.";
-	public final static String cWhitelistContact = "Contact.";
 
 	// Special value names
 	public final static String cValueRandom = "#Random#";
@@ -424,11 +421,58 @@ public class PrivacyManager {
 	}
 
 	public static boolean isWhitelisted(int uid, String type, String name, boolean useCache) {
-		return PrivacyManager.getSettingBool(uid, type + name, false, useCache);
+		// For hooks
+		return PrivacyManager.getSettingBool(uid, type + "." + name, false, useCache);
 	}
 
-	public static void setWhitelisted(int uid, String type, String name, boolean whitelist) {
-		PrivacyManager.setSetting(uid, type + name, Boolean.toString(whitelist));
+	public static Boolean checkWhitelist(int uid, String type, String name, boolean useCache) {
+		// For getRestriction we need to be able to indicate whether it is
+		// whitelisted, blacklisted, or not stored.
+		String value = PrivacyManager.getSetting(uid, type + "." + name, "", useCache);
+		Boolean result = null;
+		if (!value.equals(""))
+			result = Boolean.parseBoolean(value);
+		return result;
+	}
+
+	public static void setWhitelisted(int uid, String type, String name, Boolean whitelist) {
+		// whitelist = true means to whitelist, false means to blacklist,
+		// whitelist = null means to ask again (there is currently no function
+		// that deletes a single setting)
+		String value = "";
+		if (whitelist != null)
+			value = Boolean.toString(whitelist);
+		PrivacyManager.setSetting(uid, type + "." + name, value);
+		Util.log(null, Log.WARN, String.format("Setting whitelist for %d (%s) %s %s", uid, type, name, whitelist));
+	}
+
+	public static HashMap<String, Map<String, Boolean>> listWhitelisted(int uid) {
+		Util.log(null, Log.WARN, "Getting whitelists for " + uid);
+		HashMap<String, Map<String, Boolean>> mapWhitelisted = new HashMap<String, Map<String, Boolean>>();
+		for (PSetting setting : getSettingList(uid)) {
+			// Grok the setting to see if it fits the bill
+			String[] components = setting.name.split("\\.");
+			if (components.length < 2)
+				continue;
+			String type = components[0];
+			String name = setting.name.replace(components[0] + ".", "");
+
+			// Don't list accounts, contacts or apps
+			if (type.equals(Meta.cWhitelistAccount) || type.equals(Meta.cWhitelistContact)
+					|| type.equals(Meta.cWhitelistApplication))
+				continue;
+
+			// Don't list inactive whitelists
+			if (setting.value.equals(""))
+				continue;
+
+			// If we get here, add it to the list
+			if (!mapWhitelisted.containsKey(type))
+				mapWhitelisted.put(type, new HashMap<String, Boolean>());
+			mapWhitelisted.get(type).put(name, Boolean.parseBoolean(setting.value));
+			Util.log(null, Log.WARN, String.format("Whitelist for %d (%s) %s = %s", uid, type, name, setting.value));
+		}
+		return mapWhitelisted;
 	}
 
 	// Usage

@@ -41,6 +41,7 @@
     <string name="menu_accounts">Povolené účty aplikace</string>
     <string name="menu_applications">Povolený přístup k aplikacím</string>
     <string name="menu_contacts">Povolené kontakty aplikace</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Příručka</string>
     <string name="menu_exclude">Vyloučit</string>
     <string name="menu_close">Zavřít</string>
@@ -53,6 +54,7 @@
     <string name="msg_applied">Šablona aplikována</string>
     <string name="msg_saved_to" formatted="false">Uloženo do %s</string>
     <string name="msg_no_restrictions">Nebyla nalezena žádná omezení</string>
+    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_select">Vyberte prosím některé aplikace</string>
     <string name="msg_limit">Vyberte prosím méně než %d aplikací</string>
@@ -98,6 +100,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
     <string name="title_categories">Kategorie</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtrovat přístup k datům</string>
     <string name="title_finternet">Filtrovat přístup k internetu</string>
     <string name="title_fpermission">Filtrovat oprávnění</string>
@@ -118,6 +121,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

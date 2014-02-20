@@ -121,6 +121,13 @@
             android:layout_height="wrap_content" >
         </CheckBox>
 
+        <CheckBox
+            android:id="@+id/cbWhitelist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" >
+        </CheckBox>
+
         <ProgressBar
             android:id="@+id/pbProgress"
             style="@android:style/Widget.ProgressBar.Horizontal"
