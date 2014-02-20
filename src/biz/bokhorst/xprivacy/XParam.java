@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Member;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -29,6 +30,12 @@ public class XParam {
 		return xparam;
 	}
 
+	public boolean doesReturn(Class<?> result) {
+		if (this.method instanceof Method)
+			return (((Method) this.method).getReturnType().equals(result));
+		return false;
+	}
+
 	public void setResult(Object result) {
 		mResult = result;
 		mHasResult = true;
@@ -40,6 +47,14 @@ public class XParam {
 
 	public Object getResult() {
 		return mResult;
+	}
+
+	public boolean doesThrow(Class<?> ex) {
+		if (this.method instanceof Method)
+			for (Class<?> t : ((Method) this.method).getExceptionTypes())
+				if (t.equals(ex))
+					return true;
+		return false;
 	}
 
 	public void setThrowable(Throwable ex) {
