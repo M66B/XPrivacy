@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -16,12 +17,14 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            tools:ignore="UseCompoundDrawables" >
 
             <ImageView
                 android:id="@+id/ivAppIcon"
                 android:layout_width="32dip"
-                android:layout_height="32dip" />
+                android:layout_height="32dip"
+                tools:ignore="ContentDescription" />
 
             <TextView
                 android:id="@+id/tvAppName"
