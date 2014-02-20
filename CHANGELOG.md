@@ -7,6 +7,11 @@ Changelog
 * BETA: new or updated features with a lower risk for bugs
 * STABLE: all known bugs fixed; low risk for bugs
 
+**Downloads**
+
+* [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
+* [GitHub releases](https://github.com/M66B/XPrivacy/releases)
+
 **Next release**
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
