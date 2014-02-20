@@ -186,7 +186,7 @@ public class PrivacyService {
 				Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);
 				mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, cServiceName));
 			} catch (Throwable ex) {
-				ex.printStackTrace();
+				Util.bug(null, ex);
 			}
 
 		// Disable disk strict mode
