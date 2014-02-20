@@ -1118,10 +1118,8 @@ public class PrivacyService {
 				if (mHandler == null)
 					return;
 
+				// Check for exceptions
 				if (hook != null && !hook.canOnDemand())
-					return;
-
-				if (!XActivityManagerService.canOnDemand())
 					return;
 
 				// Check if enabled
@@ -1155,6 +1153,10 @@ public class PrivacyService {
 					Util.log(null, Log.WARN, "On demand " + restriction);
 					mOndemandSemaphore.acquireUninterruptibly();
 					try {
+						// Check if activity manager agrees
+						if (!XActivityManagerService.canOnDemand())
+							return;
+
 						Util.log(null, Log.WARN, "On demanding " + restriction);
 
 						// Check if not asked before
