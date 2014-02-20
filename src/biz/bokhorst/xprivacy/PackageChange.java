@@ -48,13 +48,8 @@ public class PackageChange extends BroadcastReceiver {
 								PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
 							// Restrict new non-system apps
-							if (!appInfo.isSystem()) {
-								for (String restrictionName : PrivacyManager.getRestrictions()) {
-									String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-									if (PrivacyManager.getSettingBool(0, templateName, !ondemand, false))
-										PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
-								}
-							}
+							if (!appInfo.isSystem())
+								PrivacyManager.applyTemplate(uid);
 						}
 
 						// Mark as new/changed

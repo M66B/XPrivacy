@@ -458,24 +458,8 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	private void optionApply() {
-		final boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
-
-		// Get toggle
-		// TOD: getRestrictionList
-		boolean some = false;
-		final List<String> listRestriction = PrivacyManager.getRestrictions();
-		for (String restrictionName : listRestriction) {
-			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-			if (PrivacyManager.getSettingBool(0, templateName, !ondemand, false))
-				if (PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null).restricted) {
-					some = true;
-					break;
-				}
-		}
-		final boolean restrict = !some;
-
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(getString(restrict ? R.string.menu_apply : R.string.menu_clear_all));
+		alertDialogBuilder.setTitle(getString(R.string.menu_apply));
 		alertDialogBuilder.setMessage(R.string.msg_sure);
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
@@ -483,11 +467,7 @@ public class ActivityApp extends ActivityBase {
 			public void onClick(DialogInterface dialog, int which) {
 				// Do toggle
 				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-				for (String restrictionName : listRestriction) {
-					String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-					if (PrivacyManager.getSettingBool(0, templateName, !ondemand, false))
-						PrivacyManager.setRestriction(mAppInfo.getUid(), restrictionName, null, restrict, false);
-				}
+				PrivacyManager.applyTemplate(mAppInfo.getUid());
 				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 
 				// Refresh display

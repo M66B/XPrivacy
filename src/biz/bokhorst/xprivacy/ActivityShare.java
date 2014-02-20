@@ -630,11 +630,7 @@ public class ActivityShare extends ActivityBase {
 					if (restriction == null && mSomeRestricted)
 						PrivacyManager.deleteRestrictions(uid, null);
 					else if (restriction == null)
-						for (String restrictionName : PrivacyManager.getRestrictions()) {
-							String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-							if (PrivacyManager.getSettingBool(0, templateName, true, false))
-								PrivacyManager.setRestriction(uid, restrictionName, null, !mSomeRestricted, false);
-						}
+						PrivacyManager.applyTemplate(uid);
 					else
 						PrivacyManager.setRestriction(uid, restriction, null, !mSomeRestricted, false);
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
