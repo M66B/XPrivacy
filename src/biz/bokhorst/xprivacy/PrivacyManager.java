@@ -121,9 +121,9 @@ public class PrivacyManager {
 	public final static String cSettingLac = "Lac";
 
 	public final static String cSettingTemplate = "Template";
-	public final static String cSettingAccount = "Account.";
-	public final static String cSettingApplication = "Application.";
-	public final static String cSettingContact = "Contact.";
+	public final static String cWhitelistAccount = "Account.";
+	public final static String cWhitelistApplication = "Application.";
+	public final static String cWhitelistContact = "Contact.";
 
 	// Special value names
 	public final static String cValueRandom = "#Random#";
@@ -421,6 +421,14 @@ public class PrivacyManager {
 			boolean asked = templateValue.contains("asked");
 			PrivacyManager.setRestriction(uid, restrictionName, null, restrict, asked || !ondemand);
 		}
+	}
+
+	public static boolean isWhitelisted(int uid, String type, String name, boolean useCache) {
+		return PrivacyManager.getSettingBool(uid, type + name, false, useCache);
+	}
+
+	public static void setWhitelisted(int uid, String type, String name, boolean whitelist) {
+		PrivacyManager.setSetting(uid, type + name, Boolean.toString(whitelist));
 	}
 
 	// Usage
