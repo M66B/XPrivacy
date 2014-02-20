@@ -1272,7 +1272,7 @@ public class ActivityApp extends ActivityBase {
 						View layout = inflator.inflate(R.layout.popup, null);
 
 						TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
-						tvTitle.setText(md.getName());
+						tvTitle.setText(md.getName() + " (" + md.getSdk() + ")");
 
 						String text = md.getAnnotation();
 						String[] permissions = md.getPermissions();
@@ -1282,6 +1282,9 @@ public class ActivityApp extends ActivityBase {
 								text += "-";
 							else
 								text += TextUtils.join("<br />", permissions);
+						}
+						if (md.getFrom() != null) {
+							text += "<br /><br />" + md.getFrom();
 						}
 
 						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
