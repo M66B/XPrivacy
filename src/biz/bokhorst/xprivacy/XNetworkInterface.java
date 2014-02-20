@@ -1,7 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
-
 import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
@@ -105,7 +103,8 @@ public class XNetworkInterface extends XHook {
 						for (InterfaceAddress address : listAddress) {
 							// address
 							try {
-								Field fieldAddress = findField(InterfaceAddress.class, "address");
+								Field fieldAddress = InterfaceAddress.class.getDeclaredField("address");
+								fieldAddress.setAccessible(true);
 								fieldAddress.set(address,
 										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "InetAddress"));
 							} catch (Throwable ex) {
@@ -114,7 +113,9 @@ public class XNetworkInterface extends XHook {
 
 							// broadcastAddress
 							try {
-								Field fieldBroadcastAddress = findField(InterfaceAddress.class, "broadcastAddress");
+								Field fieldBroadcastAddress = InterfaceAddress.class
+										.getDeclaredField("broadcastAddress");
+								fieldBroadcastAddress.setAccessible(true);
 								fieldBroadcastAddress.set(address,
 										PrivacyManager.getDefacedProp(Binder.getCallingUid(), "InetAddress"));
 							} catch (Throwable ex) {

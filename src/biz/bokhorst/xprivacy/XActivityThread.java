@@ -1,7 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import static de.robv.android.xposed.XposedHelpers.findField;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -121,7 +119,8 @@ public class XActivityThread extends XHook {
 				// Get intent
 				Intent intent = null;
 				try {
-					Field fieldIntent = findField(param.args[0].getClass(), "intent");
+					Field fieldIntent = param.args[0].getClass().getDeclaredField("intent");
+					fieldIntent.setAccessible(true);
 					intent = (Intent) fieldIntent.get(param.args[0]);
 				} catch (Throwable ex) {
 					Util.bug(this, ex);
