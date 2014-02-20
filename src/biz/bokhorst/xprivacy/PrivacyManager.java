@@ -407,6 +407,21 @@ public class PrivacyManager {
 		setSetting(uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 	}
 
+	public static void applyTemplate(int uid) {
+		// Enable on-demand
+		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+		if (ondemand)
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
+
+		// Apply template
+		for (String restrictionName : PrivacyManager.getRestrictions()) {
+			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+			String templateValue = PrivacyManager.getSetting(0, templateName, "false+ask", false);
+			PrivacyManager.setRestriction(uid, restrictionName, null, templateValue.contains("true"),
+					!ondemand || templateValue.contains("asked"));
+		}
+	}
+
 	// Usage
 
 	public static long getUsage(int uid, String restrictionName, String methodName) {

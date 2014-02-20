@@ -619,31 +619,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	}
 
 	private void optionTemplate() {
-		// Get restriction categories
-		TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(this);
-		List<String> listRestrictionName = new ArrayList<String>(tmRestriction.navigableKeySet());
-		final List<String> listLocalizedTitle = new ArrayList<String>(tmRestriction.values());
-
-		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
-
-		CharSequence[] options = new CharSequence[listLocalizedTitle.size()];
-		listRestrictionName.toArray(options);
-		boolean[] selection = new boolean[listLocalizedTitle.size()];
-		for (int i = 0; i < listLocalizedTitle.size(); i++) {
-			String templateName = PrivacyManager.cSettingTemplate + "." + listLocalizedTitle.get(i);
-			selection[i] = PrivacyManager.getSettingBool(0, templateName, !ondemand, false);
-		}
-
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(R.string.menu_template);
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setMultiChoiceItems(options, selection, new DialogInterface.OnMultiChoiceClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
-				String templateName = PrivacyManager.cSettingTemplate + "." + listLocalizedTitle.get(whichButton);
-				PrivacyManager.setSetting(0, templateName, Boolean.toString(isChecked));
-			}
-		});
+		ListView lvTemplate = new ListView(this);
+		lvTemplate.setAdapter(new TemplateListAdapter(this, R.layout.templateentry));
+		alertDialogBuilder.setView(lvTemplate);
 		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -1085,6 +1067,90 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private class SpinnerAdapter extends ArrayAdapter<String> {
 		public SpinnerAdapter(Context context, int textViewResourceId) {
 			super(context, textViewResourceId);
+		}
+	}
+
+	@SuppressLint("DefaultLocale")
+	private class TemplateListAdapter extends ArrayAdapter<String> {
+		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		TreeMap<String, String> tmRestriction;
+		List<String> listRestrictionName;
+		List<String> listLocalizedTitle;
+		boolean ondemand;
+
+		public TemplateListAdapter(Context context, int resource) {
+			super(context, resource, new ArrayList<String>());
+
+			// Get restriction categories
+			tmRestriction = PrivacyManager.getRestrictions(context);
+			listRestrictionName = new ArrayList<String>(tmRestriction.values());
+			listLocalizedTitle = new ArrayList<String>(tmRestriction.navigableKeySet());
+
+			ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+
+			this.addAll(listLocalizedTitle);
+		}
+
+		private class ViewHolder {
+			private View row;
+			public TextView tvRestriction;
+			public boolean restricted;
+			public boolean asked;
+
+			public ViewHolder(View theRow, int thePosition) {
+				row = theRow;
+				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
+			}
+		}
+
+		@Override
+		public View getView(int position, View convertView, ViewGroup parent) {
+			final ViewHolder holder;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.templateentry, null);
+				holder = new ViewHolder(convertView, position);
+				convertView.setTag(holder);
+			} else {
+				holder = (ViewHolder) convertView.getTag();
+			}
+
+			// Get info
+			final String templateName = PrivacyManager.cSettingTemplate + "." + listRestrictionName.get(position);
+			String value = PrivacyManager.getSetting(0, templateName, "false+ask", false);
+			holder.restricted = value.contains("true");
+			holder.asked = !ondemand || value.contains("asked");
+			Bitmap check = holder.asked ? (holder.restricted ? getFullCheckBox() : getOffCheckBox())
+					: getOnDemandCheckBox();
+
+			// Set data
+			holder.tvRestriction.setText(listLocalizedTitle.get(position));
+			holder.tvRestriction.setCompoundDrawablesWithIntrinsicBounds(null, null, new BitmapDrawable(getResources(),
+					check), null);
+
+			holder.tvRestriction.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					if (holder.restricted && holder.asked) {
+						holder.restricted = false;
+						holder.asked = true;
+					} else if (!holder.restricted && holder.asked) {
+						holder.restricted = false;
+						holder.asked = false;
+					} else {
+						holder.restricted = true;
+						holder.asked = true;
+					}
+					PrivacyManager.setSetting(0, templateName, (holder.restricted ? "true" : "false")
+							+ "+" + (holder.asked ? "asked" : "ask"));
+
+					Bitmap check = holder.asked ? (holder.restricted ? getFullCheckBox() : getOffCheckBox())
+							: getOnDemandCheckBox();
+					holder.tvRestriction.setCompoundDrawablesWithIntrinsicBounds(null, null, new BitmapDrawable(
+							getResources(), check), null);
+				}
+			});
+
+			return convertView;
 		}
 	}
 
