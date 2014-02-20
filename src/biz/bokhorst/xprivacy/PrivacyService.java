@@ -27,8 +27,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteStatement;
-import android.graphics.Paint;
-import android.graphics.Typeface;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
@@ -42,15 +40,13 @@ import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.ViewGroup;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.ScrollView;
-import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -1198,7 +1194,8 @@ public class PrivacyService {
 									holder.dialog = alertDialog;
 
 									// Progress bar
-									final ProgressBar mProgress = (ProgressBar) alertDialog.findViewById(1966);
+									final ProgressBar mProgress = (ProgressBar) alertDialog
+											.findViewById(R.id.pbProgress);
 									mProgress.setMax(cMaxOnDemandDialog * 20);
 									mProgress.setProgress(cMaxOnDemandDialog * 20);
 									Runnable rProgress = new Runnable() {
@@ -1255,152 +1252,37 @@ public class PrivacyService {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
-			int hmargin = resources.getDimensionPixelSize(R.dimen.activity_horizontal_margin);
-			int vmargin = resources.getDimensionPixelSize(R.dimen.activity_vertical_margin);
-			float density = context.getResources().getDisplayMetrics().density;
 
-			// Build view
-			ScrollView scroll = new ScrollView(context);
-			ViewGroup.LayoutParams scrollParam = new ViewGroup.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
-					LinearLayout.LayoutParams.WRAP_CONTENT);
-			scroll.setLayoutParams(scrollParam);
-			scroll.setPadding(hmargin, vmargin, hmargin, vmargin);
+			// Reference views
+			View view = LayoutInflater.from(context.createPackageContext(self, 0)).inflate(R.layout.ondemand, null);
+			ImageView ivAppIcon = (ImageView) view.findViewById(R.id.ivAppIcon);
+			TextView tvAppName = (TextView) view.findViewById(R.id.tvAppName);
+			TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
+			TextView tvFunction = (TextView) view.findViewById(R.id.tvFunction);
+			TextView tvParameters = (TextView) view.findViewById(R.id.tvParameters);
+			TableRow rowParameters = (TableRow) view.findViewById(R.id.rowParameters);
+			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
+			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
+
+			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
-				scroll.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
+				view.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
 
-			// Container
-			LinearLayout llContainer = new LinearLayout(context);
-			llContainer.setOrientation(LinearLayout.VERTICAL);
-			LinearLayout.LayoutParams llContainerParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			llContainer.setLayoutParams(llContainerParams);
+			ivAppIcon.setImageDrawable(appInfo.getIcon(context));
+			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
-			// Container for icon & message
-			LinearLayout llApplication = new LinearLayout(context);
-			llApplication.setOrientation(LinearLayout.HORIZONTAL);
-			LinearLayout.LayoutParams llApplicationParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			llApplication.setLayoutParams(llApplicationParams);
-			{
-				// Application icon
-				ImageView ivApp = new ImageView(context);
-				ivApp.setImageDrawable(appInfo.getIcon(context));
-				LinearLayout.LayoutParams ivAppParams = new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-				ivAppParams.height = (int) (density * 32);
-				ivAppParams.width = (int) (density * 32);
-				ivApp.setLayoutParams(ivAppParams);
-				llApplication.addView(ivApp);
+			int catId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
+			tvCategory.setText(resources.getString(catId));
+			tvFunction.setText(restriction.methodName);
+			if (restriction.extra == null)
+				rowParameters.setVisibility(View.GONE);
+			else
+				tvParameters.setText(restriction.extra);
 
-				// Application name
-				TextView tvApp = new TextView(context);
-				tvApp.setText(TextUtils.join(", ", appInfo.getApplicationName()));
-				tvApp.setTextAppearance(context, android.R.attr.textAppearanceMedium);
-				LinearLayout.LayoutParams tvAppParams = new LinearLayout.LayoutParams(
-						LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-				tvAppParams.setMargins(hmargin / 2, 0, 0, 0);
-				tvApp.setLayoutParams(tvAppParams);
-				llApplication.addView(tvApp);
-			}
-			llContainer.addView(llApplication);
-
-			// Attempt
-			TextView titleAttempt = new TextView(context);
-			titleAttempt.setText(resources.getString(R.string.title_attempt));
-			LinearLayout.LayoutParams tvAttemptParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			tvAttemptParams.setMargins(0, vmargin / 2, 0, 0);
-			titleAttempt.setLayoutParams(tvAttemptParams);
-			titleAttempt.setPaintFlags(titleAttempt.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-			llContainer.addView(titleAttempt);
-
-			// Table for restriction
-			TableLayout table = new TableLayout(context);
-			LinearLayout.LayoutParams llTableParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			table.setLayoutParams(llTableParams);
-			table.setPadding(0, 0, 0, vmargin / 2);
-			table.setShrinkAllColumns(true);
-			{
-				TableRow row1 = new TableRow(context);
-				TableRow row2 = new TableRow(context);
-				TableRow row3 = new TableRow(context);
-
-				TableRow.LayoutParams cellParams0 = new TableRow.LayoutParams(TableRow.LayoutParams.WRAP_CONTENT,
-						TableRow.LayoutParams.WRAP_CONTENT);
-				TableRow.LayoutParams cellParams1 = new TableRow.LayoutParams(0, TableRow.LayoutParams.WRAP_CONTENT, 1);
-				cellParams1.setMargins(hmargin / 2, 0, 0, 0);
-
-				// Category
-				TextView titleCategory = new TextView(context);
-				titleCategory.setText(resources.getString(R.string.title_category));
-				titleCategory.setSingleLine(true);
-				row1.addView(titleCategory, cellParams0);
-
-				TextView category = new TextView(context);
-				int catId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
-				category.setText(resources.getString(catId));
-				category.setTypeface(null, Typeface.BOLD);
-				category.setSingleLine(true);
-				category.setEllipsize(TextUtils.TruncateAt.END);
-				row1.addView(category, cellParams1);
-
-				// Method
-				TextView titleMethod = new TextView(context);
-				titleMethod.setText(resources.getString(R.string.title_function));
-				titleMethod.setSingleLine(true);
-				row2.addView(titleMethod, cellParams0);
-
-				TextView method = new TextView(context);
-				method.setText(restriction.methodName);
-				method.setTypeface(null, Typeface.BOLD);
-				method.setSingleLine(true);
-				method.setEllipsize(TextUtils.TruncateAt.START);
-				row2.addView(method, cellParams1);
-
-				// Arguments
-				if (restriction.extra != null) {
-					TextView titleArguments = new TextView(context);
-					titleArguments.setText(resources.getString(R.string.title_parameters));
-					titleArguments.setSingleLine(true);
-					row3.addView(titleArguments, cellParams0);
-
-					TextView argument = new TextView(context);
-					argument.setText(restriction.extra);
-					argument.setTypeface(null, Typeface.BOLD);
-					argument.setSingleLine(true);
-					argument.setEllipsize(TextUtils.TruncateAt.MIDDLE);
-					row3.addView(argument, cellParams1);
-				}
-
-				TableLayout.LayoutParams rowParams = new TableLayout.LayoutParams(
-						TableLayout.LayoutParams.WRAP_CONTENT, TableLayout.LayoutParams.WRAP_CONTENT);
-
-				table.addView(row1, rowParams);
-				table.addView(row2, rowParams);
-				if (restriction.extra != null)
-					table.addView(row3, rowParams);
-			}
-			llContainer.addView(table);
-
-			// Category check box
-			final CheckBox cbCategory = new CheckBox(context);
-			cbCategory.setText(resources.getString(R.string.title_applycat));
 			cbCategory.setChecked(mSelectCategory);
-			LinearLayout.LayoutParams llCategoryParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			cbCategory.setLayoutParams(llCategoryParams);
-			llContainer.addView(cbCategory);
-
-			// Once check box
-			final CheckBox cbOnce = new CheckBox(context);
+			cbOnce.setChecked(mSelectOnce);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
 					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
-			cbOnce.setChecked(mSelectOnce);
-			LinearLayout.LayoutParams llOnceParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			cbOnce.setLayoutParams(llOnceParams);
-			llContainer.addView(cbOnce);
 
 			// Category and once exclude each other
 			cbCategory.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -1418,31 +1300,10 @@ public class PrivacyService {
 				}
 			});
 
-			// Message
-			TextView tvPlease = new TextView(context);
-			tvPlease.setText(resources.getString(R.string.title_pleasesubmit));
-			tvPlease.setTypeface(null, Typeface.ITALIC);
-			LinearLayout.LayoutParams tvPleaseParams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			tvPlease.setLayoutParams(tvPleaseParams);
-			llContainer.addView(tvPlease);
-
-			// Progress bar
-			ProgressBar pbProgress = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-			pbProgress.setId(1966);
-			pbProgress.setIndeterminate(false);
-			LinearLayout.LayoutParams llProgress = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			llProgress.setMargins(0, vmargin, 0, 0);
-			pbProgress.setLayoutParams(llProgress);
-			llContainer.addView(pbProgress);
-
-			scroll.addView(llContainer);
-
 			// Ask
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
-			alertDialogBuilder.setView(scroll);
+			alertDialogBuilder.setView(view);
 			alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
 			alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
 					new DialogInterface.OnClickListener() {
