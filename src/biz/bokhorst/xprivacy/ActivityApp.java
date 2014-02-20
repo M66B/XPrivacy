@@ -737,8 +737,8 @@ public class ActivityApp extends ActivityBase {
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 								try {
-									PrivacyManager.setWhitelisted(mAppInfo.getUid(), PrivacyManager.cWhitelistApplication,
-											mPackage[whichButton], isChecked);
+									PrivacyManager.setWhitelisted(mAppInfo.getUid(),
+											PrivacyManager.cWhitelistApplication, mPackage[whichButton], isChecked);
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
 									Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
@@ -795,8 +795,8 @@ public class ActivityApp extends ActivityBase {
 			for (Long id : mapContact.keySet()) {
 				mListContact.add(mapContact.get(id));
 				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.isWhitelisted(mAppInfo.getUid(), PrivacyManager.cWhitelistContact, Long.toString(id),
-						false);
+				mSelection[i++] = PrivacyManager.isWhitelisted(mAppInfo.getUid(), PrivacyManager.cWhitelistContact,
+						Long.toString(id), false);
 			}
 			return null;
 		}
@@ -1283,9 +1283,8 @@ public class ActivityApp extends ActivityBase {
 							else
 								text += TextUtils.join("<br />", permissions);
 						}
-						if (md.getFrom() != null) {
+						if (md.getFrom() != null)
 							text += "<br /><br />" + md.getFrom();
-						}
 
 						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
 						tvInfo.setText(Html.fromHtml(text));
