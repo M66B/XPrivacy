@@ -15,7 +15,8 @@ Changelog
 * Fixed some more repeated asking on demand, thanks @[jpeg729](https://github.com/jpeg729)
 * Improved tutorial/info background ([issue](/../../issues/1391))
 * Added template for on demand restricting, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1376))
-* Reduced dependency on Xposed (so we could *for example* more easily use [Cydia substrate](http://www.cydiasubstrate.com/))
+* Reduced dependency on Xposed
+	* So we could *for example* more easily use [Cydia Substrate](http://www.cydiasubstrate.com/)
 * Updated German translation
 * Updated French translation
 * Updated Lithuanian translation
