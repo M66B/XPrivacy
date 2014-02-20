@@ -411,14 +411,16 @@ public class PrivacyManager {
 		// Enable on-demand
 		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 		if (ondemand)
-			PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
+			ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
 
 		// Apply template
 		for (String restrictionName : PrivacyManager.getRestrictions()) {
 			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
-			String templateValue = PrivacyManager.getSetting(0, templateName, "false+ask", false);
-			PrivacyManager.setRestriction(uid, restrictionName, null, templateValue.contains("true"),
-					!ondemand || templateValue.contains("asked"));
+			String templateValue = PrivacyManager.getSetting(0, templateName, Boolean.toString(!ondemand) + "+ask",
+					false);
+			boolean restrict = templateValue.contains("true");
+			boolean asked = templateValue.contains("asked");
+			PrivacyManager.setRestriction(uid, restrictionName, null, restrict, asked || !ondemand);
 		}
 	}
 
