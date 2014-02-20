@@ -10,8 +10,6 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XActivity extends XHook {
 	private Methods mMethod;
 	private String mActionName;
@@ -83,7 +81,7 @@ public class XActivity extends XHook {
 
 	@Override
 	@SuppressLint("DefaultLocale")
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Get intent(s)
 		Intent[] intents = null;
 		if (mMethod == Methods.getSystemService) {
@@ -131,7 +129,7 @@ public class XActivity extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getSystemService) {
 			if (param.args.length > 0 && param.args[0] != null) {
 				String name = (String) param.args[0];

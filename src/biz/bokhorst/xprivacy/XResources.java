@@ -7,8 +7,6 @@ import android.content.res.Configuration;
 import android.os.Binder;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XResources extends XHook {
 	private Methods mMethod;
 
@@ -37,7 +35,7 @@ public class XResources extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.updateConfiguration) {
 			if (param.args.length > 0 && param.args[0] != null && param.args[0] instanceof Configuration) {
 				boolean restricted = false;
@@ -71,7 +69,7 @@ public class XResources extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

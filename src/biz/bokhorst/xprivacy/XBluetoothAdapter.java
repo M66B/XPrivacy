@@ -10,8 +10,6 @@ import android.bluetooth.BluetoothDevice;
 import android.os.Binder;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XBluetoothAdapter extends XHook {
 	private Methods mMethod;
 
@@ -41,12 +39,12 @@ public class XBluetoothAdapter extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getAddress) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));

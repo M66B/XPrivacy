@@ -12,8 +12,6 @@ import android.annotation.SuppressLint;
 import android.os.Process;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XIoBridge extends XHook {
 	private Methods mMethod;
 	private String mFileName;
@@ -69,7 +67,7 @@ public class XIoBridge extends XHook {
 
 	@Override
 	@SuppressLint("SdCardPath")
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.connect) {
 			if (param.args.length > 2 && param.args[1] instanceof InetAddress) {
 				InetAddress address = (InetAddress) param.args[1];
@@ -129,7 +127,7 @@ public class XIoBridge extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

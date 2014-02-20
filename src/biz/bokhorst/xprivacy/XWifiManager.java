@@ -13,10 +13,6 @@ import android.net.wifi.WifiInfo;
 import android.os.Binder;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-import static de.robv.android.xposed.XposedHelpers.findField;
-import static de.robv.android.xposed.XposedHelpers.findMethodExact;
-
 public class XWifiManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
@@ -59,12 +55,12 @@ public class XWifiManager extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getConfiguredNetworks) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<WifiConfiguration>());
@@ -75,7 +71,8 @@ public class XWifiManager extends XHook {
 				if (getRestrictionName().equals(PrivacyManager.cInternet)) {
 					// Supplicant state
 					try {
-						Field fieldState = findField(WifiInfo.class, "mSupplicantState");
+						Field fieldState = WifiInfo.class.getDeclaredField("mSupplicantState");
+						fieldState.setAccessible(true);
 						fieldState.set(wInfo, SupplicantState.DISCONNECTED);
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
@@ -84,7 +81,8 @@ public class XWifiManager extends XHook {
 				} else {
 					// BSSID
 					try {
-						Field fieldBSSID = findField(WifiInfo.class, "mBSSID");
+						Field fieldBSSID = WifiInfo.class.getDeclaredField("mBSSID");
+						fieldBSSID.setAccessible(true);
 						fieldBSSID.set(wInfo, PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
@@ -92,7 +90,8 @@ public class XWifiManager extends XHook {
 
 					// IP address
 					try {
-						Field fieldIp = findField(WifiInfo.class, "mIpAddress");
+						Field fieldIp = WifiInfo.class.getDeclaredField("mIpAddress");
+						fieldIp.setAccessible(true);
 						fieldIp.set(wInfo, PrivacyManager.getDefacedProp(Binder.getCallingUid(), "InetAddress"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
@@ -100,7 +99,8 @@ public class XWifiManager extends XHook {
 
 					// MAC address
 					try {
-						Field fieldMAC = findField(WifiInfo.class, "mMacAddress");
+						Field fieldMAC = WifiInfo.class.getDeclaredField("mMacAddress");
+						fieldMAC.setAccessible(true);
 						fieldMAC.set(wInfo, PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));
 					} catch (Throwable ex) {
 						Util.bug(this, ex);
@@ -109,16 +109,18 @@ public class XWifiManager extends XHook {
 					// SSID
 					String ssid = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "SSID");
 					try {
-						Field fieldSSID = findField(WifiInfo.class, "mSSID");
+						Field fieldSSID = WifiInfo.class.getDeclaredField("mSSID");
+						fieldSSID.setAccessible(true);
 						fieldSSID.set(wInfo, ssid);
 					} catch (Throwable ex) {
 						try {
-							Field fieldWifiSsid = findField(WifiInfo.class, "mWifiSsid");
+							Field fieldWifiSsid = WifiInfo.class.getDeclaredField("mWifiSsid");
+							fieldWifiSsid.setAccessible(true);
 							Object mWifiSsid = fieldWifiSsid.get(wInfo);
 							if (mWifiSsid != null) {
 								// public static WifiSsid
 								// createFromAsciiEncoded(String asciiEncoded)
-								Method methodCreateFromAsciiEncoded = findMethodExact(mWifiSsid.getClass(),
+								Method methodCreateFromAsciiEncoded = mWifiSsid.getClass().getDeclaredMethod(
 										"createFromAsciiEncoded", String.class);
 								fieldWifiSsid.set(wInfo, methodCreateFromAsciiEncoded.invoke(null, ssid));
 							}

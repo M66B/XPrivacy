@@ -6,8 +6,6 @@ import java.util.List;
 import android.os.Binder;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XWebSettings extends XHook {
 	private Methods mMethod;
 	private String mClassName;
@@ -47,7 +45,7 @@ public class XWebSettings extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.getDefaultUserAgent) {
 			int uid = Binder.getCallingUid();
 			if (getRestricted(uid)) {
@@ -82,7 +80,7 @@ public class XWebSettings extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

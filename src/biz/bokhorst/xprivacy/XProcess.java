@@ -5,8 +5,6 @@ import java.util.List;
 
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XProcess extends XHook {
 	private Methods mMethod;
 	private String mRestrictionName;
@@ -63,7 +61,7 @@ public class XProcess extends XHook {
 	// frameworks/base/data/etc/platform.xml
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.startViaZygote) {
 			if (param.args.length >= 5) {
 				// Check if restricted
@@ -113,7 +111,7 @@ public class XProcess extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

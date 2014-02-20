@@ -5,8 +5,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XInetAddress extends XHook {
 	@SuppressWarnings("unused")
 	private Methods mMethod;
@@ -39,12 +37,12 @@ public class XInetAddress extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		Object result = param.getResult();
 		if (result != null) {
 			// Get addresses

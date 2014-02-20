@@ -11,8 +11,6 @@ import android.os.Parcel;
 import android.os.Process;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XBinder extends XHook {
 	private Methods mMethod;
 
@@ -101,7 +99,7 @@ public class XBinder extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.execTransact)
 			checkIPC(param);
 
@@ -112,7 +110,7 @@ public class XBinder extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	private void markIPC(MethodHookParam param) {
+	private void markIPC(XParam param) {
 		int flags = (Integer) param.args[3];
 		if (flags != 0 && flags != IBinder.FLAG_ONEWAY)
 			Util.log(this, Log.ERROR, "flags=" + Integer.toHexString(flags));
@@ -120,7 +118,7 @@ public class XBinder extends XHook {
 		param.args[3] = flags;
 	}
 
-	private void checkIPC(MethodHookParam param) throws Throwable {
+	private void checkIPC(XParam param) throws Throwable {
 		// Entry point from android_util_Binder.cpp's onTransact
 		int flags = (Integer) param.args[3];
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
@@ -161,7 +159,7 @@ public class XBinder extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

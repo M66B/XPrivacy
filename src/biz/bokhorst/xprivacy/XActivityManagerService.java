@@ -7,8 +7,6 @@ import java.util.concurrent.Semaphore;
 import android.os.Build;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XActivityManagerService extends XHook {
 	private Methods mMethod;
 
@@ -76,7 +74,7 @@ public class XActivityManagerService extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.inputDispatchingTimedOut) {
 			try {
 				// Delay foreground ANRs while on demand dialog open
@@ -132,7 +130,7 @@ public class XActivityManagerService extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.systemReady) {
 			Util.log(this, Log.WARN, "System ready");
 
@@ -155,7 +153,7 @@ public class XActivityManagerService extends XHook {
 
 	// Helper method
 
-	private int getUidANR(MethodHookParam param) throws IllegalAccessException {
+	private int getUidANR(XParam param) throws IllegalAccessException {
 		int uid = -1;
 		try {
 			Class<?> pr = Class.forName("com.android.server.am.ProcessRecord");

@@ -15,8 +15,6 @@ import java.util.List;
 import android.os.Binder;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XNetworkInterface extends XHook {
 	private Methods mMethod;
 
@@ -62,12 +60,12 @@ public class XNetworkInterface extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (getRestrictionName().equals(PrivacyManager.cInternet)) {
 			// Internet: fake offline state
 			if (mMethod == Methods.getByInetAddress || mMethod == Methods.getByName

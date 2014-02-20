@@ -5,8 +5,6 @@ import java.util.List;
 
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XCamera extends XHook {
 	private Methods mMethod;
 
@@ -43,7 +41,7 @@ public class XCamera extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.setPreviewCallback || mMethod == Methods.setPreviewCallbackWithBuffer
 				|| mMethod == Methods.setOneShotPreviewCallback || mMethod == Methods.takePicture) {
 			if (isRestricted(param))
@@ -54,7 +52,7 @@ public class XCamera extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

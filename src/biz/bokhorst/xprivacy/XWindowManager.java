@@ -9,8 +9,6 @@ import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XWindowManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
@@ -56,7 +54,7 @@ public class XWindowManager extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.addView || mMethod == Methods.removeView || mMethod == Methods.updateViewLayout) {
 			View view = (View) param.args[0];
 			if (view != null) {
@@ -88,7 +86,7 @@ public class XWindowManager extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

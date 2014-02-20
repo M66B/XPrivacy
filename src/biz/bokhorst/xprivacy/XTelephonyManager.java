@@ -16,8 +16,6 @@ import android.telephony.TelephonyManager;
 import android.telephony.gsm.GsmCellLocation;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XTelephonyManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
@@ -130,7 +128,7 @@ public class XTelephonyManager extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.listen) {
 			if (param.args.length > 1) {
 				PhoneStateListener listener = (PhoneStateListener) param.args[0];
@@ -170,7 +168,7 @@ public class XTelephonyManager extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod != Methods.listen && mMethod != Methods.disableLocationUpdates
 				&& mMethod != Methods.enableLocationUpdates)
 			if (mMethod == Methods.getAllCellInfo) {

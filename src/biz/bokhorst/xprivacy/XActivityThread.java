@@ -18,8 +18,6 @@ import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XActivityThread extends XHook {
 	private Methods mMethod;
 	private String mActionName;
@@ -116,7 +114,7 @@ public class XActivityThread extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		String methodName = param.method.getName();
 		if (mMethod == Methods.handleReceiver) {
 			if (param.args.length > 0 && param.args[0] != null) {
@@ -184,11 +182,11 @@ public class XActivityThread extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 
-	private void finish(MethodHookParam param) {
+	private void finish(XParam param) {
 		// unscheduleGcIdler
 		if (param.thisObject != null)
 			try {

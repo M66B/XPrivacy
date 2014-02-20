@@ -8,8 +8,6 @@ import android.util.Log;
 
 import com.android.internal.telephony.TelephonyProperties;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XSystemProperties extends XHook {
 	private Methods mMethod;
 	private String mPropertyName;
@@ -63,12 +61,12 @@ public class XSystemProperties extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		String key = (param.args.length > 0 ? (String) param.args[0] : null);
 		if (key != null)
 			if (mPropertyName.startsWith("%") ? key.contains(mPropertyName.substring(1)) : key.equals(mPropertyName))

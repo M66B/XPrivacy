@@ -6,8 +6,6 @@ import java.util.List;
 import android.os.Binder;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XAdvertisingIdClientInfo extends XHook {
 	private Methods mMethod;
 
@@ -39,7 +37,7 @@ public class XAdvertisingIdClientInfo extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.getId) {
 			if (isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "AdvertisingId"));
@@ -49,7 +47,7 @@ public class XAdvertisingIdClientInfo extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

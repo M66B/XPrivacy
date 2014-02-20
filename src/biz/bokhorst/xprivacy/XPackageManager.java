@@ -12,8 +12,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XPackageManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
@@ -65,13 +63,13 @@ public class XPackageManager extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getInstalledApplications) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));

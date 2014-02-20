@@ -11,8 +11,6 @@ import android.util.Log;
 
 import com.google.android.gms.location.LocationListener;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XLocationClient extends XHook {
 	private Methods mMethod;
 	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
@@ -61,7 +59,7 @@ public class XLocationClient extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.addGeofences) {
 			if (isRestricted(param))
 				param.setResult(null);
@@ -85,7 +83,7 @@ public class XLocationClient extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.addGeofences || mMethod == Methods.removeGeofences) {
 			// Do nothing
 
@@ -104,7 +102,7 @@ public class XLocationClient extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	private void replaceLocationListener(MethodHookParam param) throws Throwable {
+	private void replaceLocationListener(XParam param) throws Throwable {
 		if (param.args.length >= 2 && param.args[1] != null
 				&& LocationListener.class.isAssignableFrom(param.args[1].getClass())) {
 			if (!(param.args[1] instanceof XLocationListener)) {
@@ -122,7 +120,7 @@ public class XLocationClient extends XHook {
 			param.setResult(null);
 	}
 
-	private void removeLocationListener(MethodHookParam param) {
+	private void removeLocationListener(XParam param) {
 		if (param.args.length >= 1 && param.args[0] != null
 				&& LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
 			LocationListener listener = (LocationListener) param.args[0];

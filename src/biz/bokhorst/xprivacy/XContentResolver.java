@@ -14,8 +14,6 @@ import android.os.Binder;
 import android.text.TextUtils;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XContentResolver extends XHook {
 	private Methods mMethod;
 
@@ -74,7 +72,7 @@ public class XContentResolver extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.query || mMethod == Methods.cquery)
 			try {
 				handleUriBefore(param);
@@ -84,7 +82,7 @@ public class XContentResolver extends XHook {
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getCurrentSync) {
 			if (isRestricted(param))
 				param.setResult(null);
@@ -109,7 +107,7 @@ public class XContentResolver extends XHook {
 	}
 
 	@SuppressLint("DefaultLocale")
-	private void handleUriBefore(MethodHookParam param) throws Throwable {
+	private void handleUriBefore(XParam param) throws Throwable {
 		// Check URI
 		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
@@ -147,7 +145,7 @@ public class XContentResolver extends XHook {
 	}
 
 	@SuppressLint("DefaultLocale")
-	private void handleUriAfter(MethodHookParam param) throws Throwable {
+	private void handleUriAfter(XParam param) throws Throwable {
 		// Check URI
 		if (param.args.length > 1 && param.args[0] instanceof Uri && param.getResult() != null) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();

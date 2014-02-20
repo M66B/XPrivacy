@@ -6,8 +6,6 @@ import java.util.List;
 import android.appwidget.AppWidgetProviderInfo;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XAppWidgetManager extends XHook {
 	private Methods mMethod;
 
@@ -35,12 +33,12 @@ public class XAppWidgetManager extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getInstalledProviders) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<AppWidgetProviderInfo>());

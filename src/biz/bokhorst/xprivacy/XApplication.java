@@ -11,8 +11,6 @@ import android.content.IntentFilter;
 import android.os.Process;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XApplication extends XHook {
 	private Methods mMethod;
 
@@ -49,12 +47,12 @@ public class XApplication extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.onCreate) {
 			// Install receiver for package management
 			if (PrivacyManager.isApplication(Process.myUid()) && !mReceiverInstalled)

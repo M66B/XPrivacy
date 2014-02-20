@@ -8,8 +8,6 @@ import android.util.Log;
 
 import biz.bokhorst.xprivacy.XHook;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XEnvironment extends XHook {
 	private Methods mMethod;
 
@@ -37,12 +35,12 @@ public class XEnvironment extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getExternalStorageState) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(Environment.MEDIA_UNMOUNTED);

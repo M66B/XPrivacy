@@ -7,8 +7,6 @@ import android.os.Binder;
 import android.provider.Settings;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XSettingsSecure extends XHook {
 	private Methods mMethod;
 
@@ -41,12 +39,12 @@ public class XSettingsSecure extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getString) {
 			String name = (param.args.length > 1 ? (String) param.args[1] : null);
 			if (Settings.Secure.ANDROID_ID.equals(name))

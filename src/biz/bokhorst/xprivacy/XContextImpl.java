@@ -5,8 +5,6 @@ import java.util.List;
 
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XContextImpl extends XHook {
 	private Methods mMethod;
 
@@ -35,12 +33,12 @@ public class XContextImpl extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 		if (mMethod == Methods.getPackageManager) {
 			Object instance = param.getResult();

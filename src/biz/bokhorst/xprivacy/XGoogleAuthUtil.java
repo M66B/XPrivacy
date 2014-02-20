@@ -6,8 +6,6 @@ import java.util.List;
 
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XGoogleAuthUtil extends XHook {
 	private Methods mMethod;
 
@@ -44,12 +42,12 @@ public class XGoogleAuthUtil extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getToken || mMethod == Methods.getTokenWithNotification) {
 			if (param.args.length > 1)
 				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[1]))

@@ -6,8 +6,6 @@ import java.util.List;
 import android.app.ActivityManager;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XActivityManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
@@ -42,12 +40,12 @@ public class XActivityManager extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		// Do nothing
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getRecentTasks) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RecentTaskInfo>());

@@ -5,8 +5,6 @@ import java.util.List;
 
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XUtilHook extends XHook {
 
 	private XUtilHook(String methodName, String restrictionName, int sdk) {
@@ -25,13 +23,13 @@ public class XUtilHook extends XHook {
 	}
 
 	@Override
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		Util.log(this, Log.INFO, param.method.getName() + "=true");
 		param.setResult(true);
 	}
 
 	@Override
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		// Do nothing
 	}
 }

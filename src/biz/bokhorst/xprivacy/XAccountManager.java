@@ -19,8 +19,6 @@ import android.os.Binder;
 import android.os.Bundle;
 import android.util.Log;
 
-import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
-
 public class XAccountManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
@@ -92,7 +90,7 @@ public class XAccountManager extends XHook {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected void before(MethodHookParam param) throws Throwable {
+	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.addOnAccountsUpdatedListener) {
 			if (param.args.length > 0 && param.args[0] != null)
 				if (isRestricted(param)) {
@@ -159,7 +157,7 @@ public class XAccountManager extends XHook {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	protected void after(MethodHookParam param) throws Throwable {
+	protected void after(XParam param) throws Throwable {
 		if (mMethod != Methods.addOnAccountsUpdatedListener && mMethod != Methods.removeOnAccountsUpdatedListener) {
 			int uid = Binder.getCallingUid();
 			if (mMethod == Methods.blockingGetAuthToken) {
