@@ -218,10 +218,8 @@ public class Requirements {
 				if (services != null)
 					for (String service : services) {
 						IBinder binder = (IBinder) getService.invoke(null, service);
-						if (binder != null) {
-							String description = binder.getInterfaceDescriptor();
-							mapService.put(service, description);
-						}
+						String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+						mapService.put(service, descriptor);
 					}
 
 				if (mapService.size() > 0) {
@@ -230,9 +228,7 @@ public class Requirements {
 					List<String> listMissing = new ArrayList<String>();
 					for (String name : XBinder.cServiceName) {
 						String descriptor = XBinder.cServiceDescriptor.get(i++);
-
-						// Skip iphonesubinfo, it is often not running
-						if (!name.equals("iphonesubinfo") && !name.equals("iphonesubinfo_msim")) {
+						if (descriptor != null && !name.equals("iphonesubinfo") && !name.equals("iphonesubinfo_msim")) {
 							// Check name
 							boolean checkDescriptor = false;
 							if (name.equals("telephony.registry")) {
