@@ -1226,6 +1226,7 @@ public class PrivacyService {
 											.findViewById(R.id.pbProgress);
 									mProgress.setMax(cMaxOnDemandDialog * 20);
 									mProgress.setProgress(cMaxOnDemandDialog * 20);
+
 									Runnable rProgress = new Runnable() {
 										@Override
 										public void run() {
