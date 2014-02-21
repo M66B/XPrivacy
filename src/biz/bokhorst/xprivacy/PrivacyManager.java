@@ -267,6 +267,10 @@ public class PrivacyManager {
 		} else if (getHook(restrictionName, methodName) == null)
 			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
+		// Check extra
+		if (extra != null && extra.length() > 250)
+			extra = extra.substring(0, 250) + "...";
+
 		// Check cache
 		boolean cached = false;
 		CRestriction key = new CRestriction(uid, restrictionName, methodName, extra);

@@ -21,6 +21,7 @@ Changelog
 * *storage/open* will also check media storage
 * Clear restrictions will clear whitelists ([issue](/../../issues/1375))
 * Whitelist management requires a [Pro license](http://www.xprivacy.eu/)
+* Limit parameters to 250 characters (some applications use long Javascript for loadUrl)
 * Updated Dutch translation
 * Updated Lithuanian translation
 * Updated Russian translation
