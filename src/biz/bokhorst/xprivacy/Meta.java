@@ -17,7 +17,6 @@ public class Meta {
 	public final static String cWhitelistFilename = "Whitelist.Filename";
 	public final static String cWhitelistCommand = "Whitelist.Command";
 	public final static String cWhitelistUrl = "Whitelist.Url";
-	public final static String cWhitelistProc = "Whitelist.Proc";
 
 	public static final String cWhitelistTypes[] = new String[] { cWhitelistIPAddress, cWhitelistLibrary,
 			cWhitelistFilename, cWhitelistCommand, cWhitelistUrl };
@@ -82,7 +81,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null));
 		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null));
 		mListHook.add(new Hook("identification", "%cid", "", 1, null, null));
-		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous().whitelist(cWhitelistProc));
+		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous().whitelist(cWhitelistFilename));
 		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).dangerous());
 		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, null, null));
 		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, null, null));
