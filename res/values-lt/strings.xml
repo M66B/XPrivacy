@@ -41,7 +41,7 @@
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
     <string name="menu_applications">Leisti pažymėtas programas</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Valdyti baltajį sąrašą</string>
     <string name="menu_tutorial">Instrukcija</string>
     <string name="menu_exclude">Išskirti</string>
     <string name="menu_close">Uždaryti</string>
@@ -97,11 +97,11 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_shell">Vykdymas (komandos, superuser)</string>
     <string name="restrict_system">Sistema (įdiegtos programos)</string>
     <string name="restrict_view">Peržiūra (Naršyklė)</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
+    <string name="whitelist_ipaddress">IP adresai</string>
     <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
-    <string name="whitelist_url">URLs</string>
+    <string name="whitelist_filename">failų vardai</string>
+    <string name="whitelist_command">Vykdymo komandos</string>
+    <string name="whitelist_url">URL adresai</string>
     <string name="title_restrict">Naudoti ribojimus:</string>
     <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Duomenų naudojimas</string>
@@ -124,7 +124,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_parameters">Parameterai:</string>
     <string name="title_applycat">Taikyti esamoje kategorijoje</string>
     <string name="title_once">Vieną kartą %1$s sekundžių</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_whitelist">Baltasis sąrašas \'%s\'</string>
     <string name="title_allow">Leisti</string>
     <string name="title_deny">Drausti</string>
     <string name="title_pleasesubmit">Prašome pateikti savo leidimą</string>
