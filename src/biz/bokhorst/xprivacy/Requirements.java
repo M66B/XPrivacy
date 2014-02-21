@@ -216,11 +216,12 @@ public class Requirements {
 				Map<String, String> mapService = new HashMap<String, String>();
 				String[] services = (String[]) listServices.invoke(null);
 				if (services != null)
-					for (String service : services) {
-						IBinder binder = (IBinder) getService.invoke(null, service);
-						String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
-						mapService.put(service, descriptor);
-					}
+					for (String service : services)
+						if (service != null) {
+							IBinder binder = (IBinder) getService.invoke(null, service);
+							String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+							mapService.put(service, descriptor);
+						}
 
 				if (mapService.size() > 0) {
 					// Check services
