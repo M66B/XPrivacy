@@ -41,6 +41,7 @@
     <string name="menu_accounts">Leisti pažymėtas paskyras</string>
     <string name="menu_applications">Leisti pažymėtas programas</string>
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Instrukcija</string>
     <string name="menu_exclude">Išskirti</string>
     <string name="menu_close">Uždaryti</string>
@@ -98,6 +99,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_view">Peržiūra (Naršyklė)</string>
     <string name="title_categories">Kategorijos</string>
     <string name="title_restrict">Naudoti ribojimus:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Duomenų naudojimas</string>
     <string name="title_finternet">Interneto prieiga</string>
     <string name="title_fpermission">Aktyvūs leidimai</string>
@@ -118,6 +120,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_parameters">Parameterai:</string>
     <string name="title_applycat">Taikyti esamoje kategorijoje</string>
     <string name="title_once">Vieną kartą %1$s sekundžių</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Leisti</string>
     <string name="title_deny">Drausti</string>
     <string name="title_pleasesubmit">Prašome pateikti savo leidimą</string>

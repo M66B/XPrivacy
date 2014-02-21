@@ -41,6 +41,7 @@
     <string name="menu_accounts">Välj tillåtna konton</string>
     <string name="menu_applications">Select applications to allow</string>
     <string name="menu_contacts">Välj kontakter att tillåta</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
@@ -98,6 +99,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="restrict_view">View (webbläsare)</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Markera för att blockera:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtrera efter använd data</string>
     <string name="title_finternet">Filtrera efter internetbehörighet</string>
     <string name="title_fpermission">Filtrera efter behörighet</string>
@@ -118,6 +120,7 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

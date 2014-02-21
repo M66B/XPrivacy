@@ -41,6 +41,7 @@
     <string name="menu_accounts">Seleccione las cuentas permitidas</string>
     <string name="menu_applications">Seleccione las aplicaciones permitidas</string>
     <string name="menu_contacts">Seleccione los contactos permitidos</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_exclude">Excluir</string>
     <string name="menu_close">Cerrar</string>
@@ -98,6 +99,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="restrict_view">Ver (navegador)</string>
     <string name="title_categories">Categorias</string>
     <string name="title_restrict">Seleccione para restringir:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtrar uso de datos</string>
     <string name="title_finternet">Filtrar acceso a Internet</string>
     <string name="title_fpermission">Filtrar permisos Android</string>
@@ -118,6 +120,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_parameters">Parámetros:</string>
     <string name="title_applycat">Aplicar a toda la categoría</string>
     <string name="title_once">Recordar por %1$s segundos</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Permitir</string>
     <string name="title_deny">Denegar</string>
     <string name="title_pleasesubmit">Por favor suba sus restricciones para ayudar a otros usuarios</string>

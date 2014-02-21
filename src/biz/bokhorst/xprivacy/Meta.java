@@ -9,6 +9,18 @@ public class Meta {
 	private static boolean mAnnotated = false;
 	private static List<Hook> mListHook = new ArrayList<Hook>();
 
+	public final static String cWhitelistAccount = "Account";
+	public final static String cWhitelistApplication = "Application";
+	public final static String cWhitelistContact = "Contact";
+	public final static String cWhitelistInetAddr = "Whitelist.InetAddr";
+	public final static String cWhitelistLibrary = "Whitelist.Library";
+	public final static String cWhitelistFilename = "Whitelist.Filename";
+	public final static String cWhitelistCommand = "Whitelist.Command";
+	public final static String cWhitelistUrl = "Whitelist.Url";
+
+	public static final String cWhitelistTypes[] = new String[] { cWhitelistInetAddr, cWhitelistLibrary,
+			cWhitelistFilename, cWhitelistCommand, cWhitelistUrl };
+
 	public static List<Hook> get() {
 		// http://developer.android.com/reference/android/Manifest.permission.html
 		if (mListHook.size() > 0)
@@ -97,7 +109,7 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
 
-		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous());
+		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cWhitelistInetAddr));
 		mListHook.add(new Hook("internet", "socket", null, 1, "1.99.46", null).dangerous());
 
 		mListHook.add(new Hook("ipc", "android.accounts.IAccountManager", "", 1, "1.99.1", null));
@@ -220,15 +232,15 @@ public class Meta {
 
 		mListHook.add(new Hook("shell", "sh", "", 10, null, null));
 		mListHook.add(new Hook("shell", "su", "", 10, null, null));
-		mListHook.add(new Hook("shell", "exec", "", 10, null, null));
-		mListHook.add(new Hook("shell", "load", "", 10, null, null).dangerous());
-		mListHook.add(new Hook("shell", "loadLibrary", "", 10, null, null).dangerous());
-		mListHook.add(new Hook("shell", "start", "", 10, null, null));
+		mListHook.add(new Hook("shell", "exec", "", 10, null, null).whitelist(cWhitelistCommand));
+		mListHook.add(new Hook("shell", "load", "", 10, null, null).dangerous().whitelist(cWhitelistLibrary));
+		mListHook.add(new Hook("shell", "loadLibrary", "", 10, null, null).dangerous().whitelist(cWhitelistLibrary));
+		mListHook.add(new Hook("shell", "start", "", 10, null, null).whitelist(cWhitelistCommand));
 
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null));
-		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous());
+		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous().whitelist(cWhitelistFilename));
 
 		mListHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).dangerous());
@@ -263,7 +275,7 @@ public class Meta {
 		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE", "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null));
 
-		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null));
+		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cWhitelistUrl));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null));
 		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null));
 		mListHook.add(new Hook("view", "getUserAgent", "", 3, null, null));

@@ -536,6 +536,24 @@ public class PrivacyService {
 						}
 					}
 
+					// Check whitelist
+					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
+						Boolean value = PrivacyManager.checkWhitelist(restriction.uid, hook.whitelist(),
+								restriction.extra, true);
+						Util.log(null, Log.WARN, String.format("Checking whitelist for %d %s = %s", restriction.uid,
+								restriction.extra, value));
+						if (value != null) {
+							// true means allow, false means block, and null
+							// means ask again
+							mresult.restricted = !value;
+							mresult.asked = true;
+
+							Util.log(null, Log.WARN, restriction.extra
+									+ (restriction.restricted ? " blacklisted" : " whitelisted") + " for "
+									+ restriction);
+						}
+					}
+
 					// Update cache
 					if (mUseCache) {
 						CRestriction key = new CRestriction(mresult, restriction.extra);
@@ -1270,6 +1288,7 @@ public class PrivacyService {
 			TableRow rowParameters = (TableRow) view.findViewById(R.id.rowParameters);
 			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
+			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
@@ -1291,19 +1310,37 @@ public class PrivacyService {
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
 					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
 
-			// Category and once exclude each other
+			if (restriction.extra != null && restriction.extra != "" && hook.whitelist() != null) {
+				cbWhitelist.setText(resources.getString(R.string.title_whitelist, restriction.extra));
+				cbWhitelist.setVisibility(View.VISIBLE);
+			}
+
+			// Category, once and whitelist exclude each other
 			cbCategory.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					if (isChecked)
+					if (isChecked) {
 						cbOnce.setChecked(false);
+						cbWhitelist.setChecked(false);
+					}
 				}
 			});
 			cbOnce.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					if (isChecked)
+					if (isChecked) {
 						cbCategory.setChecked(false);
+						cbWhitelist.setChecked(false);
+					}
+				}
+			});
+			cbWhitelist.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked) {
+						cbCategory.setChecked(false);
+						cbOnce.setChecked(false);
+					}
 				}
 			});
 
@@ -1320,7 +1357,9 @@ public class PrivacyService {
 							result.restricted = true;
 							mSelectCategory = cbCategory.isChecked();
 							mSelectOnce = cbOnce.isChecked();
-							if (cbOnce.isChecked())
+							if (cbWhitelist.isChecked())
+								onDemandWhitelist(restriction, result, hook);
+							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
 							else
 								onDemandChoice(restriction, cbCategory.isChecked(), true);
@@ -1335,7 +1374,9 @@ public class PrivacyService {
 							result.restricted = false;
 							mSelectCategory = cbCategory.isChecked();
 							mSelectOnce = cbOnce.isChecked();
-							if (cbOnce.isChecked())
+							if (cbWhitelist.isChecked())
+								onDemandWhitelist(restriction, result, hook);
+							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
 							else
 								onDemandChoice(restriction, cbCategory.isChecked(), false);
@@ -1343,6 +1384,27 @@ public class PrivacyService {
 						}
 					});
 			return alertDialogBuilder;
+		}
+
+		private void onDemandWhitelist(final PRestriction restriction, final PRestriction result, Hook hook) {
+			// Set the whitelist
+			Util.log(null, Log.WARN, (result.restricted ? "Blacklisting" : "Whitelisting") + " " + restriction.extra
+					+ " for " + restriction);
+			PrivacyManager.setWhitelisted(restriction.uid, hook.whitelist(), restriction.extra, !result.restricted);
+
+			// Cache it
+			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
+			CRestriction key = new CRestriction(restriction, restriction.extra);
+
+			// Avoid checking for the whitelist next time round
+			key.asked = true;
+
+			Util.log(null, Log.WARN, (result.restricted ? "Blacklisting " : "Whitelisting ") + key.toString());
+			synchronized (mRestrictionCache) {
+				if (mRestrictionCache.containsKey(key))
+					mRestrictionCache.remove(key);
+				mRestrictionCache.put(key, key);
+			}
 		}
 
 		private void onDemandOnce(final PRestriction restriction, final PRestriction result) {

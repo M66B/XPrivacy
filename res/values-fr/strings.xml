@@ -41,6 +41,7 @@
     <string name="menu_accounts">Choisir les comptes à autoriser</string>
     <string name="menu_applications">Choisir les applis à autoriser</string>
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Didacticiel</string>
     <string name="menu_exclude">Exclure</string>
     <string name="menu_close">Fermer</string>
@@ -98,6 +99,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_view">Vue (navigateur)</string>
     <string name="title_categories">Catégories</string>
     <string name="title_restrict">Cocher pour restreindre :</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtrer utilisation des données</string>
     <string name="title_finternet">Filtrer ayant accès à internet</string>
     <string name="title_fpermission">Filtrer par permissions</string>
@@ -118,6 +120,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_parameters">Paramètres:</string>
     <string name="title_applycat">Appliquer à toute la catégorie</string>
     <string name="title_once">Une fois pendant %1$s secondes</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Permettre</string>
     <string name="title_deny">Bloquer</string>
     <string name="title_pleasesubmit">Veuillez envoyer vos restrictions pour aider les autres</string>

@@ -41,6 +41,7 @@
     <string name="menu_accounts">設定允許存取之帳戶</string>
     <string name="menu_applications">設定允許存取之app</string>
     <string name="menu_contacts">設定允許存取之聯絡人</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">說明</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">關閉</string>
@@ -98,6 +99,7 @@
     <string name="restrict_view">瀏覽器介面</string>
     <string name="title_categories">分類</string>
     <string name="title_restrict">限制項目:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">程式曾取得過資訊</string>
     <string name="title_finternet">程式要求網際網路權限</string>
     <string name="title_fpermission">程式要求手機權限</string>
@@ -118,6 +120,7 @@
     <string name="title_parameters">參數：</string>
     <string name="title_applycat">套用至整個限制分類</string>
     <string name="title_once"> %1$s 秒後再次詢問</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">允許</string>
     <string name="title_deny">封鎖</string>
     <string name="title_pleasesubmit">稍後請上傳您的設定到社群網路利人利己 :)</string>

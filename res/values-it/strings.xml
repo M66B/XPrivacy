@@ -41,6 +41,7 @@
     <string name="menu_accounts">Seleziona account consentiti</string>
     <string name="menu_applications">Seleziona le applicazioni permesse</string>
     <string name="menu_contacts">Seleziona contatti consentiti</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
@@ -98,6 +99,7 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="restrict_view">Visualizzazione (browser)</string>
     <string name="title_categories">Categorie</string>
     <string name="title_restrict">Spunta per limitare:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtra per utilizzo dati</string>
     <string name="title_finternet">Filtra per accesso a internet</string>
     <string name="title_fpermission">Filtra per permesso</string>
@@ -118,6 +120,7 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

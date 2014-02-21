@@ -41,6 +41,7 @@
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
     <string name="menu_applications">अनुमति के लिए applications को चुने</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">शिक्षा</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
@@ -98,6 +99,7 @@
     <string name="restrict_view">View (ब्राउज़र)</string>
     <string name="title_categories">श्रेणियाँ</string>
     <string name="title_restrict">प्रतिबंधित करने के लिए मार्क करे:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">डेटा उपयोग पर फिल्टर करे</string>
     <string name="title_finternet">इन्टरनेट उपयोग पर फिल्टर करे</string>
     <string name="title_fpermission">अनुमति के द्वारा फिल्टर करे</string>
@@ -118,6 +120,7 @@
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

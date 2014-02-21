@@ -715,8 +715,8 @@ public class ActivityShare extends ActivityBase {
 							List<PSetting> listAppSetting = PrivacyManager.getSettingList(uid);
 							for (PSetting setting : listAppSetting) {
 								// Bind accounts/contacts to same device
-								if (setting.name.startsWith(PrivacyManager.cWhitelistAccount)
-										|| setting.name.startsWith(PrivacyManager.cWhitelistContact))
+								if (setting.name.startsWith(Meta.cWhitelistAccount)
+										|| setting.name.startsWith(Meta.cWhitelistContact))
 									setting.name += "." + android_id;
 
 								// Serialize setting
@@ -963,8 +963,8 @@ public class ActivityShare extends ActivityBase {
 					String value = attributes.getValue("Value");
 
 					// Import accounts/contacts only for same device
-					if (name.startsWith(PrivacyManager.cWhitelistAccount)
-							|| name.startsWith(PrivacyManager.cWhitelistContact))
+					if (name.startsWith(Meta.cWhitelistAccount)
+							|| name.startsWith(Meta.cWhitelistContact))
 						if (name.endsWith("." + android_id))
 							name = name.replace("." + android_id, "");
 						else
@@ -1322,7 +1322,7 @@ public class ActivityShare extends ActivityBase {
 						for (Account account : accountManager.getAccounts()) {
 							String sha1 = Util.sha1(account.name + account.type);
 							boolean allowed = PrivacyManager.isWhitelisted(appInfo.getUid(),
-									PrivacyManager.cWhitelistAccount, sha1, false);
+									Meta.cWhitelistAccount, sha1, false);
 							if (allowed) {
 								allowedAccounts = true;
 								break;
@@ -1335,7 +1335,7 @@ public class ActivityShare extends ActivityBase {
 								null))
 							for (String packageName : aAppInfo.getPackageName()) {
 								boolean allowed = PrivacyManager.isWhitelisted(aAppInfo.getUid(),
-										PrivacyManager.cWhitelistApplication, packageName, false);
+										Meta.cWhitelistApplication, packageName, false);
 								if (allowed) {
 									allowedApplications = true;
 									break;
@@ -1351,7 +1351,7 @@ public class ActivityShare extends ActivityBase {
 								while (cursor.moveToNext()) {
 									long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 									boolean allowed = PrivacyManager.isWhitelisted(appInfo.getUid(),
-											PrivacyManager.cWhitelistContact, Long.toString(id), false);
+											Meta.cWhitelistContact, Long.toString(id), false);
 									if (allowed) {
 										allowedContacts = true;
 										break;

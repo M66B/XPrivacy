@@ -45,6 +45,9 @@
         android:id="@+id/menu_contacts"
         android:title="@string/menu_contacts"/>
     <item
+        android:id="@+id/menu_whitelists"
+        android:title="@string/menu_whitelists"/>
+    <item
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"/>
 

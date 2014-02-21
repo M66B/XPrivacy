@@ -41,6 +41,7 @@
     <string name="menu_accounts">Izberi dovoljene račune</string>
     <string name="menu_applications">Izberi dovoljene aplikacije</string>
     <string name="menu_contacts">Izberi dovoljene stike</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Navodila</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
@@ -98,6 +99,7 @@
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="title_categories">Kategorije</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtriraj po uporabi podatkov</string>
     <string name="title_finternet">Filtriraj po internetnem dostopu</string>
     <string name="title_fpermission">Filtriraj po pravicah</string>
@@ -118,6 +120,7 @@
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

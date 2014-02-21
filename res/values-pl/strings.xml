@@ -41,6 +41,7 @@
     <string name="menu_accounts">Wybierz dozwolone konta</string>
     <string name="menu_applications">Wybierz dozwolone aplikacje</string>
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
+    <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Samouczek</string>
     <string name="menu_exclude">Wyklucz</string>
     <string name="menu_close">Zamknij</string>
@@ -98,6 +99,7 @@
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="title_categories">Kategorie</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
+    <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Filtruj wg dostępu do danych</string>
     <string name="title_finternet">Filtruj wg dostępu do internetu</string>
     <string name="title_fpermission">Filtruj wg uprawnień</string>
@@ -118,6 +120,7 @@
     <string name="title_parameters">Parametry:</string>
     <string name="title_applycat">Zastosuj do całej kategorii</string>
     <string name="title_once">Jednorazowo na %1$s sekund</string>
+    <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Pozwól</string>
     <string name="title_deny">Zabroń</string>
     <string name="title_pleasesubmit">Proszę wyślij twoje ograniczenia aby pomóc innym</string>
