@@ -16,6 +16,8 @@ Changelog
 
 * Localized whitelist names ([issue](/../../issues/1375))
 * Sorted whitelist entries ([issue](/../../issues/1375))
+* Removed /proc exceptions, except */proc/self/cmdline*
+* Added whitelist for /proc
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

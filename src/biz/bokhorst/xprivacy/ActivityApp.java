@@ -878,7 +878,7 @@ public class ActivityApp extends ActivityBase {
 
 					final List<String> localizedType = new ArrayList<String>();
 					for (String type : mListWhitelist.keySet()) {
-						String name = type.toLowerCase().replace(".", "_");
+						String name = type.toLowerCase().replace(".", "_").replace("/", "");
 						int id = getResources().getIdentifier(name, "string", ActivityApp.this.getPackageName());
 						localizedType.add(getResources().getString(id));
 					}

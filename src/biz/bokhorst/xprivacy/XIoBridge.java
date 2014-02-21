@@ -4,7 +4,6 @@ import java.io.FileNotFoundException;
 import java.net.InetAddress;
 import java.net.SocketException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -14,13 +13,6 @@ import android.util.Log;
 public class XIoBridge extends XHook {
 	private Methods mMethod;
 	private String mFileName;
-
-	// @formatter:off
-	public static List<String> cProcWhiteList = Arrays.asList(new String[] {
-		"/proc/meminfo",
-		"/proc/self/cmdline"
-	});
-	// @formatter:on
 
 	private XIoBridge(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), null);
@@ -96,7 +88,7 @@ public class XIoBridge extends XHook {
 
 					// Proc white list
 					if (mFileName.equals("/proc"))
-						if (cProcWhiteList.contains(fileName))
+						if ("/proc/self/cmdline".equals(fileName))
 							return;
 
 					// Check if restricted
