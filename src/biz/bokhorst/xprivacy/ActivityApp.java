@@ -897,8 +897,6 @@ public class ActivityApp extends ActivityBase {
 					mWhitelistAdapter.setType((String) spWhitelistType.getSelectedItem());
 
 					alertDialogBuilder.setView(llWhitelists);
-				} else {
-					alertDialogBuilder.setMessage(R.string.msg_no_whitelists);
 				}
 
 				alertDialogBuilder.setPositiveButton(getString(R.string.msg_done),

@@ -54,7 +54,6 @@
     <string name="msg_applied">Šablona aplikována</string>
     <string name="msg_saved_to" formatted="false">Uloženo do %s</string>
     <string name="msg_no_restrictions">Nebyla nalezena žádná omezení</string>
-    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Jste si jistý?</string>
     <string name="msg_select">Vyberte prosím některé aplikace</string>
     <string name="msg_limit">Vyberte prosím méně než %d aplikací</string>

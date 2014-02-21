@@ -451,21 +451,23 @@ public class PrivacyManager {
 		HashMap<String, Map<String, Boolean>> mapWhitelisted = new HashMap<String, Map<String, Boolean>>();
 		for (PSetting setting : getSettingList(uid)) {
 			// Grok the setting to see if it fits the bill
-			String[] components = setting.name.split("\\.");
-			if (components.length < 3 || !components[0].equals("Whitelist"))
-				continue;
-			String type = components[1];
-			String name = setting.name.replace(components[0] + ".", "");
+			if (setting.name.startsWith("Whitelist")) {
+				String[] components = setting.name.split("\\.");
+				if (components.length < 3)
+					continue;
+				String type = components[1];
+				String name = setting.name.replace(components[0] + "." + components[1] + ".", "");
 
-			// Don't list inactive whitelists
-			if (setting.value.equals(""))
-				continue;
+				// Don't list inactive whitelists
+				if (setting.value.equals(""))
+					continue;
 
-			// If we get here, add it to the list
-			if (!mapWhitelisted.containsKey(type))
-				mapWhitelisted.put(type, new HashMap<String, Boolean>());
-			mapWhitelisted.get(type).put(name, Boolean.parseBoolean(setting.value));
-			Util.log(null, Log.WARN, String.format("Whitelist for %d (%s) %s = %s", uid, type, name, setting.value));
+				// If we get here, add it to the list
+				if (!mapWhitelisted.containsKey(type))
+					mapWhitelisted.put(type, new HashMap<String, Boolean>());
+				mapWhitelisted.get(type).put(name, Boolean.parseBoolean(setting.value));
+				Util.log(null, Log.WARN, String.format("Whitelist for %d (%s) %s = %s", uid, type, name, setting.value));
+			}
 		}
 		return mapWhitelisted;
 	}

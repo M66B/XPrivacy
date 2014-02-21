@@ -54,7 +54,6 @@
     <string name="msg_applied">Modèle appliqué</string>
     <string name="msg_saved_to" formatted="false">Sauvé dans %s</string>
     <string name="msg_no_restrictions">Pas de restriction trouvée</string>
-    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Êtes-vous certain ?</string>
     <string name="msg_select">Choisissez quelques applications</string>
     <string name="msg_limit">Choisissez moins de %d applications</string>

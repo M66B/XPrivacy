@@ -54,7 +54,6 @@
     <string name="msg_applied">Template übernommen</string>
     <string name="msg_saved_to" formatted="false">Gespeichert nach %s</string>
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
-    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Sind Sie sicher?</string>
     <string name="msg_select">Bitte wählen Sie einige Apps aus</string>
     <string name="msg_limit">Bitte wählen Sie weniger als %d App(s) aus</string>

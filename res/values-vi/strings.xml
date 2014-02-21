@@ -54,7 +54,6 @@
     <string name="msg_applied">Thiết lập mẫu đã được áp dụng</string>
     <string name="msg_saved_to" formatted="false">Đã được lưu vào %s</string>
     <string name="msg_no_restrictions">Không có thông tin hạn chế nào được tìm thấy</string>
-    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_select">Vui lòng chọn một vài ứng dụng</string>
     <string name="msg_limit">Vui lòng chọn ít hơn %d ứng dụng</string>

@@ -54,7 +54,6 @@
     <string name="msg_applied">Šablonas pritaikytas</string>
     <string name="msg_saved_to" formatted="false">Išsaugomi %s</string>
     <string name="msg_no_restrictions">Nerasta ribojimų</string>
-    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Įsitikinę?</string>
     <string name="msg_select">Prašome pasirinkti keletą programų</string>
     <string name="msg_limit">Prašome pasirinkti mažiau nei %d programų</string>

@@ -54,7 +54,6 @@
     <string name="msg_applied">Plantilla aplicada</string>
     <string name="msg_saved_to" formatted="false">Guardado en %s</string>
     <string name="msg_no_restrictions">No se han encontrado restricciones</string>
-    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">¿Estas seguro?</string>
     <string name="msg_select">Seleccione alguna aplicación</string>
     <string name="msg_limit">Por favor, seleccione menos de %d aplicaciones</string>

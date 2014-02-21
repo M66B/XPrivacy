@@ -54,7 +54,6 @@
     <string name="msg_applied">قالبه کان به کارهینران</string>
     <string name="msg_saved_to" formatted="false">زانیاریه کان هه ل گیران له %s</string>
     <string name="msg_no_restrictions">هیچ زانیارییه کی سنوردار کراو نه دوزرایه وه</string>
-    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">ئایا دلنیایت؟</string>
     <string name="msg_select">ته کایه چه ند به رنامه یک هه لبژیره</string>
     <string name="msg_limit">ته کایه ژماره یه کی که متر له %d به رنامه هه لبژیره</string>

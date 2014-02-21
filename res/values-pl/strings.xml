@@ -54,7 +54,6 @@
     <string name="msg_applied">Zastosowano szablon</string>
     <string name="msg_saved_to" formatted="false">Zapisane do %s</string>
     <string name="msg_no_restrictions">Nie znaleziono reguł blokowania</string>
-    <string name="msg_no_whitelists">No whitelists found for this application</string>
     <string name="msg_sure">Czy jesteś pewny/a?</string>
     <string name="msg_select">Proszę wyberz jakieś aplikacje</string>
     <string name="msg_limit">Proszę wybierz mniej niż %d aplikacji</string>

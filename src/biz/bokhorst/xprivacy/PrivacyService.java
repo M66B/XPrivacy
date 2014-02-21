@@ -457,6 +457,8 @@ public class PrivacyService {
 					}
 				}
 
+				boolean whitelisted = false;
+
 				if (!cached) {
 					PRestriction cresult = new PRestriction(restriction.uid, restriction.restrictionName, null);
 					boolean methodFound = false;
@@ -537,18 +539,20 @@ public class PrivacyService {
 					}
 
 					// Check whitelist
-					if (!mresult.asked && usage && hook != null && hook.whitelist() != null
-							&& restriction.extra != null && restriction.extra != "") {
+					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null
+							&& restriction.extra != "") {
 						Boolean value = PrivacyManager.checkWhitelist(restriction.uid, hook.whitelist(),
 								restriction.extra, true);
 						Util.log(null, Log.WARN, String.format("Checking whitelist for %d %s = %s", restriction.uid,
 								restriction.extra, value));
 						if (value != null) {
 							// true means allow, false means block, and null
-							// means
-							// ask again
-							restriction.restricted = !value;
-							restriction.asked = true;
+							// means ask again
+							mresult.restricted = !value;
+							mresult.asked = true;
+
+							// Don't show the prompt
+							whitelisted = true;
 
 							Util.log(null, Log.WARN, restriction.extra
 									+ (restriction.restricted ? " blacklisted" : " whitelisted") + " for "
@@ -572,7 +576,7 @@ public class PrivacyService {
 					notifyRestricted(restriction);
 
 				// Ask to restrict
-				if (!mresult.asked && usage && PrivacyManager.isApplication(restriction.uid))
+				if (!mresult.asked && !whitelisted && usage && PrivacyManager.isApplication(restriction.uid))
 					onDemandDialog(hook, restriction, mresult);
 
 				// Log usage
