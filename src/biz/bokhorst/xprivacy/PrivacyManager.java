@@ -445,8 +445,8 @@ public class PrivacyManager {
 		PrivacyManager.setSetting(uid, type + "." + name, value);
 	}
 
-	public static HashMap<String, Map<String, Boolean>> listWhitelisted(int uid) {
-		HashMap<String, Map<String, Boolean>> mapWhitelisted = new HashMap<String, Map<String, Boolean>>();
+	public static Map<String, TreeMap<String, Boolean>> listWhitelisted(int uid) {
+		Map<String, TreeMap<String, Boolean>> mapWhitelisted = new HashMap<String, TreeMap<String, Boolean>>();
 		for (PSetting setting : getSettingList(uid)) {
 			// Grok the setting to see if it fits the bill
 			if (setting.name.startsWith("Whitelist")) {
@@ -458,7 +458,7 @@ public class PrivacyManager {
 
 				// If we get here, add it to the list
 				if (!mapWhitelisted.containsKey(type))
-					mapWhitelisted.put(type, new HashMap<String, Boolean>());
+					mapWhitelisted.put(type, new TreeMap<String, Boolean>());
 				mapWhitelisted.get(type).put(name, Boolean.parseBoolean(setting.value));
 			}
 		}

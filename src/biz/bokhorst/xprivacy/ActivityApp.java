@@ -851,7 +851,7 @@ public class ActivityApp extends ActivityBase {
 
 	private class WhitelistsTask extends AsyncTask<Object, Object, Object> {
 		private WhitelistAdapter mWhitelistAdapter;
-		private Map<String, Map<String, Boolean>> mListWhitelist;
+		private Map<String, TreeMap<String, Boolean>> mListWhitelist;
 
 		@Override
 		protected Object doInBackground(Object... params) {
@@ -929,10 +929,10 @@ public class ActivityApp extends ActivityBase {
 	@SuppressLint("DefaultLocale")
 	private class WhitelistAdapter extends ArrayAdapter<String> {
 		private String mSelectedType;
-		private Map<String, Map<String, Boolean>> mMapWhitelists;
+		private Map<String, TreeMap<String, Boolean>> mMapWhitelists;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public WhitelistAdapter(Context context, int resource, Map<String, Map<String, Boolean>> mapWhitelists) {
+		public WhitelistAdapter(Context context, int resource, Map<String, TreeMap<String, Boolean>> mapWhitelists) {
 			super(context, resource, new ArrayList<String>());
 			mMapWhitelists = mapWhitelists;
 		}

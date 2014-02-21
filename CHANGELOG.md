@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Localized whitelist names ([issue](/../../issues/1375))
+* Sorted whitelist entries ([issue](/../../issues/1375))
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
