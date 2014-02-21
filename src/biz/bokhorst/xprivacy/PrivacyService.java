@@ -161,6 +161,10 @@ public class PrivacyService {
 		}
 	}
 
+	public static boolean isRegistered() {
+		return mRegistered;
+	}
+
 	public static boolean checkClient() {
 		// Runs client side
 		try {
@@ -186,6 +190,7 @@ public class PrivacyService {
 			}
 
 		// Disable disk strict mode
+		// TODO: hook setThreadPolicy
 		try {
 			ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
 			ThreadPolicy newpolicy = new ThreadPolicy.Builder(oldPolicy).permitDiskReads().permitDiskWrites().build();

@@ -126,8 +126,8 @@ public class Util {
 		log(hook, priority, ex.toString() + " uid=" + Process.myUid() + "\n" + Log.getStackTraceString(ex));
 	}
 
-	public static void logStack(XHook hook) {
-		log(hook, Log.WARN, Log.getStackTraceString(new Exception("StackTrace")));
+	public static void logStack(XHook hook, int priority) {
+		log(hook, priority, Log.getStackTraceString(new Exception("StackTrace")));
 	}
 
 	public static int getXposedAppProcessVersion() {

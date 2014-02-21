@@ -138,7 +138,7 @@ public class XPackageManager extends XHook {
 
 		if (packageName == null) {
 			Util.log(null, Log.WARN, "isPackageAllowed uid=" + uid + " package=" + packageName);
-			Util.logStack(null);
+			Util.logStack(null, Log.WARN);
 			return false;
 		}
 

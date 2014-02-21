@@ -5,6 +5,8 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import android.util.Log;
+
 import de.robv.android.xposed.XC_MethodHook.MethodHookParam;
 
 public class XParam {
@@ -37,8 +39,13 @@ public class XParam {
 	}
 
 	public void setResult(Object result) {
-		mResult = result;
-		mHasResult = true;
+		if (result instanceof Throwable) {
+			Util.log(null, Log.ERROR, "Set result throwable=" + result);
+			setThrowable((Throwable) result);
+		} else {
+			mResult = result;
+			mHasResult = true;
+		}
 	}
 
 	public boolean hasResult() {
