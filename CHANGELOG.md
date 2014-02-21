@@ -18,6 +18,7 @@ Changelog
 * Sorted whitelist entries ([issue](/../../issues/1375))
 * Removed /proc exceptions, except */proc/self/cmdline*
 * Added whitelist for /proc
+* *storage/open* will also check media storage
 * Updated Dutch translation
 * Updated Lithuanian translation
 

@@ -8,6 +8,7 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.os.Process;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class XIoBridge extends XHook {
@@ -74,7 +75,10 @@ public class XIoBridge extends XHook {
 					String externalStorage = System.getenv("EXTERNAL_STORAGE");
 					String emulatedSource = System.getenv("EMULATED_STORAGE_SOURCE");
 					String emulatedTarget = System.getenv("EMULATED_STORAGE_TARGET");
-					if (fileName.startsWith("/sdcard")
+					String mediaStorage = System.getenv("MEDIA_STORAGE");
+					if (TextUtils.isEmpty(mediaStorage))
+						mediaStorage = "/data/media";
+					if (fileName.startsWith("/sdcard") || fileName.startsWith(mediaStorage)
 							|| (externalStorage != null && fileName.startsWith(externalStorage))
 							|| (emulatedSource != null && fileName.startsWith(emulatedSource))
 							|| (emulatedTarget != null && fileName.startsWith(emulatedTarget)))
