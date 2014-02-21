@@ -403,6 +403,8 @@ public class PrivacyManager {
 		setSetting(uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 	}
 
+	// Template
+
 	public static void applyTemplate(int uid) {
 		// Enable on-demand
 		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
@@ -420,34 +422,30 @@ public class PrivacyManager {
 		}
 	}
 
+	// White listing
+
 	public static boolean isWhitelisted(int uid, String type, String name, boolean useCache) {
 		// For hooks
 		return PrivacyManager.getSettingBool(uid, type + "." + name, false, useCache);
 	}
 
-	public static Boolean checkWhitelist(int uid, String type, String name, boolean useCache) {
-		// For getRestriction we need to be able to indicate whether it is
-		// whitelisted, blacklisted, or not stored.
-		String value = PrivacyManager.getSetting(uid, type + "." + name, "", useCache);
+	public static Boolean checkWhitelisted(int uid, String type, String name, boolean useCache) {
+		String value = PrivacyManager.getSetting(uid, type + "." + name, null, useCache);
 		Boolean result = null;
-		if (!value.equals(""))
+		if (value != null)
 			result = Boolean.parseBoolean(value);
 		return result;
 	}
 
 	public static void setWhitelisted(int uid, String type, String name, Boolean whitelist) {
-		// whitelist = true means to whitelist, false means to blacklist,
-		// whitelist = null means to ask again (there is currently no function
-		// that deletes a single setting)
-		String value = "";
+		// whitelist = true means to whitelist, false means to blacklist
+		String value = null;
 		if (whitelist != null)
 			value = Boolean.toString(whitelist);
 		PrivacyManager.setSetting(uid, type + "." + name, value);
-		Util.log(null, Log.WARN, String.format("Setting whitelist for %d (%s) %s %s", uid, type, name, whitelist));
 	}
 
 	public static HashMap<String, Map<String, Boolean>> listWhitelisted(int uid) {
-		Util.log(null, Log.WARN, "Getting whitelists for " + uid);
 		HashMap<String, Map<String, Boolean>> mapWhitelisted = new HashMap<String, Map<String, Boolean>>();
 		for (PSetting setting : getSettingList(uid)) {
 			// Grok the setting to see if it fits the bill
@@ -455,18 +453,13 @@ public class PrivacyManager {
 				String[] components = setting.name.split("\\.");
 				if (components.length < 3)
 					continue;
-				String type = components[1];
+				String type = components[0] + "." + components[1];
 				String name = setting.name.replace(components[0] + "." + components[1] + ".", "");
-
-				// Don't list inactive whitelists
-				if (setting.value.equals(""))
-					continue;
 
 				// If we get here, add it to the list
 				if (!mapWhitelisted.containsKey(type))
 					mapWhitelisted.put(type, new HashMap<String, Boolean>());
 				mapWhitelisted.get(type).put(name, Boolean.parseBoolean(setting.value));
-				Util.log(null, Log.WARN, String.format("Whitelist for %d (%s) %s = %s", uid, type, name, setting.value));
 			}
 		}
 		return mapWhitelisted;

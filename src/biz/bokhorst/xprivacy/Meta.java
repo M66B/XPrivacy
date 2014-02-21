@@ -12,13 +12,13 @@ public class Meta {
 	public final static String cWhitelistAccount = "Account";
 	public final static String cWhitelistApplication = "Application";
 	public final static String cWhitelistContact = "Contact";
-	public final static String cWhitelistInetAddr = "Whitelist.InetAddr";
+	public final static String cWhitelistIPAddress = "Whitelist.IPAddress";
 	public final static String cWhitelistLibrary = "Whitelist.Library";
 	public final static String cWhitelistFilename = "Whitelist.Filename";
 	public final static String cWhitelistCommand = "Whitelist.Command";
 	public final static String cWhitelistUrl = "Whitelist.Url";
 
-	public static final String cWhitelistTypes[] = new String[] { cWhitelistInetAddr, cWhitelistLibrary,
+	public static final String cWhitelistTypes[] = new String[] { cWhitelistIPAddress, cWhitelistLibrary,
 			cWhitelistFilename, cWhitelistCommand, cWhitelistUrl };
 
 	public static List<Hook> get() {
@@ -109,7 +109,7 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
 
-		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cWhitelistInetAddr));
+		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cWhitelistIPAddress));
 		mListHook.add(new Hook("internet", "socket", null, 1, "1.99.46", null).dangerous());
 
 		mListHook.add(new Hook("ipc", "android.accounts.IAccountManager", "", 1, "1.99.1", null));
@@ -230,8 +230,8 @@ public class Meta {
 		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null));
 		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null));
 
-		mListHook.add(new Hook("shell", "sh", "", 10, null, null));
-		mListHook.add(new Hook("shell", "su", "", 10, null, null));
+		mListHook.add(new Hook("shell", "sh", "", 10, null, null).whitelist(cWhitelistCommand));
+		mListHook.add(new Hook("shell", "su", "", 10, null, null).whitelist(cWhitelistCommand));
 		mListHook.add(new Hook("shell", "exec", "", 10, null, null).whitelist(cWhitelistCommand));
 		mListHook.add(new Hook("shell", "load", "", 10, null, null).dangerous().whitelist(cWhitelistLibrary));
 		mListHook.add(new Hook("shell", "loadLibrary", "", 10, null, null).dangerous().whitelist(cWhitelistLibrary));

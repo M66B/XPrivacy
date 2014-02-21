@@ -37,7 +37,6 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
 import android.view.View.OnClickListener;
@@ -888,7 +887,7 @@ public class ActivityApp extends ActivityBase {
 						}
 
 						@Override
-						public void onNothingSelected(AdapterView<?> arg0) {
+						public void onNothingSelected(AdapterView<?> view) {
 						}
 					});
 
@@ -920,9 +919,9 @@ public class ActivityApp extends ActivityBase {
 
 	@SuppressLint("DefaultLocale")
 	private class WhitelistAdapter extends ArrayAdapter<String> {
+		private String mSelectedType;
+		private Map<String, Map<String, Boolean>> mMapWhitelists;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		Map<String, Map<String, Boolean>> mMapWhitelists;
-		String mSelectedType;
 
 		public WhitelistAdapter(Context context, int resource, Map<String, Map<String, Boolean>> mapWhitelists) {
 			super(context, resource, new ArrayList<String>());
@@ -932,11 +931,8 @@ public class ActivityApp extends ActivityBase {
 		public void setType(String selectedType) {
 			mSelectedType = selectedType;
 			this.clear();
-			if (mMapWhitelists.containsKey(selectedType)) {
+			if (mMapWhitelists.containsKey(selectedType))
 				this.addAll(mMapWhitelists.get(selectedType).keySet());
-				Util.log(null, Log.WARN, "Showing whitelists of type " + selectedType);
-			} else
-				Util.log(null, Log.WARN, "No whitelists of type " + selectedType);
 		}
 
 		private class ViewHolder {
@@ -978,7 +974,7 @@ public class ActivityApp extends ActivityBase {
 			});
 			holder.imgDelete.setOnClickListener(new OnClickListener() {
 				@Override
-				public void onClick(View arg0) {
+				public void onClick(View view) {
 					// delete/disable it
 					String name = WhitelistAdapter.this.getItem(position);
 					PrivacyManager.setWhitelisted(mAppInfo.getUid(), mSelectedType, name, null);

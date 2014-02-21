@@ -538,19 +538,13 @@ public class PrivacyService {
 
 					// Check whitelist
 					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
-						Boolean value = PrivacyManager.checkWhitelist(restriction.uid, hook.whitelist(),
+						// TODO: privacy manager is for client side only
+						Boolean value = PrivacyManager.checkWhitelisted(restriction.uid, hook.whitelist(),
 								restriction.extra, true);
-						Util.log(null, Log.WARN, String.format("Checking whitelist for %d %s = %s", restriction.uid,
-								restriction.extra, value));
 						if (value != null) {
-							// true means allow, false means block, and null
-							// means ask again
+							// true means allow, false means block
 							mresult.restricted = !value;
 							mresult.asked = true;
-
-							Util.log(null, Log.WARN, restriction.extra
-									+ (restriction.restricted ? " blacklisted" : " whitelisted") + " for "
-									+ restriction);
 						}
 					}
 
@@ -1197,6 +1191,15 @@ public class PrivacyService {
 								return;
 							}
 						}
+						if (hook != null && hook.whitelist() != null) {
+							CSetting skey = new CSetting(restriction.uid, hook.whitelist() + "." + restriction.extra);
+							synchronized (mSettingCache) {
+								if (mSettingCache.containsKey(skey)) {
+									Util.log(null, Log.WARN, "Already asked " + skey);
+									return;
+								}
+							}
+						}
 
 						final AlertDialogHolder holder = new AlertDialogHolder();
 						final CountDownLatch latch = new CountDownLatch(1);
@@ -1310,7 +1313,7 @@ public class PrivacyService {
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
 					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
 
-			if (restriction.extra != null && restriction.extra != "" && hook.whitelist() != null) {
+			if (hook != null && hook.whitelist() != null && restriction.extra != null) {
 				cbWhitelist.setText(resources.getString(R.string.title_whitelist, restriction.extra));
 				cbWhitelist.setVisibility(View.VISIBLE);
 			}
@@ -1388,23 +1391,8 @@ public class PrivacyService {
 
 		private void onDemandWhitelist(final PRestriction restriction, final PRestriction result, Hook hook) {
 			// Set the whitelist
-			Util.log(null, Log.WARN, (result.restricted ? "Blacklisting" : "Whitelisting") + " " + restriction.extra
-					+ " for " + restriction);
+			Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction);
 			PrivacyManager.setWhitelisted(restriction.uid, hook.whitelist(), restriction.extra, !result.restricted);
-
-			// Cache it
-			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
-			CRestriction key = new CRestriction(restriction, restriction.extra);
-
-			// Avoid checking for the whitelist next time round
-			key.asked = true;
-
-			Util.log(null, Log.WARN, (result.restricted ? "Blacklisting " : "Whitelisting ") + key.toString());
-			synchronized (mRestrictionCache) {
-				if (mRestrictionCache.containsKey(key))
-					mRestrictionCache.remove(key);
-				mRestrictionCache.put(key, key);
-			}
 		}
 
 		private void onDemandOnce(final PRestriction restriction, final PRestriction result) {

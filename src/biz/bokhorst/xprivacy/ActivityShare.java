@@ -963,8 +963,7 @@ public class ActivityShare extends ActivityBase {
 					String value = attributes.getValue("Value");
 
 					// Import accounts/contacts only for same device
-					if (name.startsWith(Meta.cWhitelistAccount)
-							|| name.startsWith(Meta.cWhitelistContact))
+					if (name.startsWith(Meta.cWhitelistAccount) || name.startsWith(Meta.cWhitelistContact))
 						if (name.endsWith("." + android_id))
 							name = name.replace("." + android_id, "");
 						else
@@ -1321,8 +1320,8 @@ public class ActivityShare extends ActivityBase {
 						AccountManager accountManager = AccountManager.get(ActivityShare.this);
 						for (Account account : accountManager.getAccounts()) {
 							String sha1 = Util.sha1(account.name + account.type);
-							boolean allowed = PrivacyManager.isWhitelisted(appInfo.getUid(),
-									Meta.cWhitelistAccount, sha1, false);
+							boolean allowed = PrivacyManager.isWhitelisted(appInfo.getUid(), Meta.cWhitelistAccount,
+									sha1, false);
 							if (allowed) {
 								allowedAccounts = true;
 								break;

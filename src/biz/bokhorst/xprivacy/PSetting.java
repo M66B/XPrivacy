@@ -62,6 +62,6 @@ public class PSetting implements Parcelable {
 
 	@Override
 	public String toString() {
-		return "uid=" + uid + " " + name + "=" + value;
+		return "uid=" + uid + " " + name + "=" + (value == null ? "null" : value);
 	}
 }
