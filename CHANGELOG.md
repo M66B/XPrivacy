@@ -14,8 +14,8 @@ Changelog
 
 **Next release**
 
-* Attempt to fix interaction between on demand dialog and status bar 
-* Explicitly check return types I/O bridge ([issue](/../../issues/1398))
+* Fixed returning exceptions ([issue](/../../issues/1398))
+* Attempt to fix interaction between on demand dialog and status bar (reported on XDA)
 * Removed more dependencies on Xposed
 * Improved on demand restricting dialog layout
 * Show SDK version and XPrivacy version from in info popup
@@ -30,9 +30,7 @@ Changelog
 * Fixed select/unselect all ([issue](/../../issues/1390))
 * Fixed some more repeated asking on demand, thanks @[jpeg729](https://github.com/jpeg729)
 * Fixed duplicate usage data entries (reported on XDA)
-* Attempt to fix hooking for multi SIM devices ([issue](/../../issues/1366))
-	* **Warning**: due to restrictions being applied, which weren't previous applied, you can have FCs !
-	* You can find a list of restrictions reported to give problems [here](http://forum.xda-developers.com/showpost.php?p=50486983&postcount=7447)
+* Fixed hooking for multi SIM devices ([issue](/../../issues/1366))
 * Improved tutorial/info background ([issue](/../../issues/1391))
 * Added template for on demand restricting, thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1376))
 * Reduced dependency on Xposed
