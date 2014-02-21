@@ -68,7 +68,7 @@ public class XIoBridge extends XHook {
 	@SuppressLint("SdCardPath")
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.connect) {
-			if (param.args.length > 2 && param.args[1] instanceof InetAddress && param.doesThrow(SocketException.class)) {
+			if (param.args.length > 2 && param.args[1] instanceof InetAddress) {
 				InetAddress address = (InetAddress) param.args[1];
 				int port = (Integer) param.args[2];
 				if (isRestrictedExtra(param, address.toString() + ":" + port))
@@ -76,7 +76,7 @@ public class XIoBridge extends XHook {
 			}
 
 		} else if (mMethod == Methods.open) {
-			if (param.args.length > 0 && param.args[0] != null && param.doesThrow(FileNotFoundException.class)) {
+			if (param.args.length > 0 && param.args[0] != null) {
 				String fileName = (String) param.args[0];
 				if (mFileName == null) {
 					String externalStorage = System.getenv("EXTERNAL_STORAGE");
@@ -118,7 +118,7 @@ public class XIoBridge extends XHook {
 			}
 
 		} else if (mMethod == Methods.socket) {
-			if (isRestricted(param) && param.doesThrow(SocketException.class))
+			if (isRestricted(param))
 				param.setThrowable(new SocketException("XPrivacy"));
 
 		} else
