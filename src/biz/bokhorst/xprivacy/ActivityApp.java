@@ -876,6 +876,7 @@ public class ActivityApp extends ActivityBase {
 					LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					View llWhitelists = inflater.inflate(R.layout.whitelists, null);
 
+					// TODO: sort localized whitelist types
 					final List<String> localizedType = new ArrayList<String>();
 					for (String type : mListWhitelist.keySet()) {
 						String name = type.toLowerCase().replace(".", "_").replace("/", "");

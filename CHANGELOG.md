@@ -19,6 +19,7 @@ Changelog
 * Removed /proc exceptions, except */proc/self/cmdline*
 * Added whitelist for /proc
 * Updated Dutch translation
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
