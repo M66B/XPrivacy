@@ -101,7 +101,6 @@
     <string name="whitelist_filename">File names</string>
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
-    <string name="title_categories">Danh mục</string>
     <string name="title_restrict">Đánh dấu để hạn chế:</string>
     <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">Lọc theo sử dụng dữ liệu</string>
