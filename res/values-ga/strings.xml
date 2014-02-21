@@ -97,6 +97,11 @@
     <string name="restrict_shell">Shell (orduithe, fhorúsáideoir)</string>
     <string name="restrict_system">Córas (suiteáilte apps)</string>
     <string name="restrict_view">Amharc (bhrabhsálaí)</string>
+    <string name="whitelist_ipaddress">IP addresses</string>
+    <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_filename">File names</string>
+    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_url">URLs</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Seiceáil chun srian a chur ar:</string>
     <string name="title_check_whitelist">Check to allow</string>

@@ -96,6 +96,11 @@
     <string name="restrict_shell">Komentorivi (komennot, superuser)</string>
     <string name="restrict_system">Järjestelmä (asennetut ohjelmat)</string>
     <string name="restrict_view">Katso (selaimessa)</string>
+    <string name="whitelist_ipaddress">IP addresses</string>
+    <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_filename">File names</string>
+    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_url">URLs</string>
     <string name="title_categories">Categories</string>
     <string name="title_restrict">Valitse rajoittaaksesi:</string>
     <string name="title_check_whitelist">Check to allow</string>

@@ -97,6 +97,11 @@
     <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
     <string name="restrict_system">系统（查看已安装的应用）</string>
     <string name="restrict_view">显示网页（内置浏览器）</string>
+    <string name="whitelist_ipaddress">IP addresses</string>
+    <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_filename">File names</string>
+    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_url">URLs</string>
     <string name="title_categories">类别</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="title_check_whitelist">Check to allow</string>

@@ -97,6 +97,11 @@
     <string name="restrict_shell">Shell (指令, ROOT指令)</string>
     <string name="restrict_system">系統資訊 (程式, 服務, etc)</string>
     <string name="restrict_view">瀏覽器介面</string>
+    <string name="whitelist_ipaddress">IP addresses</string>
+    <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_filename">File names</string>
+    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_url">URLs</string>
     <string name="title_categories">分類</string>
     <string name="title_restrict">限制項目:</string>
     <string name="title_check_whitelist">Check to allow</string>

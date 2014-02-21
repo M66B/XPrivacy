@@ -97,6 +97,11 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_shell">Shell (commandes, root)</string>
     <string name="restrict_system">Système (applis installées)</string>
     <string name="restrict_view">Vue (navigateur)</string>
+    <string name="whitelist_ipaddress">IP addresses</string>
+    <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_filename">File names</string>
+    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_url">URLs</string>
     <string name="title_categories">Catégories</string>
     <string name="title_restrict">Cocher pour restreindre :</string>
     <string name="title_check_whitelist">Check to allow</string>

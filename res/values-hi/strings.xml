@@ -97,6 +97,11 @@
     <string name="restrict_shell">Shell (आदेश, superuser)</string>
     <string name="restrict_system">सिस्टम (इन्सटाल्ड apps)</string>
     <string name="restrict_view">View (ब्राउज़र)</string>
+    <string name="whitelist_ipaddress">IP addresses</string>
+    <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_filename">File names</string>
+    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_url">URLs</string>
     <string name="title_categories">श्रेणियाँ</string>
     <string name="title_restrict">प्रतिबंधित करने के लिए मार्क करे:</string>
     <string name="title_check_whitelist">Check to allow</string>
