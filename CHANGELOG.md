@@ -14,6 +14,11 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.51 TEST**
+
+* Fixed returning exceptions ([issue](/../../issues/1398))
 * Localized whitelist names ([issue](/../../issues/1375))
 * Sorted whitelist entries ([issue](/../../issues/1375))
 * Removed /proc exceptions, except */proc/self/cmdline*
@@ -25,8 +30,6 @@ Changelog
 * Updated Dutch translation
 * Updated Lithuanian translation
 * Updated Russian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.50 TEST**
 
