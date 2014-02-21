@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Updated Dutch translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.50 TEST**
@@ -24,7 +26,7 @@ Changelog
 * Improved on demand restricting dialog layout
 * Show SDK version and XPrivacy version *from* in function information
 * Prevent on demand restricting after being powered down
-* Added white/black listing to IP addresses, shell commands, files and URLs, big thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1375))
+* Added white/black listing for IP addresses, shell commands, files and URLs, big thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1375))
 * Updated Russian translation
 
 **Version 1.99.49 TEST**
