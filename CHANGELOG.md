@@ -14,16 +14,18 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.50 TEST**
+
 * Fixed returning exceptions ([issue](/../../issues/1398))
 * Attempt to fix interaction between on demand dialog and status bar (reported on XDA)
 * Removed more dependencies on Xposed
 * Improved on demand restricting dialog layout
-* Show SDK version and XPrivacy version from in function information
+* Show SDK version and XPrivacy version *from* in function information
 * Prevent on demand restricting after being powered down
 * Added white/black listing to IP addresses, shell commands, files and URLs, big thanks @[jpeg729](https://github.com/jpeg729) ([issue](/../../issues/1375))
 * Updated Russian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.49 TEST**
 
