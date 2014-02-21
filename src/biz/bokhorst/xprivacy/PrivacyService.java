@@ -1396,9 +1396,14 @@ public class PrivacyService {
 		}
 
 		private void onDemandWhitelist(final PRestriction restriction, final PRestriction result, Hook hook) {
-			// Set the whitelist
-			Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction);
-			PrivacyManager.setWhitelisted(restriction.uid, hook.whitelist(), restriction.extra, !result.restricted);
+			try {
+				// Set the whitelist
+				Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction);
+				setSettingInternal(new PSetting(restriction.uid, hook.whitelist() + "." + restriction.extra,
+						Boolean.toString(!result.restricted)));
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 		}
 
 		private void onDemandOnce(final PRestriction restriction, final PRestriction result) {
