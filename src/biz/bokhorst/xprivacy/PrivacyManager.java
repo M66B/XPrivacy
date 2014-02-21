@@ -392,6 +392,7 @@ public class PrivacyManager {
 		// Delete restrictions
 		try {
 			PrivacyService.getClient().deleteRestrictions(uid, restrictionName == null ? "" : restrictionName);
+			deleteWhitelists(uid);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -423,6 +424,7 @@ public class PrivacyManager {
 	}
 
 	// White listing
+	// TODO: move white listing to service
 
 	public static boolean isWhitelisted(int uid, String type, String name, boolean useCache) {
 		// For hooks
@@ -463,6 +465,13 @@ public class PrivacyManager {
 			}
 		}
 		return mapWhitelisted;
+	}
+
+	private static void deleteWhitelists(int uid) {
+		if (uid > 0)
+			for (PSetting setting : getSettingList(uid))
+				if (setting.name.startsWith("Whitelist"))
+					setSetting(uid, setting.name, null);
 	}
 
 	// Usage
