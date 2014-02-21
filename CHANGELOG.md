@@ -20,6 +20,7 @@ Changelog
 * Added whitelist for /proc ([issue](/../../issues/1375))
 * *storage/open* will also check media storage
 * Clear restrictions will clear whitelists ([issue](/../../issues/1375))
+* Whitelist management requires a [Pro license](http://www.xprivacy.eu/)
 * Updated Dutch translation
 * Updated Lithuanian translation
 * Updated Russian translation

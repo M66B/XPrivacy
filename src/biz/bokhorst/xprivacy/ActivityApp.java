@@ -597,8 +597,13 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	private void optionWhitelists() {
-		WhitelistsTask whitelistsTask = new WhitelistsTask();
-		whitelistsTask.executeOnExecutor(mExecutor, (Object) null);
+		if (Util.hasProLicense(this) == null) {
+			// Redirect to pro page
+			Util.viewUri(this, ActivityMain.cProUri);
+		} else {
+			WhitelistsTask whitelistsTask = new WhitelistsTask();
+			whitelistsTask.executeOnExecutor(mExecutor, (Object) null);
+		}
 	}
 
 	private void optionSettings() {
