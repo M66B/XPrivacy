@@ -12,11 +12,11 @@ public class Meta {
 	public final static String cWhitelistAccount = "Account";
 	public final static String cWhitelistApplication = "Application";
 	public final static String cWhitelistContact = "Contact";
-	public final static String cWhitelistInetAddr = "InetAddr";
-	public final static String cWhitelistLibrary = "Library";
-	public final static String cWhitelistFilename = "Filename";
-	public final static String cWhitelistCommand = "Command";
-	public final static String cWhitelistUrl = "Url";
+	public final static String cWhitelistInetAddr = "Whitelist.InetAddr";
+	public final static String cWhitelistLibrary = "Whitelist.Library";
+	public final static String cWhitelistFilename = "Whitelist.Filename";
+	public final static String cWhitelistCommand = "Whitelist.Command";
+	public final static String cWhitelistUrl = "Whitelist.Url";
 
 	public static final String cWhitelistTypes[] = new String[] { cWhitelistInetAddr, cWhitelistLibrary,
 			cWhitelistFilename, cWhitelistCommand, cWhitelistUrl };

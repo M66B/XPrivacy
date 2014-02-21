@@ -536,6 +536,26 @@ public class PrivacyService {
 						}
 					}
 
+					// Check whitelist
+					if (!mresult.asked && usage && hook != null && hook.whitelist() != null
+							&& restriction.extra != null && restriction.extra != "") {
+						Boolean value = PrivacyManager.checkWhitelist(restriction.uid, hook.whitelist(),
+								restriction.extra, true);
+						Util.log(null, Log.WARN, String.format("Checking whitelist for %d %s = %s", restriction.uid,
+								restriction.extra, value));
+						if (value != null) {
+							// true means allow, false means block, and null
+							// means
+							// ask again
+							restriction.restricted = !value;
+							restriction.asked = true;
+
+							Util.log(null, Log.WARN, restriction.extra
+									+ (restriction.restricted ? " blacklisted" : " whitelisted") + " for "
+									+ restriction);
+						}
+					}
+
 					// Update cache
 					if (mUseCache) {
 						CRestriction key = new CRestriction(mresult, restriction.extra);
@@ -547,33 +567,12 @@ public class PrivacyService {
 					}
 				}
 
-				// Check whitelist
-				boolean whitelisted = false;
-				if (!mresult.asked && usage && hook.whitelist() != null && restriction.extra != null
-						&& restriction.extra != "") {
-					Boolean value = PrivacyManager.checkWhitelist(restriction.uid, hook.whitelist(), restriction.extra,
-							true);
-					Util.log(null, Log.WARN, String.format("Checking whitelist for %d %s = %s", restriction.uid,
-							restriction.extra, value));
-					if (value != null) {
-						// true means allow, false means block, and null means
-						// ask again
-						restriction.restricted = !value;
-
-						// the following is needed for the first access after
-						// boot, the caches take care of the rest
-						whitelisted = true;
-						Util.log(null, Log.WARN, restriction.extra
-								+ (restriction.restricted ? " blacklisted" : " whitelisted") + " for " + restriction);
-					}
-				}
-
 				// Media: notify user
 				if (mresult.restricted && usage && hook != null && hook.shouldNotify())
 					notifyRestricted(restriction);
 
 				// Ask to restrict
-				if (!mresult.asked && usage && !whitelisted && PrivacyManager.isApplication(restriction.uid))
+				if (!mresult.asked && usage && PrivacyManager.isApplication(restriction.uid))
 					onDemandDialog(hook, restriction, mresult);
 
 				// Log usage
@@ -1390,11 +1389,18 @@ public class PrivacyService {
 		}
 
 		private void onDemandWhitelist(final PRestriction restriction, final PRestriction result, Hook hook) {
+			// Set the whitelist
 			Util.log(null, Log.WARN, (result.restricted ? "Blacklisting" : "Whitelisting") + " " + restriction.extra
 					+ " for " + restriction);
 			PrivacyManager.setWhitelisted(restriction.uid, hook.whitelist(), restriction.extra, !result.restricted);
+
+			// Cache it
 			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 			CRestriction key = new CRestriction(restriction, restriction.extra);
+
+			// Avoid checking for the whitelist next time round
+			key.asked = true;
+
 			Util.log(null, Log.WARN, (result.restricted ? "Blacklisting " : "Whitelisting ") + key.toString());
 			synchronized (mRestrictionCache) {
 				if (mRestrictionCache.containsKey(key))

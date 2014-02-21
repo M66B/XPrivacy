@@ -452,15 +452,10 @@ public class PrivacyManager {
 		for (PSetting setting : getSettingList(uid)) {
 			// Grok the setting to see if it fits the bill
 			String[] components = setting.name.split("\\.");
-			if (components.length < 2)
+			if (components.length < 3 || !components[0].equals("Whitelist"))
 				continue;
-			String type = components[0];
+			String type = components[1];
 			String name = setting.name.replace(components[0] + ".", "");
-
-			// Don't list accounts, contacts or apps
-			if (type.equals(Meta.cWhitelistAccount) || type.equals(Meta.cWhitelistContact)
-					|| type.equals(Meta.cWhitelistApplication))
-				continue;
 
 			// Don't list inactive whitelists
 			if (setting.value.equals(""))
