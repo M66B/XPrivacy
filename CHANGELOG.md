@@ -18,8 +18,9 @@ Changelog
 * Attempt to fix interaction between on demand dialog and status bar (reported on XDA)
 * Removed more dependencies on Xposed
 * Improved on demand restricting dialog layout
-* Show SDK version and XPrivacy version from in info popup
+* Show SDK version and XPrivacy version from in function information
 * Prevent on demand restricting after being powered down
+* Updated Russian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
