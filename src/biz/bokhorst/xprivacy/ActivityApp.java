@@ -864,6 +864,7 @@ public class ActivityApp extends ActivityBase {
 		}
 
 		@Override
+		@SuppressLint("DefaultLocale")
 		protected void onPostExecute(Object result) {
 			if (!ActivityApp.this.isFinishing()) {
 				// Build dialog
@@ -875,15 +876,21 @@ public class ActivityApp extends ActivityBase {
 					LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					View llWhitelists = inflater.inflate(R.layout.whitelists, null);
 
+					final List<String> localizedType = new ArrayList<String>();
+					for (String type : mListWhitelist.keySet()) {
+						String name = type.toLowerCase().replace(".", "_");
+						int id = getResources().getIdentifier(name, "string", ActivityApp.this.getPackageName());
+						localizedType.add(getResources().getString(id));
+					}
+
 					Spinner spWhitelistType = (Spinner) llWhitelists.findViewById(R.id.spWhitelistType);
 					ArrayAdapter<String> whitelistTypeAdapter = new ArrayAdapter<String>(ActivityApp.this,
-							android.R.layout.simple_spinner_dropdown_item, new ArrayList<String>(
-									mListWhitelist.keySet()));
+							android.R.layout.simple_spinner_dropdown_item, localizedType);
 					spWhitelistType.setAdapter(whitelistTypeAdapter);
 					spWhitelistType.setOnItemSelectedListener(new OnItemSelectedListener() {
 						@Override
 						public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-							mWhitelistAdapter.setType((String) parent.getSelectedItem());
+							mWhitelistAdapter.setType(mListWhitelist.keySet().toArray(new String[0])[position]);
 						}
 
 						@Override
@@ -893,7 +900,9 @@ public class ActivityApp extends ActivityBase {
 
 					ListView lvWhitelist = (ListView) llWhitelists.findViewById(R.id.lvWhitelist);
 					lvWhitelist.setAdapter(mWhitelistAdapter);
-					mWhitelistAdapter.setType((String) spWhitelistType.getSelectedItem());
+					int position = spWhitelistType.getSelectedItemPosition();
+					if (position != AdapterView.INVALID_POSITION)
+						mWhitelistAdapter.setType(mListWhitelist.keySet().toArray(new String[0])[position]);
 
 					alertDialogBuilder.setView(llWhitelists);
 				}
