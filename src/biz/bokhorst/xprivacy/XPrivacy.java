@@ -326,6 +326,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 							param.setResult(xparam.getResult());
 						if (xparam.hasThrowable())
 							param.setResult(xparam.getThrowable());
+						param.setObjectExtra("xextra", xparam.getExtras());
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
 					}
@@ -338,6 +339,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 							if (Process.myUid() <= 0)
 								return;
 							XParam xparam = XParam.fromXposed(param);
+							xparam.setExtras(param.getObjectExtra("xextra"));
 							hook.after(xparam);
 							if (xparam.hasResult())
 								param.setResult(xparam.getResult());

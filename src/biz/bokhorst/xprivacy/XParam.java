@@ -70,6 +70,15 @@ public class XParam {
 		return mThrowable;
 	}
 
+	public Object getExtras() {
+		return mExtra;
+	}
+
+	@SuppressWarnings("unchecked")
+	public void setExtras(Object extra) {
+		mExtra = (Map<String, Object>) extra;
+	}
+
 	public void setObjectExtra(String name, Object value) {
 		if (mExtra == null)
 			mExtra = new HashMap<String, Object>();
