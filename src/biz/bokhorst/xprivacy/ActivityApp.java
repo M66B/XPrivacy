@@ -1272,7 +1272,7 @@ public class ActivityApp extends ActivityBase {
 						View layout = inflator.inflate(R.layout.popup, null);
 
 						TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
-						tvTitle.setText(md.getName() + " (" + md.getSdk() + ")");
+						tvTitle.setText(md.getName() + " (SDK " + md.getSdk() + ")");
 
 						String text = md.getAnnotation();
 						String[] permissions = md.getPermissions();
@@ -1284,7 +1284,7 @@ public class ActivityApp extends ActivityBase {
 								text += TextUtils.join("<br />", permissions);
 						}
 						if (md.getFrom() != null)
-							text += "<br /><br />" + md.getFrom();
+							text += "<br /><br />XPrivacy " + md.getFrom();
 
 						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
 						tvInfo.setText(Html.fromHtml(text));
