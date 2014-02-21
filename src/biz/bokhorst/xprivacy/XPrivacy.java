@@ -289,15 +289,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
 		// Check SDK version
 		Hook md = null;
+		String message = null;
 		if (hook.getRestrictionName() == null) {
 			if (hook.getSdk() == 0)
-				Util.log(null, Log.ERROR, "No SDK specified for " + hook.getClassName() + "." + hook.getMethodName());
+				message = "No SDK specified for " + hook;
 		} else {
 			md = PrivacyManager.getHook(hook.getRestrictionName(), hook.getSpecifier());
 			if (md == null)
-				Util.log(null, Log.ERROR, "Hook not found " + hook.getRestrictionName() + "/" + hook.getSpecifier());
+				message = "Hook not found " + hook;
 			else if (hook.getSdk() != 0)
-				Util.log(null, Log.ERROR, "SDK specified for " + hook.getRestrictionName() + "/" + hook.getSpecifier());
+				message = "SDK not expected for " + hook;
+		}
+		if (message != null) {
+			mListHookError.add(message);
+			Util.log(hook, Log.ERROR, message);
 		}
 
 		int sdk = 0;
@@ -384,8 +389,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				try {
 					XposedBridge.hookMethod(member, methodHook);
 				} catch (Throwable ex) {
-					Util.bug(hook, ex);
 					mListHookError.add(ex.toString());
+					Util.bug(hook, ex);
 				}
 
 			// Check if members found
@@ -395,8 +400,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, message);
 			}
 		} catch (Throwable ex) {
-			Util.bug(hook, ex);
 			mListHookError.add(ex.toString());
+			Util.bug(hook, ex);
 		}
 	}
 
