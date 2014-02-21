@@ -543,7 +543,7 @@ Because some Google components are not installed.
 <a name="FAQ21"></a>
 **(31) Do I still need root after installing Xposed?**
 
-No.
+No, root is only required to install Xposed one time.
 
 <a name="FAQ22"></a>
 **(22) Why isn't XPrivacy available in the Play Store anymore?**
@@ -584,7 +584,7 @@ No, because I don't consider these privacy-sensitive data, i.e., able to identif
 <a name="FAQ27"></a>
 **(27) Does XPrivacy work with SELinux (Fort Knox)?**
 
-Yes.
+Yes, I am developing XPrivacy on a device with SELinux in restrictive mode.
 
 <a name="FAQ28"></a>
 **(28) How does the tri-state check box work?**
