@@ -21,6 +21,7 @@ Changelog
 * *storage/open* will also check media storage
 * Updated Dutch translation
 * Updated Lithuanian translation
+* Updated Russian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
