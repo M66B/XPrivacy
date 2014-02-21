@@ -381,7 +381,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Hook members
 			for (Member member : listMember)
-				XposedBridge.hookMethod(member, methodHook);
+				try {
+					XposedBridge.hookMethod(member, methodHook);
+				} catch (Throwable ex) {
+					Util.bug(hook, ex);
+					mListHookError.add(ex.toString());
+				}
 
 			// Check if members found
 			if (listMember.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
