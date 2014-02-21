@@ -74,7 +74,7 @@ public class XRuntime extends XHook {
 
 		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
 			if (isRestrictedExtra(param, (String) param.args[0]))
-				param.setResult(new UnsatisfiedLinkError());
+				param.setThrowable(new UnsatisfiedLinkError());
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());

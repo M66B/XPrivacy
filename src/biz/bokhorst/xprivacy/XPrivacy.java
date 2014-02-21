@@ -330,7 +330,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						if (xparam.hasResult())
 							param.setResult(xparam.getResult());
 						if (xparam.hasThrowable())
-							param.setResult(xparam.getThrowable());
+							param.setThrowable(xparam.getThrowable());
 						param.setObjectExtra("xextra", xparam.getExtras());
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
