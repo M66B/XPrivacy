@@ -1212,13 +1212,13 @@ public class PrivacyService {
 						}
 						if (restriction.extra != null && hook != null && hook.whitelist() != null) {
 							CSetting skey = new CSetting(restriction.uid, hook.whitelist() + "." + restriction.extra);
-							CSetting fkey = null;
+							CSetting xkey = null;
 							String xextra = getXExtra(restriction, hook);
 							if (xextra != null)
-								fkey = new CSetting(restriction.uid, hook.whitelist() + "." + xextra);
+								xkey = new CSetting(restriction.uid, hook.whitelist() + "." + xextra);
 							synchronized (mSettingCache) {
 								if (mSettingCache.containsKey(skey)
-										|| (fkey != null && mSettingCache.containsKey(fkey))) {
+										|| (xkey != null && mSettingCache.containsKey(xkey))) {
 									Util.log(null, Log.WARN, "Already asked " + skey);
 									return false;
 								}
