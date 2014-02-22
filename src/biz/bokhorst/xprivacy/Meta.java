@@ -282,7 +282,7 @@ public class Meta {
 		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null));
 		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null));
 		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null));
-		mListHook.add(new Hook("view", "android.intent.action.VIEW", "", 1, null, null).doNotify());
+		mListHook.add(new Hook("view", "android.intent.action.VIEW", "", 1, null, null).doNotify().whitelist(cWhitelistUrl));
 		// @formatter:on
 		return mListHook;
 	}
