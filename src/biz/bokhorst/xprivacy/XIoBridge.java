@@ -74,9 +74,9 @@ public class XIoBridge extends XHook {
 			}
 
 		} else if (mMethod == Methods.open) {
-			if (param.args.length > 0 && param.args[0] != null) {
+			if (param.args.length > 0) {
 				String fileName = (String) param.args[0];
-				if (mFileName == null) {
+				if (mFileName == null && fileName != null) {
 					// Get storage folders
 					if (mExternalStorage == null) {
 						mExternalStorage = System.getenv("EXTERNAL_STORAGE");
@@ -88,7 +88,7 @@ public class XIoBridge extends XHook {
 					}
 
 					// Check storage folders
-					if (fileName.startsWith("/sdcard") || fileName.startsWith(mMediaStorage)
+					if (fileName.startsWith("/sdcard") || (mMediaStorage != null && fileName.startsWith(mMediaStorage))
 							|| (mExternalStorage != null && fileName.startsWith(mExternalStorage))
 							|| (mEmulatedSource != null && fileName.startsWith(mEmulatedSource))
 							|| (mEmulatedTarget != null && fileName.startsWith(mEmulatedTarget)))
