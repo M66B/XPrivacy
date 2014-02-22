@@ -495,15 +495,18 @@ This means XPrivacy's apk file is corrupt. Try disabling your popup blocker or d
 <a name="FAQ14"></a>
 **(14) How can I make a logcat?**
 
+The simplest way is to use an application, like [catlog](https://play.google.com/store/apps/details?id=com.nolanlawson.logcat),
+but logcats capture this why are not always sufficient. The best way to capture a logcat is:
+
 * Install the [Android SDK](http://developer.android.com/sdk/index.html) (Click *Download for other platforms* for a minimal download)
 * Make sure you can connect to your device via USB (see [here](http://developer.android.com/sdk/win-usb.html) for drivers and instructions)
-* Enable XPrivacy debug logging in the main settings
+* **Enable XPrivacy debug logging in the main settings**
 * Power off your device
 * Start logging by entering this command on the command line: *adb logcat >log.txt*
 * Power on your device
 * Reproduce the problem
 
-Upload the capture logcat somewhere, for example using Google Drive,
+Upload the captured logcat somewhere, for example using Google Drive,
 and link to it from the issue you (should) have created.
 
 <a name="FAQ15"></a>
