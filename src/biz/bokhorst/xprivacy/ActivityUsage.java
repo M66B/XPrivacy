@@ -25,10 +25,10 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Filter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -72,20 +72,6 @@ public class ActivityUsage extends ActivityBase {
 		// Start task to get usage data
 		UsageTask usageTask = new UsageTask();
 		usageTask.executeOnExecutor(mExecutor, (Object) null);
-
-		// Listen for clicks
-		ListView lvUsage = (ListView) findViewById(R.id.lvUsage);
-		lvUsage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapter, View view, int position, long arg) {
-				PRestriction usageData = mUsageAdapter.getItem(position);
-				Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
-				intent.putExtra(ActivityApp.cUid, usageData.uid);
-				intent.putExtra(ActivityApp.cRestrictionName, usageData.restrictionName);
-				intent.putExtra(ActivityApp.cMethodName, usageData.methodName);
-				startActivity(intent);
-			}
-		});
 
 		// Up navigation
 		getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -223,6 +209,7 @@ public class ActivityUsage extends ActivityBase {
 		private class ViewHolder {
 			private View row;
 			private int position;
+			public LinearLayout llUsage;
 			public TextView tvTime;
 			public ImageView imgIcon;
 			public ImageView imgRestricted;
@@ -233,6 +220,7 @@ public class ActivityUsage extends ActivityBase {
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
 				position = thePosition;
+				llUsage = (LinearLayout) row.findViewById(R.id.llUsage);
 				tvTime = (TextView) row.findViewById(R.id.tvTime);
 				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
 				imgRestricted = (ImageView) row.findViewById(R.id.imgRestricted);
@@ -276,6 +264,21 @@ public class ActivityUsage extends ActivityBase {
 				if (holder.position == position && result != null) {
 					holder.imgIcon.setImageDrawable(icon);
 					holder.imgIcon.setVisibility(View.VISIBLE);
+
+					View.OnClickListener listener = new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							PRestriction usageData = mUsageAdapter.getItem(position);
+							Intent intent = new Intent(ActivityUsage.this, ActivityApp.class);
+							intent.putExtra(ActivityApp.cUid, usageData.uid);
+							intent.putExtra(ActivityApp.cRestrictionName, usageData.restrictionName);
+							intent.putExtra(ActivityApp.cMethodName, usageData.methodName);
+							startActivity(intent);
+						}
+					};
+
+					holder.llUsage.setOnClickListener(listener);
+					holder.tvRestriction.setOnClickListener(listener);
 				}
 			}
 		}
