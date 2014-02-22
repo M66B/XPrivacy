@@ -765,10 +765,10 @@ If you have any question, you can leave a message in the [XDA XPrivacy forum thr
 
 **Do not use my personal or XDA e-mail for bug reports, feature requests or questions.**
 
-**I will not look into issues of applications that have to be paid for.**
-
 It is okay to use my personal or XDA e-mail for things that cannot be shared in public,
 such as security reports.
+
+**I will not look into issues of applications that have to be paid for.**
 
 **There is no support for anything else than privacy, so not for game cheating, root cloaking, etc.**
 
