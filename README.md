@@ -722,7 +722,7 @@ IMHO you should at least install an ad blocker and a firewall.
 * [AdAway](http://sufficientlysecure.org/index.php/adaway/)
 * [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
 * [Disable Service](https://play.google.com/store/apps/details?id=cn.wq.disableservice)
-* [Trans Android Bugreports](https://play.google.com/store/apps/details?id=fr.slvn.trashreport)
+* [Trash Android Bugreports](https://play.google.com/store/apps/details?id=fr.slvn.trashreport)
 
 Support
 -------
