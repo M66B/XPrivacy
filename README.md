@@ -896,3 +896,9 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with XPrivacy.  If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/).
+
+http://sufficientlysecure.org/index.php/adaway/
+http://forum.xda-developers.com/showthread.php?t=2597332
+https://play.google.com/store/apps/details?id=cn.wq.disableservice
+https://play.google.com/store/apps/details?id=fr.slvn.trashreport
+https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall

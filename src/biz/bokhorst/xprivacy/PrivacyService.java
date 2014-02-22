@@ -418,16 +418,23 @@ public class PrivacyService {
 				// Check for self
 				if (Util.getAppId(restriction.uid) == getXUid()) {
 					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
-							&& "getString".equals(restriction.methodName))
+							&& "getString".equals(restriction.methodName)) {
+						mresult.asked = true;
 						return mresult;
-					if (PrivacyManager.cIPC.equals(restriction.restrictionName))
+					}
+					if (PrivacyManager.cIPC.equals(restriction.restrictionName)) {
+						mresult.asked = true;
 						return mresult;
-					else if (PrivacyManager.cStorage.equals(restriction.restrictionName))
+					} else if (PrivacyManager.cStorage.equals(restriction.restrictionName)) {
+						mresult.asked = true;
 						return mresult;
-					else if (PrivacyManager.cSystem.equals(restriction.restrictionName))
+					} else if (PrivacyManager.cSystem.equals(restriction.restrictionName)) {
+						mresult.asked = true;
 						return mresult;
-					else if (PrivacyManager.cView.equals(restriction.restrictionName))
+					} else if (PrivacyManager.cView.equals(restriction.restrictionName)) {
+						mresult.asked = true;
 						return mresult;
+					}
 				}
 
 				// Get meta data
