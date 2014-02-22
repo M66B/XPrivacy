@@ -106,15 +106,9 @@ public class XActivity extends XHook {
 					boolean restricted = false;
 					if (mActionName.equals(Intent.ACTION_VIEW)) {
 						Uri uri = intent.getData();
-						if (uri != null) {
-							String scheme = uri.getScheme();
-							if (scheme != null) {
-								scheme = scheme.toLowerCase();
-								if (scheme.equals("http") || scheme.equals("https"))
-									if (isRestricted(param, mActionName))
-										restricted = true;
-							}
-						}
+						if (uri != null)
+							if (isRestrictedExtra(param, mActionName, uri.toString()))
+								restricted = true;
 					} else
 						restricted = isRestricted(param, mActionName);
 
