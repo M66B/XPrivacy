@@ -16,6 +16,7 @@ Changelog
 
 * Optimized *storage/open* restriction
 * Display host name instead of IP address where possible ([issue](/../../issues/1415))
+* Fixed crash when both on demand restricting and notify restricted ([issue](/../../issues/1417))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

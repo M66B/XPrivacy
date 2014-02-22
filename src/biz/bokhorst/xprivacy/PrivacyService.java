@@ -571,13 +571,14 @@ public class PrivacyService {
 					}
 				}
 
-				// Media: notify user
-				if (mresult.restricted && usage && hook != null && hook.shouldNotify())
-					notifyRestricted(restriction);
-
 				// Ask to restrict
 				if (!mresult.asked && usage && PrivacyManager.isApplication(restriction.uid))
 					onDemandDialog(hook, restriction, mresult);
+				else {
+					// Notify user
+					if (mresult.restricted && hook != null && hook.shouldNotify())
+						notifyRestricted(restriction);
+				}
 
 				// Log usage
 				if (usage && hook != null && hook.hasUsageData())
