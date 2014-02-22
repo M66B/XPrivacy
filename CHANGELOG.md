@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Optimized *storage/open* restriction
+* Display host name instead of IP address where possible ([issue](/../../issues/1415))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
