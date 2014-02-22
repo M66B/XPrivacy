@@ -47,7 +47,7 @@ public class XIoBridge extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		open, connect, socket
+		open, connect
 	};
 
 	public static List<XHook> getInstances() {
@@ -58,7 +58,6 @@ public class XIoBridge extends XHook {
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/system/build.prop"));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/sys/block/.../cid"));
 		listHook.add(new XIoBridge(Methods.open, PrivacyManager.cIdentification, "/sys/class/.../cid"));
-		listHook.add(new XIoBridge(Methods.socket, PrivacyManager.cInternet));
 		return listHook;
 	}
 
@@ -122,10 +121,6 @@ public class XIoBridge extends XHook {
 					}
 				}
 			}
-
-		} else if (mMethod == Methods.socket) {
-			if (isRestricted(param))
-				param.setThrowable(new SocketException("XPrivacy"));
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
