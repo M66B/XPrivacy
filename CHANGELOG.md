@@ -14,7 +14,7 @@ Changelog
 
 **Next release**
 
-* Restrict all view action and show parameters ([issue](/../../issues/1419))
+* Restrict all *view* actions and show parameters ([issue](/../../issues/1419))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
