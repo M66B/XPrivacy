@@ -724,6 +724,9 @@ IMHO you should at least install an ad blocker and a firewall.
 * [Disable Service](https://play.google.com/store/apps/details?id=cn.wq.disableservice)
 * [Trash Android Bugreports](https://play.google.com/store/apps/details?id=fr.slvn.trashreport)
 
+Please note that these applications are not written by me
+and that you should contact the author for support questions.
+
 Support
 -------
 
