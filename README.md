@@ -710,7 +710,19 @@ Things to do / check:
 * Disable and then enable XPrivacy again in the Xposed installer
 * Clear the (Dalvik) cache using the recovery
 
-If these suggestion don't help, please create an issue and provide a logcat (see *Support* below).
+The most common problems seems to be the storage location of the applications.
+
+If these suggestions don't help, please create an issue and provide a logcat (see *Support* below).
+
+<a name="FAQ50"></a>
+**(50) Do you have suggestions about additional privacy related software?**
+
+IMHO you should at least install an ad blocker and a firewall.
+
+* [AdAway](http://sufficientlysecure.org/index.php/adaway/)
+* [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
+* [Disable Service](https://play.google.com/store/apps/details?id=cn.wq.disableservice)
+* [Trans Android Bugreports](https://play.google.com/store/apps/details?id=fr.slvn.trashreport)
 
 Support
 -------
@@ -897,8 +909,3 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with XPrivacy.  If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/).
 
-http://sufficientlysecure.org/index.php/adaway/
-http://forum.xda-developers.com/showthread.php?t=2597332
-https://play.google.com/store/apps/details?id=cn.wq.disableservice
-https://play.google.com/store/apps/details?id=fr.slvn.trashreport
-https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall
