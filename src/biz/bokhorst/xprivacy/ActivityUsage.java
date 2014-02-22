@@ -18,6 +18,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -227,6 +228,7 @@ public class ActivityUsage extends ActivityBase {
 			public ImageView imgRestricted;
 			public TextView tvApp;
 			public TextView tvRestriction;
+			public TextView tvParameter;
 
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
@@ -236,6 +238,7 @@ public class ActivityUsage extends ActivityBase {
 				imgRestricted = (ImageView) row.findViewById(R.id.imgRestricted);
 				tvApp = (TextView) row.findViewById(R.id.tvApp);
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
+				tvParameter = (TextView) row.findViewById(R.id.tvParameter);
 			}
 		}
 
@@ -299,11 +302,12 @@ public class ActivityUsage extends ActivityBase {
 			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.imgRestricted.setVisibility(usageData.restricted ? View.VISIBLE : View.INVISIBLE);
 			holder.tvApp.setText(Integer.toString(usageData.uid));
-			if (usageData.extra == null || !mHasProLicense)
-				holder.tvRestriction.setText(String.format("%s/%s", usageData.restrictionName, usageData.methodName));
-			else
-				holder.tvRestriction.setText(String.format("%s/%s(%s)", usageData.restrictionName,
-						usageData.methodName, usageData.extra));
+			holder.tvRestriction.setText(String.format("%s/%s", usageData.restrictionName, usageData.methodName));
+			if (!TextUtils.isEmpty(usageData.extra) && mHasProLicense) {
+				holder.tvParameter.setText(usageData.extra);
+				holder.tvParameter.setVisibility(View.VISIBLE);
+			} else
+				holder.tvParameter.setVisibility(View.GONE);
 
 			// Async update
 			new HolderTask(position, holder, usageData).executeOnExecutor(mExecutor, (Object) null);

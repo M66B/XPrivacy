@@ -37,13 +37,30 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
 
-    <TextView
-        android:id="@+id/tvRestriction"
+    <LinearLayout
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:textIsSelectable="false" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvRestriction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="start"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textIsSelectable="false"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvParameter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textIsSelectable="true"
+            android:visibility="gone" />
+    </LinearLayout>
 
 </LinearLayout>
