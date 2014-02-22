@@ -14,7 +14,8 @@ Changelog
 
 **Next release**
 
-* Restrict all *view* actions and show parameters ([issue](/../../issues/1419))
+* Restrict all *view* actions, show parameters and whitelisting ([issue](/../../issues/1419))
+	* You might see a few more messages *Restricted by XPrivacy* because of this
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
