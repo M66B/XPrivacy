@@ -496,7 +496,7 @@ This means XPrivacy's apk file is corrupt. Try disabling your popup blocker or d
 **(14) How can I make a logcat?**
 
 The simplest way is to use an application, like [catlog](https://play.google.com/store/apps/details?id=com.nolanlawson.logcat),
-but logcats capture this why are not always sufficient. The best way to capture a logcat is:
+but logcats captured this why are not always sufficient. The best way to capture a logcat is:
 
 * Install the [Android SDK](http://developer.android.com/sdk/index.html) (Click *Download for other platforms* for a minimal download)
 * Make sure you can connect to your device via USB (see [here](http://developer.android.com/sdk/win-usb.html) for drivers and instructions)
