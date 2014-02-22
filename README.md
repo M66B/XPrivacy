@@ -732,6 +732,8 @@ Support
 
 *Please read everything below first*
 
+### Bugs
+
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
 Include a [logcat](#FAQ14) when relevant (use [pastebin](http://pastebin.com/) or a similar service).
@@ -741,15 +743,21 @@ Include a [logcat](#FAQ14) when relevant (use [pastebin](http://pastebin.com/) o
 Please describe the exact steps to reproduce the issue
 and include information about your device type and Android version.
 
+**Before submitting any issue please make sure you are running the latest version of XPrivacy.**
+
+**Before submitting any issue please make sure XPrivacy is causing the problem by disabling XPrivacy.**
+
+### Feature requests
+
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
 Note that there is a stop on big new features, read [here](http://forum.xda-developers.com/showpost.php?p=50535073&postcount=7547) for more information.
 
+### Questions
+
 If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
-**Before submitting any issue please make sure you are running the latest version of XPrivacy.**
-
-**Before submitting any issue please make sure XPrivacy is causing the problem by disabling XPrivacy.**
+### General
 
 **One bug report / feature request per issue please!**
 
