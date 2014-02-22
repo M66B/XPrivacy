@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Optimized *storage/open* restriction
+* Limit parameters to 128 characters to prevent performance problems
 * Display host name instead of IP address where possible ([issue](/../../issues/1415))
 * Fixed crash when both on demand restricting and notify restricted ([issue](/../../issues/1417))
 

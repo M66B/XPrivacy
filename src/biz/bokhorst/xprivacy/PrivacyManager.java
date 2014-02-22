@@ -129,6 +129,7 @@ public class PrivacyManager {
 	// Constants
 	public final static int cXposedAppProcessMinVersion = 46;
 
+	private final static int cMaxExtra = 128;
 	private final static String cDeface = "DEFACE";
 	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
 	public final static int cSettingCacheTimeoutMs = 30 * 1000;
@@ -268,8 +269,8 @@ public class PrivacyManager {
 			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
 
 		// Check extra
-		if (extra != null && extra.length() > 250)
-			extra = extra.substring(0, 250) + "...";
+		if (extra != null && extra.length() > cMaxExtra)
+			extra = extra.substring(0, cMaxExtra) + "...";
 
 		// Check cache
 		boolean cached = false;
