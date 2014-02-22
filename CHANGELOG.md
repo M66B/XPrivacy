@@ -16,6 +16,7 @@ Changelog
 
 * Optimized *storage/open* restriction
 * Added whitelisting for folders
+* Added whitelisting for subdomains ([issue](/../../issues/1418))
 * Limited parameters to 128 characters to prevent performance problems
 * Display host name instead of IP address where possible ([issue](/../../issues/1415))
 * Fixed crash when both on demand restricting and notify restricted ([issue](/../../issues/1417))

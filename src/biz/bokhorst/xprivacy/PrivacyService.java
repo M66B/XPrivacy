@@ -553,9 +553,11 @@ public class PrivacyService {
 						// TODO: privacy manager is for client side only
 						Boolean value = PrivacyManager.checkWhitelisted(restriction.uid, hook.whitelist(),
 								restriction.extra, true);
-						if (value == null && hook.whitelist().equals(Meta.cWhitelistFilename)) {
-							String folder = new File(restriction.extra).getParent() + File.separatorChar + "*";
-							value = PrivacyManager.checkWhitelisted(restriction.uid, hook.whitelist(), folder, true);
+						if (value == null) {
+							String xextra = getXExtra(restriction, hook);
+							if (xextra != null)
+								value = PrivacyManager
+										.checkWhitelisted(restriction.uid, hook.whitelist(), xextra, true);
 						}
 						if (value != null) {
 							// true means allow, false means block
@@ -1211,10 +1213,9 @@ public class PrivacyService {
 						if (restriction.extra != null && hook != null && hook.whitelist() != null) {
 							CSetting skey = new CSetting(restriction.uid, hook.whitelist() + "." + restriction.extra);
 							CSetting fkey = null;
-							if (hook.whitelist().equals(Meta.cWhitelistFilename)) {
-								String folder = new File(restriction.extra).getParent() + File.separatorChar + "*";
-								fkey = new CSetting(restriction.uid, hook.whitelist() + "." + folder);
-							}
+							String xextra = getXExtra(restriction, hook);
+							if (xextra != null)
+								fkey = new CSetting(restriction.uid, hook.whitelist() + "." + xextra);
 							synchronized (mSettingCache) {
 								if (mSettingCache.containsKey(skey)
 										|| (fkey != null && mSettingCache.containsKey(fkey))) {
@@ -1318,7 +1319,7 @@ public class PrivacyService {
 			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
-			final CheckBox cbWhitelistFolder = (CheckBox) view.findViewById(R.id.cbWhitelistFolder);
+			final CheckBox cbWhitelistExtra = (CheckBox) view.findViewById(R.id.cbWhitelistExtra);
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
@@ -1343,10 +1344,10 @@ public class PrivacyService {
 			if (hook != null && hook.whitelist() != null && restriction.extra != null) {
 				cbWhitelist.setText(resources.getString(R.string.title_whitelist, restriction.extra));
 				cbWhitelist.setVisibility(View.VISIBLE);
-				if (hook.whitelist().equals(Meta.cWhitelistFilename)) {
-					String folder = new File(restriction.extra).getParent() + File.separatorChar + "*";
-					cbWhitelistFolder.setText(resources.getString(R.string.title_whitelist, folder));
-					cbWhitelistFolder.setVisibility(View.VISIBLE);
+				String xextra = getXExtra(restriction, hook);
+				if (xextra != null) {
+					cbWhitelistExtra.setText(resources.getString(R.string.title_whitelist, xextra));
+					cbWhitelistExtra.setVisibility(View.VISIBLE);
 				}
 			}
 
@@ -1357,7 +1358,7 @@ public class PrivacyService {
 					if (isChecked) {
 						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
-						cbWhitelistFolder.setChecked(false);
+						cbWhitelistExtra.setChecked(false);
 					}
 				}
 			});
@@ -1367,7 +1368,7 @@ public class PrivacyService {
 					if (isChecked) {
 						cbCategory.setChecked(false);
 						cbWhitelist.setChecked(false);
-						cbWhitelistFolder.setChecked(false);
+						cbWhitelistExtra.setChecked(false);
 					}
 				}
 			});
@@ -1377,11 +1378,11 @@ public class PrivacyService {
 					if (isChecked) {
 						cbCategory.setChecked(false);
 						cbOnce.setChecked(false);
-						cbWhitelistFolder.setChecked(false);
+						cbWhitelistExtra.setChecked(false);
 					}
 				}
 			});
-			cbWhitelistFolder.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			cbWhitelistExtra.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if (isChecked) {
@@ -1406,9 +1407,9 @@ public class PrivacyService {
 							mSelectCategory = cbCategory.isChecked();
 							mSelectOnce = cbOnce.isChecked();
 							if (cbWhitelist.isChecked())
-								onDemandWhitelist(restriction, false, result, hook);
-							else if (cbWhitelistFolder.isChecked())
-								onDemandWhitelist(restriction, true, result, hook);
+								onDemandWhitelist(restriction, null, result, hook);
+							else if (cbWhitelistExtra.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook), result, hook);
 							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
 							else
@@ -1425,9 +1426,9 @@ public class PrivacyService {
 							mSelectCategory = cbCategory.isChecked();
 							mSelectOnce = cbOnce.isChecked();
 							if (cbWhitelist.isChecked())
-								onDemandWhitelist(restriction, false, result, hook);
-							else if (cbWhitelistFolder.isChecked())
-								onDemandWhitelist(restriction, true, result, hook);
+								onDemandWhitelist(restriction, null, result, hook);
+							else if (cbWhitelistExtra.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook), result, hook);
 							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
 							else
@@ -1438,19 +1439,28 @@ public class PrivacyService {
 			return alertDialogBuilder;
 		}
 
-		private void onDemandWhitelist(final PRestriction restriction, boolean folder, final PRestriction result,
+		private String getXExtra(PRestriction restriction, Hook hook) {
+			if (hook != null)
+				if (hook.whitelist().equals(Meta.cWhitelistFilename)) {
+					String folder = new File(restriction.extra).getParent();
+					if (!TextUtils.isEmpty(folder))
+						return folder + File.separatorChar + "*";
+				} else if (hook.whitelist().equals(Meta.cWhitelistIPAddress)) {
+					int dot = restriction.extra.indexOf('.');
+					if (dot > 0)
+						return '*' + restriction.extra.substring(dot);
+				}
+			return null;
+		}
+
+		private void onDemandWhitelist(final PRestriction restriction, String xextra, final PRestriction result,
 				Hook hook) {
 			try {
 				// Set the whitelist
-				String extra;
-				if (folder)
-					extra = new File(restriction.extra).getParent() + File.separatorChar + "*";
-				else
-					extra = restriction.extra;
-				Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction + "folder="
-						+ folder);
-				setSettingInternal(new PSetting(restriction.uid, hook.whitelist() + "." + extra,
-						Boolean.toString(!result.restricted)));
+				Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction
+						+ " xextra=" + xextra);
+				setSettingInternal(new PSetting(restriction.uid, hook.whitelist() + "."
+						+ (xextra == null ? restriction.extra : xextra), Boolean.toString(!result.restricted)));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
