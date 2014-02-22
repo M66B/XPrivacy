@@ -572,13 +572,13 @@ public class PrivacyService {
 				}
 
 				// Ask to restrict
+				boolean ondemand = false;
 				if (!mresult.asked && usage && PrivacyManager.isApplication(restriction.uid))
-					onDemandDialog(hook, restriction, mresult);
-				else {
-					// Notify user
-					if (mresult.restricted && hook != null && hook.shouldNotify())
-						notifyRestricted(restriction);
-				}
+					ondemand = onDemandDialog(hook, restriction, mresult);
+
+				// Notify user
+				if (!ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify())
+					notifyRestricted(restriction);
 
 				// Log usage
 				if (usage && hook != null && hook.hasUsageData())
@@ -1141,32 +1141,32 @@ public class PrivacyService {
 
 		// Helper methods
 
-		private void onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
+		private boolean onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
 			// Neither category nor method is restricted and asked for
 			try {
 				// Without handler nothing can be done
 				if (mHandler == null)
-					return;
+					return false;
 
 				// Check for exceptions
 				if (hook != null && !hook.canOnDemand())
-					return;
+					return false;
 
 				// Check if enabled
 				if (!getSettingBool(0, PrivacyManager.cSettingOnDemand, true))
-					return;
+					return false;
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
-					return;
+					return false;
 
 				// Skip dangerous methods
 				final boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 				if (!dangerous && hook != null && hook.isDangerous())
-					return;
+					return false;
 
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
-					return;
+					return false;
 
 				long token = 0;
 				try {
@@ -1177,7 +1177,7 @@ public class PrivacyService {
 
 					// Check if system application
 					if (!dangerous && appInfo.isSystem())
-						return;
+						return false;
 
 					// Go ask
 					Util.log(null, Log.WARN, "On demand " + restriction);
@@ -1185,7 +1185,7 @@ public class PrivacyService {
 					try {
 						// Check if activity manager agrees
 						if (!XActivityManagerService.canOnDemand())
-							return;
+							return false;
 
 						Util.log(null, Log.WARN, "On demanding " + restriction);
 
@@ -1195,13 +1195,13 @@ public class PrivacyService {
 							if (mRestrictionCache.containsKey(key))
 								if (mRestrictionCache.get(key).asked) {
 									Util.log(null, Log.WARN, "Already asked " + restriction);
-									return;
+									return false;
 								}
 						}
 						synchronized (mAskedOnceCache) {
 							if (mAskedOnceCache.containsKey(key) && !mAskedOnceCache.get(key).isExpired()) {
 								Util.log(null, Log.WARN, "Already asked once " + restriction);
-								return;
+								return false;
 							}
 						}
 						if (hook != null && hook.whitelist() != null) {
@@ -1209,7 +1209,7 @@ public class PrivacyService {
 							synchronized (mSettingCache) {
 								if (mSettingCache.containsKey(skey)) {
 									Util.log(null, Log.WARN, "Already asked " + skey);
-									return;
+									return false;
 								}
 							}
 						}
@@ -1282,6 +1282,8 @@ public class PrivacyService {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+
+			return true;
 		}
 
 		final class AlertDialogHolder {
