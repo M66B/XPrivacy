@@ -15,6 +15,11 @@ public class XIoBridge extends XHook {
 	private Methods mMethod;
 	private String mFileName;
 
+	private static String mExternalStorage = null;
+	private static String mEmulatedSource = null;
+	private static String mEmulatedTarget = null;
+	private static String mMediaStorage = null;
+
 	private XIoBridge(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
@@ -72,16 +77,21 @@ public class XIoBridge extends XHook {
 			if (param.args.length > 0 && param.args[0] != null) {
 				String fileName = (String) param.args[0];
 				if (mFileName == null) {
-					String externalStorage = System.getenv("EXTERNAL_STORAGE");
-					String emulatedSource = System.getenv("EMULATED_STORAGE_SOURCE");
-					String emulatedTarget = System.getenv("EMULATED_STORAGE_TARGET");
-					String mediaStorage = System.getenv("MEDIA_STORAGE");
-					if (TextUtils.isEmpty(mediaStorage))
-						mediaStorage = "/data/media";
-					if (fileName.startsWith("/sdcard") || fileName.startsWith(mediaStorage)
-							|| (externalStorage != null && fileName.startsWith(externalStorage))
-							|| (emulatedSource != null && fileName.startsWith(emulatedSource))
-							|| (emulatedTarget != null && fileName.startsWith(emulatedTarget)))
+					// Get storage folders
+					if (mExternalStorage == null) {
+						mExternalStorage = System.getenv("EXTERNAL_STORAGE");
+						mEmulatedSource = System.getenv("EMULATED_STORAGE_SOURCE");
+						mEmulatedTarget = System.getenv("EMULATED_STORAGE_TARGET");
+						mMediaStorage = System.getenv("MEDIA_STORAGE");
+						if (TextUtils.isEmpty(mMediaStorage))
+							mMediaStorage = "/data/media";
+					}
+
+					// Check storage folders
+					if (fileName.startsWith("/sdcard") || fileName.startsWith(mMediaStorage)
+							|| (mExternalStorage != null && fileName.startsWith(mExternalStorage))
+							|| (mEmulatedSource != null && fileName.startsWith(mEmulatedSource))
+							|| (mEmulatedTarget != null && fileName.startsWith(mEmulatedTarget)))
 						if (isRestrictedExtra(param, fileName))
 							param.setThrowable(new FileNotFoundException("XPrivacy"));
 
