@@ -14,6 +14,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.53 TEST**
+
 * Fixed hooking base constructors ([issue](/../../issues/1431))
 * Fixed some restrictions applying only after reboot (reported on XDA)
 * Restrict all *view* actions, show parameters and whitelisting ([issue](/../../issues/1419))
@@ -24,8 +28,6 @@ Changelog
 * Removed *internet/socket*, since it passes *internet/connect* anyway
 * Show data parameter for intents
 * Export only application settings when exporting one application
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.52 BETA**
 
