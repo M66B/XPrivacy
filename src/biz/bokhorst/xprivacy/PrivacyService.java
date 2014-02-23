@@ -75,30 +75,31 @@ public class PrivacyService {
 
 	public static void setupDatabase() {
 		// This is run from Zygote with root permissions
+		// SELinix needs to be taken into account
 		try {
 			File dbFile = getDbFile();
 
-			// Create database folder
-			dbFile.getParentFile().mkdirs();
+			// Check database folder
 			if (dbFile.getParentFile().isDirectory())
 				Util.log(null, Log.WARN, "Database folder=" + dbFile.getParentFile());
 			else
 				Util.log(null, Log.ERROR, "Does not exist folder=" + dbFile.getParentFile());
 
-			// Set database file permissions
-			// Owner: rwx (system)
-			// Group: --- (system)
-			// World: ---
-			Util.setPermissions(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
-			File[] files = dbFile.getParentFile().listFiles();
-			if (files != null)
-				for (File file : files)
-					Util.setPermissions(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
-
-			// Move database from app folder
-			File folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
-					+ PrivacyService.class.getPackage().getName());
+			// Move database from data/xprivacy folder
+			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
 			File[] oldFiles = folder.listFiles();
+			if (oldFiles != null)
+				for (File file : oldFiles)
+					if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db")) {
+						File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+						boolean status = file.renameTo(target);
+						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
+					}
+
+			// Move database from data/application folder
+			folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+					+ PrivacyService.class.getPackage().getName());
+			oldFiles = folder.listFiles();
 			if (oldFiles != null)
 				for (File file : oldFiles)
 					if (file.getName().startsWith("xprivacy.db")) {
@@ -106,6 +107,17 @@ public class PrivacyService {
 						boolean status = file.renameTo(target);
 						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
 					}
+
+			// Set database file permissions
+			// Owner: rwx (system)
+			// Group: rwx (system)
+			// World: ---
+			File[] files = dbFile.getParentFile().listFiles();
+			if (files != null)
+				for (File file : files)
+					if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db"))
+						Util.setPermissions(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
+
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -208,11 +220,11 @@ public class PrivacyService {
 	}
 
 	private static File getDbFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "xprivacy" + File.separator + "xprivacy.db");
+		return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "xprivacy.db");
 	}
 
 	private static File getDbUsageFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "xprivacy" + File.separator + "usage.db");
+		return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "usage.db");
 	}
 
 	public static void reportErrorInternal(String message) {
