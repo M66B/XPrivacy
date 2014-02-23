@@ -392,14 +392,14 @@ public class ActivityApp extends ActivityBase {
 		case R.id.menu_tutorial:
 			optionTutorial();
 			return true;
+		case R.id.menu_usage:
+			optionUsage();
+			return true;
 		case R.id.menu_apply:
 			optionApply();
 			return true;
 		case R.id.menu_clear:
 			optionClear();
-			return true;
-		case R.id.menu_usage:
-			optionUsage();
 			return true;
 		case R.id.menu_import:
 			optionImport();
@@ -479,6 +479,12 @@ public class ActivityApp extends ActivityBase {
 		PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
 	}
 
+	private void optionUsage() {
+		Intent intent = new Intent(this, ActivityUsage.class);
+		intent.putExtra(ActivityUsage.cUid, mAppInfo.getUid());
+		startActivity(intent);
+	}
+
 	private void optionApply() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
 		alertDialogBuilder.setTitle(getString(R.string.menu_apply));
@@ -537,12 +543,6 @@ public class ActivityApp extends ActivityBase {
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
-	}
-
-	private void optionUsage() {
-		Intent intent = new Intent(this, ActivityUsage.class);
-		intent.putExtra(ActivityUsage.cUid, mAppInfo.getUid());
-		startActivity(intent);
 	}
 
 	private void optionImport() {

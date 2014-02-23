@@ -15,14 +15,14 @@
         android:id="@+id/menu_tutorial"
         android:title="@string/menu_tutorial"/>
     <item
+        android:id="@+id/menu_usage"
+        android:title="@string/menu_usage"/>
+    <item
         android:id="@+id/menu_apply"
         android:title="@string/menu_apply"/>
     <item
         android:id="@+id/menu_clear"
         android:title="@string/menu_clear"/>
-    <item
-        android:id="@+id/menu_usage"
-        android:title="@string/menu_usage"/>
     <item
         android:id="@+id/menu_import"
         android:title="@string/menu_import"
