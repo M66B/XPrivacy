@@ -80,7 +80,7 @@ import android.widget.Toast;
 public class ActivityShare extends ActivityBase {
 	private int mActionId;
 	private AppListAdapter mAppAdapter;
-	private SparseArray<AppHolder> mAppsByUid;
+	private SparseArray<AppState> mAppsByUid;
 	private boolean mRunning = false;
 	private boolean mAbort = false;
 	private int mProgressCurrent;
@@ -356,19 +356,50 @@ public class ActivityShare extends ActivityBase {
 			return super.onContextItemSelected(item);
 	}
 
+	// State management
+
+	public void setState(int uid, int state, String message) {
+		final AppState app = mAppsByUid.get(uid);
+		app.message = message;
+		app.state = state;
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				mAppAdapter.notifyDataSetChanged();
+				if (mAppAdapter != null) {
+					int position = mAppAdapter.getPosition(app);
+					if (position >= 0) {
+						ListView lvShare = (ListView) findViewById(R.id.lvShare);
+						lvShare.smoothScrollToPosition(position);
+					}
+				}
+			}
+		});
+	}
+
+	public void setState(int uid, int state) {
+		AppState app = mAppsByUid.get(uid);
+		app.state = state;
+	}
+
+	public void setMessage(int uid, String message) {
+		AppState app = mAppsByUid.get(uid);
+		app.message = message;
+	}
+
 	// App info and share state
 
-	private class AppHolder implements Comparable<AppHolder> {
+	private class AppState implements Comparable<AppState> {
 		public int state = STATE_WAITING;
-		public ApplicationInfoEx appInfo;
 		public String message = null;
+		public ApplicationInfoEx appInfo;
 
-		public AppHolder(int uid) {
+		public AppState(int uid) {
 			appInfo = new ApplicationInfoEx(ActivityShare.this, uid);
 		}
 
 		@Override
-		public int compareTo(AppHolder other) {
+		public int compareTo(AppState other) {
 			return this.appInfo.compareTo(other.appInfo);
 		}
 	}
@@ -376,51 +407,11 @@ public class ActivityShare extends ActivityBase {
 	// Adapters
 
 	@SuppressLint("DefaultLocale")
-	private class AppListAdapter extends ArrayAdapter<AppHolder> {
+	private class AppListAdapter extends ArrayAdapter<AppState> {
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		public List<AppHolder> mAppsWaiting = new ArrayList<AppHolder>();
-		private List<AppHolder> mAppsDone = new ArrayList<AppHolder>();
-		private ChangeNotifier changeNotifier = new ChangeNotifier();
 
-		private class ChangeNotifier implements Runnable {
-			AppHolder mScrollTo;
-
-			@Override
-			public void run() {
-				if (mScrollTo != null) {
-					int position = mAppAdapter.getPosition(mScrollTo);
-					// Make sure apps done or in progress are listed first
-					// All operations except importing
-					// treat the apps in the listed order
-					if (mActionId == R.string.menu_import && mAppsWaiting.contains(mScrollTo)) {
-						mAppsWaiting.remove(mScrollTo);
-						mAppsDone.add(mScrollTo);
-						mAppAdapter.setNotifyOnChange(false);
-						mAppAdapter.clear();
-						mAppAdapter.addAll(mAppsDone);
-						mAppAdapter.addAll(mAppsWaiting);
-						// If I separate out the app currently in progress, I
-						// could sort the done ones in the same way as the
-						// waiting ones were.
-						// We'd then have in order: a sorted list of the done
-						// apps, mAppCurrent, then all the waiting apps in order
-					}
-					notifyDataSetChanged();
-					if (position >= 0) {
-						ListView lvShare = (ListView) findViewById(R.id.lvShare);
-						lvShare.smoothScrollToPosition(position);
-					}
-				}
-			}
-
-			public void setScrollTo(AppHolder app) {
-				mScrollTo = app;
-			}
-		};
-
-		public AppListAdapter(Context context, int resource, List<AppHolder> objects) {
+		public AppListAdapter(Context context, int resource, List<AppState> objects) {
 			super(context, resource, objects);
-			mAppsWaiting.addAll(objects);
 		}
 
 		public List<Integer> getListUid() {
@@ -435,24 +426,6 @@ public class ActivityShare extends ActivityBase {
 			for (int i = 0; i < this.getCount(); i++)
 				apps.add(this.getItem(i).appInfo);
 			return apps;
-		}
-
-		public void setState(int uid, int state, String message) {
-			AppHolder app = mAppsByUid.get(uid);
-			app.message = message;
-			app.state = state;
-			changeNotifier.setScrollTo(app);
-			runOnUiThread(changeNotifier);
-		}
-
-		public void setState(int uid, int state) {
-			AppHolder app = mAppsByUid.get(uid);
-			app.state = state;
-		}
-
-		public void setMessage(int uid, String message) {
-			AppHolder app = mAppsByUid.get(uid);
-			app.message = message;
 		}
 
 		private class ViewHolder {
@@ -488,7 +461,7 @@ public class ActivityShare extends ActivityBase {
 			}
 
 			// Get info
-			final AppHolder xApp = getItem(holder.position);
+			final AppState xApp = getItem(holder.position);
 
 			// Set background color
 			if (xApp.appInfo.isSystem())
@@ -532,14 +505,14 @@ public class ActivityShare extends ActivityBase {
 
 	// Tasks
 
-	private class AppListTask extends AsyncTask<int[], Object, List<AppHolder>> {
+	private class AppListTask extends AsyncTask<int[], Object, List<AppState>> {
 		private ProgressDialog mProgressDialog;
 
 		@Override
-		protected List<AppHolder> doInBackground(int[]... params) {
+		protected List<AppState> doInBackground(int[]... params) {
 			int[] uids = params[0];
-			List<AppHolder> apps = new ArrayList<AppHolder>();
-			mAppsByUid = new SparseArray<AppHolder>();
+			List<AppState> apps = new ArrayList<AppState>();
+			mAppsByUid = new SparseArray<AppState>();
 
 			if (!mInteractive && mActionId == R.string.menu_export) {
 				// Build list of distinct uids for export
@@ -557,7 +530,7 @@ public class ActivityShare extends ActivityBase {
 			mProgressDialog.setMax(uids.length);
 			for (int i = 0; i < uids.length; i++) {
 				mProgressDialog.setProgress(i);
-				AppHolder app = new AppHolder(uids[i]);
+				AppState app = new AppState(uids[i]);
 				apps.add(app);
 				mAppsByUid.put(uids[i], app);
 			}
@@ -581,7 +554,7 @@ public class ActivityShare extends ActivityBase {
 		}
 
 		@Override
-		protected void onPostExecute(List<AppHolder> listApp) {
+		protected void onPostExecute(List<AppState> listApp) {
 			if (!ActivityShare.this.isFinishing()) {
 				// Display app list
 				mAppAdapter = new AppListAdapter(ActivityShare.this, R.layout.shareentry, listApp);
@@ -618,7 +591,7 @@ public class ActivityShare extends ActivityBase {
 
 					// Update progess
 					publishProgress(++mProgressCurrent, lstUid.size() + 1);
-					mAppAdapter.setState(uid, STATE_RUNNING, null);
+					setState(uid, STATE_RUNNING, null);
 
 					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, restrictionName);
 					if (actionId == R.id.rbClear)
@@ -631,10 +604,9 @@ public class ActivityShare extends ActivityBase {
 						Util.log(null, Log.ERROR, "Unknown action=" + actionId);
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
-					mAppAdapter.setState(uid, STATE_SUCCESS,
-							!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
+					setState(uid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 				} catch (Throwable ex) {
-					mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+					setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
 					return ex;
 				}
 
@@ -708,7 +680,7 @@ public class ActivityShare extends ActivityBase {
 								throw new AbortException(ActivityShare.this);
 
 							publishProgress(++mProgressCurrent, listUid.size() + 1);
-							mAppAdapter.setState(uid, STATE_RUNNING, null);
+							setState(uid, STATE_RUNNING, null);
 
 							// Process application settings
 							List<PSetting> listAppSetting = PrivacyManager.getSettingList(uid);
@@ -758,9 +730,9 @@ public class ActivityShare extends ActivityBase {
 								}
 							}
 
-							mAppAdapter.setState(uid, STATE_SUCCESS, null);
+							setState(uid, STATE_SUCCESS, null);
 						} catch (Throwable ex) {
-							mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+							setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
 							throw ex;
 						}
 					// End serialization
@@ -867,7 +839,7 @@ public class ActivityShare extends ActivityBase {
 
 						if (listUidSelected.size() == 0 || listUidSelected.contains(uid)) {
 							Util.log(null, Log.INFO, "Importing " + packageName);
-							mAppAdapter.setState(uid, STATE_RUNNING, null);
+							setState(uid, STATE_RUNNING, null);
 
 							// Reset existing restrictions
 							List<Boolean> oldState = PrivacyManager.getRestartStates(uid, null);
@@ -883,12 +855,12 @@ public class ActivityShare extends ActivityBase {
 							}
 							List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
-							mAppAdapter.setState(uid, STATE_SUCCESS,
-									!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
+							setState(uid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart)
+									: null);
 						}
 					} catch (Throwable ex) {
 						if (uid > 0)
-							mAppAdapter.setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+							setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
 						Util.log(null, Log.WARN, "Not found package=" + packageName);
 					}
 				}
@@ -906,25 +878,6 @@ public class ActivityShare extends ActivityBase {
 		protected void onProgressUpdate(Integer... values) {
 			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
-		}
-
-		@Override
-		protected void onPostExecute(Throwable result) {
-			// Mark as failed the apps that weren't found
-			if (!ActivityShare.this.isFinishing()) {
-				if (result == null) {
-					List<AppHolder> listWaiting = new ArrayList<AppHolder>();
-					listWaiting.addAll(mAppAdapter.mAppsWaiting);
-					for (AppHolder app : listWaiting) {
-						mAppAdapter.setState(app.appInfo.getUid(), STATE_FAILURE);
-						mAppAdapter.setMessage(app.appInfo.getUid(), getString(R.string.msg_no_restrictions));
-					}
-					mAppAdapter.notifyDataSetChanged();
-				}
-
-				done(result);
-			}
-			super.onPostExecute(result);
 		}
 	}
 
@@ -1040,7 +993,7 @@ public class ActivityShare extends ActivityBase {
 
 							// Mark the next one as in progress
 							mListRestrictionUid.add(uid);
-							mAppAdapter.setState(uid, STATE_RUNNING, null);
+							setState(uid, STATE_RUNNING, null);
 							runOnUiThread(mProgress);
 
 							// Delete restrictions
@@ -1066,8 +1019,8 @@ public class ActivityShare extends ActivityBase {
 				// Abort notification
 				if (mListAbortedUid.size() > 0) {
 					int uid = mListAbortedUid.get(0);
-					mAppAdapter.setState(uid, STATE_FAILURE);
-					mAppAdapter.setMessage(uid, getString(R.string.msg_aborted));
+					setState(uid, STATE_FAILURE);
+					setMessage(uid, getString(R.string.msg_aborted));
 				}
 
 				runOnUiThread(new Runnable() {
@@ -1095,8 +1048,7 @@ public class ActivityShare extends ActivityBase {
 				List<Boolean> newState = PrivacyManager.getRestartStates(lastUid, null);
 
 				// Mark as success
-				mAppAdapter.setState(lastUid, STATE_SUCCESS,
-						!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
+				setState(lastUid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 			}
 		}
 
@@ -1165,8 +1117,7 @@ public class ActivityShare extends ActivityBase {
 							if (mAbort)
 								throw new AbortException(ActivityShare.this);
 
-							mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
-									ActivityShare.this.getString(R.string.menu_fetch));
+							setState(appInfo.getUid(), STATE_RUNNING, ActivityShare.this.getString(R.string.menu_fetch));
 
 							JSONArray appName = new JSONArray();
 							for (String name : appInfo.getApplicationName())
@@ -1209,7 +1160,7 @@ public class ActivityShare extends ActivityBase {
 							if (mAbort)
 								throw new AbortException(ActivityShare.this);
 
-							mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
+							setState(appInfo.getUid(), STATE_RUNNING,
 									ActivityShare.this.getString(R.string.msg_applying));
 
 							if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
@@ -1253,13 +1204,13 @@ public class ActivityShare extends ActivityBase {
 									PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingModifyTime,
 											Long.toString(System.currentTimeMillis()));
 
-									mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS,
+									setState(appInfo.getUid(), STATE_SUCCESS,
 											!newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 								} else {
 									int errno = status.getInt("errno");
 									String message = status.getString("error");
 									ServerException ex = new ServerException(ActivityShare.this, errno, message);
-									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+									setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
 								}
 							} else {
 								// Failed
@@ -1268,7 +1219,7 @@ public class ActivityShare extends ActivityBase {
 							}
 						}
 					} catch (Throwable ex) {
-						mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+						setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
 						throw ex;
 					}
 				return null;
@@ -1310,8 +1261,7 @@ public class ActivityShare extends ActivityBase {
 
 						// Update progess
 						publishProgress(++mProgressCurrent, lstApp.size() + 1);
-						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
-								ActivityShare.this.getString(R.string.msg_loading));
+						setState(appInfo.getUid(), STATE_RUNNING, ActivityShare.this.getString(R.string.msg_loading));
 
 						// Check if any account allowed
 						boolean allowedAccounts = false;
@@ -1434,8 +1384,7 @@ public class ActivityShare extends ActivityBase {
 						if (mAbort)
 							throw new AbortException(ActivityShare.this);
 
-						mAppAdapter.setState(appInfo.getUid(), STATE_RUNNING,
-								ActivityShare.this.getString(R.string.menu_submit));
+						setState(appInfo.getUid(), STATE_RUNNING, ActivityShare.this.getString(R.string.menu_submit));
 
 						// Submit
 						HttpParams httpParams = new BasicHttpParams();
@@ -1460,7 +1409,7 @@ public class ActivityShare extends ActivityBase {
 								// Mark as shared
 								PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingState,
 										Integer.toString(ActivityMain.STATE_SHARED));
-								mAppAdapter.setState(appInfo.getUid(), STATE_SUCCESS, null);
+								setState(appInfo.getUid(), STATE_SUCCESS, null);
 							} else {
 								int errno = status.getInt("errno");
 								String message = status.getString("error");
@@ -1472,7 +1421,7 @@ public class ActivityShare extends ActivityBase {
 											Boolean.toString(false));
 									throw ex;
 								} else
-									mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+									setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
 							}
 						} else {
 							// Failed
@@ -1480,7 +1429,7 @@ public class ActivityShare extends ActivityBase {
 							throw new IOException(statusLine.getReasonPhrase());
 						}
 					} catch (Throwable ex) {
-						mAppAdapter.setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+						setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
 						throw ex;
 					}
 				return null;
