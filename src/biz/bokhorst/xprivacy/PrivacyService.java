@@ -97,11 +97,11 @@ public class PrivacyService {
 			// Owner: rwx (system)
 			// Group: --- (system)
 			// World: ---
-			Util.setPermissions(dbFile.getParentFile().getAbsolutePath(), 0660, Process.SYSTEM_UID, Process.SYSTEM_UID);
+			Util.setPermissions(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
 			File[] files = dbFile.getParentFile().listFiles();
 			if (files != null)
 				for (File file : files)
-					Util.setPermissions(file.getAbsolutePath(), 0660, Process.SYSTEM_UID, Process.SYSTEM_UID);
+					Util.setPermissions(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
