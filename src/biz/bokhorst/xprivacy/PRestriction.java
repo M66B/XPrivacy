@@ -112,6 +112,6 @@ public class PRestriction implements Parcelable {
 	@SuppressLint("DefaultLocale")
 	public String toString() {
 		return String.format("%d/%s(%s) %s=%srestricted%s", uid, methodName, extra, restrictionName, (restricted ? ""
-				: "!") + (asked ? "" : "?"));
+				: "!"), (asked ? "" : "?"));
 	}
 }

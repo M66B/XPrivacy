@@ -244,7 +244,7 @@ public class PrivacyManager {
 	public static boolean getRestrictionExtra(final XHook hook, int uid, String restrictionName, String methodName,
 			String extra, String secret) {
 		long start = System.currentTimeMillis();
-		boolean restricted = false;
+		PRestriction result = new PRestriction(uid, restrictionName, methodName, false, true);
 
 		// Check uid
 		if (uid <= 0)
@@ -271,6 +271,7 @@ public class PrivacyManager {
 		// Check extra
 		if (extra != null && extra.length() > cMaxExtra)
 			extra = extra.substring(0, cMaxExtra) + "...";
+		result.extra = extra;
 
 		// Check cache
 		boolean cached = false;
@@ -280,7 +281,7 @@ public class PrivacyManager {
 				CRestriction entry = mRestrictionCache.get(key);
 				if (!entry.isExpired()) {
 					cached = true;
-					restricted = entry.restricted;
+					result.restricted = entry.restricted;
 				}
 			}
 		}
@@ -290,12 +291,11 @@ public class PrivacyManager {
 			try {
 				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 				query.extra = extra;
-				PRestriction result = PrivacyService.getRestriction(query, true, secret);
-				restricted = result.restricted;
+				result.restricted = PrivacyService.getRestriction(query, true, secret).restricted;
 
 				// Add to cache
 				if (result.time >= 0) {
-					key.restricted = restricted;
+					key.restricted = result.restricted;
 					if (result.time > 0) {
 						key.setExpiry(result.time);
 						Util.log(null, Log.WARN, "Caching " + result + " until " + new Date(result.time));
@@ -312,14 +312,9 @@ public class PrivacyManager {
 
 		// Result
 		long ms = System.currentTimeMillis() - start;
-		if (ms > 1)
-			Util.log(hook, Log.INFO, String.format("get %d/%s %s=%srestricted%s %d ms", uid, methodName,
-					restrictionName, (restricted ? "" : "!"), (cached ? " (cached)" : ""), ms));
-		else
-			Util.log(hook, Log.INFO, String.format("get %d/%s %s=%srestricted%s", uid, methodName, restrictionName,
-					(restricted ? "" : "!"), (cached ? " (cached)" : "")));
+		Util.log(hook, Log.INFO, String.format("get client %s%s %d ms", result, (cached ? " (cached)" : ""), ms));
 
-		return restricted;
+		return result.restricted;
 	}
 
 	public static void setRestriction(int uid, String restrictionName, String methodName, boolean restricted,
