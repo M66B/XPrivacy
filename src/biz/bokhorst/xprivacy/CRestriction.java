@@ -43,15 +43,20 @@ public class CRestriction {
 		return mUid;
 	}
 
-	public String getRestrictionName() {
-		return mRestrictionName;
+	public boolean matches(PRestriction restriction) {
+		// @formatter:off
+		return (restriction.uid == mUid
+				&& restriction.restrictionName.equals(mRestrictionName)
+				&& (restriction.methodName == null ? true : restriction.methodName.equals(mMethodName)));
+		// @formatter:on
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		CRestriction other = (CRestriction) obj;
 		// @formatter:off
-		return (mUid == other.mUid && mRestrictionName.equals(other.mRestrictionName)
+		return (mUid == other.mUid
+				&& mRestrictionName.equals(other.mRestrictionName)
 				&& (mMethodName == null ? other.mMethodName == null : mMethodName.equals(other.mMethodName))
 				&& (mExtra == null ? other.mExtra == null : mExtra.equals(other.mExtra)));
 		// @formatter:on

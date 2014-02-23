@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Fixed hooking base constructors ([issue](/../../issues/1431))
+* Fixed some restrictions applying only after reboot (reported on XDA)
 * Restrict all *view* actions, show parameters and whitelisting ([issue](/../../issues/1419))
 	* You might see a few more messages *Restricted by XPrivacy* because of this
 * Improved usage data layout, option to copy parameters ([issue](/../../issues/1424))
