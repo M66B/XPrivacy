@@ -113,6 +113,29 @@ public class PrivacyService {
 		mListError.addAll(listError);
 
 		try {
+			// Register privacy service
+			// @formatter:off
+			// public static void addService(String name, IBinder service)
+			// public static void addService(String name, IBinder service, boolean allowIsolated)
+			// @formatter:on
+			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class,
+						boolean.class);
+				mAddService.invoke(null, cServiceName, mPrivacyService, true);
+			} else {
+				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
+				mAddService.invoke(null, cServiceName, mPrivacyService);
+			}
+
+			// This will and should open the database
+			mRegistered = true;
+			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
+
+			// Hook into activity manager service
+			XActivityManagerService.setSemaphore(mOndemandSemaphore);
+			XPrivacy.hookAll(XActivityManagerService.getInstances(), secret);
+
 			// Get memory class to enable/disable caching
 			// http://stackoverflow.com/questions/2630158/detect-application-heap-size-in-android
 			int memoryClass = (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
@@ -134,29 +157,6 @@ public class PrivacyService {
 			});
 			mWorker.start();
 
-			// Hook into activity manager service
-			XActivityManagerService.setSemaphore(mOndemandSemaphore);
-			XPrivacy.hookAll(XActivityManagerService.getInstances(), secret);
-
-			// Register privacy service
-			// @formatter:off
-			// public static void addService(String name, IBinder service)
-			// public static void addService(String name, IBinder service, boolean allowIsolated)
-			// @formatter:on
-			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class,
-						boolean.class);
-				Util.log(null, Log.WARN, "Invoking " + mAddService);
-				mAddService.invoke(null, cServiceName, mPrivacyService, true);
-			} else {
-				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
-				Util.log(null, Log.WARN, "Invoking " + mAddService);
-				mAddService.invoke(null, cServiceName, mPrivacyService);
-			}
-
-			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
-			mRegistered = true;
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -219,7 +219,7 @@ public class PrivacyService {
 
 	public static PRestriction getRestriction(final PRestriction restriction, boolean usage, String secret)
 			throws RemoteException {
-		if (mRegistered)
+		if (isRegistered())
 			return mPrivacyService.getRestriction(restriction, usage, secret);
 		else {
 			IPrivacyService client = getClient();
@@ -235,12 +235,13 @@ public class PrivacyService {
 	}
 
 	public static PSetting getSetting(PSetting setting) throws RemoteException {
-		if (mRegistered)
+		if (isRegistered())
 			return mPrivacyService.getSetting(setting);
 		else {
 			IPrivacyService client = getClient();
 			if (client == null) {
 				Log.w("XPrivacy", "No client for " + setting + " uid=" + Process.myUid() + " pid=" + Process.myPid());
+				Log.w("XPrivacy", Log.getStackTraceString(new Exception("StackTrace")));
 				return setting;
 			} else
 				return client.getSetting(setting);

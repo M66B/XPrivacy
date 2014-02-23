@@ -83,7 +83,7 @@ public class Util {
 
 		// Report to service
 		if (uid > 0 && priority == Log.ERROR)
-			if (uid == Process.SYSTEM_UID)
+			if (PrivacyService.isRegistered())
 				PrivacyService.reportErrorInternal(msg);
 			else
 				try {
