@@ -365,8 +365,9 @@ public class ActivityShare extends ActivityBase {
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				mAppAdapter.notifyDataSetChanged();
 				if (mAppAdapter != null) {
+					mAppAdapter.notifyDataSetChanged();
+
 					int position = mAppAdapter.getPosition(app);
 					if (position >= 0) {
 						ListView lvShare = (ListView) findViewById(R.id.lvShare);
@@ -878,6 +879,13 @@ public class ActivityShare extends ActivityBase {
 		protected void onProgressUpdate(Integer... values) {
 			blueStreakOfProgress(values[0], values[1]);
 			super.onProgressUpdate(values);
+		}
+
+		@Override
+		protected void onPostExecute(Throwable result) {
+			if (!ActivityShare.this.isFinishing())
+				done(result);
+			super.onPostExecute(result);
 		}
 	}
 
