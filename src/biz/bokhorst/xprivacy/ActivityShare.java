@@ -683,23 +683,26 @@ public class ActivityShare extends ActivityBase {
 					serializer.startTag(null, "XPrivacy");
 
 					// Process package map
-					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0)) {
-						serializer.startTag(null, "PackageInfo");
-						serializer.attribute(null, "Id", Integer.toString(pInfo.applicationInfo.uid));
-						serializer.attribute(null, "Name", pInfo.packageName);
-						serializer.endTag(null, "PackageInfo");
-					}
+					for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
+						if (listUid.size() == 1 ? pInfo.applicationInfo.uid == listUid.get(0) : true) {
+							serializer.startTag(null, "PackageInfo");
+							serializer.attribute(null, "Id", Integer.toString(pInfo.applicationInfo.uid));
+							serializer.attribute(null, "Name", pInfo.packageName);
+							serializer.endTag(null, "PackageInfo");
+						}
 
 					// Process global settings
-					List<PSetting> listGlobalSetting = PrivacyManager.getSettingList(0);
-					for (PSetting setting : listGlobalSetting) {
-						// Serialize setting
-						serializer.startTag(null, "Setting");
-						serializer.attribute(null, "Id", "");
-						serializer.attribute(null, "Name", setting.name);
-						if (setting.value != null)
-							serializer.attribute(null, "Value", setting.value);
-						serializer.endTag(null, "Setting");
+					if (listUid.size() > 1) {
+						List<PSetting> listGlobalSetting = PrivacyManager.getSettingList(0);
+						for (PSetting setting : listGlobalSetting) {
+							// Serialize setting
+							serializer.startTag(null, "Setting");
+							serializer.attribute(null, "Id", "");
+							serializer.attribute(null, "Name", setting.name);
+							if (setting.value != null)
+								serializer.attribute(null, "Value", setting.value);
+							serializer.endTag(null, "Setting");
+						}
 					}
 
 					// Process application settings and restrictions
