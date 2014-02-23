@@ -11,8 +11,7 @@ import java.util.concurrent.ThreadFactory;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -235,6 +234,8 @@ public class ActivityUsage extends ActivityBase {
 			private ViewHolder holder;
 			private PRestriction usageData;
 			private Drawable icon = null;
+			private boolean system;
+			private Hook hook;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, PRestriction theUsageData) {
 				position = thePosition;
@@ -245,15 +246,10 @@ public class ActivityUsage extends ActivityBase {
 			@Override
 			protected Object doInBackground(Object... params) {
 				if (usageData != null) {
-					try {
-						PackageManager pm = ActivityUsage.this.getPackageManager();
-						String[] packages = pm.getPackagesForUid(usageData.uid);
-						if (packages != null && packages.length > 0) {
-							ApplicationInfo app = pm.getApplicationInfo(packages[0], 0);
-							icon = pm.getApplicationIcon(app);
-						}
-					} catch (Throwable ignored) {
-					}
+					ApplicationInfoEx appInfo = new ApplicationInfoEx(ActivityUsage.this, usageData.uid);
+					icon = appInfo.getIcon(ActivityUsage.this);
+					system = appInfo.isSystem();
+					hook = PrivacyManager.getHook(usageData.restrictionName, usageData.methodName);
 					return holder;
 				}
 				return null;
@@ -262,6 +258,10 @@ public class ActivityUsage extends ActivityBase {
 			@Override
 			protected void onPostExecute(Object result) {
 				if (holder.position == position && result != null) {
+					if (system || (hook != null && hook.isDangerous()))
+						holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+					else
+						holder.row.setBackgroundColor(Color.TRANSPARENT);
 					holder.imgIcon.setImageDrawable(icon);
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
@@ -299,13 +299,17 @@ public class ActivityUsage extends ActivityBase {
 			PRestriction usageData = getItem(position);
 
 			// Build entry
+			holder.row.setBackgroundColor(Color.TRANSPARENT);
+
 			Date date = new Date(usageData.time);
 			SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss", Locale.ROOT);
 			holder.tvTime.setText(format.format(date));
+
 			holder.imgIcon.setVisibility(View.INVISIBLE);
 			holder.imgRestricted.setVisibility(usageData.restricted ? View.VISIBLE : View.INVISIBLE);
 			holder.tvApp.setText(Integer.toString(usageData.uid));
 			holder.tvRestriction.setText(String.format("%s/%s", usageData.restrictionName, usageData.methodName));
+
 			if (!TextUtils.isEmpty(usageData.extra) && mHasProLicense) {
 				holder.tvParameter.setText(usageData.extra);
 				holder.tvParameter.setVisibility(View.VISIBLE);
