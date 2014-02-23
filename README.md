@@ -724,6 +724,7 @@ IMHO you should at least install an ad blocker and a firewall.
 
 * [AdAway](http://sufficientlysecure.org/index.php/adaway/)
 * [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
+* [NOGAPPS](http://forum.xda-developers.com/showthread.php?t=1715375)
 * [Disable Service](https://play.google.com/store/apps/details?id=cn.wq.disableservice)
 * [Trash Android Bugreports](https://play.google.com/store/apps/details?id=fr.slvn.trashreport)
 * [OS Monitor](https://f-droid.org/repository/browse/?fdfilter=os%20monitor&fdid=com.eolwral.osmonitor)
