@@ -68,6 +68,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -169,6 +170,7 @@ public class ActivityShare extends ActivityBase {
 		// Reference controls
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
+		final CheckBox cbClear = (CheckBox) findViewById(R.id.cbClear);
 		ListView lvShare = (ListView) findViewById(R.id.lvShare);
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
 		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -222,7 +224,12 @@ public class ActivityShare extends ActivityBase {
 			else
 				showFileName();
 
-		} else if (action.equals(ACTION_TOGGLE)) {
+		} else if (action.equals(ACTION_FETCH)) {
+			tvDescription.setText(getBaseURL(ActivityShare.this));
+			cbClear.setVisibility(View.VISIBLE);
+		}
+
+		else if (action.equals(ACTION_TOGGLE)) {
 			// Show category
 			if (restrictionName == null)
 				tvDescription.setText(R.string.menu_all);
@@ -276,7 +283,7 @@ public class ActivityShare extends ActivityBase {
 					else if (action.equals(ACTION_FETCH)) {
 						if (uids.length > 0) {
 							mRunning = true;
-							new FetchTask().executeOnExecutor(mExecutor);
+							new FetchTask().executeOnExecutor(mExecutor, cbClear.isChecked());
 						}
 					}
 
@@ -1100,12 +1107,13 @@ public class ActivityShare extends ActivityBase {
 		}
 	}
 
-	private class FetchTask extends AsyncTask<int[], Integer, Throwable> {
+	private class FetchTask extends AsyncTask<Boolean, Integer, Throwable> {
 		@Override
 		@SuppressLint("DefaultLocale")
-		protected Throwable doInBackground(int[]... params) {
+		protected Throwable doInBackground(Boolean... params) {
 			try {
 				// Get data
+				boolean clear = params[0];
 				List<ApplicationInfoEx> lstApp = mAppAdapter.getListAppInfo();
 
 				String[] license = Util.getProLicenseUnchecked();
@@ -1183,7 +1191,10 @@ public class ActivityShare extends ActivityBase {
 									JSONArray settings = status.getJSONArray("settings");
 									// Delete existing restrictions
 									List<Boolean> oldState = PrivacyManager.getRestartStates(appInfo.getUid(), null);
-									PrivacyManager.deleteRestrictions(appInfo.getUid(), null);
+
+									// Clear existing restriction
+									if (clear)
+										PrivacyManager.deleteRestrictions(appInfo.getUid(), null);
 
 									// Set fetched restrictions
 									List<PRestriction> listRestriction = new ArrayList<PRestriction>();
@@ -1197,8 +1208,9 @@ public class ActivityShare extends ActivityBase {
 											int voted_restricted = entry.getInt("restricted");
 											int voted_not_restricted = entry.getInt("not_restricted");
 											boolean restricted = (voted_restricted > voted_not_restricted);
-											listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
-													methodName, restricted));
+											if (clear || restricted)
+												listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
+														methodName, restricted));
 										}
 									}
 									PrivacyManager.setRestrictionList(listRestriction);
@@ -1252,9 +1264,9 @@ public class ActivityShare extends ActivityBase {
 	}
 
 	@SuppressLint("DefaultLocale")
-	private class SubmitTask extends AsyncTask<int[], Integer, Throwable> {
+	private class SubmitTask extends AsyncTask<Object, Integer, Throwable> {
 		@Override
-		protected Throwable doInBackground(int[]... params) {
+		protected Throwable doInBackground(Object... params) {
 			try {
 				// Get data
 				List<ApplicationInfoEx> lstApp = mAppAdapter.getListAppInfo();
