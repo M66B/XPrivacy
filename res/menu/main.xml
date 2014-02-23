@@ -31,14 +31,14 @@
         android:id="@+id/menu_tutorial"
         android:title="@string/menu_tutorial"/>
     <item
+        android:id="@+id/menu_usage"
+        android:title="@string/menu_usage"/>
+    <item
         android:id="@+id/menu_toggle"
         android:title="@string/menu_toggle"/>
     <item
         android:id="@+id/menu_clear_db"
         android:title="@string/menu_clear_db"/>
-    <item
-        android:id="@+id/menu_usage"
-        android:title="@string/menu_usage"/>
     <item
         android:id="@+id/menu_export"
         android:title="@string/menu_export"/>
@@ -51,9 +51,6 @@
     <item
         android:id="@+id/menu_fetch"
         android:title="@string/menu_fetch"/>
-    <item
-        android:id="@+id/menu_refresh"
-        android:title="@string/menu_refresh"/>
     <item
         android:id="@+id/menu_pro"
         android:title="@string/menu_pro"/>

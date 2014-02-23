@@ -465,14 +465,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			case R.id.menu_tutorial:
 				optionTutorial();
 				return true;
+			case R.id.menu_usage:
+				optionUsage();
+				return true;
 			case R.id.menu_toggle:
 				optionToggle();
 				return true;
 			case R.id.menu_clear_db:
 				optionClearDB();
-				return true;
-			case R.id.menu_usage:
-				optionUsage();
 				return true;
 			case R.id.menu_export:
 				optionExport();
@@ -485,9 +485,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				return true;
 			case R.id.menu_fetch:
 				optionFetch();
-				return true;
-			case R.id.menu_refresh:
-				optionRefresh();
 				return true;
 			case R.id.menu_pro:
 				optionPro();
@@ -580,6 +577,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	// Options
 
+	private void optionUsage() {
+		Intent intent = new Intent(this, ActivityUsage.class);
+		startActivity(intent);
+	}
+
 	private void optionToggle() {
 		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
 		intent.putExtra(ActivityShare.cInteractive, true);
@@ -610,11 +612,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
-	}
-
-	private void optionUsage() {
-		Intent intent = new Intent(this, ActivityUsage.class);
-		startActivity(intent);
 	}
 
 	private void optionTemplate() {
@@ -715,10 +712,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				startActivity(intent);
 			}
 		}
-	}
-
-	private void optionRefresh() {
-		this.recreate();
 	}
 
 	private void optionSwitchTheme() {
