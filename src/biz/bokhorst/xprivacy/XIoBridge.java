@@ -68,7 +68,13 @@ public class XIoBridge extends XHook {
 			if (param.args.length > 2 && param.args[1] instanceof InetAddress) {
 				InetAddress address = (InetAddress) param.args[1];
 				int port = (Integer) param.args[2];
-				if (isRestrictedExtra(param, address.getHostName() + ":" + port))
+				String hostName;
+				try {
+					hostName = address.getHostName();
+				} catch (Throwable ignored) {
+					hostName = address.toString();
+				}
+				if (isRestrictedExtra(param, hostName + ":" + port))
 					param.setThrowable(new SocketException("XPrivacy"));
 			}
 
