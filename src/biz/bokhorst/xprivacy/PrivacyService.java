@@ -415,6 +415,8 @@ public class PrivacyService {
 		@Override
 		public PRestriction getRestriction(final PRestriction restriction, boolean usage, String secret)
 				throws RemoteException {
+			long start = System.currentTimeMillis();
+			boolean cached = false;
 			final PRestriction mresult = new PRestriction(restriction);
 
 			try {
@@ -471,7 +473,6 @@ public class PrivacyService {
 					return mresult;
 
 				// Check cache
-				boolean cached = false;
 				if (mUseCache) {
 					CRestriction key = new CRestriction(restriction, restriction.extra);
 					synchronized (mRestrictionCache) {
@@ -652,6 +653,11 @@ public class PrivacyService {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+
+			long ms = System.currentTimeMillis() - start;
+			Util.log(null, Log.INFO,
+					String.format("get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
+
 			return mresult;
 		}
 
