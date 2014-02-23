@@ -15,7 +15,7 @@ public class PackageChange extends BroadcastReceiver {
 	public void onReceive(final Context context, Intent intent) {
 		try {
 			// Check uri
-			Uri inputUri = Uri.parse(intent.getDataString());
+			Uri inputUri = intent.getData();
 			if (inputUri.getScheme().equals("package")) {
 				// Get data
 				int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);

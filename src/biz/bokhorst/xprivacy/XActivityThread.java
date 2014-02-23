@@ -137,7 +137,7 @@ public class XActivityThread extends XHook {
 							if (bundle != null) {
 								String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
 								if (phoneNumber != null)
-									if (isRestricted(param, mActionName))
+									if (isRestrictedExtra(param, mActionName, intent.getDataString()))
 										intent.putExtra(Intent.EXTRA_PHONE_NUMBER, (String) PrivacyManager
 												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
 							}
@@ -147,14 +147,14 @@ public class XActivityThread extends XHook {
 							if (bundle != null) {
 								String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
 								if (phoneNumber != null) {
-									if (isRestricted(param, mActionName))
+									if (isRestrictedExtra(param, mActionName, intent.getDataString()))
 										intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, (String) PrivacyManager
 												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
 								}
 							}
 						} else if (getRestrictionName().equals(PrivacyManager.cSystem)) {
 							// Package event
-							if (isRestricted(param, mActionName)) {
+							if (isRestrictedExtra(param, mActionName, intent.getDataString())) {
 								String[] packageNames;
 								if (action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)
 										|| action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE))
@@ -168,7 +168,7 @@ public class XActivityThread extends XHook {
 										break;
 									}
 							}
-						} else if (isRestricted(param, mActionName)) {
+						} else if (isRestrictedExtra(param, mActionName, intent.getDataString())) {
 							finish(param);
 							param.setResult(null);
 						}

@@ -20,6 +20,7 @@ Changelog
 * Improved usage data layout, option to copy parameters ([issue](/../../issues/1424))
 * Moved usage data to separate database to improve performance (locking)
 * Removed *internet/socket*, since it passes *internet/connect* anyway
+* Show data parameter for intents
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
