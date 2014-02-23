@@ -80,6 +80,20 @@ public class PrivacyService {
 
 			// Create database folder
 			dbFile.getParentFile().mkdirs();
+			if (dbFile.getParentFile().isDirectory())
+				Util.log(null, Log.WARN, "Database folder=" + dbFile.getParentFile());
+			else
+				Util.log(null, Log.ERROR, "Does not exist folder=" + dbFile.getParentFile());
+
+			// Set database file permissions
+			// Owner: rwx (system)
+			// Group: --- (system)
+			// World: ---
+			Util.setPermissions(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
+			File[] files = dbFile.getParentFile().listFiles();
+			if (files != null)
+				for (File file : files)
+					Util.setPermissions(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
 
 			// Move database from app folder
 			File folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
@@ -92,16 +106,6 @@ public class PrivacyService {
 						boolean status = file.renameTo(target);
 						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
 					}
-
-			// Set database file permissions
-			// Owner: rwx (system)
-			// Group: --- (system)
-			// World: ---
-			Util.setPermissions(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
-			File[] files = dbFile.getParentFile().listFiles();
-			if (files != null)
-				for (File file : files)
-					Util.setPermissions(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
