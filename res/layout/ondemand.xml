@@ -125,6 +125,7 @@
             android:id="@+id/cbWhitelist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:visibility="gone" >
         </CheckBox>
 
@@ -132,6 +133,7 @@
             android:id="@+id/cbWhitelistExtra"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:visibility="gone" >
         </CheckBox>
 

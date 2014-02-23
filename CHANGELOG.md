@@ -18,6 +18,7 @@ Changelog
 * Restrict all *view* actions, show parameters and whitelisting ([issue](/../../issues/1419))
 	* You might see a few more messages *Restricted by XPrivacy* because of this
 * Improved usage data layout, option to copy parameters ([issue](/../../issues/1424))
+* Improved on demand restricting dialog layout
 * Moved usage data to separate database to improve performance (locking)
 * Removed *internet/socket*, since it passes *internet/connect* anyway
 * Show data parameter for intents
