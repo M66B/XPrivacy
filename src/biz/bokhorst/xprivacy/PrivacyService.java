@@ -1088,12 +1088,13 @@ public class PrivacyService {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDb();
+				SQLiteDatabase dbUsage = getDb();
 
 				mLock.writeLock().lock();
 				db.beginTransaction();
 				try {
-					db.execSQL("DELETE FROM restriction");
-					db.execSQL("DELETE FROM setting");
+					db.execSQL("DELETE FROM " + cTableRestriction);
+					db.execSQL("DELETE FROM " + cTableSetting);
 					Util.log(null, Log.WARN, "Database cleared");
 
 					// Reset migrated
@@ -1109,6 +1110,21 @@ public class PrivacyService {
 						db.endTransaction();
 					} finally {
 						mLock.writeLock().unlock();
+					}
+				}
+
+				mLockUsage.writeLock().lock();
+				dbUsage.beginTransaction();
+				try {
+					dbUsage.execSQL("DELETE FROM " + cTableUsage);
+					Util.log(null, Log.WARN, "Usage database cleared");
+
+					dbUsage.setTransactionSuccessful();
+				} finally {
+					try {
+						dbUsage.endTransaction();
+					} finally {
+						mLockUsage.writeLock().unlock();
 					}
 				}
 
