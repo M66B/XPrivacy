@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.TreeMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -1328,6 +1329,10 @@ public class ActivityShare extends ActivityBase {
 								cursor.close();
 							}
 
+						// Get white lists
+						Map<String, TreeMap<String, Boolean>> mapWhitelist = PrivacyManager.listWhitelisted(appInfo
+								.getUid());
+
 						// Encode restrictions
 						JSONArray jSettings = new JSONArray();
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
@@ -1354,11 +1359,23 @@ public class ActivityShare extends ActivityBase {
 										&& PrivacyManager.getRestrictionEx(appInfo.getUid(), restrictionName,
 												md.getName()).restricted;
 								long mUsed = PrivacyManager.getUsage(appInfo.getUid(), restrictionName, md.getName());
+
+								// TODO: split files and /proc
+								boolean mWhitelisted = false;
+								if (mRestricted && md.whitelist() != null) {
+									for (Boolean allowed : mapWhitelist.get(md.whitelist()).values())
+										if (allowed) {
+											mWhitelisted = true;
+											break;
+										}
+								}
+
 								JSONObject jMethod = new JSONObject();
 								jMethod.put("restriction", restrictionName);
 								jMethod.put("method", md.getName());
 								jMethod.put("restricted", mRestricted);
 								jMethod.put("used", mUsed);
+								jMethod.put("allowed", mWhitelisted ? 1 : 0);
 								jSettings.put(jMethod);
 							}
 						}
