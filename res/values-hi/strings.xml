@@ -26,7 +26,7 @@
     <string name="menu_sort">Sort</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_all">प्रत्येक</string>
-    <string name="menu_restriction_all">प्रतिबंध toggle करे</string>
+    <string name="menu_toggle">प्रतिबंध toggle करे</string>
     <string name="menu_clear_all">सब clear करे</string>
     <string name="menu_restrict_all">सब प्रतिबंध करे</string>
     <string name="menu_clear_usage">Clear</string>
@@ -129,6 +129,7 @@
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">क्रमांक#</string>
     <string name="settings_lat">अक्षांश</string>
     <string name="settings_lon">रेखांश</string>

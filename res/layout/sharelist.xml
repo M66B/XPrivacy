@@ -11,12 +11,48 @@
 
     <!-- Header -->
 
-    <TextView
-        android:id="@+id/tvDescription"
-        android:layout_width="match_parent"
+    <LinearLayout
+        android:id="@+id/llHeader"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autoLink="web"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/tvDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <RadioGroup
+            android:id="@+id/rgToggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone" >
+
+            <RadioButton
+                android:id="@+id/rbClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_clear"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbRestrict"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_set_restrict"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbTemplate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_template"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RadioGroup>
+    </LinearLayout>
 
     <!-- Progress -->
 
@@ -24,7 +60,7 @@
         android:id="@+id/rlProgress"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tvDescription"
+        android:layout_below="@id/llHeader"
         android:paddingTop="3dip" >
 
         <View

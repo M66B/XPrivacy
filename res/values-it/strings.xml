@@ -26,7 +26,7 @@
     <string name="menu_sort">Sort</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_all">Tutto</string>
-    <string name="menu_restriction_all">Imposta restrizioni</string>
+    <string name="menu_toggle">Imposta restrizioni</string>
     <string name="menu_clear_all">Deseleziona tutto</string>
     <string name="menu_restrict_all">Seleziona tutto</string>
     <string name="menu_clear_usage">Clear</string>
@@ -129,6 +129,7 @@ ma è impossibile garantire che funzionerà in modo impeccabile su ogni disposit
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">Numero di serie#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>

@@ -26,7 +26,7 @@
     <string name="menu_sort">Zoradiť</string>
     <string name="menu_filter">Filtrovať</string>
     <string name="menu_all">Všetko</string>
-    <string name="menu_restriction_all">Prepnúť obmedzenia</string>
+    <string name="menu_toggle">Prepnúť obmedzenia</string>
     <string name="menu_clear_all">Vymazať všetky</string>
     <string name="menu_restrict_all">Obmedziť všetky</string>
     <string name="menu_clear_usage">Vymazať</string>
@@ -129,6 +129,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_deny">Odmietnuť</string>
     <string name="title_pleasesubmit">Odošlite prosím vaše obmedzenia na pomoc ostatným</string>
     <string name="title_permissions">Povolenia</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>

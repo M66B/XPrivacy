@@ -26,7 +26,7 @@
     <string name="menu_sort">Sortuj</string>
     <string name="menu_filter">Filtruj</string>
     <string name="menu_all">Wszystko</string>
-    <string name="menu_restriction_all">Przełącz restrykcje</string>
+    <string name="menu_toggle">Przełącz restrykcje</string>
     <string name="menu_clear_all">Wyczyść wszystko</string>
     <string name="menu_restrict_all">Ogranicz wszystko</string>
     <string name="menu_clear_usage">Wyczyść</string>
@@ -129,6 +129,7 @@
     <string name="title_deny">Zabroń</string>
     <string name="title_pleasesubmit">Proszę wyślij twoje ograniczenia aby pomóc innym</string>
     <string name="title_permissions">Uprawnienia</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>

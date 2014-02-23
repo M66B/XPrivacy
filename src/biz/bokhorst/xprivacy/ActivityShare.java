@@ -71,6 +71,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioGroup;
+import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -84,7 +86,6 @@ public class ActivityShare extends ActivityBase {
 	private int mProgressCurrent;
 	private int mProgressWidth = 0;
 	private String mFileName;
-	public boolean mSomeRestricted = false;
 	private boolean mInteractive = false;
 
 	private static final int STATE_WAITING = 0;
@@ -135,8 +136,7 @@ public class ActivityShare extends ActivityBase {
 		final Bundle extras = getIntent().getExtras();
 		final String action = getIntent().getAction();
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
-		final String restriction = (extras != null ? extras.getString(cRestriction) : null);
-		// TODO: show localized restriction name
+		final String restrictionName = (extras != null ? extras.getString(cRestriction) : null);
 
 		// License check
 		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
@@ -166,10 +166,17 @@ public class ActivityShare extends ActivityBase {
 		// Set layout
 		setContentView(R.layout.sharelist);
 
+		// Reference controls
+		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+		RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
+		ListView lvShare = (ListView) findViewById(R.id.lvShare);
+		final Button btnOk = (Button) findViewById(R.id.btnOk);
+		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+
 		// Set title
 		if (action.equals(ACTION_TOGGLE)) {
-			mActionId = R.string.menu_restriction_all;
-			setTitle(R.string.menu_restriction_all);
+			mActionId = R.string.menu_toggle;
+			setTitle(R.string.menu_toggle);
 		} else if (action.equals(ACTION_IMPORT)) {
 			mActionId = R.string.menu_import;
 			setTitle(R.string.menu_import);
@@ -188,9 +195,8 @@ public class ActivityShare extends ActivityBase {
 		}
 
 		// App list
-		ListView lvShare = (ListView) findViewById(R.id.lvShare);
 		AppListTask appListTask = new AppListTask();
-		appListTask.executeOnExecutor(mExecutor, uids, restriction);
+		appListTask.executeOnExecutor(mExecutor, uids);
 
 		// Allow users to remove apps from list
 		// TODO: replace by swipe left/right
@@ -210,22 +216,36 @@ public class ActivityShare extends ActivityBase {
 				mFileName = getFileName(this, hasIntent);
 			else
 				mFileName = (hasIntent ? null : getFileName(this, false));
+
 			if (mFileName == null)
 				fileChooser();
 			else
 				showFileName();
-		} else {
-			TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-			tvDescription.setText(getBaseURL(ActivityShare.this));
-		}
 
-		// Reference buttons
-		final Button btnOk = (Button) findViewById(R.id.btnOk);
-		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
+		} else if (action.equals(ACTION_TOGGLE)) {
+			// Show category
+			if (restrictionName == null)
+				tvDescription.setText(R.string.menu_all);
+			else {
+				int stringId = getResources().getIdentifier("restrict_" + restrictionName, "string", getPackageName());
+				tvDescription.setText(stringId);
+			}
+			rgToggle.setVisibility(View.VISIBLE);
+
+			// Listen for radio button
+			rgToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(RadioGroup group, int checkedId) {
+					btnOk.setEnabled(checkedId >= 0);
+				}
+			});
+
+		} else
+			tvDescription.setText(getBaseURL(ActivityShare.this));
 
 		if (mInteractive) {
 			// Enable ok (showFileName does this for export/import)
-			if (action.equals(ACTION_SUBMIT) || action.equals(ACTION_FETCH) || action.equals(ACTION_TOGGLE))
+			if (action.equals(ACTION_SUBMIT) || action.equals(ACTION_FETCH))
 				btnOk.setEnabled(true);
 
 			// Listen for ok
@@ -237,11 +257,11 @@ public class ActivityShare extends ActivityBase {
 					// Toggle
 					if (action.equals(ACTION_TOGGLE)) {
 						mRunning = true;
-						new ToggleTask().executeOnExecutor(mExecutor, restriction);
+						new ToggleTask().executeOnExecutor(mExecutor, restrictionName);
 					}
 
 					// Import
-					if (action.equals(ACTION_IMPORT)) {
+					else if (action.equals(ACTION_IMPORT)) {
 						mRunning = true;
 						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName));
 					}
@@ -332,9 +352,8 @@ public class ActivityShare extends ActivityBase {
 				btnOk.setEnabled(true);
 			}
 			return true;
-		} else {
+		} else
 			return super.onContextItemSelected(item);
-		}
 	}
 
 	// App info and share state
@@ -344,7 +363,7 @@ public class ActivityShare extends ActivityBase {
 		public ApplicationInfoEx appInfo;
 		public String message = null;
 
-		public AppHolder(int uid) throws NameNotFoundException {
+		public AppHolder(int uid) {
 			appInfo = new ApplicationInfoEx(ActivityShare.this, uid);
 		}
 
@@ -513,13 +532,12 @@ public class ActivityShare extends ActivityBase {
 
 	// Tasks
 
-	private class AppListTask extends AsyncTask<Object, Integer, List<AppHolder>> {
+	private class AppListTask extends AsyncTask<int[], Object, List<AppHolder>> {
 		private ProgressDialog mProgressDialog;
 
 		@Override
-		protected List<AppHolder> doInBackground(Object... params) {
-			int[] uids = (int[]) params[0];
-			String restrictionName = (String) params[1];
+		protected List<AppHolder> doInBackground(int[]... params) {
+			int[] uids = params[0];
 			List<AppHolder> apps = new ArrayList<AppHolder>();
 			mAppsByUid = new SparseArray<AppHolder>();
 
@@ -529,43 +547,22 @@ public class ActivityShare extends ActivityBase {
 				for (PackageInfo pInfo : getPackageManager().getInstalledPackages(0))
 					if (!listUid.contains(pInfo.applicationInfo.uid))
 						listUid.add(pInfo.applicationInfo.uid);
+
 				// Convert to primitive array
 				uids = new int[listUid.size()];
 				for (int i = 0; i < listUid.size(); i++)
 					uids[i] = listUid.get(i);
 			}
 
-			boolean some = false;
 			mProgressDialog.setMax(uids.length);
 			for (int i = 0; i < uids.length; i++) {
 				mProgressDialog.setProgress(i);
-				try {
-					AppHolder app = new AppHolder(uids[i]);
-					apps.add(app);
-					mAppsByUid.put(uids[i], app);
-
-					// If toggling, check if some restricted
-					if (mActionId == R.string.menu_restriction_all)
-						for (PRestriction restriction : PrivacyManager.getRestrictionList(uids[i], restrictionName))
-							if (restriction.restricted) {
-								some = true;
-								break;
-							}
-
-				} catch (NameNotFoundException ex) {
-					Util.bug(null, ex);
-				}
-			}
-
-			if (mActionId == R.string.menu_restriction_all) {
-				mSomeRestricted = some;
-				mActionId = (some ? R.string.menu_clear_all : R.string.menu_restrict_all);
-				Util.log(null, Log.WARN, "Toggle means clear=" + some);
+				AppHolder app = new AppHolder(uids[i]);
+				apps.add(app);
+				mAppsByUid.put(uids[i], app);
 			}
 
 			Collections.sort(apps);
-			// TODO: sort according to preferences
-			// TODO: add sort options to actionbar just like in ActivityMain
 			return apps;
 		}
 
@@ -594,10 +591,6 @@ public class ActivityShare extends ActivityBase {
 				// Dismiss progress dialog
 				mProgressDialog.dismiss();
 
-				// If toggling, set title
-				if (mActionId == R.string.menu_clear_all || mActionId == R.string.menu_restrict_all)
-					ActivityShare.this.setTitle(mActionId);
-
 				// Launch non-interactive export
 				if (!mInteractive && mActionId == R.string.menu_export) {
 					mRunning = true;
@@ -615,7 +608,8 @@ public class ActivityShare extends ActivityBase {
 			// Get data
 			mProgressCurrent = 0;
 			List<Integer> lstUid = mAppAdapter.getListUid();
-			final String restriction = params[0];
+			final String restrictionName = params[0];
+			int actionId = ((RadioGroup) ActivityShare.this.findViewById(R.id.rgToggle)).getCheckedRadioButtonId();
 
 			for (Integer uid : lstUid)
 				try {
@@ -626,13 +620,15 @@ public class ActivityShare extends ActivityBase {
 					publishProgress(++mProgressCurrent, lstUid.size() + 1);
 					mAppAdapter.setState(uid, STATE_RUNNING, null);
 
-					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, null);
-					if (restriction == null && mSomeRestricted)
-						PrivacyManager.deleteRestrictions(uid, null);
-					else if (restriction == null)
-						PrivacyManager.applyTemplate(uid);
+					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, restrictionName);
+					if (actionId == R.id.rbClear)
+						PrivacyManager.deleteRestrictions(uid, restrictionName);
+					else if (actionId == R.id.rbRestrict)
+						PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
+					else if (actionId == R.id.rbTemplate)
+						PrivacyManager.applyTemplate(uid, restrictionName);
 					else
-						PrivacyManager.setRestriction(uid, restriction, null, !mSomeRestricted, false);
+						Util.log(null, Log.ERROR, "Unknown action=" + actionId);
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
 					mAppAdapter.setState(uid, STATE_SUCCESS,
@@ -1053,7 +1049,6 @@ public class ActivityShare extends ActivityBase {
 						}
 
 						// Set restriction
-						// TODO: use setRestrictionList
 						PrivacyManager.setRestriction(uid, restrictionName, methodName, restricted, asked);
 					}
 				} else
@@ -1667,8 +1662,6 @@ public class ActivityShare extends ActivityBase {
 			result = ex.getLocalizedMessage();
 
 		// Check result string and display toast with error
-		// TODO: it might be better to put this in a dialog box
-		// asking whether to send debugging info
 		if (result != null)
 			Toast.makeText(this, result, Toast.LENGTH_LONG).show();
 
@@ -1692,10 +1685,6 @@ public class ActivityShare extends ActivityBase {
 		final View vButtonSeparator = findViewById(R.id.vButtonSeparator);
 		btnCancel.setVisibility(View.GONE);
 		vButtonSeparator.setVisibility(View.GONE);
-		// TODO: a nice touch would be to make the cancel button open the main
-		// list with only the failed apps in view.
-		// I'm not sure what text to put on it though; "Examine failed" might
-		// do, if it isn't too long.
 	}
 
 	public void fileChooser() {

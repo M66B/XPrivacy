@@ -462,12 +462,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			case R.id.menu_filter:
 				optionFilter();
 				return true;
-
 			case R.id.menu_tutorial:
 				optionTutorial();
 				return true;
-			case R.id.menu_all:
-				optionAll();
+			case R.id.menu_toggle:
+				optionToggle();
 				return true;
 			case R.id.menu_clear_db:
 				optionClearDB();
@@ -581,7 +580,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	// Options
 
-	private void optionAll() {
+	private void optionToggle() {
 		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
 		intent.putExtra(ActivityShare.cInteractive, true);
 		intent.putExtra(ActivityShare.cUidList,

@@ -26,7 +26,7 @@
     <string name="menu_sort">Sortieren</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_all">Alles (beschränkt)</string>
-    <string name="menu_restriction_all">Beschränkungen invertieren</string>
+    <string name="menu_toggle">Beschränkungen invertieren</string>
     <string name="menu_clear_all">Alles löschen</string>
     <string name="menu_restrict_all">Alles beschränken</string>
     <string name="menu_clear_usage">Löschen</string>
@@ -129,6 +129,7 @@
     <string name="title_deny">Blockieren</string>
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter um anderen zu helfen</string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>

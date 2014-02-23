@@ -188,9 +188,9 @@ public class PrivacyManager {
 	public static TreeMap<String, String> getRestrictions(Context context) {
 		Collator collator = Collator.getInstance(Locale.getDefault());
 		TreeMap<String, String> tmRestriction = new TreeMap<String, String>(collator);
-		String packageName = PrivacyManager.class.getPackage().getName();
 		for (String restrictionName : getRestrictions()) {
-			int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string", packageName);
+			int stringId = context.getResources().getIdentifier("restrict_" + restrictionName, "string",
+					context.getPackageName());
 			tmRestriction.put(stringId == 0 ? restrictionName : context.getString(stringId), restrictionName);
 		}
 		return tmRestriction;
@@ -417,22 +417,29 @@ public class PrivacyManager {
 		return listRestartRestriction;
 	}
 
-	public static void applyTemplate(int uid) {
+	public static void applyTemplate(int uid, String restrictionName) {
 		checkCaller();
 
-		// Enable on-demand
+		// Check on-demand
 		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 		if (ondemand)
 			ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
 
+		// Build list of restrictions
+		List<String> listRestriction = new ArrayList<String>();
+		if (restrictionName == null)
+			listRestriction.addAll(PrivacyManager.getRestrictions());
+		else
+			listRestriction.add(restrictionName);
+
 		// Apply template
-		for (String restrictionName : PrivacyManager.getRestrictions()) {
-			String templateName = PrivacyManager.cSettingTemplate + "." + restrictionName;
+		for (String rRestrictionName : listRestriction) {
+			String templateName = PrivacyManager.cSettingTemplate + "." + rRestrictionName;
 			String templateValue = PrivacyManager.getSetting(0, templateName, Boolean.toString(!ondemand) + "+ask",
 					false);
 			boolean restrict = templateValue.contains("true");
 			boolean asked = templateValue.contains("asked");
-			PrivacyManager.setRestriction(uid, restrictionName, null, restrict, asked || !ondemand);
+			PrivacyManager.setRestriction(uid, rRestrictionName, null, restrict, asked || !ondemand);
 		}
 	}
 

@@ -489,7 +489,7 @@ public class ActivityApp extends ActivityBase {
 			public void onClick(DialogInterface dialog, int which) {
 				// Do toggle
 				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-				PrivacyManager.applyTemplate(mAppInfo.getUid());
+				PrivacyManager.applyTemplate(mAppInfo.getUid(), null);
 				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
 
 				// Refresh display

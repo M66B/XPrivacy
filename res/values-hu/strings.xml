@@ -26,7 +26,7 @@
     <string name="menu_sort">Sort</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_all">Minden</string>
-    <string name="menu_restriction_all">Korlátozások kapcsolása</string>
+    <string name="menu_toggle">Korlátozások kapcsolása</string>
     <string name="menu_clear_all">Összes törlése</string>
     <string name="menu_restrict_all">Összes korlátozása</string>
     <string name="menu_clear_usage">Clear</string>
@@ -129,6 +129,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">Sorozatszám#</string>
     <string name="settings_lat">Szélesség</string>
     <string name="settings_lon">Hosszúság</string>

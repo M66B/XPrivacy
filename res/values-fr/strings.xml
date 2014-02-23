@@ -26,7 +26,7 @@
     <string name="menu_sort">Trier</string>
     <string name="menu_filter">Filtre</string>
     <string name="menu_all">Tous</string>
-    <string name="menu_restriction_all">Inverser restrictions</string>
+    <string name="menu_toggle">Inverser restrictions</string>
     <string name="menu_clear_all">Tout effacer</string>
     <string name="menu_restrict_all">Tout restreindre</string>
     <string name="menu_clear_usage">Effacer</string>
@@ -129,6 +129,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_deny">Bloquer</string>
     <string name="title_pleasesubmit">Veuillez envoyer vos restrictions pour aider les autres</string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

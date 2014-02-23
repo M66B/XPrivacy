@@ -26,7 +26,7 @@
     <string name="menu_sort">Sort</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_all">Kalahatan</string>
-    <string name="menu_restriction_all">Bigyan ng lahat o walang paghihigpit</string>
+    <string name="menu_toggle">Bigyan ng lahat o walang paghihigpit</string>
     <string name="menu_clear_all">Burahin lahat ng paghihigpit</string>
     <string name="menu_restrict_all">Pahigpitan lahat</string>
     <string name="menu_clear_usage">Burahin lahat nang nakatakdang kaalaman at ukol sa mga pahintulot na nagamit</string>
@@ -129,6 +129,7 @@
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">Ang iyong Seryal#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longhitud</string>

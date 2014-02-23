@@ -31,8 +31,8 @@
         android:id="@+id/menu_tutorial"
         android:title="@string/menu_tutorial"/>
     <item
-        android:id="@+id/menu_all"
-        android:title="@string/menu_restriction_all"/>
+        android:id="@+id/menu_toggle"
+        android:title="@string/menu_toggle"/>
     <item
         android:id="@+id/menu_clear_db"
         android:title="@string/menu_clear_db"/>

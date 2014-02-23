@@ -26,7 +26,7 @@
     <string name="menu_sort">Rūšiuoti</string>
     <string name="menu_filter">Filtras</string>
     <string name="menu_all">Visos</string>
-    <string name="menu_restriction_all">Išvalyti visus ribojimus</string>
+    <string name="menu_toggle">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
     <string name="menu_restrict_all">Įjungti visus ribojimus</string>
     <string name="menu_clear_usage">Valyti</string>
@@ -129,6 +129,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_deny">Drausti</string>
     <string name="title_pleasesubmit">Prašome pateikti savo leidimą</string>
     <string name="title_permissions">Leidimai</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>

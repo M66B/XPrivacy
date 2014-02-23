@@ -26,7 +26,7 @@
     <string name="menu_sort">ریزکردن</string>
     <string name="menu_filter">پالاوتن</string>
     <string name="menu_all">هه موو</string>
-    <string name="menu_restriction_all">سنوردارکردن / سنوردار نه کردن</string>
+    <string name="menu_toggle">سنوردارکردن / سنوردار نه کردن</string>
     <string name="menu_clear_all">به تال کردنی هه مویان</string>
     <string name="menu_restrict_all">سنوردار کردنی هه مویان</string>
     <string name="menu_clear_usage">به تال کردن</string>
@@ -128,6 +128,7 @@
     <string name="title_deny">ریگه نه دان</string>
     <string name="title_pleasesubmit">ته کایه بو یارمه تی دانی که سانی تریش ئه و شتانه ى سنوردارتكردوون به لاو بكه </string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">سريال نه مبرى موبايل</string>
     <string name="settings_lat">هیلی پانی</string>
     <string name="settings_lon">هیلی دریژی</string>

@@ -26,7 +26,7 @@
     <string name="menu_sort">Sorteer</string>
     <string name="menu_filter">Filter</string>
     <string name="menu_all">Allen</string>
-    <string name="menu_restriction_all">Schakel beperkingen</string>
+    <string name="menu_toggle">Schakel beperkingen</string>
     <string name="menu_clear_all">Alles wissen</string>
     <string name="menu_restrict_all">Alles beperken</string>
     <string name="menu_clear_usage">Wissen</string>
@@ -128,7 +128,8 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_allow">Toestaan</string>
     <string name="title_deny">Blokkeren</string>
     <string name="title_pleasesubmit">Stuur a.u.b. uw beperkingen op om anderen te helpen</string>
-    <string name="title_permissions">Permissions</string>
+    <string name="title_permissions">Rechten</string>
+    <string name="title_set_restrict">Beperk</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>

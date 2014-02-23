@@ -26,7 +26,7 @@
     <string name="menu_sort">分类</string>
     <string name="menu_filter">过滤器</string>
     <string name="menu_all">全部权限</string>
-    <string name="menu_restriction_all">全选/不选列表中的应用</string>
+    <string name="menu_toggle">全选/不选列表中的应用</string>
     <string name="menu_clear_all">清除限制</string>
     <string name="menu_restrict_all">限制所有权限</string>
     <string name="menu_clear_usage">清除权限使用记录</string>
@@ -129,6 +129,7 @@
     <string name="title_deny">拒绝</string>
     <string name="title_pleasesubmit">请发送你的应用限制信息来帮助其他人</string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>

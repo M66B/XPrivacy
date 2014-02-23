@@ -26,7 +26,7 @@
     <string name="menu_sort">Susun</string>
     <string name="menu_filter">Tapis</string>
     <string name="menu_all">Semua</string>
-    <string name="menu_restriction_all">Aktif sekatan</string>
+    <string name="menu_toggle">Aktif sekatan</string>
     <string name="menu_clear_all">Bersih semua</string>
     <string name="menu_restrict_all">Sekat semua</string>
     <string name="menu_clear_usage">Bersih</string>
@@ -129,6 +129,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="title_deny">Tidak dibenarkan</string>
     <string name="title_pleasesubmit">Sila kemukakan sekatan anda untuk menolong orang lain</string>
     <string name="title_permissions">Kebenaran</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">Siri#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>

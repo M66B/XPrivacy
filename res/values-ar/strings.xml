@@ -26,7 +26,7 @@
     <string name="menu_sort">ترتيب</string>
     <string name="menu_filter">فلتر</string>
     <string name="menu_all">تحديد الكل</string>
-    <string name="menu_restriction_all">تبديل القيود</string>
+    <string name="menu_toggle">تبديل القيود</string>
     <string name="menu_clear_all">مسح الكل</string>
     <string name="menu_restrict_all">تقييد الكل</string>
     <string name="menu_clear_usage">إزالة</string>
@@ -129,6 +129,7 @@
     <string name="title_deny">منع</string>
     <string name="title_pleasesubmit">الرجاء إرسال القيود لمساعدة الآخرين</string>
     <string name="title_permissions">Permissions</string>
+    <string name="title_set_restrict">Restrict</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
