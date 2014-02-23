@@ -375,6 +375,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					for (Constructor<?> constructor : clazz.getDeclaredConstructors())
 						if (Modifier.isPublic(constructor.getModifiers()) ? hook.isVisible() : !hook.isVisible())
 							listMember.add(constructor);
+					break;
 				} else {
 					for (Method method : clazz.getDeclaredMethods())
 						if (method.getName().equals(hook.getMethodName())
