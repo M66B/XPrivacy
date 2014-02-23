@@ -602,54 +602,9 @@ public class PrivacyService {
 				if (!ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify())
 					notifyRestricted(restriction);
 
-				// Log usage
+				// Store usage data
 				if (usage && hook != null && hook.hasUsageData())
-					if (getSettingBool(0, PrivacyManager.cSettingUsage, true)) {
-						// Check secret
-						boolean allowed = true;
-						if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
-							if (mSecret == null || !mSecret.equals(secret)) {
-								allowed = false;
-								Util.log(null, Log.WARN, "Invalid secret");
-							}
-						}
-
-						if (allowed) {
-							mExecutor.execute(new Runnable() {
-								public void run() {
-									try {
-										if (XActivityManagerService.canWriteUsageData()) {
-											SQLiteDatabase dbUsage = getDbUsage();
-
-											mLockUsage.writeLock().lock();
-											dbUsage.beginTransaction();
-											try {
-												ContentValues values = new ContentValues();
-												values.put("uid", restriction.uid);
-												values.put("restriction", restriction.restrictionName);
-												values.put("method", restriction.methodName);
-												values.put("restricted", mresult.restricted);
-												values.put("time", new Date().getTime());
-												values.put("extra", restriction.extra == null ? "" : restriction.extra);
-												dbUsage.insertWithOnConflict(cTableUsage, null, values,
-														SQLiteDatabase.CONFLICT_REPLACE);
-
-												dbUsage.setTransactionSuccessful();
-											} finally {
-												try {
-													dbUsage.endTransaction();
-												} finally {
-													mLockUsage.writeLock().unlock();
-												}
-											}
-										}
-									} catch (Throwable ex) {
-										Util.bug(null, ex);
-									}
-								}
-							});
-						}
-					}
+					storeUsageData(restriction, secret, mresult);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -659,6 +614,57 @@ public class PrivacyService {
 					String.format("get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
 
 			return mresult;
+		}
+
+		private void storeUsageData(final PRestriction restriction, String secret, final PRestriction mresult)
+				throws RemoteException {
+			// Check if enabled
+			if (getSettingBool(0, PrivacyManager.cSettingUsage, true)) {
+				// Check secret
+				boolean allowed = true;
+				if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
+					if (mSecret == null || !mSecret.equals(secret)) {
+						allowed = false;
+						Util.log(null, Log.WARN, "Invalid secret");
+					}
+				}
+
+				if (allowed) {
+					mExecutor.execute(new Runnable() {
+						public void run() {
+							try {
+								if (XActivityManagerService.canWriteUsageData()) {
+									SQLiteDatabase dbUsage = getDbUsage();
+
+									mLockUsage.writeLock().lock();
+									dbUsage.beginTransaction();
+									try {
+										ContentValues values = new ContentValues();
+										values.put("uid", restriction.uid);
+										values.put("restriction", restriction.restrictionName);
+										values.put("method", restriction.methodName);
+										values.put("restricted", mresult.restricted);
+										values.put("time", new Date().getTime());
+										values.put("extra", restriction.extra == null ? "" : restriction.extra);
+										dbUsage.insertWithOnConflict(cTableUsage, null, values,
+												SQLiteDatabase.CONFLICT_REPLACE);
+
+										dbUsage.setTransactionSuccessful();
+									} finally {
+										try {
+											dbUsage.endTransaction();
+										} finally {
+											mLockUsage.writeLock().unlock();
+										}
+									}
+								}
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+							}
+						}
+					});
+				}
+			}
 		}
 
 		@Override
