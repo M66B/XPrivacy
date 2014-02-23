@@ -14,7 +14,7 @@ Changelog
 
 **Next release**
 
-* Toggle restriction will allow to choose between, clear, restrict and template ([issue](/../../issues/1290))
+* Toggle restriction will allow to choose between, clear, restrict and template ([issue](/../../issues/1390))
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
