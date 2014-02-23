@@ -17,6 +17,7 @@ Changelog
 * Toggle restriction will allow to choose between, clear, restrict and template ([issue](/../../issues/1319))
 * Option to select if existing restrictions should be deleted on fetch ([issue](/../../issues/1119))
 * Updated Dutch translation
+* Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

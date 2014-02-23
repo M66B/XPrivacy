@@ -1,181 +1,181 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_notxposed" formatted="false">Xposed framework versione %d+ non è installato</string>
-    <string name="app_notenabled">XPrivacy non è abilitato nell\'installer di Xposed framework</string>
+    <string name="app_notenabled">XPrivacy non è attivato nell\'installatore di Xposed</string>
     <string name="app_wrongandroid">Solo per Android versione 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
-    <string name="app_version" formatted="false">Versione di XPrivacy: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Versione di Xposed framework: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
-    <string name="menu_usage">Utilizzo</string>
+    <string name="app_incompatible" formatted="false">XPrivacy non è compatibile con %s</string>
+    <string name="app_version" formatted="false">XPrivacy versione: %s (%d)</string>
+    <string name="app_description">Il gestore di privacy definitivo</string>
+    <string name="app_xversion" formatted="false">Xposed framework versione: %d</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2014 di M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licenziato, grazie per il tuo supporto!</string>
+    <string name="menu_usage">Dati utilizzati</string>
     <string name="menu_refresh">Aggiorna</string>
     <string name="menu_settings">Impostazioni</string>
-    <string name="menu_template">Template</string>
-    <string name="menu_report">Segnala problema</string>
+    <string name="menu_template">Modello</string>
+    <string name="menu_report">Riporta problema</string>
     <string name="menu_export">Esporta</string>
     <string name="menu_import">Importa</string>
     <string name="menu_submit">Invia restrizioni</string>
-    <string name="menu_fetch">Scarica restrizioni</string>
+    <string name="menu_fetch">Ricevi restrizioni</string>
     <string name="menu_theme">Cambia tema</string>
     <string name="menu_pro">Versione Pro</string>
-    <string name="menu_about">Riguardo a</string>
+    <string name="menu_about">About</string>
     <string name="menu_help">Aiuto</string>
-    <string name="menu_select_all">Select all</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_select_all">Seleziona tutto</string>
+    <string name="menu_sort">Organizza</string>
+    <string name="menu_filter">Filtra</string>
     <string name="menu_all">Tutto</string>
-    <string name="menu_toggle">Imposta restrizioni</string>
-    <string name="menu_clear_all">Deseleziona tutto</string>
-    <string name="menu_restrict_all">Seleziona tutto</string>
-    <string name="menu_clear_usage">Clear</string>
-    <string name="menu_clear_db">Clear all data</string>
-    <string name="menu_usage_all">Imposta filtro</string>
-    <string name="menu_apply">Applica template</string>
-    <string name="menu_clear">Pulisci</string>
-    <string name="menu_app_launch">Lancia</string>
+    <string name="menu_toggle">Attiva restrizioni</string>
+    <string name="menu_clear_all">Azzera tutto</string>
+    <string name="menu_restrict_all">Restringi tutto</string>
+    <string name="menu_clear_usage">Azzera</string>
+    <string name="menu_clear_db">Azzera tutti i dati di XPrivacy</string>
+    <string name="menu_usage_all">Attiva filtro</string>
+    <string name="menu_apply">Applica modello</string>
+    <string name="menu_clear">Azzera</string>
+    <string name="menu_app_launch">Avvia</string>
     <string name="menu_app_settings">Impostazioni</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Kill</string>
-    <string name="menu_accounts">Seleziona account consentiti</string>
-    <string name="menu_applications">Seleziona le applicazioni permesse</string>
-    <string name="menu_contacts">Seleziona contatti consentiti</string>
-    <string name="menu_whitelists">Manage whitelists</string>
-    <string name="menu_tutorial">Tutorial</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="menu_app_kill">Chiudi processo</string>
+    <string name="menu_accounts">Seleziona gli accounts da consentire</string>
+    <string name="menu_applications">Seleziona le applicazioni da consentire</string>
+    <string name="menu_contacts">Seleziona i contatti da consentire</string>
+    <string name="menu_whitelists">Gestisci le whitelists</string>
+    <string name="menu_tutorial">Guida</string>
+    <string name="menu_exclude">Escludi</string>
+    <string name="menu_close">Chiudi</string>
+    <string name="msg_abort">Annullo</string>
+    <string name="msg_aborted">Annullato</string>
     <string name="msg_new">Nuovo</string>
     <string name="msg_update">Aggiorna</string>
-    <string name="msg_loading">Caricamento in corso</string>
-    <string name="msg_applying">Applicazione in corso</string>
-    <string name="msg_applied">Template applied</string>
-    <string name="msg_saved_to" formatted="false">Salvato su %s</string>
+    <string name="msg_loading">Caricamento &#8230;</string>
+    <string name="msg_applying">Applico &#8230;</string>
+    <string name="msg_applied">	Modello applicato</string>
+    <string name="msg_saved_to" formatted="false">Salvato in %s</string>
     <string name="msg_no_restrictions">Nessuna restrizione trovata</string>
     <string name="msg_sure">Sei sicuro?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
-    <string name="msg_done">Fatto</string>
-    <string name="msg_reboot">Riavvio richiesto</string>
-    <string name="msg_random_now">Generazione casuale</string>
-    <string name="msg_random_access">Generazione casuale all\'accesso</string>
-    <string name="msg_random_boot">Generazione casuale all\'avvio</string>
-    <string name="msg_restart">Richiesto riavvio dell\'applicazione</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
-    <string name="msg_first"><b>XPrivacy è stato testato e sviluppato con cura,
-ma è impossibile garantire che funzionerà in modo impeccabile su ogni dispositivo e per ogni applicazione.
-\n\nUsalo a tuo rischio.</b>\n\nLeggi la licenza:</string>
-    <string name="restrict_accounts">Accounts (Google, Facebook, etc)</string>
-    <string name="restrict_browser">Browser (bookmarks/history)</string>
-    <string name="restrict_calendar">Calendario</string>
-    <string name="restrict_calling">Chiamate (Telefono, SMS, MMS)</string>
-    <string name="restrict_clipboard">Appunti</string>
-    <string name="restrict_contacts">Contatti</string>
-    <string name="restrict_dictionary">Dizionario (utente)</string>
-    <string name="restrict_email">E-mail</string>
-    <string name="restrict_identification">Identificazione (dispositivo)</string>
-    <string name="restrict_internet">Internet</string>
-    <string name="restrict_location">Posizione (precisa/grossolana)</string>
-    <string name="restrict_media">Media (audio, foto, video)</string>
-    <string name="restrict_messages">Messaggi (SMS, MMS)</string>
-    <string name="restrict_network">Rete (indirizzi)</string>
-    <string name="restrict_notifications">Notifiche</string>
-    <string name="restrict_overlay">Overlay</string>
-    <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
-    <string name="restrict_sensors">Sensori</string>
-    <string name="restrict_storage">Memoria (media, scheda SD)</string>
-    <string name="restrict_shell">Shell (comandi, superuser)</string>
-    <string name="restrict_system">Sistema (applicazioni installate)</string>
-    <string name="restrict_view">Visualizzazione (browser)</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
-    <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
-    <string name="whitelist_url">URLs</string>
-    <string name="title_restrict">Spunta per limitare:</string>
-    <string name="title_check_whitelist">Check to allow</string>
-    <string name="title_fused">Filtra per utilizzo dati</string>
-    <string name="title_finternet">Filtra per accesso a internet</string>
-    <string name="title_fpermission">Filtra per permesso</string>
-    <string name="title_frestricted">Filtra per restrizione</string>
-    <string name="title_fuser">Filtra per app utente</string>
-    <string name="title_fondemand">Filter by on-demand</string>
-    <string name="title_fsystem">Filtra per app di sistema</string>
+    <string name="msg_select">Per favore seleziona delle applicazioni</string>
+    <string name="msg_limit">Per favore seleziona meno di %d applicazioni</string>
+    <string name="msg_done">Eseguito</string>
+    <string name="msg_reboot">Richiesto riavvio del dispositivo</string>
+    <string name="msg_random_now">Randomizza adesso</string>
+    <string name="msg_random_access">Randomizza all\'acccesso</string>
+    <string name="msg_random_boot">Randomizza all\'avvio</string>
+    <string name="msg_restart">Richiesto riavvio</string>
+    <string name="msg_register">Per favore registra il tuo dispositivo</string>
+    <string name="msg_email">Per favore inserisci il tuo indirizzo e-mail:</string>
+    <string name="msg_registered">Controlla l\'e-mail per attivare il dispositivo</string>
+    <string name="msg_service">Servizio di aggiornamento in funzione</string>
+    <string name="msg_migrating" formatted="false">Migrazione %s</string>
+    <string name="msg_randomizing" formatted="false">Randomizzazione %s</string>
+    <string name="msg_upgrading" formatted="false">Aggiornamento %s</string>
+    <string name="msg_support_info">Un controllo interno è fallito, vuoi inviare le informazioni di supporto?</string>
+    <string name="msg_restrictedby">Ristretto da XPrivacy</string>
+    <string name="msg_first"><b>Grande attenzione e\' stata impiegata per sviluppare e testare XPrivacy,
+tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
+\n\nL\'utilizzo è completamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
+    <string name="restrict_accounts" tools:ignore="UnusedResources">Accounts (Google, Facebook, ecc)</string>
+    <string name="restrict_browser" tools:ignore="UnusedResources">Browser (segnalibri/storico)</string>
+    <string name="restrict_calendar" tools:ignore="UnusedResources">Calendario</string>
+    <string name="restrict_calling" tools:ignore="UnusedResources">Chiamate (Telefono, SMS, MMS)</string>
+    <string name="restrict_clipboard" tools:ignore="UnusedResources">Appunti</string>
+    <string name="restrict_contacts" tools:ignore="UnusedResources">Contatti</string>
+    <string name="restrict_dictionary" tools:ignore="UnusedResources">Dizionario (utente)</string>
+    <string name="restrict_email" tools:ignore="UnusedResources">E-mail</string>
+    <string name="restrict_identification" tools:ignore="UnusedResources">Identificazione (dispositivo)</string>
+    <string name="restrict_internet" tools:ignore="UnusedResources">Internet</string>
+    <string name="restrict_location" tools:ignore="UnusedResources">Luogo (fine/approssimato)</string>
+    <string name="restrict_media" tools:ignore="UnusedResources">Media (audio, foto, video)</string>
+    <string name="restrict_messages" tools:ignore="UnusedResources">Messaggi (SMS, MMS)</string>
+    <string name="restrict_network" tools:ignore="UnusedResources">Rete (indirizzi)</string>
+    <string name="restrict_notifications" tools:ignore="UnusedResources">Notifiche</string>
+    <string name="restrict_overlay" tools:ignore="UnusedResources">Sovrapposizione</string>
+    <string name="restrict_phone" tools:ignore="UnusedResources">Telefono (ID, numeri, chiamate)</string>
+    <string name="restrict_sensors" tools:ignore="UnusedResources">Sensori</string>
+    <string name="restrict_storage" tools:ignore="UnusedResources">Memoria (media, scheda SD)</string>
+    <string name="restrict_shell" tools:ignore="UnusedResources">Shell (comandi, superuser)</string>
+    <string name="restrict_system" tools:ignore="UnusedResources">Sistema (applicazioni installate)</string>
+    <string name="restrict_view" tools:ignore="UnusedResources">Visualizza (browser)</string>
+    <string name="whitelist_ipaddress" tools:ignore="UnusedResources">Indirizzi IP</string>
+    <string name="whitelist_library" tools:ignore="UnusedResources">Librerie native</string>
+    <string name="whitelist_filename" tools:ignore="UnusedResources">Nomi file</string>
+    <string name="whitelist_command" tools:ignore="UnusedResources">Comandi Shell</string>
+    <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>
+    <string name="title_restrict">Seleziona per restringere:</string>
+    <string name="title_check_whitelist">Seleziona per consentire</string>
+    <string name="title_fused">Filtra per dati di utilizzo</string>
+    <string name="title_finternet">Filtra per accesso internet</string>
+    <string name="title_fpermission">Filtra per permessi</string>
+    <string name="title_frestricted">Filtra per restrizioni</string>
+    <string name="title_fuser">Filtra per applicazioni utente</string>
+    <string name="title_fondemand">Filtra per su-richiesta</string>
+    <string name="title_fsystem">Filtra per applicazioni di sistema</string>
     <string name="title_fnot">Nega</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
-    <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_sname">Per nome</string>
+    <string name="title_suid">Per uid</string>
+    <string name="title_sinstalled">Per data di installazione</string>
+    <string name="title_supdated">Per data di aggiornamento</string>
+    <string name="title_smodified">Per data di modifica (XPrivacy)</string>
+    <string name="title_sinvert">Inverti ordine di disposizione</string>
+    <string name="title_attempt">Tentativo d\'uso di:</string>
+    <string name="title_category">Categoria:</string>
+    <string name="title_function">Funzione:</string>
+    <string name="title_parameters">Parametri:</string>
+    <string name="title_applycat">Applica a intera categoria</string>
+    <string name="title_once">Una volta per %1$s secondi</string>
     <string name="title_whitelist">Whitelist \'%s\'</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
-    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
-    <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
-    <string name="settings_serial">Numero di serie#</string>
+    <string name="title_allow">Consenti</string>
+    <string name="title_deny">Rifiuta</string>
+    <string name="title_pleasesubmit">Per favore sottoponi le tue restrizioni per aiutare gli altri</string>
+    <string name="title_permissions">Permessi</string>
+    <string name="title_set_restrict">Restringi</string>
+    <string name="settings_serial">Seriale#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">Altitudine</string>
     <string name="settings_mac">Indirizzo MAC</string>
     <string name="settings_ip">Indirizzo IP</string>
-    <string name="settings_phone">Numero di Telefono</string>
+    <string name="settings_phone">Numero di telefono</string>
     <string name="settings_id">Android ID</string>
-    <string name="settings_adid">ID Pubblicità</string>
-    <string name="settings_country">Nazione</string>
+    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_country">Paese</string>
     <string name="settings_operator">Operatore</string>
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Generale</string>
     <string name="settings_fake_data">Dati falsi</string>
     <string name="settings_notify">Aggiorna notifiche</string>
-    <string name="settings_ondemand">Restrict on demand</string>
-    <string name="settings_log">Debug log (richiede riavvio)</string>
+    <string name="settings_ondemand">Restringi su richiesta</string>
+    <string name="settings_log">Log di debug (rechiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
-    <string name="settings_dangerous">Limita funzioni pericolose</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
-    <string name="settings_experimental">Experimental functions (requires restart)</string>
-    <string name="settings_https">Use secure connections</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
+    <string name="settings_dangerous">Restringi funzioni pericolose</string>
+    <string name="settings_confidence">Intervallo massimo di confidenza nella ricezione</string>
+    <string name="settings_experimental">Funzioni sperimentali (richiede riavvio)</string>
+    <string name="settings_https">Usa connessioni sicure</string>
+    <string name="settings_syscomponents">Restringi componenti di sistema (Android)</string>
+    <string name="settings_usagedata">Mostra utilizzo dati dell\'applicazione</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
-    <string name="help_longpress">Long press name to select</string>
-    <string name="help_ondemand">restrictions will be asked</string>
+    <string name="help_longpress">Tieni premuto sul nome per selezionare</string>
+    <string name="help_ondemand">le restrizioni verrano richieste</string>
     <string name="help_application">Applicazione</string>
-    <string name="help_internet">ha permesso internet</string>
-    <string name="help_granted">ha permesso Android</string>
-    <string name="help_used">ha usato questi dati</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_internet">ha il permesso di internet</string>
+    <string name="help_granted">ha il permesso di Android</string>
+    <string name="help_used">ha utilizzato questo dato</string>
+    <string name="help_used_grayed">dati di utilizzo non disponibili</string>
     <string name="help_frozen">è disabilitato</string>
-    <string name="help_dangerous">è pericoloso</string>
-    <string name="help_half">parzialmente limitato</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="help_dangerous">è pericoloso, restringere può causare problemi</string>
+    <string name="help_half">ristretto in parte</string>
+    <string name="help_attention">restrizioni necessitano di attenzione</string>
+    <string name="help_restricted">restrizioni modificate</string>
+    <string name="help_shared">restrizioni inviate</string>
+    <string name="tutorial_mainheader">Seleziona la categoria da restringere</string>
+    <string name="tutorial_mainlist">Tocca la casella di controllo per restringere la categoria selezionata per un\'applicazione\n
+\nAlle applicazioni verranno forniti dati vuoti o falsi per le categorie ristrette\n
+\nTocca l\'icona dell\'applicazione per le restrizioni e le impostazioni dettagliate</string>
+    <string name="tutorial_detailsheader">Tocca l\'icona dell\'applicazione per ulteriori azioni</string>
+    <string name="tutorial_detailslist">Tocca la freccia verso il basso per visualizzare le funzioni escluse di una categoria ristretta</string>
+    <string name="permission_manage">Gestisci le applicazioni, inclusa la chiusura</string>
 
 </resources>
