@@ -82,8 +82,8 @@ public class Util {
 				Log.println(priority, String.format("XPrivacy/%s", hook.getClass().getSimpleName()), msg);
 
 		// Report to service
-		if (Process.myUid() > 0 && priority == Log.ERROR)
-			if (Process.myUid() == Process.SYSTEM_UID)
+		if (uid > 0 && priority == Log.ERROR)
+			if (uid == Process.SYSTEM_UID)
 				PrivacyService.reportErrorInternal(msg);
 			else
 				try {
