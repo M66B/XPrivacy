@@ -320,8 +320,8 @@ public class ActivityApp extends ActivityBase {
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		if (PrivacyService.checkClient()) {
-			MenuInflater inflater = getMenuInflater();
+		MenuInflater inflater = getMenuInflater();
+		if (inflater != null && PrivacyService.checkClient()) {
 			inflater.inflate(R.menu.app, menu);
 			return true;
 		} else

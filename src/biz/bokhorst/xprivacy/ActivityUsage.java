@@ -86,8 +86,11 @@ public class ActivityUsage extends ActivityBase {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.usage, menu);
-		return true;
+		if (inflater != null && PrivacyService.checkClient()) {
+			inflater.inflate(R.menu.usage, menu);
+			return true;
+		} else
+			return false;
 	}
 
 	@Override
