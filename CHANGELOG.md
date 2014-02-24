@@ -16,8 +16,8 @@ Changelog
 
 * Toggle restriction will allow to choose between, clear, restrict and template ([issue](/../../issues/1319))
 * Option to select if existing restrictions should be deleted on fetch ([issue](/../../issues/1119))
-* Move database to /data/system ([issue](/../../issues/1437))
-* Submit restricted functions with a whitelist as an exception ([issue](/../../issues/1438))
+* Move database to /data/system/xprivacy ([issue](/../../issues/1437))
+* Submit restricted functions with a whitelist as having an exception ([issue](/../../issues/1438))
 * Updated Dutch translation
 * Updated Italian translation
 

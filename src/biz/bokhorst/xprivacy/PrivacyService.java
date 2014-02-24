@@ -79,6 +79,9 @@ public class PrivacyService {
 		try {
 			File dbFile = getDbFile();
 
+			// Create database folder
+			dbFile.getParentFile().mkdirs();
+
 			// Check database folder
 			if (dbFile.getParentFile().isDirectory())
 				Util.log(null, Log.WARN, "Database folder=" + dbFile.getParentFile());
@@ -112,6 +115,7 @@ public class PrivacyService {
 			// Owner: rwx (system)
 			// Group: rwx (system)
 			// World: ---
+			Util.setPermissions(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
 			File[] files = dbFile.getParentFile().listFiles();
 			if (files != null)
 				for (File file : files)
@@ -220,11 +224,13 @@ public class PrivacyService {
 	}
 
 	private static File getDbFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "xprivacy.db");
+		return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "xprivacy"
+				+ File.separator + "xprivacy.db");
 	}
 
 	private static File getDbUsageFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "usage.db");
+		return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "xprivacy"
+				+ File.separator + "usage.db");
 	}
 
 	public static void reportErrorInternal(String message) {
