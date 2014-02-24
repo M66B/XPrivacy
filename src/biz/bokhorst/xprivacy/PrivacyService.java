@@ -953,6 +953,11 @@ public class PrivacyService {
 							mSettingCache.put(key, key);
 					}
 				}
+
+				if (setting.name.startsWith("Whitelist"))
+					synchronized (mRestrictionCache) {
+						mRestrictionCache.clear();
+					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
