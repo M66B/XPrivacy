@@ -1915,6 +1915,69 @@ public class PrivacyService {
 							}
 						}
 
+						if (db.needUpgrade(11)) {
+							mLock.writeLock().lock();
+							db.beginTransaction();
+							try {
+								List<PSetting> listSetting = new ArrayList<PSetting>();
+								Cursor cursor = db.query(cTableSetting, new String[] { "uid", "name", "value" }, null,
+										null, null, null, null);
+								if (cursor != null)
+									try {
+										while (cursor.moveToNext()) {
+											int uid = cursor.getInt(0);
+											String name = cursor.getString(1);
+											String value = cursor.getString(2);
+											if (name.startsWith("Account.") || name.startsWith("Application.")
+													|| name.startsWith("Contact.")) {
+												int dot = name.indexOf('.');
+												String type = name.substring(0, dot);
+												listSetting
+														.add(new PSetting(uid, type, name.substring(dot + 1), value));
+												listSetting.add(new PSetting(uid, "", name, null));
+
+											} else if (name.startsWith("Whitelist.")) {
+												String[] component = name.split("\\.");
+												listSetting.add(new PSetting(uid, component[1], name.replace(
+														component[0] + "." + component[1] + ".", ""), value));
+												listSetting.add(new PSetting(uid, "", name, null));
+											}
+										}
+									} finally {
+										cursor.close();
+									}
+
+								for (PSetting setting : listSetting) {
+									Util.log(null, Log.WARN, "Converting " + setting);
+									if (setting.value == null)
+										db.delete(cTableSetting, "uid=? AND type=? AND name=?",
+												new String[] { Integer.toString(setting.uid), setting.type,
+														setting.name });
+									else {
+										// Create record
+										ContentValues values = new ContentValues();
+										values.put("uid", setting.uid);
+										values.put("type", setting.type);
+										values.put("name", setting.name);
+										values.put("value", setting.value);
+
+										// Insert/update record
+										db.insertWithOnConflict(cTableSetting, null, values,
+												SQLiteDatabase.CONFLICT_REPLACE);
+									}
+								}
+
+								db.setVersion(10);
+								db.setTransactionSuccessful();
+							} finally {
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
+							}
+						}
+
 						Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 						mDb = db;
 					} catch (Throwable ex) {
