@@ -1362,9 +1362,9 @@ public class ActivityShare extends ActivityBase {
 
 								// TODO: split files and /proc
 								boolean mWhitelisted = false;
-								if (mRestricted && md.whitelist() != null) {
+								if (md.whitelist() != null) {
 									for (Boolean allowed : mapWhitelist.get(md.whitelist()).values())
-										if (allowed) {
+										if (mRestricted ? allowed : !allowed) {
 											mWhitelisted = true;
 											break;
 										}
