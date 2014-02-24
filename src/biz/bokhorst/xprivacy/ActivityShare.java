@@ -60,7 +60,6 @@ import android.provider.Settings.Secure;
 import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -338,30 +337,6 @@ public class ActivityShare extends ActivityBase {
 				showFileName();
 			}
 		}
-	}
-
-	@Override
-	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-		super.onCreateContextMenu(menu, v, menuInfo);
-		if (v.getId() == R.id.lvShare)
-			menu.addSubMenu(Menu.NONE, R.string.menu_exclude, Menu.NONE, R.string.menu_exclude);
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		if (!mRunning && item.getItemId() == R.string.menu_exclude) {
-			// remove app from list
-			AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-			mAppAdapter.remove(mAppAdapter.getItem(info.position));
-
-			// Check submit limit
-			if (mActionId == R.string.menu_submit && mAppAdapter.getCount() <= cSubmitLimit) {
-				Button btnOk = (Button) findViewById(R.id.btnOk);
-				btnOk.setEnabled(true);
-			}
-			return true;
-		} else
-			return super.onContextItemSelected(item);
 	}
 
 	// State management
