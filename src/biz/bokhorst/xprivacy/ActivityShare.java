@@ -671,16 +671,15 @@ public class ActivityShare extends ActivityBase {
 							List<PSetting> listAppSetting = PrivacyManager.getSettingList(uid);
 							for (PSetting setting : listAppSetting) {
 								// Bind accounts/contacts to same device
-								if (setting.name.startsWith(Meta.cWhitelistAccount)
-										|| setting.name.startsWith(Meta.cWhitelistContact))
+								if (Meta.cTypeAccount.equals(setting.type) || Meta.cTypeContact.equals(setting.type))
 									setting.name += "." + android_id;
 
 								// Serialize setting
 								serializer.startTag(null, "Setting");
 								serializer.attribute(null, "Id", Integer.toString(uid));
+								serializer.attribute(null, "Type", setting.type);
 								serializer.attribute(null, "Name", setting.name);
-								if (setting.value != null)
-									serializer.attribute(null, "Value", setting.value);
+								serializer.attribute(null, "Value", setting.value);
 								serializer.endTag(null, "Setting");
 							}
 
@@ -880,7 +879,7 @@ public class ActivityShare extends ActivityBase {
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 		private Runnable mProgress;
-		private SparseArray<Map<String, String>> mSettings = new SparseArray<Map<String, String>>();
+		private SparseArray<Map<String[], String>> mSettings = new SparseArray<Map<String[], String>>();
 		private List<Integer> mListRestrictionUid = new ArrayList<Integer>();
 		private List<Integer> mListAbortedUid = new ArrayList<Integer>();
 		private SparseArray<List<Boolean>> mListRestartStates = new SparseArray<List<Boolean>>();
@@ -903,11 +902,21 @@ public class ActivityShare extends ActivityBase {
 				} else if (qName.equals("Setting")) {
 					// Setting
 					String id = attributes.getValue("Id");
+					String type = attributes.getValue("Type");
 					String name = attributes.getValue("Name");
 					String value = attributes.getValue("Value");
 
+					if (name.startsWith("Account.") || name.startsWith("Application.") || name.startsWith("Contact.")
+							|| name.startsWith("Whitelist.")) {
+						name = name.replace("Whitelist.", "");
+						int dot = name.indexOf('.');
+						type = name.substring(0, dot);
+						name = name.substring(dot + 1);
+					} else if (type == null)
+						type = "";
+
 					// Import accounts/contacts only for same device
-					if (name.startsWith(Meta.cWhitelistAccount) || name.startsWith(Meta.cWhitelistContact))
+					if (Meta.cTypeAccount.equals(type) || Meta.cTypeContact.equals(type))
 						if (name.endsWith("." + android_id))
 							name = name.replace("." + android_id, "");
 						else
@@ -920,7 +929,7 @@ public class ActivityShare extends ActivityBase {
 					} else if ("".equals(id))
 						// Global setting
 						// TODO: clear global settings
-						PrivacyManager.setSetting(0, name, value);
+						PrivacyManager.setSetting(0, type, name, value);
 					else {
 						// Application setting
 						int iid = Integer.parseInt(id);
@@ -929,13 +938,13 @@ public class ActivityShare extends ActivityBase {
 							if (!mListRestrictionUid.contains(uid)) {
 								// Cache settings
 								if (mSettings.indexOfKey(uid) < 0)
-									mSettings.put(uid, new HashMap<String, String>());
-								mSettings.get(uid).put(name, value);
+									mSettings.put(uid, new HashMap<String[], String>());
+								mSettings.get(uid).put(new String[] { type, name }, value);
 							} else {
 								// This apps cached settings
 								// have already been applied,
 								// so add this one directly
-								PrivacyManager.setSetting(uid, name, value);
+								PrivacyManager.setSetting(uid, type, name, value);
 							}
 						}
 					}
@@ -1032,8 +1041,8 @@ public class ActivityShare extends ActivityBase {
 				// Apply settings
 				PrivacyManager.deleteSettings(lastUid);
 				if (mSettings.indexOfKey(lastUid) >= 0)
-					for (Entry<String, String> entry : mSettings.get(lastUid).entrySet())
-						PrivacyManager.setSetting(lastUid, entry.getKey(), entry.getValue());
+					for (Entry<String[], String> entry : mSettings.get(lastUid).entrySet())
+						PrivacyManager.setSetting(lastUid, entry.getKey()[0], entry.getKey()[1], entry.getValue());
 
 				// Restart notification
 				List<Boolean> oldState = mListRestartStates.get(lastUid);
@@ -1265,8 +1274,8 @@ public class ActivityShare extends ActivityBase {
 						AccountManager accountManager = AccountManager.get(ActivityShare.this);
 						for (Account account : accountManager.getAccounts()) {
 							String sha1 = Util.sha1(account.name + account.type);
-							boolean allowed = PrivacyManager.isWhitelisted(appInfo.getUid(), Meta.cWhitelistAccount,
-									sha1, false);
+							boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(), Meta.cTypeAccount, sha1,
+									false, false);
 							if (allowed) {
 								allowedAccounts = true;
 								break;
@@ -1278,8 +1287,8 @@ public class ActivityShare extends ActivityBase {
 						for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this,
 								null))
 							for (String packageName : aAppInfo.getPackageName()) {
-								boolean allowed = PrivacyManager.isWhitelisted(aAppInfo.getUid(),
-										Meta.cWhitelistApplication, packageName, false);
+								boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
+										Meta.cTypeApplication, packageName, false, false);
 								if (allowed) {
 									allowedApplications = true;
 									break;
@@ -1294,8 +1303,8 @@ public class ActivityShare extends ActivityBase {
 							try {
 								while (cursor.moveToNext()) {
 									long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-									boolean allowed = PrivacyManager.isWhitelisted(appInfo.getUid(),
-											Meta.cWhitelistContact, Long.toString(id), false);
+									boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
+											Meta.cTypeContact, Long.toString(id), false, false);
 									if (allowed) {
 										allowedContacts = true;
 										break;

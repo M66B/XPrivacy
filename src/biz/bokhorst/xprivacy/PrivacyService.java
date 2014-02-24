@@ -590,17 +590,16 @@ public class PrivacyService {
 					// Check whitelist
 					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
 						// TODO: privacy manager is for client side only
-						Boolean value = PrivacyManager.checkWhitelisted(restriction.uid, hook.whitelist(),
-								restriction.extra, true);
+						String value = getSetting(new PSetting(restriction.uid, hook.whitelist(), restriction.extra,
+								null)).value;
 						if (value == null) {
 							String xextra = getXExtra(restriction, hook);
 							if (xextra != null)
-								value = PrivacyManager
-										.checkWhitelisted(restriction.uid, hook.whitelist(), xextra, true);
+								value = getSetting(new PSetting(restriction.uid, hook.whitelist(), xextra, null)).value;
 						}
 						if (value != null) {
 							// true means allow, false means block
-							mresult.restricted = !value;
+							mresult.restricted = !Boolean.parseBoolean(value);
 							mresult.asked = true;
 						}
 					}
@@ -955,7 +954,7 @@ public class PrivacyService {
 					}
 				}
 
-				if (setting.name.startsWith("Whitelist"))
+				if (!"".equals(setting.type))
 					synchronized (mRestrictionCache) {
 						mRestrictionCache.clear();
 					}
@@ -1064,7 +1063,7 @@ public class PrivacyService {
 				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
-					Cursor cursor = db.query(cTableSetting, new String[] { "name", "type", "value" }, "uid=?",
+					Cursor cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=?",
 							new String[] { Integer.toString(uid) }, null, null, null);
 					if (cursor == null)
 						Util.log(null, Log.WARN, "Database cursor null (settings)");
@@ -1517,11 +1516,11 @@ public class PrivacyService {
 
 		private String getXExtra(PRestriction restriction, Hook hook) {
 			if (hook != null)
-				if (hook.whitelist().equals(Meta.cWhitelistFilename)) {
+				if (hook.whitelist().equals(Meta.cTypeFilename)) {
 					String folder = new File(restriction.extra).getParent();
 					if (!TextUtils.isEmpty(folder))
 						return folder + File.separatorChar + "*";
-				} else if (hook.whitelist().equals(Meta.cWhitelistIPAddress)) {
+				} else if (hook.whitelist().equals(Meta.cTypeIPAddress)) {
 					int dot = restriction.extra.indexOf('.');
 					if (dot > 0)
 						return '*' + restriction.extra.substring(dot);

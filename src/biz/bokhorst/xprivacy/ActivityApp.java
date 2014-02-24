@@ -664,8 +664,8 @@ public class ActivityApp extends ActivityBase {
 				try {
 					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
 					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
-					mSelection[i] = PrivacyManager
-							.isWhitelisted(mAppInfo.getUid(), Meta.cWhitelistAccount, sha1, false);
+					mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeAccount, sha1, false,
+							false);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
@@ -685,8 +685,8 @@ public class ActivityApp extends ActivityBase {
 								try {
 									Account account = mAccounts[whichButton];
 									String sha1 = Util.sha1(account.name + account.type);
-									PrivacyManager.setWhitelisted(mAppInfo.getUid(), Meta.cWhitelistAccount, sha1,
-											isChecked);
+									PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeAccount, sha1,
+											Boolean.toString(isChecked));
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
 									Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
@@ -738,8 +738,8 @@ public class ActivityApp extends ActivityBase {
 						String pkgName = appInfo.getPackageName().get(p);
 						mApp[i] = String.format("%s (%s)", appName, pkgName);
 						mPackage[i] = pkgName;
-						mSelection[i] = PrivacyManager.isWhitelisted(mAppInfo.getUid(), Meta.cWhitelistApplication,
-								pkgName, false);
+						mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeApplication,
+								pkgName, false, false);
 						i++;
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
@@ -758,8 +758,8 @@ public class ActivityApp extends ActivityBase {
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 								try {
-									PrivacyManager.setWhitelisted(mAppInfo.getUid(), Meta.cWhitelistApplication,
-											mPackage[whichButton], isChecked);
+									PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeApplication,
+											mPackage[whichButton], Boolean.toString(isChecked));
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
 									Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
@@ -816,8 +816,8 @@ public class ActivityApp extends ActivityBase {
 			for (Long id : mapContact.keySet()) {
 				mListContact.add(mapContact.get(id));
 				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.isWhitelisted(mAppInfo.getUid(), Meta.cWhitelistContact,
-						Long.toString(id), false);
+				mSelection[i++] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeContact,
+						Long.toString(id), false, false);
 			}
 			return null;
 		}
@@ -833,8 +833,8 @@ public class ActivityApp extends ActivityBase {
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 								// Contact
-								PrivacyManager.setWhitelisted(mAppInfo.getUid(), Meta.cWhitelistContact,
-										Long.toString(mIds[whichButton]), isChecked);
+								PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeContact,
+										Long.toString(mIds[whichButton]), Boolean.toString(isChecked));
 							}
 						});
 				alertDialogBuilder.setPositiveButton(getString(R.string.msg_done),
@@ -884,9 +884,12 @@ public class ActivityApp extends ActivityBase {
 					// TODO: sort localized whitelist types
 					final List<String> localizedType = new ArrayList<String>();
 					for (String type : mListWhitelist.keySet()) {
-						String name = type.toLowerCase().replace(".", "_").replace("/", "");
+						String name = "whitelist_" + type.toLowerCase().replace("/", "");
 						int id = getResources().getIdentifier(name, "string", ActivityApp.this.getPackageName());
-						localizedType.add(getResources().getString(id));
+						if (id == 0)
+							localizedType.add(name);
+						else
+							localizedType.add(getResources().getString(id));
 					}
 
 					Spinner spWhitelistType = (Spinner) llWhitelists.findViewById(R.id.spWhitelistType);
@@ -983,8 +986,8 @@ public class ActivityApp extends ActivityBase {
 					// Black/whitelist it
 					boolean isChecked = holder.ctvName.isChecked();
 					holder.ctvName.toggle();
-					PrivacyManager.setWhitelisted(mAppInfo.getUid(), mSelectedType,
-							WhitelistAdapter.this.getItem(position), !isChecked);
+					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType,
+							WhitelistAdapter.this.getItem(position), Boolean.toString(!isChecked));
 				}
 			});
 			holder.imgDelete.setOnClickListener(new OnClickListener() {
@@ -992,7 +995,7 @@ public class ActivityApp extends ActivityBase {
 				public void onClick(View view) {
 					// delete/disable it
 					String name = WhitelistAdapter.this.getItem(position);
-					PrivacyManager.setWhitelisted(mAppInfo.getUid(), mSelectedType, name, null);
+					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, null);
 					// Remove from list
 					WhitelistAdapter.this.remove(name);
 					mMapWhitelists.get(mSelectedType).remove(name);

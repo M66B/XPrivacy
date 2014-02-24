@@ -448,50 +448,18 @@ public class PrivacyManager {
 	}
 
 	// White listing
-
-	public static boolean isWhitelisted(int uid, String type, String name, boolean useCache) {
-
-		// For hooks
-		return PrivacyManager.getSettingBool(uid, type + "." + name, false, useCache);
-	}
-
-	public static Boolean checkWhitelisted(int uid, String type, String name, boolean useCache) {
-		String value = PrivacyManager.getSetting(uid, type + "." + name, null, useCache);
-		Boolean result = null;
-		if (value != null)
-			result = Boolean.parseBoolean(value);
-		return result;
-	}
-
-	public static void setWhitelisted(int uid, String type, String name, Boolean whitelist) {
-		checkCaller();
-
-		// whitelist = true means to whitelist, false means to blacklist
-		String value = null;
-		if (whitelist != null)
-			value = Boolean.toString(whitelist);
-		PrivacyManager.setSetting(uid, type + "." + name, value);
-	}
+	// TODO: add specialized get to privacy service
 
 	public static Map<String, TreeMap<String, Boolean>> listWhitelisted(int uid) {
 		checkCaller();
 
 		Map<String, TreeMap<String, Boolean>> mapWhitelisted = new HashMap<String, TreeMap<String, Boolean>>();
-		for (PSetting setting : getSettingList(uid)) {
-			// Grok the setting to see if it fits the bill
-			if (setting.name.startsWith("Whitelist")) {
-				String[] components = setting.name.split("\\.");
-				if (components.length < 3)
-					continue;
-				String type = components[0] + "." + components[1];
-				String name = setting.name.replace(components[0] + "." + components[1] + ".", "");
-
-				// If we get here, add it to the list
-				if (!mapWhitelisted.containsKey(type))
-					mapWhitelisted.put(type, new TreeMap<String, Boolean>());
-				mapWhitelisted.get(type).put(name, Boolean.parseBoolean(setting.value));
+		for (PSetting setting : getSettingList(uid))
+			if (Meta.isWhitelist(setting.type)) {
+				if (!mapWhitelisted.containsKey(setting.type))
+					mapWhitelisted.put(setting.type, new TreeMap<String, Boolean>());
+				mapWhitelisted.get(setting.type).put(setting.name, Boolean.parseBoolean(setting.value));
 			}
-		}
 		return mapWhitelisted;
 	}
 
@@ -500,8 +468,8 @@ public class PrivacyManager {
 
 		if (uid > 0)
 			for (PSetting setting : getSettingList(uid))
-				if (setting.name.startsWith("Whitelist"))
-					setSetting(uid, setting.name, null);
+				if (Meta.isWhitelist(setting.type))
+					setSetting(uid, setting.type, setting.name, null);
 	}
 
 	// Usage
@@ -563,6 +531,10 @@ public class PrivacyManager {
 
 	public static boolean getSettingBool(int uid, String name, boolean defaultValue, boolean useCache) {
 		return Boolean.parseBoolean(getSetting(uid, name, Boolean.toString(defaultValue), useCache));
+	}
+
+	public static boolean getSettingBool(int uid, String type, String name, boolean defaultValue, boolean useCache) {
+		return Boolean.parseBoolean(getSetting(uid, type, name, Boolean.toString(defaultValue), useCache));
 	}
 
 	public static String getSetting(int uid, String name, String defaultValue, boolean useCache) {
