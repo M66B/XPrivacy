@@ -132,7 +132,8 @@ public class UpdateService extends Service {
 			Util.log(null, Log.WARN, "Nothing to migrate");
 
 		// Complete migration
-		PrivacyService.getClient().setSetting(new PSetting(0, PrivacyManager.cSettingMigrated, Boolean.toString(true)));
+		PrivacyService.getClient().setSetting(
+				new PSetting(0, "", PrivacyManager.cSettingMigrated, Boolean.toString(true)));
 	}
 
 	private static void upgrade(Context context) throws NameNotFoundException {
@@ -195,20 +196,21 @@ public class UpdateService extends Service {
 	private static List<PSetting> getRandomizeWork(Context context, int uid) {
 		List<PSetting> listWork = new ArrayList<PSetting>();
 		if (PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false, true)) {
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingAltitude, PrivacyManager.getRandomProp("ALT")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingSerial, PrivacyManager.getRandomProp("SERIAL")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingId, PrivacyManager.getRandomProp("ANDROID_ID")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingGsfId, PrivacyManager.getRandomProp("GSF_ID")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingAdId, PrivacyManager.getRandomProp("AdvertisingId")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingCountry, PrivacyManager.getRandomProp("ISO3166")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingSubscriber, PrivacyManager
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAltitude, PrivacyManager.getRandomProp("ALT")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, PrivacyManager.getRandomProp("SERIAL")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, PrivacyManager.getRandomProp("ANDROID_ID")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingGsfId, PrivacyManager.getRandomProp("GSF_ID")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAdId, PrivacyManager
+					.getRandomProp("AdvertisingId")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingCountry, PrivacyManager.getRandomProp("ISO3166")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, PrivacyManager
 					.getRandomProp("SubscriberId")));
-			listWork.add(new PSetting(uid, PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
+			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
 		}
 		return listWork;
 	}

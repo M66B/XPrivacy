@@ -566,13 +566,17 @@ public class PrivacyManager {
 	}
 
 	public static String getSetting(int uid, String name, String defaultValue, boolean useCache) {
+		return getSetting(uid, "", name, defaultValue, useCache);
+	}
+
+	public static String getSetting(int uid, String type, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();
 		String value = null;
 
 		// Check cache
 		boolean cached = false;
 		boolean willExpire = false;
-		CSetting key = new CSetting(uid, name);
+		CSetting key = new CSetting(uid, type, name);
 		if (useCache)
 			synchronized (mSettingsCache) {
 				if (mSettingsCache.containsKey(key)) {
@@ -588,10 +592,10 @@ public class PrivacyManager {
 		// Get settings
 		if (!cached)
 			try {
-				value = PrivacyService.getSetting(new PSetting(Math.abs(uid), name, null)).value;
+				value = PrivacyService.getSetting(new PSetting(Math.abs(uid), type, name, null)).value;
 				if (value == null)
 					if (uid > 0)
-						value = PrivacyService.getSetting(new PSetting(0, name, defaultValue)).value;
+						value = PrivacyService.getSetting(new PSetting(0, type, name, defaultValue)).value;
 					else
 						value = defaultValue;
 
@@ -608,21 +612,21 @@ public class PrivacyManager {
 
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
-			if (ms > 1)
-				Util.log(null, Log.INFO, String.format("get setting uid=%d %s=%s%s %d ms", uid, name, value,
-						(cached ? " (cached)" : ""), ms));
-			else
-				Util.log(null, Log.INFO,
-						String.format("get setting uid=%d %s=%s%s", uid, name, value, (cached ? " (cached)" : "")));
+			Util.log(null, Log.INFO, String.format("get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value,
+					(cached ? " (cached)" : ""), ms));
 
 		return value;
 	}
 
 	public static void setSetting(int uid, String name, String value) {
+		setSetting(uid, "", name, value);
+	}
+
+	public static void setSetting(int uid, String type, String name, String value) {
 		checkCaller();
 
 		try {
-			PrivacyService.getClient().setSetting(new PSetting(uid, name, value));
+			PrivacyService.getClient().setSetting(new PSetting(uid, type, name, value));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}

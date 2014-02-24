@@ -731,7 +731,7 @@ public class PrivacyProvider extends ContentProvider {
 				try {
 					String value = prefs.getString(name, null);
 					if (value != null && !"".equals(value))
-						listWork.add(new PSetting(uid, name, value));
+						listWork.add(new PSetting(uid, "", name, value));
 				} catch (Throwable ex) {
 					// Legacy boolean
 					Util.bug(null, ex);

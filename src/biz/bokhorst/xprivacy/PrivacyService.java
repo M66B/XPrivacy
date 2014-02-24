@@ -920,12 +920,13 @@ public class PrivacyService {
 				db.beginTransaction();
 				try {
 					if (setting.value == null)
-						db.delete(cTableSetting, "uid=? AND name=?", new String[] { Integer.toString(setting.uid),
-								setting.name });
+						db.delete(cTableSetting, "uid=? AND type=? AND name=?",
+								new String[] { Integer.toString(setting.uid), setting.type, setting.name });
 					else {
 						// Create record
 						ContentValues values = new ContentValues();
 						values.put("uid", setting.uid);
+						values.put("type", setting.type);
 						values.put("name", setting.name);
 						values.put("value", setting.value);
 
@@ -944,7 +945,7 @@ public class PrivacyService {
 
 				// Update cache
 				if (mUseCache) {
-					CSetting key = new CSetting(setting.uid, setting.name);
+					CSetting key = new CSetting(setting.uid, setting.type, setting.name);
 					key.setValue(setting.value);
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key))
@@ -974,13 +975,13 @@ public class PrivacyService {
 		@Override
 		@SuppressLint("DefaultLocale")
 		public PSetting getSetting(PSetting setting) throws RemoteException {
-			PSetting result = new PSetting(setting.uid, setting.name, setting.value);
+			PSetting result = new PSetting(setting.uid, setting.type, setting.name, setting.value);
 			try {
 				// No permissions enforced
 
 				// Check cache
 				if (mUseCache && setting.value != null) {
-					CSetting key = new CSetting(setting.uid, setting.name);
+					CSetting key = new CSetting(setting.uid, setting.type, setting.name);
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key)) {
 							result.value = mSettingCache.get(key).getValue();
@@ -1006,7 +1007,7 @@ public class PrivacyService {
 
 				// Precompile statement when needed
 				if (stmtGetSetting == null) {
-					String sql = "SELECT value FROM " + cTableSetting + " WHERE uid=? AND name=?";
+					String sql = "SELECT value FROM " + cTableSetting + " WHERE uid=? AND type=? AND name=?";
 					stmtGetSetting = db.compileStatement(sql);
 				}
 
@@ -1018,7 +1019,8 @@ public class PrivacyService {
 						synchronized (stmtGetSetting) {
 							stmtGetSetting.clearBindings();
 							stmtGetSetting.bindLong(1, setting.uid);
-							stmtGetSetting.bindString(2, setting.name);
+							stmtGetSetting.bindString(2, setting.type);
+							stmtGetSetting.bindString(3, setting.name);
 							String value = stmtGetSetting.simpleQueryForString();
 							if (value != null)
 								result.value = value;
@@ -1037,7 +1039,7 @@ public class PrivacyService {
 
 				// Add to cache
 				if (mUseCache && result.value != null) {
-					CSetting key = new CSetting(setting.uid, setting.name);
+					CSetting key = new CSetting(setting.uid, setting.type, setting.name);
 					key.setValue(result.value);
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key))
@@ -1061,14 +1063,15 @@ public class PrivacyService {
 				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
-					Cursor cursor = db.query(cTableSetting, new String[] { "name", "value" }, "uid=?",
+					Cursor cursor = db.query(cTableSetting, new String[] { "name", "type", "value" }, "uid=?",
 							new String[] { Integer.toString(uid) }, null, null, null);
 					if (cursor == null)
 						Util.log(null, Log.WARN, "Database cursor null (settings)");
 					else
 						try {
 							while (cursor.moveToNext())
-								listSetting.add(new PSetting(uid, cursor.getString(0), cursor.getString(1)));
+								listSetting.add(new PSetting(uid, cursor.getString(0), cursor.getString(1), cursor
+										.getString(2)));
 						} finally {
 							cursor.close();
 						}
@@ -1137,6 +1140,7 @@ public class PrivacyService {
 					// Reset migrated
 					ContentValues values = new ContentValues();
 					values.put("uid", 0);
+					values.put("type", "");
 					values.put("name", PrivacyManager.cSettingMigrated);
 					values.put("value", Boolean.toString(true));
 					db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -1281,11 +1285,12 @@ public class PrivacyService {
 							}
 						}
 						if (restriction.extra != null && hook != null && hook.whitelist() != null) {
-							CSetting skey = new CSetting(restriction.uid, hook.whitelist() + "." + restriction.extra);
+							CSetting skey = new CSetting(restriction.uid, "", hook.whitelist() + "."
+									+ restriction.extra);
 							CSetting xkey = null;
 							String xextra = getXExtra(restriction, hook);
 							if (xextra != null)
-								xkey = new CSetting(restriction.uid, hook.whitelist() + "." + xextra);
+								xkey = new CSetting(restriction.uid, "", hook.whitelist() + "." + xextra);
 							synchronized (mSettingCache) {
 								if (mSettingCache.containsKey(skey)
 										|| (xkey != null && mSettingCache.containsKey(xkey))) {
@@ -1529,7 +1534,7 @@ public class PrivacyService {
 				// Set the whitelist
 				Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction
 						+ " xextra=" + xextra);
-				setSettingInternal(new PSetting(restriction.uid, hook.whitelist() + "."
+				setSettingInternal(new PSetting(restriction.uid, "", hook.whitelist() + "."
 						+ (xextra == null ? restriction.extra : xextra), Boolean.toString(!result.restricted)));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -1589,11 +1594,11 @@ public class PrivacyService {
 				}
 
 				// Mark state as changed
-				setSettingInternal(new PSetting(restriction.uid, PrivacyManager.cSettingState,
+				setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingState,
 						Integer.toString(ActivityMain.STATE_CHANGED)));
 
 				// Update modification time
-				setSettingInternal(new PSetting(restriction.uid, PrivacyManager.cSettingModifyTime,
+				setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingModifyTime,
 						Long.toString(System.currentTimeMillis())));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -1629,7 +1634,11 @@ public class PrivacyService {
 		}
 
 		private boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {
-			String value = getSetting(new PSetting(uid, name, Boolean.toString(defaultValue))).value;
+			return getSettingBool(uid, "", name, defaultValue);
+		}
+
+		private boolean getSettingBool(int uid, String type, String name, boolean defaultValue) throws RemoteException {
+			String value = getSetting(new PSetting(uid, type, name, Boolean.toString(defaultValue))).value;
 			return Boolean.parseBoolean(value);
 		}
 
@@ -1728,6 +1737,7 @@ public class PrivacyService {
 							try {
 								ContentValues values = new ContentValues();
 								values.put("uid", 0);
+								values.put("type", "");
 								values.put("name", PrivacyManager.cSettingMigrated);
 								values.put("value", Boolean.toString(true));
 								db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -1875,6 +1885,24 @@ public class PrivacyService {
 							try {
 								db.execSQL("DROP TABLE usage");
 								db.setVersion(9);
+								db.setTransactionSuccessful();
+							} finally {
+								try {
+									db.endTransaction();
+								} finally {
+									mLock.writeLock().unlock();
+								}
+							}
+						}
+
+						if (db.needUpgrade(10)) {
+							mLock.writeLock().lock();
+							db.beginTransaction();
+							try {
+								db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT NOT NULL");
+								db.execSQL("DROP INDEX idx_setting");
+								db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, type, name)");
+								db.setVersion(10);
 								db.setTransactionSuccessful();
 							} finally {
 								try {
