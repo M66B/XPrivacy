@@ -1597,7 +1597,7 @@ public class ActivityShare extends ActivityBase {
 
 		@Override
 		protected void onPostExecute(Throwable result) {
-			if (mContext != null) {
+			if (!mContext.isFinishing()) {
 				String message;
 				if (result == null)
 					message = mContext.getString(R.string.msg_registered);
