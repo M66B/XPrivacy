@@ -329,7 +329,11 @@ public class PrivacyManager {
 
 		// Create list of restrictions set set
 		List<PRestriction> listRestriction = new ArrayList<PRestriction>();
-		listRestriction.add(new PRestriction(uid, restrictionName, methodName, restricted, asked));
+		if (restrictionName == null)
+			for (String rRestrictionName : PrivacyManager.getRestrictions())
+				listRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
+		else
+			listRestriction.add(new PRestriction(uid, restrictionName, methodName, restricted, asked));
 
 		// Make exceptions for dangerous methods
 		if (methodName == null)
