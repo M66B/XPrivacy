@@ -976,6 +976,7 @@ public class PrivacyService {
 		@SuppressLint("DefaultLocale")
 		public PSetting getSetting(PSetting setting) throws RemoteException {
 			PSetting result = new PSetting(setting.uid, setting.type, setting.name, setting.value);
+
 			try {
 				// No permissions enforced
 
@@ -1737,7 +1738,8 @@ public class PrivacyService {
 							try {
 								ContentValues values = new ContentValues();
 								values.put("uid", 0);
-								values.put("type", "");
+								if (db.getVersion() > 9)
+									values.put("type", "");
 								values.put("name", PrivacyManager.cSettingMigrated);
 								values.put("value", Boolean.toString(true));
 								db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
@@ -1899,7 +1901,7 @@ public class PrivacyService {
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
-								db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT NOT NULL");
+								db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT NOT NULL DEFAULT ''");
 								db.execSQL("DROP INDEX idx_setting");
 								db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, type, name)");
 								db.setVersion(10);
