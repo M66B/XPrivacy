@@ -1869,7 +1869,7 @@ public class PrivacyService {
 							}
 						}
 
-						if (db.needUpgrade(8)) {
+						if (db.needUpgrade(9)) {
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
