@@ -2,6 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 public class PSetting implements Parcelable {
 	public int uid;
@@ -24,6 +25,10 @@ public class PSetting implements Parcelable {
 		type = _type;
 		name = _name;
 		value = _value;
+		if (type == null) {
+			Util.log(null, Log.WARN, "PSetting null");
+			Util.logStack(null, Log.WARN);
+		}
 	}
 
 	public static final Parcelable.Creator<PSetting> CREATOR = new Parcelable.Creator<PSetting>() {

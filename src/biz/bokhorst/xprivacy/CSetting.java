@@ -2,6 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.util.Date;
 
+import android.util.Log;
+
 public class CSetting {
 	private long mTimestamp;
 	private int mUid;
@@ -15,6 +17,10 @@ public class CSetting {
 		mType = type;
 		mName = name;
 		mValue = null;
+		if (type == null) {
+			Util.log(null, Log.WARN, "CSetting null");
+			Util.logStack(null, Log.WARN);
+		}
 	}
 
 	public void setValue(String value) {

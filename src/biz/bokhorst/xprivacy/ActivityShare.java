@@ -61,17 +61,15 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.util.Xml;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -169,7 +167,7 @@ public class ActivityShare extends ActivityBase {
 
 		// Reference controls
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-		RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
+		final RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
 		final CheckBox cbClear = (CheckBox) findViewById(R.id.cbClear);
 		ListView lvShare = (ListView) findViewById(R.id.lvShare);
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
@@ -264,6 +262,8 @@ public class ActivityShare extends ActivityBase {
 					// Toggle
 					if (action.equals(ACTION_TOGGLE)) {
 						mRunning = true;
+						for (int i = 0; i < rgToggle.getChildCount(); i++)
+							((RadioButton) rgToggle.getChildAt(i)).setEnabled(false);
 						new ToggleTask().executeOnExecutor(mExecutor, restrictionName);
 					}
 
@@ -283,6 +283,7 @@ public class ActivityShare extends ActivityBase {
 					else if (action.equals(ACTION_FETCH)) {
 						if (uids.length > 0) {
 							mRunning = true;
+							cbClear.setEnabled(false);
 							new FetchTask().executeOnExecutor(mExecutor, cbClear.isChecked());
 						}
 					}
