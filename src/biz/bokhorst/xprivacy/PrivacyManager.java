@@ -327,22 +327,27 @@ public class PrivacyManager {
 			return;
 		}
 
-		// Create list of restrictions set set
-		List<PRestriction> listRestriction = new ArrayList<PRestriction>();
+		// Build list of restrictions
+		List<String> listRestriction = new ArrayList<String>();
 		if (restrictionName == null)
-			for (String rRestrictionName : PrivacyManager.getRestrictions())
-				listRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
+			listRestriction.addAll(PrivacyManager.getRestrictions());
 		else
-			listRestriction.add(new PRestriction(uid, restrictionName, methodName, restricted, asked));
+			listRestriction.add(restrictionName);
+
+		// Create list of restrictions set set
+		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
+		for (String rRestrictionName : listRestriction)
+			listPRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
 
 		// Make exceptions for dangerous methods
 		if (methodName == null)
 			if (!getSettingBool(0, cSettingDangerous, false, false))
-				for (Hook md : getHooks(restrictionName))
-					if (md.isDangerous())
-						listRestriction.add(new PRestriction(uid, restrictionName, md.getName(), false, true));
+				for (String rRestrictionName : listRestriction)
+					for (Hook md : getHooks(rRestrictionName))
+						if (md.isDangerous())
+							listPRestriction.add(new PRestriction(uid, restrictionName, md.getName(), false, true));
 
-		setRestrictionList(listRestriction);
+		setRestrictionList(listPRestriction);
 
 		// Mark state as changed
 		setSetting(uid, cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));

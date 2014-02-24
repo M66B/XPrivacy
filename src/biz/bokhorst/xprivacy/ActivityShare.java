@@ -615,7 +615,7 @@ public class ActivityShare extends ActivityBase {
 
 					setState(uid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 				} catch (Throwable ex) {
-					setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+					setState(uid, STATE_FAILURE, ex.getMessage());
 					return ex;
 				}
 
@@ -741,7 +741,7 @@ public class ActivityShare extends ActivityBase {
 
 							setState(uid, STATE_SUCCESS, null);
 						} catch (Throwable ex) {
-							setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+							setState(uid, STATE_FAILURE, ex.getMessage());
 							throw ex;
 						}
 					// End serialization
@@ -869,7 +869,7 @@ public class ActivityShare extends ActivityBase {
 						}
 					} catch (Throwable ex) {
 						if (uid > 0)
-							setState(uid, STATE_FAILURE, ex.getLocalizedMessage());
+							setState(uid, STATE_FAILURE, ex.getMessage());
 						Util.log(null, Log.WARN, "Not found package=" + packageName);
 					}
 				}
@@ -1231,7 +1231,7 @@ public class ActivityShare extends ActivityBase {
 									int errno = status.getInt("errno");
 									String message = status.getString("error");
 									ServerException ex = new ServerException(ActivityShare.this, errno, message);
-									setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+									setState(appInfo.getUid(), STATE_FAILURE, ex.getMessage());
 								}
 							} else {
 								// Failed
@@ -1240,7 +1240,7 @@ public class ActivityShare extends ActivityBase {
 							}
 						}
 					} catch (Throwable ex) {
-						setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+						setState(appInfo.getUid(), STATE_FAILURE, ex.getMessage());
 						throw ex;
 					}
 				return null;
@@ -1458,7 +1458,7 @@ public class ActivityShare extends ActivityBase {
 											Boolean.toString(false));
 									throw ex;
 								} else
-									setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+									setState(appInfo.getUid(), STATE_FAILURE, ex.getMessage());
 							}
 						} else {
 							// Failed
@@ -1466,7 +1466,7 @@ public class ActivityShare extends ActivityBase {
 							throw new IOException(statusLine.getReasonPhrase());
 						}
 					} catch (Throwable ex) {
-						setState(appInfo.getUid(), STATE_FAILURE, ex.getLocalizedMessage());
+						setState(appInfo.getUid(), STATE_FAILURE, ex.getMessage());
 						throw ex;
 					}
 				return null;
@@ -1602,7 +1602,7 @@ public class ActivityShare extends ActivityBase {
 				if (result == null)
 					message = mContext.getString(R.string.msg_registered);
 				else
-					message = result.getLocalizedMessage();
+					message = result.getMessage();
 
 				// Build dialog
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(mContext);
@@ -1645,7 +1645,7 @@ public class ActivityShare extends ActivityBase {
 	private void done(Throwable ex) {
 		String result = null;
 		if (ex != null && !(ex instanceof AbortException))
-			result = ex.getLocalizedMessage();
+			result = ex.getMessage();
 
 		// Check result string and display toast with error
 		if (result != null)
@@ -1740,10 +1740,10 @@ public class ActivityShare extends ActivityBase {
 
 		@Override
 		@SuppressLint("DefaultLocale")
-		public String getLocalizedMessage() {
+		public String getMessage() {
 			if (mErrorNo == cErrorNoRestrictions && mContext != null)
 				return mContext.getString(R.string.msg_no_restrictions);
-			return String.format("Error %d: %s", mErrorNo, super.getLocalizedMessage());
+			return String.format("Error %d: %s", mErrorNo, super.getMessage());
 			// general:
 			// 'errno' => 101, 'error' => 'Empty request'
 			// 'errno' => 102, 'error' => 'Please upgrade to at least ...'
