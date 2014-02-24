@@ -3,12 +3,12 @@
     <string name="app_notxposed" formatted="false">尚未安裝 Xposed framework 版本 %d+ </string>
     <string name="app_notenabled">尚未於 Xposed installer 啟用 XPrivacy</string>
     <string name="app_wrongandroid">僅支援版本 Android 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">%s 與XPrivacy不相容</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_description">超強隱私管理工具，絕讚好評發售中!!</string>
     <string name="app_xversion" formatted="false">Xposed framework 版本: %d</string>
     <string name="app_copyright">版權所有 \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_licensed">授權成功，感謝您贊助 XPrivacy!!</string>
     <string name="menu_usage">操作記錄</string>
     <string name="menu_refresh">重新整理</string>
     <string name="menu_settings">設定</string>
@@ -27,7 +27,7 @@
     <string name="menu_filter">篩選</string>
     <string name="menu_all">所有程式</string>
     <string name="menu_toggle">套用預設規則</string>
-    <string name="menu_clear_all">清除全部</string>
+    <string name="menu_clear_all">清空</string>
     <string name="menu_restrict_all">限制全部</string>
     <string name="menu_clear_usage">清除記錄</string>
     <string name="menu_clear_db">清除所有資料</string>
@@ -97,11 +97,11 @@
     <string name="restrict_shell">Shell (指令, ROOT指令)</string>
     <string name="restrict_system">系統資訊 (程式, 服務, etc)</string>
     <string name="restrict_view">瀏覽器介面</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
-    <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
-    <string name="whitelist_url">URLs</string>
+    <string name="whitelist_ipaddress">IP 位址</string>
+    <string name="whitelist_library">原生資料庫元件</string>
+    <string name="whitelist_filename">檔案名稱</string>
+    <string name="whitelist_command">Shell 指令</string>
+    <string name="whitelist_url">網址</string>
     <string name="title_restrict">限制項目:</string>
     <string name="title_check_whitelist">Check to allow</string>
     <string name="title_fused">程式曾取得過資訊</string>
@@ -128,8 +128,8 @@
     <string name="title_allow">允許</string>
     <string name="title_deny">封鎖</string>
     <string name="title_pleasesubmit">稍後請上傳您的設定到社群網路利人利己 :)</string>
-    <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_permissions">權限</string>
+    <string name="title_set_restrict">限制</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>
@@ -173,9 +173,9 @@
     <string name="tutorial_mainheader">選擇要限制的權限分類</string>
     <string name="tutorial_mainlist">點選勾選框可封鎖APP使無法取得敏感資訊或功能權限\n
      \n當特定資訊被封鎖時，該APP會接收到假資料或空白資料\n
-     \n點選APP圖示可針對該APP做細部規則設定</string>
+     \n點選APP圖示可針對該APP設定細部規則</string>
     <string name="tutorial_detailsheader">點選APP圖示顯示進階動作選單</string>
-    <string name="tutorial_detailslist">點選﹀符號可編輯更細部的權限設定</string>
+    <string name="tutorial_detailslist">點選﹀符號可編輯細部權限設定</string>
     <string name="permission_manage">管理/強制停止app</string>
 
 </resources>
