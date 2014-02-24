@@ -20,6 +20,7 @@ Changelog
 * Submit functions with a white/blacklist as having an exception ([issue](/../../issues/1438))
 * Updated Dutch translation
 * Updated Italian translation
+* Updated Traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
