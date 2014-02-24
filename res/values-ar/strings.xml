@@ -8,7 +8,7 @@
     <string name="app_description">مدير الخصوصية الرئيسي</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
     <string name="app_copyright">حقوق الطبع \u00A9 2013–2014 ل M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_licensed">License found, thanks for your support!</string>
     <string name="menu_usage">الإستخدام</string>
     <string name="menu_refresh">إنعاش</string>
     <string name="menu_settings">الإعدادات</string>
