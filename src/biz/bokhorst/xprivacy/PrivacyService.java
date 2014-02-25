@@ -1781,11 +1781,11 @@ public class PrivacyService {
 
 						// Upgrade database if needed
 						if (db.needUpgrade(1)) {
+							Util.log(null, Log.WARN, "Creating database");
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
 								// http://www.sqlite.org/lang_createtable.html
-								Util.log(null, Log.WARN, "Creating database");
 								db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
 								db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
 								db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
@@ -1804,11 +1804,14 @@ public class PrivacyService {
 
 						}
 
-						if (db.needUpgrade(2))
+						if (db.needUpgrade(2)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							// Old migrated indication
 							db.setVersion(2);
+						}
 
 						if (db.needUpgrade(3)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1825,6 +1828,7 @@ public class PrivacyService {
 						}
 
 						if (db.needUpgrade(4)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1841,6 +1845,7 @@ public class PrivacyService {
 						}
 
 						if (db.needUpgrade(5)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1858,6 +1863,7 @@ public class PrivacyService {
 						}
 
 						if (db.needUpgrade(6)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1874,6 +1880,7 @@ public class PrivacyService {
 						}
 
 						if (db.needUpgrade(7)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1890,6 +1897,7 @@ public class PrivacyService {
 						}
 
 						if (db.needUpgrade(8)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1907,6 +1915,7 @@ public class PrivacyService {
 						}
 
 						if (db.needUpgrade(9)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1923,6 +1932,7 @@ public class PrivacyService {
 						}
 
 						if (db.needUpgrade(10)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1941,6 +1951,7 @@ public class PrivacyService {
 						}
 
 						if (db.needUpgrade(11)) {
+							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
@@ -1992,7 +2003,7 @@ public class PrivacyService {
 									}
 								}
 
-								db.setVersion(10);
+								db.setVersion(11);
 								db.setTransactionSuccessful();
 							} finally {
 								try {
@@ -2041,10 +2052,10 @@ public class PrivacyService {
 
 						// Upgrade database if needed
 						if (dbUsage.needUpgrade(1)) {
+							Util.log(null, Log.WARN, "Creating usage database");
 							mLockUsage.writeLock().lock();
 							dbUsage.beginTransaction();
 							try {
-								Util.log(null, Log.WARN, "Creating usage database");
 								dbUsage.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, extra TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
 								dbUsage.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method, extra)");
 								dbUsage.setVersion(1);
