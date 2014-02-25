@@ -1128,7 +1128,7 @@ public class PrivacyService {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDb();
-				SQLiteDatabase dbUsage = getDb();
+				SQLiteDatabase dbUsage = getDbUsage();
 
 				mLock.writeLock().lock();
 				db.beginTransaction();
@@ -1154,6 +1154,17 @@ public class PrivacyService {
 					}
 				}
 
+				// Clear caches
+				if (mUseCache) {
+					synchronized (mRestrictionCache) {
+						mRestrictionCache.clear();
+					}
+					synchronized (mSettingCache) {
+						mSettingCache.clear();
+					}
+					Util.log(null, Log.WARN, "Cache cleared");
+				}
+
 				mLockUsage.writeLock().lock();
 				dbUsage.beginTransaction();
 				try {
@@ -1169,16 +1180,6 @@ public class PrivacyService {
 					}
 				}
 
-				// Clear caches
-				if (mUseCache) {
-					synchronized (mRestrictionCache) {
-						mRestrictionCache.clear();
-					}
-					synchronized (mSettingCache) {
-						mSettingCache.clear();
-					}
-					Util.log(null, Log.WARN, "Cache cleared");
-				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
