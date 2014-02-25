@@ -1333,7 +1333,6 @@ public class ActivityShare extends ActivityBase {
 												md.getName()).restricted;
 								long mUsed = PrivacyManager.getUsage(appInfo.getUid(), restrictionName, md.getName());
 
-								// TODO: split files and /proc
 								boolean mWhitelisted = false;
 								if (md.whitelist() != null) {
 									for (Boolean allowed : mapWhitelist.get(md.whitelist()).values())

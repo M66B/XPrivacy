@@ -23,6 +23,8 @@ Changelog
 * Option to enable/disable usage data parameters (**default disabled**)
 * Removed phone properties restrictions (these are covered by function restrictions too)
 * Fixed on demand restricting asking again ([issue](/../../issues/1447))
+* Separated file name and /proc whitelists
+	* This means you have to whitelist /proc entries again
 * Updated Dutch translation
 * Updated German translation
 * Updated Italian translation

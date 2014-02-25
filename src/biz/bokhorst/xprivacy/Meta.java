@@ -18,11 +18,12 @@ public class Meta {
 	public final static String cTypeFilename = "Filename";
 	public final static String cTypeIPAddress = "IPAddress";
 	public final static String cTypeLibrary = "Library";
+	public final static String cTypeProc = "Proc";
 	public final static String cTypeUrl = "Url";
 
 	public static boolean isWhitelist(String type) {
 		return (cTypeCommand.equals(type) || cTypeFilename.equals(type) || cTypeIPAddress.equals(type)
-				|| cTypeLibrary.equals(type) || cTypeUrl.equals(type));
+				|| cTypeLibrary.equals(type) || cTypeProc.equals(type) || cTypeUrl.equals(type));
 	}
 
 	public static List<Hook> get() {
@@ -85,7 +86,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null));
 		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null));
 		mListHook.add(new Hook("identification", "%cid", "", 1, null, null));
-		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous().whitelist(cTypeProc));
 		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).dangerous());
 		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, null, null));
 		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, null, null));
