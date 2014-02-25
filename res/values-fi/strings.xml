@@ -102,7 +102,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Valitse rajoittaaksesi:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Suodata datan käyttöön</string>
     <string name="title_finternet">Suodata internet yhteyksiin</string>
     <string name="title_fpermission">Suodata käyttöoikeuksiin</string>

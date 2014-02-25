@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">勾选表示限制:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">曾经使用</string>
     <string name="title_finternet">网络权限</string>
     <string name="title_fpermission">含有权限</string>

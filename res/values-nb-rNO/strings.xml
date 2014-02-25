@@ -101,7 +101,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Marker for å blokkere:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filtrer etter databruk</string>
     <string name="title_finternet">Filtrer etter Internett bruk</string>
     <string name="title_fpermission">Filtrer etter tillatelse</string>

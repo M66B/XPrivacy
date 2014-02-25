@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">प्रतिबंधित करने के लिए मार्क करे:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">डेटा उपयोग पर फिल्टर करे</string>
     <string name="title_finternet">इन्टरनेट उपयोग पर फिल्टर करे</string>
     <string name="title_fpermission">अनुमति के द्वारा फिल्टर करे</string>

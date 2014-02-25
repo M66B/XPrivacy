@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">إختر للتقيد:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">التصفية حسب استخدام البيانات</string>
     <string name="title_finternet">التصفية حسب الوصول للإنترنت</string>
     <string name="title_fpermission">التصفية حسب الأُذونات</string>

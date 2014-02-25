@@ -103,7 +103,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Tanda untuk sekat:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Tapis data digunakan</string>
     <string name="title_finternet">Tapis internet diakses</string>
     <string name="title_fpermission">Tapis kebenaran</string>

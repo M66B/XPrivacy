@@ -3,4 +3,4 @@ grep -RIl "\<string name=\"settings_usagedata" res | xargs sed -i -e "/settings_
 \ \ \ \ <string name=\"settings_parameters\">Show parameters of usage data</string>"
 
 #grep -RIl "\<string name=\"title_categories" res | xargs sed -i -e '/title_categories/d'
-#grep -RIl "\<string name=\"title_whitelist" res | xargs sed -i -e 's/">Whitelist /">Remember /g'
+#grep -RIl "\<string name=\"title_check_whitelist" res | xargs sed -i -e 's/Check to allow/Check to allow:/g'

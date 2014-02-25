@@ -103,7 +103,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="whitelist_command">Vykdymo komandos</string>
     <string name="whitelist_url">URL adresai</string>
     <string name="title_restrict">Naudoti ribojimus:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Duomenų naudojimas</string>
     <string name="title_finternet">Interneto prieiga</string>
     <string name="title_fpermission">Aktyvūs leidimai</string>

@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">チェックで制限:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">データ使用有りを表示</string>
     <string name="title_finternet">ネットアクセス有りを表示</string>
     <string name="title_fpermission">権限有りを表示</string>

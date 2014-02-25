@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Lagyan ng Check para pahigpitan:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Bigyan ng Filter at ipakita lamang sa mga Kaalaman na Nagamit</string>
     <string name="title_finternet">Bigyan ng Filter at ipakita lamang sa Pagdaan ng Internet</string>
     <string name="title_fpermission">Bigyan ng Filter at ipakita lamang sa mga may Pahintulot</string>

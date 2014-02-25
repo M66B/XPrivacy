@@ -101,7 +101,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Activa per a restringir:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filtra per ús de dades</string>
     <string name="title_finternet">Filtra per accés a Internet</string>
     <string name="title_fpermission">Filtra per permís</string>

@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filtriraj po uporabi podatkov</string>
     <string name="title_finternet">Filtriraj po internetnem dostopu</string>
     <string name="title_fpermission">Filtriraj po pravicah</string>
