@@ -22,6 +22,7 @@ Changelog
 * Import/export one application will not import/export global settings
 * Option to enable/disable usage data parameters (**default disabled**)
 * Removed phone properties restrictions (these are covered by function restrictions too)
+* Fixed on demand restricting asking again ([issue](/../../issues/1447))
 * Updated Dutch translation
 * Updated Italian translation
 * Updated Polish translation

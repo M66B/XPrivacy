@@ -411,16 +411,16 @@ public class PrivacyService {
 				// Update cache
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
-						// Clear cache
-						for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
-							if (key.matches(restriction))
-								mRestrictionCache.remove(key);
-
-						if (restriction.methodName != null) {
-							// Update cache
-							CRestriction key = new CRestriction(restriction, restriction.extra);
-							mRestrictionCache.put(key, key);
+						if (restriction.methodName != null && restriction.extra == null) {
+							for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
+								if (key.isSameMethod(restriction))
+									mRestrictionCache.remove(key);
 						}
+
+						CRestriction key = new CRestriction(restriction, restriction.extra);
+						if (mRestrictionCache.containsKey(key))
+							mRestrictionCache.remove(key);
+						mRestrictionCache.put(key, key);
 					}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
