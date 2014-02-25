@@ -14,7 +14,6 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.Map.Entry;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -874,15 +873,18 @@ public class ActivityShare extends ActivityBase {
 
 	private class ImportHandler extends DefaultHandler {
 		private List<Integer> mListUidSelected;
+		private List<Integer> mListUidSettings = new ArrayList<Integer>();
+		private List<Integer> mListUidRestrictions = new ArrayList<Integer>();
+
+		private int lastUid = -1;
+		private List<Boolean> mOldState = null;
+
 		private SparseArray<String> mMapId = new SparseArray<String>();
 		private Map<String, Integer> mMapUid = new HashMap<String, Integer>();
 		private Map<String, Map<String, List<MethodDescription>>> mMapPackage = new HashMap<String, Map<String, List<MethodDescription>>>();
-		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
+
 		private Runnable mProgress;
-		private SparseArray<Map<String[], String>> mSettings = new SparseArray<Map<String[], String>>();
-		private List<Integer> mListUid = new ArrayList<Integer>();
-		private List<Integer> mListAbortedUid = new ArrayList<Integer>();
-		private SparseArray<List<Boolean>> mListRestartStates = new SparseArray<List<Boolean>>();
+		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
 		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
 			mListUidSelected = listUidSelected;
@@ -928,27 +930,37 @@ public class ActivityShare extends ActivityBase {
 						// Legacy
 						Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
 						PrivacyManager.setSetting(0, name, value);
+
 					} else if ("".equals(id)) {
 						// Global setting
-						// TODO: clear global settings
 						if (mListUidSelected.size() > 1)
 							PrivacyManager.setSetting(0, type, name, value);
+
 					} else {
 						// Application setting
 						int iid = Integer.parseInt(id);
 						int uid = getUid(iid);
-						if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
-							if (!mListUid.contains(uid)) {
-								// Cache settings
-								if (mSettings.indexOfKey(uid) < 0)
-									mSettings.put(uid, new HashMap<String[], String>());
-								mSettings.get(uid).put(new String[] { type, name }, value);
-							} else {
-								// This apps cached settings
-								// have already been applied,
-								// so add this one directly
-								PrivacyManager.setSetting(uid, type, name, value);
+						if (uid >= 0 && mListUidSelected.contains(uid)) {
+							// Check for abort
+							if (mAbort && !mListUidSettings.contains(uid)) {
+								setState(uid, STATE_FAILURE);
+								setMessage(uid, getString(R.string.msg_aborted));
+								return;
 							}
+
+							// Check for new uid
+							if (!mListUidSettings.contains(uid)) {
+								// Update state
+								mListUidSettings.add(uid);
+
+								// Update visible state
+								setState(uid, STATE_RUNNING, null);
+
+								// Clear settings
+								PrivacyManager.deleteSettings(uid);
+							}
+
+							PrivacyManager.setSetting(uid, type, name, value);
 						}
 					}
 
@@ -981,29 +993,32 @@ public class ActivityShare extends ActivityBase {
 
 					// Get uid
 					int uid = getUid(id);
-
-					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
-
-						// Check whether we should abort
-						if (mAbort && !mListUid.contains(uid)) {
-							// This app hasn't begun to be imported, so skip it
-							if (!mListAbortedUid.contains(uid))
-								mListAbortedUid.add(uid);
-							Util.log(null, Log.INFO, "Skipping restriction for uid=" + uid);
+					if (uid >= 0 || mListUidSelected.contains(uid)) {
+						// Check for abort
+						if (mAbort && !mListUidRestrictions.contains(uid)) {
+							setState(uid, STATE_FAILURE);
+							setMessage(uid, getString(R.string.msg_aborted));
 							return;
 						}
 
-						// Progress report and pre-import cleanup
-						if (!mListUid.contains(uid)) {
-							finishLastImport();
+						// Check for new uid
+						if (!mListUidRestrictions.contains(uid)) {
+							// Mark previous as success
+							if (lastUid >= 0) {
+								boolean restart = !PrivacyManager.getRestartStates(lastUid, null).equals(mOldState);
+								setState(lastUid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
+							}
 
-							// Mark the next one as in progress
-							mListUid.add(uid);
+							// Update state
+							lastUid = uid;
+							mListUidRestrictions.add(uid);
+							mOldState = PrivacyManager.getRestartStates(uid, null);
+
+							// Update visible state
 							setState(uid, STATE_RUNNING, null);
 							runOnUiThread(mProgress);
 
-							// Delete restrictions
-							mListRestartStates.put(uid, PrivacyManager.getRestartStates(uid, null));
+							// Clear restrictions
 							PrivacyManager.deleteRestrictions(uid, null);
 						}
 
@@ -1019,43 +1034,11 @@ public class ActivityShare extends ActivityBase {
 
 		@Override
 		public void endElement(String uri, String localName, String qName) {
-			if (qName.equals("XPrivacy")) {
-				finishLastImport();
-
-				// Abort notification
-				if (mListAbortedUid.size() > 0) {
-					int uid = mListAbortedUid.get(0);
-					setState(uid, STATE_FAILURE);
-					setMessage(uid, getString(R.string.msg_aborted));
+			if (qName.equals("XPrivacy"))
+				if (lastUid >= 0) {
+					boolean restart = !PrivacyManager.getRestartStates(lastUid, null).equals(mOldState);
+					setState(lastUid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
 				}
-
-				runOnUiThread(new Runnable() {
-					@Override
-					public void run() {
-						mAppAdapter.notifyDataSetChanged();
-					}
-				});
-			}
-		}
-
-		private void finishLastImport() {
-			// Finish import for the last app imported
-			if (mListUid.size() > 0) {
-				int lastUid = mListUid.get(mListUid.size() - 1);
-
-				// Apply settings
-				PrivacyManager.deleteSettings(lastUid);
-				if (mSettings.indexOfKey(lastUid) >= 0)
-					for (Entry<String[], String> entry : mSettings.get(lastUid).entrySet())
-						PrivacyManager.setSetting(lastUid, entry.getKey()[0], entry.getKey()[1], entry.getValue());
-
-				// Restart notification
-				List<Boolean> oldState = mListRestartStates.get(lastUid);
-				List<Boolean> newState = PrivacyManager.getRestartStates(lastUid, null);
-
-				// Mark as success
-				setState(lastUid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart) : null);
-			}
 		}
 
 		private int getUid(int id) {

@@ -20,6 +20,7 @@ Changelog
 * Submit functions with a white/blacklist as having an exception ([issue](/../../issues/1438))
 * Always ask on demand for dangerous functions (was dependent on setting)
 * On demand timeout will return set restriction (was deny once)
+* Import/export one application will not import/export global settings
 * Updated Dutch translation
 * Updated Italian translation
 * Updated Polish translation
