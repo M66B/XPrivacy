@@ -18,8 +18,7 @@ Changelog
 * Option to select if existing restrictions should be deleted on import or fetch ([issue](/../../issues/1119))
 * Move database to /data/system/xprivacy ([issue](/../../issues/1437))
 * Submit functions with a white/blacklist as having an exception ([issue](/../../issues/1438))
-* Always ask on demand for dangerous functions (was dependent on setting)
-* On demand timeout will return set restriction (was deny once)
+* On demand timeout will result in using defined restriction (was deny once)
 * Import/export one application will not import/export global settings
 * Option to enable/disable usage data parameters (**default disabled**)
 * Updated Dutch translation

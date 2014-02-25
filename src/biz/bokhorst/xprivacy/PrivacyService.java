@@ -1250,6 +1250,11 @@ public class PrivacyService {
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
 					return false;
 
+				// Skip dangerous methods
+				final boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+				if (!dangerous && hook != null && hook.isDangerous())
+					return false;
+
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
@@ -1263,7 +1268,6 @@ public class PrivacyService {
 					final ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
 
 					// Check if system application
-					final boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
 					if (!dangerous && appInfo.isSystem())
 						return false;
 
