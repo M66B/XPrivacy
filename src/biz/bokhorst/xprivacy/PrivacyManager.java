@@ -380,13 +380,18 @@ public class PrivacyManager {
 		return new ArrayList<PRestriction>();
 	}
 
-	public static void deleteRestrictions(int uid, String restrictionName) {
+	public static void deleteRestrictions(int uid, String restrictionName, boolean deleteWhitelists) {
 		checkCaller();
 
 		// Delete restrictions
 		try {
 			PrivacyService.getClient().deleteRestrictions(uid, restrictionName == null ? "" : restrictionName);
-			deleteWhitelists(uid);
+			if (deleteWhitelists) {
+				if (uid > 0)
+					for (PSetting setting : getSettingList(uid))
+						if (Meta.isWhitelist(setting.type))
+							setSetting(uid, setting.type, setting.name, null);
+			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -461,15 +466,6 @@ public class PrivacyManager {
 				mapWhitelisted.get(setting.type).put(setting.name, Boolean.parseBoolean(setting.value));
 			}
 		return mapWhitelisted;
-	}
-
-	private static void deleteWhitelists(int uid) {
-		checkCaller();
-
-		if (uid > 0)
-			for (PSetting setting : getSettingList(uid))
-				if (Meta.isWhitelist(setting.type))
-					setSetting(uid, setting.type, setting.name, null);
 	}
 
 	// Usage

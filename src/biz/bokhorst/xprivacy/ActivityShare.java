@@ -583,7 +583,7 @@ public class ActivityShare extends ActivityBase {
 
 					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, restrictionName);
 					if (actionId == R.id.rbClear)
-						PrivacyManager.deleteRestrictions(uid, restrictionName);
+						PrivacyManager.deleteRestrictions(uid, restrictionName, true);
 					else if (actionId == R.id.rbRestrict)
 						PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
 					else if (actionId == R.id.rbTemplate)
@@ -829,7 +829,7 @@ public class ActivityShare extends ActivityBase {
 
 							// Reset existing restrictions
 							List<Boolean> oldState = PrivacyManager.getRestartStates(uid, null);
-							PrivacyManager.deleteRestrictions(uid, null);
+							PrivacyManager.deleteRestrictions(uid, null, true);
 
 							// Set imported restrictions
 							for (String restrictionName : mapPackage.get(packageName).keySet()) {
@@ -1026,7 +1026,7 @@ public class ActivityShare extends ActivityBase {
 
 							// Clear restrictions
 							if (mClear)
-								PrivacyManager.deleteRestrictions(uid, null);
+								PrivacyManager.deleteRestrictions(uid, null, false);
 						}
 
 						// Set restriction
@@ -1175,7 +1175,7 @@ public class ActivityShare extends ActivityBase {
 
 									// Clear existing restriction
 									if (clear)
-										PrivacyManager.deleteRestrictions(appInfo.getUid(), null);
+										PrivacyManager.deleteRestrictions(appInfo.getUid(), null, true);
 
 									// Set fetched restrictions
 									List<PRestriction> listRestriction = new ArrayList<PRestriction>();

@@ -72,7 +72,7 @@ public class RState {
 
 			// Change restriction
 			if (restricted)
-				PrivacyManager.deleteRestrictions(mUid, mRestrictionName);
+				PrivacyManager.deleteRestrictions(mUid, mRestrictionName, true);
 			else
 				for (String restrictionName : listRestriction)
 					PrivacyManager.setRestriction(mUid, restrictionName, null, true, false);
