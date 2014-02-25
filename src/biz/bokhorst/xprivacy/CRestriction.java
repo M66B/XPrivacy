@@ -47,7 +47,7 @@ public class CRestriction {
 		// @formatter:off
 		return (restriction.uid == mUid
 				&& restriction.restrictionName.equals(mRestrictionName)
-				&& restriction.methodName.equals(mMethodName));
+				&& (restriction.methodName == null || restriction.methodName.equals(mMethodName)));
 		// @formatter:on
 	}
 

@@ -411,11 +411,10 @@ public class PrivacyService {
 				// Update cache
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
-						if (restriction.methodName != null && restriction.extra == null) {
+						if (restriction.methodName == null || restriction.extra == null)
 							for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
 								if (key.isSameMethod(restriction))
 									mRestrictionCache.remove(key);
-						}
 
 						CRestriction key = new CRestriction(restriction, restriction.extra);
 						if (mRestrictionCache.containsKey(key))
