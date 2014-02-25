@@ -178,7 +178,6 @@ public class XLocationManager extends XHook {
 				XLocationListener xlistener = mListener.get(listener);
 				if (xlistener != null) {
 					param.args[0] = xlistener;
-					mListener.remove(listener);
 					Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 				}
 			}

@@ -137,19 +137,25 @@ public class XTelephonyManager extends XHook {
 					if (event == PhoneStateListener.LISTEN_NONE) {
 						// Remove
 						synchronized (mListener) {
-							XPhoneStateListener xlistener = mListener.get(listener);
-							if (xlistener != null) {
-								param.args[0] = xlistener;
-								mListener.remove(listener);
+							XPhoneStateListener xListener = mListener.get(listener);
+							if (xListener != null) {
+								param.args[0] = xListener;
+								Util.log(this, Log.WARN,
+										"Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 							}
 						}
 					} else if (isRestricted(param))
 						try {
 							// Replace
-							XPhoneStateListener xListener = new XPhoneStateListener(listener);
+							XPhoneStateListener xListener;
 							synchronized (mListener) {
-								mListener.put(listener, xListener);
-								Util.log(this, Log.INFO, "Added count=" + mListener.size());
+								xListener = mListener.get(listener);
+								if (xListener == null) {
+									xListener = new XPhoneStateListener(listener);
+									mListener.put(listener, xListener);
+									Util.log(this, Log.WARN,
+											"Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+								}
 							}
 							param.args[0] = xListener;
 						} catch (Throwable ignored) {
