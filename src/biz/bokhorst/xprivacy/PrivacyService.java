@@ -100,9 +100,8 @@ public class PrivacyService {
 			mRegistered = true;
 			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
 
-			// Hook into activity manager service
+			// Publish semaphore to activity manager service
 			XActivityManagerService.setSemaphore(mOndemandSemaphore);
-			XPrivacy.hookAll(XActivityManagerService.getInstances(), secret);
 
 			// Get memory class to enable/disable caching
 			// http://stackoverflow.com/questions/2630158/detect-application-heap-size-in-android

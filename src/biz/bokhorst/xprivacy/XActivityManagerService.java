@@ -78,7 +78,7 @@ public class XActivityManagerService extends XHook {
 		if (mMethod == Methods.inputDispatchingTimedOut) {
 			try {
 				// Delay foreground ANRs while on demand dialog open
-				boolean ondemanding = (mOndemandSemaphore.availablePermits() < 1);
+				boolean ondemanding = (mOndemandSemaphore != null && mOndemandSemaphore.availablePermits() < 1);
 				Util.log(this, Log.WARN, "Foreground ANR uid=" + getUidANR(param) + " ondemand=" + ondemanding);
 				if (ondemanding)
 					param.setResult(5 * 1000); // 5 seconds
@@ -89,7 +89,7 @@ public class XActivityManagerService extends XHook {
 		} else if (mMethod == Methods.appNotResponding) {
 			try {
 				// Ignore background ANRs while on demand dialog open
-				boolean ondemanding = (mOndemandSemaphore.availablePermits() < 1);
+				boolean ondemanding = (mOndemandSemaphore != null && mOndemandSemaphore.availablePermits() < 1);
 				Util.log(this, Log.WARN, "Background ANR uid=" + getUidANR(param) + " ondemand=" + ondemanding);
 				if (ondemanding)
 					param.setResult(null);
