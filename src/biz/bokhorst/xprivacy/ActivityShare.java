@@ -221,6 +221,9 @@ public class ActivityShare extends ActivityBase {
 			else
 				showFileName();
 
+			if (action.equals(ACTION_IMPORT))
+				cbClear.setVisibility(View.VISIBLE);
+
 		} else if (action.equals(ACTION_FETCH)) {
 			tvDescription.setText(getBaseURL(ActivityShare.this));
 			cbClear.setVisibility(View.VISIBLE);
@@ -269,7 +272,7 @@ public class ActivityShare extends ActivityBase {
 					// Import
 					else if (action.equals(ACTION_IMPORT)) {
 						mRunning = true;
-						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName));
+						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName), cbClear.isChecked());
 					}
 
 					// Export
@@ -766,14 +769,13 @@ public class ActivityShare extends ActivityBase {
 		}
 	}
 
-	private class ImportTask extends AsyncTask<File, Integer, Throwable> {
-		private File mFile;
-
+	private class ImportTask extends AsyncTask<Object, Integer, Throwable> {
 		@Override
-		protected Throwable doInBackground(File... params) {
+		protected Throwable doInBackground(Object... params) {
 			try {
-				mFile = (File) params[0];
-
+				// Parameters
+				File file = (File) params[0];
+				boolean clear = (Boolean) params[1];
 				List<Integer> listUidSelected = mAppAdapter.getListUid();
 
 				// Progress
@@ -787,13 +789,13 @@ public class ActivityShare extends ActivityBase {
 				};
 
 				// Parse XML
-				Util.log(null, Log.INFO, "Importing " + mFile);
+				Util.log(null, Log.INFO, "Importing " + file);
 				FileInputStream fis = null;
 				Map<String, Map<String, List<ImportHandler.MethodDescription>>> mapPackage;
 				try {
-					fis = new FileInputStream(mFile);
+					fis = new FileInputStream(file);
 					XMLReader xmlReader = SAXParserFactory.newInstance().newSAXParser().getXMLReader();
-					ImportHandler importHandler = new ImportHandler(listUidSelected, progress);
+					ImportHandler importHandler = new ImportHandler(clear, listUidSelected, progress);
 					xmlReader.setContentHandler(importHandler);
 					xmlReader.parse(new InputSource(fis));
 					mapPackage = importHandler.getPackageMap();
@@ -872,6 +874,7 @@ public class ActivityShare extends ActivityBase {
 	}
 
 	private class ImportHandler extends DefaultHandler {
+		private boolean mClear;
 		private List<Integer> mListUidSelected;
 		private List<Integer> mListUidSettings = new ArrayList<Integer>();
 		private List<Integer> mListUidRestrictions = new ArrayList<Integer>();
@@ -886,7 +889,8 @@ public class ActivityShare extends ActivityBase {
 		private Runnable mProgress;
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 
-		public ImportHandler(List<Integer> listUidSelected, Runnable progress) {
+		public ImportHandler(boolean clear, List<Integer> listUidSelected, Runnable progress) {
+			mClear = clear;
 			mListUidSelected = listUidSelected;
 			mProgress = progress;
 		}
@@ -957,7 +961,8 @@ public class ActivityShare extends ActivityBase {
 								setState(uid, STATE_RUNNING, null);
 
 								// Clear settings
-								PrivacyManager.deleteSettings(uid);
+								if (mClear)
+									PrivacyManager.deleteSettings(uid);
 							}
 
 							PrivacyManager.setSetting(uid, type, name, value);
@@ -1019,7 +1024,8 @@ public class ActivityShare extends ActivityBase {
 							runOnUiThread(mProgress);
 
 							// Clear restrictions
-							PrivacyManager.deleteRestrictions(uid, null);
+							if (mClear)
+								PrivacyManager.deleteRestrictions(uid, null);
 						}
 
 						// Set restriction
