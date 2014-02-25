@@ -14,12 +14,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.55 TEST**
+
 * Fixed submitting restrictions ([issue](/../../issues/1452))
 * System server will create database folder ([issue](/../../issues/1437))
 * Updated Russian translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.54 TEST**
 
