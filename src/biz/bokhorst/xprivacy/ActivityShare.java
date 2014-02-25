@@ -909,7 +909,7 @@ public class ActivityShare extends ActivityBase {
 					String value = attributes.getValue("Value");
 
 					if (name.startsWith("Account.") || name.startsWith("Application.") || name.startsWith("Contact.")
-							|| name.startsWith("Whitelist.")) {
+							|| name.startsWith("Template.") || name.startsWith("Whitelist.")) {
 						name = name.replace("Whitelist.", "");
 						int dot = name.indexOf('.');
 						type = name.substring(0, dot);

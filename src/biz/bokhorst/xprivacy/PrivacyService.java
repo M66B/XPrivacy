@@ -589,7 +589,6 @@ public class PrivacyService {
 
 					// Check whitelist
 					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
-						// TODO: privacy manager is for client side only
 						String value = getSetting(new PSetting(restriction.uid, hook.whitelist(), restriction.extra,
 								null)).value;
 						if (value == null) {
@@ -1936,7 +1935,7 @@ public class PrivacyService {
 											String name = cursor.getString(1);
 											String value = cursor.getString(2);
 											if (name.startsWith("Account.") || name.startsWith("Application.")
-													|| name.startsWith("Contact.")) {
+													|| name.startsWith("Contact.") || name.startsWith("Template.")) {
 												int dot = name.indexOf('.');
 												String type = name.substring(0, dot);
 												listSetting

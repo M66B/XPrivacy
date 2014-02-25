@@ -1106,8 +1106,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				holder = (ViewHolder) convertView.getTag();
 
 			// Get info
-			final String templateName = PrivacyManager.cSettingTemplate + "." + listRestrictionName.get(position);
-			String value = PrivacyManager.getSetting(0, templateName, Boolean.toString(!ondemand) + "+ask", false);
+			final String restrictionName = listRestrictionName.get(position);
+			String value = PrivacyManager.getSetting(0, Meta.cTypeTemplate, restrictionName,
+					Boolean.toString(!ondemand) + "+ask", false);
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
 			Bitmap check = (holder.asked ? (holder.restricted ? getFullCheckBox() : getOffCheckBox())
@@ -1131,8 +1132,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						holder.restricted = true;
 						holder.asked = true;
 					}
-					PrivacyManager.setSetting(0, templateName, (holder.restricted ? "true" : "false") + "+"
-							+ (holder.asked ? "asked" : "ask"));
+					PrivacyManager.setSetting(0, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
+							: "false") + "+" + (holder.asked ? "asked" : "ask"));
 
 					Bitmap check = holder.asked ? (holder.restricted ? getFullCheckBox() : getOffCheckBox())
 							: getOnDemandCheckBox();

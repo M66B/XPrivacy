@@ -121,8 +121,6 @@ public class PrivacyManager {
 	public final static String cSettingCid = "Cid";
 	public final static String cSettingLac = "Lac";
 
-	public final static String cSettingTemplate = "Template";
-
 	// Special value names
 	public final static String cValueRandom = "#Random#";
 	public final static String cValueRandomLegacy = "\nRandom\n";
@@ -444,9 +442,8 @@ public class PrivacyManager {
 
 		// Apply template
 		for (String rRestrictionName : listRestriction) {
-			String templateName = PrivacyManager.cSettingTemplate + "." + rRestrictionName;
-			String templateValue = PrivacyManager.getSetting(0, templateName, Boolean.toString(!ondemand) + "+ask",
-					false);
+			String templateValue = PrivacyManager.getSetting(0, Meta.cTypeTemplate, rRestrictionName,
+					Boolean.toString(!ondemand) + "+ask", false);
 			boolean restrict = templateValue.contains("true");
 			boolean asked = templateValue.contains("asked");
 			PrivacyManager.setRestriction(uid, rRestrictionName, null, restrict, asked || !ondemand);
