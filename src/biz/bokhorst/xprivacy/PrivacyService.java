@@ -570,22 +570,11 @@ public class PrivacyService {
 					}
 
 					// Default dangerous
-					// TODO: check if exceptions for dangerous are still needed
 					if (!methodFound && hook != null && hook.isDangerous())
 						if (!getSettingBool(0, PrivacyManager.cSettingDangerous, false)) {
 							mresult.restricted = false;
 							mresult.asked = true;
 						}
-
-					// Fallback
-					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
-							&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
-						if (hook != null && !hook.isDangerous()) {
-							mresult.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
-									restriction.restrictionName, restriction.methodName);
-							Util.log(null, Log.WARN, "Fallback " + mresult);
-						}
-					}
 
 					// Check whitelist
 					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
@@ -600,6 +589,16 @@ public class PrivacyService {
 							// true means allow, false means block
 							mresult.restricted = !Boolean.parseBoolean(value);
 							mresult.asked = true;
+						}
+					}
+
+					// Fallback
+					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
+							&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
+						if (hook != null && !hook.isDangerous()) {
+							mresult.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
+									restriction.restrictionName, restriction.methodName);
+							Util.log(null, Log.WARN, "Fallback " + mresult);
 						}
 					}
 
