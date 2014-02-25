@@ -168,7 +168,6 @@ public class ActivityShare extends ActivityBase {
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		final RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
 		final CheckBox cbClear = (CheckBox) findViewById(R.id.cbClear);
-		ListView lvShare = (ListView) findViewById(R.id.lvShare);
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
 		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
@@ -193,15 +192,9 @@ public class ActivityShare extends ActivityBase {
 			return;
 		}
 
-		// App list
+		// Build application list
 		AppListTask appListTask = new AppListTask();
 		appListTask.executeOnExecutor(mExecutor, uids);
-
-		// Allow users to remove apps from list
-		// TODO: replace by swipe left/right
-		// http://stackoverflow.com/questions/18585345/swipe-to-delete-a-listview-item
-		if (mInteractive)
-			registerForContextMenu(lvShare);
 
 		// Import/export filename
 		if (action.equals(ACTION_EXPORT) || action.equals(ACTION_IMPORT)) {
@@ -227,9 +220,8 @@ public class ActivityShare extends ActivityBase {
 		} else if (action.equals(ACTION_FETCH)) {
 			tvDescription.setText(getBaseURL(ActivityShare.this));
 			cbClear.setVisibility(View.VISIBLE);
-		}
 
-		else if (action.equals(ACTION_TOGGLE)) {
+		} else if (action.equals(ACTION_TOGGLE)) {
 			// Show category
 			if (restrictionName == null)
 				tvDescription.setText(R.string.menu_all);
@@ -251,7 +243,8 @@ public class ActivityShare extends ActivityBase {
 			tvDescription.setText(getBaseURL(ActivityShare.this));
 
 		if (mInteractive) {
-			// Enable ok (showFileName does this for export/import)
+			// Enable ok
+			// (showFileName does this for export/import)
 			if (action.equals(ACTION_SUBMIT) || action.equals(ACTION_FETCH))
 				btnOk.setEnabled(true);
 
@@ -267,10 +260,9 @@ public class ActivityShare extends ActivityBase {
 						for (int i = 0; i < rgToggle.getChildCount(); i++)
 							((RadioButton) rgToggle.getChildAt(i)).setEnabled(false);
 						new ToggleTask().executeOnExecutor(mExecutor, restrictionName);
-					}
 
-					// Import
-					else if (action.equals(ACTION_IMPORT)) {
+						// Import
+					} else if (action.equals(ACTION_IMPORT)) {
 						mRunning = true;
 						cbClear.setEnabled(false);
 						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName), cbClear.isChecked());
@@ -280,10 +272,9 @@ public class ActivityShare extends ActivityBase {
 					else if (action.equals(ACTION_EXPORT)) {
 						mRunning = true;
 						new ExportTask().executeOnExecutor(mExecutor, new File(mFileName));
-					}
 
-					// Fetch
-					else if (action.equals(ACTION_FETCH)) {
+						// Fetch
+					} else if (action.equals(ACTION_FETCH)) {
 						if (uids.length > 0) {
 							mRunning = true;
 							cbClear.setEnabled(false);
@@ -306,6 +297,7 @@ public class ActivityShare extends ActivityBase {
 					}
 				}
 			});
+
 		} else {
 			// Hide ok button and separator
 			btnOk.setVisibility(View.GONE);
@@ -330,8 +322,8 @@ public class ActivityShare extends ActivityBase {
 	protected void onActivityResult(int requestCode, int resultCode, Intent dataIntent) {
 		super.onActivityResult(requestCode, resultCode, dataIntent);
 
-		if (requestCode == ACTIVITY_IMPORT_SELECT) {
-			// Import select
+		// Import select
+		if (requestCode == ACTIVITY_IMPORT_SELECT)
 			if (resultCode == RESULT_CANCELED || dataIntent == null)
 				finish();
 			else {
@@ -340,7 +332,6 @@ public class ActivityShare extends ActivityBase {
 						.getAbsolutePath() + File.separatorChar);
 				showFileName();
 			}
-		}
 	}
 
 	// State management
@@ -394,7 +385,6 @@ public class ActivityShare extends ActivityBase {
 
 	// Adapters
 
-	@SuppressLint("DefaultLocale")
 	private class AppListAdapter extends ArrayAdapter<AppState> {
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -484,6 +474,9 @@ public class ActivityShare extends ActivityBase {
 				holder.imgResult.setBackgroundResource(R.drawable.indicator_input_error);
 				holder.imgResult.setVisibility(View.VISIBLE);
 				holder.pbRunning.setVisibility(View.INVISIBLE);
+				break;
+			default:
+				Util.log(null, Log.ERROR, "Unknown state=" + xApp.state);
 				break;
 			}
 
@@ -1663,7 +1656,7 @@ public class ActivityShare extends ActivityBase {
 
 	private void showFileName() {
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-		tvDescription.setText(new File(mFileName).getName());
+		tvDescription.setText(mFileName);
 		Button btnOk = (Button) findViewById(R.id.btnOk);
 		btnOk.setEnabled(true);
 	}
