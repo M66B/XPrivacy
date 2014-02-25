@@ -53,8 +53,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
-		PrivacyService.setupDatabase();
-
 		// System server
 		try {
 			// frameworks/base/services/java/com/android/server/SystemServer.java

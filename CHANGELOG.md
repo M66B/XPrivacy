@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Fixed submitting restrictions ([issue](/../../issues/1452))
+* System server will create database folder ([issue](/../../issues/1437))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
