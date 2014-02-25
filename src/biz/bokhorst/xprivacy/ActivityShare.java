@@ -845,7 +845,7 @@ public class ActivityShare extends ActivityBase {
 					} catch (Throwable ex) {
 						if (uid > 0)
 							setState(uid, STATE_FAILURE, ex.getMessage());
-						Util.log(null, Log.WARN, "Not found package=" + packageName);
+						Util.bug(null, ex);
 					}
 				}
 
@@ -880,7 +880,7 @@ public class ActivityShare extends ActivityBase {
 		private String android_id = Secure.getString(getContentResolver(), Secure.ANDROID_ID);
 		private Runnable mProgress;
 		private SparseArray<Map<String[], String>> mSettings = new SparseArray<Map<String[], String>>();
-		private List<Integer> mListRestrictionUid = new ArrayList<Integer>();
+		private List<Integer> mListUid = new ArrayList<Integer>();
 		private List<Integer> mListAbortedUid = new ArrayList<Integer>();
 		private SparseArray<List<Boolean>> mListRestartStates = new SparseArray<List<Boolean>>();
 
@@ -894,11 +894,13 @@ public class ActivityShare extends ActivityBase {
 			try {
 				if (qName.equals("XPrivacy")) {
 					// Root
+
 				} else if (qName.equals("PackageInfo")) {
 					// Package info
 					int id = Integer.parseInt(attributes.getValue("Id"));
 					String name = attributes.getValue("Name");
 					mMapId.put(id, name);
+
 				} else if (qName.equals("Setting")) {
 					// Setting
 					String id = attributes.getValue("Id");
@@ -926,16 +928,17 @@ public class ActivityShare extends ActivityBase {
 						// Legacy
 						Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
 						PrivacyManager.setSetting(0, name, value);
-					} else if ("".equals(id))
+					} else if ("".equals(id)) {
 						// Global setting
 						// TODO: clear global settings
-						PrivacyManager.setSetting(0, type, name, value);
-					else {
+						if (mListUidSelected.size() > 1)
+							PrivacyManager.setSetting(0, type, name, value);
+					} else {
 						// Application setting
 						int iid = Integer.parseInt(id);
 						int uid = getUid(iid);
 						if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
-							if (!mListRestrictionUid.contains(uid)) {
+							if (!mListUid.contains(uid)) {
 								// Cache settings
 								if (mSettings.indexOfKey(uid) < 0)
 									mSettings.put(uid, new HashMap<String[], String>());
@@ -948,6 +951,7 @@ public class ActivityShare extends ActivityBase {
 							}
 						}
 					}
+
 				} else if (qName.equals("Package")) {
 					// Restriction (legacy)
 					String packageName = attributes.getValue("Name");
@@ -966,6 +970,7 @@ public class ActivityShare extends ActivityBase {
 						MethodDescription md = new MethodDescription(methodName, restricted);
 						mMapPackage.get(packageName).get(restrictionName).add(md);
 					}
+
 				} else if (qName.equals("Restriction")) {
 					// Restriction (new style)
 					int id = Integer.parseInt(attributes.getValue("Id"));
@@ -980,7 +985,7 @@ public class ActivityShare extends ActivityBase {
 					if (uid >= 0 && mListUidSelected.size() == 0 || mListUidSelected.contains(uid)) {
 
 						// Check whether we should abort
-						if (mAbort && !mListRestrictionUid.contains(uid)) {
+						if (mAbort && !mListUid.contains(uid)) {
 							// This app hasn't begun to be imported, so skip it
 							if (!mListAbortedUid.contains(uid))
 								mListAbortedUid.add(uid);
@@ -989,11 +994,11 @@ public class ActivityShare extends ActivityBase {
 						}
 
 						// Progress report and pre-import cleanup
-						if (!mListRestrictionUid.contains(uid)) {
+						if (!mListUid.contains(uid)) {
 							finishLastImport();
 
 							// Mark the next one as in progress
-							mListRestrictionUid.add(uid);
+							mListUid.add(uid);
 							setState(uid, STATE_RUNNING, null);
 							runOnUiThread(mProgress);
 
@@ -1035,8 +1040,8 @@ public class ActivityShare extends ActivityBase {
 
 		private void finishLastImport() {
 			// Finish import for the last app imported
-			if (mListRestrictionUid.size() > 0) {
-				int lastUid = mListRestrictionUid.get(mListRestrictionUid.size() - 1);
+			if (mListUid.size() > 0) {
+				int lastUid = mListUid.get(mListUid.size() - 1);
 
 				// Apply settings
 				PrivacyManager.deleteSettings(lastUid);
