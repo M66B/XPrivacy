@@ -961,10 +961,22 @@ public class PrivacyService {
 					}
 				}
 
-				if (!"".equals(setting.type))
-					synchronized (mRestrictionCache) {
-						mRestrictionCache.clear();
-					}
+				// Clear restrictions for white list
+				if (Meta.isWhitelist(setting.type))
+					for (String restrictionName : PrivacyManager.getRestrictions())
+						for (Hook hook : PrivacyManager.getHooks(restrictionName))
+							if (setting.type.equals(hook.whitelist())) {
+								PRestriction restriction = new PRestriction(setting.uid, hook.getRestrictionName(),
+										hook.getName());
+								Util.log(null, Log.WARN, "Clearing cache for " + restriction);
+								synchronized (mRestrictionCache) {
+									for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
+										if (key.isSameMethod(restriction)) {
+											Util.log(null, Log.WARN, "Removing " + key);
+											mRestrictionCache.remove(key);
+										}
+								}
+							}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
@@ -1295,6 +1307,7 @@ public class PrivacyService {
 								return false;
 							}
 						}
+
 						if (restriction.extra != null && hook != null && hook.whitelist() != null) {
 							CSetting skey = new CSetting(restriction.uid, hook.whitelist(), restriction.extra);
 							CSetting xkey = null;
