@@ -150,7 +150,7 @@
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Экспертный режим</string>
     <string name="settings_dangerous">Запрет опасных функций</string>
-    <string name="settings_confidence">Максимальный интервал получения доверия</string>
+    <string name="settings_confidence">Максимальный доверительный интервал выборки</string>
     <string name="settings_experimental">Экспериментальные функции</string>
     <string name="settings_https">Использовать безопасные соединения</string>
     <string name="settings_syscomponents">Запрет системных компонентов (Android) (требует перезапуска)</string>
