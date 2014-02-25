@@ -16,6 +16,11 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+
+**Version 1.99.56 TEST**
+
+* More compatible database upgrade procedure
+
 **Version 1.99.55 TEST**
 
 * Fixed submitting restrictions ([issue](/../../issues/1452))
