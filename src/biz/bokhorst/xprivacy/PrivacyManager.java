@@ -113,6 +113,7 @@ public class PrivacyManager {
 	public final static String cSettingHttps = "Https";
 	public final static String cSettingRegistered = "Registered";
 	public final static String cSettingUsage = "UsageData";
+	public final static String cSettingParameters = "Parameters";
 	public final static String cSettingSystem = "RestrictSystem";
 	public final static String cSettingRestricted = "Retricted";
 	public final static String cSettingOnDemand = "OnDemand";

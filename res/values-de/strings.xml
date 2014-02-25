@@ -155,6 +155,7 @@
     <string name="settings_https">Benutze sichere Verbindung</string>
     <string name="settings_syscomponents">Beschränke Systemkomponenten (Android) (erfordert Geräteneustart)</string>
     <string name="settings_usagedata">Zeige App Nutzungsdaten\n (erfordert Geräteneustart)</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Für Auswahl App-Name drücken und kurz halten</string>

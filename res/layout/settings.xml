@@ -65,6 +65,12 @@
                 android:text="@string/settings_usagedata" />
 
             <CheckBox
+                android:id="@+id/cbParameters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_parameters" />
+
+            <CheckBox
                 android:id="@+id/cbLog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

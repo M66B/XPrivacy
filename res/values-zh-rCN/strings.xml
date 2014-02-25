@@ -155,6 +155,7 @@
     <string name="settings_https">使用安全连接(https)</string>
     <string name="settings_syscomponents">限制系统组件 (Android) (需要重启)</string>
     <string name="settings_usagedata">显示应用权限使用情况 (需要重启)</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">长按名称进行选择</string>

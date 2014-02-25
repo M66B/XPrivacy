@@ -661,13 +661,18 @@ public class PrivacyService {
 									mLockUsage.writeLock().lock();
 									dbUsage.beginTransaction();
 									try {
+										String extra = "";
+										if (restriction.extra != null)
+											if (getSettingBool(0, PrivacyManager.cSettingParameters, false))
+												extra = restriction.extra;
+
 										ContentValues values = new ContentValues();
 										values.put("uid", restriction.uid);
 										values.put("restriction", restriction.restrictionName);
 										values.put("method", restriction.methodName);
 										values.put("restricted", mresult.restricted);
 										values.put("time", new Date().getTime());
-										values.put("extra", restriction.extra == null ? "" : restriction.extra);
+										values.put("extra", extra);
 										dbUsage.insertWithOnConflict(cTableUsage, null, values,
 												SQLiteDatabase.CONFLICT_REPLACE);
 

@@ -155,6 +155,7 @@
     <string name="settings_https">セキュリティーで保護された接続を使用する</string>
     <string name="settings_syscomponents">システムのコンポーネントにアクセスを制限する （アンドロイド）（再起動が必要となります）</string>
     <string name="settings_usagedata">使用状況データを登録する（再起動が必要）</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">タイトルを押してれば、選択ができます</string>
