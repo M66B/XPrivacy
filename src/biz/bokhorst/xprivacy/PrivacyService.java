@@ -750,11 +750,14 @@ public class PrivacyService {
 					}
 				}
 
-				// Clear cache
+				// Clear caches
 				if (mUseCache)
 					synchronized (mRestrictionCache) {
 						mRestrictionCache.clear();
 					}
+				synchronized (mAskedOnceCache) {
+					mAskedOnceCache.clear();
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
@@ -1167,8 +1170,11 @@ public class PrivacyService {
 					synchronized (mSettingCache) {
 						mSettingCache.clear();
 					}
-					Util.log(null, Log.WARN, "Cache cleared");
 				}
+				synchronized (mAskedOnceCache) {
+					mAskedOnceCache.clear();
+				}
+				Util.log(null, Log.WARN, "Caches cleared");
 
 				mLockUsage.writeLock().lock();
 				dbUsage.beginTransaction();
@@ -1287,12 +1293,11 @@ public class PrivacyService {
 							}
 						}
 						if (restriction.extra != null && hook != null && hook.whitelist() != null) {
-							CSetting skey = new CSetting(restriction.uid, "", hook.whitelist() + "."
-									+ restriction.extra);
+							CSetting skey = new CSetting(restriction.uid, hook.whitelist(), restriction.extra);
 							CSetting xkey = null;
 							String xextra = getXExtra(restriction, hook);
 							if (xextra != null)
-								xkey = new CSetting(restriction.uid, "", hook.whitelist() + "." + xextra);
+								xkey = new CSetting(restriction.uid, hook.whitelist(), xextra);
 							synchronized (mSettingCache) {
 								if (mSettingCache.containsKey(skey)
 										|| (xkey != null && mSettingCache.containsKey(xkey))) {
@@ -1533,8 +1538,8 @@ public class PrivacyService {
 				// Set the whitelist
 				Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction
 						+ " xextra=" + xextra);
-				setSettingInternal(new PSetting(restriction.uid, "", hook.whitelist() + "."
-						+ (xextra == null ? restriction.extra : xextra), Boolean.toString(!result.restricted)));
+				setSettingInternal(new PSetting(restriction.uid, hook.whitelist(), (xextra == null ? restriction.extra
+						: xextra), Boolean.toString(!result.restricted)));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
