@@ -21,6 +21,7 @@ Changelog
 * On demand timeout will result in using defined restriction (was deny once)
 * Import/export one application will not import/export global settings
 * Option to enable/disable usage data parameters (**default disabled**)
+* Removed phone properties restrictions (these are covered by function restrictions too)
 * Updated Dutch translation
 * Updated Italian translation
 * Updated Polish translation

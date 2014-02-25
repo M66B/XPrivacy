@@ -220,13 +220,6 @@ public class Meta {
 		mListHook.add(new Hook("phone", "android.intent.action.PHONE_STATE", "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 1, null, null));
 		mListHook.add(new Hook("phone", "CallLogProvider", "READ_CALL_LOG", 1, null, null));
-		mListHook.add(new Hook("phone", "gsm.operator.iso-country", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.operator.numeric", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.operator.alpha", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.current.phone-type", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.sim.operator.iso-country", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.sim.operator.numeric", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.sim.operator.alpha", "", 10, "1.99.1", null));
 		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData().noOnDemand());
 		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData().noOnDemand());
 
