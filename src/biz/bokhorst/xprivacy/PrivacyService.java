@@ -71,7 +71,7 @@ public class PrivacyService {
 	private static final String cServiceName = "xprivacy283";
 
 	// TODO: define column names
-	// sqlite3 /data/xprivacy/xprivacy.db
+	// sqlite3 /data/system/xprivacy/xprivacy.db
 
 	public static void setupDatabase() {
 		// This is run from Zygote with root permissions

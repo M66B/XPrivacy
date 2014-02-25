@@ -1663,7 +1663,7 @@ public class ActivityShare extends ActivityBase {
 
 	private void showFileName() {
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
-		tvDescription.setText(".../" + new File(mFileName).getName());
+		tvDescription.setText(new File(mFileName).getName());
 		Button btnOk = (Button) findViewById(R.id.btnOk);
 		btnOk.setEnabled(true);
 	}
