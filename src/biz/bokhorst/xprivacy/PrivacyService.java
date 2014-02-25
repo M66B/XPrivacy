@@ -1244,7 +1244,6 @@ public class PrivacyService {
 		// Helper methods
 
 		private boolean onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
-			// Neither category nor method is restricted and asked for
 			try {
 				// Without handler nothing can be done
 				if (mHandler == null)
@@ -1281,11 +1280,15 @@ public class PrivacyService {
 					if (!dangerous && appInfo.isSystem())
 						return false;
 
+					// Check if activity manager agrees
+					if (!XActivityManagerService.canOnDemand())
+						return false;
+
 					// Go ask
 					Util.log(null, Log.WARN, "On demand " + restriction);
 					mOndemandSemaphore.acquireUninterruptibly();
 					try {
-						// Check if activity manager agrees
+						// Check if activity manager still agrees
 						if (!XActivityManagerService.canOnDemand())
 							return false;
 
