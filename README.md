@@ -723,6 +723,7 @@ If these suggestions don't help, please create an issue and provide a logcat (se
 IMHO you should at least install an ad blocker and a firewall.
 
 * [AdAway](http://sufficientlysecure.org/index.php/adaway/)
+* [CrappaLinks](http://forum.xda-developers.com/showthread.php?t=2603868)
 * [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
 * [NOGAPPS](http://forum.xda-developers.com/showthread.php?t=1715375)
 * [Disable Service](https://play.google.com/store/apps/details?id=cn.wq.disableservice)
