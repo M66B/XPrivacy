@@ -10,13 +10,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.lang.IllegalArgumentException;
-import java.lang.IllegalStateException;
-import java.lang.SecurityException;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import javax.net.ssl.SSLPeerUnverifiedException;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,8 +18,6 @@ import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.http.conn.ConnectTimeoutException;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -38,7 +29,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.NetworkOnMainThreadException;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserHandle;
@@ -102,30 +92,18 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof ActivityShare.ServerException)
 			priority = Log.WARN;
-		else if (ex instanceof ConnectTimeoutException)
-			priority = Log.WARN;
-		else if (ex instanceof IllegalArgumentException)
-			priority = Log.WARN;
-		else if (ex instanceof IllegalStateException)
-			priority = Log.WARN;
-		else if (ex instanceof IOException)
-			priority = Log.WARN;
-		else if (ex instanceof NetworkOnMainThreadException)
-			priority = Log.WARN;
-		else if (ex instanceof RemoteException)
-			priority = Log.WARN;
-		else if (ex instanceof SecurityException)
-			priority = Log.WARN;
-		else if (ex instanceof SocketException)
-			priority = Log.WARN;
-		else if (ex instanceof SocketTimeoutException)
-			priority = Log.WARN;
-		else if (ex instanceof SSLPeerUnverifiedException)
-			priority = Log.WARN;
-		else if (ex instanceof UnknownHostException)
-			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
+
+		boolean xprivacy = false;
+		for (StackTraceElement frame : ex.getStackTrace())
+			if (frame.getClassName() != null && frame.getClassName().startsWith("biz.bokhorst.xprivacy")) {
+				xprivacy = true;
+				break;
+			}
+		if (!xprivacy)
+			priority = Log.WARN;
+
 		log(hook, priority, ex.toString() + " uid=" + Process.myUid() + "\n" + Log.getStackTraceString(ex));
 	}
 
