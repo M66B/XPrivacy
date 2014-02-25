@@ -24,6 +24,7 @@ Changelog
 * Removed phone properties restrictions (these are covered by function restrictions too)
 * Fixed on demand restricting asking again ([issue](/../../issues/1447))
 * Updated Dutch translation
+* Updated German translation
 * Updated Italian translation
 * Updated Polish translation
 * Updated traditional Chinese translation
