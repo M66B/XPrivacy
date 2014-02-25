@@ -1941,6 +1941,7 @@ public class PrivacyService {
 								db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT");
 								db.execSQL("DROP INDEX idx_setting");
 								db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, type, name)");
+								db.execSQL("UPDATE setting SET type=''");
 								db.setVersion(10);
 								db.setTransactionSuccessful();
 							} finally {
