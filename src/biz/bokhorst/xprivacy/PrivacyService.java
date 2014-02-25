@@ -181,8 +181,6 @@ public class PrivacyService {
 	}
 
 	private static void setupDatabase() {
-		// This is run from Zygote with root permissions
-		// SELinix needs to be taken into account
 		try {
 			File dbFile = getDbFile();
 
