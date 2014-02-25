@@ -35,10 +35,10 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tvAttempt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="6dip"
-            android:text="@string/title_attempt" />
+            android:paddingTop="6dip" />
 
         <View
             android:layout_width="match_parent"

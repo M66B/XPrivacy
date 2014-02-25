@@ -1409,6 +1409,7 @@ public class PrivacyService {
 			View view = LayoutInflater.from(context.createPackageContext(self, 0)).inflate(R.layout.ondemand, null);
 			ImageView ivAppIcon = (ImageView) view.findViewById(R.id.ivAppIcon);
 			TextView tvAppName = (TextView) view.findViewById(R.id.tvAppName);
+			TextView tvAttempt = (TextView) view.findViewById(R.id.tvAttempt);
 			TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
 			TextView tvFunction = (TextView) view.findViewById(R.id.tvFunction);
 			TextView tvParameters = (TextView) view.findViewById(R.id.tvParameters);
@@ -1424,6 +1425,9 @@ public class PrivacyService {
 
 			ivAppIcon.setImageDrawable(appInfo.getIcon(context));
 			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
+
+			String defaultAction = resources.getString(result.restricted ? R.string.title_deny : R.string.title_allow);
+			tvAttempt.setText(resources.getString(R.string.title_attempt) + " (" + defaultAction + ")");
 
 			int catId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
 			tvCategory.setText(resources.getString(catId));
