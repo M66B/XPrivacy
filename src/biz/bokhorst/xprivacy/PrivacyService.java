@@ -1938,7 +1938,7 @@ public class PrivacyService {
 							mLock.writeLock().lock();
 							db.beginTransaction();
 							try {
-								db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT NOT NULL DEFAULT ''");
+								db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT");
 								db.execSQL("DROP INDEX idx_setting");
 								db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, type, name)");
 								db.setVersion(10);
