@@ -18,6 +18,8 @@ Changelog
 * Option to select if existing restrictions should be deleted on fetch ([issue](/../../issues/1119))
 * Move database to /data/system/xprivacy ([issue](/../../issues/1437))
 * Submit functions with a white/blacklist as having an exception ([issue](/../../issues/1438))
+* Always ask on demand for dangerous functions (was dependent on setting)
+* On demand timeout will return set restriction (was deny once)
 * Updated Dutch translation
 * Updated Italian translation
 * Updated Polish translation
