@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Fixed submitting restrictions ([issue](/../../issues/1452))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.54 TEST**

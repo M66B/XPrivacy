@@ -1334,13 +1334,12 @@ public class ActivityShare extends ActivityBase {
 								long mUsed = PrivacyManager.getUsage(appInfo.getUid(), restrictionName, md.getName());
 
 								boolean mWhitelisted = false;
-								if (md.whitelist() != null) {
+								if (md.whitelist() != null && mapWhitelist.containsKey(md.whitelist()))
 									for (Boolean allowed : mapWhitelist.get(md.whitelist()).values())
 										if (mRestricted ? allowed : !allowed) {
 											mWhitelisted = true;
 											break;
 										}
-								}
 
 								JSONObject jMethod = new JSONObject();
 								jMethod.put("restriction", restrictionName);
