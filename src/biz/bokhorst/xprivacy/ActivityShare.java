@@ -272,6 +272,7 @@ public class ActivityShare extends ActivityBase {
 					// Import
 					else if (action.equals(ACTION_IMPORT)) {
 						mRunning = true;
+						cbClear.setEnabled(false);
 						new ImportTask().executeOnExecutor(mExecutor, new File(mFileName), cbClear.isChecked());
 					}
 
