@@ -303,7 +303,7 @@ public class PrivacyService {
 				if (restriction.restrictionName == null) {
 					Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
 					Util.logStack(null, Log.ERROR);
-					return;
+					throw new RemoteException("Invalid restriction");
 				}
 
 				SQLiteDatabase db = getDb();
