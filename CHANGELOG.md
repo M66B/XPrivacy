@@ -14,6 +14,7 @@ Changelog
 
 **Next release**
 
+* Fixed all minor bugs reported through the support info
 * Run [VACUUM](http://www.sqlite.org/lang_vacuum.html) on databases on boot
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
