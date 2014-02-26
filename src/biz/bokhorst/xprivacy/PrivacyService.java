@@ -2019,6 +2019,16 @@ public class PrivacyService {
 							}
 						}
 
+						Util.log(null, Log.WARN, "Running VACUUM");
+						mLock.writeLock().lock();
+						try {
+							db.execSQL("VACUUM");
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						} finally {
+							mLock.writeLock().unlock();
+						}
+
 						Util.log(null, Log.WARN, "Database version=" + db.getVersion());
 						mDb = db;
 					} catch (Throwable ex) {
@@ -2072,6 +2082,16 @@ public class PrivacyService {
 									mLockUsage.writeLock().unlock();
 								}
 							}
+						}
+
+						Util.log(null, Log.WARN, "Running VACUUM");
+						mLockUsage.writeLock().lock();
+						try {
+							dbUsage.execSQL("VACUUM");
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						} finally {
+							mLockUsage.writeLock().unlock();
 						}
 
 						Util.log(null, Log.WARN, "Usage database version=" + dbUsage.getVersion());
