@@ -1714,7 +1714,7 @@ public class PrivacyService {
 				}
 				if (mDb != null && mDb.getVersion() != 11) {
 					mDb = null;
-					Util.log(null, Log.ERROR, "Database wrong version");
+					Util.log(null, Log.ERROR, "Database wrong version=" + mDb.getVersion());
 				}
 
 				if (mDb == null)
