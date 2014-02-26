@@ -56,7 +56,7 @@ public class RState {
 
 		restricted = (allRestricted || someRestricted);
 		partial = (!allRestricted && someRestricted);
-		asked = (!onDemand || asked);
+		asked = (!onDemand || !PrivacyManager.isApplication(uid) || asked);
 	}
 
 	public void toggleRestriction() {

@@ -1473,8 +1473,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							false);
 
 					// Get if on demand
-					ondemand = (PrivacyManager.isApplication(xAppInfo.getUid()) && PrivacyManager.getSettingBool(0,
-							PrivacyManager.cSettingOnDemand, true, false));
+					ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 
 					// Get if granted
 					granted = true;
