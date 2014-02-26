@@ -543,7 +543,8 @@ public class ActivityShare extends ActivityBase {
 				lvShare.setAdapter(mAppAdapter);
 
 				// Dismiss progress dialog
-				mProgressDialog.dismiss();
+				if (mProgressDialog.isShowing())
+					mProgressDialog.dismiss();
 
 				// Launch non-interactive export
 				if (!mInteractive && mActionId == R.string.menu_export) {

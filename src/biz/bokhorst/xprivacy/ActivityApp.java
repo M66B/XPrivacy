@@ -1470,8 +1470,9 @@ public class ActivityApp extends ActivityBase {
 						Button btnOk = (Button) layout.findViewById(R.id.btnOk);
 						btnOk.setOnClickListener(new View.OnClickListener() {
 							@Override
-							public void onClick(View v) {
-								popup.dismiss();
+							public void onClick(View view) {
+								if (popup.isShowing())
+									popup.dismiss();
 							}
 						});
 

@@ -1044,7 +1044,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				lvApp.setAdapter(mAppAdapter);
 
 				// Dismiss progress dialog
-				mProgressDialog.dismiss();
+				if (mProgressDialog.isShowing())
+					mProgressDialog.dismiss();
 
 				// Restore state
 				ActivityMain.this.selectRestriction(spRestriction.getSelectedItemPosition());
