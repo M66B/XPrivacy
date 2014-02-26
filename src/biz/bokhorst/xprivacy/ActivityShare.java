@@ -584,6 +584,8 @@ public class ActivityShare extends ActivityBase {
 						PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
 					else if (actionId == R.id.rbTemplate)
 						PrivacyManager.applyTemplate(uid, restrictionName);
+					else if (actionId == R.id.rbOndemand)
+						PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 					else
 						Util.log(null, Log.ERROR, "Unknown action=" + actionId);
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);

@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Added option to batch enable on demand restricting (requested on XDA)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.58 TEST**

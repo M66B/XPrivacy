@@ -61,6 +61,13 @@
                 android:layout_height="wrap_content"
                 android:text="@string/menu_template"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbOndemand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ondemand"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
         </RadioGroup>
     </LinearLayout>
 
