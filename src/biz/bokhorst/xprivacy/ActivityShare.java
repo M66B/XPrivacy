@@ -837,6 +837,7 @@ public class ActivityShare extends ActivityBase {
 							setState(uid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart)
 									: null);
 						}
+					} catch (NameNotFoundException ignored) {
 					} catch (Throwable ex) {
 						if (listUidSelected.contains(uid))
 							setState(uid, STATE_FAILURE, ex.getMessage());
