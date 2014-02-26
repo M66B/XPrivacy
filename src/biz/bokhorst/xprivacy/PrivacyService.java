@@ -67,8 +67,8 @@ public class PrivacyService {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 290;
-	private static final String cServiceName = "xprivacy288";
+	private static final int cCurrentVersion = 291;
+	private static final String cServiceName = "xprivacy291";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
