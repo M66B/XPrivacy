@@ -58,6 +58,7 @@ import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.util.Log;
+import android.util.Patterns;
 import android.util.SparseArray;
 import android.util.Xml;
 import android.view.LayoutInflater;
@@ -1495,7 +1496,7 @@ public class ActivityShare extends ActivityBase {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							String email = input.getText().toString();
-							if (!"".equals(email))
+							if (Patterns.EMAIL_ADDRESS.matcher(email).matches())
 								new RegisterTask(context).executeOnExecutor(mExecutor, email);
 						}
 					});
