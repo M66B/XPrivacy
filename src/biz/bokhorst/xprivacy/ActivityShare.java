@@ -24,6 +24,7 @@ import org.apache.http.HttpStatus;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -1219,6 +1220,8 @@ public class ActivityShare extends ActivityBase {
 						throw ex;
 					}
 				return null;
+			} catch (ConnectTimeoutException ex) {
+				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex;
@@ -1443,6 +1446,8 @@ public class ActivityShare extends ActivityBase {
 						throw ex;
 					}
 				return null;
+			} catch (ConnectTimeoutException ex) {
+				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex;
