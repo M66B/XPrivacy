@@ -388,7 +388,6 @@ public class SettingsDialog {
 					}
 				} catch (Throwable ex) {
 					Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
-					Util.bug(null, ex);
 				}
 			}
 		});
