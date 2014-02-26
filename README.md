@@ -445,7 +445,7 @@ Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/x
 Great care has been taken to develop XPrivacy. Nevertheless, on rare occasions, data can leak and applications can crash.
 
 <a name="FAQ8"></a>
-**(8) I get "Incompatible..." !**
+**(8) I get "An internal check failed ..." !**
 
 An internal check of XPrivacy failed, resulting in potential data leakage.
 Please press *OK* to send me the support information so I can look into it.
