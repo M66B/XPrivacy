@@ -279,6 +279,7 @@ Limitations
 * You cannot restrict *view* for XPrivacy because it is needed to open links to the crowd sourced restrictions.
 * You cannot restrict *Configuration.MCC/MNC* on demand.
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?).
+* IPC restrictions do not work for some ROMs
 
 You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
 
