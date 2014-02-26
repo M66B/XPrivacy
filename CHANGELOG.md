@@ -15,7 +15,8 @@ Changelog
 **Next release**
 
 * Fixed all minor bugs reported through the support info
-* Run [VACUUM](http://www.sqlite.org/lang_vacuum.html) on databases on boot
+* Running [VACUUM](http://www.sqlite.org/lang_vacuum.html) on databases on boot
+* Setting [asynchronous mode](http://www.sqlite.org/pragma.html#pragma_synchronous) for usage data database
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

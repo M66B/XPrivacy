@@ -2094,6 +2094,13 @@ public class PrivacyService {
 							mLockUsage.writeLock().unlock();
 						}
 
+						Util.log(null, Log.WARN, "Changing to asynchronous mode");
+						try {
+							dbUsage.rawQuery("PRAGMA synchronous=OFF", null);
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+
 						Util.log(null, Log.WARN, "Usage database version=" + dbUsage.getVersion());
 						mDbUsage = dbUsage;
 					} catch (Throwable ex) {
