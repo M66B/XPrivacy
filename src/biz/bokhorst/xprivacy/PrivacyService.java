@@ -94,8 +94,6 @@ public class PrivacyService {
 				mAddService.invoke(null, cServiceName, mPrivacyService);
 			}
 
-			setupDatabase();
-
 			// This will and should open the database
 			mRegistered = true;
 			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
@@ -168,68 +166,6 @@ public class PrivacyService {
 		}
 
 		return mClient;
-	}
-
-	private static File getDbFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "xprivacy"
-				+ File.separator + "xprivacy.db");
-	}
-
-	private static File getDbUsageFile() {
-		return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "xprivacy"
-				+ File.separator + "usage.db");
-	}
-
-	private static void setupDatabase() {
-		try {
-			File dbFile = getDbFile();
-
-			// Create database folder
-			dbFile.getParentFile().mkdirs();
-
-			// Check database folder
-			if (dbFile.getParentFile().isDirectory())
-				Util.log(null, Log.WARN, "Database folder=" + dbFile.getParentFile());
-			else
-				Util.log(null, Log.ERROR, "Does not exist folder=" + dbFile.getParentFile());
-
-			// Move database from data/xprivacy folder
-			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
-			File[] oldFiles = folder.listFiles();
-			if (oldFiles != null)
-				for (File file : oldFiles)
-					if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db")) {
-						File target = new File(dbFile.getParentFile() + File.separator + file.getName());
-						boolean status = file.renameTo(target);
-						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
-					}
-
-			// Move database from data/application folder
-			folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
-					+ PrivacyService.class.getPackage().getName());
-			oldFiles = folder.listFiles();
-			if (oldFiles != null)
-				for (File file : oldFiles)
-					if (file.getName().startsWith("xprivacy.db")) {
-						File target = new File(dbFile.getParentFile() + File.separator + file.getName());
-						boolean status = file.renameTo(target);
-						Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
-					}
-
-			// Set database file permissions
-			// Owner: rwx (system)
-			// Group: rwx (system)
-			// World: ---
-			Util.setPermissions(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
-			File[] files = dbFile.getParentFile().listFiles();
-			if (files != null)
-				for (File file : files)
-					if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db"))
-						Util.setPermissions(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
-
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
 	}
 
 	public static void reportErrorInternal(String message) {
@@ -1706,6 +1642,69 @@ public class PrivacyService {
 			return mXUid;
 		}
 
+		private File getDbFile() {
+			return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "xprivacy"
+					+ File.separator + "xprivacy.db");
+		}
+
+		private File getDbUsageFile() {
+			return new File(Environment.getDataDirectory() + File.separator + "system" + File.separator + "xprivacy"
+					+ File.separator + "usage.db");
+		}
+
+		private void setupDatabase() {
+			try {
+				File dbFile = getDbFile();
+
+				// Create database folder
+				dbFile.getParentFile().mkdirs();
+
+				// Check database folder
+				if (dbFile.getParentFile().isDirectory())
+					Util.log(null, Log.WARN, "Database folder=" + dbFile.getParentFile());
+				else
+					Util.log(null, Log.ERROR, "Does not exist folder=" + dbFile.getParentFile());
+
+				// Move database from data/xprivacy folder
+				File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
+				File[] oldFiles = folder.listFiles();
+				if (oldFiles != null)
+					for (File file : oldFiles)
+						if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db")) {
+							File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+							boolean status = file.renameTo(target);
+							Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
+						}
+
+				// Move database from data/application folder
+				folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+						+ PrivacyService.class.getPackage().getName());
+				oldFiles = folder.listFiles();
+				if (oldFiles != null)
+					for (File file : oldFiles)
+						if (file.getName().startsWith("xprivacy.db")) {
+							File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+							boolean status = file.renameTo(target);
+							Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
+						}
+
+				// Set database file permissions
+				// Owner: rwx (system)
+				// Group: rwx (system)
+				// World: ---
+				Util.setPermissions(dbFile.getParentFile().getAbsolutePath(), 0770, Process.SYSTEM_UID,
+						Process.SYSTEM_UID);
+				File[] files = dbFile.getParentFile().listFiles();
+				if (files != null)
+					for (File file : files)
+						if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db"))
+							Util.setPermissions(file.getAbsolutePath(), 0770, Process.SYSTEM_UID, Process.SYSTEM_UID);
+
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+
 		private SQLiteDatabase getDb() {
 			synchronized (this) {
 				// Check current reference
@@ -1713,9 +1712,15 @@ public class PrivacyService {
 					mDb = null;
 					Util.log(null, Log.ERROR, "Database not open");
 				}
+				if (mDb != null && mDb.getVersion() != 11) {
+					mDb = null;
+					Util.log(null, Log.ERROR, "Database wrong version");
+				}
 
 				if (mDb == null)
 					try {
+						setupDatabase();
+
 						// Create/upgrade database when needed
 						File dbFile = getDbFile();
 						SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(dbFile, null);
