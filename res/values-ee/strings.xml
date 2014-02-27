@@ -130,6 +130,8 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">Seeria#</string>
     <string name="settings_lat">Laiuskraad</string>
     <string name="settings_lon">Pikkuskraad</string>

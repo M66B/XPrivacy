@@ -59,14 +59,21 @@
                 android:id="@+id/rbTemplate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/menu_template"
+                android:text="@string/menu_apply"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
-                android:id="@+id/rbOndemand"
+                android:id="@+id/rbEnableOndemand"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/settings_ondemand"
+                android:text="@string/title_enable_ondemand"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbDisableOndemand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_disable_ondemand"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RadioGroup>
     </LinearLayout>

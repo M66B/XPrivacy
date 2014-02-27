@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Added option to batch disable on demand restricting ([issue](/../../issues/1467))
+* Updated Dutch translation
 * Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

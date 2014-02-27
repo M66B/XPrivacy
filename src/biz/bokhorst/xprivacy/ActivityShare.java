@@ -590,8 +590,10 @@ public class ActivityShare extends ActivityBase {
 						PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
 					else if (actionId == R.id.rbTemplate)
 						PrivacyManager.applyTemplate(uid, restrictionName);
-					else if (actionId == R.id.rbOndemand)
+					else if (actionId == R.id.rbEnableOndemand)
 						PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
+					else if (actionId == R.id.rbDisableOndemand)
+						PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(false));
 					else
 						Util.log(null, Log.ERROR, "Unknown action=" + actionId);
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);

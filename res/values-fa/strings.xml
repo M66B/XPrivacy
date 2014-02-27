@@ -132,6 +132,8 @@
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">شماره سریال</string>
     <string name="settings_lat">عرض جغرافیایی</string>
     <string name="settings_lon">طول جغرافیایی</string>

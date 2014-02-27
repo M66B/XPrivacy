@@ -129,6 +129,8 @@
     <string name="title_pleasesubmit">ته کایه بو یارمه تی دانی که سانی تریش ئه و شتانه ى سنوردارتكردوون به لاو بكه </string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">سريال نه مبرى موبايل</string>
     <string name="settings_lat">هیلی پانی</string>
     <string name="settings_lon">هیلی دریژی</string>
