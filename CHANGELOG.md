@@ -18,7 +18,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-*Just a few people are experiencing upgrade problems, see [here](/../../issues/1466) for more details.*
+*Fortunately just a few people were experiencing upgrade problems, see [here](/../../issues/1466) for more details.*
 
 **Version 1.99.59 BETA**
 
