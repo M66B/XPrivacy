@@ -1045,7 +1045,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 				// Dismiss progress dialog
 				if (mProgressDialog.isShowing())
-					mProgressDialog.dismiss();
+					try {
+						mProgressDialog.dismiss();
+					} catch (IllegalArgumentException ignored) {
+					}
 
 				// Restore state
 				ActivityMain.this.selectRestriction(spRestriction.getSelectedItemPosition());

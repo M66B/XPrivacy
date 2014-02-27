@@ -546,7 +546,10 @@ public class ActivityShare extends ActivityBase {
 
 				// Dismiss progress dialog
 				if (mProgressDialog.isShowing())
-					mProgressDialog.dismiss();
+					try {
+						mProgressDialog.dismiss();
+					} catch (IllegalArgumentException ignored) {
+					}
 
 				// Launch non-interactive export
 				if (!mInteractive && mActionId == R.string.menu_export) {
