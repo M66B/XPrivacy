@@ -299,13 +299,14 @@ public class PrivacyService {
 		}
 
 		private void setRestrictionInternal(PRestriction restriction) throws RemoteException {
-			try {
-				if (restriction.restrictionName == null) {
-					Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
-					Util.logStack(null, Log.ERROR);
-					throw new RemoteException("Invalid restriction");
-				}
+			// Validate
+			if (restriction.restrictionName == null) {
+				Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
+				Util.logStack(null, Log.ERROR);
+				throw new RemoteException("Invalid restriction");
+			}
 
+			try {
 				SQLiteDatabase db = getDb();
 				// 0 not restricted, ask
 				// 1 restricted, ask
