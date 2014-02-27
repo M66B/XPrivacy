@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Added option to batch disable on demand restricting ([issue](/../../issues/1467))
+* Clearer whitelist entry delete icon
 * Updated Dutch translation
 * Updated Lithuanian translation
 
