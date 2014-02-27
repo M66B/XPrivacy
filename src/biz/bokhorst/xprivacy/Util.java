@@ -10,6 +10,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.nio.channels.FileChannel;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -471,13 +472,22 @@ public class Util {
 	}
 
 	public static void copy(File src, File dst) throws IOException {
-		InputStream in = new FileInputStream(src);
-		OutputStream out = new FileOutputStream(dst);
-		byte[] buf = new byte[1024];
-		int len;
-		while ((len = in.read(buf)) > 0)
-			out.write(buf, 0, len);
-		in.close();
-		out.close();
+		FileInputStream inStream = null;
+		try {
+			inStream = new FileInputStream(src);
+			FileOutputStream outStream = null;
+			try {
+				outStream = new FileOutputStream(dst);
+				FileChannel inChannel = inStream.getChannel();
+				FileChannel outChannel = outStream.getChannel();
+				inChannel.transferTo(0, inChannel.size(), outChannel);
+			} finally {
+				if (outStream != null)
+					outStream.close();
+			}
+		} finally {
+			if (inStream != null)
+				inStream.close();
+		}
 	}
 }
