@@ -14,12 +14,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.59 BETA**
+
 * Fixed all minor bugs reported through the support info
 * More compatible database upgrade procedure (again)
 * Added option to batch enable on demand restricting (requested on XDA)
 * Added option to export from application details view (requested on XDA)
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.58 TEST**
 
