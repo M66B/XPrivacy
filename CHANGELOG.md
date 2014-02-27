@@ -18,6 +18,7 @@ Changelog
 * Clearer whitelist entry delete icon
 * Updated Dutch translation
 * Updated Lithuanian translation
+* Updated Russian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
