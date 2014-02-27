@@ -129,7 +129,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_deny">Drausti</string>
     <string name="title_pleasesubmit">Prašome pateikti savo leidimą</string>
     <string name="title_permissions">Leidimai</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_set_restrict">Riboti</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
@@ -155,7 +155,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_https">Naudojamas saugus ryšys</string>
     <string name="settings_syscomponents">Riboti sistemos komponentus (Android) (reikia perkrauti)</string>
     <string name="settings_usagedata">Rodyti programos duomenų naudojimą (reikia perkrauti)</string>
-    <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_parameters">Rodyti duomenų naudojimo parametrus</string>
     <string name="settings_cid">GSM stoties ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>
