@@ -159,7 +159,8 @@ public class PrivacyService {
 		// TODO: hook setThreadPolicy
 		try {
 			ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
-			ThreadPolicy newpolicy = new ThreadPolicy.Builder(oldPolicy).permitDiskReads().permitDiskWrites().build();
+			ThreadPolicy newpolicy = new ThreadPolicy.Builder(oldPolicy).permitDiskReads().permitDiskWrites()
+					.permitNetwork().build();
 			StrictMode.setThreadPolicy(newpolicy);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
