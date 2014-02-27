@@ -20,7 +20,7 @@
         android:layout_width="32dip"
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:layout_gravity="center_vertical"
-        android:src="@drawable/delete"
+        android:src="@android:drawable/ic_delete"
         tools:ignore="ContentDescription" />
 
 </LinearLayout>
