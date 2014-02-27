@@ -16,6 +16,8 @@ Changelog
 
 * Added option to batch disable on demand restricting ([issue](/../../issues/1467))
 * Clearer whitelist entry delete icon
+* Log database upgrade failures ([issue](/../../issues/1466))
+* Use not focusable on demand dialog ([issue](/../../issues/1464))
 * Updated Dutch translation
 * Updated Lithuanian translation
 * Updated Russian translation
