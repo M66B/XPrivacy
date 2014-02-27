@@ -1,6 +1,9 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -309,6 +312,8 @@ public class PrivacyService {
 
 			try {
 				SQLiteDatabase db = getDb();
+				if (db == null)
+					return;
 				// 0 not restricted, ask
 				// 1 restricted, ask
 				// 2 not restricted, asked
@@ -451,6 +456,8 @@ public class PrivacyService {
 
 					// No permissions required
 					SQLiteDatabase db = getDb();
+					if (db == null)
+						return mresult;
 
 					// Precompile statement when needed
 					if (stmtGetRestriction == null) {
@@ -592,6 +599,8 @@ public class PrivacyService {
 							try {
 								if (XActivityManagerService.canWriteUsageData()) {
 									SQLiteDatabase dbUsage = getDbUsage();
+									if (dbUsage == null)
+										return;
 
 									mLockUsage.writeLock().lock();
 									dbUsage.beginTransaction();
@@ -665,6 +674,8 @@ public class PrivacyService {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDb();
+				if (db == null)
+					return;
 
 				mLock.writeLock().lock();
 				db.beginTransaction();
@@ -857,6 +868,8 @@ public class PrivacyService {
 		private void setSettingInternal(PSetting setting) throws RemoteException {
 			try {
 				SQLiteDatabase db = getDb();
+				if (db == null)
+					return;
 
 				mLock.writeLock().lock();
 				db.beginTransaction();
@@ -947,6 +960,8 @@ public class PrivacyService {
 
 				// No persmissions required
 				SQLiteDatabase db = getDb();
+				if (db == null)
+					return result;
 
 				// Fallback
 				if (!PrivacyManager.cSettingMigrated.equals(setting.name)
@@ -1014,6 +1029,8 @@ public class PrivacyService {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDb();
+				if (db == null)
+					return listSetting;
 
 				mLock.readLock().lock();
 				db.beginTransaction();
@@ -1051,6 +1068,8 @@ public class PrivacyService {
 			try {
 				enforcePermission();
 				SQLiteDatabase db = getDb();
+				if (db == null)
+					return;
 
 				mLock.writeLock().lock();
 				db.beginTransaction();
@@ -1084,6 +1103,8 @@ public class PrivacyService {
 				enforcePermission();
 				SQLiteDatabase db = getDb();
 				SQLiteDatabase dbUsage = getDbUsage();
+				if (db == null || dbUsage == null)
+					return;
 
 				mLock.writeLock().lock();
 				db.beginTransaction();
@@ -2042,6 +2063,17 @@ public class PrivacyService {
 					} catch (Throwable ex) {
 						mDb = null; // retry
 						Util.bug(null, ex);
+						try {
+							OutputStreamWriter outputStreamWriter = new OutputStreamWriter(new FileOutputStream(
+									"/cache/xprivacy.log", true));
+							outputStreamWriter.write(ex.toString());
+							outputStreamWriter.write("\n");
+							outputStreamWriter.write(Log.getStackTraceString(ex));
+							outputStreamWriter.write("\n");
+							outputStreamWriter.close();
+						} catch (IOException exex) {
+							Util.bug(null, exex);
+						}
 					}
 
 				return mDb;
