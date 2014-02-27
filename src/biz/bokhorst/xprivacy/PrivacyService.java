@@ -1667,26 +1667,32 @@ public class PrivacyService {
 
 				// Move database from data/xprivacy folder
 				File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
-				File[] oldFiles = folder.listFiles();
-				if (oldFiles != null)
-					for (File file : oldFiles)
-						if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db")) {
-							File target = new File(dbFile.getParentFile() + File.separator + file.getName());
-							boolean status = file.renameTo(target);
-							Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
-						}
+				if (folder.exists()) {
+					File[] oldFiles = folder.listFiles();
+					if (oldFiles != null)
+						for (File file : oldFiles)
+							if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db")) {
+								File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+								boolean status = Util.move(file, target);
+								Util.log(null, Log.WARN, "Moved " + file + " to " + target + " ok=" + status);
+							}
+					folder.delete();
+				}
 
 				// Move database from data/application folder
 				folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
 						+ PrivacyService.class.getPackage().getName());
-				oldFiles = folder.listFiles();
-				if (oldFiles != null)
-					for (File file : oldFiles)
-						if (file.getName().startsWith("xprivacy.db")) {
-							File target = new File(dbFile.getParentFile() + File.separator + file.getName());
-							boolean status = file.renameTo(target);
-							Util.log(null, Log.WARN, "Moving " + file + " to " + target + " ok=" + status);
-						}
+				if (folder.exists()) {
+					File[] oldFiles = folder.listFiles();
+					if (oldFiles != null)
+						for (File file : oldFiles)
+							if (file.getName().startsWith("xprivacy.db")) {
+								File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+								boolean status = Util.move(file, target);
+								Util.log(null, Log.WARN, "Moved " + file + " to " + target + " ok=" + status);
+							}
+					folder.delete();
+				}
 
 				// Set database file permissions
 				// Owner: rwx (system)

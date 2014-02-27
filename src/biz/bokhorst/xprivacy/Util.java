@@ -490,4 +490,14 @@ public class Util {
 				inStream.close();
 		}
 	}
+
+	public static boolean move(File src, File dst) {
+		try {
+			copy(src, dst);
+		} catch (IOException ex) {
+			Util.bug(null, ex);
+			return false;
+		}
+		return src.delete();
+	}
 }
