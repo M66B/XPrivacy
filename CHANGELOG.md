@@ -14,6 +14,12 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+*Fortunately just a few people were experiencing upgrade problems, see [here](/../../issues/1466) for more details.*
+
+**Version 1.99.60 BETA**
+
 * Added option to batch disable on demand restricting ([issue](/../../issues/1467))
 * Clearer whitelist entry delete icon
 * Log database upgrade failures ([issue](/../../issues/1466))
@@ -21,10 +27,6 @@ Changelog
 * Updated Dutch translation
 * Updated Lithuanian translation
 * Updated Russian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
-
-*Fortunately just a few people were experiencing upgrade problems, see [here](/../../issues/1466) for more details.*
 
 **Version 1.99.59 BETA**
 
