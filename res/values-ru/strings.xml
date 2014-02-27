@@ -25,7 +25,7 @@
     <string name="menu_select_all">Выбрать всё</string>
     <string name="menu_sort">Сортировка</string>
     <string name="menu_filter">Фильтр</string>
-    <string name="menu_all">Выделить все</string>
+    <string name="menu_all">Все</string>
     <string name="menu_toggle">Переключить разрешения</string>
     <string name="menu_clear_all">Очистить все</string>
     <string name="menu_restrict_all">Запретить все</string>
@@ -123,15 +123,15 @@
     <string name="title_function">Функция:</string>
     <string name="title_parameters">Параметры:</string>
     <string name="title_applycat">Применить ко всей категории</string>
-    <string name="title_once">Раз в %1$s секунду(ы).</string>
+    <string name="title_once">Раз в %1$s сек.</string>
     <string name="title_whitelist">Белый список \'%s\'</string>
     <string name="title_allow">Разрешить</string>
     <string name="title_deny">Запретить</string>
     <string name="title_pleasesubmit">Пожалуйста, отправьте ваши разрешения, чтобы помочь остальным</string>
     <string name="title_permissions">Разрешения</string>
-    <string name="title_set_restrict">Restrict</string>
-    <string name="title_enable_ondemand">Enable on demand restricting</string>
-    <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_set_restrict">Запретить</string>
+    <string name="title_enable_ondemand">Включить запрос разрешений</string>
+    <string name="title_disable_ondemand">Отключить запрос разрешений</string>
     <string name="settings_serial">Серийный номер</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>
@@ -152,7 +152,7 @@
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Экспертный режим</string>
     <string name="settings_dangerous">Запрет опасных функций</string>
-    <string name="settings_confidence">Максимальный доверительный интервал выборки</string>
+    <string name="settings_confidence">Макс. доверительный интервал выборки</string>
     <string name="settings_experimental">Экспериментальные функции</string>
     <string name="settings_https">Использовать безопасные соединения</string>
     <string name="settings_syscomponents">Запрет системных компонентов (Android) (требует перезапуска)</string>
