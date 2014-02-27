@@ -351,7 +351,7 @@
 
                     <EditText
                         android:id="@+id/etId"
-                        android:digits="0123456789ABCDEF"
+                        android:digits="0123456789abcdef"
                         android:hint="DEFACE"
                         android:inputType="textCapCharacters|textNoSuggestions"
                         android:singleLine="true"

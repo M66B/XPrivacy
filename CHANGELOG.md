@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Lower case entry for Android ID (reported on XDA)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 *Fortunately just a few people were experiencing upgrade problems, see [here](/../../issues/1466) for more details.*
