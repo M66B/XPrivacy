@@ -450,9 +450,12 @@ While viewing an application's restrictions, do "Menu > Clear," then reboot.
 <a name="FAQ5"></a>
 **(5) Can I backup XPrivacy's restrictions, settings, and usage data?**
 
-Starting with version 1.11.13, you can no longer backup XPrivacy's data with standard backup tools, such as Titanium Backup. This is because database is no longer stored in the XPrivacy data folder, but in a system folder. I have tried to store the database in the XPrivacy data folder, but this leads to all kinds of permission problems.
+Starting with version 1.11.13, you can no longer backup XPrivacy's data with standard backup tools, such as Titanium Backup.
+This is because database is no longer stored in the XPrivacy data folder, but in a system folder.
+I have tried to store the database in the XPrivacy data folder, but this leads to all kinds of permission problems.
 
-The best practice is to use XPrivacy's export function (Main Menu > Export) to backup XPrivacy data, but please note that this requires the [pro version](http://www.xprivacy.eu/).
+The best practice is to use XPrivacy's export function (Main Menu > Export) to backup XPrivacy data,
+but please note that this requires the [pro version](http://www.xprivacy.eu/).
 
 You can automate backups by sending an intent:
 
@@ -548,7 +551,7 @@ and link to it from the issue you (should) have created.
 
 XPrivacy's restrictions, settings, and usage data are stored in an sqlite3 database in this folder:
 
-/data/xprivacy
+/data/system/xprivacy
 
 <a name="FAQ16"></a>
 **(16) Why doesn't clearing the check box for a data category also clear the functions inside that category?**
@@ -786,7 +789,7 @@ Include a [logcat](#FAQ14) when relevant (use [pastebin](http://pastebin.com/) o
 **Do not forget to enable XPrivacy logging using the settings menu!**
 
 Please describe the exact steps to reproduce the issue
-and include information about your device type and Android version.
+and include information about your device type, Android and XPrivacy version.
 
 **Before submitting any issue please make sure you are running the latest version of XPrivacy.**
 
