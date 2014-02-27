@@ -14,6 +14,7 @@ Changelog
 
 **Next release**
 
+* Fixed all minor bugs reported through the support info
 * Added option to batch enable on demand restricting (requested on XDA)
 * Added option to export from application details view (requested on XDA)
 
