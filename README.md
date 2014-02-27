@@ -767,6 +767,11 @@ IMHO you should at least install an ad blocker and a firewall.
 Please note that these applications are not written by me
 and that you should contact the author for support questions.
 
+<a name="FAQ51"></a>
+**(51) What does the on/off switch do in the application details view?**
+
+It turns all restrictions for the application on or off, but still allows you to change the restrictions.
+
 Support
 -------
 
