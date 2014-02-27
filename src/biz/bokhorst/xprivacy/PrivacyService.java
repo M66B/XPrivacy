@@ -1296,8 +1296,7 @@ public class PrivacyService {
 											dangerous, result, context, latch);
 									AlertDialog alertDialog = builder.create();
 									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_PHONE);
-									alertDialog.getWindow().setSoftInputMode(
-											WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+									alertDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE);
 									alertDialog.setCancelable(false);
 									alertDialog.setCanceledOnTouchOutside(false);
 									alertDialog.show();
