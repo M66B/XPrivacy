@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Added option to batch enable on demand restricting (requested on XDA)
+* Added option to export from application details view (requested on XDA)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

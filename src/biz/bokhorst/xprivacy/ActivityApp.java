@@ -29,6 +29,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
@@ -330,11 +331,14 @@ public class ActivityApp extends ActivityBase {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 		boolean accountsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cAccounts, null).restricted;
 		boolean appsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cSystem, null).restricted;
 		boolean contactsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cContacts, null).restricted;
 
 		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
+		menu.findItem(R.id.menu_export).setEnabled(mounted);
+		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
 		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
 		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
@@ -400,6 +404,9 @@ public class ActivityApp extends ActivityBase {
 			return true;
 		case R.id.menu_clear:
 			optionClear();
+			return true;
+		case R.id.menu_export:
+			optionExport();
 			return true;
 		case R.id.menu_import:
 			optionImport();
@@ -543,6 +550,14 @@ public class ActivityApp extends ActivityBase {
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+	}
+
+	private void optionExport() {
+		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
+		int[] uid = new int[] { mAppInfo.getUid() };
+		intent.putExtra(ActivityShare.cUidList, uid);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		startActivity(intent);
 	}
 
 	private void optionImport() {
