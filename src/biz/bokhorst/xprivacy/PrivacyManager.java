@@ -358,6 +358,12 @@ public class PrivacyManager {
 	public static void setRestrictionList(List<PRestriction> listRestriction) {
 		checkCaller();
 
+		for (PRestriction restriction : listRestriction)
+			if (restriction.restrictionName == null) {
+				Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
+				Util.logStack(null, Log.ERROR);
+			}
+
 		if (listRestriction.size() > 0)
 			try {
 				PrivacyService.getClient().setRestrictionList(listRestriction);
