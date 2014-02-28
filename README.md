@@ -835,6 +835,7 @@ Similar solutions
 * [CyanogenMod Incognito Mode](https://plus.google.com/100275307499530023476/posts/6jzWcRR6hyu) (now Paranoid Android Privacy Guard)
 * [Per App Settings Module](http://forum.xda-developers.com/showthread.php?t=2072081)
 * [Android 4.3+ Permission Manager](http://www.androidpolice.com/2013/07/25/app-ops-android-4-3s-hidden-app-permission-manager-control-permissions-for-individual-apps/)
+* [SRT AppGuard](http://www.srt-appguard.com/en/)
 
 The *PDroid* family provides fake or no data, more or less in the same way as XPrivacy does.
 A difference is that you need to patch Android and that there is (therefore) only limited stock ROM support.
