@@ -4,6 +4,7 @@ import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.InterfaceAddress;
 import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -77,7 +78,7 @@ public class XNetworkInterface extends XHook {
 		} else if (getRestrictionName().equals(PrivacyManager.cNetwork)) {
 			// Network
 			NetworkInterface ni = (NetworkInterface) param.thisObject;
-			if (ni != null && !ni.isLoopback())
+			if (ni != null)
 				if (param.getResult() != null && isRestricted(param))
 					if (mMethod == Methods.getHardwareAddress) {
 						String mac = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC");
