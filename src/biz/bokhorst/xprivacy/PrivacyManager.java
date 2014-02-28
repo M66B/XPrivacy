@@ -783,8 +783,7 @@ public class PrivacyManager {
 			if (ip != null)
 				try {
 					return InetAddress.getByName(ip);
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
+				} catch (Throwable ignored) {
 				}
 
 			// Any address (0.0.0.0)
