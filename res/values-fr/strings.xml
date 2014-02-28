@@ -41,7 +41,7 @@
     <string name="menu_accounts">Choisir les comptes à autoriser</string>
     <string name="menu_applications">Choisir les applis à autoriser</string>
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Gérer les Listes blanches</string>
     <string name="menu_tutorial">Didacticiel</string>
     <string name="menu_exclude">Exclure</string>
     <string name="menu_close">Fermer</string>
@@ -129,9 +129,9 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_deny">Bloquer</string>
     <string name="title_pleasesubmit">Veuillez envoyer vos restrictions pour aider les autres</string>
     <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
-    <string name="title_enable_ondemand">Enable on demand restricting</string>
-    <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_set_restrict">Restreindre la sélection</string>
+    <string name="title_enable_ondemand">Activer \"restreindre sur demande\"</string>
+    <string name="title_disable_ondemand">Désactiver \"restreindre sur demande\"</string>
     <string name="settings_serial">N° de série</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
