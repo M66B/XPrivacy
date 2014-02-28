@@ -33,6 +33,7 @@ Changelog
 * Log database upgrade failures ([issue](/../../issues/1466))
 * Use not focusable on demand dialog ([issue](/../../issues/1464))
 * Updated Dutch translation
+* Updated French translation
 * Updated Lithuanian translation
 * Updated Russian translation
 
