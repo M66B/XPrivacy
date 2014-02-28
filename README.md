@@ -835,6 +835,7 @@ Similar solutions
 * [CyanogenMod Incognito Mode](https://plus.google.com/100275307499530023476/posts/6jzWcRR6hyu) (now Paranoid Android Privacy Guard)
 * [Per App Settings Module](http://forum.xda-developers.com/showthread.php?t=2072081)
 * [Android 4.3+ Permission Manager](http://www.androidpolice.com/2013/07/25/app-ops-android-4-3s-hidden-app-permission-manager-control-permissions-for-individual-apps/)
+* [SRT AppGuard](http://www.srt-appguard.com/en/)
 
 The *PDroid* family provides fake or no data, more or less in the same way as XPrivacy does.
 A difference is that you need to patch Android and that there is (therefore) only limited stock ROM support.
@@ -852,7 +853,9 @@ if the associated content provider chooses to do so.
 The *Per App Settings Module* revokes permissions like LBE Privacy Guard does.
 This modules offers a lot of other, interesting features.
 
-Android 4.3+ Permission Manager is like CyanogenMod Incognito Mode.
+*Android 4.3+ Permission Manager* is like CyanogenMod Incognito Mode.
+
+*SRT AppGuard* does not require root and therefore revokes permissions by uninstalling the app to be monitored and reinstalling a modified version. Without a backup, app data will be lost in this process. Compared to XPrivacy, permission control is not as fine grained and comprehensive. System apps cannot be restricted.
 
 XPrivacy can restrict more data than any of the above solutions,
 also for closed source applications and libraries, like Google Play services.
