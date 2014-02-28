@@ -1740,9 +1740,15 @@ public class PrivacyService {
 					mDb = null;
 					Util.log(null, Log.ERROR, "Database not open");
 				}
-				if (mDb != null && mDb.getVersion() != 11) {
-					mDb = null;
-					Util.log(null, Log.ERROR, "Database wrong version=" + mDb.getVersion());
+
+				mLock.readLock().lock();
+				try {
+					if (mDb != null && mDb.getVersion() != 11) {
+						mDb = null;
+						Util.log(null, Log.ERROR, "Database wrong version=" + mDb.getVersion());
+					}
+				} finally {
+					mLock.readLock().unlock();
 				}
 
 				if (mDb == null)
