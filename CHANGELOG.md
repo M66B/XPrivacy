@@ -14,8 +14,11 @@ Changelog
 
 **Next release**
 
+* Fixed all minor bugs reported through the support info
+	* The loop back address will be restricted too, see [this commit](https://github.com/M66B/XPrivacy/commit/4aad9cecc15cc040a0b9c4104dabb65332e4f63e)
 * Fixed negative GSF ID ([issue](/../../issues/1473))
 * Lower case entry for Android ID (reported on XDA)
+* Updated German translation
 * Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
