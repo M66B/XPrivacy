@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -254,6 +255,7 @@ public class Util {
 				setPermissions(out.getAbsolutePath(), 0700, Process.myUid(), Process.myUid());
 
 				licenseFile.delete();
+			} catch (FileNotFoundException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
