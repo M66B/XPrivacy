@@ -853,7 +853,7 @@ if the associated content provider chooses to do so.
 The *Per App Settings Module* revokes permissions like LBE Privacy Guard does.
 This modules offers a lot of other, interesting features.
 
-Android 4.3+ Permission Manager is like CyanogenMod Incognito Mode.
+*Android 4.3+ Permission Manager* is like CyanogenMod Incognito Mode.
 
 *SRT AppGuard* does not require root and therefore revokes permissions by uninstalling the app to be monitored and reinstalling a modified version. Without a backup, app data will be lost in this process. Compared to XPrivacy, permission control is not as fine grained and comprehensive.
 
