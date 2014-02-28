@@ -1195,14 +1195,15 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					return mListAppAll;
 				else {
 					List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
-					if (flags == cSelectAppUser) {
-						for (ApplicationInfoEx appInfo : mListAppAll)
+					if (flags == cSelectAppUser)
+						for (int i = 0; i < this.getCount(); i++) {
+							ApplicationInfoEx appInfo = this.getItem(i);
 							if (!appInfo.isSystem())
 								listApp.add(appInfo);
-					} else if (flags != cSelectAppNone) {
+						}
+					else if (flags != cSelectAppNone)
 						for (int i = 0; i < this.getCount(); i++)
 							listApp.add(this.getItem(i));
-					}
 					return listApp;
 				}
 			}
