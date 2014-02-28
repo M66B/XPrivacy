@@ -1464,6 +1464,8 @@ public class ActivityShare extends ActivityBase {
 				return null;
 			} catch (ConnectTimeoutException ex) {
 				return ex;
+			} catch (SocketTimeoutException ex) {
+				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex;
