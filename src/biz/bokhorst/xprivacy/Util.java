@@ -35,6 +35,7 @@ import android.os.RemoteException;
 import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Util {
 	private static boolean mPro = false;
@@ -322,7 +323,10 @@ public class Util {
 	public static void viewUri(Context context, Uri uri) {
 		Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 		infoIntent.setData(uri);
-		context.startActivity(infoIntent);
+		if (isIntentAvailable(context, infoIntent))
+			context.startActivity(infoIntent);
+		else
+			Toast.makeText(context, "View action not available", Toast.LENGTH_LONG).show();
 	}
 
 	public static boolean hasLBE() {
