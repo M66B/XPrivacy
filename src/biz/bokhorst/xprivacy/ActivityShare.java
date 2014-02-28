@@ -208,10 +208,18 @@ public class ActivityShare extends ActivityBase {
 			boolean hasIntent = Util.isIntentAvailable(ActivityShare.this, file);
 
 			// Get file name
-			if (action.equals(ACTION_EXPORT))
-				mFileName = getFileName(this, hasIntent);
-			else
-				mFileName = (hasIntent ? null : getFileName(this, false));
+			if (action.equals(ACTION_EXPORT)) {
+				String packageName = null;
+				if (uids.length == 1)
+					try {
+						ApplicationInfoEx appInfo = new ApplicationInfoEx(this, uids[0]);
+						packageName = appInfo.getPackageName().get(0);
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					}
+				mFileName = getFileName(this, hasIntent, packageName);
+			} else
+				mFileName = (hasIntent ? null : getFileName(this, false, null));
 
 			if (mFileName == null)
 				fileChooser();
@@ -1691,15 +1699,15 @@ public class ActivityShare extends ActivityBase {
 			return HTTP_BASE_URL;
 	}
 
-	public static String getFileName(Context context, boolean multiple) {
+	public static String getFileName(Context context, boolean multiple, String packageName) {
 		File folder = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator
 				+ ".xprivacy");
 		folder.mkdir();
 		String fileName;
 		if (multiple) {
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT);
-			fileName = String.format("XPrivacy_%s_%s_%s.xml", Util.getSelfVersionName(context),
-					format.format(new Date()), Build.DEVICE);
+			fileName = String.format("XPrivacy_%s_%s_%s%s.xml", Util.getSelfVersionName(context),
+					format.format(new Date()), Build.DEVICE, (packageName == null ? "" : "_" + packageName));
 		} else
 			fileName = "XPrivacy.xml";
 		return new File(folder + File.separator + fileName).getAbsolutePath();

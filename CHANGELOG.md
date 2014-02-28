@@ -18,6 +18,7 @@ Changelog
 	* The loop back address will be restricted too, see [this commit](https://github.com/M66B/XPrivacy/commit/4aad9cecc15cc040a0b9c4104dabb65332e4f63e)
 * Fixed negative GSF ID ([issue](/../../issues/1473))
 * Select visible applications for fetch ([issue](/../../issues/1477))
+* Add package name to export file name when exporting one application ([issue](/../../issues/1465))
 * Lower case entry for Android ID (reported on XDA)
 * Updated German translation
 * Updated Polish translation
