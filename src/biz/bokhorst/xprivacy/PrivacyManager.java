@@ -938,7 +938,7 @@ public class PrivacyManager {
 		}
 
 		if (name.equals("GSF_ID")) {
-			long v = r.nextLong();
+			long v = Math.abs(r.nextLong());
 			return Long.toString(v, 16).toUpperCase();
 		}
 
