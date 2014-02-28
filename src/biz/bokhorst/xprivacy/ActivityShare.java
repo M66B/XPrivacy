@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.SocketTimeoutException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -1234,6 +1235,8 @@ public class ActivityShare extends ActivityBase {
 					}
 				return null;
 			} catch (ConnectTimeoutException ex) {
+				return ex;
+			} catch (SocketTimeoutException ex) {
 				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
