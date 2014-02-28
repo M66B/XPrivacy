@@ -16,6 +16,7 @@ Changelog
 
 * Fixed negative GSF ID ([issue](/../../issues/1473))
 * Lower case entry for Android ID (reported on XDA)
+* Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
