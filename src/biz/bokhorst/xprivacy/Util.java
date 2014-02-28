@@ -94,6 +94,8 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof ActivityShare.ServerException)
 			priority = Log.WARN;
+		else if (ex instanceof NoClassDefFoundError)
+			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
 
