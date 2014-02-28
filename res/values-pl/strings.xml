@@ -98,7 +98,7 @@
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
     <string name="whitelist_ipaddress">Adresy IP</string>
-    <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_library">Biblioteki natywne</string>
     <string name="whitelist_filename">Nazwy plików</string>
     <string name="whitelist_command">Polecenia powłoki</string>
     <string name="whitelist_url">URLe</string>
@@ -130,8 +130,8 @@
     <string name="title_pleasesubmit">Proszę wyślij twoje ograniczenia aby pomóc innym</string>
     <string name="title_permissions">Uprawnienia</string>
     <string name="title_set_restrict">Ogranicz</string>
-    <string name="title_enable_ondemand">Enable on demand restricting</string>
-    <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_enable_ondemand">Włącz restrykcje na żądanie</string>
+    <string name="title_disable_ondemand">Wyłącz restrykcje na żądanie</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
@@ -157,7 +157,7 @@
     <string name="settings_https">Użyj bezpiecznych połaczeń</string>
     <string name="settings_syscomponents">Ogranicz komponenty systemowe (Android) (wymaga restartu)</string>
     <string name="settings_usagedata">Pokaż użycie danych przez aplikacje (wymaga restartu)</string>
-    <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_parameters">Pokaż parametry odczytu danych</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Przytrzymaj na nazwie aby wybrać</string>
