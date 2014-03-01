@@ -431,6 +431,10 @@ Frequently asked questions
 
 Maybe a little bit, but you probably won't notice.
 
+But my device is slow with XPrivacy!
+It appeared that in some cases this was caused by the TRIM bug.
+See [here](http://forum.xda-developers.com/showthread.php?t=2104326) for more information and a solution.
+
 <a name="FAQ2"></a>
 **(2) Does XPrivacy use a lot of memory and battery?**
 
