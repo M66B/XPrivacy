@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Batch enable/disable on demand restricting requires enabling *Restrict dangerous functions*
+* Batch enable/disable on demand restricting will disable/enable update notifications too
 * Updated Android support library to latest version
 * Updated simplified Chinese translation
 

@@ -597,20 +597,29 @@ public class ActivityShare extends ActivityBase {
 					setState(uid, STATE_RUNNING, null);
 
 					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, restrictionName);
+
 					if (actionId == R.id.rbClear) {
 						PrivacyManager.deleteRestrictions(uid, restrictionName, true);
 						if (restrictionName == null)
 							PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(false));
+
 					} else if (actionId == R.id.rbRestrict)
 						PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
+
 					else if (actionId == R.id.rbTemplate)
 						PrivacyManager.applyTemplate(uid, restrictionName);
-					else if (actionId == R.id.rbEnableOndemand)
+
+					else if (actionId == R.id.rbEnableOndemand) {
 						PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
-					else if (actionId == R.id.rbDisableOndemand)
+						PrivacyManager.setSetting(uid, PrivacyManager.cSettingNotify, Boolean.toString(false));
+
+					} else if (actionId == R.id.rbDisableOndemand) {
 						PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(false));
-					else
+						PrivacyManager.setSetting(uid, PrivacyManager.cSettingNotify, Boolean.toString(true));
+
+					} else
 						Util.log(null, Log.ERROR, "Unknown action=" + actionId);
+
 					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
 					setState(uid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart) : null);
