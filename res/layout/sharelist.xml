@@ -24,7 +24,8 @@
             android:autoLink="web"
             android:ellipsize="start"
             android:singleLine="true"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/cbClear"
