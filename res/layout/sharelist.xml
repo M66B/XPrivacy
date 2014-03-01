@@ -43,36 +43,40 @@
 
             <RadioButton
                 android:id="@+id/rbClear"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/menu_clear"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
                 android:id="@+id/rbRestrict"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title_set_restrict"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
                 android:id="@+id/rbTemplate"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/menu_apply"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
                 android:id="@+id/rbEnableOndemand"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/color_dangerous"
+                android:enabled="false"
                 android:text="@string/title_enable_ondemand"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
                 android:id="@+id/rbDisableOndemand"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="?attr/color_dangerous"
+                android:enabled="false"
                 android:text="@string/title_disable_ondemand"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RadioGroup>

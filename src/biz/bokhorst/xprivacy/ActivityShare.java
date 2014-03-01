@@ -171,6 +171,8 @@ public class ActivityShare extends ActivityBase {
 		// Reference controls
 		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		final RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
+		RadioButton rbODEnable = (RadioButton) findViewById(R.id.rbEnableOndemand);
+		RadioButton rbODDisable = (RadioButton) findViewById(R.id.rbDisableOndemand);
 		final CheckBox cbClear = (CheckBox) findViewById(R.id.cbClear);
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
 		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -250,6 +252,10 @@ public class ActivityShare extends ActivityBase {
 					btnOk.setEnabled(checkedId >= 0);
 				}
 			});
+
+			boolean dangerous = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingDangerous, false, false);
+			rbODEnable.setEnabled(dangerous);
+			rbODDisable.setEnabled(dangerous);
 
 		} else
 			tvDescription.setText(getBaseURL(ActivityShare.this));

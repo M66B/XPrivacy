@@ -14,6 +14,7 @@ Changelog
 
 **Next release**
 
+* Batch enable/disable on demand restricting requires enabling *Restrict dangerous functions*
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
