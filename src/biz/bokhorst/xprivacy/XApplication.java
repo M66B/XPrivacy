@@ -64,6 +64,7 @@ public class XApplication extends XHook {
 						app.registerReceiver(new Receiver(app), new IntentFilter(ACTION_MANAGE_PACKAGE),
 								PERMISSION_MANAGE_PACKAGES, null);
 					}
+				} catch (SecurityException ignored) {
 				} catch (Throwable ex) {
 					Util.bug(this, ex);
 				}
