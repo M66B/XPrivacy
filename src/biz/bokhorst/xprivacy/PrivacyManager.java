@@ -491,12 +491,13 @@ public class PrivacyManager {
 		}
 	}
 
-	public static List<PRestriction> getUsageList(Context context, int uid) {
+	public static List<PRestriction> getUsageList(Context context, int uid, String restrictionName) {
 		checkCaller();
 
 		List<PRestriction> listUsage = new ArrayList<PRestriction>();
 		try {
-			listUsage.addAll(PrivacyService.getClient().getUsageList(uid));
+			listUsage.addAll(PrivacyService.getClient().getUsageList(uid,
+					restrictionName == null ? "" : restrictionName));
 		} catch (Throwable ex) {
 			Util.log(null, Log.ERROR, "getUsageList");
 			Util.bug(null, ex);

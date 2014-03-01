@@ -579,16 +579,20 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private void optionUsage() {
 		Intent intent = new Intent(this, ActivityUsage.class);
+		if (mAppAdapter != null && mAppAdapter.getRestrictionName() != null)
+			intent.putExtra(ActivityUsage.cRestriction, mAppAdapter.getRestrictionName());
 		startActivity(intent);
 	}
 
 	private void optionToggle() {
-		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
-		intent.putExtra(ActivityShare.cInteractive, true);
-		intent.putExtra(ActivityShare.cUidList,
-				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
-		intent.putExtra(ActivityShare.cRestriction, mAppAdapter.getRestrictionName());
-		startActivity(intent);
+		if (mAppAdapter != null) {
+			Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
+			intent.putExtra(ActivityShare.cInteractive, true);
+			intent.putExtra(ActivityShare.cUidList,
+					mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
+			intent.putExtra(ActivityShare.cRestriction, mAppAdapter.getRestrictionName());
+			startActivity(intent);
+		}
 	}
 
 	private void optionClearDB() {

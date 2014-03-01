@@ -34,9 +34,11 @@ import android.widget.TextView;
 public class ActivityUsage extends ActivityBase {
 	private boolean mAll = true;
 	private int mUid;
+	private String mRestrictionName;
 	private UsageAdapter mUsageAdapter;
 
 	public static final String cUid = "Uid";
+	public static final String cRestriction = "Restriction";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -64,6 +66,7 @@ public class ActivityUsage extends ActivityBase {
 		// Get uid
 		Bundle extras = getIntent().getExtras();
 		mUid = (extras == null ? 0 : extras.getInt(cUid, 0));
+		mRestrictionName = (extras == null ? null : extras.getString(cRestriction));
 
 		// Set title
 		setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_usage)));
@@ -129,11 +132,9 @@ public class ActivityUsage extends ActivityBase {
 	private class UsageTask extends AsyncTask<Object, Object, List<PRestriction>> {
 		@Override
 		protected List<PRestriction> doInBackground(Object... arg0) {
-			long minTime = new Date().getTime() - 1000 * 60 * 60 * 24;
 			List<PRestriction> listUsageData = new ArrayList<PRestriction>();
-			for (PRestriction usageData : PrivacyManager.getUsageList(ActivityUsage.this, mUid))
-				if (usageData.time > minTime)
-					listUsageData.add(usageData);
+			for (PRestriction usageData : PrivacyManager.getUsageList(ActivityUsage.this, mUid, mRestrictionName))
+				listUsageData.add(usageData);
 			return listUsageData;
 		}
 

@@ -71,7 +71,7 @@ public class PrivacyService {
 	private static final String cTableSetting = "setting";
 
 	private static final int cCurrentVersion = 295;
-	private static final String cServiceName = "xprivacy291";
+	private static final String cServiceName = "xprivacy296";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -772,7 +772,7 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<PRestriction> getUsageList(int uid) throws RemoteException {
+		public List<PRestriction> getUsageList(int uid, String restrictionName) throws RemoteException {
 			List<PRestriction> result = new ArrayList<PRestriction>();
 			try {
 				enforcePermission();
@@ -782,14 +782,27 @@ public class PrivacyService {
 				dbUsage.beginTransaction();
 				try {
 					Cursor cursor;
-					if (uid == 0)
-						cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-								"restricted", "time", "extra" }, null, new String[] {}, null, null, "time DESC LIMIT "
-								+ cMaxUsageData);
-					else
-						cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-								"restricted", "time", "extra" }, "uid=?", new String[] { Integer.toString(uid) }, null,
-								null, "time DESC LIMIT " + cMaxUsageData);
+					if (uid == 0) {
+						if ("".equals(restrictionName))
+							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
+									"restricted", "time", "extra" }, null, new String[] {}, null, null,
+									"time DESC LIMIT " + cMaxUsageData);
+						else
+							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
+									"restricted", "time", "extra" }, "restriction=?", new String[] { restrictionName },
+									null, null, "time DESC LIMIT " + cMaxUsageData);
+					} else {
+						if ("".equals(restrictionName))
+							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
+									"restricted", "time", "extra" }, "uid=?", new String[] { Integer.toString(uid) },
+									null, null, "time DESC LIMIT " + cMaxUsageData);
+						else
+							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
+									"restricted", "time", "extra" }, "uid=? AND restriction=?",
+									new String[] { Integer.toString(uid), restrictionName }, null, null,
+									"time DESC LIMIT " + cMaxUsageData);
+					}
+
 					if (cursor == null)
 						Util.log(null, Log.WARN, "Database cursor null (usage data)");
 					else
