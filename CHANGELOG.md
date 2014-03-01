@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Fixed interaction of on demand restriction dialog with status bar and keyboard
+* Enabled proguard again for a smaller file size (in preparation of the stable release)
 * Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
