@@ -169,7 +169,7 @@ public class ActivityShare extends ActivityBase {
 		setContentView(R.layout.sharelist);
 
 		// Reference controls
-		TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+		final TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		final RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
 		RadioButton rbODEnable = (RadioButton) findViewById(R.id.rbEnableOndemand);
 		RadioButton rbODDisable = (RadioButton) findViewById(R.id.rbDisableOndemand);
@@ -250,6 +250,14 @@ public class ActivityShare extends ActivityBase {
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
 					btnOk.setEnabled(checkedId >= 0);
+					if (restrictionName == null
+							|| (checkedId == R.id.rbEnableOndemand || checkedId == R.id.rbDisableOndemand))
+						tvDescription.setText(R.string.menu_all);
+					else {
+						int stringId = getResources().getIdentifier("restrict_" + restrictionName, "string",
+								getPackageName());
+						tvDescription.setText(stringId);
+					}
 				}
 			});
 
