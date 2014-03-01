@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Fixed interaction of on demand restriction dialog with status bar and keyboard
+* Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

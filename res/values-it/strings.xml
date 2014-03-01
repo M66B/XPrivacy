@@ -20,7 +20,7 @@
     <string name="menu_fetch">Ricevi restrizioni</string>
     <string name="menu_theme">Cambia tema</string>
     <string name="menu_pro">Versione Pro</string>
-    <string name="menu_about">About</string>
+    <string name="menu_about">Circa</string>
     <string name="menu_help">Aiuto</string>
     <string name="menu_select_all">Seleziona tutto</string>
     <string name="menu_sort">Organizza</string>
@@ -37,7 +37,7 @@
     <string name="menu_app_launch">Avvia</string>
     <string name="menu_app_settings">Impostazioni</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Chiudi processo</string>
+    <string name="menu_app_kill">Termina processo</string>
     <string name="menu_accounts">Seleziona gli accounts da consentire</string>
     <string name="menu_applications">Seleziona le applicazioni da consentire</string>
     <string name="menu_contacts">Seleziona i contatti da consentire</string>
@@ -45,8 +45,8 @@
     <string name="menu_tutorial">Guida</string>
     <string name="menu_exclude">Escludi</string>
     <string name="menu_close">Chiudi</string>
-    <string name="msg_abort">Annullo</string>
-    <string name="msg_aborted">Annullato</string>
+    <string name="msg_abort">Abortisco</string>
+    <string name="msg_aborted">Abortito</string>
     <string name="msg_new">Nuovo</string>
     <string name="msg_update">Aggiorna</string>
     <string name="msg_loading">Caricamento &#8230;</string>
@@ -65,7 +65,7 @@
     <string name="msg_restart">Richiesto riavvio</string>
     <string name="msg_register">Per favore registra il tuo dispositivo</string>
     <string name="msg_email">Per favore inserisci il tuo indirizzo e-mail:</string>
-    <string name="msg_registered">Controlla l\'e-mail per attivare il dispositivo</string>
+    <string name="msg_registered">Controlla la e-mail per attivare il dispositivo</string>
     <string name="msg_service">Servizio di aggiornamento in funzione</string>
     <string name="msg_migrating" formatted="false">Migrazione %s</string>
     <string name="msg_randomizing" formatted="false">Randomizzazione %s</string>
@@ -74,7 +74,7 @@
     <string name="msg_restrictedby">Ristretto da XPrivacy</string>
     <string name="msg_first"><b>Grande attenzione e\' stata impiegata per sviluppare e testare XPrivacy,
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
-\n\nL\'utilizzo è completamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
+\n\nL\'utilizzo è interamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
     <string name="restrict_accounts" tools:ignore="UnusedResources">Accounts (Google, Facebook, ecc)</string>
     <string name="restrict_browser" tools:ignore="UnusedResources">Browser (segnalibri/storico)</string>
     <string name="restrict_calendar" tools:ignore="UnusedResources">Calendario</string>
@@ -102,6 +102,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="whitelist_filename" tools:ignore="UnusedResources">Nomi file</string>
     <string name="whitelist_command" tools:ignore="UnusedResources">Comandi Shell</string>
     <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>
+    <string name="whitelist_proc" tools:ignore="UnusedResources">/proc</string>
     <string name="title_restrict">Seleziona per restringere:</string>
     <string name="title_check_whitelist">Seleziona per consentire</string>
     <string name="title_fused">Filtra per dati di utilizzo</string>
@@ -130,8 +131,8 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_pleasesubmit">Per favore sottoponi le tue restrizioni per aiutare gli altri</string>
     <string name="title_permissions">Permessi</string>
     <string name="title_set_restrict">Restringi</string>
-    <string name="title_enable_ondemand">Enable on demand restricting</string>
-    <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
+    <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
     <string name="settings_serial">Seriale#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
@@ -149,7 +150,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_fake_data">Dati falsi</string>
     <string name="settings_notify">Aggiorna notifiche</string>
     <string name="settings_ondemand">Restringi su richiesta</string>
-    <string name="settings_log">Log di debug (rechiede riavvio)</string>
+    <string name="settings_log">Log di debug (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
     <string name="settings_dangerous">Restringi funzioni pericolose</string>
     <string name="settings_confidence">Intervallo massimo di confidenza nella ricezione</string>
@@ -157,7 +158,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_https">Usa connessioni sicure</string>
     <string name="settings_syscomponents">Restringi componenti di sistema (Android)</string>
     <string name="settings_usagedata">Mostra utilizzo dati dell\'applicazione</string>
-    <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_parameters">Mostra parametri dei dati utilizzati</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Tieni premuto sul nome per selezionare</string>
