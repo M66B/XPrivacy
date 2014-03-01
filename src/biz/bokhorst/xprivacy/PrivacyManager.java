@@ -344,7 +344,7 @@ public class PrivacyManager {
 				for (String rRestrictionName : listRestriction)
 					for (Hook md : getHooks(rRestrictionName))
 						if (md.isDangerous())
-							listPRestriction.add(new PRestriction(uid, restrictionName, md.getName(), false, true));
+							listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
 
 		setRestrictionList(listPRestriction);
 
@@ -357,12 +357,6 @@ public class PrivacyManager {
 
 	public static void setRestrictionList(List<PRestriction> listRestriction) {
 		checkCaller();
-
-		for (PRestriction restriction : listRestriction)
-			if (restriction.restrictionName == null) {
-				Util.log(null, Log.ERROR, "Set invalid restriction " + restriction);
-				Util.logStack(null, Log.ERROR);
-			}
 
 		if (listRestriction.size() > 0)
 			try {

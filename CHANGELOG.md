@@ -14,6 +14,7 @@ Changelog
 
 **Next release**
 
+* Fixed making exceptions for dangerous functions in some situations
 * Batch enable/disable on demand restricting requires enabling *Restrict dangerous functions*
 * Batch enable/disable on demand restricting will disable/enable update notifications too
 * Show usage data for selected category only

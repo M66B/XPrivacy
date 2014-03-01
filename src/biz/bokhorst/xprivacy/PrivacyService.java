@@ -158,7 +158,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 			}
 
-		// Disable disk strict mode
+		// Disable disk/network strict mode
 		// TODO: hook setThreadPolicy
 		try {
 			ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
