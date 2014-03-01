@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Batch enable/disable on demand restricting requires enabling *Restrict dangerous functions*
+* Updated Android support library to latest version
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
