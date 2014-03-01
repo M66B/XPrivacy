@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Fixed interaction of on demand restriction dialog with status bar and keyboard
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.62 BETA**
