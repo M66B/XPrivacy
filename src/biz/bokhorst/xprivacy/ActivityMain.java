@@ -1094,12 +1094,16 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		private class ViewHolder {
 			private View row;
 			public TextView tvRestriction;
+			public ImageView imgCbRestricted;
+			public ImageView imgCbAsk;
 			public boolean restricted;
 			public boolean asked;
 
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
+				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
+				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 			}
 		}
 
@@ -1119,34 +1123,37 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					Boolean.toString(!ondemand) + "+ask", false);
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
-			Bitmap check = (holder.asked ? (holder.restricted ? getFullCheckBox() : getOffCheckBox())
-					: getOnDemandCheckBox());
+			Bitmap check = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
+			Bitmap askCheck = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
 
 			// Set data
 			holder.tvRestriction.setText(listLocalizedTitle.get(position));
-			holder.tvRestriction.setCompoundDrawablesWithIntrinsicBounds(null, null, new BitmapDrawable(getResources(),
-					check), null);
+			holder.imgCbRestricted.setImageBitmap(check);
+			holder.imgCbAsk.setImageBitmap(askCheck);
 
-			holder.tvRestriction.setOnClickListener(new OnClickListener() {
+			holder.imgCbRestricted.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
-					if (holder.restricted && holder.asked) {
-						holder.restricted = false;
-						holder.asked = true;
-					} else if (!holder.restricted && holder.asked) {
-						holder.restricted = false;
-						holder.asked = false;
-					} else {
-						holder.restricted = true;
-						holder.asked = true;
-					}
+					// Update setting
+					holder.restricted = !holder.restricted;
 					PrivacyManager.setSetting(0, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
+					// Update view
+					Bitmap check = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
+					holder.imgCbRestricted.setImageBitmap(check);
+				}
+			});
 
-					Bitmap check = holder.asked ? (holder.restricted ? getFullCheckBox() : getOffCheckBox())
-							: getOnDemandCheckBox();
-					holder.tvRestriction.setCompoundDrawablesWithIntrinsicBounds(null, null, new BitmapDrawable(
-							getResources(), check), null);
+			holder.imgCbAsk.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// Update setting
+					holder.asked = !holder.asked;
+					PrivacyManager.setSetting(0, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
+							: "false") + "+" + (holder.asked ? "asked" : "ask"));
+					// Update view
+					Bitmap askCheck = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
+					holder.imgCbAsk.setImageBitmap(askCheck);
 				}
 			});
 
