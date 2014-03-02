@@ -14,13 +14,15 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.63 BETA**
+
 * Fixed interaction of on demand restricting dialog with status bar and keyboard
 	* Some dialogs when starting an application from a notification are still unresponsive
-* Enabled proguard again for a smaller file size (in preparation of the stable release)
 * Template restrictions and on demand restricting separately, thanks @[jpeg729](https://github.com/jpeg729)
+* Enabled proguard again for a smaller file size (in preparation of the stable release)
 * Updated Italian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.62 BETA**
 
