@@ -265,8 +265,8 @@ public class ActivityShare extends ActivityBase {
 
 			boolean dangerous = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingDangerous, false, false);
 			boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
-			rbODEnable.setEnabled(dangerous && ondemand);
-			rbODDisable.setEnabled(dangerous && ondemand);
+			rbODEnable.setVisibility(dangerous && ondemand ? View.VISIBLE : View.GONE);
+			rbODDisable.setVisibility(dangerous && ondemand ? View.VISIBLE : View.GONE);
 
 		} else
 			tvDescription.setText(getBaseURL(ActivityShare.this));
