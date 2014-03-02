@@ -7,6 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
+import java.net.UnknownHostException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +28,7 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.ConnectTimeoutException;
+import org.apache.http.conn.HttpHostConnectException;
 import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
@@ -1267,7 +1269,11 @@ public class ActivityShare extends ActivityBase {
 				return null;
 			} catch (ConnectTimeoutException ex) {
 				return ex;
+			} catch (HttpHostConnectException ex) {
+				return ex;
 			} catch (SocketTimeoutException ex) {
+				return ex;
+			} catch (UnknownHostException ex) {
 				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -1495,7 +1501,11 @@ public class ActivityShare extends ActivityBase {
 				return null;
 			} catch (ConnectTimeoutException ex) {
 				return ex;
+			} catch (HttpHostConnectException ex) {
+				return ex;
 			} catch (SocketTimeoutException ex) {
+				return ex;
+			} catch (UnknownHostException ex) {
 				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
