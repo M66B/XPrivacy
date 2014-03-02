@@ -14,4 +14,20 @@
         android:gravity="center_vertical"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
+    <ImageView
+        android:id="@+id/imgCbRestricted"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/title_restrict"
+        android:paddingLeft="3dip" />
+
+    <ImageView
+        android:id="@+id/imgCbAsk"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/title_restrict"
+        android:paddingLeft="3dip" />
+
 </LinearLayout>
