@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Added info icon to toggle restrictions
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.63 BETA**

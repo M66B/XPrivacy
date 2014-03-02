@@ -439,6 +439,7 @@ public class ActivityShare extends ActivityBase {
 			private View row;
 			private int position;
 			public ImageView imgIcon;
+			public ImageView imgInfo;
 			public TextView tvName;
 			public ImageView imgResult;
 			public ProgressBar pbRunning;
@@ -448,6 +449,7 @@ public class ActivityShare extends ActivityBase {
 				row = theRow;
 				position = thePosition;
 				imgIcon = (ImageView) row.findViewById(R.id.imgIcon);
+				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvApp);
 				imgResult = (ImageView) row.findViewById(R.id.imgResult);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
@@ -479,6 +481,16 @@ public class ActivityShare extends ActivityBase {
 			// Display icon
 			holder.imgIcon.setImageDrawable(xApp.appInfo.getIcon(ActivityShare.this));
 			holder.imgIcon.setVisibility(View.VISIBLE);
+
+			holder.imgInfo.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// Packages can be selected on the web site
+					Util.viewUri(ActivityShare.this, Uri.parse(String.format(
+							ActivityShare.getBaseURL(ActivityShare.this) + "?package_name=%s", xApp.appInfo
+									.getPackageName().get(0))));
+				}
+			});
 
 			// Set app name
 			holder.tvName.setText(xApp.appInfo.toString());

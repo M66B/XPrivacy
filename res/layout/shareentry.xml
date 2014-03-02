@@ -14,12 +14,22 @@
         android:contentDescription="@string/help_application"
         android:paddingLeft="3dip" />
 
+    <ImageView
+        android:id="@+id/imgInfo"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/imgIcon"
+        android:contentDescription="@string/help_application"
+        android:paddingLeft="3dip"
+        android:src="?attr/icon_info" />
+
     <TextView
         android:id="@+id/tvApp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/imgIcon"
+        android:layout_toRightOf="@id/imgInfo"
         android:paddingLeft="6dip"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textIsSelectable="false" />
