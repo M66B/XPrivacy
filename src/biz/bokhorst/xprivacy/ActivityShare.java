@@ -20,6 +20,8 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
+
+import javax.net.ssl.SSLPeerUnverifiedException;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
@@ -1286,6 +1288,8 @@ public class ActivityShare extends ActivityBase {
 				return ex;
 			} catch (SocketTimeoutException ex) {
 				return ex;
+			} catch (SSLPeerUnverifiedException ex) {
+				return ex;
 			} catch (UnknownHostException ex) {
 				return ex;
 			} catch (Throwable ex) {
@@ -1518,6 +1522,8 @@ public class ActivityShare extends ActivityBase {
 				return ex;
 			} catch (SocketTimeoutException ex) {
 				return ex;
+			} catch (SSLPeerUnverifiedException ex) {
+				return ex;
 			} catch (UnknownHostException ex) {
 				return ex;
 			} catch (Throwable ex) {
@@ -1639,6 +1645,16 @@ public class ActivityShare extends ActivityBase {
 					response.getEntity().getContent().close();
 					throw new IOException(statusLine.getReasonPhrase());
 				}
+			} catch (ConnectTimeoutException ex) {
+				return ex;
+			} catch (HttpHostConnectException ex) {
+				return ex;
+			} catch (SocketTimeoutException ex) {
+				return ex;
+			} catch (SSLPeerUnverifiedException ex) {
+				return ex;
+			} catch (UnknownHostException ex) {
+				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex;
