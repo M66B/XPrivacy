@@ -14,7 +14,8 @@ Changelog
 
 **Next release**
 
-* Fixed interaction of on demand restriction dialog with status bar and keyboard
+* Fixed interaction of on demand restricting dialog with status bar and keyboard
+	* Some dialogs when starting an application from a notification are still unresponsive
 * Enabled proguard again for a smaller file size (in preparation of the stable release)
 * Template restrictions and on demand restricting separately, thanks @[jpeg729](https://github.com/jpeg729)
 * Updated Italian translation
