@@ -21,7 +21,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
-import javax.net.ssl.SSLPeerUnverifiedException;
+import javax.net.ssl.SSLException;
 import javax.xml.parsers.SAXParserFactory;
 
 import org.apache.http.HttpResponse;
@@ -1288,7 +1288,7 @@ public class ActivityShare extends ActivityBase {
 				return ex;
 			} catch (SocketTimeoutException ex) {
 				return ex;
-			} catch (SSLPeerUnverifiedException ex) {
+			} catch (SSLException ex) {
 				return ex;
 			} catch (UnknownHostException ex) {
 				return ex;
@@ -1522,7 +1522,7 @@ public class ActivityShare extends ActivityBase {
 				return ex;
 			} catch (SocketTimeoutException ex) {
 				return ex;
-			} catch (SSLPeerUnverifiedException ex) {
+			} catch (SSLException ex) {
 				return ex;
 			} catch (UnknownHostException ex) {
 				return ex;
@@ -1651,7 +1651,7 @@ public class ActivityShare extends ActivityBase {
 				return ex;
 			} catch (SocketTimeoutException ex) {
 				return ex;
-			} catch (SSLPeerUnverifiedException ex) {
+			} catch (SSLException ex) {
 				return ex;
 			} catch (UnknownHostException ex) {
 				return ex;
