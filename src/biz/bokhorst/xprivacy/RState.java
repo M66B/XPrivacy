@@ -84,6 +84,9 @@ public class RState {
 
 	public void toggleAsked() {
 		asked = !asked;
-		PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, restricted, asked);
+		// Avoid re-doing all exceptions for dangerous functions
+		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
+		listPRestriction.add(new PRestriction(mUid, mRestrictionName, mMethodName, restricted, asked));
+		PrivacyManager.setRestrictionList(listPRestriction);
 	}
 }
