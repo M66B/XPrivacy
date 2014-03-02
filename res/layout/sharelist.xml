@@ -68,7 +68,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/color_dangerous"
-                android:enabled="false"
                 android:text="@string/title_enable_ondemand"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -77,7 +76,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="?attr/color_dangerous"
-                android:enabled="false"
                 android:text="@string/title_disable_ondemand"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RadioGroup>
