@@ -11,8 +11,7 @@
         android:layout_height="?android:attr/listPreferredItemHeightSmall"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:contentDescription="@string/help_application"
-        android:paddingLeft="3dip" />
+        android:contentDescription="@string/help_application" />
 
     <ImageView
         android:id="@+id/imgInfo"
@@ -21,7 +20,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/imgIcon"
         android:contentDescription="@string/help_application"
-        android:paddingLeft="3dip"
+        android:paddingLeft="6dip"
         android:src="?attr/icon_info" />
 
     <TextView
