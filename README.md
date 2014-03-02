@@ -625,6 +625,15 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 
 No, because I don't consider these privacy-sensitive data, i.e., able to identify you and collect data about you. I am happy to add new restrictions for data that is really privacy-sensitive.
 
+<a name="FAQ26"></a>
+**(26) Will you revoke permissions?**
+
+Android permissions cover only a part of the functions that leak privacy sensitive information.
+Revoking permissions will make a lot of applications unusable/crash.
+XPrivacy feeds applications with fake or no data, which keeps most application working.
+In other words, XPrivacy is not a permission manager, but a privacy manager.
+If you need a permission manager, there are several Xposed modules offering this feature.
+
 <a name="FAQ27"></a>
 **(27) Does XPrivacy work with SELinux (Fort Knox)?**
 
@@ -778,6 +787,15 @@ and that you should contact the author for support questions.
 **(51) What does the on/off switch do in the application details view?**
 
 It turns all restrictions for the application on or off, but still allows you to change the restrictions.
+
+<a name="FAQ52"></a>
+**(52) Why was my issue closed?**
+
+I have spent really a lot of time developing XPrivacy and I am happy to look into any issue,
+but I am asking you to properly document your issue.
+*It doesn't work* or *it crashes* is insufficient.
+So, please describe the exact steps to reproduce the problem and/or provide a logcat.
+See [here](https://github.com/M66B/XPrivacy#support) for more details.
 
 Support
 -------
