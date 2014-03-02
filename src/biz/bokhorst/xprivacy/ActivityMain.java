@@ -1085,16 +1085,15 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			tmRestriction = PrivacyManager.getRestrictions(context);
 			listRestrictionName = new ArrayList<String>(tmRestriction.values());
 			listLocalizedTitle = new ArrayList<String>(tmRestriction.navigableKeySet());
+			this.addAll(listLocalizedTitle);
 
 			ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
-
-			this.addAll(listLocalizedTitle);
 		}
 
 		private class ViewHolder {
 			private View row;
 			public TextView tvRestriction;
-			public ImageView imgCbRestricted;
+			public ImageView imgCbRestrict;
 			public ImageView imgCbAsk;
 			public boolean restricted;
 			public boolean asked;
@@ -1102,7 +1101,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
-				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
+				imgCbRestrict = (ImageView) row.findViewById(R.id.imgCbRestrict);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 			}
 		}
@@ -1123,15 +1122,15 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					Boolean.toString(!ondemand) + "+ask", false);
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
-			Bitmap check = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
-			Bitmap askCheck = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
+			Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
+			Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
 
 			// Set data
 			holder.tvRestriction.setText(listLocalizedTitle.get(position));
-			holder.imgCbRestricted.setImageBitmap(check);
-			holder.imgCbAsk.setImageBitmap(askCheck);
+			holder.imgCbRestrict.setImageBitmap(bmRestricted);
+			holder.imgCbAsk.setImageBitmap(bmAsked);
 
-			holder.imgCbRestricted.setOnClickListener(new OnClickListener() {
+			holder.imgCbRestrict.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View arg0) {
 					// Update setting
@@ -1139,8 +1138,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					PrivacyManager.setSetting(0, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
 					// Update view
-					Bitmap check = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
-					holder.imgCbRestricted.setImageBitmap(check);
+					Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
+					holder.imgCbRestrict.setImageBitmap(bmRestricted);
 				}
 			});
 
@@ -1152,8 +1151,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					PrivacyManager.setSetting(0, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
 					// Update view
-					Bitmap askCheck = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
-					holder.imgCbAsk.setImageBitmap(askCheck);
+					Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
+					holder.imgCbAsk.setImageBitmap(bmAsked);
 				}
 			});
 

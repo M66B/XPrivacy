@@ -15,7 +15,7 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ImageView
-        android:id="@+id/imgCbRestricted"
+        android:id="@+id/imgCbRestrict"
         android:layout_width="32dip"
         android:layout_height="32dip"
         android:layout_gravity="center_vertical"
