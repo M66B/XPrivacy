@@ -802,6 +802,17 @@ Support
 
 *Please read everything below first*
 
+### General
+
+**Do not use my personal or XDA e-mail for bug reports, feature requests or questions.**
+
+It is okay to use my personal or XDA e-mail for things that cannot be shared in public,
+such as security reports.
+
+**I will not look into issues of applications that have to be paid for.**
+
+**There is no support for anything else than privacy, so not for game cheating, root cloaking, etc.**
+
 ### Bugs
 
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
@@ -830,17 +841,6 @@ Note that there is a stop on big new features, read [here](http://forum.xda-deve
 ### Questions
 
 If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
-
-### General
-
-**Do not use my personal or XDA e-mail for bug reports, feature requests or questions.**
-
-It is okay to use my personal or XDA e-mail for things that cannot be shared in public,
-such as security reports.
-
-**I will not look into issues of applications that have to be paid for.**
-
-**There is no support for anything else than privacy, so not for game cheating, root cloaking, etc.**
 
 Changelog
 ---------
