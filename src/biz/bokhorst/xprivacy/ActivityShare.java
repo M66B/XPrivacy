@@ -1013,7 +1013,14 @@ public class ActivityShare extends ActivityBase {
 
 							// Check for new uid
 							if (!mListUidSettings.contains(uid)) {
+								// Mark previous as success
+								if (lastUid > 0) {
+									boolean restart = !PrivacyManager.getRestartStates(lastUid, null).equals(mOldState);
+									setState(lastUid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
+								}
+
 								// Update state
+								lastUid = uid;
 								mListUidSettings.add(uid);
 
 								// Update visible state
