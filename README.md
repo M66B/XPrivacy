@@ -630,7 +630,7 @@ No, because I don't consider these privacy-sensitive data, i.e., able to identif
 
 Android permissions cover only a part of the functions that leak privacy sensitive information.
 Revoking permissions will make a lot of applications unusable/crash.
-XPrivacy feeds applications with fake or no data, which keeps most application working.
+XPrivacy feeds applications with fake or no data, which keeps most applications working.
 In other words, XPrivacy is not a permission manager, but a privacy manager.
 If you need a permission manager, there are several Xposed modules offering this feature.
 
