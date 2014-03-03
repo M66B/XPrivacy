@@ -76,7 +76,13 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public boolean isDangerous() {
-		return mDangerous;
+		String name = String.format("%s.%s", PrivacyManager.cSettingDangerous, this.getName());
+		return PrivacyManager.getSettingBool(0, name, mDangerous, false);
+	}
+
+	public void toggleDangerous() {
+		String name = String.format("%s.%s", PrivacyManager.cSettingDangerous, this.getName());
+		PrivacyManager.setSetting(0, name, Boolean.toString(!isDangerous()));
 	}
 
 	public void annotate(String text) {

@@ -1416,6 +1416,23 @@ public class ActivityApp extends ActivityBase {
 						});
 					else
 						holder.imgCbMethodAsk.setClickable(false);
+
+					// Listen for long press
+					holder.llMethodName.setOnLongClickListener(new View.OnLongClickListener() {
+						@Override
+						public boolean onLongClick(View view) {
+							md.toggleDangerous();
+
+							// Reset background color
+							if (md.isDangerous())
+								holder.row.setBackgroundColor(getResources()
+										.getColor(getThemed(R.attr.color_dangerous)));
+							else
+								holder.row.setBackgroundColor(Color.TRANSPARENT);
+
+							return true;
+						}
+					});
 				}
 			}
 		}
