@@ -292,7 +292,8 @@ public class SettingsDialog {
 			cbNotify.setChecked(notify);
 		}
 
-		if (uid == 0 || PrivacyManager.isApplication(uid))
+		boolean gondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+		if (uid == 0 || (PrivacyManager.isApplication(uid) && gondemand))
 			cbOnDemand.setChecked(ondemand);
 		else
 			cbOnDemand.setVisibility(View.GONE);
