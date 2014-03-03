@@ -1231,6 +1231,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			Bitmap bmAsked = (parentAsked || holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
 
 			// Set data
+			if (hook.isDangerous())
+				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+			else
+				holder.row.setBackgroundColor(Color.TRANSPARENT);
 			holder.tvRestriction.setText(hook.getName());
 			holder.imgCbRestrict.setEnabled(parentRestricted);
 			holder.imgCbRestrict.setImageBitmap(bmRestricted);
