@@ -1150,6 +1150,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.tvRestriction.setText(listLocalizedTitle.get(groupPosition));
 			holder.imgCbRestrict.setImageBitmap(bmRestricted);
 			holder.imgCbAsk.setImageBitmap(bmAsked);
+			holder.imgCbAsk.setVisibility(ondemand ? View.VISIBLE : View.GONE);
 
 			holder.imgCbRestrict.setOnClickListener(new OnClickListener() {
 				@Override
@@ -1169,7 +1170,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				@Override
 				public void onClick(View arg0) {
 					// Update setting
-					holder.asked = !holder.asked;
+					holder.asked = (!ondemand || !holder.asked);
 					PrivacyManager.setSetting(0, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
 					// Update view
@@ -1243,6 +1244,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgCbRestrict.setImageBitmap(bmRestricted);
 			holder.imgCbAsk.setEnabled(!parentAsked);
 			holder.imgCbAsk.setImageBitmap(bmAsked);
+			holder.imgCbAsk.setVisibility(ondemand ? View.VISIBLE : View.GONE);
 
 			holder.imgCbRestrict.setOnClickListener(new OnClickListener() {
 				@Override
