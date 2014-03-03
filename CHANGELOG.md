@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Updated Lithuanian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.64 TEST**
