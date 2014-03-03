@@ -75,6 +75,7 @@
             android:layout_gravity="center_vertical"
             android:background="@drawable/list_item_pressed"
             android:clickable="true"
+            android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:paddingLeft="6dip" >
 
             <LinearLayout
