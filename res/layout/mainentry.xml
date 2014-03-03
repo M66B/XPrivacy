@@ -96,6 +96,15 @@
                     android:contentDescription="@string/title_restrict"
                     android:visibility="invisible" />
 
+                <ProgressBar
+                    android:id="@+id/pbRunning"
+                    style="?android:attr/progressBarStyleInverse"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:layout_marginLeft="3dip"
+                    android:layout_marginRight="6dip"
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/tvOnDemand"
                     android:layout_width="wrap_content"

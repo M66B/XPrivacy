@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Fixed function templates in relation to dangerous functions
+* Added spinner for changing restrictions in the application list view
 * Removed user defined dangerous functions
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

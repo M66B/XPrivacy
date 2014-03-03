@@ -1567,6 +1567,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ImageView imgFrozen;
 			public TextView tvName;
 			public ImageView imgCbRestricted;
+			public ProgressBar pbRunning;
 			public TextView tvOnDemand;
 			public RelativeLayout rlName;
 
@@ -1582,6 +1583,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
+				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
 				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				rlName = (RelativeLayout) row.findViewById(R.id.rlName);
 			}
@@ -1757,6 +1759,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			}
 
 			private void deleteRestrictions() {
+				holder.imgCbRestricted.setVisibility(View.GONE);
+				holder.pbRunning.setVisibility(View.VISIBLE);
+
 				new AsyncTask<Object, Object, Object>() {
 					private List<Boolean> oldState;
 
@@ -1788,11 +1793,17 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						// Display new state
 						showState();
+
+						holder.pbRunning.setVisibility(View.GONE);
+						holder.imgCbRestricted.setVisibility(View.VISIBLE);
 					}
 				}.executeOnExecutor(mExecutor);
 			}
 
 			private void toggleRestrictions() {
+				holder.imgCbRestricted.setVisibility(View.GONE);
+				holder.pbRunning.setVisibility(View.VISIBLE);
+
 				new AsyncTask<Object, Object, Object>() {
 					private List<Boolean> oldState;
 					private List<Boolean> newState;
@@ -1822,6 +1833,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						// Display new state
 						showState();
+
+						holder.pbRunning.setVisibility(View.GONE);
+						holder.imgCbRestricted.setVisibility(View.VISIBLE);
 					}
 				}.executeOnExecutor(mExecutor);
 			}
