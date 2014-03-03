@@ -98,7 +98,7 @@
                 <TextView
                     android:id="@+id/tvOnDemand"
                     android:layout_width="wrap_content"
-                    android:layout_height="32dip"
+                    android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:layout_marginLeft="3dip"
                     android:text="@string/msg_question"
