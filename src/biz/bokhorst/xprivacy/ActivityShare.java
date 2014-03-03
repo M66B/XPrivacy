@@ -103,6 +103,7 @@ public class ActivityShare extends ActivityBase {
 	public static final String cUidList = "UidList";
 	public static final String cRestriction = "Restriction";
 	public static final String cInteractive = "Interactive";
+	public static final String cChoice = "Choice";
 	public static final String HTTP_BASE_URL = "http://crowd.xprivacy.eu/";
 	public static final String HTTPS_BASE_URL = "https://crowd.xprivacy.eu/";
 
@@ -114,6 +115,9 @@ public class ActivityShare extends ActivityBase {
 	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
 	public static final String ACTION_SUBMIT = "biz.bokhorst.xprivacy.action.SUBMIT";
 	public static final String ACTION_TOGGLE = "biz.bokhorst.xprivacy.action.TOGGLE";
+
+	public static final int CHOICE_CLEAR = 1;
+	public static final int CHOICE_TEMPLATE = 2;
 
 	public static final int TIMEOUT_MILLISEC = 45000;
 
@@ -142,6 +146,7 @@ public class ActivityShare extends ActivityBase {
 		final String action = getIntent().getAction();
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 		final String restrictionName = (extras != null ? extras.getString(cRestriction) : null);
+		int choice = (extras != null && extras.containsKey(cChoice) ? extras.getInt(cChoice) : -1);
 
 		// License check
 		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
@@ -174,6 +179,8 @@ public class ActivityShare extends ActivityBase {
 		// Reference controls
 		final TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		final RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
+		RadioButton rbClear = (RadioButton) findViewById(R.id.rbClear);
+		RadioButton rbTemplate = (RadioButton) findViewById(R.id.rbTemplate);
 		RadioButton rbODEnable = (RadioButton) findViewById(R.id.rbEnableOndemand);
 		RadioButton rbODDisable = (RadioButton) findViewById(R.id.rbDisableOndemand);
 		final CheckBox cbClear = (CheckBox) findViewById(R.id.cbClear);
@@ -247,6 +254,11 @@ public class ActivityShare extends ActivityBase {
 				tvDescription.setText(stringId);
 			}
 			rgToggle.setVisibility(View.VISIBLE);
+
+			if (choice == CHOICE_CLEAR)
+				rbClear.setChecked(true);
+			else if (choice == CHOICE_TEMPLATE)
+				rbTemplate.setChecked(true);
 
 			// Listen for radio button
 			rgToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {

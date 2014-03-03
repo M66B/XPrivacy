@@ -400,7 +400,7 @@ public class ActivityApp extends ActivityBase {
 			optionUsage();
 			return true;
 		case R.id.menu_apply:
-			optionApply();
+			optionTemplate();
 			return true;
 		case R.id.menu_clear:
 			optionClear();
@@ -492,123 +492,48 @@ public class ActivityApp extends ActivityBase {
 		startActivity(intent);
 	}
 
-	private void optionApply() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_apply));
-		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				new AsyncTask<Object, Object, Object>() {
-					private List<Boolean> oldState;
-					private List<Boolean> newState;
-
-					@Override
-					protected Object doInBackground(Object... arg0) {
-						// Do toggle
-						oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-						PrivacyManager.applyTemplate(mAppInfo.getUid(), null);
-						newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-						return null;
-					}
-
-					@Override
-					protected void onPostExecute(Object result) {
-						// Refresh display
-						if (mPrivacyListAdapter != null)
-							mPrivacyListAdapter.notifyDataSetChanged();
-
-						// Notify restart
-						if (!newState.equals(oldState))
-							Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-									.show();
-
-						super.onPostExecute(result);
-					}
-				}.executeOnExecutor(mExecutor);
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+	private void optionTemplate() {
+		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
+		intent.putExtra(ActivityShare.cChoice, ActivityShare.CHOICE_TEMPLATE);
+		startActivity(intent);
 	}
 
 	private void optionClear() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(R.string.menu_clear_all);
-		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				new AsyncTask<Object, Object, Object>() {
-					private List<Boolean> oldState;
-
-					@Override
-					protected Object doInBackground(Object... arg0) {
-						oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-						PrivacyManager.deleteRestrictions(mAppInfo.getUid(), null, true);
-						return null;
-					}
-
-					@Override
-					protected void onPostExecute(Object result) {
-						// Refresh display
-						if (mPrivacyListAdapter != null)
-							mPrivacyListAdapter.notifyDataSetChanged();
-
-						// Notify restart
-						if (oldState.contains(true))
-							Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-									.show();
-					}
-				}.executeOnExecutor(mExecutor);
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
+		intent.putExtra(ActivityShare.cChoice, ActivityShare.CHOICE_CLEAR);
+		startActivity(intent);
 	}
 
 	private void optionExport() {
 		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
-		int[] uid = new int[] { mAppInfo.getUid() };
-		intent.putExtra(ActivityShare.cUidList, uid);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
 		intent.putExtra(ActivityShare.cInteractive, true);
 		startActivity(intent);
 	}
 
 	private void optionImport() {
 		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-		int[] uid = new int[] { mAppInfo.getUid() };
-		intent.putExtra(ActivityShare.cUidList, uid);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
 		intent.putExtra(ActivityShare.cInteractive, true);
 		startActivity(intent);
 	}
 
 	private void optionSubmit() {
 		if (ActivityShare.registerDevice(this)) {
-			int[] uid = new int[] { mAppInfo.getUid() };
 			Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
-			intent.putExtra(ActivityShare.cUidList, uid);
+			intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
 			intent.putExtra(ActivityShare.cInteractive, true);
 			startActivity(intent);
 		}
 	}
 
 	private void optionFetch() {
-		int[] uid = new int[] { mAppInfo.getUid() };
 		Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
-		intent.putExtra(ActivityShare.cUidList, uid);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
 		intent.putExtra(ActivityShare.cInteractive, true);
 		startActivity(intent);
 	}

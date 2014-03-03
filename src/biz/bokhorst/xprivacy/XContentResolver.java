@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.DeadObjectException;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -76,6 +77,7 @@ public class XContentResolver extends XHook {
 		if (mMethod == Methods.query || mMethod == Methods.cquery)
 			try {
 				handleUriBefore(param);
+			} catch (DeadObjectException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
@@ -98,6 +100,7 @@ public class XContentResolver extends XHook {
 		} else if (mMethod == Methods.query || mMethod == Methods.cquery) {
 			try {
 				handleUriAfter(param);
+			} catch (DeadObjectException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
