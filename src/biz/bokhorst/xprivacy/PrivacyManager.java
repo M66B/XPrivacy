@@ -432,6 +432,7 @@ public class PrivacyManager {
 		boolean ondemand = getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 		if (ondemand)
 			ondemand = getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
+		boolean dangerous = getSettingBool(0, cSettingDangerous, false, false);
 
 		// Build list of restrictions
 		List<String> listRestriction = new ArrayList<String>();
@@ -448,13 +449,14 @@ public class PrivacyManager {
 					+ "+ask", false);
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
-			setRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked);
+			listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked));
 
 			// Childs
 			for (Hook hook : getHooks(rRestrictionName)) {
 				String settingName = rRestrictionName + "." + hook.getName();
-				String value = getSetting(0, Meta.cTypeTemplate, settingName, Boolean.toString(parentRestricted)
-						+ (parentAsked ? "+asked" : "+ask"), false);
+				String value = getSetting(0, Meta.cTypeTemplate, settingName,
+						Boolean.toString(parentRestricted && hook.isDangerous() ? dangerous : true)
+								+ (parentAsked ? "+asked" : "+ask"), false);
 				boolean restricted = value.contains("true");
 				boolean asked = value.contains("asked");
 				listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted

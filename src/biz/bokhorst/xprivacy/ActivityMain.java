@@ -1079,6 +1079,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		private List<String> listRestrictionName;
 		private List<String> listLocalizedTitle;
 		private boolean ondemand;
+		private boolean dangerous;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public TemplateListAdapter(Context context, int resource) {
@@ -1089,6 +1090,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			listLocalizedTitle = new ArrayList<String>(tmRestriction.navigableKeySet());
 
 			ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+			dangerous = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingDangerous, false, false);
 		}
 
 		private class ViewHolder {
@@ -1224,7 +1226,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Get child info
 			String value = PrivacyManager.getSetting(0, Meta.cTypeTemplate, settingName,
-					Boolean.toString(parentRestricted) + (parentAsked ? "+asked" : "+ask"), false);
+					Boolean.toString(parentRestricted && hook.isDangerous() ? dangerous : true)
+							+ (parentAsked ? "+asked" : "+ask"), false);
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
 			Bitmap bmRestricted = (parentRestricted && holder.restricted ? getFullCheckBox() : getOffCheckBox());
