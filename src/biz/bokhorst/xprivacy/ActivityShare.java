@@ -255,11 +255,6 @@ public class ActivityShare extends ActivityBase {
 			}
 			rgToggle.setVisibility(View.VISIBLE);
 
-			if (choice == CHOICE_CLEAR)
-				rbClear.setChecked(true);
-			else if (choice == CHOICE_TEMPLATE)
-				rbTemplate.setChecked(true);
-
 			// Listen for radio button
 			rgToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				@Override
@@ -280,6 +275,11 @@ public class ActivityShare extends ActivityBase {
 			boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 			rbODEnable.setVisibility(dangerous && ondemand ? View.VISIBLE : View.GONE);
 			rbODDisable.setVisibility(dangerous && ondemand ? View.VISIBLE : View.GONE);
+
+			if (choice == CHOICE_CLEAR)
+				rbClear.setChecked(true);
+			else if (choice == CHOICE_TEMPLATE)
+				rbTemplate.setChecked(true);
 
 		} else
 			tvDescription.setText(getBaseURL(ActivityShare.this));
