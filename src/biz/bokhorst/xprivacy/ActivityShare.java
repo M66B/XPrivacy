@@ -3,7 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.SocketTimeoutException;
@@ -910,10 +909,7 @@ public class ActivityShare extends ActivityBase {
 				// Display message
 				Util.log(null, Log.INFO, "Importing finished");
 				return null;
-			} catch (FileNotFoundException ex) {
-				return ex;
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
 				return ex;
 			}
 		}
