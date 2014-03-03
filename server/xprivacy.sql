@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 21, 2013 at 12:54 PM
+-- Generation Time: Mar 03, 2014 at 10:25 PM
 -- Server version: 5.5.31-1~dotdeb.0
 -- PHP Version: 5.3.28-1~dotdeb.0
 
@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `restriction` (`android_id_md5`(50),`android_sdk`,`package_name`(100),`package_version`(50),`package_version_code`,`restriction`(20),`method`(70)),
   KEY `package` (`package_name`(100))
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2424310 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5086415 ;
 
 -- --------------------------------------------------------
 
@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `xprivacy_app` (
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `application` (`application_name`(100),`package_name`(100),`package_version`(50),`package_version_code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=16537 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37051 ;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
