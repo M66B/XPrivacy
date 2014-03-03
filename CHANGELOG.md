@@ -14,13 +14,15 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.66 TEST**
+
 * Fixed function templates in relation to dangerous functions
 * Added spinners for changing restrictions
 * Clearing restrictions does no longer disable on demand restricting application *setting*
 * Delete restrictions and apply template of applications details view will use batch operation
 * Removed user defined dangerous functions
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.65 TEST**
 
