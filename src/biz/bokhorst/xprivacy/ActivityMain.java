@@ -1237,7 +1237,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Get child info
 			String value = PrivacyManager.getSetting(0, Meta.cTypeTemplate, settingName,
-					Boolean.toString(parentRestricted && hook.isDangerous() ? dangerous : true)
+					Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
 							+ (parentAsked ? "+asked" : "+ask"), false);
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));

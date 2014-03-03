@@ -455,7 +455,7 @@ public class PrivacyManager {
 			for (Hook hook : getHooks(rRestrictionName)) {
 				String settingName = rRestrictionName + "." + hook.getName();
 				String value = getSetting(0, Meta.cTypeTemplate, settingName,
-						Boolean.toString(parentRestricted && hook.isDangerous() ? dangerous : true)
+						Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
 								+ (parentAsked ? "+asked" : "+ask"), false);
 				boolean restricted = value.contains("true");
 				boolean asked = value.contains("asked");

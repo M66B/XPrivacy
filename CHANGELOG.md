@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Fixed function templates in relation to dangerous functions
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.65 TEST**
