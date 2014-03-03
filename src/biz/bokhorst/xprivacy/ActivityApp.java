@@ -63,6 +63,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -1025,6 +1026,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgInfo;
 			public TextView tvName;
 			public ImageView imgCbRestricted;
+			public ProgressBar pbRunning;
 			public ImageView imgCbAsk;
 			public LinearLayout llName;
 
@@ -1037,6 +1039,7 @@ public class ActivityApp extends ActivityBase {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
+				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 				llName = (LinearLayout) row.findViewById(R.id.llName);
 			}
@@ -1096,6 +1099,9 @@ public class ActivityApp extends ActivityBase {
 					holder.llName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
+							holder.imgCbRestricted.setVisibility(View.GONE);
+							holder.pbRunning.setVisibility(View.VISIBLE);
+
 							new AsyncTask<Object, Object, Object>() {
 								private List<Boolean> oldState;
 								private List<Boolean> newState;
@@ -1119,6 +1125,9 @@ public class ActivityApp extends ActivityBase {
 									if (!newState.equals(oldState))
 										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
 												Toast.LENGTH_SHORT).show();
+
+									holder.pbRunning.setVisibility(View.GONE);
+									holder.imgCbRestricted.setVisibility(View.VISIBLE);
 								}
 							}.executeOnExecutor(mExecutor);
 						}
@@ -1129,6 +1138,9 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
+								holder.imgCbAsk.setVisibility(View.GONE);
+								holder.pbRunning.setVisibility(View.VISIBLE);
+
 								new AsyncTask<Object, Object, Object>() {
 									@Override
 									protected Object doInBackground(Object... arg0) {
@@ -1140,6 +1152,9 @@ public class ActivityApp extends ActivityBase {
 									protected void onPostExecute(Object result) {
 										// Needed to update children
 										notifyDataSetChanged();
+
+										holder.pbRunning.setVisibility(View.GONE);
+										holder.imgCbAsk.setVisibility(View.VISIBLE);
 									}
 								}.executeOnExecutor(mExecutor);
 							}
@@ -1254,6 +1269,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgInfo;
 			public TextView tvMethodName;
 			public ImageView imgCbMethodRestricted;
+			public ProgressBar pbRunning;
 			public ImageView imgCbMethodAsk;
 			public LinearLayout llMethodName;
 
@@ -1266,6 +1282,7 @@ public class ActivityApp extends ActivityBase {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
 				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
+				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
 				imgCbMethodAsk = (ImageView) row.findViewById(R.id.imgCbMethodAsk);
 				llMethodName = (LinearLayout) row.findViewById(R.id.llMethodName);
 			}
@@ -1343,6 +1360,9 @@ public class ActivityApp extends ActivityBase {
 					holder.llMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
+							holder.imgCbMethodRestricted.setVisibility(View.GONE);
+							holder.pbRunning.setVisibility(View.VISIBLE);
+
 							new AsyncTask<Object, Object, Object>() {
 								@Override
 								protected Object doInBackground(Object... arg0) {
@@ -1361,6 +1381,9 @@ public class ActivityApp extends ActivityBase {
 									if (md.isRestartRequired())
 										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
 												Toast.LENGTH_SHORT).show();
+
+									holder.pbRunning.setVisibility(View.GONE);
+									holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
 								}
 							}.executeOnExecutor(mExecutor);
 						}
@@ -1371,6 +1394,9 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodAsk.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
+								holder.imgCbMethodAsk.setVisibility(View.GONE);
+								holder.pbRunning.setVisibility(View.VISIBLE);
+
 								new AsyncTask<Object, Object, Object>() {
 									@Override
 									protected Object doInBackground(Object... arg0) {
@@ -1381,6 +1407,9 @@ public class ActivityApp extends ActivityBase {
 									@Override
 									protected void onPostExecute(Object result) {
 										holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+
+										holder.pbRunning.setVisibility(View.GONE);
+										holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
 									}
 								}.executeOnExecutor(mExecutor);
 							}

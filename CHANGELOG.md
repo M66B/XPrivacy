@@ -15,7 +15,7 @@ Changelog
 **Next release**
 
 * Fixed function templates in relation to dangerous functions
-* Added spinner for changing restrictions in the application list view
+* Added spinners for changing restrictions
 * Clearing restrictions does no longer disable on demand restricting application setting
 * Removed user defined dangerous functions
 
