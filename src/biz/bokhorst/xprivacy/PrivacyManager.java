@@ -447,20 +447,19 @@ public class PrivacyManager {
 			String parentValue = getSetting(0, Meta.cTypeTemplate, rRestrictionName, Boolean.toString(!ondemand)
 					+ "+ask", false);
 			boolean parentRestricted = parentValue.contains("true");
-			boolean parentAsked = parentValue.contains("asked");
-			setRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked || !ondemand);
+			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
+			setRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked);
 
 			// Childs
-			if (parentRestricted || !parentAsked)
-				for (Hook hook : getHooks(rRestrictionName)) {
-					String settingName = rRestrictionName + "." + hook.getName();
-					String value = getSetting(0, Meta.cTypeTemplate, settingName, Boolean.toString(parentRestricted)
-							+ (parentAsked ? "+asked" : "+ask"), false);
-					boolean restricted = value.contains("true");
-					boolean asked = value.contains("asked");
-					listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
-							&& restricted, parentAsked || asked || !ondemand));
-				}
+			for (Hook hook : getHooks(rRestrictionName)) {
+				String settingName = rRestrictionName + "." + hook.getName();
+				String value = getSetting(0, Meta.cTypeTemplate, settingName, Boolean.toString(parentRestricted)
+						+ (parentAsked ? "+asked" : "+ask"), false);
+				boolean restricted = value.contains("true");
+				boolean asked = value.contains("asked");
+				listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
+						&& restricted, parentAsked || asked || !ondemand));
+			}
 		}
 		setRestrictionList(listPRestriction);
 	}
