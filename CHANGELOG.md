@@ -14,10 +14,12 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.67 TEST**
+
 * Option to apply template partially (categories) or fully (categories and functions)
 * Reverted *Removed user defined dangerous functions*
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.66 TEST**
 
