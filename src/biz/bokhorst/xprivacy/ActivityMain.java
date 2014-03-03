@@ -605,10 +605,20 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				PrivacyManager.clear();
-				spRestriction.setSelection(0);
-				((EditText) findViewById(R.id.etFilter)).setText("");
-				ActivityMain.this.recreate();
+				new AsyncTask<Object, Object, Object>() {
+					@Override
+					protected Object doInBackground(Object... arg0) {
+						PrivacyManager.clear();
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Object result) {
+						spRestriction.setSelection(0);
+						((EditText) findViewById(R.id.etFilter)).setText("");
+						ActivityMain.this.recreate();
+					}
+				}.executeOnExecutor(mExecutor);
 			}
 		});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {

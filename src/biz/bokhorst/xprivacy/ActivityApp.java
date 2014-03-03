@@ -546,16 +546,28 @@ public class ActivityApp extends ActivityBase {
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-				PrivacyManager.deleteRestrictions(mAppInfo.getUid(), null, true);
+				new AsyncTask<Object, Object, Object>() {
+					private List<Boolean> oldState;
 
-				// Refresh display
-				if (mPrivacyListAdapter != null)
-					mPrivacyListAdapter.notifyDataSetChanged();
+					@Override
+					protected Object doInBackground(Object... arg0) {
+						oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
+						PrivacyManager.deleteRestrictions(mAppInfo.getUid(), null, true);
+						return null;
+					}
 
-				// Notify restart
-				if (oldState.contains(true))
-					Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
+					@Override
+					protected void onPostExecute(Object result) {
+						// Refresh display
+						if (mPrivacyListAdapter != null)
+							mPrivacyListAdapter.notifyDataSetChanged();
+
+						// Notify restart
+						if (oldState.contains(true))
+							Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+									.show();
+					}
+				}.executeOnExecutor(mExecutor);
 			}
 		});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
