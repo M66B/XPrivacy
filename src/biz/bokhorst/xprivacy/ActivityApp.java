@@ -1025,7 +1025,7 @@ public class ActivityApp extends ActivityBase {
 		private ApplicationInfoEx mAppInfo;
 		private String mSelectedRestrictionName;
 		private String mSelectedMethodName;
-		private List<String> mRestrictions;
+		private List<String> mListRestriction;
 		private HashMap<Integer, List<Hook>> mHook;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -1034,7 +1034,7 @@ public class ActivityApp extends ActivityBase {
 			mAppInfo = appInfo;
 			mSelectedRestrictionName = selectedRestrictionName;
 			mSelectedMethodName = selectedMethodName;
-			mRestrictions = new ArrayList<String>();
+			mListRestriction = new ArrayList<String>();
 			mHook = new LinkedHashMap<Integer, List<Hook>>();
 
 			boolean fUsed = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUsed, false, false);
@@ -1045,18 +1045,18 @@ public class ActivityApp extends ActivityBase {
 				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, rRestrictionName);
 				if (mSelectedRestrictionName != null
 						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
-					mRestrictions.add(rRestrictionName);
+					mListRestriction.add(rRestrictionName);
 			}
 		}
 
 		@Override
 		public Object getGroup(int groupPosition) {
-			return mRestrictions.get(groupPosition);
+			return mListRestriction.get(groupPosition);
 		}
 
 		@Override
 		public int getGroupCount() {
-			return mRestrictions.size();
+			return mListRestriction.size();
 		}
 
 		@Override
@@ -1235,7 +1235,7 @@ public class ActivityApp extends ActivityBase {
 				boolean fPermission = PrivacyManager
 						.getSettingBool(0, PrivacyManager.cSettingFPermission, false, false);
 				List<Hook> listMethod = new ArrayList<Hook>();
-				String restrictionName = mRestrictions.get(groupPosition);
+				String restrictionName = mListRestriction.get(groupPosition);
 				for (Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
 					boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName()) > 0);
 					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
@@ -1425,10 +1425,10 @@ public class ActivityApp extends ActivityBase {
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
-			final Hook md = (Hook) getChild(groupPosition, childPosition);
+			final Hook hook = (Hook) getChild(groupPosition, childPosition);
 
 			// Set background color
-			if (md.isDangerous())
+			if (hook.isDangerous())
 				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
@@ -1438,7 +1438,7 @@ public class ActivityApp extends ActivityBase {
 			holder.imgCbMethodAsk.setEnabled(false);
 
 			// Display method name
-			holder.tvMethodName.setText(md.getName());
+			holder.tvMethodName.setText(hook.getName());
 			holder.tvMethodName.setTypeface(null, Typeface.NORMAL);
 
 			// Display if used
@@ -1447,7 +1447,7 @@ public class ActivityApp extends ActivityBase {
 			// Display if permissions
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 
-			if (md.getAnnotation() == null)
+			if (hook.getAnnotation() == null)
 				holder.imgInfo.setVisibility(View.GONE);
 			else {
 				holder.imgInfo.setVisibility(View.VISIBLE);
@@ -1458,10 +1458,10 @@ public class ActivityApp extends ActivityBase {
 						View layout = inflator.inflate(R.layout.popup, null);
 
 						TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
-						tvTitle.setText(md.getName() + " (SDK " + md.getSdk() + ")");
+						tvTitle.setText(hook.getName() + " (SDK " + hook.getSdk() + ")");
 
-						String text = md.getAnnotation();
-						String[] permissions = md.getPermissions();
+						String text = hook.getAnnotation();
+						String[] permissions = hook.getPermissions();
 						if (permissions != null && permissions.length > 0) {
 							text += "<br /><br /><b>" + getString(R.string.title_permissions) + "</b><br /><br />";
 							if (permissions[0].equals(""))
@@ -1469,8 +1469,8 @@ public class ActivityApp extends ActivityBase {
 							else
 								text += TextUtils.join("<br />", permissions);
 						}
-						if (md.getFrom() != null)
-							text += "<br /><br />XPrivacy " + md.getFrom();
+						if (hook.getFrom() != null)
+							text += "<br /><br />XPrivacy " + hook.getFrom();
 
 						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
 						tvInfo.setText(Html.fromHtml(text));
