@@ -500,18 +500,33 @@ public class ActivityApp extends ActivityBase {
 		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
-				// Do toggle
-				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-				PrivacyManager.applyTemplate(mAppInfo.getUid(), null);
-				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
+				new AsyncTask<Object, Object, Object>() {
+					private List<Boolean> oldState;
+					private List<Boolean> newState;
 
-				// Refresh display
-				if (mPrivacyListAdapter != null)
-					mPrivacyListAdapter.notifyDataSetChanged();
+					@Override
+					protected Object doInBackground(Object... arg0) {
+						// Do toggle
+						oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
+						PrivacyManager.applyTemplate(mAppInfo.getUid(), null);
+						newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
+						return null;
+					}
 
-				// Notify restart
-				if (!newState.equals(oldState))
-					Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
+					@Override
+					protected void onPostExecute(Object result) {
+						// Refresh display
+						if (mPrivacyListAdapter != null)
+							mPrivacyListAdapter.notifyDataSetChanged();
+
+						// Notify restart
+						if (!newState.equals(oldState))
+							Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+									.show();
+
+						super.onPostExecute(result);
+					}
+				}.executeOnExecutor(mExecutor);
 			}
 		});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
@@ -1144,18 +1159,31 @@ public class ActivityApp extends ActivityBase {
 					holder.llName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Change restriction
-							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
-							rstate.toggleRestriction();
-							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+							new AsyncTask<Object, Object, Object>() {
+								private List<Boolean> oldState;
+								private List<Boolean> newState;
 
-							// Refresh display
-							notifyDataSetChanged(); // Needed to update children
+								@Override
+								protected Object doInBackground(Object... arg0) {
+									// Change restriction
+									oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+									rstate.toggleRestriction();
+									newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+									return null;
+								}
 
-							// Notify restart
-							if (!newState.equals(oldState))
-								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-										.show();
+								@Override
+								protected void onPostExecute(Object result) {
+									// Refresh display
+									// Needed to update children
+									notifyDataSetChanged();
+
+									// Notify restart
+									if (!newState.equals(oldState))
+										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
+												Toast.LENGTH_SHORT).show();
+								}
+							}.executeOnExecutor(mExecutor);
 						}
 					});
 
@@ -1164,11 +1192,23 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
-								rstate.toggleAsked();
-								notifyDataSetChanged();
-								// Needed to update children
+								new AsyncTask<Object, Object, Object>() {
+									@Override
+									protected Object doInBackground(Object... arg0) {
+										rstate.toggleAsked();
+										return null;
+									}
+
+									@Override
+									protected void onPostExecute(Object result) {
+										// Needed to update children
+										notifyDataSetChanged();
+									}
+								}.executeOnExecutor(mExecutor);
 							}
 						});
+					else
+						holder.imgCbAsk.setClickable(false);
 				}
 			}
 		}
@@ -1366,16 +1406,26 @@ public class ActivityApp extends ActivityBase {
 					holder.llMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Change restriction
-							rstate.toggleRestriction();
+							new AsyncTask<Object, Object, Object>() {
+								@Override
+								protected Object doInBackground(Object... arg0) {
+									// Change restriction
+									rstate.toggleRestriction();
+									return null;
+								}
 
-							// Refresh display
-							notifyDataSetChanged(); // Needed to update parent
+								@Override
+								protected void onPostExecute(Object result) {
+									// Refresh display
+									// Needed to update parent
+									notifyDataSetChanged();
 
-							// Notify restart
-							if (md.isRestartRequired())
-								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-										.show();
+									// Notify restart
+									if (md.isRestartRequired())
+										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
+												Toast.LENGTH_SHORT).show();
+								}
+							}.executeOnExecutor(mExecutor);
 						}
 					});
 
@@ -1384,10 +1434,22 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodAsk.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
-								rstate.toggleAsked();
-								holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+								new AsyncTask<Object, Object, Object>() {
+									@Override
+									protected Object doInBackground(Object... arg0) {
+										rstate.toggleAsked();
+										return null;
+									}
+
+									@Override
+									protected void onPostExecute(Object result) {
+										holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+									}
+								}.executeOnExecutor(mExecutor);
 							}
 						});
+					else
+						holder.imgCbMethodAsk.setClickable(false);
 
 					// Listen for long press
 					holder.llMethodName.setOnLongClickListener(new View.OnLongClickListener() {

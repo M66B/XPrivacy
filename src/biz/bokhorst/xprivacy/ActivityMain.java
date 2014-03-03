@@ -1727,28 +1727,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 											new DialogInterface.OnClickListener() {
 												@Override
 												public void onClick(DialogInterface dialog, int which) {
-													// Update restriction
-													List<Boolean> oldState = PrivacyManager.getRestartStates(
-															xAppInfo.getUid(), mRestrictionName);
-													PrivacyManager.deleteRestrictions(xAppInfo.getUid(), null, true);
-													PrivacyManager.setSetting(xAppInfo.getUid(),
-															PrivacyManager.cSettingOnDemand, Boolean.toString(true));
-
-													// Update visible state
-													holder.vwState.setBackgroundColor(getResources().getColor(
-															getThemed(R.attr.color_state_attention)));
-
-													// Update stored state
-													rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
-													holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-													holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE
-															: View.VISIBLE);
-
-													// Notify restart
-													if (oldState.contains(true))
-														Toast.makeText(ActivityMain.this,
-																getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-																.show();
+													deleteRestrictions();
 												}
 											});
 									alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
@@ -1759,42 +1738,93 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 											});
 									AlertDialog alertDialog = alertDialogBuilder.create();
 									alertDialog.show();
-								} else {
-									// Change restriction
-									List<Boolean> oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
-											mRestrictionName);
-									rstate.toggleRestriction();
-									List<Boolean> newState = PrivacyManager.getRestartStates(xAppInfo.getUid(),
-											mRestrictionName);
-
-									// Update restriction display
-									rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
-									holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-
-									// Update on demand
-									holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
-
-									// Notify restart
-									if (!newState.equals(oldState))
-										Toast.makeText(ActivityMain.this, getString(R.string.msg_restart),
-												Toast.LENGTH_SHORT).show();
-								}
-
-								// Display new state
-								state = xAppInfo.getState(ActivityMain.this);
-								if (state == STATE_ATTENTION)
-									holder.vwState.setBackgroundColor(getResources().getColor(
-											getThemed(R.attr.color_state_attention)));
-								else if (state == STATE_SHARED)
-									holder.vwState.setBackgroundColor(getResources().getColor(
-											getThemed(R.attr.color_state_shared)));
-								else
-									holder.vwState.setBackgroundColor(getResources().getColor(
-											getThemed(R.attr.color_state_restricted)));
+								} else
+									toggleRestrictions();
 							}
 						}
 					});
 				}
+			}
+
+			private void deleteRestrictions() {
+				new AsyncTask<Object, Object, Object>() {
+					private List<Boolean> oldState;
+
+					@Override
+					protected Object doInBackground(Object... arg0) {
+						// Update restriction
+						oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(), mRestrictionName);
+						PrivacyManager.deleteRestrictions(xAppInfo.getUid(), null, true);
+						PrivacyManager.setSetting(xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+								Boolean.toString(true));
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Object result) {
+						// Update visible state
+						holder.vwState.setBackgroundColor(getResources().getColor(
+								getThemed(R.attr.color_state_attention)));
+
+						// Update stored state
+						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
+						holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+
+						// Notify restart
+						if (oldState.contains(true))
+							Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+									.show();
+
+						// Display new state
+						showState();
+					}
+				}.executeOnExecutor(mExecutor);
+			}
+
+			private void toggleRestrictions() {
+				new AsyncTask<Object, Object, Object>() {
+					private List<Boolean> oldState;
+					private List<Boolean> newState;
+
+					@Override
+					protected Object doInBackground(Object... arg0) {
+						// Change restriction
+						oldState = PrivacyManager.getRestartStates(xAppInfo.getUid(), mRestrictionName);
+						rstate.toggleRestriction();
+						newState = PrivacyManager.getRestartStates(xAppInfo.getUid(), mRestrictionName);
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Object result) {
+						// Update restriction display
+						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
+
+						// Update on demand
+						holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+
+						// Notify restart
+						if (!newState.equals(oldState))
+							Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+									.show();
+
+						// Display new state
+						showState();
+					}
+				}.executeOnExecutor(mExecutor);
+			}
+
+			private void showState() {
+				state = xAppInfo.getState(ActivityMain.this);
+				if (state == STATE_ATTENTION)
+					holder.vwState.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_attention)));
+				else if (state == STATE_SHARED)
+					holder.vwState.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_shared)));
+				else
+					holder.vwState
+							.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_restricted)));
 			}
 		}
 
