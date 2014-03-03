@@ -903,7 +903,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		cbFRestrictionNot.setEnabled(fRestriction);
 
 		cbFOnDemand.setEnabled(ondemand);
-		cbFOnDemandNot.setEnabled(fRestriction && ondemand);
+		cbFOnDemandNot.setEnabled(fOnDemand && ondemand);
 
 		// Manage user/system filter exclusivity
 		OnCheckedChangeListener checkListener = new OnCheckedChangeListener() {
