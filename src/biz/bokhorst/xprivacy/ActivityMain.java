@@ -51,11 +51,13 @@ import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
+import android.widget.ExpandableListView;
 import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -623,7 +625,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(R.string.menu_template);
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		ListView lvTemplate = new ListView(this);
+		ExpandableListView lvTemplate = new ExpandableListView(this);
 		lvTemplate.setAdapter(new TemplateListAdapter(this, R.layout.templateentry));
 		alertDialogBuilder.setView(lvTemplate);
 		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
@@ -1071,21 +1073,18 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	}
 
 	@SuppressLint("DefaultLocale")
-	private class TemplateListAdapter extends ArrayAdapter<String> {
+	private class TemplateListAdapter extends BaseExpandableListAdapter {
+		private List<String> listRestrictionName;
+		private List<String> listLocalizedTitle;
+		private boolean ondemand;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		TreeMap<String, String> tmRestriction;
-		List<String> listRestrictionName;
-		List<String> listLocalizedTitle;
-		boolean ondemand;
 
 		public TemplateListAdapter(Context context, int resource) {
-			super(context, resource, new ArrayList<String>());
 
 			// Get restriction categories
-			tmRestriction = PrivacyManager.getRestrictions(context);
+			TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(context);
 			listRestrictionName = new ArrayList<String>(tmRestriction.values());
 			listLocalizedTitle = new ArrayList<String>(tmRestriction.navigableKeySet());
-			this.addAll(listLocalizedTitle);
 
 			ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 		}
@@ -1098,7 +1097,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public boolean restricted;
 			public boolean asked;
 
-			public ViewHolder(View theRow, int thePosition) {
+			public ViewHolder(View theRow) {
 				row = theRow;
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
 				imgCbRestrict = (ImageView) row.findViewById(R.id.imgCbRestrict);
@@ -1107,17 +1106,34 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		@Override
-		public View getView(int position, View convertView, ViewGroup parent) {
+		public Object getGroup(int groupPosition) {
+			return listRestrictionName.get(groupPosition);
+		}
+
+		@Override
+		public int getGroupCount() {
+			return listRestrictionName.size();
+		}
+
+		@Override
+		public long getGroupId(int groupPosition) {
+			return groupPosition;
+		}
+
+		@Override
+		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.templateentry, null);
-				holder = new ViewHolder(convertView, position);
+				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			} else
 				holder = (ViewHolder) convertView.getTag();
 
+			// Get entry
+			final String restrictionName = (String) getGroup(groupPosition);
+
 			// Get info
-			final String restrictionName = listRestrictionName.get(position);
 			String value = PrivacyManager.getSetting(0, Meta.cTypeTemplate, restrictionName,
 					Boolean.toString(!ondemand) + "+ask", false);
 			holder.restricted = value.contains("true");
@@ -1126,7 +1142,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
 
 			// Set data
-			holder.tvRestriction.setText(listLocalizedTitle.get(position));
+			holder.tvRestriction.setTypeface(null, Typeface.BOLD);
+			holder.tvRestriction.setText(listLocalizedTitle.get(groupPosition));
 			holder.imgCbRestrict.setImageBitmap(bmRestricted);
 			holder.imgCbAsk.setImageBitmap(bmAsked);
 
@@ -1140,6 +1157,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Update view
 					Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
 					holder.imgCbRestrict.setImageBitmap(bmRestricted);
+					notifyDataSetChanged(); // update childs
 				}
 			});
 
@@ -1153,10 +1171,102 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Update view
 					Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
 					holder.imgCbAsk.setImageBitmap(bmAsked);
+					notifyDataSetChanged(); // update childs
 				}
 			});
 
 			return convertView;
+		}
+
+		@Override
+		public Object getChild(int groupPosition, int childPosition) {
+			return PrivacyManager.getHooks((String) getGroup(groupPosition)).get(childPosition);
+		}
+
+		@Override
+		public long getChildId(int groupPosition, int childPosition) {
+			return childPosition;
+		}
+
+		@Override
+		public int getChildrenCount(int groupPosition) {
+			return PrivacyManager.getHooks((String) getGroup(groupPosition)).size();
+		}
+
+		@Override
+		public boolean isChildSelectable(int groupPosition, int childPosition) {
+			return false;
+		}
+
+		@Override
+		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
+				ViewGroup parent) {
+			final ViewHolder holder;
+			if (convertView == null) {
+				convertView = mInflater.inflate(R.layout.templateentry, null);
+				holder = new ViewHolder(convertView);
+				convertView.setTag(holder);
+			} else
+				holder = (ViewHolder) convertView.getTag();
+
+			// Get entry
+			final String restrictionName = (String) getGroup(groupPosition);
+			final Hook hook = (Hook) getChild(groupPosition, childPosition);
+			final String settingName = restrictionName + "." + hook.getName();
+
+			// Get parent info
+			String parentValue = PrivacyManager.getSetting(0, Meta.cTypeTemplate, restrictionName,
+					Boolean.toString(!ondemand) + "+ask", false);
+			boolean parentRestricted = parentValue.contains("true");
+			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
+
+			// Get child info
+			String value = PrivacyManager.getSetting(0, Meta.cTypeTemplate, settingName,
+					Boolean.toString(parentRestricted) + (parentAsked ? "+asked" : "+ask"), false);
+			holder.restricted = value.contains("true");
+			holder.asked = (!ondemand || value.contains("asked"));
+			Bitmap bmRestricted = (parentRestricted && holder.restricted ? getFullCheckBox() : getOffCheckBox());
+			Bitmap bmAsked = (parentAsked || holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
+
+			// Set data
+			holder.tvRestriction.setText(hook.getName());
+			holder.imgCbRestrict.setEnabled(parentRestricted);
+			holder.imgCbRestrict.setImageBitmap(bmRestricted);
+			holder.imgCbAsk.setEnabled(!parentAsked);
+			holder.imgCbAsk.setImageBitmap(bmAsked);
+
+			holder.imgCbRestrict.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// Update setting
+					holder.restricted = !holder.restricted;
+					PrivacyManager.setSetting(0, Meta.cTypeTemplate, settingName,
+							(holder.restricted ? "true" : "false") + "+" + (holder.asked ? "asked" : "ask"));
+					// Update view
+					Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
+					holder.imgCbRestrict.setImageBitmap(bmRestricted);
+				}
+			});
+
+			holder.imgCbAsk.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View arg0) {
+					// Update setting
+					holder.asked = !holder.asked;
+					PrivacyManager.setSetting(0, Meta.cTypeTemplate, settingName,
+							(holder.restricted ? "true" : "false") + "+" + (holder.asked ? "asked" : "ask"));
+					// Update view
+					Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
+					holder.imgCbAsk.setImageBitmap(bmAsked);
+				}
+			});
+
+			return convertView;
+		}
+
+		@Override
+		public boolean hasStableIds() {
+			return true;
 		}
 	}
 
