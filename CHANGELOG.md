@@ -18,6 +18,7 @@ Changelog
 
 **Version 1.99.65 TEST**
 
+* Fixed on demand restricting filtering negate  ([issue](/../../issues/1495))
 * Run all restriction changes in the background
 	* To prevent application not responding messages
 	* There can be a delay before a restriction change is visible
