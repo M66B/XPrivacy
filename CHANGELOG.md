@@ -14,12 +14,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.65 TEST**
+
 * Run all restriction changes in the background
 	* To prevent application not responding messages
 	* There can be a delay before a restriction change is visible
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.64 TEST**
 
