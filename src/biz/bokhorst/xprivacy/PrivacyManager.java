@@ -429,25 +429,40 @@ public class PrivacyManager {
 		checkCaller();
 
 		// Check on-demand
-		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+		boolean ondemand = getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 		if (ondemand)
-			ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
+			ondemand = getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
 
 		// Build list of restrictions
 		List<String> listRestriction = new ArrayList<String>();
 		if (restrictionName == null)
-			listRestriction.addAll(PrivacyManager.getRestrictions());
+			listRestriction.addAll(getRestrictions());
 		else
 			listRestriction.add(restrictionName);
 
 		// Apply template
+		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction) {
-			String templateValue = PrivacyManager.getSetting(0, Meta.cTypeTemplate, rRestrictionName,
-					Boolean.toString(!ondemand) + "+ask", false);
-			boolean restrict = templateValue.contains("true");
-			boolean asked = templateValue.contains("asked");
-			PrivacyManager.setRestriction(uid, rRestrictionName, null, restrict, asked || !ondemand);
+			// Parent
+			String parentValue = getSetting(0, Meta.cTypeTemplate, rRestrictionName, Boolean.toString(!ondemand)
+					+ "+ask", false);
+			boolean parentRestricted = parentValue.contains("true");
+			boolean parentAsked = parentValue.contains("asked");
+			setRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked || !ondemand);
+
+			// Childs
+			if (parentRestricted || !parentAsked)
+				for (Hook hook : getHooks(rRestrictionName)) {
+					String settingName = rRestrictionName + "." + hook.getName();
+					String value = getSetting(0, Meta.cTypeTemplate, settingName, Boolean.toString(parentRestricted)
+							+ (parentAsked ? "+asked" : "+ask"), false);
+					boolean restricted = value.contains("true");
+					boolean asked = value.contains("asked");
+					listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
+							&& restricted, parentAsked || asked || !ondemand));
+				}
 		}
+		setRestrictionList(listPRestriction);
 	}
 
 	// White listing
