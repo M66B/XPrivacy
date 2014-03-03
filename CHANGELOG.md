@@ -14,12 +14,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.64 TEST**
+
 * Fixed all minor bugs reported through the support info
 * Fixed some minor bugs and improved some layouts
-* Template functions
+* Added template for functions
 * Added info icon to toggle restrictions
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.63 BETA**
 
