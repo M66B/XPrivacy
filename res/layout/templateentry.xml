@@ -3,9 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin" >
+    android:orientation="horizontal" >
 
     <TextView
         android:id="@+id/tvRestriction"
@@ -13,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:paddingLeft="24dip"
+        android:paddingLeft="30dip"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ImageView

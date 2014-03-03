@@ -625,9 +625,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(R.string.menu_template);
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		ExpandableListView lvTemplate = new ExpandableListView(this);
-		lvTemplate.setAdapter(new TemplateListAdapter(this, R.layout.templateentry));
-		alertDialogBuilder.setView(lvTemplate);
+		ExpandableListView elvTemplate = new ExpandableListView(this);
+		elvTemplate.setPadding(6, 0, 6, 0);
+		elvTemplate.setAdapter(new TemplateListAdapter(this, R.layout.templateentry));
+		elvTemplate.setScrollBarStyle(ExpandableListView.SCROLLBARS_INSIDE_INSET);
+		alertDialogBuilder.setView(elvTemplate);
 		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
