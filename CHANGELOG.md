@@ -14,6 +14,8 @@ Changelog
 
 **Next release**
 
+* Option to apply template partially (categories) or fully (categories and functions)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.66 TEST**

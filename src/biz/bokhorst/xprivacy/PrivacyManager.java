@@ -425,7 +425,7 @@ public class PrivacyManager {
 		return listRestartRestriction;
 	}
 
-	public static void applyTemplate(int uid, String restrictionName) {
+	public static void applyTemplate(int uid, String restrictionName, boolean methods) {
 		checkCaller();
 
 		// Check on-demand
@@ -452,16 +452,17 @@ public class PrivacyManager {
 			listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked));
 
 			// Childs
-			for (Hook hook : getHooks(rRestrictionName)) {
-				String settingName = rRestrictionName + "." + hook.getName();
-				String value = getSetting(0, Meta.cTypeTemplate, settingName,
-						Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
-								+ (parentAsked ? "+asked" : "+ask"), false);
-				boolean restricted = value.contains("true");
-				boolean asked = value.contains("asked");
-				listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
-						&& restricted, parentAsked || asked || !ondemand));
-			}
+			if (methods)
+				for (Hook hook : getHooks(rRestrictionName)) {
+					String settingName = rRestrictionName + "." + hook.getName();
+					String value = getSetting(0, Meta.cTypeTemplate, settingName,
+							Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
+									+ (parentAsked ? "+asked" : "+ask"), false);
+					boolean restricted = value.contains("true");
+					boolean asked = value.contains("asked");
+					listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
+							&& restricted, parentAsked || asked || !ondemand));
+				}
 		}
 		setRestrictionList(listPRestriction);
 	}

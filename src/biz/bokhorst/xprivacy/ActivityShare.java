@@ -180,7 +180,7 @@ public class ActivityShare extends ActivityBase {
 		final TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		final RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
 		RadioButton rbClear = (RadioButton) findViewById(R.id.rbClear);
-		RadioButton rbTemplate = (RadioButton) findViewById(R.id.rbTemplate);
+		RadioButton rbTemplateFull = (RadioButton) findViewById(R.id.rbTemplateFull);
 		RadioButton rbODEnable = (RadioButton) findViewById(R.id.rbEnableOndemand);
 		RadioButton rbODDisable = (RadioButton) findViewById(R.id.rbDisableOndemand);
 		final CheckBox cbClear = (CheckBox) findViewById(R.id.cbClear);
@@ -279,7 +279,7 @@ public class ActivityShare extends ActivityBase {
 			if (choice == CHOICE_CLEAR)
 				rbClear.setChecked(true);
 			else if (choice == CHOICE_TEMPLATE)
-				rbTemplate.setChecked(true);
+				rbTemplateFull.setChecked(true);
 
 		} else
 			tvDescription.setText(getBaseURL(ActivityShare.this));
@@ -640,8 +640,11 @@ public class ActivityShare extends ActivityBase {
 					else if (actionId == R.id.rbRestrict)
 						PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
 
-					else if (actionId == R.id.rbTemplate)
-						PrivacyManager.applyTemplate(uid, restrictionName);
+					else if (actionId == R.id.rbTemplateCategory)
+						PrivacyManager.applyTemplate(uid, restrictionName, false);
+
+					else if (actionId == R.id.rbTemplateFull)
+						PrivacyManager.applyTemplate(uid, restrictionName, true);
 
 					else if (actionId == R.id.rbEnableOndemand) {
 						PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));

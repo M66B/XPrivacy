@@ -49,7 +49,7 @@ public class PackageChange extends BroadcastReceiver {
 
 							// Restrict new non-system apps
 							if (!appInfo.isSystem())
-								PrivacyManager.applyTemplate(uid, null);
+								PrivacyManager.applyTemplate(uid, null, true);
 						}
 
 						// Mark as new/changed

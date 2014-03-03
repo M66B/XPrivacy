@@ -130,6 +130,8 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter um anderen zu helfen</string>
     <string name="title_permissions">Berechtigungen</string>
     <string name="title_set_restrict">Auswahl beschränken</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
     <string name="title_enable_ondemand">\"Beschränken nach Aufforderung\" aktivieren</string>
     <string name="title_disable_ondemand">\"Beschränken nach Aufforderung\" deaktivieren</string>
     <string name="settings_serial">Seriennummer</string>

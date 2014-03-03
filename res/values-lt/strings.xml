@@ -130,6 +130,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_pleasesubmit">Prašome pateikti savo leidimą</string>
     <string name="title_permissions">Leidimai</string>
     <string name="title_set_restrict">Riboti</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
     <string name="title_enable_ondemand">Įjungti ribojimus pagal reikalavimą</string>
     <string name="title_disable_ondemand">Išjungti ribojimus pagal reikalavimą</string>
     <string name="settings_serial">Serial#</string>

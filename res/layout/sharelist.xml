@@ -57,10 +57,17 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
-                android:id="@+id/rbTemplate"
+                android:id="@+id/rbTemplateCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/menu_apply"
+                android:text="@string/title_template_category"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbTemplateFull"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_template_full"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton

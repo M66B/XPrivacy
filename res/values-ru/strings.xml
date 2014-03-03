@@ -130,6 +130,8 @@
     <string name="title_pleasesubmit">Пожалуйста, отправьте ваши разрешения, чтобы помочь остальным</string>
     <string name="title_permissions">Разрешения</string>
     <string name="title_set_restrict">Запретить</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
     <string name="title_enable_ondemand">Включить запрос разрешений</string>
     <string name="title_disable_ondemand">Отключить запрос разрешений</string>
     <string name="settings_serial">Серийный номер</string>
