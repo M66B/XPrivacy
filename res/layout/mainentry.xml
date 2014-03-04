@@ -22,6 +22,7 @@
             android:id="@+id/imgIcon"
             android:layout_width="?android:attr/listPreferredItemHeightSmall"
             android:layout_height="?android:attr/listPreferredItemHeightSmall"
+            android:layout_gravity="center_vertical"
             android:contentDescription="@string/help_application"
             android:paddingLeft="6dip" />
 
