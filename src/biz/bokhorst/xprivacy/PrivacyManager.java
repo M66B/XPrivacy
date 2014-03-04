@@ -333,7 +333,7 @@ public class PrivacyManager {
 		else
 			listRestriction.add(restrictionName);
 
-		// Create list of restrictions set set
+		// Create list of restrictions to set
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction)
 			listPRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
@@ -382,14 +382,15 @@ public class PrivacyManager {
 	public static void deleteRestrictions(int uid, String restrictionName, boolean deleteWhitelists) {
 		checkCaller();
 
-		// Delete restrictions
 		try {
+			// Delete restrictions
 			PrivacyService.getClient().deleteRestrictions(uid, restrictionName == null ? "" : restrictionName);
-			if (deleteWhitelists) {
-				if (uid > 0)
-					for (PSetting setting : getSettingList(uid))
-						if (Meta.isWhitelist(setting.type))
-							setSetting(uid, setting.type, setting.name, null);
+
+			// Clear associated whitelists
+			if (deleteWhitelists && uid > 0) {
+				for (PSetting setting : getSettingList(uid))
+					if (Meta.isWhitelist(setting.type))
+						setSetting(uid, setting.type, setting.name, null);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);

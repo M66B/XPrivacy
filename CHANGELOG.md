@@ -14,6 +14,9 @@ Changelog
 
 **Next release**
 
+* Fixed erasing whitelists when changing restrictions ([issue](/../../issues/1499))
+* Fixed updating application state when new application with shared user ID is installed ([issue](/../../issues/1498))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.67 TEST**
@@ -31,7 +34,7 @@ Changelog
 
 **Version 1.99.65 TEST**
 
-* Fixed on demand restricting filtering negate  ([issue](/../../issues/1495))
+* Fixed on demand restricting filtering negate ([issue](/../../issues/1495))
 * Run all restriction changes in the background
 	* To prevent application not responding messages
 	* There can be a delay before a restriction change is visible

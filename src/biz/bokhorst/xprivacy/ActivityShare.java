@@ -635,7 +635,7 @@ public class ActivityShare extends ActivityBase {
 					List<Boolean> oldState = PrivacyManager.getRestartStates(uid, restrictionName);
 
 					if (actionId == R.id.rbClear)
-						PrivacyManager.deleteRestrictions(uid, restrictionName, true);
+						PrivacyManager.deleteRestrictions(uid, restrictionName, (restrictionName == null));
 
 					else if (actionId == R.id.rbRestrict)
 						PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
