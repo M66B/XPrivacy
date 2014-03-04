@@ -14,12 +14,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.68 BETA**
+
 * Fixed erasing whitelists when changing restrictions ([issue](/../../issues/1499))
 * Fixed updating application state when new application with shared user ID is installed ([issue](/../../issues/1498))
 * Updated German translation
 * Updated French translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.67 TEST**
 
