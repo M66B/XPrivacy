@@ -1519,10 +1519,12 @@ public class PrivacyService {
 					if (!TextUtils.isEmpty(folder))
 						return folder + File.separatorChar + "*";
 				} else if (hook.whitelist().equals(Meta.cTypeIPAddress)) {
-					if (Patterns.IP_ADDRESS.matcher(restriction.extra).matches()) {
-						int dot = restriction.extra.lastIndexOf('.');
-						if (dot > 0)
-							return restriction.extra.substring(0, dot + 1) + '*';
+					int semi = restriction.extra.lastIndexOf(':');
+					String address = (semi >= 0 ? restriction.extra.substring(0, semi) : restriction.extra);
+					if (Patterns.IP_ADDRESS.matcher(address).matches()) {
+						int dot = address.lastIndexOf('.');
+						return address.substring(0, dot + 1) + '*'
+								+ (semi >= 0 ? restriction.extra.substring(semi) : "");
 					} else {
 						int dot = restriction.extra.indexOf('.');
 						if (dot > 0)
