@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Small layout fix (reported on XDA)
+* Moved user defined dangerous functions to template
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

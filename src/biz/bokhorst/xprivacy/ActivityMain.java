@@ -1256,9 +1256,25 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgCbAsk.setImageBitmap(bmAsked);
 			holder.imgCbAsk.setVisibility(ondemand ? View.VISIBLE : View.GONE);
 
+			// Listen for long press
+			holder.tvRestriction.setOnLongClickListener(new View.OnLongClickListener() {
+				@Override
+				public boolean onLongClick(View view) {
+					hook.toggleDangerous();
+
+					// Change background color
+					if (hook.isDangerous())
+						holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+					else
+						holder.row.setBackgroundColor(Color.TRANSPARENT);
+
+					return true;
+				}
+			});
+
 			holder.imgCbRestrict.setOnClickListener(new OnClickListener() {
 				@Override
-				public void onClick(View arg0) {
+				public void onClick(View view) {
 					// Update setting
 					holder.restricted = !holder.restricted;
 					PrivacyManager.setSetting(0, Meta.cTypeTemplate, settingName,
@@ -1271,7 +1287,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			holder.imgCbAsk.setOnClickListener(new OnClickListener() {
 				@Override
-				public void onClick(View arg0) {
+				public void onClick(View view) {
 					// Update setting
 					holder.asked = !holder.asked;
 					PrivacyManager.setSetting(0, Meta.cTypeTemplate, settingName,
