@@ -2,7 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -44,6 +43,7 @@ import android.os.StrictMode;
 import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -1519,9 +1519,15 @@ public class PrivacyService {
 					if (!TextUtils.isEmpty(folder))
 						return folder + File.separatorChar + "*";
 				} else if (hook.whitelist().equals(Meta.cTypeIPAddress)) {
-					int dot = restriction.extra.indexOf('.');
-					if (dot > 0)
-						return '*' + restriction.extra.substring(dot);
+					if (Patterns.IP_ADDRESS.matcher(restriction.extra).matches()) {
+						int dot = restriction.extra.lastIndexOf('.');
+						if (dot > 0)
+							return restriction.extra.substring(0, dot + 1) + '*';
+					} else {
+						int dot = restriction.extra.indexOf('.');
+						if (dot > 0)
+							return '*' + restriction.extra.substring(dot);
+					}
 				}
 			return null;
 		}

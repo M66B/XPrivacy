@@ -16,6 +16,7 @@ Changelog
 
 * Small layout fix (reported on XDA)
 * Moved user defined dangerous functions to template
+* Whitelist subnets ([issue](/../../issues/1501))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
