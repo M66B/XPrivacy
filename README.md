@@ -296,23 +296,26 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-* [/proc](http://linux.die.net/man/5/proc), CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops.
-* /proc/self/cmdline will not be restricted by /proc, because it will result in instability.
-* The phone number cannot be restricted for the standard phone application.
-* Internet and storage can only be restricted for applications, providers, and services started by the Android package manager.
-* There is no usage data for *inet*, *media* and *sdcard*, since this is technically not possible.
-* Because it is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data.
-* Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825)).
-* Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857)).
-* It is not possible to restrict hardware MAC addresses or the external IP address.
-* You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions (only [pro version](http://www.xprivacy.eu/)).
-* You cannot restrict *IPC* for XPrivacy because it is needed for internal checks.
-* You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file.
-* You cannot restrict *system* for XPrivacy because it is needed to get an application list.
-* You cannot restrict *view* for XPrivacy because it is needed to open links to the crowd sourced restrictions.
-* You cannot restrict *Configuration.MCC/MNC* on demand.
-* Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?).
-* The on demand restricting dialog does sometimes not respond.
+* [/proc](http://linux.die.net/man/5/proc), CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops
+* /proc/self/cmdline will not be restricted by /proc, because it will result in instability
+* The phone number cannot be restricted for the standard phone application
+* Internet and storage can only be restricted for applications, providers, and services started by the Android package manager
+* There is no usage data for *inet*, *media* and *sdcard*, since this is technically not possible
+* Because it is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data
+* Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
+* Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
+* It is not possible to restrict hardware MAC addresses or the external IP address
+* You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
+* You cannot restrict *IPC* for XPrivacy because it is needed for internal checks
+* You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file
+* You cannot restrict *system* for XPrivacy because it is needed to get an application list
+* You cannot restrict *view* for XPrivacy because it is needed to open links to the crowd sourced restrictions
+* You cannot restrict *Configuration.MCC/MNC* on demand
+* Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
+* The on demand restricting dialog does sometimes not respond and is sometimes hidden
+	* A known situation is starting an application from a notification for the restrictions *inet*, *sdcard* and *media*
+	* This cannot be fixed, because the on demand dialog is locking a system process
+	* The on demand dialog will timeout after 20 seconds, so this is not a major problem
 
 You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
 
