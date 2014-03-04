@@ -2091,7 +2091,7 @@ public class PrivacyService {
 							outputStreamWriter.write(Log.getStackTraceString(ex));
 							outputStreamWriter.write("\n");
 							outputStreamWriter.close();
-						} catch (IOException exex) {
+						} catch (Throwable exex) {
 							Util.bug(null, exex);
 						}
 					}
