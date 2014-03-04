@@ -237,7 +237,7 @@ public class Util {
 		String importedLicense = getUserDataDirectory(Process.myUid()) + File.separator + LICENSE_FILE_NAME;
 
 		// Import license file
-		if (licenseFile.exists()) {
+		if (licenseFile.exists() && licenseFile.canRead()) {
 			try {
 				File out = new File(importedLicense);
 				Util.log(null, Log.WARN, "Licensing: importing " + out.getAbsolutePath());
