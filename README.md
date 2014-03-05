@@ -472,10 +472,10 @@ adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT
 
 You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm), for example:
 
-New task: Any name you like
-Action Category: Misc/Send Intent
-Action: biz.bokhorst.xprivacy.action.EXPORT
-Target: Activity
+* New task: Any name you like
+* Action Category: Misc/Send Intent
+* Action: biz.bokhorst.xprivacy.action.EXPORT
+* Target: Activity
 
 <a name="FAQ6"></a>
 **(6) Precisely which functions does XPrivacy restrict?**
