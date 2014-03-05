@@ -800,6 +800,11 @@ but I am asking you to properly document your issue.
 So, please describe the exact steps to reproduce the problem and/or provide a logcat.
 See [here](https://github.com/M66B/XPrivacy#support) for more details.
 
+<a name="FAQ53"></a>
+**(53) What happens if I make XPrivacy device administrator?**
+
+This will make that other applications cannot uninstall XPrivacy without your knowledge.
+
 Support
 -------
 
