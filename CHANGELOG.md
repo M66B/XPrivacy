@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Added *uid* to *restricted by* dialog (requested on XDA)
+* On demand restricting for dangerous functions always enabled
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
