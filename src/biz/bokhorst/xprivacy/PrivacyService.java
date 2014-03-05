@@ -1629,7 +1629,8 @@ public class PrivacyService {
 
 							// Notify user
 							String text = resources.getString(R.string.msg_restrictedby);
-							text += " (" + restriction.restrictionName + "/" + restriction.methodName + ")";
+							text += " (" + restriction.uid + " " + restriction.restrictionName + "/"
+									+ restriction.methodName + ")";
 							Toast.makeText(context, text, Toast.LENGTH_LONG).show();
 
 						} catch (NameNotFoundException ex) {
