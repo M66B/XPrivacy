@@ -531,6 +531,8 @@ Changes to restrictions may require up to 15 seconds to take effect because of c
 You can restrict internet access for any application. But if you want to partly enable internet, for example for Wi-Fi only, you will have to use a firewall application, such as [AFWall+](http://forum.xda-developers.com/showthread.php?t=1957231). XPrivacy works within Android,
 and detailed firewall rules can only be applied within the Linux kernel.
 
+The latest versions of XPrivacy allow you to white and black list IP addresses and host names.
+
 <a name="FAQ13"></a>
 **(13) I get "Unable to parse package."**
 
@@ -580,10 +582,12 @@ That is correct. XPrivacy only replaces the real location with a fake location. 
 <a name="FAQ19"></a>
 **(19) How about multi-user support?**
 
-Additional users can install and use XPrivacy the same way as the primary user.
+Secondary users can install and use XPrivacy the same way as the primary user.
+The primary user cannot manage the restrictions of secondary users.
+This is because Android totally separates the enviroments of the users (which is security wise a good thing).
 
 <a name="FAQ20"></a>
-**(20) Why is the "Settings > FAKE DATA > Search" button disabled?**
+**(20) Why is the "Settings > Fake data > Search" button disabled?**
 
 Because some Google components are not installed.
 
@@ -605,7 +609,7 @@ XPrivacy uses the template to apply restrictions to newly installed applications
 <a name="FAQ24"></a>
 **(24) Will there be iOS or Windows Phone versions?**
 
-No, because it's too difficult to implement something like XPrivacy on these OS's.
+No, because it's too difficult to implement something like XPrivacy on these OS's, because they are not open source.
 
 <a name="FAQ25"></a>
 **(25) Will you restrict...?**
