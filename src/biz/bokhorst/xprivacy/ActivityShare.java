@@ -721,6 +721,7 @@ public class ActivityShare extends ActivityBase {
 							// Serialize setting
 							serializer.startTag(null, "Setting");
 							serializer.attribute(null, "Id", "");
+							serializer.attribute(null, "Type", setting.type);
 							serializer.attribute(null, "Name", setting.name);
 							if (setting.value != null)
 								serializer.attribute(null, "Value", setting.value);
