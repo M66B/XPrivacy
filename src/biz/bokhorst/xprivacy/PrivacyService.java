@@ -1232,7 +1232,7 @@ public class PrivacyService {
 
 				// Skip dangerous methods
 				final boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
-				if (!dangerous && hook != null && hook.isDangerous())
+				if (!dangerous && hook != null && hook.isDangerous() && hook.whitelist() == null)
 					return false;
 
 				// Get am context
