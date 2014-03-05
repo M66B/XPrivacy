@@ -27,10 +27,17 @@
                 tools:ignore="ContentDescription" />
 
             <TextView
-                android:id="@+id/tvAppName"
+                android:id="@+id/tvUid"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingLeft="6dip"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/tvAppName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="3dip"
                 android:textAppearance="?android:attr/textAppearanceMedium" />
         </LinearLayout>
 

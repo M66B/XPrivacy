@@ -1380,6 +1380,7 @@ public class PrivacyService {
 			// Reference views
 			View view = LayoutInflater.from(context.createPackageContext(self, 0)).inflate(R.layout.ondemand, null);
 			ImageView ivAppIcon = (ImageView) view.findViewById(R.id.ivAppIcon);
+			TextView tvUid = (TextView) view.findViewById(R.id.tvUid);
 			TextView tvAppName = (TextView) view.findViewById(R.id.tvAppName);
 			TextView tvAttempt = (TextView) view.findViewById(R.id.tvAttempt);
 			TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
@@ -1396,6 +1397,7 @@ public class PrivacyService {
 				view.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
 
 			ivAppIcon.setImageDrawable(appInfo.getIcon(context));
+			tvUid.setText(Integer.toString(appInfo.getUid()));
 			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
 			String defaultAction = resources.getString(result.restricted ? R.string.title_deny : R.string.title_allow);
