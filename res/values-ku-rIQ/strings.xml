@@ -4,7 +4,7 @@
     <string name="app_notenabled">اکس پرایوسی له ناو اکسپوسید کارا نه کراوه</string>
     <string name="app_wrongandroid">ته نیا بو ویرژه نی اندروید  4.0.3+</string>
     <string name="app_incompatible" formatted="false">اکس پرای وه سی گونجاو نی یه له گه ل %s</string>
-    <string name="app_version">اکس پرایوه سی ویرژه نی: %s (%d)</string>
+    <string name="app_version" formatted="false">اکس پرایوه سی ویرژه نی: %s (%d)</string>
     <string name="app_description">به هیز ترین به رنامه ی نیهینی پاریز</string>
     <string name="app_xversion">ویرژه نی اکپوسید فریمورک: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 خاوه نی M. Bokhorst (M66B)</string>

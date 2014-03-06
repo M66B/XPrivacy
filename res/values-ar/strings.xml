@@ -4,7 +4,7 @@
     <string name="app_notenabled">لم يتم تفعيل XPrivacy</string>
     <string name="app_wrongandroid">فقط لأندرويد نسخة 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy غير متوافق مع %s</string>
-    <string name="app_version">نسخة XPrivacy\u200F : %s (%d)</string>
+    <string name="app_version" formatted="false">نسخة XPrivacy\u200F : %s (%d)</string>
     <string name="app_description">مدير الخصوصية الرئيسي</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
     <string name="app_copyright">حقوق الطبع \u00A9 2013–2014 ل M. Bokhorst (M66B)\u200E</string>
