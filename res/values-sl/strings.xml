@@ -5,10 +5,10 @@
     <string name="app_wrongandroid">Samo za Android različice 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy različica: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">Odlični upravljalec pravic</string>
     <string name="app_xversion" formatted="false">Xposed framework različica: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_licensed">Lincecirano, hvala za Vašo podporo!</string>
     <string name="menu_usage">Uporaba</string>
     <string name="menu_refresh">Osveži</string>
     <string name="menu_settings">Nastavitve</string>
@@ -22,15 +22,15 @@
     <string name="menu_pro">Pro različica</string>
     <string name="menu_about">O programu</string>
     <string name="menu_help">Pomoč</string>
-    <string name="menu_select_all">Select all</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_select_all">Izberi vse</string>
+    <string name="menu_sort">Razvrsti</string>
+    <string name="menu_filter">Filtriranje</string>
     <string name="menu_all">Vse</string>
     <string name="menu_toggle">Preklopi omejitve</string>
     <string name="menu_clear_all">Počisti vse</string>
     <string name="menu_restrict_all">Omeji vse</string>
     <string name="menu_clear_usage">Počisti</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_clear_db">Počisti vse podatke</string>
     <string name="menu_usage_all">Preklopi filtre</string>
     <string name="menu_apply">Uporabi predlogo</string>
     <string name="menu_clear">Počisti</string>
@@ -41,12 +41,12 @@
     <string name="menu_accounts">Izberi dovoljene račune</string>
     <string name="menu_applications">Izberi dovoljene aplikacije</string>
     <string name="menu_contacts">Izberi dovoljene stike</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Upravljaj bele liste</string>
     <string name="menu_tutorial">Navodila</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="menu_exclude">Izključi</string>
+    <string name="menu_close">Zapri</string>
+    <string name="msg_abort">Preklicujem</string>
+    <string name="msg_aborted">Preklicano</string>
     <string name="msg_new">Novo</string>
     <string name="msg_update">Posodobitev</string>
     <string name="msg_loading">Nalagam</string>
@@ -55,23 +55,23 @@
     <string name="msg_saved_to" formatted="false">Shranjeno v %s</string>
     <string name="msg_no_restrictions">Ni bilo najdenih omejitev</string>
     <string name="msg_sure">Ste prepričani?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Prosimo, izberite nekaj programov</string>
+    <string name="msg_limit">Prosimo, izberite manj kot %d programov</string>
     <string name="msg_done">Dokončano</string>
     <string name="msg_reboot">Zahtevan ponovni zagon</string>
     <string name="msg_random_now">Naključni podatki</string>
     <string name="msg_random_access">Naključni podatki ob dostopu</string>
     <string name="msg_random_boot">Naključni podatki ob zagonu</string>
     <string name="msg_restart">Potreben je ponoven zagon aplikacije</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
+    <string name="msg_register">Prosimo, registrirajte svojo napravo</string>
+    <string name="msg_email">Prosimo, vnesite svoj e-mail naslov:</string>
+    <string name="msg_registered">Za aktiviranje Vaše naprave, preverite e-pošto</string>
+    <string name="msg_service">Posodobi zagnane storitve</string>
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_upgrading" formatted="false">Nadgrajujem %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_restrictedby">Omejeno z XPrivacy</string>
     <string name="msg_first"><b>Za razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
     odgovornost</b>\n\nPreberite si tudi licenco:</string>
@@ -97,11 +97,11 @@
     <string name="restrict_shell">Lupina (ukazi, superuser)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
     <string name="restrict_view">Pogled (brskalnik)</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
-    <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
-    <string name="whitelist_url">URLs</string>
+    <string name="whitelist_ipaddress">IP naslovi</string>
+    <string name="whitelist_library">Nativne knjižice</string>
+    <string name="whitelist_filename">Imena datotek</string>
+    <string name="whitelist_command">Ukazi lupine</string>
+    <string name="whitelist_url">URLji</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
     <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filtriraj po uporabi podatkov</string>
@@ -112,32 +112,32 @@
     <string name="title_fondemand">Filter by on-demand</string>
     <string name="title_fsystem">Filtriraj sistemske programe</string>
     <string name="title_fnot">Negiraj</string>
-    <string name="title_sname">By name</string>
-    <string name="title_suid">By uid</string>
-    <string name="title_sinstalled">By date installed</string>
-    <string name="title_supdated">By date updated</string>
-    <string name="title_smodified">By date modified (XPrivacy)</string>
-    <string name="title_sinvert">Invert sort order</string>
-    <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
-    <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
-    <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
-    <string name="title_template_category">Apply template (categories)</string>
-    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_sname">Poi imenu</string>
+    <string name="title_suid">Po uid</string>
+    <string name="title_sinstalled">Po datumu namestitve</string>
+    <string name="title_supdated">Po datumu posodobitve</string>
+    <string name="title_smodified">Po datumu spremembe (XPrivacy)</string>
+    <string name="title_sinvert">Obrni zaporedje razvrščanja</string>
+    <string name="title_attempt">Poskus uporabe:</string>
+    <string name="title_category">Kategorija:</string>
+    <string name="title_function">Funkcija:</string>
+    <string name="title_parameters">Parametri:</string>
+    <string name="title_applycat">Uveljavi za celotno kategorijo</string>
+    <string name="title_once">Enkrat na %1$s sekund</string>
+    <string name="title_whitelist">Dodaj \'%s\' na belo listo</string>
+    <string name="title_allow">Dovoli</string>
+    <string name="title_deny">Zavrni</string>
+    <string name="title_pleasesubmit">Prosimo, pošljite Vaše omejitve za pomoč drugim</string>
+    <string name="title_permissions">Pravice</string>
+    <string name="title_set_restrict">Omeji</string>
+    <string name="title_template_category">Uveljavi predlogo (kategorije)</string>
+    <string name="title_template_full">Uveljavi predlogo (kategorije+funkcije)</string>
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
-    <string name="settings_alt">Altitude</string>
+    <string name="settings_alt">Nadmorska višina</string>
     <string name="settings_mac">MAC naslov</string>
     <string name="settings_ip">IP naslov</string>
     <string name="settings_phone">Telefonska številka</string>
@@ -156,31 +156,31 @@
     <string name="settings_dangerous">Omeji nevarne funkcije</string>
     <string name="settings_confidence">Največji interval prenašanja omejitev</string>
     <string name="settings_experimental">Funkcije za strokovnjake (zahtevan ponovni zagon)</string>
-    <string name="settings_https">Use secure connections</string>
-    <string name="settings_syscomponents">Restrict system components (Android) (requires restart)</string>
-    <string name="settings_usagedata">Show application usage data (requires restart)</string>
-    <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_https">Uporabi varne povezave</string>
+    <string name="settings_syscomponents">Omeji sistemske komponente (Android) (zahtevan ponovni zagon)</string>
+    <string name="settings_usagedata">Prikaži uporabo podatkov aplikacije (zahtevan ponovni zagon)</string>
+    <string name="settings_parameters">Prikaži parametre za uporabo podatkov</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
-    <string name="help_longpress">Long press name to select</string>
+    <string name="help_longpress">Za izbiranje pridržite ime</string>
     <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
     <string name="help_used">je uporabljal te podatke</string>
-    <string name="help_used_grayed">no usage data available</string>
+    <string name="help_used_grayed">ni uporabljen podatkov</string>
     <string name="help_frozen">je onemogočen</string>
     <string name="help_dangerous">je nevaren</string>
     <string name="help_half">delno omejeno</string>
     <string name="help_attention">omejitve potrebujejo pozornost</string>
     <string name="help_restricted">omejitve so spremenjene</string>
     <string name="help_shared">omejitve so poslane</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="tutorial_mainheader">Izberite kategorijo za omejevanje</string>
     <string name="tutorial_mainlist">Tapni na potrditveno polje za omejitev izbrane kategorije za aplikacije\n
 \nAplikacije bodo nahranjene s praznimi ali lažnimi podatki za omejene kotegorije\n
 \nTapni ikono aplikacije za podrobnejšo omejevanje in nastavljanje</string>
     <string name="tutorial_detailsheader">Tapni ikono aplikacije za več možnosti</string>
     <string name="tutorial_detailslist">Tapni puščico navzdol za pregled izjem funkcij v omejeni kategoriji</string>
-    <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_manage">Upravljaj programe, vključno z ubijanjem(programov)</string>
 
 </resources>
