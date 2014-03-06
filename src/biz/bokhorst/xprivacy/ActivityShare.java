@@ -759,28 +759,27 @@ public class ActivityShare extends ActivityBase {
 								// Category
 								// TODO: use getRestrictionList
 								PRestriction crestricted = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
-								if (crestricted.restricted || crestricted.asked) {
-									serializer.startTag(null, "Restriction");
-									serializer.attribute(null, "Id", Integer.toString(uid));
-									serializer.attribute(null, "Name", restrictionName);
-									serializer.attribute(null, "Restricted", Boolean.toString(crestricted.restricted));
-									serializer.attribute(null, "Asked", Boolean.toString(crestricted.asked));
-									serializer.endTag(null, "Restriction");
+								serializer.startTag(null, "Restriction");
+								serializer.attribute(null, "Id", Integer.toString(uid));
+								serializer.attribute(null, "Name", restrictionName);
+								serializer.attribute(null, "Restricted", Boolean.toString(crestricted.restricted));
+								serializer.attribute(null, "Asked", Boolean.toString(crestricted.asked));
+								serializer.endTag(null, "Restriction");
 
-									// Methods
-									for (Hook md : PrivacyManager.getHooks(restrictionName)) {
-										PRestriction mrestricted = PrivacyManager.getRestrictionEx(uid,
-												restrictionName, md.getName());
-										if (!mrestricted.restricted || !mrestricted.asked || md.isDangerous()) {
-											serializer.startTag(null, "Restriction");
-											serializer.attribute(null, "Id", Integer.toString(uid));
-											serializer.attribute(null, "Name", restrictionName);
-											serializer.attribute(null, "Method", md.getName());
-											serializer.attribute(null, "Restricted",
-													Boolean.toString(mrestricted.restricted));
-											serializer.attribute(null, "Asked", Boolean.toString(mrestricted.asked));
-											serializer.endTag(null, "Restriction");
-										}
+								// Methods
+								for (Hook md : PrivacyManager.getHooks(restrictionName)) {
+									PRestriction mrestricted = PrivacyManager.getRestrictionEx(uid, restrictionName,
+											md.getName());
+									if ((crestricted.restricted && !mrestricted.restricted)
+											|| (!crestricted.asked && mrestricted.asked) || md.isDangerous()) {
+										serializer.startTag(null, "Restriction");
+										serializer.attribute(null, "Id", Integer.toString(uid));
+										serializer.attribute(null, "Name", restrictionName);
+										serializer.attribute(null, "Method", md.getName());
+										serializer.attribute(null, "Restricted",
+												Boolean.toString(mrestricted.restricted));
+										serializer.attribute(null, "Asked", Boolean.toString(mrestricted.asked));
+										serializer.endTag(null, "Restriction");
 									}
 								}
 							}

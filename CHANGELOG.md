@@ -15,6 +15,7 @@ Changelog
 **Next release**
 
 * Fixed exporting of template ([issue](/../../issues/1506))
+* Fixed exporting of on demand restricting function settings ([issue](/../../issues/1508))
 * Added *uid* to *restricted by* dialog (requested on XDA)
 * On demand restricting for dangerous functions with a whitelist always enabled
 * Updated Italian translation
