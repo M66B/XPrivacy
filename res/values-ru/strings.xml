@@ -123,7 +123,7 @@
     <string name="title_function">Функция:</string>
     <string name="title_parameters">Параметры:</string>
     <string name="title_applycat">Применить ко всей категории</string>
-    <string name="title_once">Раз в %1$s сек.</string>
+    <string name="title_once">Раз в %s сек.</string>
     <string name="title_whitelist">Белый список \'%s\'</string>
     <string name="title_allow">Разрешить</string>
     <string name="title_deny">Запретить</string>

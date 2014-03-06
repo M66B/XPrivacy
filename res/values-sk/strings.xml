@@ -123,7 +123,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_function">Funkcia:</string>
     <string name="title_parameters">Parametre:</string>
     <string name="title_applycat">Aplikovať na celú kategóriu</string>
-    <string name="title_once">Raz za %1$s sekúnd</string>
+    <string name="title_once">Raz za %s sekúnd</string>
     <string name="title_whitelist">Biela listina: \'%s\'</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>

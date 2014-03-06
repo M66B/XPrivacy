@@ -121,7 +121,7 @@
     <string name="title_function">Function:</string>
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_once">Once for %s seconds</string>
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>

@@ -123,7 +123,7 @@
     <string name="title_function">功能:</string>
     <string name="title_parameters">参数:</string>
     <string name="title_applycat">应用到整个权限类别</string>
-    <string name="title_once">一次操作生效 %1$s 秒</string>
+    <string name="title_once">一次操作生效 %s 秒</string>
     <string name="title_whitelist">白名单 \'%s\'</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>
