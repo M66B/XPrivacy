@@ -14,6 +14,7 @@ Changelog
 
 **Next release**
 
+* Removed reboot action from restart required notification ([issue](/../../issues/1485))
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

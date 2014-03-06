@@ -135,19 +135,11 @@ public class PackageChange extends BroadcastReceiver {
 						changeIntent.putExtra(UpdateService.cAction, UpdateService.cActionUpdated);
 						context.startService(changeIntent);
 
-						Intent resultIntent = new Intent(context, ActivityMain.class);
-						resultIntent.putExtra(ActivityMain.cAction, ActivityMain.cActionReboot);
-
-						// Build pending intent
-						PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
-								PendingIntent.FLAG_UPDATE_CURRENT);
-
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 						notificationBuilder.setContentTitle(context.getString(R.string.app_name));
 						notificationBuilder.setContentText(context.getString(R.string.msg_reboot));
-						notificationBuilder.setContentIntent(pendingIntent);
 						notificationBuilder.setWhen(System.currentTimeMillis());
 						notificationBuilder.setAutoCancel(true);
 						Notification notification = notificationBuilder.build();
