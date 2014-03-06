@@ -195,7 +195,7 @@ public class Util {
 				Method method = (Method) UserHandle.class.getDeclaredMethod("getAppId", int.class);
 				uid = (Integer) method.invoke(null, uid);
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
+				Util.log(null, Log.WARN, ex.toString());
 			}
 		return uid;
 	}
@@ -209,7 +209,7 @@ public class Util {
 				Method method = (Method) UserHandle.class.getDeclaredMethod("getUserId", int.class);
 				userId = (Integer) method.invoke(null, uid);
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
+				Util.log(null, Log.WARN, ex.toString());
 			}
 		return userId;
 	}
