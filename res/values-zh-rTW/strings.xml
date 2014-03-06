@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell 指令</string>
     <string name="whitelist_url">網址</string>
     <string name="title_restrict">限制項目:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">程式曾取得過資訊</string>
     <string name="title_finternet">程式要求網際網路權限</string>
     <string name="title_fpermission">程式要求手機權限</string>
@@ -130,6 +130,10 @@
     <string name="title_pleasesubmit">稍後請上傳您的設定到社群網路利人利己 :)</string>
     <string name="title_permissions">權限</string>
     <string name="title_set_restrict">限制</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>
@@ -155,6 +159,7 @@
     <string name="settings_https">使用加密連線 (HTTPS)</string>
     <string name="settings_syscomponents">可限制安卓系統元件(需重新啟動)</string>
     <string name="settings_usagedata">開啟操作記錄(需重新啟動)</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">長按程式名稱可選取</string>

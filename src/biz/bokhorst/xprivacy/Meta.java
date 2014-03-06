@@ -9,17 +9,22 @@ public class Meta {
 	private static boolean mAnnotated = false;
 	private static List<Hook> mListHook = new ArrayList<Hook>();
 
-	public final static String cWhitelistAccount = "Account";
-	public final static String cWhitelistApplication = "Application";
-	public final static String cWhitelistContact = "Contact";
-	public final static String cWhitelistIPAddress = "Whitelist.IPAddress";
-	public final static String cWhitelistLibrary = "Whitelist.Library";
-	public final static String cWhitelistFilename = "Whitelist.Filename";
-	public final static String cWhitelistCommand = "Whitelist.Command";
-	public final static String cWhitelistUrl = "Whitelist.Url";
+	public final static String cTypeAccount = "Account";
+	public final static String cTypeApplication = "Application";
+	public final static String cTypeContact = "Contact";
+	public final static String cTypeTemplate = "Template";
 
-	public static final String cWhitelistTypes[] = new String[] { cWhitelistIPAddress, cWhitelistLibrary,
-			cWhitelistFilename, cWhitelistCommand, cWhitelistUrl };
+	public final static String cTypeCommand = "Command";
+	public final static String cTypeFilename = "Filename";
+	public final static String cTypeIPAddress = "IPAddress";
+	public final static String cTypeLibrary = "Library";
+	public final static String cTypeProc = "Proc";
+	public final static String cTypeUrl = "Url";
+
+	public static boolean isWhitelist(String type) {
+		return (cTypeCommand.equals(type) || cTypeFilename.equals(type) || cTypeIPAddress.equals(type)
+				|| cTypeLibrary.equals(type) || cTypeProc.equals(type) || cTypeUrl.equals(type));
+	}
 
 	public static List<Hook> get() {
 		// http://developer.android.com/reference/android/Manifest.permission.html
@@ -81,7 +86,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null));
 		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null));
 		mListHook.add(new Hook("identification", "%cid", "", 1, null, null));
-		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous().whitelist(cWhitelistFilename));
+		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous().whitelist(cTypeProc));
 		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).dangerous());
 		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, null, null));
 		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, null, null));
@@ -109,7 +114,7 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
 
-		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cWhitelistIPAddress));
+		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cTypeIPAddress));
 
 		mListHook.add(new Hook("ipc", "android.accounts.IAccountManager", "", 1, "1.99.1", null));
 		mListHook.add(new Hook("ipc", "android.app.IActivityManager", "", 1, "1.99.1", null));
@@ -216,30 +221,23 @@ public class Meta {
 		mListHook.add(new Hook("phone", "android.intent.action.PHONE_STATE", "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 1, null, null));
 		mListHook.add(new Hook("phone", "CallLogProvider", "READ_CALL_LOG", 1, null, null));
-		mListHook.add(new Hook("phone", "gsm.operator.iso-country", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.operator.numeric", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.operator.alpha", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.current.phone-type", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.sim.operator.iso-country", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.sim.operator.numeric", "", 10, "1.99.1", null));
-		mListHook.add(new Hook("phone", "gsm.sim.operator.alpha", "", 10, "1.99.1", null));
 		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData().noOnDemand());
 		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData().noOnDemand());
 
 		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null));
 		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null));
 
-		mListHook.add(new Hook("shell", "sh", "", 10, null, null).whitelist(cWhitelistCommand));
-		mListHook.add(new Hook("shell", "su", "", 10, null, null).whitelist(cWhitelistCommand));
-		mListHook.add(new Hook("shell", "exec", "", 10, null, null).whitelist(cWhitelistCommand));
-		mListHook.add(new Hook("shell", "load", "", 10, null, null).dangerous().whitelist(cWhitelistLibrary));
-		mListHook.add(new Hook("shell", "loadLibrary", "", 10, null, null).dangerous().whitelist(cWhitelistLibrary));
-		mListHook.add(new Hook("shell", "start", "", 10, null, null).whitelist(cWhitelistCommand));
+		mListHook.add(new Hook("shell", "sh", "", 10, null, null).whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "su", "", 10, null, null).whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "exec", "", 10, null, null).whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "load", "", 10, null, null).dangerous().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "loadLibrary", "", 10, null, null).dangerous().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "start", "", 10, null, null).whitelist(cTypeCommand));
 
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null));
-		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous().whitelist(cWhitelistFilename));
+		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous().whitelist(cTypeFilename));
 
 		mListHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).dangerous());
@@ -274,14 +272,14 @@ public class Meta {
 		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE", "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null));
 
-		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cWhitelistUrl));
+		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null));
 		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null));
 		mListHook.add(new Hook("view", "getUserAgent", "", 3, null, null));
 		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null));
 		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null));
 		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null));
-		mListHook.add(new Hook("view", "android.intent.action.VIEW", "", 1, null, null).doNotify().whitelist(cWhitelistUrl));
+		mListHook.add(new Hook("view", "android.intent.action.VIEW", "", 1, null, null).doNotify().whitelist(cTypeUrl));
 		// @formatter:on
 		return mListHook;
 	}

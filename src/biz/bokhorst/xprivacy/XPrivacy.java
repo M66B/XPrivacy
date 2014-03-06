@@ -53,8 +53,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
-		PrivacyService.setupDatabase();
-
 		// System server
 		try {
 			// frameworks/base/services/java/com/android/server/SystemServer.java
@@ -69,6 +67,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+
+		// Activity manager service
+		hookAll(XActivityManagerService.getInstances(), mSecret);
 
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances(), mSecret);
@@ -397,7 +398,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Check if members found
 			if (listMember.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
 				message = String.format("Method not found for %s", hook);
-				mListHookError.add(message);
+				if (!hook.isOptional())
+					mListHookError.add(message);
 				Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, message);
 			}
 		} catch (Throwable ex) {

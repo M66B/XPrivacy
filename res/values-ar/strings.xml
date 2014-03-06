@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">إختر للتقيد:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">التصفية حسب استخدام البيانات</string>
     <string name="title_finternet">التصفية حسب الوصول للإنترنت</string>
     <string name="title_fpermission">التصفية حسب الأُذونات</string>
@@ -130,6 +130,10 @@
     <string name="title_pleasesubmit">الرجاء إرسال القيود لمساعدة الآخرين</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
@@ -155,6 +159,7 @@
     <string name="settings_https">إستخدم الإتصال الآمن</string>
     <string name="settings_syscomponents">تقييد مكونات نظام (أندرويد) (يتطلب إعادة التشغيل)</string>
     <string name="settings_usagedata">إظهار بيانات استخدام التطبيق (يتطلب إعادة التشغيل)</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">ضغطة طويلة في الإسم لتحديده</string>

@@ -103,7 +103,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">チェックで制限:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">データ使用有りを表示</string>
     <string name="title_finternet">ネットアクセス有りを表示</string>
     <string name="title_fpermission">権限有りを表示</string>
@@ -130,6 +130,10 @@
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
@@ -155,6 +159,7 @@
     <string name="settings_https">セキュリティーで保護された接続を使用する</string>
     <string name="settings_syscomponents">システムのコンポーネントにアクセスを制限する （アンドロイド）（再起動が必要となります）</string>
     <string name="settings_usagedata">使用状況データを登録する（再起動が必要）</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">タイトルを押してれば、選択ができます</string>

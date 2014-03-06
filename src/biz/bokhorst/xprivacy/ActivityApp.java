@@ -29,6 +29,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
@@ -62,6 +63,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.Switch;
@@ -330,11 +332,14 @@ public class ActivityApp extends ActivityBase {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 		boolean accountsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cAccounts, null).restricted;
 		boolean appsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cSystem, null).restricted;
 		boolean contactsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cContacts, null).restricted;
 
 		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
+		menu.findItem(R.id.menu_export).setEnabled(mounted);
+		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
 		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
 		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
@@ -396,10 +401,13 @@ public class ActivityApp extends ActivityBase {
 			optionUsage();
 			return true;
 		case R.id.menu_apply:
-			optionApply();
+			optionTemplate();
 			return true;
 		case R.id.menu_clear:
 			optionClear();
+			return true;
+		case R.id.menu_export:
+			optionExport();
 			return true;
 		case R.id.menu_import:
 			optionImport();
@@ -485,88 +493,48 @@ public class ActivityApp extends ActivityBase {
 		startActivity(intent);
 	}
 
-	private void optionApply() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(getString(R.string.menu_apply));
-		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// Do toggle
-				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-				PrivacyManager.applyTemplate(mAppInfo.getUid(), null);
-				List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-
-				// Refresh display
-				if (mPrivacyListAdapter != null)
-					mPrivacyListAdapter.notifyDataSetChanged();
-
-				// Notify restart
-				if (!newState.equals(oldState))
-					Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+	private void optionTemplate() {
+		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
+		intent.putExtra(ActivityShare.cChoice, ActivityShare.CHOICE_TEMPLATE);
+		startActivity(intent);
 	}
 
 	private void optionClear() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(R.string.menu_clear_all);
-		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), null);
-				PrivacyManager.deleteRestrictions(mAppInfo.getUid(), null);
+		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
+		intent.putExtra(ActivityShare.cChoice, ActivityShare.CHOICE_CLEAR);
+		startActivity(intent);
+	}
 
-				// Refresh display
-				if (mPrivacyListAdapter != null)
-					mPrivacyListAdapter.notifyDataSetChanged();
-
-				// Notify restart
-				if (oldState.contains(true))
-					Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT).show();
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
+	private void optionExport() {
+		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
+		intent.putExtra(ActivityShare.cInteractive, true);
+		startActivity(intent);
 	}
 
 	private void optionImport() {
 		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-		int[] uid = new int[] { mAppInfo.getUid() };
-		intent.putExtra(ActivityShare.cUidList, uid);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
 		intent.putExtra(ActivityShare.cInteractive, true);
 		startActivity(intent);
 	}
 
 	private void optionSubmit() {
 		if (ActivityShare.registerDevice(this)) {
-			int[] uid = new int[] { mAppInfo.getUid() };
 			Intent intent = new Intent("biz.bokhorst.xprivacy.action.SUBMIT");
-			intent.putExtra(ActivityShare.cUidList, uid);
+			intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
 			intent.putExtra(ActivityShare.cInteractive, true);
 			startActivity(intent);
 		}
 	}
 
 	private void optionFetch() {
-		int[] uid = new int[] { mAppInfo.getUid() };
 		Intent intent = new Intent("biz.bokhorst.xprivacy.action.FETCH");
-		intent.putExtra(ActivityShare.cUidList, uid);
+		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
 		intent.putExtra(ActivityShare.cInteractive, true);
 		startActivity(intent);
 	}
@@ -664,8 +632,8 @@ public class ActivityApp extends ActivityBase {
 				try {
 					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
 					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
-					mSelection[i] = PrivacyManager
-							.isWhitelisted(mAppInfo.getUid(), Meta.cWhitelistAccount, sha1, false);
+					mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeAccount, sha1, false,
+							false);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
@@ -685,8 +653,8 @@ public class ActivityApp extends ActivityBase {
 								try {
 									Account account = mAccounts[whichButton];
 									String sha1 = Util.sha1(account.name + account.type);
-									PrivacyManager.setWhitelisted(mAppInfo.getUid(), Meta.cWhitelistAccount, sha1,
-											isChecked);
+									PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeAccount, sha1,
+											Boolean.toString(isChecked));
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
 									Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
@@ -738,8 +706,8 @@ public class ActivityApp extends ActivityBase {
 						String pkgName = appInfo.getPackageName().get(p);
 						mApp[i] = String.format("%s (%s)", appName, pkgName);
 						mPackage[i] = pkgName;
-						mSelection[i] = PrivacyManager.isWhitelisted(mAppInfo.getUid(), Meta.cWhitelistApplication,
-								pkgName, false);
+						mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeApplication,
+								pkgName, false, false);
 						i++;
 					} catch (Throwable ex) {
 						Util.bug(null, ex);
@@ -758,8 +726,8 @@ public class ActivityApp extends ActivityBase {
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 								try {
-									PrivacyManager.setWhitelisted(mAppInfo.getUid(), Meta.cWhitelistApplication,
-											mPackage[whichButton], isChecked);
+									PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeApplication,
+											mPackage[whichButton], Boolean.toString(isChecked));
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
 									Toast toast = Toast.makeText(ActivityApp.this, ex.toString(), Toast.LENGTH_LONG);
@@ -816,8 +784,8 @@ public class ActivityApp extends ActivityBase {
 			for (Long id : mapContact.keySet()) {
 				mListContact.add(mapContact.get(id));
 				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.isWhitelisted(mAppInfo.getUid(), Meta.cWhitelistContact,
-						Long.toString(id), false);
+				mSelection[i++] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeContact,
+						Long.toString(id), false, false);
 			}
 			return null;
 		}
@@ -833,8 +801,8 @@ public class ActivityApp extends ActivityBase {
 						new DialogInterface.OnMultiChoiceClickListener() {
 							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
 								// Contact
-								PrivacyManager.setWhitelisted(mAppInfo.getUid(), Meta.cWhitelistContact,
-										Long.toString(mIds[whichButton]), isChecked);
+								PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeContact,
+										Long.toString(mIds[whichButton]), Boolean.toString(isChecked));
 							}
 						});
 				alertDialogBuilder.setPositiveButton(getString(R.string.msg_done),
@@ -884,9 +852,12 @@ public class ActivityApp extends ActivityBase {
 					// TODO: sort localized whitelist types
 					final List<String> localizedType = new ArrayList<String>();
 					for (String type : mListWhitelist.keySet()) {
-						String name = type.toLowerCase().replace(".", "_").replace("/", "");
+						String name = "whitelist_" + type.toLowerCase().replace("/", "");
 						int id = getResources().getIdentifier(name, "string", ActivityApp.this.getPackageName());
-						localizedType.add(getResources().getString(id));
+						if (id == 0)
+							localizedType.add(name);
+						else
+							localizedType.add(getResources().getString(id));
 					}
 
 					Spinner spWhitelistType = (Spinner) llWhitelists.findViewById(R.id.spWhitelistType);
@@ -983,8 +954,8 @@ public class ActivityApp extends ActivityBase {
 					// Black/whitelist it
 					boolean isChecked = holder.ctvName.isChecked();
 					holder.ctvName.toggle();
-					PrivacyManager.setWhitelisted(mAppInfo.getUid(), mSelectedType,
-							WhitelistAdapter.this.getItem(position), !isChecked);
+					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType,
+							WhitelistAdapter.this.getItem(position), Boolean.toString(!isChecked));
 				}
 			});
 			holder.imgDelete.setOnClickListener(new OnClickListener() {
@@ -992,7 +963,7 @@ public class ActivityApp extends ActivityBase {
 				public void onClick(View view) {
 					// delete/disable it
 					String name = WhitelistAdapter.this.getItem(position);
-					PrivacyManager.setWhitelisted(mAppInfo.getUid(), mSelectedType, name, null);
+					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, null);
 					// Remove from list
 					WhitelistAdapter.this.remove(name);
 					mMapWhitelists.get(mSelectedType).remove(name);
@@ -1007,7 +978,7 @@ public class ActivityApp extends ActivityBase {
 		private ApplicationInfoEx mAppInfo;
 		private String mSelectedRestrictionName;
 		private String mSelectedMethodName;
-		private List<String> mRestrictions;
+		private List<String> mListRestriction;
 		private HashMap<Integer, List<Hook>> mHook;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -1016,7 +987,7 @@ public class ActivityApp extends ActivityBase {
 			mAppInfo = appInfo;
 			mSelectedRestrictionName = selectedRestrictionName;
 			mSelectedMethodName = selectedMethodName;
-			mRestrictions = new ArrayList<String>();
+			mListRestriction = new ArrayList<String>();
 			mHook = new LinkedHashMap<Integer, List<Hook>>();
 
 			boolean fUsed = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUsed, false, false);
@@ -1027,18 +998,18 @@ public class ActivityApp extends ActivityBase {
 				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, rRestrictionName);
 				if (mSelectedRestrictionName != null
 						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
-					mRestrictions.add(rRestrictionName);
+					mListRestriction.add(rRestrictionName);
 			}
 		}
 
 		@Override
 		public Object getGroup(int groupPosition) {
-			return mRestrictions.get(groupPosition);
+			return mListRestriction.get(groupPosition);
 		}
 
 		@Override
 		public int getGroupCount() {
-			return mRestrictions.size();
+			return mListRestriction.size();
 		}
 
 		@Override
@@ -1055,6 +1026,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgInfo;
 			public TextView tvName;
 			public ImageView imgCbRestricted;
+			public ProgressBar pbRunning;
 			public ImageView imgCbAsk;
 			public LinearLayout llName;
 
@@ -1067,6 +1039,7 @@ public class ActivityApp extends ActivityBase {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
+				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 				llName = (LinearLayout) row.findViewById(R.id.llName);
 			}
@@ -1126,18 +1099,37 @@ public class ActivityApp extends ActivityBase {
 					holder.llName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Change restriction
-							List<Boolean> oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
-							rstate.toggleRestriction();
-							List<Boolean> newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+							holder.imgCbRestricted.setVisibility(View.GONE);
+							holder.pbRunning.setVisibility(View.VISIBLE);
 
-							// Refresh display
-							notifyDataSetChanged(); // Needed to update children
+							new AsyncTask<Object, Object, Object>() {
+								private List<Boolean> oldState;
+								private List<Boolean> newState;
 
-							// Notify restart
-							if (!newState.equals(oldState))
-								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-										.show();
+								@Override
+								protected Object doInBackground(Object... arg0) {
+									// Change restriction
+									oldState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+									rstate.toggleRestriction();
+									newState = PrivacyManager.getRestartStates(mAppInfo.getUid(), restrictionName);
+									return null;
+								}
+
+								@Override
+								protected void onPostExecute(Object result) {
+									// Refresh display
+									// Needed to update children
+									notifyDataSetChanged();
+
+									// Notify restart
+									if (!newState.equals(oldState))
+										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
+												Toast.LENGTH_SHORT).show();
+
+									holder.pbRunning.setVisibility(View.GONE);
+									holder.imgCbRestricted.setVisibility(View.VISIBLE);
+								}
+							}.executeOnExecutor(mExecutor);
 						}
 					});
 
@@ -1146,11 +1138,29 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
-								rstate.toggleAsked();
-								notifyDataSetChanged();
-								// Needed to update children
+								holder.imgCbAsk.setVisibility(View.GONE);
+								holder.pbRunning.setVisibility(View.VISIBLE);
+
+								new AsyncTask<Object, Object, Object>() {
+									@Override
+									protected Object doInBackground(Object... arg0) {
+										rstate.toggleAsked();
+										return null;
+									}
+
+									@Override
+									protected void onPostExecute(Object result) {
+										// Needed to update children
+										notifyDataSetChanged();
+
+										holder.pbRunning.setVisibility(View.GONE);
+										holder.imgCbAsk.setVisibility(View.VISIBLE);
+									}
+								}.executeOnExecutor(mExecutor);
 							}
 						});
+					else
+						holder.imgCbAsk.setClickable(false);
 				}
 			}
 		}
@@ -1217,7 +1227,7 @@ public class ActivityApp extends ActivityBase {
 				boolean fPermission = PrivacyManager
 						.getSettingBool(0, PrivacyManager.cSettingFPermission, false, false);
 				List<Hook> listMethod = new ArrayList<Hook>();
-				String restrictionName = mRestrictions.get(groupPosition);
+				String restrictionName = mListRestriction.get(groupPosition);
 				for (Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
 					boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName()) > 0);
 					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
@@ -1259,6 +1269,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgInfo;
 			public TextView tvMethodName;
 			public ImageView imgCbMethodRestricted;
+			public ProgressBar pbRunning;
 			public ImageView imgCbMethodAsk;
 			public LinearLayout llMethodName;
 
@@ -1271,6 +1282,7 @@ public class ActivityApp extends ActivityBase {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
 				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
+				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
 				imgCbMethodAsk = (ImageView) row.findViewById(R.id.imgCbMethodAsk);
 				llMethodName = (LinearLayout) row.findViewById(R.id.llMethodName);
 			}
@@ -1348,16 +1360,32 @@ public class ActivityApp extends ActivityBase {
 					holder.llMethodName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
-							// Change restriction
-							rstate.toggleRestriction();
+							holder.imgCbMethodRestricted.setVisibility(View.GONE);
+							holder.pbRunning.setVisibility(View.VISIBLE);
 
-							// Refresh display
-							notifyDataSetChanged(); // Needed to update parent
+							new AsyncTask<Object, Object, Object>() {
+								@Override
+								protected Object doInBackground(Object... arg0) {
+									// Change restriction
+									rstate.toggleRestriction();
+									return null;
+								}
 
-							// Notify restart
-							if (md.isRestartRequired())
-								Toast.makeText(ActivityApp.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
-										.show();
+								@Override
+								protected void onPostExecute(Object result) {
+									// Refresh display
+									// Needed to update parent
+									notifyDataSetChanged();
+
+									// Notify restart
+									if (md.isRestartRequired())
+										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
+												Toast.LENGTH_SHORT).show();
+
+									holder.pbRunning.setVisibility(View.GONE);
+									holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
+								}
+							}.executeOnExecutor(mExecutor);
 						}
 					});
 
@@ -1366,27 +1394,29 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodAsk.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
-								rstate.toggleAsked();
-								holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+								holder.imgCbMethodAsk.setVisibility(View.GONE);
+								holder.pbRunning.setVisibility(View.VISIBLE);
+
+								new AsyncTask<Object, Object, Object>() {
+									@Override
+									protected Object doInBackground(Object... arg0) {
+										rstate.toggleAsked();
+										return null;
+									}
+
+									@Override
+									protected void onPostExecute(Object result) {
+										// Needed to update parent
+										notifyDataSetChanged();
+
+										holder.pbRunning.setVisibility(View.GONE);
+										holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
+									}
+								}.executeOnExecutor(mExecutor);
 							}
 						});
-
-					// Listen for long press
-					holder.llMethodName.setOnLongClickListener(new View.OnLongClickListener() {
-						@Override
-						public boolean onLongClick(View view) {
-							md.toggleDangerous();
-
-							// Reset background color
-							if (md.isDangerous())
-								holder.row.setBackgroundColor(getResources()
-										.getColor(getThemed(R.attr.color_dangerous)));
-							else
-								holder.row.setBackgroundColor(Color.TRANSPARENT);
-
-							return true;
-						}
-					});
+					else
+						holder.imgCbMethodAsk.setClickable(false);
 				}
 			}
 		}
@@ -1407,10 +1437,10 @@ public class ActivityApp extends ActivityBase {
 
 			// Get entry
 			final String restrictionName = (String) getGroup(groupPosition);
-			final Hook md = (Hook) getChild(groupPosition, childPosition);
+			final Hook hook = (Hook) getChild(groupPosition, childPosition);
 
 			// Set background color
-			if (md.isDangerous())
+			if (hook.isDangerous())
 				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
@@ -1420,7 +1450,7 @@ public class ActivityApp extends ActivityBase {
 			holder.imgCbMethodAsk.setEnabled(false);
 
 			// Display method name
-			holder.tvMethodName.setText(md.getName());
+			holder.tvMethodName.setText(hook.getName());
 			holder.tvMethodName.setTypeface(null, Typeface.NORMAL);
 
 			// Display if used
@@ -1429,7 +1459,7 @@ public class ActivityApp extends ActivityBase {
 			// Display if permissions
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 
-			if (md.getAnnotation() == null)
+			if (hook.getAnnotation() == null)
 				holder.imgInfo.setVisibility(View.GONE);
 			else {
 				holder.imgInfo.setVisibility(View.VISIBLE);
@@ -1440,10 +1470,10 @@ public class ActivityApp extends ActivityBase {
 						View layout = inflator.inflate(R.layout.popup, null);
 
 						TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
-						tvTitle.setText(md.getName() + " (SDK " + md.getSdk() + ")");
+						tvTitle.setText(hook.getName() + " (SDK " + hook.getSdk() + ")");
 
-						String text = md.getAnnotation();
-						String[] permissions = md.getPermissions();
+						String text = hook.getAnnotation();
+						String[] permissions = hook.getPermissions();
 						if (permissions != null && permissions.length > 0) {
 							text += "<br /><br /><b>" + getString(R.string.title_permissions) + "</b><br /><br />";
 							if (permissions[0].equals(""))
@@ -1451,8 +1481,8 @@ public class ActivityApp extends ActivityBase {
 							else
 								text += TextUtils.join("<br />", permissions);
 						}
-						if (md.getFrom() != null)
-							text += "<br /><br />XPrivacy " + md.getFrom();
+						if (hook.getFrom() != null)
+							text += "<br /><br />XPrivacy " + hook.getFrom();
 
 						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
 						tvInfo.setText(Html.fromHtml(text));
@@ -1467,8 +1497,9 @@ public class ActivityApp extends ActivityBase {
 						Button btnOk = (Button) layout.findViewById(R.id.btnOk);
 						btnOk.setOnClickListener(new View.OnClickListener() {
 							@Override
-							public void onClick(View v) {
-								popup.dismiss();
+							public void onClick(View view) {
+								if (popup.isShowing())
+									popup.dismiss();
 							}
 						});
 

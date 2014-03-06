@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,13 +11,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
-import java.lang.IllegalArgumentException;
-import java.lang.IllegalStateException;
-import java.lang.SecurityException;
-import java.net.SocketException;
-import java.net.SocketTimeoutException;
-import java.net.UnknownHostException;
-import javax.net.ssl.SSLPeerUnverifiedException;
+import java.nio.channels.FileChannel;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -25,8 +20,6 @@ import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import org.apache.http.conn.ConnectTimeoutException;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -38,12 +31,12 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
-import android.os.NetworkOnMainThreadException;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
+import android.widget.Toast;
 
 public class Util {
 	private static boolean mPro = false;
@@ -102,30 +95,20 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof ActivityShare.ServerException)
 			priority = Log.WARN;
-		else if (ex instanceof ConnectTimeoutException)
-			priority = Log.WARN;
-		else if (ex instanceof IllegalArgumentException)
-			priority = Log.WARN;
-		else if (ex instanceof IllegalStateException)
-			priority = Log.WARN;
-		else if (ex instanceof IOException)
-			priority = Log.WARN;
-		else if (ex instanceof NetworkOnMainThreadException)
-			priority = Log.WARN;
-		else if (ex instanceof RemoteException)
-			priority = Log.WARN;
-		else if (ex instanceof SecurityException)
-			priority = Log.WARN;
-		else if (ex instanceof SocketException)
-			priority = Log.WARN;
-		else if (ex instanceof SocketTimeoutException)
-			priority = Log.WARN;
-		else if (ex instanceof SSLPeerUnverifiedException)
-			priority = Log.WARN;
-		else if (ex instanceof UnknownHostException)
+		else if (ex instanceof NoClassDefFoundError)
 			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
+
+		boolean xprivacy = false;
+		for (StackTraceElement frame : ex.getStackTrace())
+			if (frame.getClassName() != null && frame.getClassName().startsWith("biz.bokhorst.xprivacy")) {
+				xprivacy = true;
+				break;
+			}
+		if (!xprivacy)
+			priority = Log.WARN;
+
 		log(hook, priority, ex.toString() + " uid=" + Process.myUid() + "\n" + Log.getStackTraceString(ex));
 	}
 
@@ -212,7 +195,7 @@ public class Util {
 				Method method = (Method) UserHandle.class.getDeclaredMethod("getAppId", int.class);
 				uid = (Integer) method.invoke(null, uid);
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
+				Util.log(null, Log.WARN, ex.toString());
 			}
 		return uid;
 	}
@@ -226,7 +209,7 @@ public class Util {
 				Method method = (Method) UserHandle.class.getDeclaredMethod("getUserId", int.class);
 				userId = (Integer) method.invoke(null, uid);
 			} catch (Throwable ex) {
-				Util.bug(null, ex);
+				Util.log(null, Log.WARN, ex.toString());
 			}
 		return userId;
 	}
@@ -254,7 +237,7 @@ public class Util {
 		String importedLicense = getUserDataDirectory(Process.myUid()) + File.separator + LICENSE_FILE_NAME;
 
 		// Import license file
-		if (licenseFile.exists()) {
+		if (licenseFile.exists() && licenseFile.canRead()) {
 			try {
 				File out = new File(importedLicense);
 				Util.log(null, Log.WARN, "Licensing: importing " + out.getAbsolutePath());
@@ -272,6 +255,7 @@ public class Util {
 				setPermissions(out.getAbsolutePath(), 0700, Process.myUid(), Process.myUid());
 
 				licenseFile.delete();
+			} catch (FileNotFoundException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -343,7 +327,10 @@ public class Util {
 	public static void viewUri(Context context, Uri uri) {
 		Intent infoIntent = new Intent(Intent.ACTION_VIEW);
 		infoIntent.setData(uri);
-		context.startActivity(infoIntent);
+		if (isIntentAvailable(context, infoIntent))
+			context.startActivity(infoIntent);
+		else
+			Toast.makeText(context, "View action not available", Toast.LENGTH_LONG).show();
 	}
 
 	public static boolean hasLBE() {
@@ -493,13 +480,32 @@ public class Util {
 	}
 
 	public static void copy(File src, File dst) throws IOException {
-		InputStream in = new FileInputStream(src);
-		OutputStream out = new FileOutputStream(dst);
-		byte[] buf = new byte[1024];
-		int len;
-		while ((len = in.read(buf)) > 0)
-			out.write(buf, 0, len);
-		in.close();
-		out.close();
+		FileInputStream inStream = null;
+		try {
+			inStream = new FileInputStream(src);
+			FileOutputStream outStream = null;
+			try {
+				outStream = new FileOutputStream(dst);
+				FileChannel inChannel = inStream.getChannel();
+				FileChannel outChannel = outStream.getChannel();
+				inChannel.transferTo(0, inChannel.size(), outChannel);
+			} finally {
+				if (outStream != null)
+					outStream.close();
+			}
+		} finally {
+			if (inStream != null)
+				inStream.close();
+		}
+	}
+
+	public static boolean move(File src, File dst) {
+		try {
+			copy(src, dst);
+		} catch (IOException ex) {
+			Util.bug(null, ex);
+			return false;
+		}
+		return src.delete();
 	}
 }

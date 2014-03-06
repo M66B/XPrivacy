@@ -364,7 +364,7 @@
 				<div class="navbar-collapse collapse">
 					<ul class="nav navbar-nav">
 						<li><a href="https://github.com/M66B/XPrivacy#xprivacy" target="_blank">XPrivacy</a></li>
-						<li><a href="https://www.xprivacy.eu/" target="_blank">Pro license</a></li>
+						<li><a href="http://www.xprivacy.eu/" target="_blank">Pro license</a></li>
 					</ul>
 					<ul class="nav navbar-nav navbar-right">
 						<li><a href="http://forum.faircode.eu/contact/" target="_blank">Contact</a></li>

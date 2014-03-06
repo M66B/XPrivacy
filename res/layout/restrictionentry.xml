@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+    android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:orientation="horizontal" >
 
     <ImageView
@@ -72,6 +73,15 @@
             android:contentDescription="@string/title_restrict"
             android:paddingLeft="3dip"
             android:visibility="invisible" />
+
+        <ProgressBar
+            android:id="@+id/pbRunning"
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="3dip"
+            android:visibility="gone" />
     </LinearLayout>
 
     <ImageView

@@ -5,7 +5,7 @@
     <string name="app_wrongandroid">Len pre Android 4.0.3+</string>
     <string name="app_incompatible" formatted="false">Aplikácia XPrivacy nie je kompatibilná s %s</string>
     <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
-    <string name="app_description">Správca súkromia</string>
+    <string name="app_description">Pokročilý správca súkromia</string>
     <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013–2014 od M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licencované. Ďakujeme za vašu podporu!</string>
@@ -41,7 +41,7 @@
     <string name="menu_accounts">Povolené účty</string>
     <string name="menu_applications">Povolené aplikácie</string>
     <string name="menu_contacts">Povolené kontakty</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Spravovať biele listiny</string>
     <string name="menu_tutorial">Príručka</string>
     <string name="menu_exclude">Vylúčiť</string>
     <string name="menu_close">Zavrieť</string>
@@ -97,13 +97,13 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
-    <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
-    <string name="whitelist_url">URLs</string>
+    <string name="whitelist_ipaddress">Adresy IP</string>
+    <string name="whitelist_library">Natívne knižnice</string>
+    <string name="whitelist_filename">Názvy súborov</string>
+    <string name="whitelist_command">Konzolové príkazy</string>
+    <string name="whitelist_url">Adresy URL</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Zaškrtnite pre povolenie:</string>
     <string name="title_fused">Filter na využitie dát</string>
     <string name="title_finternet">Filter na prístup k internetu</string>
     <string name="title_fpermission">Filter na povolenie</string>
@@ -124,12 +124,16 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_parameters">Parametre:</string>
     <string name="title_applycat">Aplikovať na celú kategóriu</string>
     <string name="title_once">Raz za %1$s sekúnd</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_whitelist">Biela listina: \'%s\'</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
     <string name="title_pleasesubmit">Odošlite prosím vaše obmedzenia na pomoc ostatným</string>
     <string name="title_permissions">Povolenia</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_set_restrict">Obmedziť</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
@@ -154,9 +158,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_experimental">Experimentálne funkcie (vyžadovaný reštart)</string>
     <string name="settings_https">Použiť zabezpečené pripojenie</string>
     <string name="settings_syscomponents">Obmedziť systémové komponenty (Android) (vyžadovaný reštart)</string>
-    <string name="settings_usagedata">Zobraziť využitie dát aplikácie (vyžadovaný reštart)</string>
-    <string name="settings_cid">GSM Cell ID</string>
-    <string name="settings_lac">GSM LAC</string>
+    <string name="settings_usagedata">Zobraziť využitie dát aplikáciou (vyžadovaný reštart)</string>
+    <string name="settings_parameters">Zobraziť parametre využitia dát</string>
+    <string name="settings_cid">Identifikátor bunky GSM</string>
+    <string name="settings_lac">Kód lokality GSM</string>
     <string name="help_longpress">Vybrať dlhým stlačením názvu</string>
     <string name="help_ondemand">obmedzenia budú požadované</string>
     <string name="help_application">Aplikácia</string>

@@ -15,7 +15,7 @@ interface IPrivacyService {
 	void deleteRestrictions(int uid, String restrictionName);
 
 	long getUsage(in List<PRestriction> restriction);
-	List<PRestriction> getUsageList(int uid);
+	List<PRestriction> getUsageList(int uid, String restrictionName);
 	void deleteUsage(int uid);
 
 	void setSetting(in PSetting setting);
@@ -25,6 +25,5 @@ interface IPrivacyService {
 	void deleteSettings(int uid);
 
 	void clear();
-	void reboot();
 	void dump(int uid);
 }

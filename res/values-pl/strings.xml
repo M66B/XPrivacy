@@ -3,7 +3,7 @@
     <string name="app_notxposed" formatted="false">Framework Xposed w wersji %d+ nie jest zainstalowany</string>
     <string name="app_notenabled">XPrivacy nie został włączony w instalatorze Xposed</string>
     <string name="app_wrongandroid">Tylko dla Androida w wersji 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy jest niekompatybilne z %s</string>
+    <string name="app_incompatible" formatted="false">XPrivacy jest niekompatybilny z %s</string>
     <string name="app_version" formatted="false">Wersja XPrivacy: %s (%d)</string>
     <string name="app_description">Kompleksowy menadżer prywatności</string>
     <string name="app_xversion" formatted="false">Wersja frameworka Xposed: %d</string>
@@ -41,7 +41,7 @@
     <string name="menu_accounts">Wybierz dozwolone konta</string>
     <string name="menu_applications">Wybierz dozwolone aplikacje</string>
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Zarządzaj białymi listami</string>
     <string name="menu_tutorial">Samouczek</string>
     <string name="menu_exclude">Wyklucz</string>
     <string name="menu_close">Zamknij</string>
@@ -58,15 +58,15 @@
     <string name="msg_select">Proszę wyberz jakieś aplikacje</string>
     <string name="msg_limit">Proszę wybierz mniej niż %d aplikacji</string>
     <string name="msg_done">Gotowe</string>
-    <string name="msg_reboot">Wymagany restart</string>
-    <string name="msg_random_now">Losuj</string>
-    <string name="msg_random_access">Losuj podczas dostępu</string>
-    <string name="msg_random_boot">Losuj po restarcie</string>
-    <string name="msg_restart">Wymagany restart aplikacji</string>
+    <string name="msg_reboot">Wymagany restart urządzenia</string>
+    <string name="msg_random_now">Losuj teraz</string>
+    <string name="msg_random_access">Losuj przy próbie odczytu</string>
+    <string name="msg_random_boot">Losuj przy restarcie</string>
+    <string name="msg_restart">Wymagany restart</string>
     <string name="msg_register">Proszę zarejestruj swoje urządzenie</string>
     <string name="msg_email">Porszę podaj swój adres e-mail:</string>
     <string name="msg_registered">Sprawdź swój e-mail aby aktywować urządzenie</string>
-    <string name="msg_service">Usługa aktualizacji pracuje</string>
+    <string name="msg_service">Usługa aktualizacji działa w tle</string>
     <string name="msg_migrating" formatted="false">Migrowanie %s</string>
     <string name="msg_randomizing" formatted="false">Losowanie %s</string>
     <string name="msg_upgrading" formatted="false">Aktualizacja %s</string>
@@ -97,14 +97,14 @@
     <string name="restrict_shell">Powłoka (polecenia, superuser)</string>
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
-    <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
-    <string name="whitelist_url">URLs</string>
+    <string name="whitelist_ipaddress">Adresy IP</string>
+    <string name="whitelist_library">Biblioteki natywne</string>
+    <string name="whitelist_filename">Nazwy plików</string>
+    <string name="whitelist_command">Polecenia powłoki</string>
+    <string name="whitelist_url">URLe</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
-    <string name="title_check_whitelist">Check to allow</string>
-    <string name="title_fused">Filtruj wg dostępu do danych</string>
+    <string name="title_check_whitelist">Zaznacz aby pozwolić</string>
+    <string name="title_fused">Filtruj wg odczytu danych</string>
     <string name="title_finternet">Filtruj wg dostępu do internetu</string>
     <string name="title_fpermission">Filtruj wg uprawnień</string>
     <string name="title_frestricted">Filtruj wg ograniczeń</string>
@@ -118,18 +118,22 @@
     <string name="title_supdated">Po dacie aktualizacji</string>
     <string name="title_smodified">Po dacie modyfikacji (XPrivacy)</string>
     <string name="title_sinvert">Odwróć porządek sortowania</string>
-    <string name="title_attempt">Próba dostępu do:</string>
+    <string name="title_attempt">Próba odczytu:</string>
     <string name="title_category">Kategoria:</string>
     <string name="title_function">Funkcja:</string>
     <string name="title_parameters">Parametry:</string>
     <string name="title_applycat">Zastosuj do całej kategorii</string>
     <string name="title_once">Jednorazowo na %1$s sekund</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_whitelist">Biała lista \'%s\'</string>
     <string name="title_allow">Pozwól</string>
     <string name="title_deny">Zabroń</string>
     <string name="title_pleasesubmit">Proszę wyślij twoje ograniczenia aby pomóc innym</string>
     <string name="title_permissions">Uprawnienia</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_set_restrict">Ogranicz</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Włącz restrykcje na żądanie</string>
+    <string name="title_disable_ondemand">Wyłącz restrykcje na żądanie</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>
@@ -155,6 +159,7 @@
     <string name="settings_https">Użyj bezpiecznych połaczeń</string>
     <string name="settings_syscomponents">Ogranicz komponenty systemowe (Android) (wymaga restartu)</string>
     <string name="settings_usagedata">Pokaż użycie danych przez aplikacje (wymaga restartu)</string>
+    <string name="settings_parameters">Pokaż parametry odczytu danych</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Przytrzymaj na nazwie aby wybrać</string>
@@ -162,10 +167,10 @@
     <string name="help_application">Aplikacja</string>
     <string name="help_internet">ma dostęp do internetu</string>
     <string name="help_granted">ma dostęp do uprawnień Androida</string>
-    <string name="help_used">wykorzystała dane</string>
-    <string name="help_used_grayed">brak informacji o użyciu danych</string>
+    <string name="help_used">odczytała dane</string>
+    <string name="help_used_grayed">brak informacji o odczycie danych</string>
     <string name="help_frozen">jest wyłączona</string>
-    <string name="help_dangerous">niebezpieczne uprawnienie, ograniczenie może spowodować problemy</string>
+    <string name="help_dangerous">jest niebezpieczne, ograniczenie może spowodować problemy</string>
     <string name="help_half">częściowo ograniczone</string>
     <string name="help_attention">restrykcje wymagają sprawdzenia</string>
     <string name="help_restricted">restrykcje się zmieniły</string>

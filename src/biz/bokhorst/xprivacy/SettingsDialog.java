@@ -39,9 +39,10 @@ public class SettingsDialog {
 
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
 		final CheckBox cbOnDemand = (CheckBox) dlgSettings.findViewById(R.id.cbOnDemand);
-
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
+		final CheckBox cbParameters = (CheckBox) dlgSettings.findViewById(R.id.cbParameters);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
+
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		final CheckBox cbSystem = (CheckBox) dlgSettings.findViewById(R.id.cbSystem);
 		final CheckBox cbDangerous = (CheckBox) dlgSettings.findViewById(R.id.cbDangerous);
@@ -220,6 +221,7 @@ public class SettingsDialog {
 
 		// Get current values
 		boolean usage = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingUsage, true, false);
+		boolean parameters = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingParameters, false, false);
 		boolean log = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingLog, false, false);
 		boolean components = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSystem, false, false);
 		boolean dangerous = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingDangerous, false, false);
@@ -256,6 +258,8 @@ public class SettingsDialog {
 
 			// Global settings
 			cbUsage.setChecked(usage);
+			cbParameters.setChecked(parameters);
+			cbParameters.setEnabled(Util.hasProLicense(context) != null);
 			cbLog.setChecked(log);
 			cbExpert.setChecked(expert);
 			if (expert) {
@@ -275,6 +279,7 @@ public class SettingsDialog {
 		} else {
 			// Disable global settings
 			cbUsage.setVisibility(View.GONE);
+			cbParameters.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 			cbExpert.setVisibility(View.GONE);
 			cbSystem.setVisibility(View.GONE);
@@ -287,7 +292,8 @@ public class SettingsDialog {
 			cbNotify.setChecked(notify);
 		}
 
-		if (uid == 0 || PrivacyManager.isApplication(uid))
+		boolean gondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+		if (uid == 0 || (PrivacyManager.isApplication(uid) && gondemand))
 			cbOnDemand.setChecked(ondemand);
 		else
 			cbOnDemand.setVisibility(View.GONE);
@@ -383,7 +389,6 @@ public class SettingsDialog {
 					}
 				} catch (Throwable ex) {
 					Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
-					Util.bug(null, ex);
 				}
 			}
 		});
@@ -429,6 +434,8 @@ public class SettingsDialog {
 				if (uid == 0) {
 					// Global settings
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingUsage, Boolean.toString(cbUsage.isChecked()));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingParameters,
+							Boolean.toString(cbParameters.isChecked()));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingLog, Boolean.toString(cbLog.isChecked()));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingSystem,
 							Boolean.toString(cbSystem.isChecked()));

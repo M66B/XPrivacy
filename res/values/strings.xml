@@ -110,8 +110,9 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="whitelist_filename" tools:ignore="UnusedResources">File names</string>
     <string name="whitelist_command" tools:ignore="UnusedResources">Shell commands</string>
     <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>
+    <string name="whitelist_proc" tools:ignore="UnusedResources">/proc</string>
     <string name="title_restrict">Check to restrict:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>
     <string name="title_fpermission">Filter on permission</string>
@@ -138,6 +139,10 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>
@@ -169,6 +174,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="settings_https">Use secure connections</string>
     <string name="settings_syscomponents">Restrict system components (Android)</string>
     <string name="settings_usagedata">Show application usage data</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Long press name to select</string>

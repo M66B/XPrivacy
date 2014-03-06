@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.DeadObjectException;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -76,6 +77,7 @@ public class XContentResolver extends XHook {
 		if (mMethod == Methods.query || mMethod == Methods.cquery)
 			try {
 				handleUriBefore(param);
+			} catch (DeadObjectException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
@@ -98,6 +100,7 @@ public class XContentResolver extends XHook {
 		} else if (mMethod == Methods.query || mMethod == Methods.cquery) {
 			try {
 				handleUriAfter(param);
+			} catch (DeadObjectException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
@@ -222,13 +225,14 @@ public class XContentResolver extends XHook {
 						while (cursor.moveToNext()) {
 							// Check if allowed
 							long id = cursor.getLong(iid);
-							boolean allowed = PrivacyManager.isWhitelisted(Binder.getCallingUid(),
-									Meta.cWhitelistContact, Long.toString(id), true);
+							boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(), Meta.cTypeContact,
+									Long.toString(id), false, true);
 							if (allowed)
 								copyColumns(cursor, result, listColumn.size());
 						}
 					else
-						Util.log(this, Log.ERROR, "ID missing uri=" + uri);
+						Util.log(this, Log.ERROR, "ID missing uri=" + uri + " added=" + added + "/" + cid + " columns="
+								+ TextUtils.join(",", cursor.getColumnNames()));
 
 					result.respond(cursor.getExtras());
 					param.setResult(result);

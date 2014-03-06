@@ -22,7 +22,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:ellipsize="start"
+            android:singleLine="true"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
 
         <CheckBox
             android:id="@+id/cbClear"
@@ -41,23 +44,46 @@
 
             <RadioButton
                 android:id="@+id/rbClear"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/menu_clear"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
                 android:id="@+id/rbRestrict"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/title_set_restrict"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
-                android:id="@+id/rbTemplate"
-                android:layout_width="wrap_content"
+                android:id="@+id/rbTemplateCategory"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/menu_template"
+                android:text="@string/title_template_category"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbTemplateFull"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_template_full"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbEnableOndemand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/color_dangerous"
+                android:text="@string/title_enable_ondemand"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbDisableOndemand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/color_dangerous"
+                android:text="@string/title_disable_ondemand"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </RadioGroup>
     </LinearLayout>

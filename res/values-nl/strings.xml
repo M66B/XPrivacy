@@ -103,7 +103,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="whitelist_command">Shell commando\'s</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Vink aan om te beperken:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Vink aan om toe te staan:</string>
     <string name="title_fused">Filter op gegevensgebruik</string>
     <string name="title_finternet">Filter op internettoegang</string>
     <string name="title_fpermission">Filter op rechten</string>
@@ -130,6 +130,10 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_pleasesubmit">Stuur a.u.b. uw beperkingen op om anderen te helpen</string>
     <string name="title_permissions">Rechten</string>
     <string name="title_set_restrict">Beperk</string>
+    <string name="title_template_category">Pas sjabloon toe (categorieën)</string>
+    <string name="title_template_full">Pas sjabloon toe (categorieën+functies)</string>
+    <string name="title_enable_ondemand">Zet op verzoek beperken aan</string>
+    <string name="title_disable_ondemand">Zet op verzoek beperken uit</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
@@ -155,6 +159,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_https">Gebruik veilige verbindingen</string>
     <string name="settings_syscomponents">Beperk systemcomponenten (Android)</string>
     <string name="settings_usagedata">Toon gebruiksgegevens</string>
+    <string name="settings_parameters">Toon parameters bij gebruiksgegevens</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Druk lang om te selecteren</string>

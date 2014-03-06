@@ -113,14 +113,13 @@ public class PrivacyManager {
 	public final static String cSettingHttps = "Https";
 	public final static String cSettingRegistered = "Registered";
 	public final static String cSettingUsage = "UsageData";
+	public final static String cSettingParameters = "Parameters";
 	public final static String cSettingSystem = "RestrictSystem";
 	public final static String cSettingRestricted = "Retricted";
 	public final static String cSettingOnDemand = "OnDemand";
 	public final static String cSettingMigrated = "Migrated";
 	public final static String cSettingCid = "Cid";
 	public final static String cSettingLac = "Lac";
-
-	public final static String cSettingTemplate = "Template";
 
 	// Special value names
 	public final static String cValueRandom = "#Random#";
@@ -334,7 +333,7 @@ public class PrivacyManager {
 		else
 			listRestriction.add(restrictionName);
 
-		// Create list of restrictions set set
+		// Create list of restrictions to set
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction)
 			listPRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
@@ -345,7 +344,7 @@ public class PrivacyManager {
 				for (String rRestrictionName : listRestriction)
 					for (Hook md : getHooks(rRestrictionName))
 						if (md.isDangerous())
-							listPRestriction.add(new PRestriction(uid, restrictionName, md.getName(), false, true));
+							listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
 
 		setRestrictionList(listPRestriction);
 
@@ -380,13 +379,19 @@ public class PrivacyManager {
 		return new ArrayList<PRestriction>();
 	}
 
-	public static void deleteRestrictions(int uid, String restrictionName) {
+	public static void deleteRestrictions(int uid, String restrictionName, boolean deleteWhitelists) {
 		checkCaller();
 
-		// Delete restrictions
 		try {
+			// Delete restrictions
 			PrivacyService.getClient().deleteRestrictions(uid, restrictionName == null ? "" : restrictionName);
-			deleteWhitelists(uid);
+
+			// Clear associated whitelists
+			if (deleteWhitelists && uid > 0) {
+				for (PSetting setting : getSettingList(uid))
+					if (Meta.isWhitelist(setting.type))
+						setSetting(uid, setting.type, setting.name, null);
+			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -421,87 +426,62 @@ public class PrivacyManager {
 		return listRestartRestriction;
 	}
 
-	public static void applyTemplate(int uid, String restrictionName) {
+	public static void applyTemplate(int uid, String restrictionName, boolean methods) {
 		checkCaller();
 
 		// Check on-demand
-		boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+		boolean ondemand = getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
 		if (ondemand)
-			ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
+			ondemand = getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
+		boolean dangerous = getSettingBool(0, cSettingDangerous, false, false);
 
 		// Build list of restrictions
 		List<String> listRestriction = new ArrayList<String>();
 		if (restrictionName == null)
-			listRestriction.addAll(PrivacyManager.getRestrictions());
+			listRestriction.addAll(getRestrictions());
 		else
 			listRestriction.add(restrictionName);
 
 		// Apply template
+		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction) {
-			String templateName = PrivacyManager.cSettingTemplate + "." + rRestrictionName;
-			String templateValue = PrivacyManager.getSetting(0, templateName, Boolean.toString(!ondemand) + "+ask",
-					false);
-			boolean restrict = templateValue.contains("true");
-			boolean asked = templateValue.contains("asked");
-			PrivacyManager.setRestriction(uid, rRestrictionName, null, restrict, asked || !ondemand);
+			// Parent
+			String parentValue = getSetting(0, Meta.cTypeTemplate, rRestrictionName, Boolean.toString(!ondemand)
+					+ "+ask", false);
+			boolean parentRestricted = parentValue.contains("true");
+			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
+			listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked));
+
+			// Childs
+			if (methods)
+				for (Hook hook : getHooks(rRestrictionName)) {
+					String settingName = rRestrictionName + "." + hook.getName();
+					String value = getSetting(0, Meta.cTypeTemplate, settingName,
+							Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
+									+ (parentAsked ? "+asked" : "+ask"), false);
+					boolean restricted = value.contains("true");
+					boolean asked = value.contains("asked");
+					listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
+							&& restricted, parentAsked || asked || !ondemand));
+				}
 		}
+		setRestrictionList(listPRestriction);
 	}
 
 	// White listing
-
-	public static boolean isWhitelisted(int uid, String type, String name, boolean useCache) {
-
-		// For hooks
-		return PrivacyManager.getSettingBool(uid, type + "." + name, false, useCache);
-	}
-
-	public static Boolean checkWhitelisted(int uid, String type, String name, boolean useCache) {
-		String value = PrivacyManager.getSetting(uid, type + "." + name, null, useCache);
-		Boolean result = null;
-		if (value != null)
-			result = Boolean.parseBoolean(value);
-		return result;
-	}
-
-	public static void setWhitelisted(int uid, String type, String name, Boolean whitelist) {
-		checkCaller();
-
-		// whitelist = true means to whitelist, false means to blacklist
-		String value = null;
-		if (whitelist != null)
-			value = Boolean.toString(whitelist);
-		PrivacyManager.setSetting(uid, type + "." + name, value);
-	}
+	// TODO: add specialized get to privacy service
 
 	public static Map<String, TreeMap<String, Boolean>> listWhitelisted(int uid) {
 		checkCaller();
 
 		Map<String, TreeMap<String, Boolean>> mapWhitelisted = new HashMap<String, TreeMap<String, Boolean>>();
-		for (PSetting setting : getSettingList(uid)) {
-			// Grok the setting to see if it fits the bill
-			if (setting.name.startsWith("Whitelist")) {
-				String[] components = setting.name.split("\\.");
-				if (components.length < 3)
-					continue;
-				String type = components[0] + "." + components[1];
-				String name = setting.name.replace(components[0] + "." + components[1] + ".", "");
-
-				// If we get here, add it to the list
-				if (!mapWhitelisted.containsKey(type))
-					mapWhitelisted.put(type, new TreeMap<String, Boolean>());
-				mapWhitelisted.get(type).put(name, Boolean.parseBoolean(setting.value));
+		for (PSetting setting : getSettingList(uid))
+			if (Meta.isWhitelist(setting.type)) {
+				if (!mapWhitelisted.containsKey(setting.type))
+					mapWhitelisted.put(setting.type, new TreeMap<String, Boolean>());
+				mapWhitelisted.get(setting.type).put(setting.name, Boolean.parseBoolean(setting.value));
 			}
-		}
 		return mapWhitelisted;
-	}
-
-	private static void deleteWhitelists(int uid) {
-		checkCaller();
-
-		if (uid > 0)
-			for (PSetting setting : getSettingList(uid))
-				if (setting.name.startsWith("Whitelist"))
-					setSetting(uid, setting.name, null);
 	}
 
 	// Usage
@@ -523,12 +503,13 @@ public class PrivacyManager {
 		}
 	}
 
-	public static List<PRestriction> getUsageList(Context context, int uid) {
+	public static List<PRestriction> getUsageList(Context context, int uid, String restrictionName) {
 		checkCaller();
 
 		List<PRestriction> listUsage = new ArrayList<PRestriction>();
 		try {
-			listUsage.addAll(PrivacyService.getClient().getUsageList(uid));
+			listUsage.addAll(PrivacyService.getClient().getUsageList(uid,
+					restrictionName == null ? "" : restrictionName));
 		} catch (Throwable ex) {
 			Util.log(null, Log.ERROR, "getUsageList");
 			Util.bug(null, ex);
@@ -565,14 +546,22 @@ public class PrivacyManager {
 		return Boolean.parseBoolean(getSetting(uid, name, Boolean.toString(defaultValue), useCache));
 	}
 
+	public static boolean getSettingBool(int uid, String type, String name, boolean defaultValue, boolean useCache) {
+		return Boolean.parseBoolean(getSetting(uid, type, name, Boolean.toString(defaultValue), useCache));
+	}
+
 	public static String getSetting(int uid, String name, String defaultValue, boolean useCache) {
+		return getSetting(uid, "", name, defaultValue, useCache);
+	}
+
+	public static String getSetting(int uid, String type, String name, String defaultValue, boolean useCache) {
 		long start = System.currentTimeMillis();
 		String value = null;
 
 		// Check cache
 		boolean cached = false;
 		boolean willExpire = false;
-		CSetting key = new CSetting(uid, name);
+		CSetting key = new CSetting(uid, type, name);
 		if (useCache)
 			synchronized (mSettingsCache) {
 				if (mSettingsCache.containsKey(key)) {
@@ -588,10 +577,10 @@ public class PrivacyManager {
 		// Get settings
 		if (!cached)
 			try {
-				value = PrivacyService.getSetting(new PSetting(Math.abs(uid), name, null)).value;
+				value = PrivacyService.getSetting(new PSetting(Math.abs(uid), type, name, null)).value;
 				if (value == null)
 					if (uid > 0)
-						value = PrivacyService.getSetting(new PSetting(0, name, defaultValue)).value;
+						value = PrivacyService.getSetting(new PSetting(0, type, name, defaultValue)).value;
 					else
 						value = defaultValue;
 
@@ -608,21 +597,21 @@ public class PrivacyManager {
 
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
-			if (ms > 1)
-				Util.log(null, Log.INFO, String.format("get setting uid=%d %s=%s%s %d ms", uid, name, value,
-						(cached ? " (cached)" : ""), ms));
-			else
-				Util.log(null, Log.INFO,
-						String.format("get setting uid=%d %s=%s%s", uid, name, value, (cached ? " (cached)" : "")));
+			Util.log(null, Log.INFO, String.format("get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value,
+					(cached ? " (cached)" : ""), ms));
 
 		return value;
 	}
 
 	public static void setSetting(int uid, String name, String value) {
+		setSetting(uid, "", name, value);
+	}
+
+	public static void setSetting(int uid, String type, String name, String value) {
 		checkCaller();
 
 		try {
-			PrivacyService.getClient().setSetting(new PSetting(uid, name, value));
+			PrivacyService.getClient().setSetting(new PSetting(uid, type, name, value));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -813,8 +802,7 @@ public class PrivacyManager {
 			if (ip != null)
 				try {
 					return InetAddress.getByName(ip);
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
+				} catch (Throwable ignored) {
 				}
 
 			// Any address (0.0.0.0)
@@ -968,7 +956,7 @@ public class PrivacyManager {
 		}
 
 		if (name.equals("GSF_ID")) {
-			long v = r.nextLong();
+			long v = Math.abs(r.nextLong());
 			return Long.toString(v, 16).toUpperCase();
 		}
 

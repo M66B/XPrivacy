@@ -108,10 +108,15 @@ public class XLocationClient extends XHook {
 			if (!(param.args[1] instanceof XLocationListener)) {
 				LocationListener listener = (LocationListener) param.args[1];
 				if (listener != null) {
-					XLocationListener xListener = new XLocationListener(listener);
+					XLocationListener xListener;
 					synchronized (mListener) {
-						mListener.put(listener, xListener);
-						Util.log(this, Log.INFO, "Added count=" + mListener.size());
+						xListener = mListener.get(listener);
+						if (xListener == null) {
+							xListener = new XLocationListener(listener);
+							mListener.put(listener, xListener);
+							Util.log(this, Log.WARN,
+									"Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+						}
 					}
 					param.args[1] = xListener;
 				}
@@ -128,7 +133,7 @@ public class XLocationClient extends XHook {
 				XLocationListener xlistener = mListener.get(listener);
 				if (xlistener != null) {
 					param.args[0] = xlistener;
-					mListener.remove(listener);
+					Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 				}
 			}
 		} else

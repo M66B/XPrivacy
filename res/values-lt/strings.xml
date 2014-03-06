@@ -103,7 +103,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="whitelist_command">Vykdymo komandos</string>
     <string name="whitelist_url">URL adresai</string>
     <string name="title_restrict">Naudoti ribojimus:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Duomenų naudojimas</string>
     <string name="title_finternet">Interneto prieiga</string>
     <string name="title_fpermission">Aktyvūs leidimai</string>
@@ -129,7 +129,11 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_deny">Drausti</string>
     <string name="title_pleasesubmit">Prašome pateikti savo leidimą</string>
     <string name="title_permissions">Leidimai</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_set_restrict">Riboti</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Įjungti ribojimus pagal reikalavimą</string>
+    <string name="title_disable_ondemand">Išjungti ribojimus pagal reikalavimą</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
@@ -155,6 +159,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_https">Naudojamas saugus ryšys</string>
     <string name="settings_syscomponents">Riboti sistemos komponentus (Android) (reikia perkrauti)</string>
     <string name="settings_usagedata">Rodyti programos duomenų naudojimą (reikia perkrauti)</string>
+    <string name="settings_parameters">Rodyti duomenų naudojimo parametrus</string>
     <string name="settings_cid">GSM stoties ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>

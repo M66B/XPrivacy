@@ -6,8 +6,6 @@ import java.util.List;
 import android.os.Binder;
 import android.util.Log;
 
-import com.android.internal.telephony.TelephonyProperties;
-
 public class XSystemProperties extends XHook {
 	private Methods mMethod;
 	private String mPropertyName;
@@ -39,23 +37,6 @@ public class XSystemProperties extends XHook {
 		for (String prop : props)
 			for (Methods getter : Methods.values())
 				listHook.add(new XSystemProperties(getter, PrivacyManager.cIdentification, prop));
-
-		listHook.add(new XSystemProperties(Methods.get, PrivacyManager.cPhone,
-				TelephonyProperties.PROPERTY_OPERATOR_ISO_COUNTRY));
-		listHook.add(new XSystemProperties(Methods.get, PrivacyManager.cPhone,
-				TelephonyProperties.PROPERTY_OPERATOR_NUMERIC));
-		listHook.add(new XSystemProperties(Methods.get, PrivacyManager.cPhone,
-				TelephonyProperties.PROPERTY_OPERATOR_ALPHA));
-
-		listHook.add(new XSystemProperties(Methods.getInt, PrivacyManager.cPhone,
-				TelephonyProperties.CURRENT_ACTIVE_PHONE));
-
-		listHook.add(new XSystemProperties(Methods.get, PrivacyManager.cPhone,
-				TelephonyProperties.PROPERTY_ICC_OPERATOR_ISO_COUNTRY));
-		listHook.add(new XSystemProperties(Methods.get, PrivacyManager.cPhone,
-				TelephonyProperties.PROPERTY_ICC_OPERATOR_NUMERIC));
-		listHook.add(new XSystemProperties(Methods.get, PrivacyManager.cPhone,
-				TelephonyProperties.PROPERTY_ICC_OPERATOR_ALPHA));
 
 		return listHook;
 	}

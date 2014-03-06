@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:orientation="horizontal" >
 
     <View
@@ -21,13 +22,14 @@
             android:id="@+id/imgIcon"
             android:layout_width="?android:attr/listPreferredItemHeightSmall"
             android:layout_height="?android:attr/listPreferredItemHeightSmall"
+            android:layout_gravity="center_vertical"
             android:contentDescription="@string/help_application"
             android:paddingLeft="6dip" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical"
             android:paddingLeft="6dip" >
 
@@ -49,7 +51,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
             android:orientation="vertical" >
 
             <ImageView
@@ -71,6 +73,7 @@
             android:id="@+id/rlName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
             android:background="@drawable/list_item_pressed"
             android:clickable="true"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
@@ -94,12 +97,21 @@
                     android:contentDescription="@string/title_restrict"
                     android:visibility="invisible" />
 
+                <ProgressBar
+                    android:id="@+id/pbRunning"
+                    style="?android:attr/progressBarStyleInverse"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:layout_marginLeft="3dip"
+                    android:layout_marginRight="6dip"
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/tvOnDemand"
                     android:layout_width="wrap_content"
-                    android:layout_height="32dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginLeft="3dip"
-                    android:gravity="center_vertical"
                     android:text="@string/msg_question"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textStyle="bold"

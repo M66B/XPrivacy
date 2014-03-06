@@ -8,8 +8,9 @@ public class RState {
 	public String mRestrictionName;
 	public String mMethodName;
 	public boolean restricted;
-	public boolean asked;
-	public boolean partial = false;
+	public boolean asked = false;
+	public boolean partialRestricted = false;
+	public boolean partialAsked = false;
 
 	public RState(int uid, String restrictionName, String methodName) {
 		mUid = uid;
@@ -23,7 +24,8 @@ public class RState {
 
 		boolean allRestricted = true;
 		boolean someRestricted = false;
-		asked = false;
+		boolean allAsked = true;
+		boolean someAsked = false;
 
 		if (methodName == null) {
 			if (restrictionName == null) {
@@ -43,6 +45,8 @@ public class RState {
 				for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
 					allRestricted = (allRestricted && restriction.restricted);
 					someRestricted = (someRestricted || restriction.restricted);
+					allAsked = (allAsked && restriction.asked);
+					someAsked = (someAsked || restriction.asked);
 				}
 				asked = query.asked;
 			}
@@ -55,8 +59,9 @@ public class RState {
 		}
 
 		restricted = (allRestricted || someRestricted);
-		partial = (!allRestricted && someRestricted);
-		asked = (!onDemand || asked);
+		asked = (!onDemand || !PrivacyManager.isApplication(uid) || asked);
+		partialRestricted = (!allRestricted && someRestricted);
+		partialAsked = (onDemand && !allAsked && someAsked);
 	}
 
 	public void toggleRestriction() {
@@ -72,7 +77,7 @@ public class RState {
 
 			// Change restriction
 			if (restricted)
-				PrivacyManager.deleteRestrictions(mUid, mRestrictionName);
+				PrivacyManager.deleteRestrictions(mUid, mRestrictionName, (mRestrictionName == null));
 			else
 				for (String restrictionName : listRestriction)
 					PrivacyManager.setRestriction(mUid, restrictionName, null, true, false);
@@ -84,6 +89,9 @@ public class RState {
 
 	public void toggleAsked() {
 		asked = !asked;
-		PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, restricted, asked);
+		// Avoid re-doing all exceptions for dangerous functions
+		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
+		listPRestriction.add(new PRestriction(mUid, mRestrictionName, mMethodName, restricted, asked));
+		PrivacyManager.setRestrictionList(listPRestriction);
 	}
 }

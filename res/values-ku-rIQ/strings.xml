@@ -102,7 +102,7 @@
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">هه ل بژیره بوو سنوردارکردنی:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">پالاوتن به هوی داتا به کارهینراوه کان</string>
     <string name="title_finternet">پالاوتنی ئه و به رنامانه ی ئينته ر نيت به كاردينن</string>
     <string name="title_fpermission">پالاوتنی ئه و زانياريانه ى كه ده توانريت به كاربهينرين</string>
@@ -129,6 +129,10 @@
     <string name="title_pleasesubmit">ته کایه بو یارمه تی دانی که سانی تریش ئه و شتانه ى سنوردارتكردوون به لاو بكه </string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">سريال نه مبرى موبايل</string>
     <string name="settings_lat">هیلی پانی</string>
     <string name="settings_lon">هیلی دریژی</string>
@@ -154,6 +158,7 @@
     <string name="settings_https">به کارهینانی هیلی پاریزراو</string>
     <string name="settings_syscomponents">سنوردار کردنی شته بنچینه یه کانی سیسته مه که ت (موبایله که ت)</string>
     <string name="settings_usagedata">پیشاندنی ئه و زانياريانه ى به كارهينراون</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">په نجه ت دابگره له سه ر ئه و ناوه ى كه ده ته ویت هه لی بژیریت</string>

@@ -25,7 +25,7 @@
     <string name="menu_select_all">Выбрать всё</string>
     <string name="menu_sort">Сортировка</string>
     <string name="menu_filter">Фильтр</string>
-    <string name="menu_all">Выделить все</string>
+    <string name="menu_all">Все</string>
     <string name="menu_toggle">Переключить разрешения</string>
     <string name="menu_clear_all">Очистить все</string>
     <string name="menu_restrict_all">Запретить все</string>
@@ -41,7 +41,7 @@
     <string name="menu_accounts">Выберите разрешенные учетные записи</string>
     <string name="menu_applications">Выберите разрешенные приложения</string>
     <string name="menu_contacts">Выберите разрешенные контакты</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Управление белым списком</string>
     <string name="menu_tutorial">Обучение</string>
     <string name="menu_exclude">Исключить</string>
     <string name="menu_close">Закрыть</string>
@@ -63,8 +63,8 @@
     <string name="msg_random_access">Случайные значения при запросе</string>
     <string name="msg_random_boot">Случайные значения после перезагрузки</string>
     <string name="msg_restart">Требуется перезапуск приложения</string>
-    <string name="msg_register">Пожалуйста, зарегистрируйте своё устройство</string>
-    <string name="msg_email">Введите свой емейл, пожалуйста:</string>
+    <string name="msg_register">Зарегистрируйте своё устройство, пожалуйста</string>
+    <string name="msg_email">Пожалуйста, введите свой емейл:</string>
     <string name="msg_registered">Проверьте емейл, чтобы активировать устройство</string>
     <string name="msg_service">Сервис обновлений запущен</string>
     <string name="msg_migrating" formatted="false">Миграция %s</string>
@@ -103,15 +103,15 @@
     <string name="whitelist_command">Команды shell</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Отметьте для запрета:</string>
-    <string name="title_check_whitelist">Отметьте для разрешения</string>
+    <string name="title_check_whitelist">Отметьте для разрешения:</string>
     <string name="title_fused">использовавшие данные</string>
     <string name="title_finternet">с доступом к Интернету</string>
     <string name="title_fpermission">с разрешениями</string>
     <string name="title_frestricted">запрещенные</string>
     <string name="title_fuser">пользовательские приложения</string>
-    <string name="title_fondemand">Фильтровать по требованию</string>
+    <string name="title_fondemand">запрос разрешений</string>
     <string name="title_fsystem">системные приложения</string>
-    <string name="title_fnot">Переключить</string>
+    <string name="title_fnot">переключить</string>
     <string name="title_sname">По имени</string>
     <string name="title_suid">По uid</string>
     <string name="title_sinstalled">По дате установки</string>
@@ -123,13 +123,17 @@
     <string name="title_function">Функция:</string>
     <string name="title_parameters">Параметры:</string>
     <string name="title_applycat">Применить ко всей категории</string>
-    <string name="title_once">Раз в %1$s секунду(ы).</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_once">Раз в %1$s сек.</string>
+    <string name="title_whitelist">Белый список \'%s\'</string>
     <string name="title_allow">Разрешить</string>
     <string name="title_deny">Запретить</string>
     <string name="title_pleasesubmit">Пожалуйста, отправьте ваши разрешения, чтобы помочь остальным</string>
     <string name="title_permissions">Разрешения</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_set_restrict">Запретить</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Включить запрос разрешений</string>
+    <string name="title_disable_ondemand">Отключить запрос разрешений</string>
     <string name="settings_serial">Серийный номер</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>
@@ -146,15 +150,16 @@
     <string name="settings_general">Общее</string>
     <string name="settings_fake_data">Фальшивые данные</string>
     <string name="settings_notify">Обновить уведомления</string>
-    <string name="settings_ondemand">Запретить по требованию</string>
+    <string name="settings_ondemand">Запрос разрешений</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Экспертный режим</string>
     <string name="settings_dangerous">Запрет опасных функций</string>
-    <string name="settings_confidence">Maximum fetch confidence interval</string>
+    <string name="settings_confidence">Макс. доверительный интервал выборки</string>
     <string name="settings_experimental">Экспериментальные функции</string>
     <string name="settings_https">Использовать безопасные соединения</string>
-    <string name="settings_syscomponents">Запретить системные компоненты (Android) (требует перезапуска)</string>
+    <string name="settings_syscomponents">Запрет системных компонентов (Android) (требует перезапуска)</string>
     <string name="settings_usagedata">Показывать использование данных (требует перезапуска)</string>
+    <string name="settings_parameters">Показывать параметры данных об использовании</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Длинное нажатие на имени для выбора</string>
@@ -170,12 +175,12 @@
     <string name="help_attention">разрешения требуют внимания</string>
     <string name="help_restricted">разрешения изменены</string>
     <string name="help_shared">разрешения отправлены</string>
-    <string name="tutorial_mainheader">Выберите категорию для запрета</string>
-    <string name="tutorial_mainlist">Тапните по чекбоксу для запрета выбранной категории для приложения\n
-\nПриложения будут получать пустые или фальшивые данные для запрещенных категорий\n
-\nТапните по иконке приложения, чтобы увидеть подробные разрешения и настройки</string>
-    <string name="tutorial_detailsheader">Тапните по иконке приложения для дополнительных действий</string>
-    <string name="tutorial_detailslist">Тапните по стрелке, чтобы увидеть отдельные функции и их разрешения в категории</string>
+    <string name="tutorial_mainheader">Выберите категорию для запрета.</string>
+    <string name="tutorial_mainlist">Тапните по чекбоксу для запрета выбранной категории для приложения.\n
+\nПриложения будут получать пустые или фальшивые данные для запрещенных категорий.\n
+\nТапните по иконке приложения, чтобы увидеть подробные разрешения и настройки.</string>
+    <string name="tutorial_detailsheader">Тапните по иконке приложения для дополнительных действий.</string>
+    <string name="tutorial_detailslist">Тапните по стрелке, чтобы увидеть отдельные функции и их разрешения в категории.</string>
     <string name="permission_manage">Управление приложениями, включая завершение</string>
 
 </resources>

@@ -8,7 +8,7 @@
     <string name="app_description">终级隐私管理器</string>
     <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
     <string name="app_copyright">版权所有 \u00A9 2013–2014 M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_licensed">已授权, 感谢您的支持!</string>
     <string name="menu_usage">权限使用记录</string>
     <string name="menu_refresh">刷新应用列表</string>
     <string name="menu_settings">用于被限制应用的模拟信息</string>
@@ -41,7 +41,7 @@
     <string name="menu_accounts">选择允许访问的帐号</string>
     <string name="menu_applications">选择允许访问的应用</string>
     <string name="menu_contacts">选择允许访问的联系人</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">管理白名单</string>
     <string name="menu_tutorial">界面功能指引</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">关闭</string>
@@ -56,7 +56,7 @@
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_sure">是否确定？</string>
     <string name="msg_select">请选择一些应用程序</string>
-    <string name="msg_limit">请不要选择%d个以上应用程序</string>
+    <string name="msg_limit">请不要选择 %d 个以上应用程序</string>
     <string name="msg_done">完成</string>
     <string name="msg_reboot">XPrivacy 需要在重启后才能生效</string>
     <string name="msg_random_now">生成随机数值</string>
@@ -97,13 +97,13 @@
     <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
     <string name="restrict_system">系统（查看已安装的应用）</string>
     <string name="restrict_view">显示网页（内置浏览器）</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
-    <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_ipaddress">IP 地址</string>
+    <string name="whitelist_library">本地库文件</string>
+    <string name="whitelist_filename">文件名称</string>
+    <string name="whitelist_command">Shell 命令</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">勾选表示限制:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">勾选表示允许:</string>
     <string name="title_fused">曾经使用</string>
     <string name="title_finternet">网络权限</string>
     <string name="title_fpermission">含有权限</string>
@@ -124,12 +124,16 @@
     <string name="title_parameters">参数:</string>
     <string name="title_applycat">应用到整个权限类别</string>
     <string name="title_once">一次操作生效 %1$s 秒</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_whitelist">白名单 \'%s\'</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>
     <string name="title_pleasesubmit">请发送你的应用限制信息来帮助其他人</string>
-    <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_permissions">权限</string>
+    <string name="title_set_restrict">限制</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">开启按需权限限制</string>
+    <string name="title_disable_ondemand">关闭按需权限限制</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
@@ -155,6 +159,7 @@
     <string name="settings_https">使用安全连接(https)</string>
     <string name="settings_syscomponents">限制系统组件 (Android) (需要重启)</string>
     <string name="settings_usagedata">显示应用权限使用情况 (需要重启)</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">长按名称进行选择</string>

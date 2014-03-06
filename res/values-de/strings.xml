@@ -7,8 +7,8 @@
     <string name="app_version" formatted="false">XPrivacy Version: %s (%d)</string>
     <string name="app_description">Der ultimative Privacy Manager</string>
     <string name="app_xversion" formatted="false">Xposed Framework Version: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Lizensiert, vielen Dank für Ihre Unterstützung!</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2014\n\t by M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Lizenz vorhanden, vielen Dank für Ihre Unterstützung!</string>
     <string name="menu_usage">Aktivitätslog</string>
     <string name="menu_refresh">Aktualisieren</string>
     <string name="menu_settings">Einstellungen</string>
@@ -25,15 +25,15 @@
     <string name="menu_select_all">Alle auswählen</string>
     <string name="menu_sort">Sortieren</string>
     <string name="menu_filter">Filter</string>
-    <string name="menu_all">Alles (beschränkt)</string>
-    <string name="menu_toggle">Beschränkungen invertieren</string>
+    <string name="menu_all">Alle Einstellungen</string>
+    <string name="menu_toggle">Beschränkungen festlegen</string>
     <string name="menu_clear_all">Alles löschen</string>
     <string name="menu_restrict_all">Alles beschränken</string>
     <string name="menu_clear_usage">Löschen</string>
     <string name="menu_clear_db">Alle XPrivacy Daten löschen</string>
     <string name="menu_usage_all">Filter invertieren</string>
     <string name="menu_apply">Template übernehmen</string>
-    <string name="menu_clear">Nichts (beschränkt)</string>
+    <string name="menu_clear">Einstellungen löschen</string>
     <string name="menu_app_launch">Öffnen</string>
     <string name="menu_app_settings">App-Info anzeigen</string>
     <string name="menu_app_store">Im Play Store anzeigen</string>
@@ -41,7 +41,7 @@
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
     <string name="menu_applications">Apps für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Positivlisten verwalten</string>
     <string name="menu_tutorial">Anleitung</string>
     <string name="menu_exclude">Ausschließen</string>
     <string name="menu_close">Schließen</string>
@@ -72,8 +72,8 @@
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">Eine interne Überprüfung ist fehlgeschlagen, möchten Sie die Supportinformationen senden?</string>
     <string name="msg_restrictedby">Durch XPrivacy beschränkt</string>
-    <string name="msg_first"><b>XPrivacy wurde mit größter Sorgfalt entwickelt und getestet. Dennoch kann nicht gewährleistet werden, 
-\ndass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
+    <string name="msg_first"><b>XPrivacy wurde mit größter Sorgfalt entwickelt und getestet.\nDennoch kann nicht gewährleistet werden, 
+dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nSie verwenden XPrivacy ausschließlich auf eigenes Risiko!</b>\n\nBitte beachten Sie auch die Lizenz:</string>
     <string name="restrict_accounts">Konten (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Browser (Lesezeichen, Verlauf)</string>
@@ -97,13 +97,13 @@
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
-    <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_ipaddress">IP Adressen</string>
+    <string name="whitelist_library">Native Bibliotheken</string>
+    <string name="whitelist_filename">Dateinamen</string>
+    <string name="whitelist_command">Shell Kommandos</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Zum Beschränken markieren:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Zum Freigeben markieren</string>
     <string name="title_fused">Datennutzung</string>
     <string name="title_finternet">Internetzugang</string>
     <string name="title_fpermission">Berechtigungen</string>
@@ -124,12 +124,16 @@
     <string name="title_parameters">Parameter:</string>
     <string name="title_applycat">Auf die gesamte Kategorie anwenden</string>
     <string name="title_once">Nur einmal für %1$s Sekunden</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_whitelist">Positivliste \'%s\'</string>
     <string name="title_allow">Zulassen</string>
     <string name="title_deny">Blockieren</string>
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter um anderen zu helfen</string>
-    <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_permissions">Berechtigungen</string>
+    <string name="title_set_restrict">Auswahl beschränken</string>
+    <string name="title_template_category">Template übernehmen (nur Kategorien)</string>
+    <string name="title_template_full">Template übernehmen (Kategorien und Funktionen)</string>
+    <string name="title_enable_ondemand">\"Beschränken nach Aufforderung\" aktivieren</string>
+    <string name="title_disable_ondemand">\"Beschränken nach Aufforderung\" deaktivieren</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
@@ -154,7 +158,8 @@
     <string name="settings_experimental">Experimentelle Funktionen\n (erfordert Geräteneustart)</string>
     <string name="settings_https">Benutze sichere Verbindung</string>
     <string name="settings_syscomponents">Beschränke Systemkomponenten (Android) (erfordert Geräteneustart)</string>
-    <string name="settings_usagedata">Zeige App Nutzungsdaten\n (erfordert Geräteneustart)</string>
+    <string name="settings_usagedata">App Nutzungsdaten zeigen\n (erfordert Geräteneustart)</string>
+    <string name="settings_parameters">Parameter der Nutzungsdaten zeigen</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Für Auswahl App-Name drücken und kurz halten</string>
@@ -172,7 +177,7 @@
     <string name="help_shared">Beschränkungen wurden eingereicht</string>
     <string name="tutorial_mainheader">Wählen Sie die zu beschränkende Kategorie</string>
     <string name="tutorial_mainlist">Tippen Sie auf ein Kontrollkästchen, um die ausgewählte Kategorie für eine App zu beschränken\n
-\nApps werden mit leeren oder manipulierten Daten für die beschränkten Kategorien "gefüttert" \n
+\nApps werden mit leeren Listen oder manipulierten Daten für die beschränkten Kategorien \"gefüttert\" \n
 \nTippen Sie auf das App-Icon für detaillierte Beschränkungen und Einstellungen</string>
     <string name="tutorial_detailsheader">Tippen Sie auf das App-Icon für weitere Aktionen</string>
     <string name="tutorial_detailslist">Tippen Sie auf den Pfeil, um die Ausnahmen der Funktionen einer beschränkten Kategorie zu sehen</string>

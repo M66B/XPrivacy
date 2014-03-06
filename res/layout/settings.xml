@@ -65,6 +65,12 @@
                 android:text="@string/settings_usagedata" />
 
             <CheckBox
+                android:id="@+id/cbParameters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_parameters" />
+
+            <CheckBox
                 android:id="@+id/cbLog"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -345,9 +351,9 @@
 
                     <EditText
                         android:id="@+id/etId"
-                        android:digits="0123456789ABCDEF"
-                        android:hint="DEFACE"
-                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:digits="0123456789abcdef"
+                        android:hint="deface"
+                        android:inputType="textNoSuggestions"
                         android:singleLine="true"
                         tools:ignore="HardcodedText" />
                 </TableRow>

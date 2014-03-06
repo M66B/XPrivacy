@@ -43,11 +43,11 @@ public class CRestriction {
 		return mUid;
 	}
 
-	public boolean matches(PRestriction restriction) {
+	public boolean isSameMethod(PRestriction restriction) {
 		// @formatter:off
 		return (restriction.uid == mUid
 				&& restriction.restrictionName.equals(mRestrictionName)
-				&& (restriction.methodName == null ? true : restriction.methodName.equals(mMethodName)));
+				&& (restriction.methodName == null || restriction.methodName.equals(mMethodName)));
 		// @formatter:on
 	}
 

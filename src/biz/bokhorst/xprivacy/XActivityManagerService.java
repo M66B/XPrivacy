@@ -53,7 +53,8 @@ public class XActivityManagerService extends XHook {
 		listHook.add(new XActivityManagerService(Methods.appNotResponding, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
 		listHook.add(new XActivityManagerService(Methods.systemReady, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
 		listHook.add(new XActivityManagerService(Methods.finishBooting, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
-		listHook.add(new XActivityManagerService(Methods.setLockScreenShown, Build.VERSION_CODES.JELLY_BEAN).optional());
+		listHook.add(new XActivityManagerService(Methods.setLockScreenShown, Build.VERSION_CODES.JELLY_BEAN_MR1)
+				.optional());
 		listHook.add(new XActivityManagerService(Methods.goingToSleep, Build.VERSION_CODES.JELLY_BEAN));
 		listHook.add(new XActivityManagerService(Methods.wakingUp, Build.VERSION_CODES.JELLY_BEAN));
 		listHook.add(new XActivityManagerService(Methods.shutdown, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
@@ -78,7 +79,7 @@ public class XActivityManagerService extends XHook {
 		if (mMethod == Methods.inputDispatchingTimedOut) {
 			try {
 				// Delay foreground ANRs while on demand dialog open
-				boolean ondemanding = (mOndemandSemaphore.availablePermits() < 1);
+				boolean ondemanding = (mOndemandSemaphore != null && mOndemandSemaphore.availablePermits() < 1);
 				Util.log(this, Log.WARN, "Foreground ANR uid=" + getUidANR(param) + " ondemand=" + ondemanding);
 				if (ondemanding)
 					param.setResult(5 * 1000); // 5 seconds
@@ -89,7 +90,7 @@ public class XActivityManagerService extends XHook {
 		} else if (mMethod == Methods.appNotResponding) {
 			try {
 				// Ignore background ANRs while on demand dialog open
-				boolean ondemanding = (mOndemandSemaphore.availablePermits() < 1);
+				boolean ondemanding = (mOndemandSemaphore != null && mOndemandSemaphore.availablePermits() < 1);
 				Util.log(this, Log.WARN, "Background ANR uid=" + getUidANR(param) + " ondemand=" + ondemanding);
 				if (ondemanding)
 					param.setResult(null);

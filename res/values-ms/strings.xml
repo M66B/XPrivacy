@@ -103,7 +103,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Tanda untuk sekat:</string>
-    <string name="title_check_whitelist">Check to allow</string>
+    <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Tapis data digunakan</string>
     <string name="title_finternet">Tapis internet diakses</string>
     <string name="title_fpermission">Tapis kebenaran</string>
@@ -130,6 +130,10 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="title_pleasesubmit">Sila kemukakan sekatan anda untuk menolong orang lain</string>
     <string name="title_permissions">Kebenaran</string>
     <string name="title_set_restrict">Restrict</string>
+    <string name="title_template_category">Apply template (categories)</string>
+    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_enable_ondemand">Enable on demand restricting</string>
+    <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">Siri#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
@@ -155,6 +159,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="settings_https">Guna sambungan terjamin</string>
     <string name="settings_syscomponents">Sekat komponen sistem (Android)</string>
     <string name="settings_usagedata">Tunjuk penggunaan data aplikasi</string>
+    <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Tekan lama pada nama untuk pilih</string>

@@ -36,7 +36,7 @@ public class PackageChange extends BroadcastReceiver {
 					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 1) {
 						if (!replacing) {
 							// Delete existing restrictions
-							PrivacyManager.deleteRestrictions(uid, null);
+							PrivacyManager.deleteRestrictions(uid, null, false);
 							PrivacyManager.deleteSettings(uid);
 							PrivacyManager.deleteUsage(uid);
 
@@ -49,14 +49,13 @@ public class PackageChange extends BroadcastReceiver {
 
 							// Restrict new non-system apps
 							if (!appInfo.isSystem())
-								PrivacyManager.applyTemplate(uid, null);
+								PrivacyManager.applyTemplate(uid, null, true);
 						}
-
-						// Mark as new/changed
-						PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
-								Integer.toString(ActivityMain.STATE_ATTENTION));
-
 					}
+
+					// Mark as new/changed
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
+							Integer.toString(ActivityMain.STATE_ATTENTION));
 
 					// New/update notification
 					boolean notify = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNotify, true, false);
@@ -121,7 +120,7 @@ public class PackageChange extends BroadcastReceiver {
 					// Delete restrictions
 					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
 					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 0) {
-						PrivacyManager.deleteRestrictions(uid, null);
+						PrivacyManager.deleteRestrictions(uid, null, false);
 						PrivacyManager.deleteSettings(uid);
 						PrivacyManager.deleteUsage(uid);
 					}
@@ -136,19 +135,11 @@ public class PackageChange extends BroadcastReceiver {
 						changeIntent.putExtra(UpdateService.cAction, UpdateService.cActionUpdated);
 						context.startService(changeIntent);
 
-						Intent resultIntent = new Intent(context, ActivityMain.class);
-						resultIntent.putExtra(ActivityMain.cAction, ActivityMain.cActionReboot);
-
-						// Build pending intent
-						PendingIntent pendingIntent = PendingIntent.getActivity(context, uid, resultIntent,
-								PendingIntent.FLAG_UPDATE_CURRENT);
-
 						// Build notification
 						NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
 						notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
 						notificationBuilder.setContentTitle(context.getString(R.string.app_name));
 						notificationBuilder.setContentText(context.getString(R.string.msg_reboot));
-						notificationBuilder.setContentIntent(pendingIntent);
 						notificationBuilder.setWhen(System.currentTimeMillis());
 						notificationBuilder.setAutoCancel(true);
 						Notification notification = notificationBuilder.build();

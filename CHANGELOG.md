@@ -14,15 +14,148 @@ Changelog
 
 **Next release**
 
-* Toggle restriction will allow to choose between, clear, restrict and template ([issue](/../../issues/1319))
-* Option to select if existing restrictions should be deleted on fetch ([issue](/../../issues/1119))
-* Move database to /data/system/xprivacy ([issue](/../../issues/1437))
-* Submit functions with a white/blacklist as having an exception ([issue](/../../issues/1438))
-* Updated Dutch translation
-* Updated Italian translation
-* Updated Traditional Chinese translation
+* Added partial asked state ([issue](/../../issues/1513))
+* Removed reboot action from restart required notification ([issue](/../../issues/1485))
+* Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.70 BETA**
+
+* Fixed exporting of template ([issue](/../../issues/1506))
+* Fixed exporting of on demand restricting function settings ([issue](/../../issues/1508))
+* Added *uid* to *restricted by* dialog (requested on XDA)
+* On demand restricting for dangerous functions with a whitelist always enabled
+* Updated Italian translation
+
+**Version 1.99.69 BETA**
+
+* Small layout fix (reported on XDA)
+* Moved user defined dangerous functions to template
+* Whitelist subnets ([issue](/../../issues/1501))
+* Added *uid* to on demand restricting dialog
+
+**Version 1.99.68 BETA**
+
+* Fixed erasing whitelists when changing restrictions ([issue](/../../issues/1499))
+* Fixed updating application state when new application with shared user ID is installed ([issue](/../../issues/1498))
+* Updated German translation
+* Updated French translation
+
+**Version 1.99.67 TEST**
+
+* Option to apply template partially (categories) or fully (categories and functions)
+* Reverted *Removed user defined dangerous functions*
+
+**Version 1.99.66 TEST**
+
+* Fixed function templates in relation to dangerous functions
+* Added spinners for changing restrictions
+* Clearing restrictions does no longer disable on demand restricting application *setting*
+* Delete restrictions and apply template of applications details view will use batch operation
+* Removed user defined dangerous functions
+
+**Version 1.99.65 TEST**
+
+* Fixed on demand restricting filtering negate ([issue](/../../issues/1495))
+* Run all restriction changes in the background
+	* To prevent application not responding messages
+	* There can be a delay before a restriction change is visible
+* Updated Lithuanian translation
+
+**Version 1.99.64 TEST**
+
+* Fixed all minor bugs reported through the support info
+* Fixed some minor bugs and improved some layouts
+* Added template for functions
+* Added info icon to toggle restrictions
+
+**Version 1.99.63 BETA**
+
+* Fixed interaction of on demand restricting dialog with status bar and keyboard
+	* Some dialogs when starting an application from a notification are still unresponsive
+* Template restrictions and on demand restricting separately, thanks @[jpeg729](https://github.com/jpeg729)
+* Enabled proguard again for a smaller file size (in preparation of the stable release)
+* Updated Italian translation
+
+**Version 1.99.62 BETA**
+
+* Fixed making exceptions for dangerous functions in some situations
+* Batch enable/disable on demand restricting requires enabling *Restrict dangerous functions*
+* Batch enable/disable on demand restricting will disable/enable update notifications too
+* Show usage data for selected category only
+* Updated Android support library to latest version
+* Updated simplified Chinese translation
+
+**Version 1.99.61 BETA**
+
+* Fixed all minor bugs reported through the support info
+	* The loop back address will be restricted too, see [this commit](https://github.com/M66B/XPrivacy/commit/4aad9cecc15cc040a0b9c4104dabb65332e4f63e)
+* Fixed negative GSF ID ([issue](/../../issues/1473))
+* Select visible applications for fetch ([issue](/../../issues/1477))
+* Add package name to export file name when exporting one application ([issue](/../../issues/1465))
+* Lower case entry for Android ID (reported on XDA)
+* Updated German translation
+* Updated Polish translation
+
+**Version 1.99.60 BETA**
+
+* Added option to batch disable on demand restricting ([issue](/../../issues/1467))
+* Clearer whitelist entry delete icon
+* Log database upgrade failures ([issue](/../../issues/1466))
+* Use not focusable on demand dialog ([issue](/../../issues/1464))
+* Updated Dutch translation
+* Updated French translation
+* Updated Lithuanian translation
+* Updated Russian translation
+
+**Version 1.99.59 BETA**
+
+* Fixed all minor bugs reported through the support info
+* More compatible database upgrade procedure (again)
+* Added option to batch enable on demand restricting (requested on XDA)
+* Added option to export from application details view (requested on XDA)
+
+**Version 1.99.58 TEST**
+
+* Fixed all minor bugs reported through the support info
+* Running [VACUUM](http://www.sqlite.org/lang_vacuum.html) on databases on boot
+* Setting [asynchronous mode](http://www.sqlite.org/pragma.html#pragma_synchronous) for usage data database
+
+**Version 1.99.57 TEST**
+
+* More compatible database upgrade procedure (again)
+* Better support info
+
+**Version 1.99.56 TEST**
+
+* More compatible database upgrade procedure
+
+**Version 1.99.55 TEST**
+
+* Fixed submitting restrictions ([issue](/../../issues/1452))
+* System server will create database folder ([issue](/../../issues/1437))
+* Updated Russian translation
+* Updated Slovak translation
+
+**Version 1.99.54 TEST**
+
+* Toggle restriction will allow to choose between, clear, restrict and template ([issue](/../../issues/1319))
+* Option to select if existing restrictions should be deleted on import or fetch ([issue](/../../issues/1119))
+* Move database to /data/system/xprivacy ([issue](/../../issues/1437))
+* Submit functions with a white/blacklist as having an exception ([issue](/../../issues/1438))
+* On demand timeout will result in using defined restriction (was deny once)
+* Import/export one application will not import/export global settings
+* Option to enable/disable usage data parameters (**default disabled**)
+* Removed phone properties restrictions (these are covered by function restrictions too)
+* Fixed on demand restricting asking again ([issue](/../../issues/1447))
+* Separated file name and /proc whitelists
+	* This means you have to whitelist /proc entries again
+* Updated Dutch translation
+* Updated German translation
+* Updated Italian translation
+* Updated Polish translation
+* Updated traditional Chinese translation
 
 **Version 1.99.53 TEST**
 
