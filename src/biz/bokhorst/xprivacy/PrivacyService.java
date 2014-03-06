@@ -601,14 +601,14 @@ public class PrivacyService {
 									if (dbUsage == null)
 										return;
 
+									String extra = "";
+									if (restriction.extra != null)
+										if (getSettingBool(0, PrivacyManager.cSettingParameters, false))
+											extra = restriction.extra;
+
 									mLockUsage.writeLock().lock();
 									dbUsage.beginTransaction();
 									try {
-										String extra = "";
-										if (restriction.extra != null)
-											if (getSettingBool(0, PrivacyManager.cSettingParameters, false))
-												extra = restriction.extra;
-
 										ContentValues values = new ContentValues();
 										values.put("uid", restriction.uid);
 										values.put("restriction", restriction.restrictionName);
