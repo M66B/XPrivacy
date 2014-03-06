@@ -45,7 +45,7 @@ because Android delegates handling these permissions to the underlying Linux net
 XPrivacy can fake an offline (internet) and unmounted (storage) state,
 but some applications still try to access the internet and storage,
 potentially resulting in crashes or error messages.
-If restricting a category of data for an application causes that application to work badly,
+If restricting a category of data for an application causes functional limitaions,
 XPrivacy can once again allow access to the data category to solve the issue.
 There is a convenient on/off switch for all restrictions for each application.
 
@@ -203,7 +203,7 @@ For easy usage, data is restricted by category:
 	* prevents connecting to Google Play services
 <a name="media"></a>
 * Media
-	* prevent recording audio (including from the microphone)
+	* prevent recording audio
 	* prevent taking pictures
 	* prevent recording video
 	* you will be notified if an application tries to perform any of these actions
@@ -305,7 +305,7 @@ Limitations
 * Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * It is not possible to restrict hardware MAC addresses or the external IP address
-* You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions (only [pro version](http://www.xprivacy.eu/))
+* You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions
 * You cannot restrict *IPC* for XPrivacy because it is needed for internal checks
 * You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file
 * You cannot restrict *system* for XPrivacy because it is needed to get an application list
@@ -452,7 +452,7 @@ Use your favorite search engine to find one.
 <a name="FAQ4"></a>
 **(4) How can I reset an application's XPrivacy settings?**
 
-While viewing an application's restrictions, do "Menu > Clear," then reboot.
+While viewing an application's restrictions, do "Menu > Clear" then reboot.
 
 <a name="FAQ5"></a>
 **(5) Can I backup XPrivacy's restrictions, settings, and usage data?**
@@ -584,7 +584,7 @@ That is correct. XPrivacy only replaces the real location with a fake location. 
 
 Secondary users can install and use XPrivacy the same way as the primary user.
 The primary user cannot manage the restrictions of secondary users.
-This is because Android totally separates the enviroments of the users (which is security wise a good thing).
+This is because Android totally separates the enviroments of the users (which is a good thing from a security perspecitve).
 
 <a name="FAQ20"></a>
 **(20) Why is the "Settings > Fake data > Search" button disabled?**
@@ -604,7 +604,7 @@ Read the explanation [here](http://forum.xda-developers.com/showpost.php?p=44427
 <a name="FAQ23"></a>
 **(23) What is "Template" used for?**
 
-XPrivacy uses the template to apply restrictions to newly installed applications and when you do "*Apply template*" from the menu inside an application.
+XPrivacy uses the template to apply restrictions to newly installed applications and when you select "*Apply template*" from the menu inside the application detail view.
 
 <a name="FAQ24"></a>
 **(24) Will there be iOS or Windows Phone versions?**
@@ -630,7 +630,7 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 * checks for root
 * lockscreen
 
-No, because I don't consider these privacy-sensitive data, i.e., able to identify you and collect data about you. I am happy to add new restrictions for data that is really privacy-sensitive.
+No, because I don't consider this information to be privacy-sensitive data, i.e., able to identify you and collect data about you. I am happy to add new restrictions for data that is really privacy-sensitive.
 
 <a name="FAQ26"></a>
 **(26) Will you revoke permissions?**
@@ -639,7 +639,7 @@ Android permissions cover only a part of the functions that leak privacy sensiti
 Revoking permissions will make a lot of applications unusable/crash.
 XPrivacy feeds applications with fake or no data, which keeps most applications working.
 In other words, XPrivacy is not a permission manager, but a privacy manager.
-If you need a permission manager, there are several Xposed modules offering this feature.
+If you need a permission manager, there are several Xposed modules that offer this feature.
 
 <a name="FAQ27"></a>
 **(27) Does XPrivacy work with SELinux (Fort Knox)?**
@@ -651,9 +651,9 @@ Yes, I am developing XPrivacy on a device with SELinux in restrictive mode.
 
 The tri-state check box works this way:
 
-* unchecked = nothing under the category is restricted
-* solid square = some things under the category are restricted
-* check mark = everything under the checked category is restricted
+* unchecked = nothing in the category is restricted
+* solid square = some things in the category are restricted
+* check mark = everything in the checked category is restricted
 
 Note: by default, categories and functions are filtered by permission, so you may not see all of them. The check box state is independent of this.
 
@@ -665,7 +665,7 @@ The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xpr
 <a name="FAQ30"></a>
 **(30) What should I do if an application force closes (crashes)?**
 
-Inspect the application's usage view, via its menu's "Usage data" item to see which restrictions the application accesses. Restrict and unrestrict one by one until you have found which one causes the application to force close. Help others by submitting your working set of restrictions.
+Inspect the application's usage view, via its menus "Usage data" item to see which restrictions the application accesses. Restrict and unrestrict one by one until you have found which one causes the application to force close. Help others by submitting your working set of restrictions.
 
 <a name="FAQ31"></a>
 **(31) Can XPrivacy handle non-Java applications?**
@@ -728,7 +728,7 @@ No, the pro license can be used independently.
 <a name="FAQ36"></a>
 **(36) Is PayPal/Bitcoin the only way to donate?**
 
-Yes, it is not feasible to add other donation methods at this moment.
+Yes, it is not feasible to add other donation methods at the moment.
 
 <a name="FAQ37"></a>
 **(37) Do I need to have the Play store/services installed for the pro version?**
@@ -798,7 +798,7 @@ It turns all restrictions for the application on or off, but still allows you to
 <a name="FAQ52"></a>
 **(52) Why was my issue closed?**
 
-I have spent really a lot of time developing XPrivacy and I am happy to look into any issue,
+I have really spent a lot of time developing XPrivacy and I am happy to look into any issue,
 but I am asking you to properly document your issue.
 *It doesn't work* or *it crashes* is insufficient.
 So, please describe the exact steps to reproduce the problem and/or provide a logcat.
@@ -807,7 +807,7 @@ See [here](https://github.com/M66B/XPrivacy#support) for more details.
 <a name="FAQ53"></a>
 **(53) What happens if I make XPrivacy device administrator?**
 
-This will make that other applications cannot uninstall XPrivacy without your knowledge.
+This ensures that other applications cannot uninstall XPrivacy without your knowledge.
 
 Support
 -------
@@ -823,7 +823,7 @@ such as security reports.
 
 **I will not look into issues of applications that have to be paid for.**
 
-**There is no support for anything else than privacy, so not for game cheating, root cloaking, etc.**
+**There is no support for anything other than privacy, so not for game cheating, root cloaking, etc.**
 
 ### Bugs
 
@@ -1002,7 +1002,7 @@ This file is part of XPrivacy.
 XPrivacy is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
+(at your discretion) any later version.
 
 XPrivacy is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
