@@ -45,7 +45,7 @@ because Android delegates handling these permissions to the underlying Linux net
 XPrivacy can fake an offline (internet) and unmounted (storage) state,
 but some applications still try to access the internet and storage,
 potentially resulting in crashes or error messages.
-If restricting a category of data for an application causes functional limitaions,
+If restricting a category of data for an application causes functional limitations,
 XPrivacy can once again allow access to the data category to solve the issue.
 There is a convenient on/off switch for all restrictions for each application.
 
