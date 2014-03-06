@@ -20,7 +20,7 @@
     <string name="menu_fetch">Ricevi restrizioni</string>
     <string name="menu_theme">Cambia tema</string>
     <string name="menu_pro">Versione Pro</string>
-    <string name="menu_about">Circa</string>
+    <string name="menu_about">A proposito di</string>
     <string name="menu_help">Aiuto</string>
     <string name="menu_select_all">Seleziona tutto</string>
     <string name="menu_sort">Organizza</string>
@@ -34,10 +34,10 @@
     <string name="menu_usage_all">Attiva filtro</string>
     <string name="menu_apply">Applica modello</string>
     <string name="menu_clear">Azzera</string>
-    <string name="menu_app_launch">Avvia</string>
+    <string name="menu_app_launch">Lancia</string>
     <string name="menu_app_settings">Impostazioni</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Termina processo</string>
+    <string name="menu_app_kill">Termina</string>
     <string name="menu_accounts">Seleziona gli accounts da consentire</string>
     <string name="menu_applications">Seleziona le applicazioni da consentire</string>
     <string name="menu_contacts">Seleziona i contatti da consentire</string>
@@ -57,11 +57,11 @@
     <string name="msg_sure">Sei sicuro?</string>
     <string name="msg_select">Per favore seleziona delle applicazioni</string>
     <string name="msg_limit">Per favore seleziona meno di %d applicazioni</string>
-    <string name="msg_done">Eseguito</string>
+    <string name="msg_done">Fatto</string>
     <string name="msg_reboot">Richiesto riavvio del dispositivo</string>
     <string name="msg_random_now">Randomizza adesso</string>
-    <string name="msg_random_access">Randomizza all\'acccesso</string>
-    <string name="msg_random_boot">Randomizza all\'avvio</string>
+    <string name="msg_random_access">Randomizza all\'accesso</string>
+    <string name="msg_random_boot">Randomizza al boot</string>
     <string name="msg_restart">Richiesto riavvio</string>
     <string name="msg_register">Per favore registra il tuo dispositivo</string>
     <string name="msg_email">Per favore inserisci il tuo indirizzo e-mail:</string>
@@ -72,7 +72,7 @@
     <string name="msg_upgrading" formatted="false">Aggiornamento %s</string>
     <string name="msg_support_info">Un controllo interno è fallito, vuoi inviare le informazioni di supporto?</string>
     <string name="msg_restrictedby">Ristretto da XPrivacy</string>
-    <string name="msg_first"><b>Grande attenzione e\' stata impiegata per sviluppare e testare XPrivacy,
+    <string name="msg_first"><b>Grande cura è stata posta nello sviluppo e verifica di XPrivacy,
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
 \n\nL\'utilizzo è interamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
     <string name="restrict_accounts" tools:ignore="UnusedResources">Accounts (Google, Facebook, ecc)</string>
@@ -85,7 +85,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_email" tools:ignore="UnusedResources">E-mail</string>
     <string name="restrict_identification" tools:ignore="UnusedResources">Identificazione (dispositivo)</string>
     <string name="restrict_internet" tools:ignore="UnusedResources">Internet</string>
-    <string name="restrict_location" tools:ignore="UnusedResources">Luogo (fine/approssimato)</string>
+    <string name="restrict_location" tools:ignore="UnusedResources">Luogo (preciso/approssimato)</string>
     <string name="restrict_media" tools:ignore="UnusedResources">Media (audio, foto, video)</string>
     <string name="restrict_messages" tools:ignore="UnusedResources">Messaggi (SMS, MMS)</string>
     <string name="restrict_network" tools:ignore="UnusedResources">Rete (indirizzi)</string>
@@ -131,8 +131,8 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_pleasesubmit">Per favore sottoponi le tue restrizioni per aiutare gli altri</string>
     <string name="title_permissions">Permessi</string>
     <string name="title_set_restrict">Restringi</string>
-    <string name="title_template_category">Apply template (categories)</string>
-    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_template_category">Applica modello (categorie)</string>
+    <string name="title_template_full">Applica modello (categorie+funzioni)</string>
     <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
     <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
     <string name="settings_serial">Seriale#</string>
@@ -149,10 +149,10 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_subscriber">Subscriber ID</string>
     <string name="settings_ua">User agent</string>
     <string name="settings_general">Generale</string>
-    <string name="settings_fake_data">Dati falsi</string>
-    <string name="settings_notify">Aggiorna notifiche</string>
+    <string name="settings_fake_data">Dati alterati</string>
+    <string name="settings_notify">Notifiche di aggiornamento</string>
     <string name="settings_ondemand">Restringi su richiesta</string>
-    <string name="settings_log">Log di debug (richiede riavvio)</string>
+    <string name="settings_log">Registro errori (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
     <string name="settings_dangerous">Restringi funzioni pericolose</string>
     <string name="settings_confidence">Intervallo massimo di confidenza nella ricezione</string>
@@ -164,7 +164,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Tieni premuto sul nome per selezionare</string>
-    <string name="help_ondemand">le restrizioni verrano richieste</string>
+    <string name="help_ondemand">le restrizioni verranno richieste</string>
     <string name="help_application">Applicazione</string>
     <string name="help_internet">ha il permesso di internet</string>
     <string name="help_granted">ha il permesso di Android</string>
@@ -178,7 +178,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="help_shared">restrizioni inviate</string>
     <string name="tutorial_mainheader">Seleziona la categoria da restringere</string>
     <string name="tutorial_mainlist">Tocca la casella di controllo per restringere la categoria selezionata per un\'applicazione\n
-\nAlle applicazioni verranno forniti dati vuoti o falsi per le categorie ristrette\n
+\nAlle applicazioni verranno forniti dati vuoti o alterati per le categorie ristrette\n
 \nTocca l\'icona dell\'applicazione per le restrizioni e le impostazioni dettagliate</string>
     <string name="tutorial_detailsheader">Tocca l\'icona dell\'applicazione per ulteriori azioni</string>
     <string name="tutorial_detailslist">Tocca la freccia verso il basso per visualizzare le funzioni escluse di una categoria ristretta</string>

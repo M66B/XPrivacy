@@ -17,6 +17,7 @@ Changelog
 * Fixed exporting of template ([issue](/../../issues/1506))
 * Added *uid* to *restricted by* dialog (requested on XDA)
 * On demand restricting for dangerous functions with a whitelist always enabled
+* Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
