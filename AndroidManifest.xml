@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
     android:installLocation="internalOnly"
-    android:versionCode="303"
-    android:versionName="1.99.69" >
+    android:versionCode="304"
+    android:versionName="1.99.70" >
 
     <uses-sdk
         android:minSdkVersion="15"

@@ -14,13 +14,15 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.70 BETA**
+
 * Fixed exporting of template ([issue](/../../issues/1506))
 * Fixed exporting of on demand restricting function settings ([issue](/../../issues/1508))
 * Added *uid* to *restricted by* dialog (requested on XDA)
 * On demand restricting for dangerous functions with a whitelist always enabled
 * Updated Italian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.69 BETA**
 
