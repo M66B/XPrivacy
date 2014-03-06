@@ -1406,7 +1406,8 @@ public class ActivityApp extends ActivityBase {
 
 									@Override
 									protected void onPostExecute(Object result) {
-										holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+										// Needed to update parent
+										notifyDataSetChanged();
 
 										holder.pbRunning.setVisibility(View.GONE);
 										holder.imgCbMethodAsk.setVisibility(View.VISIBLE);

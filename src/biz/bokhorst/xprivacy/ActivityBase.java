@@ -67,27 +67,21 @@ public class ActivityBase extends Activity {
 	}
 
 	protected Bitmap getCheckBoxImage(RState state) {
-		Bitmap checkbox;
-
-		if (state.partial)
-			checkbox = getHalfCheckBox();
+		if (state.partialRestricted)
+			return getHalfCheckBox();
 		else if (state.restricted)
-			checkbox = getFullCheckBox();
+			return getFullCheckBox();
 		else
-			checkbox = getOffCheckBox();
-
-		return checkbox;
+			return getOffCheckBox();
 	}
 
 	protected Bitmap getAskBoxImage(RState state) {
-		Bitmap checkbox;
-
-		if (state.asked)
-			checkbox = getOffCheckBox();
+		if (state.partialAsked)
+			return getHalfCheckBox();
+		else if (state.asked)
+			return getOffCheckBox();
 		else
-			checkbox = getOnDemandCheckBox();
-
-		return checkbox;
+			return getOnDemandCheckBox();
 	}
 
 	private void buildCheckBoxes() {

@@ -8,8 +8,9 @@ public class RState {
 	public String mRestrictionName;
 	public String mMethodName;
 	public boolean restricted;
-	public boolean asked;
-	public boolean partial = false;
+	public boolean asked = false;
+	public boolean partialRestricted = false;
+	public boolean partialAsked = false;
 
 	public RState(int uid, String restrictionName, String methodName) {
 		mUid = uid;
@@ -23,7 +24,8 @@ public class RState {
 
 		boolean allRestricted = true;
 		boolean someRestricted = false;
-		asked = false;
+		boolean allAsked = true;
+		boolean someAsked = false;
 
 		if (methodName == null) {
 			if (restrictionName == null) {
@@ -43,6 +45,8 @@ public class RState {
 				for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
 					allRestricted = (allRestricted && restriction.restricted);
 					someRestricted = (someRestricted || restriction.restricted);
+					allAsked = (allAsked && restriction.asked);
+					someAsked = (someAsked || restriction.asked);
 				}
 				asked = query.asked;
 			}
@@ -55,8 +59,9 @@ public class RState {
 		}
 
 		restricted = (allRestricted || someRestricted);
-		partial = (!allRestricted && someRestricted);
 		asked = (!onDemand || !PrivacyManager.isApplication(uid) || asked);
+		partialRestricted = (!allRestricted && someRestricted);
+		partialAsked = (onDemand && !allAsked && someAsked);
 	}
 
 	public void toggleRestriction() {

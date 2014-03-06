@@ -14,6 +14,7 @@ Changelog
 
 **Next release**
 
+* Added partial asked state ([issue](/../../issues/1513))
 * Removed reboot action from restart required notification ([issue](/../../issues/1485))
 * Updated Slovenian translation
 
