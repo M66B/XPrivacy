@@ -1,4 +1,4 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
     <string name="app_notxposed" formatted="false">Xposed framework versione %d+ non è installato</string>
     <string name="app_notenabled">XPrivacy non è attivato nell\'installatore di Xposed</string>
@@ -75,34 +75,34 @@
     <string name="msg_first"><b>Grande cura è stata posta nello sviluppo e verifica di XPrivacy,
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
 \n\nL\'utilizzo è interamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
-    <string name="restrict_accounts" tools:ignore="UnusedResources">Accounts (Google, Facebook, ecc)</string>
-    <string name="restrict_browser" tools:ignore="UnusedResources">Browser (segnalibri/storico)</string>
-    <string name="restrict_calendar" tools:ignore="UnusedResources">Calendario</string>
-    <string name="restrict_calling" tools:ignore="UnusedResources">Chiamate (Telefono, SMS, MMS)</string>
-    <string name="restrict_clipboard" tools:ignore="UnusedResources">Appunti</string>
-    <string name="restrict_contacts" tools:ignore="UnusedResources">Contatti</string>
-    <string name="restrict_dictionary" tools:ignore="UnusedResources">Dizionario (utente)</string>
-    <string name="restrict_email" tools:ignore="UnusedResources">E-mail</string>
-    <string name="restrict_identification" tools:ignore="UnusedResources">Identificazione (dispositivo)</string>
-    <string name="restrict_internet" tools:ignore="UnusedResources">Internet</string>
-    <string name="restrict_location" tools:ignore="UnusedResources">Luogo (preciso/approssimato)</string>
-    <string name="restrict_media" tools:ignore="UnusedResources">Media (audio, foto, video)</string>
-    <string name="restrict_messages" tools:ignore="UnusedResources">Messaggi (SMS, MMS)</string>
-    <string name="restrict_network" tools:ignore="UnusedResources">Rete (indirizzi)</string>
-    <string name="restrict_notifications" tools:ignore="UnusedResources">Notifiche</string>
-    <string name="restrict_overlay" tools:ignore="UnusedResources">Sovrapposizione</string>
-    <string name="restrict_phone" tools:ignore="UnusedResources">Telefono (ID, numeri, chiamate)</string>
-    <string name="restrict_sensors" tools:ignore="UnusedResources">Sensori</string>
-    <string name="restrict_storage" tools:ignore="UnusedResources">Memoria (media, scheda SD)</string>
-    <string name="restrict_shell" tools:ignore="UnusedResources">Shell (comandi, superuser)</string>
-    <string name="restrict_system" tools:ignore="UnusedResources">Sistema (applicazioni installate)</string>
-    <string name="restrict_view" tools:ignore="UnusedResources">Visualizza (browser)</string>
-    <string name="whitelist_ipaddress" tools:ignore="UnusedResources">Indirizzi IP</string>
-    <string name="whitelist_library" tools:ignore="UnusedResources">Librerie native</string>
-    <string name="whitelist_filename" tools:ignore="UnusedResources">Nomi file</string>
-    <string name="whitelist_command" tools:ignore="UnusedResources">Comandi Shell</string>
-    <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>
-    <string name="whitelist_proc" tools:ignore="UnusedResources">/proc</string>
+    <string name="restrict_accounts">Accounts (Google, Facebook, ecc)</string>
+    <string name="restrict_browser">Browser (segnalibri/storico)</string>
+    <string name="restrict_calendar">Calendario</string>
+    <string name="restrict_calling">Chiamate (Telefono, SMS, MMS)</string>
+    <string name="restrict_clipboard">Appunti</string>
+    <string name="restrict_contacts">Contatti</string>
+    <string name="restrict_dictionary">Dizionario (utente)</string>
+    <string name="restrict_email">E-mail</string>
+    <string name="restrict_identification">Identificazione (dispositivo)</string>
+    <string name="restrict_internet">Internet</string>
+    <string name="restrict_location">Luogo (preciso/approssimato)</string>
+    <string name="restrict_media">Media (audio, foto, video)</string>
+    <string name="restrict_messages">Messaggi (SMS, MMS)</string>
+    <string name="restrict_network">Rete (indirizzi)</string>
+    <string name="restrict_notifications">Notifiche</string>
+    <string name="restrict_overlay">Sovrapposizione</string>
+    <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
+    <string name="restrict_sensors">Sensori</string>
+    <string name="restrict_storage">Memoria (media, scheda SD)</string>
+    <string name="restrict_shell">Shell (comandi, superuser)</string>
+    <string name="restrict_system">Sistema (applicazioni installate)</string>
+    <string name="restrict_view">Visualizza (browser)</string>
+    <string name="whitelist_ipaddress">Indirizzi IP</string>
+    <string name="whitelist_library">Librerie native</string>
+    <string name="whitelist_filename">Nomi file</string>
+    <string name="whitelist_command">Comandi Shell</string>
+    <string name="whitelist_url">URLs</string>
+    <string name="whitelist_proc">/proc</string>
     <string name="title_restrict">Seleziona per restringere:</string>
     <string name="title_check_whitelist">Seleziona per consentire</string>
     <string name="title_fused">Filtra per dati di utilizzo</string>
