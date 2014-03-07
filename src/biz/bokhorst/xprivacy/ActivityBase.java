@@ -76,7 +76,7 @@ public class ActivityBase extends Activity {
 	}
 
 	protected Bitmap getAskBoxImage(RState state) {
-		if (state.partialAsked)
+		if (state.partialAsk)
 			return getHalfCheckBox();
 		else if (state.asked)
 			return getOffCheckBox();
