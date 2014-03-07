@@ -14,11 +14,20 @@ Changelog
 
 **Next release**
 
-* Added partial asked state ([issue](/../../issues/1513))
-* Removed reboot action from restart required notification ([issue](/../../issues/1485))
-* Updated Slovenian translation
+* Added version number to reboot view
+* Update application state after changing on demand restricting ([issue](/../../issues/1515))
+* Updated Russian translation
+* Updated Slovenian translatation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 1.99.71 BETA**
+
+* Added partial asked state ([issue](/../../issues/1513))
+* Removed reboot action from restart required notification ([issue](/../../issues/1485))
+* Positional text parameters (English only), thanks @[Phylon](https://github.com/Phylon) ([pull request](https://github.com/M66B/XPrivacy/pull/1514))
+* Updated Dutch translation
+* Updated Slovenian translation
 
 **Version 1.99.70 BETA**
 

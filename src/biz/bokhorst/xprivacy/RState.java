@@ -10,7 +10,7 @@ public class RState {
 	public boolean restricted;
 	public boolean asked = false;
 	public boolean partialRestricted = false;
-	public boolean partialAsked = false;
+	public boolean partialAsk = false;
 
 	public RState(int uid, String restrictionName, String methodName) {
 		mUid = uid;
@@ -24,8 +24,8 @@ public class RState {
 
 		boolean allRestricted = true;
 		boolean someRestricted = false;
-		boolean allAsked = true;
-		boolean someAsked = false;
+		boolean allAsk = true;
+		boolean someAsk = false;
 
 		if (methodName == null) {
 			if (restrictionName == null) {
@@ -42,11 +42,12 @@ public class RState {
 				// Examine the category/method states
 				PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
 				someRestricted = query.restricted;
+				someAsk = !query.asked;
 				for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
 					allRestricted = (allRestricted && restriction.restricted);
 					someRestricted = (someRestricted || restriction.restricted);
-					allAsked = (allAsked && restriction.asked);
-					someAsked = (someAsked || restriction.asked);
+					allAsk = (allAsk && !restriction.asked);
+					someAsk = (someAsk || !restriction.asked);
 				}
 				asked = query.asked;
 			}
@@ -61,7 +62,7 @@ public class RState {
 		restricted = (allRestricted || someRestricted);
 		asked = (!onDemand || !PrivacyManager.isApplication(uid) || asked);
 		partialRestricted = (!allRestricted && someRestricted);
-		partialAsked = (onDemand && !allAsked && someAsked);
+		partialAsk = (onDemand && PrivacyManager.isApplication(uid) && !allAsk && someAsk);
 	}
 
 	public void toggleRestriction() {
@@ -93,5 +94,7 @@ public class RState {
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		listPRestriction.add(new PRestriction(mUid, mRestrictionName, mMethodName, restricted, asked));
 		PrivacyManager.setRestrictionList(listPRestriction);
+		PrivacyManager.setSetting(mUid, PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
+		PrivacyManager.setSetting(mUid, PrivacyManager.cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 	}
 }

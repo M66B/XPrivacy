@@ -169,13 +169,15 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		if (!mFrozenDetermined) {
 			PackageManager pm = context.getPackageManager();
 			boolean enabled = false;
-			for (ApplicationInfo appInfo : mMapAppInfo.values()) {
-				int setting = pm.getApplicationEnabledSetting(appInfo.packageName);
-				enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
-				enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
-				if (enabled)
-					break;
-			}
+			for (ApplicationInfo appInfo : mMapAppInfo.values())
+				try {
+					int setting = pm.getApplicationEnabledSetting(appInfo.packageName);
+					enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_DEFAULT);
+					enabled = (enabled || setting == PackageManager.COMPONENT_ENABLED_STATE_ENABLED);
+					if (enabled)
+						break;
+				} catch (IllegalArgumentException ignored) {
+				}
 			mFrozen = !enabled;
 			mFrozenDetermined = true;
 		}

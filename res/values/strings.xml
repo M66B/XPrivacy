@@ -2,14 +2,14 @@
 
     <!-- Translators: do not include texts with translatable="false" -->
     <string name="app_name" translatable="false">XPrivacy</string>
-    <string name="app_notxposed" formatted="false">Xposed framework version %d+ is not installed</string>
+    <string name="app_notxposed">Xposed framework version %1$d+ is not installed</string>
     <string name="app_notenabled">XPrivacy is not enabled in the Xposed installer</string>
     <string name="app_wrongandroid">Only for Android version 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible">XPrivacy is incompatible with %1$s</string>
     <string name="app_wrongenabler" translatable="false">Please upgrade the Pro enabler</string>
-    <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
+    <string name="app_version">XPrivacy version: %1$s (%2$d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Xposed framework version: %d</string>
+    <string name="app_xversion">Xposed framework version: %1$d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy?mobile=0#xprivacy</string>
@@ -57,11 +57,11 @@
     <string name="msg_loading">Loading &#8230;</string>
     <string name="msg_applying">Applying &#8230;</string>
     <string name="msg_applied">Template applied</string>
-    <string name="msg_saved_to" formatted="false">Saved to %s</string>
+    <string name="msg_saved_to">Saved to %1$s</string>
     <string name="msg_no_restrictions">No restrictions found</string>
     <string name="msg_sure">Are you sure?</string>
     <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_limit">Please select fewer than %1$d applications</string>
     <string name="msg_done">Done</string>
     <string name="msg_reboot">Device restart required</string>
     <string name="msg_random_now">Randomize now</string>
@@ -72,9 +72,9 @@
     <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">Check your e-mail to activate your device</string>
     <string name="msg_service">Update service running</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_migrating">Migrating %1$s</string>
+    <string name="msg_randomizing">Randomizing %1$s</string>
+    <string name="msg_upgrading">Upgrading %1$s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_question" translatable="false">\?</string>
@@ -132,8 +132,8 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="title_function">Function:</string>
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %s seconds</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_whitelist">Whitelist \'%1$s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>

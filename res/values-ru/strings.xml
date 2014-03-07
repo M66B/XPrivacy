@@ -1,12 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Не установлен Xposed framework версии %d+</string>
+    <string name="app_notxposed" formatted="false">Не установлен Xposed framework версии %1$d+</string>
     <string name="app_notenabled">Модуль XPrivacy не активирован в Xposed installer</string>
     <string name="app_wrongandroid">Только для Android версии 4.0 и выше</string>
-    <string name="app_incompatible" formatted="false">XPrivacy не совместим с %s</string>
-    <string name="app_version" formatted="false">Версия XPrivacy: %s (%d)</string>
+    <string name="app_incompatible" formatted="false">XPrivacy не совместим с %1$s</string>
+    <string name="app_version" formatted="false">Версия XPrivacy: %1$s (%2$d)</string>
     <string name="app_description">Продвинутый менеджер конфиденциальности</string>
-    <string name="app_xversion" formatted="false">Версия Xposed framework: %d</string>
+    <string name="app_xversion" formatted="false">Версия Xposed framework: %1$d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Зарегистрировано, спасибо за Вашу поддержку!</string>
     <string name="menu_usage">Использование</string>
@@ -52,11 +52,11 @@
     <string name="msg_loading">Загрузка</string>
     <string name="msg_applying">Применение</string>
     <string name="msg_applied">Шаблон применен</string>
-    <string name="msg_saved_to" formatted="false">Сохранено в %s</string>
+    <string name="msg_saved_to" formatted="false">Сохранено в %1$s</string>
     <string name="msg_no_restrictions">Не найдено разрешений</string>
     <string name="msg_sure">Вы уверены?</string>
     <string name="msg_select">Выберите приложения, пожалуйста</string>
-    <string name="msg_limit">Максимум приложений для выбора - %d</string>
+    <string name="msg_limit">Выберите меньше, чем %1$d приложений</string>
     <string name="msg_done">Готово</string>
     <string name="msg_reboot">Требуется перезагрузка</string>
     <string name="msg_random_now">Случайные значения</string>
@@ -67,9 +67,9 @@
     <string name="msg_email">Пожалуйста, введите свой емейл:</string>
     <string name="msg_registered">Проверьте емейл, чтобы активировать устройство</string>
     <string name="msg_service">Сервис обновлений запущен</string>
-    <string name="msg_migrating" formatted="false">Миграция %s</string>
-    <string name="msg_randomizing" formatted="false">Рандомизация %s</string>
-    <string name="msg_upgrading" formatted="false">Обновление %s</string>
+    <string name="msg_migrating" formatted="false">Миграция %1$s</string>
+    <string name="msg_randomizing" formatted="false">Рандомизация %1$s</string>
+    <string name="msg_upgrading" formatted="false">Обновление %1$s</string>
     <string name="msg_support_info">Внутренняя проверка не удалась, хотите ли вы отправить информацию для поддержки?</string>
     <string name="msg_restrictedby">Запрещено XPrivacy</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
@@ -123,15 +123,15 @@
     <string name="title_function">Функция:</string>
     <string name="title_parameters">Параметры:</string>
     <string name="title_applycat">Применить ко всей категории</string>
-    <string name="title_once">Раз в %s сек.</string>
-    <string name="title_whitelist">Белый список \'%s\'</string>
+    <string name="title_once">Раз в %1$s сек.</string>
+    <string name="title_whitelist">Белый список \'%1$s\'</string>
     <string name="title_allow">Разрешить</string>
     <string name="title_deny">Запретить</string>
     <string name="title_pleasesubmit">Пожалуйста, отправьте ваши разрешения, чтобы помочь остальным</string>
     <string name="title_permissions">Разрешения</string>
     <string name="title_set_restrict">Запретить</string>
-    <string name="title_template_category">Apply template (categories)</string>
-    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_template_category">Применить шаблон (категории)</string>
+    <string name="title_template_full">Применить шаблон (категории+функции)</string>
     <string name="title_enable_ondemand">Включить запрос разрешений</string>
     <string name="title_disable_ondemand">Отключить запрос разрешений</string>
     <string name="settings_serial">Серийный номер</string>
@@ -152,7 +152,7 @@
     <string name="settings_notify">Обновить уведомления</string>
     <string name="settings_ondemand">Запрос разрешений</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
-    <string name="settings_expert">Экспертный режим</string>
+    <string name="settings_expert">Режим эксперта</string>
     <string name="settings_dangerous">Запрет опасных функций</string>
     <string name="settings_confidence">Макс. доверительный интервал выборки</string>
     <string name="settings_experimental">Экспериментальные функции</string>

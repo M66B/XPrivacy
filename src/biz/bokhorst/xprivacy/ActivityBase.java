@@ -2,6 +2,7 @@ package biz.bokhorst.xprivacy;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
@@ -31,6 +32,16 @@ public class ActivityBase extends Activity {
 		} else {
 			// Privacy client now available
 			setContentView(R.layout.reboot);
+
+			try {
+				PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+				TextView tvVersion = (TextView) findViewById(R.id.tvVersion);
+				tvVersion.setText(pInfo.versionName);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+
+			// Show reason
 			if (PrivacyService.getClient() == null) {
 				TextView tvRebootClient = (TextView) findViewById(R.id.tvRebootClient);
 				tvRebootClient.setVisibility(View.VISIBLE);
@@ -76,7 +87,7 @@ public class ActivityBase extends Activity {
 	}
 
 	protected Bitmap getAskBoxImage(RState state) {
-		if (state.partialAsked)
+		if (state.partialAsk)
 			return getHalfCheckBox();
 		else if (state.asked)
 			return getOffCheckBox();

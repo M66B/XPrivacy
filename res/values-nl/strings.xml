@@ -1,12 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed framework versie %d+ is niet geïnstalleerd</string>
+    <string name="app_notxposed">Xposed framework versie %1$d+ is niet geïnstalleerd</string>
     <string name="app_notenabled">XPrivacy is niet ingeschakeld in de Xposed installer</string>
     <string name="app_wrongandroid">Alleen voor Android versie 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is niet verenigbaar met %s</string>
-    <string name="app_version" formatted="false">XPrivacy versie: %s (%d)</string>
+    <string name="app_incompatible">XPrivacy is niet verenigbaar met %1$s</string>
+    <string name="app_version">XPrivacy versie: %1$s (%2$d)</string>
     <string name="app_description">De ultieme privacy manager</string>
-    <string name="app_xversion" formatted="false">Xposed framework versie: %d</string>
+    <string name="app_xversion">Xposed framework versie: %1$d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Gelicenseerd, bedankt voor uw ondersteuning!</string>
     <string name="menu_usage">Gebruik</string>
@@ -52,11 +52,11 @@
     <string name="msg_loading">Laden &#8230;</string>
     <string name="msg_applying">Toepassen &#8230;</string>
     <string name="msg_applied">Sjabloon toegepast</string>
-    <string name="msg_saved_to" formatted="false">Bewaard als %s</string>
+    <string name="msg_saved_to">Bewaard als %1$s</string>
     <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
     <string name="msg_sure">Zeker weten?</string>
     <string name="msg_select">Selecter a.u.b enige applicaties</string>
-    <string name="msg_limit">Selecteer a.u.b. minder dan %d applicaties</string>
+    <string name="msg_limit">Selecteer a.u.b. minder dan %1$d applicaties</string>
     <string name="msg_done">Gereed</string>
     <string name="msg_reboot">Herstart apparaat vereist</string>
     <string name="msg_random_now">Willekeurig</string>
@@ -67,9 +67,9 @@
     <string name="msg_email">Vul a.u.b. uw e-mail adres in:</string>
     <string name="msg_registered">Controleer uw e-mail om uw apparaat te activeren</string>
     <string name="msg_service">Bijwerkdienst actief</string>
-    <string name="msg_migrating" formatted="false">Migratie %s</string>
-    <string name="msg_randomizing" formatted="false">Willekeurig %s</string>
-    <string name="msg_upgrading" formatted="false">Bijwerken %s</string>
+    <string name="msg_migrating">Migratie %1$s</string>
+    <string name="msg_randomizing">Willekeurig %1$s</string>
+    <string name="msg_upgrading">Bijwerken %1$s</string>
     <string name="msg_support_info">Een interne controle faalde, wilt u de ondersteuningsinformatie sturen?</string>
     <string name="msg_restrictedby">Beperkt door XPrivacy</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
@@ -123,8 +123,8 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_function">Functie:</string>
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Pas toe op gehele categorie</string>
-    <string name="title_once">Één keer voor %s seconden</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_once">Één keer voor %1$s seconden</string>
+    <string name="title_whitelist">Whitelist \'%1$s\'</string>
     <string name="title_allow">Toestaan</string>
     <string name="title_deny">Blokkeren</string>
     <string name="title_pleasesubmit">Stuur a.u.b. uw beperkingen op om anderen te helpen</string>
