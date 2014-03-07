@@ -117,7 +117,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_sinstalled">Podľa dátumu inštalácie</string>
     <string name="title_supdated">Podľa dátumu aktulizácie</string>
     <string name="title_smodified">Podľa dátumu zmeny (XPrivacy)</string>
-    <string name="title_sinvert">Obrátiť poradenie zoradenia</string>
+    <string name="title_sinvert">Obrátiť poradie zoradenia</string>
     <string name="title_attempt">Pokus o použitie:</string>
     <string name="title_category">Kategória:</string>
     <string name="title_function">Funkcia:</string>
@@ -130,10 +130,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_pleasesubmit">Odošlite prosím vaše obmedzenia na pomoc ostatným</string>
     <string name="title_permissions">Povolenia</string>
     <string name="title_set_restrict">Obmedziť</string>
-    <string name="title_template_category">Apply template (categories)</string>
-    <string name="title_template_full">Apply template (categories+functions)</string>
-    <string name="title_enable_ondemand">Enable on demand restricting</string>
-    <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_template_category">Použiť šablónu (kategórie)</string>
+    <string name="title_template_full">Použiť šablónu (kategórie+funkcie)</string>
+    <string name="title_enable_ondemand">Povoliť obmedzenie na požiadanie</string>
+    <string name="title_disable_ondemand">Zakázať obmedzenie na požiadanie</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
@@ -162,7 +162,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_parameters">Zobraziť parametre využitia dát</string>
     <string name="settings_cid">Identifikátor bunky GSM</string>
     <string name="settings_lac">Kód lokality GSM</string>
-    <string name="help_longpress">Vybrať dlhým stlačením názvu</string>
+    <string name="help_longpress">Vyberte dlhým stlačením názvu</string>
     <string name="help_ondemand">obmedzenia budú požadované</string>
     <string name="help_application">Aplikácia</string>
     <string name="help_internet">má internetové povolenie</string>
