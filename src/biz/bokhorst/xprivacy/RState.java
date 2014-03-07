@@ -94,5 +94,7 @@ public class RState {
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		listPRestriction.add(new PRestriction(mUid, mRestrictionName, mMethodName, restricted, asked));
 		PrivacyManager.setRestrictionList(listPRestriction);
+		PrivacyManager.setSetting(mUid, PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
+		PrivacyManager.setSetting(mUid, PrivacyManager.cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 	}
 }
