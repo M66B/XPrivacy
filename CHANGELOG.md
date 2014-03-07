@@ -18,7 +18,7 @@ Changelog
 * Update application state after changing on demand restricting ([issue](/../../issues/1515))
 * Fix some translations, thanks @[Phylon](https://github.com/Phylon) ([pull request](https://github.com/M66B/XPrivacy/pull/1446))
 * Updated Russian translation
-* Updated Slovenian translatation
+* Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
