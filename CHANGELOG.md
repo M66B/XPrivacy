@@ -16,6 +16,7 @@ Changelog
 
 * Added version number to reboot view
 * Update application state after changing on demand restricting ([issue](/../../issues/1515))
+* Updated Russian translation
 * Updated Slovenian translatation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
