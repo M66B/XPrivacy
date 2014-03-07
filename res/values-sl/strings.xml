@@ -41,7 +41,7 @@
     <string name="menu_accounts">Izberi dovoljene račune</string>
     <string name="menu_applications">Izberi dovoljene aplikacije</string>
     <string name="menu_contacts">Izberi dovoljene stike</string>
-    <string name="menu_whitelists">Upravljaj bele liste</string>
+    <string name="menu_whitelists">Upravljanje bele liste</string>
     <string name="menu_tutorial">Navodila</string>
     <string name="menu_exclude">Izključi</string>
     <string name="menu_close">Zapri</string>
@@ -67,10 +67,10 @@
     <string name="msg_email">Prosimo, vnesite svoj e-mail naslov:</string>
     <string name="msg_registered">Za aktiviranje Vaše naprave, preverite e-pošto</string>
     <string name="msg_service">Posodobi zagnane storitve</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
+    <string name="msg_migrating" formatted="false">Selim %s</string>
+    <string name="msg_randomizing" formatted="false">Ustvarjam naključne podatke %s</string>
     <string name="msg_upgrading" formatted="false">Nadgrajujem %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
+    <string name="msg_support_info">Napaka pri notranjem preverjanju, želite poslati podatke podpori?</string>
     <string name="msg_restrictedby">Omejeno z XPrivacy</string>
     <string name="msg_first"><b>Za razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
@@ -103,16 +103,16 @@
     <string name="whitelist_command">Ukazi lupine</string>
     <string name="whitelist_url">URLji</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
-    <string name="title_check_whitelist">Check to allow:</string>
+    <string name="title_check_whitelist">Izberi za dovoljevanje:</string>
     <string name="title_fused">Filtriraj po uporabi podatkov</string>
     <string name="title_finternet">Filtriraj po internetnem dostopu</string>
     <string name="title_fpermission">Filtriraj po pravicah</string>
     <string name="title_frestricted">Filtriraj po omejitvah</string>
     <string name="title_fuser">Filtriraj uporabniške programe</string>
-    <string name="title_fondemand">Filter by on-demand</string>
+    <string name="title_fondemand">Filtriraj po "na-zahtevo"</string>
     <string name="title_fsystem">Filtriraj sistemske programe</string>
     <string name="title_fnot">Negiraj</string>
-    <string name="title_sname">Poi imenu</string>
+    <string name="title_sname">Po imenu</string>
     <string name="title_suid">Po uid</string>
     <string name="title_sinstalled">Po datumu namestitve</string>
     <string name="title_supdated">Po datumu posodobitve</string>
@@ -132,8 +132,8 @@
     <string name="title_set_restrict">Omeji</string>
     <string name="title_template_category">Uveljavi predlogo (kategorije)</string>
     <string name="title_template_full">Uveljavi predlogo (kategorije+funkcije)</string>
-    <string name="title_enable_ondemand">Enable on demand restricting</string>
-    <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_enable_ondemand">Omogoči omejevanje na zahtevo</string>
+    <string name="title_disable_ondemand">Onemogoči omejevanje na zahtevo</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
@@ -146,11 +146,11 @@
     <string name="settings_country">Država</string>
     <string name="settings_operator">Operater</string>
     <string name="settings_subscriber">ID naročnika</string>
-    <string name="settings_ua">User agent</string>
+    <string name="settings_ua">Uporabniški agent</string>
     <string name="settings_general">Splošno</string>
     <string name="settings_fake_data">Lažni podatki</string>
     <string name="settings_notify">Obvestila ob posodobitvi</string>
-    <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_ondemand">Omeji na zahtevo</string>
     <string name="settings_log">Beleženje za razvijalce (zahteva ponovni zagon)</string>
     <string name="settings_expert">Način za strokovnjake</string>
     <string name="settings_dangerous">Omeji nevarne funkcije</string>
@@ -163,7 +163,7 @@
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Za izbiranje pridržite ime</string>
-    <string name="help_ondemand">restrictions will be asked</string>
+    <string name="help_ondemand">omejitve bodo vprašane</string>
     <string name="help_application">Program</string>
     <string name="help_internet">uporablja internetne pravice</string>
     <string name="help_granted">uporablja Android pravice</string>
