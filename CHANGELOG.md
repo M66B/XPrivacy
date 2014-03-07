@@ -17,6 +17,7 @@ Changelog
 * Added partial asked state ([issue](/../../issues/1513))
 * Removed reboot action from restart required notification ([issue](/../../issues/1485))
 * Positional text parameters (English only), thanks @[Phylon](https://github.com/Phylon)
+* Updated Dutch translation
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
