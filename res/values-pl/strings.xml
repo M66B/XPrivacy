@@ -123,7 +123,7 @@
     <string name="title_function">Funkcja:</string>
     <string name="title_parameters">Parametry:</string>
     <string name="title_applycat">Zastosuj do całej kategorii</string>
-    <string name="title_once">Jednorazowo na %1$s sekund</string>
+    <string name="title_once">Jednorazowo na %s sekund</string>
     <string name="title_whitelist">Biała lista \'%s\'</string>
     <string name="title_allow">Pozwól</string>
     <string name="title_deny">Zabroń</string>

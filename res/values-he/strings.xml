@@ -1,14 +1,14 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed מסגרת גרסה &amp;d+ אינו מותקן</string>
+    <string name="app_notxposed" formatted="false">Xposed מסגרת גרסה %d+ אינו מותקן</string>
     <string name="app_notenabled">XPrivacy אינו מאופשר במתקין Xposed</string>
     <string name="app_wrongandroid">Only for Android version 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
-    <string name="app_version" formatted="false">XPrivacy גירסא: %s (%d)</string>
+    <string name="app_version" formatted="false">גירסא XPrivacy\u200F: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">גרסת מסגרת Xposed: %d</string>
-    <string name="app_copyright">כל הזכויות שמורות \ u00A9 2013–2014 על ידי מ \'Bokhorst (M66B)</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_xversion">גרסת מסגרת Xposed\u200F: %d</string>
+    <string name="app_copyright">כל הזכויות שמורות \u00A9 2013–2014 על ידי מ Bokhorst (M66B)\u200E</string>
+    <string name="app_licensed">License found, thanks for your support!</string>
     <string name="menu_usage">Usage</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">הגדרות</string>
@@ -123,7 +123,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_function">Function:</string>
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %1$s seconds</string>
+    <string name="title_once">Once for %s seconds</string>
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>

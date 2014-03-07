@@ -124,7 +124,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_function">Funzione:</string>
     <string name="title_parameters">Parametri:</string>
     <string name="title_applycat">Applica a intera categoria</string>
-    <string name="title_once">Una volta per %1$s secondi</string>
+    <string name="title_once">Una volta per %s secondi</string>
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Consenti</string>
     <string name="title_deny">Rifiuta</string>
