@@ -22,6 +22,9 @@ Changelog
 * Added on demand restricting
 	* XPrivacy will ask to allow/deny on actual function usage
 * Added white and black listing for files, IP addresses, domain names, commands, libraries and URLs
+	* White and black listing on demand are available to anyone
+	* White/black list management from the user interface requires a [Pro license](http://www.xprivacy.eu/)
+	* Clearing restrictions will clear white/black lists too
 * Added parameters to usage data (option) (only [Pro license](http://www.xprivacy.eu/))
 * Added sorting and extended filtering
 * Added multiple select and batch operations to set, reset, import and export restrictions
