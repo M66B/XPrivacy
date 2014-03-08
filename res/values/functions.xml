@@ -239,6 +239,7 @@
     <string name="system_android_intent_action_EXTERNAL_APPLICATIONS_AVAILABLE" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/Intent.html#ACTION_EXTERNAL_APPLICATIONS_AVAILABLE">Google documentation</a>]]></string>
     <string name="system_android_intent_action_EXTERNAL_APPLICATIONS_UNAVAILABLE" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/Intent.html#ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE">Google documentation</a>]]></string>
     <string name="system_ApplicationsProvider" translatable="false"><![CDATA[Will restrict access to a list of applications installed on the phone to provide search suggestions]]></string>
+    <string name="system_TZ_getDefault" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/java/util/TimeZone.html#getDefault()">Google documentation</a>]]></string>
     <!-- view -->
     <string name="view_loadUrl" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>
     <string name="view_WebView" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/webkit/WebView.html">Google documentation</a>]]></string>

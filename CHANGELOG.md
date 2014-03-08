@@ -41,6 +41,7 @@ Changelog
 
 Other changes:
 
+* Added restriction for time zone ([issue](/../../issues/1524))
 * Updated Dutch translation
 * Updated Slovenian translation
 
