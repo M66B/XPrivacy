@@ -116,19 +116,19 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cTypeIPAddress));
 
-		mListHook.add(new Hook("ipc", "android.accounts.IAccountManager", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "android.app.IActivityManager", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "android.content.IClipboard", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "android.net.IConnectivityManager", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "android.content.IContentService", "", 1, "1.99.40", null));
-		mListHook.add(new Hook("ipc", "android.location.ILocationManager", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistry", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistryMSim", "", 1, "1.99.26", null));
-		mListHook.add(new Hook("ipc", "android.content.pm.IPackageManager", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.IPhoneSubInfo", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.msim.IPhoneSubInfoMSim", "", 1, "1.99.26", null));
-		mListHook.add(new Hook("ipc", "android.view.IWindowManager", "", 1, "1.99.1", null));
-		mListHook.add(new Hook("ipc", "android.net.wifi.IWifiManager", "", 1, "1.99.1", null));
+		mListHook.add(new Hook("ipc", "android.accounts.IAccountManager", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "android.app.IActivityManager", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "android.content.IClipboard", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "android.net.IConnectivityManager", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "android.content.IContentService", "", 1, "1.99.40", null).dangerous());
+		mListHook.add(new Hook("ipc", "android.location.ILocationManager", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistry", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistryMSim", "", 1, "1.99.26", null).dangerous());
+		mListHook.add(new Hook("ipc", "android.content.pm.IPackageManager", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "com.android.internal.telephony.IPhoneSubInfo", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "com.android.internal.telephony.msim.IPhoneSubInfoMSim", "", 1, "1.99.26", null).dangerous());
+		mListHook.add(new Hook("ipc", "android.view.IWindowManager", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "android.net.wifi.IWifiManager", "", 1, "1.99.1", null).dangerous());
 
 		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
 		mListHook.add(new Hook("location", "addNmeaListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 5, null, null));
