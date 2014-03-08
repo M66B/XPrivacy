@@ -451,19 +451,16 @@
 						$apps[$i] = "'" . $db->real_escape_string($apps[$i]) . "'";
 
 					$package_names = array();
-					$package_versions = array();
 					if (count($apps)) {
 						// Get package names
-						$sql = "SELECT DISTINCT package_name, package_version, package_version_code";
+						$sql = "SELECT DISTINCT package_name";
 						$sql .= " FROM xprivacy_app";
 						$sql .= " WHERE application_name IN (" . implode(',', $apps) . ")";
-						$sql .= " ORDER BY package_name, package_version";
+						$sql .= " ORDER BY package_name";
 						$result = $db->query($sql);
 						if ($result) {
-							while (($row = $result->fetch_object())) {
+							while (($row = $result->fetch_object()))
 								$package_names[] = $row->package_name;
-								$package_versions[] = $row->package_version . ' (' . $row->package_version_code . ')';
-							}
 							$result->close();
 						}
 						else
@@ -477,7 +474,6 @@
 					for ($i = 0; $i < count($package_names); $i++) {
 						echo '<a href="/xprivacy?package_name=' . urlencode($package_names[$i]) . '">';
 						echo htmlentities($package_names[$i], ENT_COMPAT, 'UTF-8') . '</a> ';
-						echo htmlentities($package_versions[$i]) . ' ';
 					}
 ?>
 					</p>
