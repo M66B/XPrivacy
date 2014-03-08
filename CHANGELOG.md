@@ -3,9 +3,10 @@ Changelog
 
 **Release types**
 
+* EXPERIMENTAL: only install if you know how to fix things
 * TEST: new or updated features with a higher risk for bugs
 * BETA: new or updated features with a lower risk for bugs
-* STABLE: all known bugs fixed; low risk for bugs
+* STABLE: all known bugs are fixed; low risk for bugs
 
 **Downloads**
 
