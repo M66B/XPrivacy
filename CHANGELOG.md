@@ -34,6 +34,7 @@ Changelog
 * Added in application documentation for all functions
 * Added switch to disable restrictions for each application
 	* Allows for disabling restrictions, without taking away the ability to edit restrictions
+* Support for multiple users (if your device supports this)
 * The number of [crowd sourced restrictions](https://crowd.xprivacy.eu/) is more than 5 million now
 * Donations are [accepted in Bitcoins](http://www.xprivacy.eu/#bitcoin) now too
 
