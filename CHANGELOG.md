@@ -33,6 +33,8 @@ Changelog
 	* Allows for disabling restrictions, without taking away the ability to edit restrictions
 * The number of [crowd sourced restrictions](https://crowd.xprivacy.eu/) is more than 5 million now
 
+Other changes:
+
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
