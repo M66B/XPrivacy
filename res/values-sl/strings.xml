@@ -3,7 +3,7 @@
     <string name="app_notxposed">Xposed framework različice %1$d+ ni nameščen</string>
     <string name="app_notenabled">XPrivacy ni omogočen v Xposed installer</string>
     <string name="app_wrongandroid">Samo za Android različice 4.0.3+</string>
-    <string name="app_incompatible">XPrivacy is incompatible with %1$s</string>
+    <string name="app_incompatible">XPrivacy je nekompatibilen z %1$s</string>
     <string name="app_version">XPrivacy različica: %1$s (%2$d)</string>
     <string name="app_description">Odlični upravljalec pravic</string>
     <string name="app_xversion">Xposed framework različica: %1$d</string>
@@ -151,7 +151,7 @@
     <string name="settings_fake_data">Lažni podatki</string>
     <string name="settings_notify">Obvestila ob posodobitvi</string>
     <string name="settings_ondemand">Omeji na zahtevo</string>
-    <string name="settings_log">Beleženje za razvijalce (zahteva ponovni zagon)</string>
+    <string name="settings_log">Beleženje za razvijalce (zahtevan ponovni zagon)</string>
     <string name="settings_expert">Način za strokovnjake</string>
     <string name="settings_dangerous">Omeji nevarne funkcije</string>
     <string name="settings_confidence">Največji interval prenašanja omejitev</string>
