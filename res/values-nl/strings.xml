@@ -22,10 +22,10 @@
     <string name="menu_pro">Pro versie</string>
     <string name="menu_about">Over</string>
     <string name="menu_help">Help</string>
-    <string name="menu_select_all">Selecteer allen</string>
+    <string name="menu_select_all">Selecteer alles</string>
     <string name="menu_sort">Sorteer</string>
     <string name="menu_filter">Filter</string>
-    <string name="menu_all">Allen</string>
+    <string name="menu_all">Alles</string>
     <string name="menu_toggle">Schakel beperkingen</string>
     <string name="menu_clear_all">Alles wissen</string>
     <string name="menu_restrict_all">Alles beperken</string>
@@ -41,7 +41,7 @@
     <string name="menu_accounts">Sta accounts toe</string>
     <string name="menu_applications">Sta applicaties toe</string>
     <string name="menu_contacts">Sta contacten toe</string>
-    <string name="menu_whitelists">Beheer witte lijsten</string>
+    <string name="menu_whitelists">Beheer negeerlijsten</string>
     <string name="menu_tutorial">Zelfstudie</string>
     <string name="menu_exclude">Sluit uit</string>
     <string name="menu_close">Sluiten</string>
@@ -55,7 +55,7 @@
     <string name="msg_saved_to">Bewaard als %1$s</string>
     <string name="msg_no_restrictions">Geen beperkingen gevonden</string>
     <string name="msg_sure">Zeker weten?</string>
-    <string name="msg_select">Selecter a.u.b enige applicaties</string>
+    <string name="msg_select">Selecter a.u.b enkele applicaties</string>
     <string name="msg_limit">Selecteer a.u.b. minder dan %1$d applicaties</string>
     <string name="msg_done">Gereed</string>
     <string name="msg_reboot">Herstart apparaat vereist</string>
@@ -124,7 +124,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Pas toe op gehele categorie</string>
     <string name="title_once">Één keer voor %1$s seconden</string>
-    <string name="title_whitelist">Whitelist \'%1$s\'</string>
+    <string name="title_whitelist">Negeerlijst \'%1$s\'</string>
     <string name="title_allow">Toestaan</string>
     <string name="title_deny">Blokkeren</string>
     <string name="title_pleasesubmit">Stuur a.u.b. uw beperkingen op om anderen te helpen</string>
