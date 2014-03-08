@@ -14,6 +14,24 @@ Changelog
 
 **Next release**
 
+*Version 2.0*
+
+* Replaced XML settings files by privacy service and privacy database
+	* Increased speed, stability and security
+	* Allows for new features formerly not possible, like:
+* Added on demand restricting
+	* XPrivacy will ask to allow/deny on actual function usage
+* Added white and black listing for files, IP addresses, domain names, commands, libraries and URLs
+* Added parameters to usage data (option) (only [Pro license](http://www.xprivacy.eu/))
+* Added sorting and extended filtering
+* Added multiple select and batch operations to set, reset, import and export restrictions
+* Added a series of new restrictions and improved existing restrictions
+* Added template for functions
+* Added user defined dangerous functions
+* Added in application documentation for all functions
+* Added switch to disable restrictions for application
+	* Allows for disabling restrictions, without taking away the ability to edit restrictions
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.72 BETA**
