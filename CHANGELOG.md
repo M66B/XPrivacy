@@ -32,9 +32,11 @@ Changelog
 * Added switch to disable restrictions for each application
 	* Allows for disabling restrictions, without taking away the ability to edit restrictions
 * The number of [crowd sourced restrictions](https://crowd.xprivacy.eu/) is more than 5 million now
+* Donations are [accepted in Bitcoins](http://www.xprivacy.eu/#bitcoin) now too
 
 Other changes:
 
+* Updated Dutch translation
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
