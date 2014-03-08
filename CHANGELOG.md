@@ -16,7 +16,8 @@ Changelog
 
 * Added version number to reboot view
 * Update application state after changing on demand restricting ([issue](/../../issues/1515))
-* Fix some translations, thanks @[Phylon](https://github.com/Phylon) ([pull request](https://github.com/M66B/XPrivacy/pull/1446))
+* Made all IPC restrictions dangerous again
+* Fixed some translations, thanks @[Phylon](https://github.com/Phylon) ([pull request](https://github.com/M66B/XPrivacy/pull/1446))
 * Updated Russian translation
 * Updated Slovenian translation
 
