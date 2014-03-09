@@ -1467,8 +1467,10 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Deny
 							result.restricted = true;
-							mSelectCategory = cbCategory.isChecked();
-							mSelectOnce = cbOnce.isChecked();
+							if (cbCategory.isChecked() || cbOnce.isChecked()) {
+								mSelectCategory = cbCategory.isChecked();
+								mSelectOnce = cbOnce.isChecked();
+							}
 							if (cbWhitelist.isChecked())
 								onDemandWhitelist(restriction, null, result, hook);
 							else if (cbWhitelistExtra.isChecked())
@@ -1486,8 +1488,10 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Allow
 							result.restricted = false;
-							mSelectCategory = cbCategory.isChecked();
-							mSelectOnce = cbOnce.isChecked();
+							if (cbCategory.isChecked() || cbOnce.isChecked()) {
+								mSelectCategory = cbCategory.isChecked();
+								mSelectOnce = cbOnce.isChecked();
+							}
 							if (cbWhitelist.isChecked())
 								onDemandWhitelist(restriction, null, result, hook);
 							else if (cbWhitelistExtra.isChecked())
