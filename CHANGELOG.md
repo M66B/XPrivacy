@@ -42,7 +42,9 @@ Changelog
 Other changes:
 
 * Added restriction for time zone ([issue](/../../issues/1524))
+* White listing does not change default of check boxes ([issue](/../../issues/1531))
 * Updated Dutch translation
+* Updated Slovak translation
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
