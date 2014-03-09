@@ -1,12 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Verzia Xposed frameworku %d+ nie je nainštalovaná</string>
+    <string name="app_notxposed">Verzia Xposed frameworku %1$d+ nie je nainštalovaná</string>
     <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed Inštalátori</string>
     <string name="app_wrongandroid">Len pre Android 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">Aplikácia XPrivacy nie je kompatibilná s %s</string>
-    <string name="app_version" formatted="false">Verzia XPrivacy: %s (%d)</string>
+    <string name="app_incompatible">Aplikácia XPrivacy nie je kompatibilná s %1$s</string>
+    <string name="app_version">Verzia XPrivacy: %1$s (%2$d)</string>
     <string name="app_description">Pokročilý správca súkromia</string>
-    <string name="app_xversion" formatted="false">Verzia Xposed frameworku: %d</string>
+    <string name="app_xversion">Verzia Xposed frameworku: %1$d</string>
     <string name="app_copyright">Autorské práva \u00A9 2013–2014 od M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licencované. Ďakujeme za vašu podporu!</string>
     <string name="menu_usage">Využitie dát</string>
@@ -50,13 +50,13 @@
     <string name="msg_new">Nové</string>
     <string name="msg_update">Aktualizácia</string>
     <string name="msg_loading">Načítavanie &#8230;</string>
-    <string name="msg_applying">Aplikovanie &#8230;</string>
+    <string name="msg_applying">Aplikácia &#8230;</string>
     <string name="msg_applied">Šablóny bola aplikovaná</string>
-    <string name="msg_saved_to" formatted="false">Uložené do %s</string>
+    <string name="msg_saved_to">Uložené do %1$s</string>
     <string name="msg_no_restrictions">Nenájdené žiadne obmedzenia</string>
     <string name="msg_sure">Ste si istý?</string>
     <string name="msg_select">Vyberte prosím nejaké aplikácie</string>
-    <string name="msg_limit">Vyberte prosím menej než %d aplikácií</string>
+    <string name="msg_limit">Vyberte prosím menej než %1$d aplikácií</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart zariadenia</string>
     <string name="msg_random_now">Náhodné hodnoty</string>
@@ -67,9 +67,9 @@
     <string name="msg_email">Zadajte prosím vašu e-mailovú adresu:</string>
     <string name="msg_registered">Skontrolujte váš e-mail pre aktiváciu vášho zariadenia</string>
     <string name="msg_service">Aktualizačná služba je spustená</string>
-    <string name="msg_migrating" formatted="false">Migrovanie %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizovanie %s</string>
-    <string name="msg_upgrading" formatted="false">Aktualizovanie %s</string>
+    <string name="msg_migrating">Migrácia %1$s</string>
+    <string name="msg_randomizing">Randomizácia %1$s</string>
+    <string name="msg_upgrading">Aktualizácia %1$s</string>
     <string name="msg_support_info">Vnútorná kontrola zlyhala. Chcete odoslať informácie na podporu?</string>
     <string name="msg_restrictedby">Obmedzené pomocou XPrivacy</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
@@ -124,7 +124,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_parameters">Parametre:</string>
     <string name="title_applycat">Aplikovať na celú kategóriu</string>
     <string name="title_once">Raz za %s sekúnd</string>
-    <string name="title_whitelist">Biela listina: \'%s\'</string>
+    <string name="title_whitelist">Biela listina \'%1$s\'</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
     <string name="title_pleasesubmit">Odošlite prosím vaše obmedzenia na pomoc ostatným</string>
