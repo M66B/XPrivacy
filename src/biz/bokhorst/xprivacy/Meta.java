@@ -272,7 +272,7 @@ public class Meta {
 		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE", "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null));
 
-		mListHook.add(new Hook("system", "TZ.getDefault", "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "TZ.getDefault", "", 1, "2.0", null).dangerous());
 
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null));
