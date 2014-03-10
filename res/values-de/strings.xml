@@ -174,7 +174,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="help_half">teilweise beschränkt</string>
     <string name="help_attention">Beschränkungen sollten überprüft werden</string>
     <string name="help_restricted">Beschränkungen wurden geändert</string>
-    <string name="help_shared">Beschränkungen wurden eingereicht</string>
+    <string name="help_shared">Beschränkungen wurden gesendet (Crowd)</string>
     <string name="tutorial_mainheader">Wählen Sie die zu beschränkende Kategorie</string>
     <string name="tutorial_mainlist">Tippen Sie auf ein Kontrollkästchen, um die ausgewählte Kategorie für eine App zu beschränken\n
 \nApps werden mit leeren Listen oder manipulierten Daten für die beschränkten Kategorien \"gefüttert\" \n
