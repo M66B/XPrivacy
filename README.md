@@ -369,6 +369,7 @@ Upgrading
 * Download the new version
 * Install the new version over the previous version
 * Reboot your device
+* If you are upgrading from a version before 1.99: wait until the migration is completed
 
 When following this procedure, your data will not leak because the Xposed part of XPrivacy keeps running.
 
