@@ -45,6 +45,7 @@ Other changes:
 * White listing does not change default of check boxes ([issue](/../../issues/1531))
 * Updated Dutch translation
 * Updated German translation
+* Updated Polish translation
 * Updated Slovak translation
 * Updated Slovenian translation
 
