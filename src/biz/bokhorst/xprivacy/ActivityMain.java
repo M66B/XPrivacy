@@ -1734,6 +1734,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			}
 
 			private void deleteRestrictions() {
+				holder.llName.setEnabled(false);
 				holder.imgCbRestricted.setVisibility(View.GONE);
 				holder.pbRunning.setVisibility(View.VISIBLE);
 
@@ -1771,11 +1772,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						holder.pbRunning.setVisibility(View.GONE);
 						holder.imgCbRestricted.setVisibility(View.VISIBLE);
+						holder.llName.setEnabled(true);
 					}
 				}.executeOnExecutor(mExecutor);
 			}
 
 			private void toggleRestrictions() {
+				holder.llName.setEnabled(false);
 				holder.imgCbRestricted.setVisibility(View.GONE);
 				holder.pbRunning.setVisibility(View.VISIBLE);
 
@@ -1811,6 +1814,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						holder.pbRunning.setVisibility(View.GONE);
 						holder.imgCbRestricted.setVisibility(View.VISIBLE);
+						holder.llName.setEnabled(true);
 					}
 				}.executeOnExecutor(mExecutor);
 			}

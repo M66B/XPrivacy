@@ -43,6 +43,7 @@ Other changes:
 
 * Added restriction for time zone ([issue](/../../issues/1524))
 * White listing does not change default of check boxes ([issue](/../../issues/1531))
+* Layout fix ([issue](/../../issues/1537))
 * Updated Dutch translation
 * Updated German translation
 * Updated French translation
