@@ -69,64 +69,56 @@
                 android:src="?attr/icon_frozen" />
         </LinearLayout>
 
-        <RelativeLayout
-            android:id="@+id/rlName"
+        <LinearLayout
+            android:id="@+id/llName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:background="@drawable/list_item_pressed"
             android:clickable="true"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
+            android:orientation="horizontal"
             android:paddingLeft="6dip" >
-
-            <LinearLayout
-                android:id="@+id/llChecks"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:orientation="horizontal"
-                tools:ignore="UseCompoundDrawables" >
-
-                <ImageView
-                    android:id="@+id/imgCbRestricted"
-                    android:layout_width="32dip"
-                    android:layout_height="32dip"
-                    android:layout_marginLeft="3dip"
-                    android:layout_marginRight="6dip"
-                    android:contentDescription="@string/title_restrict"
-                    android:visibility="invisible" />
-
-                <ProgressBar
-                    android:id="@+id/pbRunning"
-                    style="?android:attr/progressBarStyleInverse"
-                    android:layout_width="32dip"
-                    android:layout_height="32dip"
-                    android:layout_marginLeft="3dip"
-                    android:layout_marginRight="6dip"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/tvOnDemand"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="3dip"
-                    android:text="@string/msg_question"
-                    android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold"
-                    android:visibility="invisible" />
-            </LinearLayout>
 
             <TextView
                 android:id="@+id/tvName"
-                android:layout_width="match_parent"
+                android:layout_width="0dip"
                 android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@id/llChecks"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
-        </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/imgCbRestricted"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="6dip"
+                android:contentDescription="@string/title_restrict"
+                android:visibility="invisible" />
+
+            <ProgressBar
+                android:id="@+id/pbRunning"
+                style="?android:attr/progressBarStyleInverse"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dip"
+                android:layout_marginRight="6dip"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tvOnDemand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dip"
+            android:text="@string/msg_question"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold"
+            android:visibility="invisible" />
     </LinearLayout>
 
 </LinearLayout>
