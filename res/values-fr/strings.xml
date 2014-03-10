@@ -1,12 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">La version %d+ de l\'environnement Xposed n\'est pas installée</string>
+    <string name="app_notxposed">La version %1$d+ de l\'environnement Xposed n\'est pas installée</string>
     <string name="app_notenabled">XPrivacy n\'est pas activé dans l\'installateur Xposed</string>
     <string name="app_wrongandroid">Uniquement pour Android 4.0.3 et ultérieur</string>
-    <string name="app_incompatible" formatted="false">XPrivacy est incompatible avec %s</string>
-    <string name="app_version" formatted="false">Version XPrivacy : %s (%d)</string>
+    <string name="app_incompatible">XPrivacy est incompatible avec %1$s</string>
+    <string name="app_version">Version XPrivacy : %1$s (%2$d)</string>
     <string name="app_description">Le gestionnaire de vie privée ultime</string>
-    <string name="app_xversion" formatted="false">Version de l\'environnement Xposed : %d</string>
+    <string name="app_xversion">Version de l\'environnement Xposed : %1$d</string>
     <string name="app_copyright">Droits d\'auteur : M. Bokhorst (M66B) \u00A9 2013–2014 </string>
     <string name="app_licensed">Licence trouvée, merci pour votre soutien!</string>
     <string name="menu_usage">Usage</string>
@@ -52,11 +52,11 @@
     <string name="msg_loading">Chargement...</string>
     <string name="msg_applying">Application en cours...</string>
     <string name="msg_applied">Modèle appliqué</string>
-    <string name="msg_saved_to" formatted="false">Sauvé dans %s</string>
+    <string name="msg_saved_to">Sauvé dans %1$s</string>
     <string name="msg_no_restrictions">Pas de restriction trouvée</string>
     <string name="msg_sure">Êtes-vous certain ?</string>
     <string name="msg_select">Choisissez quelques applications</string>
-    <string name="msg_limit">Choisissez moins de %d applications</string>
+    <string name="msg_limit">Choisissez moins de %1$d applications</string>
     <string name="msg_done">Effectué</string>
     <string name="msg_reboot">Redémarrage requis</string>
     <string name="msg_random_now">Randomiser maintenant</string>
@@ -67,9 +67,9 @@
     <string name="msg_email">Veuillez entrer votre adresse e-mail:</string>
     <string name="msg_registered">Vérifiez vos mails pour activer votre appareil</string>
     <string name="msg_service">Service de mise à jour en fonctionnement</string>
-    <string name="msg_migrating" formatted="false">Migration %s</string>
-    <string name="msg_randomizing" formatted="false">Randomisation %s</string>
-    <string name="msg_upgrading" formatted="false">Mise à niveau %s</string>
+    <string name="msg_migrating">Migration %1$s</string>
+    <string name="msg_randomizing">Randomisation %1$s</string>
+    <string name="msg_upgrading">Mise à niveau %1$s</string>
     <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs?</string>
     <string name="msg_restrictedby">Restreint par XPrivacy</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
@@ -123,8 +123,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_function">Fonction:</string>
     <string name="title_parameters">Paramètres:</string>
     <string name="title_applycat">Appliquer à toute la catégorie</string>
-    <string name="title_once">Une fois pendant %s secondes</string>
-    <string name="title_whitelist">Se souvenir de \'%s\'</string>
+    <string name="title_once">Une fois pendant %1$s secondes</string>
+    <string name="title_whitelist">Se souvenir de \'%1$s\'</string>
     <string name="title_allow">Permettre</string>
     <string name="title_deny">Bloquer</string>
     <string name="title_pleasesubmit">Veuillez envoyer vos restrictions pour aider les autres</string>
