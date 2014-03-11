@@ -45,6 +45,7 @@ Main changes since stable version 1.11:
 * Added switch to disable restrictions for each application
 	* Allows for disabling restrictions, without taking away the ability to edit restrictions
 * Support for multiple users (if your device supports this)
+* XPrivacy became [one of the Open Source Rookies of 2013](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners)
 * The number of [crowd sourced restrictions](https://crowd.xprivacy.eu/) is more than 5 million now
 * Donations are [accepted in Bitcoins](http://www.xprivacy.eu/#bitcoin) now too
 
