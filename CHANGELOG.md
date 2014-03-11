@@ -15,11 +15,13 @@ Changelog
 
 **Next release**
 
+* Updated Norwegian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0 STABLE**
 
-* Replaced XML settings files by privacy service and privacy database
+* Replaced XML settings files by a privacy service and privacy database
 	* Increased speed, stability and security
 	* Allows for new features formerly not possible, like:
 * Added on demand restricting
