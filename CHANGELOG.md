@@ -15,9 +15,12 @@ Changelog
 
 **Next release**
 
-* Updated Norwegian translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.1 STABLE**
+
+* Reverted restriction for time zone ([issue](/../../issues/1524))
+* Updated Norwegian translation
 
 **Version 2.0 STABLE**
 
