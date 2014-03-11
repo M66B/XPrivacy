@@ -15,9 +15,18 @@ Changelog
 
 **Next release**
 
-*Version 2.0*
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-* Replaced XML settings files by privacy service and privacy database
+**Version 2.0.1 STABLE**
+
+* Reverted restriction for time zone ([issue](/../../issues/1524))
+* Updated Norwegian translation
+
+**Version 2.0 STABLE**
+
+Main changes since stable version 1.11:
+
+* Replaced XML settings files by a privacy service and a privacy database
 	* Increased speed, stability and security
 	* Allows for new features formerly not possible, like:
 * Added on demand restricting
@@ -50,8 +59,6 @@ Other changes:
 * Updated Polish translation
 * Updated Slovak translation
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.72 BETA**
 

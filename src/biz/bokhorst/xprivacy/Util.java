@@ -271,6 +271,8 @@ public class Util {
 				String email = iniFile.get("email", "");
 				String signature = iniFile.get("signature", "");
 				return new String[] { name, email, signature };
+			} catch (FileNotFoundException ex) {
+				return null;
 			} catch (Throwable ex) {
 				bug(null, ex);
 				return null;
