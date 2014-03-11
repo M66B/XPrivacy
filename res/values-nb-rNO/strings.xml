@@ -3,12 +3,12 @@
     <string name="app_notxposed" formatted="false">Xposed rammeverk versjon %d+ er ikke installert</string>
     <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installasjon</string>
     <string name="app_wrongandroid">Kun for Android versjon 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">XPrivacy er ikke kompatibel med %s</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_description">Den ultimative personvernbehandleren</string>
     <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013–2014</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_licensed">Lisensert, takk for støtten!</string>
     <string name="menu_usage">Databruk</string>
     <string name="menu_refresh">Oppdater</string>
     <string name="menu_settings">Innstillinger</string>
@@ -30,7 +30,7 @@
     <string name="menu_clear_all">Nullstill alt</string>
     <string name="menu_restrict_all">Blokk alt</string>
     <string name="menu_clear_usage">Nullstill</string>
-    <string name="menu_clear_db">Nullstill data</string>
+    <string name="menu_clear_db">Nullstill XPRivacy data</string>
     <string name="menu_usage_all">Skift filter</string>
     <string name="menu_apply">Bruk skjema</string>
     <string name="menu_clear">Nullstill</string>
@@ -41,7 +41,7 @@
     <string name="menu_accounts">Velg konto som skal tillates</string>
     <string name="menu_applications">Velg apper som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Behandel positivlister</string>
     <string name="menu_tutorial">Innføring</string>
     <string name="menu_exclude">Ekskluder</string>
     <string name="menu_close">Lukk</string>
@@ -95,19 +95,19 @@
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
     <string name="restrict_system">System (installerte apper)</string>
     <string name="restrict_view">Betrakte (nettleser)</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
-    <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
+    <string name="whitelist_ipaddress">IP adresser</string>
+    <string name="whitelist_library">Lokale biblioteker</string>
+    <string name="whitelist_filename">Filnavner</string>
+    <string name="whitelist_command">Shell kommandoer</string>
     <string name="whitelist_url">URLs</string>
     <string name="title_restrict">Marker for å blokkere:</string>
-    <string name="title_check_whitelist">Check to allow:</string>
+    <string name="title_check_whitelist">Marker for å tillate:</string>
     <string name="title_fused">Filtrer etter databruk</string>
     <string name="title_finternet">Filtrer etter Internett bruk</string>
     <string name="title_fpermission">Filtrer etter tillatelse</string>
     <string name="title_frestricted">Filtrer etter restriksjon</string>
     <string name="title_fuser">Filtrer etter vanlige apper</string>
-    <string name="title_fondemand">Filtrer etter restriksjon på forespørsel</string>
+    <string name="title_fondemand">Filtrer etter blokkering på forespørsel</string>
     <string name="title_fsystem">Filtrer etter systemapper</string>
     <string name="title_fnot">Inverter</string>
     <string name="title_sname">Etter navn</string>
@@ -122,16 +122,16 @@
     <string name="title_parameters">Parametere:</string>
     <string name="title_applycat">Bruk for hele kategorien</string>
     <string name="title_once">En gang i %s sekunder</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_whitelist">Positivliste \'%s\'</string>
     <string name="title_allow">Tillat</string>
     <string name="title_deny">Nekt</string>
     <string name="title_pleasesubmit">Vennligst last opp restriksjonene dine for å hjelpe andre</string>
-    <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
-    <string name="title_template_category">Apply template (categories)</string>
-    <string name="title_template_full">Apply template (categories+functions)</string>
-    <string name="title_enable_ondemand">Enable on demand restricting</string>
-    <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_permissions">Tillatelser</string>
+    <string name="title_set_restrict">Blokker</string>
+    <string name="title_template_category">Bruk skjema (kategorier)</string>
+    <string name="title_template_full">Bruk skjema (kategorier+funksjoner)</string>
+    <string name="title_enable_ondemand">Aktiver blokkering på forespørsel</string>
+    <string name="title_disable_ondemand">Deaktiver blokkering på forespørsel</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
@@ -148,7 +148,7 @@
     <string name="settings_general">Generell</string>
     <string name="settings_fake_data">Forfalsket data</string>
     <string name="settings_notify">Oppdater varslinger</string>
-    <string name="settings_ondemand">Blokker på forespørsel</string>
+    <string name="settings_ondemand">Blokkering på forespørsel</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_dangerous">Blokker farlige funksjoner</string>
@@ -157,8 +157,8 @@
     <string name="settings_https">Bruk trygg forbindelse</string>
     <string name="settings_syscomponents">Blokker systemkomponenter (Android) (omstart nødvendig)</string>
     <string name="settings_usagedata">Vis brukerdata til apper (omstart nødvendig)</string>
-    <string name="settings_parameters">Show parameters of usage data</string>
-    <string name="settings_cid">GSM Cell ID</string>
+    <string name="settings_parameters">Vis brukerdata-parametere</string>
+    <string name="settings_cid">GSM Celle ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">>Trykk lenge på navnet som skal markeres</string>
     <string name="help_ondemand">apper spør om tillatelse</string>
