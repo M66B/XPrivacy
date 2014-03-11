@@ -24,6 +24,8 @@ Changelog
 
 **Version 2.0 STABLE**
 
+Main changes since stable version 1.11:
+
 * Replaced XML settings files by a privacy service and a privacy database
 	* Increased speed, stability and security
 	* Allows for new features formerly not possible, like:
