@@ -15,7 +15,9 @@ Changelog
 
 **Next release**
 
-*Version 2.0*
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0 STABLE**
 
 * Replaced XML settings files by privacy service and privacy database
 	* Increased speed, stability and security
@@ -50,8 +52,6 @@ Other changes:
 * Updated Polish translation
 * Updated Slovak translation
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 1.99.72 BETA**
 
