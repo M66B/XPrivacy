@@ -287,6 +287,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
 	* prevent package add, replace, restart and remove notifications
+	* return a fake time zone (UTC)
 <a name="view"></a>
 * View
 	* prevent links from opening in the browser
@@ -369,7 +370,7 @@ Upgrading
 * Download the new version
 * Install the new version over the previous version
 * Reboot your device
-* If you are upgrading from a version before 1.99: wait until the migration is completed
+* If you are upgrading from a version before 1.99: **wait until the migration has been completed**
 
 When following this procedure, your data will not leak because the Xposed part of XPrivacy keeps running.
 

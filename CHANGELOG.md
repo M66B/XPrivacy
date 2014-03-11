@@ -21,7 +21,7 @@ Changelog
 
 **Version 2.0 STABLE**
 
-* Replaced XML settings files by a privacy service and privacy database
+* Replaced XML settings files by a privacy service and a privacy database
 	* Increased speed, stability and security
 	* Allows for new features formerly not possible, like:
 * Added on demand restricting
