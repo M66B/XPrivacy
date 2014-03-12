@@ -719,9 +719,7 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 * If *Restrict dangerous functions* is disabled (the default):
 	* You will never be asked whether to restrict dangerous functions
 	* Setting any category to restricted will not restrict any of its dangerous functions
-* The default after dialog timeout:
-	* for a user application the default is to deny temporarily
-	* for a system applications the default is to allow temporarily, unless *Restrict dangerous functions* is enabled
+* The default after dialog timeout is taken from the current restriction settings
 
 <a name="FAQ35"></a>
 **(35) Do I need the pro enabler to use the pro license?**
