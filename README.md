@@ -287,7 +287,6 @@ For easy usage, data is restricted by category:
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
 	* prevent package add, replace, restart and remove notifications
-	* return a fake time zone (UTC)
 <a name="view"></a>
 * View
 	* prevent links from opening in the browser
@@ -426,7 +425,8 @@ XPrivacy asks for the following Android permissions:
 * Internet: to be able to submit and fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
 * Storage: to be able to export XPrivacy's settings to the SD card (only [pro version](http://www.xprivacy.eu/))
 
-If desired, you can even restrict XPrivacy from accessing any of the above.
+If desired, you can even restrict XPrivacy from accessing any of the above,
+but there are some [limitations](https://github.com/M66B/XPrivacy#limitations).
 
 Frequently asked questions
 --------------------------
@@ -707,9 +707,10 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 * The on demand restricting dialog will appear if:
 	* On demand restricting is enabled in the main settings
 	* On demand restricting is enabled in the application settings
-	* The category and the function are still marked with question marks
+	* The category and the function are marked with question marks
 	* However a few functions are exempted from prompting (only *Phone/Configuration.MCC/MNC*)
 	* Prompts will not be shown for dangerous functions unless *Restrict dangerous functions* is enabled
+		* An exception are functions with white/black lists
 	* Prompts will not be shown for System applications unless *Restrict dangerous functions* is enabled
 * *Apply to entire category* will:
 	* Set the entire category definitively according to your choice (deny/allow)
@@ -717,7 +718,7 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 * When applying to a function only (*Apply to entire category* not checked):
 	* The function is set definitively according to your choice
 * If *Restrict dangerous functions* is disabled (the default):
-	* You will never be asked whether to restrict dangerous functions
+	* You will never be asked whether to restrict dangerous functions, except for functions with a white/black list
 	* Setting any category to restricted will not restrict any of its dangerous functions
 * The default after dialog timeout is taken from the current restriction settings
 
