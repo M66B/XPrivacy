@@ -40,6 +40,7 @@ Main changes since stable version 1.11:
 	* White/black list management from the user interface requires a [Pro license](http://www.xprivacy.eu/)
 	* Clearing restrictions will clear white/black lists too
 * Added parameters to usage data (option) (only [Pro license](http://www.xprivacy.eu/))
+* Added a service to migrate settings, upgrade and randomize
 * Added sorting and extended filtering
 * Added multiple select and batch operations to set, reset, import and export restrictions
 * Added a series of new restrictions and improved existing restrictions
