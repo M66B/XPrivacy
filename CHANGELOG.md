@@ -17,6 +17,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 2.0.2 STABLE**
+
+* Clear restrictions before calling pro enabler
+
 **Version 2.0.1 STABLE**
 
 * Reverted restriction for time zone ([issue](/../../issues/1524))
