@@ -693,7 +693,7 @@ If you think a function requires permissions while XPrivacy shows it doesn't, pl
 <a name="FAQ33"></a>
 **(33) How can I restrict the hardware, external MAC, IP, and IMEI number?**
 
-You can restrict the IP and MAC addresses and IMEI number for any application.
+You can restrict the (internal) IP and MAC addresses and IMEI number for any application.
 
 The external IP is assigned by your provider and cannot be changed. You could use a [VPN](http://en.wikipedia.org/wiki/Virtual_private_network) or [TOR](http://en.wikipedia.org/wiki/Tor_\(anonymity_network\)) to hide your external IP to a certain extent.
 
