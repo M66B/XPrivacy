@@ -391,7 +391,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				try {
 					XposedBridge.hookMethod(member, methodHook);
 				} catch (NoSuchFieldError ex) {
-					Util.bug(hook, ex);
+					Util.log(null, Log.WARN, ex.toString());
 				} catch (Throwable ex) {
 					mListHookError.add(ex.toString());
 					Util.bug(hook, ex);
