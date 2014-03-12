@@ -811,6 +811,14 @@ See [here](https://github.com/M66B/XPrivacy#support) for more details.
 
 This ensures that other applications cannot uninstall XPrivacy without your knowledge.
 
+<a name="FAQ54"></a>
+**(54) Exporting and importing takes a long time**
+
+There are about 250 restrictions and additionally there can be quite some settings, for example when you use white/black lists.
+So, yes, exporting and importing can take quite some time. The default is to export everything, since the export is meant to be a full backup.
+However, it is possible to filter the applications you want to export, for example only user applications with restrictions,
+and to select these applications using the action bar *select all* to only export a part of the applications.
+
 Support
 -------
 
