@@ -287,7 +287,6 @@ For easy usage, data is restricted by category:
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
 	* prevent package add, replace, restart and remove notifications
-	* return a fake time zone (UTC)
 <a name="view"></a>
 * View
 	* prevent links from opening in the browser
@@ -426,7 +425,8 @@ XPrivacy asks for the following Android permissions:
 * Internet: to be able to submit and fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
 * Storage: to be able to export XPrivacy's settings to the SD card (only [pro version](http://www.xprivacy.eu/))
 
-If desired, you can even restrict XPrivacy from accessing any of the above.
+If desired, you can even restrict XPrivacy from accessing any of the above,
+but there are some [limitations](https://github.com/M66B/XPrivacy#limitations).
 
 Frequently asked questions
 --------------------------
@@ -520,7 +520,9 @@ To import and export XPrivacy's data, you need the [pro version](http://www.xpri
 <a name="FAQ10"></a>
 **(10) Can I restrict root access?**
 
-Yes, via "Shell (commands, superuser) > su".
+Yes, via "Shell (commands, superuser) > su",
+but be aware that applications can acquire root privileges through native libraries too.
+An example is [Android Terminal Emulator](https://play.google.com/store/apps/details?id=jackpal.androidterm).
 
 <a name="FAQ11"></a>
 **(11) Will restrictions be applied immediately?**
@@ -693,7 +695,7 @@ If you think a function requires permissions while XPrivacy shows it doesn't, pl
 <a name="FAQ33"></a>
 **(33) How can I restrict the hardware, external MAC, IP, and IMEI number?**
 
-You can restrict the IP and MAC addresses and IMEI number for any application.
+You can restrict the (internal) IP and MAC addresses and IMEI number for any application.
 
 The external IP is assigned by your provider and cannot be changed. You could use a [VPN](http://en.wikipedia.org/wiki/Virtual_private_network) or [TOR](http://en.wikipedia.org/wiki/Tor_\(anonymity_network\)) to hide your external IP to a certain extent.
 
@@ -707,9 +709,10 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 * The on demand restricting dialog will appear if:
 	* On demand restricting is enabled in the main settings
 	* On demand restricting is enabled in the application settings
-	* The category and the function are still marked with question marks
+	* The category and the function are marked with question marks
 	* However a few functions are exempted from prompting (only *Phone/Configuration.MCC/MNC*)
 	* Prompts will not be shown for dangerous functions unless *Restrict dangerous functions* is enabled
+		* An exception are functions with white/black lists
 	* Prompts will not be shown for System applications unless *Restrict dangerous functions* is enabled
 * *Apply to entire category* will:
 	* Set the entire category definitively according to your choice (deny/allow)
@@ -717,11 +720,9 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 * When applying to a function only (*Apply to entire category* not checked):
 	* The function is set definitively according to your choice
 * If *Restrict dangerous functions* is disabled (the default):
-	* You will never be asked whether to restrict dangerous functions
+	* You will never be asked whether to restrict dangerous functions, except for functions with a white/black list
 	* Setting any category to restricted will not restrict any of its dangerous functions
-* The default after dialog timeout:
-	* for a user application the default is to deny temporarily
-	* for a system applications the default is to allow temporarily, unless *Restrict dangerous functions* is enabled
+* The default after dialog timeout is taken from the current restriction settings
 
 <a name="FAQ35"></a>
 **(35) Do I need the pro enabler to use the pro license?**
@@ -811,6 +812,14 @@ See [here](https://github.com/M66B/XPrivacy#support) for more details.
 **(53) What happens if I make XPrivacy device administrator?**
 
 This ensures that other applications cannot uninstall XPrivacy without your knowledge.
+
+<a name="FAQ54"></a>
+**(54) Exporting and importing takes a long time**
+
+There are about 250 restrictions and additionally there can be quite some settings, for example when you use white/black lists.
+So, yes, exporting and importing can take quite some time. The default is to export everything, since the export is meant to be a full backup.
+However, it is possible to filter the applications you want to export, for example only user applications with restrictions,
+and to select these applications using the action bar *select all* to only export a part of the applications.
 
 Support
 -------

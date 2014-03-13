@@ -17,6 +17,19 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 2.0.3 BETA**
+
+* Fixed restrictions not always showing correct after on demand restricting ([issue](/../../issues/1549))
+* Fixed invalid *restart required* when toggling restrictions of a category
+* Fixed and improved batch operation layout ([issue](/../../issues/1539))
+* Fixed randomize on access combined with randomize on boot ([issue](/../../issues/1547))
+* Fixed displaying on demand restricting in application list
+* Better matching of *sh* and *su* ([issue](/../../issues/1551))
+
+**Version 2.0.2 STABLE**
+
+* Clear restrictions before calling pro enabler
+
 **Version 2.0.1 STABLE**
 
 * Reverted restriction for time zone ([issue](/../../issues/1524))
@@ -36,6 +49,7 @@ Main changes since stable version 1.11:
 	* White/black list management from the user interface requires a [Pro license](http://www.xprivacy.eu/)
 	* Clearing restrictions will clear white/black lists too
 * Added parameters to usage data (option) (only [Pro license](http://www.xprivacy.eu/))
+* Added a service to migrate settings, upgrade and randomize
 * Added sorting and extended filtering
 * Added multiple select and batch operations to set, reset, import and export restrictions
 * Added a series of new restrictions and improved existing restrictions
@@ -45,6 +59,7 @@ Main changes since stable version 1.11:
 * Added switch to disable restrictions for each application
 	* Allows for disabling restrictions, without taking away the ability to edit restrictions
 * Support for multiple users (if your device supports this)
+* XPrivacy became [one of the Open Source Rookies of 2013](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners)
 * The number of [crowd sourced restrictions](https://crowd.xprivacy.eu/) is more than 5 million now
 * Donations are [accepted in Bitcoins](http://www.xprivacy.eu/#bitcoin) now too
 

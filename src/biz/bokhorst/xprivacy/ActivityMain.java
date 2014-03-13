@@ -1760,7 +1760,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						// Update stored state
 						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-						holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+						if (ondemand)
+							holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 						// Notify restart
 						if (oldState.contains(true))
@@ -1802,7 +1803,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 
 						// Update on demand
-						holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+						if (ondemand)
+							holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 						// Notify restart
 						if (!newState.equals(oldState))
@@ -1907,6 +1909,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		if (!Util.isProEnabled() && Util.hasProLicense(this) == null)
 			if (Util.isProEnablerInstalled(this))
 				try {
+					int uid = getPackageManager().getPackageInfo("biz.bokhorst.xprivacy.pro", 0).applicationInfo.uid;
+					PrivacyManager.deleteRestrictions(uid, null, true);
 					Util.log(null, Log.INFO, "Licensing: check");
 					startActivityForResult(new Intent("biz.bokhorst.xprivacy.pro.CHECK"), ACTIVITY_LICENSE);
 				} catch (Throwable ex) {

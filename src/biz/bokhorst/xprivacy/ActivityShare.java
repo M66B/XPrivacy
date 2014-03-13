@@ -62,6 +62,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
 import android.util.SparseArray;
@@ -509,25 +510,30 @@ public class ActivityShare extends ActivityBase {
 			holder.tvName.setText(xApp.appInfo.toString());
 
 			// Show app share state
-			holder.tvMessage.setText(xApp.message == null ? "" : xApp.message);
+			if (TextUtils.isEmpty(xApp.message))
+				holder.tvMessage.setVisibility(View.GONE);
+			else {
+				holder.tvMessage.setVisibility(View.VISIBLE);
+				holder.tvMessage.setText(xApp.message);
+			}
 			switch (xApp.state) {
 			case STATE_WAITING:
-				holder.imgResult.setVisibility(View.INVISIBLE);
-				holder.pbRunning.setVisibility(View.INVISIBLE);
+				holder.imgResult.setVisibility(View.GONE);
+				holder.pbRunning.setVisibility(View.GONE);
 				break;
 			case STATE_RUNNING:
-				holder.imgResult.setVisibility(View.INVISIBLE);
+				holder.imgResult.setVisibility(View.GONE);
 				holder.pbRunning.setVisibility(View.VISIBLE);
 				break;
 			case STATE_SUCCESS:
 				holder.imgResult.setBackgroundResource(R.drawable.btn_check_buttonless_on);
 				holder.imgResult.setVisibility(View.VISIBLE);
-				holder.pbRunning.setVisibility(View.INVISIBLE);
+				holder.pbRunning.setVisibility(View.GONE);
 				break;
 			case STATE_FAILURE:
 				holder.imgResult.setBackgroundResource(R.drawable.indicator_input_error);
 				holder.imgResult.setVisibility(View.VISIBLE);
-				holder.pbRunning.setVisibility(View.INVISIBLE);
+				holder.pbRunning.setVisibility(View.GONE);
 				break;
 			default:
 				Util.log(null, Log.ERROR, "Unknown state=" + xApp.state);
@@ -657,7 +663,7 @@ public class ActivityShare extends ActivityBase {
 					} else
 						Util.log(null, Log.ERROR, "Unknown action=" + actionId);
 
-					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
+					List<Boolean> newState = PrivacyManager.getRestartStates(uid, restrictionName);
 
 					setState(uid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 				} catch (Throwable ex) {
