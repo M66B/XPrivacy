@@ -65,11 +65,8 @@ public class XRuntime extends XHook {
 			// Check programs
 			if (progs != null) {
 				String command = TextUtils.join(" ", progs);
-				if (mCommand == null ? !(command.startsWith("sh") || command.startsWith("su")
-						|| command.contains("sh ") || command.contains("su ")) : command.startsWith(mCommand)
-						|| command.contains(mCommand + " "))
-					if (isRestrictedExtra(param, command))
-						param.setThrowable(new IOException());
+				if (matches(command, mCommand) && isRestrictedExtra(param, command))
+					param.setThrowable(new IOException());
 			}
 
 		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
@@ -78,6 +75,25 @@ public class XRuntime extends XHook {
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+	}
+
+	public static boolean matches(String command, String mCommand) {
+		if (mCommand == null)
+			return !isShell(command) && !isSU(command);
+		else if (mCommand.equals("sh"))
+			return isShell(command);
+		else if (mCommand.equals("su"))
+			return isSU(command);
+		else
+			return false;
+	}
+
+	private static boolean isShell(String command) {
+		return command.startsWith("sh") || command.matches("/.*/.*/sh.*") || command.contains("sh ");
+	}
+
+	private static boolean isSU(String command) {
+		return command.startsWith("su") || command.matches("/.*/.*/su.*") || command.contains("su ");
 	}
 
 	@Override
