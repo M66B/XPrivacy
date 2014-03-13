@@ -196,23 +196,56 @@ public class UpdateService extends Service {
 	private static List<PSetting> getRandomizeWork(Context context, int uid) {
 		List<PSetting> listWork = new ArrayList<PSetting>();
 		if (PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false, true)) {
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLongitude, PrivacyManager.getRandomProp("LON")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAltitude, PrivacyManager.getRandomProp("ALT")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, PrivacyManager.getRandomProp("SERIAL")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, PrivacyManager.getRandomProp("ANDROID_ID")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingGsfId, PrivacyManager.getRandomProp("GSF_ID")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAdId, PrivacyManager
-					.getRandomProp("AdvertisingId")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingCountry, PrivacyManager.getRandomProp("ISO3166")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, PrivacyManager
-					.getRandomProp("SubscriberId")));
-			listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingLatitude))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingLongitude))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLongitude, PrivacyManager
+						.getRandomProp("LON")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingAltitude))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAltitude, PrivacyManager.getRandomProp("ALT")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSerial))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSerial, PrivacyManager
+						.getRandomProp("SERIAL")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingMac))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingMac, PrivacyManager.getRandomProp("MAC")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingPhone))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingPhone, PrivacyManager.getRandomProp("PHONE")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingImei))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingImei, PrivacyManager.getRandomProp("IMEI")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingId))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingId, PrivacyManager
+						.getRandomProp("ANDROID_ID")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingGsfId))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingGsfId, PrivacyManager.getRandomProp("GSF_ID")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingAdId))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingAdId, PrivacyManager
+						.getRandomProp("AdvertisingId")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingCountry))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingCountry, PrivacyManager
+						.getRandomProp("ISO3166")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSubscriber))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSubscriber, PrivacyManager
+						.getRandomProp("SubscriberId")));
+
+			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSSID))
+				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
 		}
 		return listWork;
+	}
+
+	private static boolean hasRandomOnAccess(int uid, String setting) {
+		return PrivacyManager.cValueRandom.equals(PrivacyManager.getSetting(uid, setting, null, false));
 	}
 
 	private static List<PRestriction> getUpgradeWork(Version sVersion, boolean dangerous, int uid) {
