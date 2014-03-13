@@ -657,7 +657,7 @@ public class ActivityShare extends ActivityBase {
 					} else
 						Util.log(null, Log.ERROR, "Unknown action=" + actionId);
 
-					List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
+					List<Boolean> newState = PrivacyManager.getRestartStates(uid, restrictionName);
 
 					setState(uid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart) : null);
 				} catch (Throwable ex) {

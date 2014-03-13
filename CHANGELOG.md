@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fixed restrictions not always showing correct after on demand restricting ([issue](/../../issues/1549))
+* Fixed invalid *restart required* when toggling restrictions of a category
 * Better matching of *sh* and *su* ([issue](/../../issues/1551))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
