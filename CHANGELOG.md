@@ -17,7 +17,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 2.0.3 BETA**
+**Version 2.0.3 STABLE**
 
 * Fixed restrictions not always showing correct after on demand restricting ([issue](/../../issues/1549))
 * Fixed invalid *restart required* when toggling restrictions of a category
