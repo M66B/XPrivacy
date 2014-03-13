@@ -1760,7 +1760,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						// Update stored state
 						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-						holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+						if (ondemand)
+							holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 						// Notify restart
 						if (oldState.contains(true))
@@ -1802,7 +1803,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 
 						// Update on demand
-						holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+						if (ondemand)
+							holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
 
 						// Notify restart
 						if (!newState.equals(oldState))

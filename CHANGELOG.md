@@ -19,6 +19,7 @@ Changelog
 * Fixed invalid *restart required* when toggling restrictions of a category
 * Fixed and improved batch operation layout ([issue](/../../issues/1539))
 * Fixed randomize on access combined with randomize on boot ([issue](/../../issues/1547))
+* Fixed displaying on demand restricting in application list
 * Better matching of *sh* and *su* ([issue](/../../issues/1551))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
