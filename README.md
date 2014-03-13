@@ -520,7 +520,9 @@ To import and export XPrivacy's data, you need the [pro version](http://www.xpri
 <a name="FAQ10"></a>
 **(10) Can I restrict root access?**
 
-Yes, via "Shell (commands, superuser) > su".
+Yes, via "Shell (commands, superuser) > su",
+but be aware that applications can acquire root privileges through native libraries too.
+An example is [Android Terminal Emulator](https://play.google.com/store/apps/details?id=jackpal.androidterm).
 
 <a name="FAQ11"></a>
 **(11) Will restrictions be applied immediately?**
