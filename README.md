@@ -348,6 +348,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 	* Alternatively download it from [here](https://github.com/M66B/XPrivacy/releases)
 1. Enable XPrivacy from the Xposed installer
+1. Start XPrivacy one time
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
