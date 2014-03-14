@@ -368,6 +368,7 @@ Upgrading
 * **Do not remove the previous version** (or else your settings will get lost)
 * Download the new version
 * Install the new version over the previous version
+* Start the new version once (else Android will not send the boot completed event)
 * Reboot your device
 * If you are upgrading from a version before 1.99: **wait until the migration has been completed**
 
