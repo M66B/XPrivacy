@@ -483,7 +483,7 @@ You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.
 <a name="FAQ6"></a>
 **(6) Precisely which functions does XPrivacy restrict?**
 
-Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
+Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/Meta.java) for all details.
 
 <a name="FAQ7"></a>
 **(7) How safe is XPrivacy?**
