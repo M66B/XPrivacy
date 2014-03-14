@@ -15,11 +15,13 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.4 STABLE**
+
 * Fixed migration of template settings
 * Fixed migration of allowed accounts, applications and contacts ([issue](/../../issues/1555))
 * Fixed permission updates ([issue](/../../issues/1557))
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.3 STABLE**
 
