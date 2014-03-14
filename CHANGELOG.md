@@ -21,7 +21,7 @@ Changelog
 
 * Fixed migration of template settings
 * Fixed migration of allowed accounts, applications and contacts ([issue](/../../issues/1555))
-* Fixed permission updates ([issue](/../../issues/1557))
+* Fixed permission updates ([issue](/../../issues/1554))
 
 **Version 2.0.3 STABLE**
 
