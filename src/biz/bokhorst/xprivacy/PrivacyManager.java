@@ -1073,6 +1073,17 @@ public class PrivacyManager {
 		}
 	}
 
+	public static void clearPermissionCache(int uid) {
+		synchronized (mPermissionRestrictionCache) {
+			if (mPermissionRestrictionCache.get(uid) != null)
+				mPermissionRestrictionCache.remove(uid);
+		}
+		synchronized (mPermissionHookCache) {
+			if (mPermissionHookCache.get(uid) != null)
+				mPermissionHookCache.remove(uid);
+		}
+	}
+
 	@SuppressLint("DefaultLocale")
 	private static boolean hasPermission(Context context, List<String> listPackage, List<String> listPermission) {
 		try {

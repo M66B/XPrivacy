@@ -17,6 +17,7 @@ Changelog
 
 * Fixed migration of template settings
 * Fixed migration of allowed accounts, applications and contacts
+* Fixed permission updates ([issue](/../../issues/1557))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
