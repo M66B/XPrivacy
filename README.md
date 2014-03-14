@@ -371,7 +371,7 @@ Upgrading
 * Install the new version over the previous version
 * Start the new version once (else Android will not send the boot completed event)
 * Reboot your device
-* If you are upgrading from a version before 1.99: **wait until the migration has been completed**
+* If you are upgrading from a version before 1.99: **wait until the migration has been completed** before starting XPrivacy
 
 When following this procedure, your data will not leak because the Xposed part of XPrivacy keeps running.
 
