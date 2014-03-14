@@ -152,6 +152,7 @@ public class XContentResolver extends XHook {
 		// Check URI
 		if (param.args.length > 1 && param.args[0] instanceof Uri && param.getResult() != null) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
+			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
 			Cursor cursor = (Cursor) param.getResult();
 			Util.log(this, Log.INFO, "After uri=" + uri);
 
@@ -232,7 +233,8 @@ public class XContentResolver extends XHook {
 						}
 					else
 						Util.log(this, Log.ERROR, "ID missing uri=" + uri + " added=" + added + "/" + cid + " columns="
-								+ TextUtils.join(",", cursor.getColumnNames()));
+								+ TextUtils.join(",", cursor.getColumnNames()) + " projection="
+								+ (projection == null ? "null" : TextUtils.join(",", projection)));
 
 					result.respond(cursor.getExtras());
 					param.setResult(result);
