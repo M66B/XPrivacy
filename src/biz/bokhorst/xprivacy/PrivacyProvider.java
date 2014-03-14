@@ -729,8 +729,17 @@ public class PrivacyProvider extends ContentProvider {
 			for (String name : prefs.getAll().keySet())
 				try {
 					String value = prefs.getString(name, null);
-					if (value != null && !"".equals(value))
-						listWork.add(new PSetting(uid, "", name, value));
+					if (value != null && !"".equals(value)) {
+						String type;
+						if (name.startsWith("Account.") || name.startsWith("Application.")
+								|| name.startsWith("Contact.") || name.startsWith("Template.")) {
+							int dot = name.indexOf('.');
+							type = name.substring(0, dot);
+							name = name.substring(dot + 1);
+						} else
+							type = "";
+						listWork.add(new PSetting(uid, type, name, value));
+					}
 				} catch (Throwable ex) {
 					// Legacy boolean
 					Util.bug(null, ex);
