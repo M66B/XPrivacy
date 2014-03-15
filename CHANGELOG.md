@@ -15,8 +15,8 @@ Changelog
 
 **Next release**
 
-* Fixed wrong uid for restricted profiles ([issue](/../../issues/1561)
-* Fixed on demand colors by swithing to traditional theme ([issue](/../../issues/1562)
+* Fixed wrong uid for restricted profiles ([issue](/../../issues/1561))
+* Fixed on demand colors by swithing to traditional theme ([issue](/../../issues/1562))
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
