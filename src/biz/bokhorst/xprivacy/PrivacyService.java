@@ -1761,16 +1761,6 @@ public class PrivacyService {
 					Util.log(null, Log.ERROR, "Database not open");
 				}
 
-				mLock.readLock().lock();
-				try {
-					if (mDb != null && mDb.getVersion() != 11) {
-						mDb = null;
-						Util.log(null, Log.ERROR, "Database wrong version=" + mDb.getVersion());
-					}
-				} finally {
-					mLock.readLock().unlock();
-				}
-
 				if (mDb == null)
 					try {
 						setupDatabase();
