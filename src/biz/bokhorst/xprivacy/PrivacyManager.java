@@ -130,17 +130,17 @@ public class PrivacyManager {
 
 	private final static int cMaxExtra = 128;
 	private final static String cDeface = "DEFACE";
-	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
-	public final static int cSettingCacheTimeoutMs = 30 * 1000;
 
 	// Caching
+	public final static int cRestrictionCacheTimeoutMs = 15 * 1000;
+	public final static int cSettingCacheTimeoutMs = 30 * 1000;
 	private static Map<String, Map<String, Hook>> mMethod = new LinkedHashMap<String, Map<String, Hook>>();
 	private static Map<String, List<String>> mRestart = new LinkedHashMap<String, List<String>>();
 	private static Map<String, List<Hook>> mPermission = new LinkedHashMap<String, List<Hook>>();
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
-	public static SparseArray<Map<String, Boolean>> mPermissionRestrictionCache = new SparseArray<Map<String, Boolean>>();
-	public static SparseArray<Map<Hook, Boolean>> mPermissionHookCache = new SparseArray<Map<Hook, Boolean>>();
+	private static SparseArray<Map<String, Boolean>> mPermissionRestrictionCache = new SparseArray<Map<String, Boolean>>();
+	private static SparseArray<Map<Hook, Boolean>> mPermissionHookCache = new SparseArray<Map<Hook, Boolean>>();
 
 	// Meta data
 
