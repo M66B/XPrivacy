@@ -153,6 +153,7 @@ public class XContentResolver extends XHook {
 		if (param.args.length > 1 && param.args[0] instanceof Uri && param.getResult() != null) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
 			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
+			String selection = (param.args[2] instanceof String ? (String) param.args[2] : null);
 			Cursor cursor = (Cursor) param.getResult();
 			Util.log(this, Log.INFO, "After uri=" + uri);
 
@@ -232,9 +233,10 @@ public class XContentResolver extends XHook {
 								copyColumns(cursor, result, listColumn.size());
 						}
 					else
-						Util.log(this, Log.ERROR, "ID missing uri=" + uri + " added=" + added + "/" + cid + " columns="
+						Util.log(this, Log.ERROR, "ID missing URI=" + uri + " added=" + added + "/" + cid + " columns="
 								+ TextUtils.join(",", cursor.getColumnNames()) + " projection="
-								+ (projection == null ? "null" : TextUtils.join(",", projection)));
+								+ (projection == null ? "null" : TextUtils.join(",", projection)) + " selection="
+								+ selection);
 
 					result.respond(cursor.getExtras());
 					param.setResult(result);
