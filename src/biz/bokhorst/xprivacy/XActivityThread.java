@@ -130,6 +130,7 @@ public class XActivityThread extends XHook {
 				if (intent != null) {
 					// Check action
 					String action = intent.getAction();
+					Util.log(this, Log.INFO, "Intent action=" + action + " uid=" + Binder.getCallingUid());
 					if (mActionName.equals(action)) {
 						if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 							// Outgoing call
