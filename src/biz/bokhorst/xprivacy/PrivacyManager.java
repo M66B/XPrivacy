@@ -24,6 +24,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.location.Location;
 import android.os.Build;
 import android.os.Process;
@@ -1110,6 +1111,8 @@ public class PrivacyManager {
 								return true;
 							}
 			}
+		} catch (NameNotFoundException ex) {
+			Util.log(null, Log.WARN, ex.toString());
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 			return false;
