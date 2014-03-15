@@ -887,7 +887,7 @@ Similar solutions
 
 The *PDroid* family provides fake or no data, more or less in the same way as XPrivacy does.
 A difference is that you need to patch Android and that there is (therefore) only limited stock ROM support.
-The PDroid family is open source. OpenPDroid is not supported anymore.
+The PDroid family is open source. The *PDroid* family is not supported anymore.
 
 *LBE Privacy Guard* revokes permissions, which will make some applications unusable.
 LBE Privacy Guard also features malware protecting and data traffic control.
@@ -896,16 +896,17 @@ Some consider the closed source code of Chinese origin as a problem.
 The members of the PDroid family and XPrivacy hardly use memory, but LBE Privacy Guard does.
 
 The *CyanogenMod Incognito Mode* seems not to be fine grained and provides only privacy for personal data,
-if the associated content provider chooses to do so.
+like contacts, if the associated content provider chooses to do so.
 
 The *Per App Settings Module* revokes permissions like LBE Privacy Guard does.
 This modules offers a lot of other, interesting features.
 
-*Android 4.3+ Permission Manager* is like *CyanogenMod Incognito Mode*.
+The *Android 4.3+ Permission Manager* is like *CyanogenMod Incognito Mode*.
 
 *SRT AppGuard* does not require root and therefore revokes permissions by uninstalling the app to be monitored
-and reinstalling a modified version. Without a backup, app data will be lost in this process.
-Compared to XPrivacy, permission control is not as fine grained and comprehensive. System apps cannot be restricted.
+and reinstalling a modified version. Without a backup, application data will be lost in this process.
+Compared to XPrivacy, permission control is not as fine grained and comprehensive.
+System applications cannot be restricted.
 
 XPrivacy can restrict more data than any of the above solutions,
 also for closed source applications and libraries, like Google Play services.
