@@ -138,7 +138,7 @@ public class XActivityThread extends XHook {
 							if (bundle != null) {
 								String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
 								if (phoneNumber != null)
-									if (isRestrictedExtra(param, mActionName, intent.getDataString()))
+									if (isRestrictedExtra(param, mActionName, phoneNumber))
 										intent.putExtra(Intent.EXTRA_PHONE_NUMBER, (String) PrivacyManager
 												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
 							}
@@ -148,7 +148,7 @@ public class XActivityThread extends XHook {
 							if (bundle != null) {
 								String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
 								if (phoneNumber != null) {
-									if (isRestrictedExtra(param, mActionName, intent.getDataString()))
+									if (isRestrictedExtra(param, mActionName, phoneNumber))
 										intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, (String) PrivacyManager
 												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
 								}
