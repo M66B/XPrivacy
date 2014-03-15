@@ -1387,7 +1387,7 @@ public class PrivacyService {
 				view.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
 
 			ivAppIcon.setImageDrawable(appInfo.getIcon(context));
-			tvUid.setText(Integer.toString(appInfo.getUid()));
+			tvUid.setText(Integer.toString(restriction.uid));
 			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
 			String defaultAction = resources.getString(result.restricted ? R.string.title_deny : R.string.title_allow);

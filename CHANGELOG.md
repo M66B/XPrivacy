@@ -15,6 +15,7 @@ Changelog
 
 **Next release**
 
+* Fixed wrong uid for restricted profiles ([issue](/../../issues/1561)
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
