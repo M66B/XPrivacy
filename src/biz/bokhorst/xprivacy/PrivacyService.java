@@ -1459,11 +1459,11 @@ public class PrivacyService {
 			});
 
 			// Ask
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context, AlertDialog.THEME_TRADITIONAL);
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK);
 			alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
 			alertDialogBuilder.setView(view);
 			alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
-			alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_deny),
+			alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
@@ -1484,7 +1484,7 @@ public class PrivacyService {
 							latch.countDown();
 						}
 					});
-			alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_allow),
+			alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_allow),
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
