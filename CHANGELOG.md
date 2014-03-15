@@ -15,6 +15,7 @@ Changelog
 
 **Next release**
 
+* Added intent extras to parameters
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

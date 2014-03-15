@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class XActivityThread extends XHook {
@@ -168,9 +169,18 @@ public class XActivityThread extends XHook {
 										break;
 									}
 							}
-						} else if (isRestrictedExtra(param, mActionName, intent.getDataString())) {
-							finish(param);
-							param.setResult(null);
+						} else {
+							List<String> listExtra = new ArrayList<String>();
+							if (intent.getDataString() != null)
+								listExtra.add(intent.getDataString());
+							Bundle extras = intent.getExtras();
+							if (extras != null)
+								for (String key : extras.keySet())
+									listExtra.add(key + "=" + extras.get(key));
+							if (isRestrictedExtra(param, mActionName, TextUtils.join(",", listExtra))) {
+								finish(param);
+								param.setResult(null);
+							}
 						}
 					}
 				}
