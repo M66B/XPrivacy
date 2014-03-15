@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Process;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
@@ -130,6 +131,8 @@ public class XActivityThread extends XHook {
 				if (intent != null) {
 					// Check action
 					String action = intent.getAction();
+					if (action != null)
+						Util.log(this, Log.INFO, "Intent action=" + action + " uid=" + Process.myUid());
 					if (mActionName.equals(action)) {
 						if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 							// Outgoing call
