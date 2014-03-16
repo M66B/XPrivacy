@@ -108,6 +108,7 @@ Features
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Free and open source
+* Free from advertisements
 
 Restrictions
 ------------
