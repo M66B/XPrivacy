@@ -562,6 +562,7 @@ but logcats captured this way are not always sufficient. The best way to capture
 
 Upload the captured logcat somewhere, for example using Google Drive,
 and link to it from the issue you (should) have created.
+Don't forget to mention the *uid* of the application to look into when relevant.
 
 <a name="FAQ15"></a>
 **(15) Where are XPrivacy's settings stored?**
@@ -858,7 +859,7 @@ Include a [logcat](#FAQ14) when relevant (use [pastebin](http://pastebin.com/) o
 
 **Do not forget to enable XPrivacy logging using the settings menu!**
 
-Please describe the exact steps to reproduce the issue
+Please describe the exact steps to reproduce the issue, including the wrong and expected result,
 and include information about your device type, Android and XPrivacy version.
 
 **Before submitting any issue please make sure you are running the latest version of XPrivacy.**
