@@ -599,6 +599,7 @@ Each user has its own set of settings, so each user can define its own template 
 * Only the primary user can enable/disable debug logging
 * The primary user can see all usage data
 * Secondary users can only see their own usage data
+* The pro version needs to be activated for all users individually
 
 <a name="FAQ20"></a>
 **(20) Why is the "Settings > Fake data > Search" button disabled?**
