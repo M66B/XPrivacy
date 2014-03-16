@@ -17,6 +17,7 @@ Changelog
 
 * Fixed wrong uid for restricted profiles ([issue](/../../issues/1561))
 * Fixed on demand dialog colors by hard coding theme ([issue](/../../issues/1562))
+* Fixed synchronization on demand setting and check box (details view)
 * Separated global settings for each Android user ([issue](/../../issues/1563))
 	* Only the primary user can clear all data
 	* Only the primary user can define dangerous functions

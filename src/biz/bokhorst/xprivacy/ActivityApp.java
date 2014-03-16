@@ -299,6 +299,13 @@ public class ActivityApp extends ActivityBase {
 	protected void onNewIntent(Intent intent) {
 		Bundle extras = intent.getExtras();
 		if (extras != null && extras.containsKey(cAction) && extras.getInt(cAction) == cActionRefresh) {
+			// Update on demand check box
+			ImageView imgCbOnDemand = (ImageView) findViewById(R.id.imgCbOnDemand);
+			boolean ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+					false, false);
+			imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
+
+			// Update restriction list
 			if (mPrivacyListAdapter != null)
 				mPrivacyListAdapter.notifyDataSetChanged();
 		} else {
