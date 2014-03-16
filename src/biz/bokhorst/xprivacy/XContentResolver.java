@@ -233,7 +233,7 @@ public class XContentResolver extends XHook {
 								copyColumns(cursor, result, listColumn.size());
 						}
 					else
-						Util.log(this, Log.ERROR, "ID missing URI=" + uri + " added=" + added + "/" + cid + " columns="
+						Util.log(this, Log.WARN, "ID missing URI=" + uri + " added=" + added + "/" + cid + " columns="
 								+ TextUtils.join(",", cursor.getColumnNames()) + " projection="
 								+ (projection == null ? "null" : TextUtils.join(",", projection)) + " selection="
 								+ selection);
