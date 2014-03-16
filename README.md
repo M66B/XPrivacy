@@ -107,6 +107,7 @@ Features
 * For any (stock) variant of Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
+* Option to restrict on demand
 * Free and open source
 * Free from advertisements
 
