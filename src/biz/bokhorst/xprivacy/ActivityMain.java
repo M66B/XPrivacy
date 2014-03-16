@@ -375,9 +375,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
+		int userId = Util.getUserId(Process.myUid());
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
 		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
+		menu.findItem(R.id.menu_clear_db).setVisible(userId == 0);
 		menu.findItem(R.id.menu_export).setEnabled(mounted);
 		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
@@ -385,7 +387,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Update filter count
 
 		// Get settings
-		int userId = Util.getUserId(Process.myUid());
 		boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false, false);
 		boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false, false);
 		boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false, false);
