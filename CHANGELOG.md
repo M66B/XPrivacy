@@ -16,9 +16,14 @@ Changelog
 **Next release**
 
 * Fixed wrong uid for restricted profiles ([issue](/../../issues/1561))
-* Fixed on demand colors by hard coding theme ([issue](/../../issues/1562))
-* Separate global settings for each Android user ([issue](/../../issues/1563))
+* Fixed on demand dialog colors by hard coding theme ([issue](/../../issues/1562))
+* Separated global settings for each Android user ([issue](/../../issues/1563))
+	* Only the primary user can clear all data
+	* Only the primary user can define dangerous functions
+	* Only the primary user can enable/disable debug logging
 * Display usage data for last three hours
+	* The primary user can see all usage data
+	* Secondary users can only see their own usage data
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
