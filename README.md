@@ -590,7 +590,15 @@ That is correct. XPrivacy only replaces the real location with a fake location. 
 
 Secondary users can install and use XPrivacy the same way as the primary user.
 The primary user cannot manage the restrictions of secondary users.
-This is because Android totally separates the enviroments of the users (which is a good thing from a security perspecitve).
+This is because Android totally separates the enviroments of the users
+(which is a good thing from a security perspective).
+Each user has its own set of settings, so each user can define its own template and global fake values.
+
+* Only the primary user can clear all data
+* Only the primary user can define dangerous functions
+* Only the primary user can enable/disable debug logging
+* The primary user can see all usage data
+* Secondary users can only see their own usage data
 
 <a name="FAQ20"></a>
 **(20) Why is the "Settings > Fake data > Search" button disabled?**
