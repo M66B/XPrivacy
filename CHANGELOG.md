@@ -18,6 +18,7 @@ Changelog
 * Fixed wrong uid for restricted profiles ([issue](/../../issues/1561))
 * Fixed on demand colors by hard coding theme ([issue](/../../issues/1562))
 * Separate global settings for each Android user ([issue](/../../issues/1563))
+* Display usage data for last three hours
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

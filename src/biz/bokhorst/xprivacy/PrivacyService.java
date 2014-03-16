@@ -226,7 +226,6 @@ public class PrivacyService {
 		private Map<CRestriction, CRestriction> mAskedOnceCache = new HashMap<CRestriction, CRestriction>();
 		private Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
-		private final int cMaxUsageData = 500; // entries
 		private final int cMaxOnDemandDialog = 20; // seconds
 
 		private ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
@@ -797,26 +796,27 @@ public class PrivacyService {
 				mLockUsage.readLock().lock();
 				dbUsage.beginTransaction();
 				try {
+					String sFrom = Long.toString(new Date().getTime() - 3L * 60L * 60L * 1000L);
 					Cursor cursor;
 					if (uid == 0) {
 						if ("".equals(restrictionName))
 							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra" }, null, new String[] {}, null, null,
-									"time DESC LIMIT " + cMaxUsageData);
+									"restricted", "time", "extra" }, "time>?", new String[] { sFrom }, null, null,
+									"time DESC");
 						else
 							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra" }, "restriction=?", new String[] { restrictionName },
-									null, null, "time DESC LIMIT " + cMaxUsageData);
+									"restricted", "time", "extra" }, "restriction=? AND time>?", new String[] {
+									restrictionName, sFrom }, null, null, "time DESC");
 					} else {
 						if ("".equals(restrictionName))
 							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra" }, "uid=?", new String[] { Integer.toString(uid) },
-									null, null, "time DESC LIMIT " + cMaxUsageData);
+									"restricted", "time", "extra" }, "uid=? AND time>?",
+									new String[] { Integer.toString(uid), sFrom }, null, null, "time DESC");
 						else
 							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra" }, "uid=? AND restriction=?",
-									new String[] { Integer.toString(uid), restrictionName }, null, null,
-									"time DESC LIMIT " + cMaxUsageData);
+									"restricted", "time", "extra" }, "uid=? AND restriction=? AND time>?",
+									new String[] { Integer.toString(uid), restrictionName, sFrom }, null, null,
+									"time DESC");
 					}
 
 					if (cursor == null)
