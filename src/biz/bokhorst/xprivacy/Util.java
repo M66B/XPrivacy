@@ -203,7 +203,7 @@ public class Util {
 	@SuppressLint("NewApi")
 	public static int getUserId(int uid) {
 		int userId = 0;
-		if (uid > 0)
+		if (uid > 99) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 				try {
 					// UserHandle: public static final int getUserId(int uid)
@@ -212,6 +212,8 @@ public class Util {
 				} catch (Throwable ex) {
 					Util.log(null, Log.WARN, ex.toString());
 				}
+		} else
+			userId = uid;
 		return userId;
 	}
 

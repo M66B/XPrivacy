@@ -250,7 +250,7 @@ public class PrivacyService {
 
 		@Override
 		public List<String> check() throws RemoteException {
-			enforcePermission();
+			enforcePermission(-1);
 
 			List<String> listError = new ArrayList<String>();
 			synchronized (mListError) {
@@ -294,7 +294,7 @@ public class PrivacyService {
 		@Override
 		public void setRestriction(PRestriction restriction) throws RemoteException {
 			try {
-				enforcePermission();
+				enforcePermission(restriction.uid);
 				setRestrictionInternal(restriction);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -371,7 +371,13 @@ public class PrivacyService {
 
 		@Override
 		public void setRestrictionList(List<PRestriction> listRestriction) throws RemoteException {
-			enforcePermission();
+			int uid = -1;
+			for (PRestriction restriction : listRestriction)
+				if (uid < 0)
+					uid = restriction.uid;
+				else if (uid != restriction.uid)
+					throw new SecurityException();
+			enforcePermission(uid);
 			for (PRestriction restriction : listRestriction)
 				setRestrictionInternal(restriction);
 		}
@@ -645,7 +651,7 @@ public class PrivacyService {
 		public List<PRestriction> getRestrictionList(PRestriction selector) throws RemoteException {
 			List<PRestriction> result = new ArrayList<PRestriction>();
 			try {
-				enforcePermission();
+				enforcePermission(selector.uid);
 
 				PRestriction query;
 				if (selector.restrictionName == null)
@@ -675,7 +681,7 @@ public class PrivacyService {
 		@Override
 		public void deleteRestrictions(int uid, String restrictionName) throws RemoteException {
 			try {
-				enforcePermission();
+				enforcePermission(uid);
 				SQLiteDatabase db = getDb();
 				if (db == null)
 					return;
@@ -719,7 +725,13 @@ public class PrivacyService {
 		public long getUsage(List<PRestriction> listRestriction) throws RemoteException {
 			long lastUsage = 0;
 			try {
-				enforcePermission();
+				int uid = -1;
+				for (PRestriction restriction : listRestriction)
+					if (uid < 0)
+						uid = restriction.uid;
+					else if (uid != restriction.uid)
+						throw new SecurityException();
+				enforcePermission(uid);
 				SQLiteDatabase dbUsage = getDbUsage();
 
 				// Precompile statement when needed
@@ -778,7 +790,7 @@ public class PrivacyService {
 		public List<PRestriction> getUsageList(int uid, String restrictionName) throws RemoteException {
 			List<PRestriction> result = new ArrayList<PRestriction>();
 			try {
-				enforcePermission();
+				enforcePermission(uid);
 				SQLiteDatabase dbUsage = getDbUsage();
 
 				mLockUsage.readLock().lock();
@@ -842,7 +854,7 @@ public class PrivacyService {
 		@Override
 		public void deleteUsage(int uid) throws RemoteException {
 			try {
-				enforcePermission();
+				enforcePermission(uid);
 				SQLiteDatabase dbUsage = getDbUsage();
 
 				mLockUsage.writeLock().lock();
@@ -873,7 +885,7 @@ public class PrivacyService {
 		@Override
 		public void setSetting(PSetting setting) throws RemoteException {
 			try {
-				enforcePermission();
+				enforcePermission(setting.uid);
 				setSettingInternal(setting);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
@@ -950,7 +962,13 @@ public class PrivacyService {
 
 		@Override
 		public void setSettingList(List<PSetting> listSetting) throws RemoteException {
-			enforcePermission();
+			int uid = -1;
+			for (PSetting setting : listSetting)
+				if (uid < 0)
+					uid = setting.uid;
+				else if (uid != setting.uid)
+					throw new SecurityException();
+			enforcePermission(uid);
 			for (PSetting setting : listSetting)
 				setSettingInternal(setting);
 		}
@@ -1044,7 +1062,7 @@ public class PrivacyService {
 		public List<PSetting> getSettingList(int uid) throws RemoteException {
 			List<PSetting> listSetting = new ArrayList<PSetting>();
 			try {
-				enforcePermission();
+				enforcePermission(uid);
 				SQLiteDatabase db = getDb();
 				if (db == null)
 					return listSetting;
@@ -1083,7 +1101,7 @@ public class PrivacyService {
 		@Override
 		public void deleteSettings(int uid) throws RemoteException {
 			try {
-				enforcePermission();
+				enforcePermission(uid);
 				SQLiteDatabase db = getDb();
 				if (db == null)
 					return;
@@ -1117,7 +1135,7 @@ public class PrivacyService {
 		@Override
 		public void clear() throws RemoteException {
 			try {
-				enforcePermission();
+				enforcePermission(0);
 				SQLiteDatabase db = getDb();
 				SQLiteDatabase dbUsage = getDbUsage();
 				if (db == null || dbUsage == null)
@@ -1651,7 +1669,11 @@ public class PrivacyService {
 			return Boolean.parseBoolean(value);
 		}
 
-		private void enforcePermission() {
+		private void enforcePermission(int uid) {
+			if (uid >= 0)
+				if (Util.getUserId(uid) != Util.getUserId(Binder.getCallingUid()))
+					throw new SecurityException("uid=" + uid + " calling=" + Binder.getCallingUid());
+
 			int callingUid = Util.getAppId(Binder.getCallingUid());
 			if (callingUid != getXUid() && callingUid != Process.SYSTEM_UID)
 				throw new SecurityException("xuid=" + mXUid + " calling=" + Binder.getCallingUid());
