@@ -43,8 +43,9 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.deleteUsage(uid);
 							PrivacyManager.clearPermissionCache(uid);
 
-							boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true,
-									false);
+							int userId = Util.getUserId(uid);
+							boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand,
+									true, false);
 
 							// Enable on demand
 							if (ondemand)

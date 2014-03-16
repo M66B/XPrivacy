@@ -340,12 +340,14 @@ public class PrivacyManager {
 			listPRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
 
 		// Make exceptions for dangerous methods
-		if (methodName == null)
-			if (!getSettingBool(0, cSettingDangerous, false, false))
+		if (methodName == null) {
+			int userId = Util.getUserId(uid);
+			if (!getSettingBool(userId, cSettingDangerous, false, false))
 				for (String rRestrictionName : listRestriction)
 					for (Hook md : getHooks(rRestrictionName))
 						if (md.isDangerous())
 							listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
+		}
 
 		setRestrictionList(listPRestriction);
 
@@ -430,11 +432,13 @@ public class PrivacyManager {
 	public static void applyTemplate(int uid, String restrictionName, boolean methods) {
 		checkCaller();
 
+		int userId = Util.getUserId(uid);
+
 		// Check on-demand
-		boolean ondemand = getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+		boolean ondemand = getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
 		if (ondemand)
 			ondemand = getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
-		boolean dangerous = getSettingBool(0, cSettingDangerous, false, false);
+		boolean dangerous = getSettingBool(userId, cSettingDangerous, false, false);
 
 		// Build list of restrictions
 		List<String> listRestriction = new ArrayList<String>();
@@ -447,7 +451,7 @@ public class PrivacyManager {
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction) {
 			// Parent
-			String parentValue = getSetting(0, Meta.cTypeTemplate, rRestrictionName, Boolean.toString(!ondemand)
+			String parentValue = getSetting(userId, Meta.cTypeTemplate, rRestrictionName, Boolean.toString(!ondemand)
 					+ "+ask", false);
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
@@ -457,7 +461,7 @@ public class PrivacyManager {
 			if (methods)
 				for (Hook hook : getHooks(rRestrictionName)) {
 					String settingName = rRestrictionName + "." + hook.getName();
-					String value = getSetting(0, Meta.cTypeTemplate, settingName,
+					String value = getSetting(userId, Meta.cTypeTemplate, settingName,
 							Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
 									+ (parentAsked ? "+asked" : "+ask"), false);
 					boolean restricted = value.contains("true");
@@ -580,9 +584,10 @@ public class PrivacyManager {
 			try {
 				value = PrivacyService.getSetting(new PSetting(Math.abs(uid), type, name, null)).value;
 				if (value == null)
-					if (uid > 0)
-						value = PrivacyService.getSetting(new PSetting(0, type, name, defaultValue)).value;
-					else
+					if (uid > 99) {
+						int userId = Util.getUserId(uid);
+						value = PrivacyService.getSetting(new PSetting(userId, type, name, defaultValue)).value;
+					} else
 						value = defaultValue;
 
 				// Add to cache

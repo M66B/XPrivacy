@@ -381,6 +381,7 @@ public class PrivacyService {
 				throws RemoteException {
 			long start = System.currentTimeMillis();
 			boolean cached = false;
+			int userId = Util.getUserId(restriction.uid);
 			final PRestriction mresult = new PRestriction(restriction);
 
 			try {
@@ -429,7 +430,7 @@ public class PrivacyService {
 
 				// Check for system component
 				if (usage && !PrivacyManager.isApplication(restriction.uid))
-					if (!getSettingBool(0, PrivacyManager.cSettingSystem, false))
+					if (!getSettingBool(userId, PrivacyManager.cSettingSystem, false))
 						return mresult;
 
 				// Check if restrictions enabled
@@ -514,7 +515,7 @@ public class PrivacyService {
 
 					// Default dangerous
 					if (!methodFound && hook != null && hook.isDangerous())
-						if (!getSettingBool(0, PrivacyManager.cSettingDangerous, false)) {
+						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
 							mresult.restricted = false;
 							mresult.asked = true;
 						}
@@ -537,7 +538,7 @@ public class PrivacyService {
 
 					// Fallback
 					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
-							&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
+							&& !getSettingBool(userId, PrivacyManager.cSettingMigrated, false)) {
 						if (hook != null && !hook.isDangerous()) {
 							mresult.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
 									restriction.restrictionName, restriction.methodName);
@@ -582,7 +583,8 @@ public class PrivacyService {
 		private void storeUsageData(final PRestriction restriction, String secret, final PRestriction mresult)
 				throws RemoteException {
 			// Check if enabled
-			if (getSettingBool(0, PrivacyManager.cSettingUsage, true)) {
+			final int userId = Util.getUserId(restriction.uid);
+			if (getSettingBool(userId, PrivacyManager.cSettingUsage, true)) {
 				// Check secret
 				boolean allowed = true;
 				if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
@@ -603,7 +605,7 @@ public class PrivacyService {
 
 									String extra = "";
 									if (restriction.extra != null)
-										if (getSettingBool(0, PrivacyManager.cSettingParameters, false))
+										if (getSettingBool(userId, PrivacyManager.cSettingParameters, false))
 											extra = restriction.extra;
 
 									mLockUsage.writeLock().lock();
@@ -956,6 +958,7 @@ public class PrivacyService {
 		@Override
 		@SuppressLint("DefaultLocale")
 		public PSetting getSetting(PSetting setting) throws RemoteException {
+			int userId = Util.getUserId(setting.uid);
 			PSetting result = new PSetting(setting.uid, setting.type, setting.name, setting.value);
 
 			try {
@@ -979,7 +982,7 @@ public class PrivacyService {
 
 				// Fallback
 				if (!PrivacyManager.cSettingMigrated.equals(setting.name)
-						&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
+						&& !getSettingBool(userId, PrivacyManager.cSettingMigrated, false)) {
 					if (setting.uid == 0)
 						result.value = PrivacyProvider.getSettingFallback(setting.name, null, false);
 					if (result.value == null) {
@@ -1206,6 +1209,8 @@ public class PrivacyService {
 
 		private boolean onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
 			try {
+				int userId = Util.getUserId(restriction.uid);
+
 				// Without handler nothing can be done
 				if (mHandler == null)
 					return false;
@@ -1215,13 +1220,13 @@ public class PrivacyService {
 					return false;
 
 				// Check if enabled
-				if (!getSettingBool(0, PrivacyManager.cSettingOnDemand, true))
+				if (!getSettingBool(userId, PrivacyManager.cSettingOnDemand, true))
 					return false;
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
 					return false;
 
 				// Skip dangerous methods
-				final boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+				final boolean dangerous = getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
 				if (!dangerous && hook != null && hook.isDangerous() && hook.whitelist() == null)
 					return false;
 
@@ -1556,6 +1561,7 @@ public class PrivacyService {
 
 		private void onDemandChoice(PRestriction restriction, boolean category, boolean restrict) {
 			try {
+				int userId = Util.getUserId(restriction.uid);
 				PRestriction result = new PRestriction(restriction);
 
 				// Get current category restriction state
@@ -1577,7 +1583,7 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Clear category on change
-					boolean dangerous = getSettingBool(0, PrivacyManager.cSettingDangerous, false);
+					boolean dangerous = getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
 					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
 						result.methodName = md.getName();
 						result.restricted = (md.isDangerous() && !dangerous ? false : restrict);
