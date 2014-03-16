@@ -15,6 +15,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.5 TEST**
+
 * Fixed wrong uid for restricted profiles ([issue](/../../issues/1561))
 * Fixed on demand dialog colors by hard coding theme ([issue](/../../issues/1562))
 * Fixed synchronization on demand setting and check box (details view)
@@ -27,8 +31,6 @@ Changelog
 	* Secondary users can only see their own usage data
 * Some performance optimizations
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.4 STABLE**
 
