@@ -16,6 +16,7 @@
             android:layout_width="60dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:gravity="right"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false" />
 
@@ -24,7 +25,7 @@
             android:layout_width="16dip"
             android:layout_height="16dip"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="2dip"
+            android:layout_marginLeft="3dip"
             android:contentDescription="@string/help_application" />
 
         <ImageView
@@ -32,7 +33,7 @@
             android:layout_width="16dip"
             android:layout_height="16dip"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="2dip"
+            android:layout_marginLeft="3dip"
             android:contentDescription="@string/help_used"
             android:src="@drawable/presence_busy" />
 
@@ -41,6 +42,8 @@
             android:layout_width="60dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dip"
+            android:gravity="right"
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false" />
     </LinearLayout>
@@ -49,6 +52,7 @@
         android:layout_width="0dip"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="3dip"
         android:layout_weight="1"
         android:orientation="vertical" >
 
