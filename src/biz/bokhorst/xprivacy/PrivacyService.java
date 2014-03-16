@@ -792,6 +792,7 @@ public class PrivacyService {
 			try {
 				enforcePermission(-1);
 				SQLiteDatabase dbUsage = getDbUsage();
+				int userId = Util.getUserId(Binder.getCallingUid());
 
 				mLockUsage.readLock().lock();
 				dbUsage.beginTransaction();
@@ -830,7 +831,8 @@ public class PrivacyService {
 								data.restricted = (cursor.getInt(3) > 0);
 								data.time = cursor.getLong(4);
 								data.extra = cursor.getString(5);
-								result.add(data);
+								if (userId == 0 || Util.getUserId(data.uid) == userId)
+									result.add(data);
 							}
 						} finally {
 							cursor.close();
