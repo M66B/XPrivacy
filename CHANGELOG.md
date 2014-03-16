@@ -24,6 +24,7 @@ Changelog
 * Display usage data for last three hours
 	* The primary user can see all usage data
 	* Secondary users can only see their own usage data
+* Some performance optimizations
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

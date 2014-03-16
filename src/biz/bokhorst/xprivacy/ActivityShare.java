@@ -1379,7 +1379,7 @@ public class ActivityShare extends ActivityBase {
 						for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this,
 								null))
 							for (String packageName : aAppInfo.getPackageName()) {
-								boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
+								boolean allowed = PrivacyManager.getSettingBool(-appInfo.getUid(),
 										Meta.cTypeApplication, packageName, false, false);
 								if (allowed) {
 									allowedApplications = true;
@@ -1395,7 +1395,7 @@ public class ActivityShare extends ActivityBase {
 							try {
 								while (cursor.moveToNext()) {
 									long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-									boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
+									boolean allowed = PrivacyManager.getSettingBool(-appInfo.getUid(),
 											Meta.cTypeContact, Long.toString(id), false, false);
 									if (allowed) {
 										allowedContacts = true;

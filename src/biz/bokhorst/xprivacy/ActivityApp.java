@@ -636,7 +636,7 @@ public class ActivityApp extends ActivityBase {
 				try {
 					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
 					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
-					mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeAccount, sha1, false,
+					mSelection[i] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeAccount, sha1, false,
 							false);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
@@ -710,7 +710,7 @@ public class ActivityApp extends ActivityBase {
 						String pkgName = appInfo.getPackageName().get(p);
 						mApp[i] = String.format("%s (%s)", appName, pkgName);
 						mPackage[i] = pkgName;
-						mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeApplication,
+						mSelection[i] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeApplication,
 								pkgName, false, false);
 						i++;
 					} catch (Throwable ex) {
@@ -788,7 +788,7 @@ public class ActivityApp extends ActivityBase {
 			for (Long id : mapContact.keySet()) {
 				mListContact.add(mapContact.get(id));
 				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeContact,
+				mSelection[i++] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeContact,
 						Long.toString(id), false, false);
 			}
 			return null;

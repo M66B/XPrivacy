@@ -227,7 +227,7 @@ public class XContentResolver extends XHook {
 						while (cursor.moveToNext()) {
 							// Check if allowed
 							long id = cursor.getLong(iid);
-							boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(), Meta.cTypeContact,
+							boolean allowed = PrivacyManager.getSettingBool(-Binder.getCallingUid(), Meta.cTypeContact,
 									Long.toString(id), false, true);
 							if (allowed)
 								copyColumns(cursor, result, listColumn.size());
