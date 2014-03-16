@@ -790,7 +790,7 @@ public class PrivacyService {
 		public List<PRestriction> getUsageList(int uid, String restrictionName) throws RemoteException {
 			List<PRestriction> result = new ArrayList<PRestriction>();
 			try {
-				enforcePermission(uid);
+				enforcePermission(-1);
 				SQLiteDatabase dbUsage = getDbUsage();
 
 				mLockUsage.readLock().lock();
