@@ -83,12 +83,15 @@ public class RState {
 			// Change restriction
 			if (restricted)
 				PrivacyManager.deleteRestrictions(mUid, mRestrictionName, (mRestrictionName == null));
-			else
+			else {
 				for (String restrictionName : listRestriction)
 					PrivacyManager.setRestriction(mUid, restrictionName, null, true, false);
+				PrivacyManager.updateState(mUid);
+			}
 		} else {
 			PRestriction query = PrivacyManager.getRestrictionEx(mUid, mRestrictionName, null);
 			PrivacyManager.setRestriction(mUid, mRestrictionName, mMethodName, !restricted, query.asked);
+			PrivacyManager.updateState(mUid);
 		}
 	}
 

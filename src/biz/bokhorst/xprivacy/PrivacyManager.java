@@ -350,11 +350,10 @@ public class PrivacyManager {
 		}
 
 		setRestrictionList(listPRestriction);
+	}
 
-		// Mark state as changed
+	public static void updateState(int uid) {
 		setSetting(uid, cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
-
-		// Update modification time
 		setSetting(uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
 	}
 
