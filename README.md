@@ -852,6 +852,10 @@ such as security reports.
 
 **I will not look into issues of applications that have to be paid for.**
 
+**There is no support for versions before the last stable version.**
+
+It is already enough work to support the versions from the last stable version.
+
 **There is no support for anything other than privacy, so not for game cheating, root cloaking, etc.**
 
 ### Bugs
