@@ -237,7 +237,8 @@ public class SettingsDialog {
 
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true, false);
-		final boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == 0, false);
+		final boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == userId,
+				false);
 
 		String serial = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSerial, "", false);
 		String lat = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLatitude, "", false);
@@ -254,7 +255,7 @@ public class SettingsDialog {
 		String ssid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSSID, "", false);
 
 		// Set current values
-		if (uid == 0) {
+		if (uid == userId) {
 			// Disable app settings
 			cbNotify.setVisibility(View.GONE);
 
@@ -298,7 +299,7 @@ public class SettingsDialog {
 		}
 
 		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
-		if (uid == 0 || (PrivacyManager.isApplication(uid) && gondemand))
+		if (uid == userId || (PrivacyManager.isApplication(uid) && gondemand))
 			cbOnDemand.setChecked(ondemand);
 		else
 			cbOnDemand.setVisibility(View.GONE);
@@ -436,7 +437,7 @@ public class SettingsDialog {
 			@Override
 			@SuppressLint("DefaultLocale")
 			public void onClick(View view) {
-				if (uid == 0) {
+				if (uid == userId) {
 					// Global settings
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingUsage, Boolean.toString(cbUsage.isChecked()));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingParameters,
@@ -458,7 +459,7 @@ public class SettingsDialog {
 							Boolean.toString(cbNotify.isChecked()));
 				}
 
-				if (uid == 0 || PrivacyManager.isApplication(uid))
+				if (uid == userId || PrivacyManager.isApplication(uid))
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand,
 							Boolean.toString(cbOnDemand.isChecked()));
 
@@ -540,7 +541,7 @@ public class SettingsDialog {
 				dlgSettings.dismiss();
 
 				// Refresh view
-				if (uid == 0) {
+				if (uid == userId) {
 					Intent intent = new Intent(context, ActivityMain.class);
 					context.startActivity(intent);
 				} else {

@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Fixed global settings for secondary user
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.5 TEST**
