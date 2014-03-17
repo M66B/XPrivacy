@@ -130,7 +130,7 @@ public class XBinder extends XHook {
 			Binder binder = (Binder) param.thisObject;
 			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 			if (cServiceDescriptor.contains(descriptor)) {
-				Util.log(this, Log.WARN, "restrict name=" + descriptor + " uid=" + uid + " my=" + Process.myUid());
+				Util.log(this, Log.WARN, "can restrict name=" + descriptor + " uid=" + uid + " my=" + Process.myUid());
 				if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
 					// Get reply parcel
 					Parcel reply = null;

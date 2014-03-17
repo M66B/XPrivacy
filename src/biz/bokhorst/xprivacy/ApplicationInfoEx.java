@@ -26,6 +26,7 @@ import android.util.SparseArray;
 
 @SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
+	private int mUid;
 	private TreeMap<String, ApplicationInfo> mMapAppInfo = null;
 	private Map<String, PackageInfo> mMapPkgInfo = new HashMap<String, PackageInfo>();
 
@@ -39,6 +40,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private long mUpdateTime = -1;
 
 	public ApplicationInfoEx(Context context, int uid) {
+		mUid = uid;
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
 		PackageManager pm = context.getPackageManager();
 		String[] packages = pm.getPackagesForUid(uid);
@@ -185,15 +187,11 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public int getUid() {
-		// All listed uid's are the same
-		if (mMapAppInfo.size() > 0)
-			return mMapAppInfo.firstEntry().getValue().uid;
-		else
-			return -1;
+		return mUid;
 	}
 
 	public int getState(Context context) {
-		return Integer.parseInt(PrivacyManager.getSetting(getUid(), PrivacyManager.cSettingState, "1", false));
+		return Integer.parseInt(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingState, "1", false));
 	}
 
 	public long getInstallTime(Context context) {
@@ -231,7 +229,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public long getModificationTime(Context context) {
-		return Long.parseLong(PrivacyManager.getSetting(getUid(), PrivacyManager.cSettingModifyTime, "0", false));
+		return Long.parseLong(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingModifyTime, "0", false));
 	}
 
 	public boolean isSystem() {
@@ -261,7 +259,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	@Override
 	public String toString() {
-		// All uid's are the same
 		return String.format("%d %s", getUid(), TextUtils.join(", ", getApplicationName()));
 	}
 

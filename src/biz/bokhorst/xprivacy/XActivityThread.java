@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Process;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
@@ -130,6 +131,8 @@ public class XActivityThread extends XHook {
 				if (intent != null) {
 					// Check action
 					String action = intent.getAction();
+					if (action != null)
+						Util.log(this, Log.INFO, "Intent action=" + action + " uid=" + Process.myUid());
 					if (mActionName.equals(action)) {
 						if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
 							// Outgoing call
@@ -137,7 +140,7 @@ public class XActivityThread extends XHook {
 							if (bundle != null) {
 								String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
 								if (phoneNumber != null)
-									if (isRestrictedExtra(param, mActionName, intent.getDataString()))
+									if (isRestrictedExtra(param, mActionName, phoneNumber))
 										intent.putExtra(Intent.EXTRA_PHONE_NUMBER, (String) PrivacyManager
 												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
 							}
@@ -147,7 +150,7 @@ public class XActivityThread extends XHook {
 							if (bundle != null) {
 								String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
 								if (phoneNumber != null) {
-									if (isRestrictedExtra(param, mActionName, intent.getDataString()))
+									if (isRestrictedExtra(param, mActionName, phoneNumber))
 										intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, (String) PrivacyManager
 												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
 								}

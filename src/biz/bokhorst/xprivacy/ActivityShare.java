@@ -60,6 +60,7 @@ import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Process;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.text.TextUtils;
@@ -143,6 +144,7 @@ public class ActivityShare extends ActivityBase {
 			return;
 
 		// Get data
+		int userId = Util.getUserId(Process.myUid());
 		final Bundle extras = getIntent().getExtras();
 		final String action = getIntent().getAction();
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
@@ -272,8 +274,8 @@ public class ActivityShare extends ActivityBase {
 				}
 			});
 
-			boolean dangerous = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingDangerous, false, false);
-			boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+			boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
+			boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
 			rbODEnable.setVisibility(dangerous && ondemand ? View.VISIBLE : View.GONE);
 			rbODDisable.setVisibility(dangerous && ondemand ? View.VISIBLE : View.GONE);
 
@@ -1007,12 +1009,15 @@ public class ActivityShare extends ActivityBase {
 					if (id == null) {
 						// Legacy
 						Util.log(null, Log.WARN, "Legacy " + name + "=" + value);
-						PrivacyManager.setSetting(0, name, value);
+						int userId = Util.getUserId(Process.myUid());
+						PrivacyManager.setSetting(userId, name, value);
 
 					} else if ("".equals(id)) {
 						// Global setting
-						if (mListUidSelected.size() > 1)
-							PrivacyManager.setSetting(0, type, name, value);
+						if (mListUidSelected.size() > 1) {
+							int userId = Util.getUserId(Process.myUid());
+							PrivacyManager.setSetting(userId, type, name, value);
+						}
 
 					} else {
 						// Application setting
@@ -1177,11 +1182,13 @@ public class ActivityShare extends ActivityBase {
 				boolean clear = params[0];
 				List<ApplicationInfoEx> lstApp = mAppAdapter.getListAppInfo();
 
+				int userId = Util.getUserId(Process.myUid());
 				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				PackageInfo xInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				String confidence = PrivacyManager.getSetting(0, PrivacyManager.cSettingConfidence, "", false);
-				boolean dangerous = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingDangerous, false, false);
+				String confidence = PrivacyManager.getSetting(userId, PrivacyManager.cSettingConfidence, "", false);
+				boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false,
+						false);
 
 				// Initialize progress
 				mProgressCurrent = 0;
@@ -1372,7 +1379,7 @@ public class ActivityShare extends ActivityBase {
 						for (ApplicationInfoEx aAppInfo : ApplicationInfoEx.getXApplicationList(ActivityShare.this,
 								null))
 							for (String packageName : aAppInfo.getPackageName()) {
-								boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
+								boolean allowed = PrivacyManager.getSettingBool(-appInfo.getUid(),
 										Meta.cTypeApplication, packageName, false, false);
 								if (allowed) {
 									allowedApplications = true;
@@ -1388,7 +1395,7 @@ public class ActivityShare extends ActivityBase {
 							try {
 								while (cursor.moveToNext()) {
 									long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-									boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(),
+									boolean allowed = PrivacyManager.getSettingBool(-appInfo.getUid(),
 											Meta.cTypeContact, Long.toString(id), false, false);
 									if (allowed) {
 										allowedContacts = true;
@@ -1522,7 +1529,8 @@ public class ActivityShare extends ActivityBase {
 
 								// Mark as unregistered
 								if (errno == ServerException.cErrorNotActivated) {
-									PrivacyManager.setSetting(0, PrivacyManager.cSettingRegistered,
+									int userId = Util.getUserId(Process.myUid());
+									PrivacyManager.setSetting(userId, PrivacyManager.cSettingRegistered,
 											Boolean.toString(false));
 									throw ex;
 								} else
@@ -1569,8 +1577,9 @@ public class ActivityShare extends ActivityBase {
 	}
 
 	public static boolean registerDevice(final ActivityBase context) {
+		int userId = Util.getUserId(Process.myUid());
 		if (Util.hasProLicense(context) == null
-				&& !PrivacyManager.getSettingBool(0, PrivacyManager.cSettingRegistered, false, false)) {
+				&& !PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingRegistered, false, false)) {
 			// Get accounts
 			String email = null;
 			for (Account account : AccountManager.get(context).getAccounts())
@@ -1655,7 +1664,8 @@ public class ActivityShare extends ActivityBase {
 					JSONObject status = new JSONObject(out.toString("UTF-8"));
 					if (status.getBoolean("ok")) {
 						// Mark as registered
-						PrivacyManager.setSetting(0, PrivacyManager.cSettingRegistered, Boolean.toString(true));
+						int userId = Util.getUserId(Process.myUid());
+						PrivacyManager.setSetting(userId, PrivacyManager.cSettingRegistered, Boolean.toString(true));
 						return null;
 					} else {
 						int errno = status.getInt("errno");
@@ -1777,7 +1787,8 @@ public class ActivityShare extends ActivityBase {
 	}
 
 	public static String getBaseURL(Context context) {
-		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingHttps, true, true))
+		int userId = Util.getUserId(Process.myUid());
+		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingHttps, true, true))
 			return HTTPS_BASE_URL;
 		else
 			return HTTP_BASE_URL;

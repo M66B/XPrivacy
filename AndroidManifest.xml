@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
     android:installLocation="internalOnly"
-    android:versionCode="310"
-    android:versionName="2.0.3" >
+    android:versionCode="312"
+    android:versionName="2.0.5" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -26,6 +26,13 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES" />
     <uses-permission android:name="biz.bokhorst.xprivacy.pro.CHECK" />
+
+    <supports-screens
+        android:anyDensity="true"
+        android:largeScreens="true"
+        android:normalScreens="true"
+        android:smallScreens="true"
+        android:xlargeScreens="true" />
 
     <application
         android:name="ApplicationEx"

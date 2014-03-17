@@ -30,6 +30,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Process;
 import android.provider.ContactsContract;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
@@ -113,6 +114,8 @@ public class ActivityApp extends ActivityBase {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		final int userId = Util.getUserId(Process.myUid());
+
 		// Check privacy service client
 		if (!PrivacyService.checkClient())
 			return;
@@ -189,7 +192,7 @@ public class ActivityApp extends ActivityBase {
 
 		final ImageView imgCbOnDemand = (ImageView) findViewById(R.id.imgCbOnDemand);
 		if (PrivacyManager.isApplication(mAppInfo.getUid())
-				&& PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false)) {
+				&& PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false)) {
 			// Display on-demand state
 			boolean ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 					false, false);
@@ -261,7 +264,7 @@ public class ActivityApp extends ActivityBase {
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Tutorial
-		if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTutorialDetails, false, false)) {
+		if (!PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingTutorialDetails, false, false)) {
 			((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
 			((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		}
@@ -272,7 +275,7 @@ public class ActivityApp extends ActivityBase {
 				while (!parent.getClass().equals(ScrollView.class))
 					parent = parent.getParent();
 				((View) parent).setVisibility(View.GONE);
-				PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialDetails, Boolean.TRUE.toString());
+				PrivacyManager.setSetting(userId, PrivacyManager.cSettingTutorialDetails, Boolean.TRUE.toString());
 			}
 		};
 		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
@@ -296,6 +299,13 @@ public class ActivityApp extends ActivityBase {
 	protected void onNewIntent(Intent intent) {
 		Bundle extras = intent.getExtras();
 		if (extras != null && extras.containsKey(cAction) && extras.getInt(cAction) == cActionRefresh) {
+			// Update on demand check box
+			ImageView imgCbOnDemand = (ImageView) findViewById(R.id.imgCbOnDemand);
+			boolean ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+					false, false);
+			imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
+
+			// Update restriction list
 			if (mPrivacyListAdapter != null)
 				mPrivacyListAdapter.notifyDataSetChanged();
 		} else {
@@ -484,7 +494,8 @@ public class ActivityApp extends ActivityBase {
 	private void optionTutorial() {
 		((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
 		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
-		PrivacyManager.setSetting(0, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
+		int userId = Util.getUserId(Process.myUid());
+		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
 	}
 
 	private void optionUsage() {
@@ -632,7 +643,7 @@ public class ActivityApp extends ActivityBase {
 				try {
 					mListAccount.add(String.format("%s (%s)", mAccounts[i].name, mAccounts[i].type));
 					String sha1 = Util.sha1(mAccounts[i].name + mAccounts[i].type);
-					mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeAccount, sha1, false,
+					mSelection[i] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeAccount, sha1, false,
 							false);
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
@@ -706,7 +717,7 @@ public class ActivityApp extends ActivityBase {
 						String pkgName = appInfo.getPackageName().get(p);
 						mApp[i] = String.format("%s (%s)", appName, pkgName);
 						mPackage[i] = pkgName;
-						mSelection[i] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeApplication,
+						mSelection[i] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeApplication,
 								pkgName, false, false);
 						i++;
 					} catch (Throwable ex) {
@@ -784,7 +795,7 @@ public class ActivityApp extends ActivityBase {
 			for (Long id : mapContact.keySet()) {
 				mListContact.add(mapContact.get(id));
 				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.getSettingBool(mAppInfo.getUid(), Meta.cTypeContact,
+				mSelection[i++] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeContact,
 						Long.toString(id), false, false);
 			}
 			return null;
@@ -990,8 +1001,10 @@ public class ActivityApp extends ActivityBase {
 			mListRestriction = new ArrayList<String>();
 			mHook = new LinkedHashMap<Integer, List<Hook>>();
 
-			boolean fUsed = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUsed, false, false);
-			boolean fPermission = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFPermission, false, false);
+			int userId = Util.getUserId(Process.myUid());
+			boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false, false);
+			boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, false,
+					false);
 
 			for (String rRestrictionName : PrivacyManager.getRestrictions(ActivityApp.this).values()) {
 				boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), rRestrictionName, null) > 0);
@@ -1064,11 +1077,12 @@ public class ActivityApp extends ActivityBase {
 			protected Object doInBackground(Object... params) {
 				if (restrictionName != null) {
 					// Get info
+					int userId = Util.getUserId(Process.myUid());
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, null);
-					ondemand = (PrivacyManager.isApplication(mAppInfo.getUid()) && PrivacyManager.getSettingBool(0,
-							PrivacyManager.cSettingOnDemand, true, false));
+					ondemand = (PrivacyManager.isApplication(mAppInfo.getUid()) && PrivacyManager.getSettingBool(
+							userId, PrivacyManager.cSettingOnDemand, true, false));
 					if (ondemand)
 						ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false, false);
@@ -1225,9 +1239,10 @@ public class ActivityApp extends ActivityBase {
 
 		private List<Hook> getHooks(int groupPosition) {
 			if (!mHook.containsKey(groupPosition)) {
-				boolean fUsed = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingFUsed, false, false);
-				boolean fPermission = PrivacyManager
-						.getSettingBool(0, PrivacyManager.cSettingFPermission, false, false);
+				int userId = Util.getUserId(Process.myUid());
+				boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false, false);
+				boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, false,
+						false);
 				List<Hook> listMethod = new ArrayList<Hook>();
 				String restrictionName = mListRestriction.get(groupPosition);
 				for (Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
@@ -1313,13 +1328,14 @@ public class ActivityApp extends ActivityBase {
 			protected Object doInBackground(Object... params) {
 				if (restrictionName != null) {
 					// Get info
+					int userId = Util.getUserId(Process.myUid());
 					md = (Hook) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName());
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName());
-					ondemand = (PrivacyManager.isApplication(mAppInfo.getUid()) && PrivacyManager.getSettingBool(0,
-							PrivacyManager.cSettingOnDemand, true, false));
+					ondemand = (PrivacyManager.isApplication(mAppInfo.getUid()) && PrivacyManager.getSettingBool(
+							userId, PrivacyManager.cSettingOnDemand, true, false));
 					if (ondemand)
 						ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false, false);

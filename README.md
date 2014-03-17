@@ -107,7 +107,9 @@ Features
 * For any (stock) variant of Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
+* Option to restrict on demand
 * Free and open source
+* Free from advertisements
 
 Restrictions
 ------------
@@ -299,6 +301,7 @@ Limitations
 * [/proc](http://linux.die.net/man/5/proc), CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops
 * /proc/self/cmdline will not be restricted by /proc, because it will result in instability
 * The phone number cannot be restricted for the standard phone application
+* The browser bookmarks and history cannot be restricted for the browser itself
 * Internet and storage can only be restricted for applications, providers, and services started by the Android package manager
 * There is no usage data for *inet*, *media* and *sdcard*, since this is technically not possible
 * Because it is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data
@@ -348,6 +351,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 	* Alternatively download it from [here](https://github.com/M66B/XPrivacy/releases)
 1. Enable XPrivacy from the Xposed installer
+1. Start XPrivacy one time
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
@@ -368,8 +372,9 @@ Upgrading
 * **Do not remove the previous version** (or else your settings will get lost)
 * Download the new version
 * Install the new version over the previous version
+* Start the new version once (else Android will not send the boot completed event)
 * Reboot your device
-* If you are upgrading from a version before 1.99: **wait until the migration has been completed**
+* If you are upgrading from a version before 1.99: **wait until the migration has been completed** before starting XPrivacy
 
 When following this procedure, your data will not leak because the Xposed part of XPrivacy keeps running.
 
@@ -482,7 +487,7 @@ You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.
 <a name="FAQ6"></a>
 **(6) Precisely which functions does XPrivacy restrict?**
 
-Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/XPrivacy.java) for all details.
+Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/Meta.java) for all details.
 
 <a name="FAQ7"></a>
 **(7) How safe is XPrivacy?**
@@ -558,6 +563,7 @@ but logcats captured this way are not always sufficient. The best way to capture
 
 Upload the captured logcat somewhere, for example using Google Drive,
 and link to it from the issue you (should) have created.
+Don't forget to mention the *uid* of the application to look into when relevant.
 
 <a name="FAQ15"></a>
 **(15) Where are XPrivacy's settings stored?**
@@ -574,9 +580,11 @@ In the app details view, it will. In the main list view you are protected agains
 <a name="FAQ17"></a>
 **(17) How can I export/import my settings?**
 
-You need the [pro version](http://www.xprivacy.eu/) to import your settings. Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*. You can copy this file to the same place on any other device. When importing, settings are only applied to applications and system applications that actually exist on the other device.
+You need the [pro version](http://www.xprivacy.eu/) to import your settings. Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*. You can copy this file to the same place on any other device. When importing, settings are only applied to user and system applications that actually exist on the other device.
 
-Note that allowed accounts and allowed contacts (not the accounts and contacts themselves) can only be imported when the Android ID is the same. Also see the above FAQ about what to do when updating your ROM.
+The export file will contain all restrictions and settings, but note that allowed accounts and contacts (not the accounts and contacts themselves) can only be imported when the Android ID is the same.
+
+Also see the above FAQ about what to do when updating your ROM.
 
 <a name="FAQ18"></a>
 **(18) I have restricted locations, but my GPS status icon still appears.**
@@ -588,7 +596,16 @@ That is correct. XPrivacy only replaces the real location with a fake location. 
 
 Secondary users can install and use XPrivacy the same way as the primary user.
 The primary user cannot manage the restrictions of secondary users.
-This is because Android totally separates the enviroments of the users (which is a good thing from a security perspecitve).
+This is because Android totally separates the enviroments of the users
+(which is a good thing from a security perspective).
+Each user has its own set of settings, so each user can define its own template and global fake values.
+
+* Only the primary user can clear all data
+* Only the primary user can define dangerous functions
+* Only the primary user can enable/disable debug logging
+* The primary user can see all usage data
+* Secondary users can only see their own usage data
+* The pro version needs to be activated for all users individually
 
 <a name="FAQ20"></a>
 **(20) Why is the "Settings > Fake data > Search" button disabled?**
@@ -845,7 +862,7 @@ Include a [logcat](#FAQ14) when relevant (use [pastebin](http://pastebin.com/) o
 
 **Do not forget to enable XPrivacy logging using the settings menu!**
 
-Please describe the exact steps to reproduce the issue
+Please describe the exact steps to reproduce the issue, including the wrong and expected result,
 and include information about your device type, Android and XPrivacy version.
 
 **Before submitting any issue please make sure you are running the latest version of XPrivacy.**
@@ -885,7 +902,7 @@ Similar solutions
 
 The *PDroid* family provides fake or no data, more or less in the same way as XPrivacy does.
 A difference is that you need to patch Android and that there is (therefore) only limited stock ROM support.
-The PDroid family is open source. OpenPDroid is not supported anymore.
+The PDroid family is open source. The *PDroid* family is not supported anymore.
 
 *LBE Privacy Guard* revokes permissions, which will make some applications unusable.
 LBE Privacy Guard also features malware protecting and data traffic control.
@@ -894,16 +911,17 @@ Some consider the closed source code of Chinese origin as a problem.
 The members of the PDroid family and XPrivacy hardly use memory, but LBE Privacy Guard does.
 
 The *CyanogenMod Incognito Mode* seems not to be fine grained and provides only privacy for personal data,
-if the associated content provider chooses to do so.
+like contacts, if the associated content provider chooses to do so.
 
 The *Per App Settings Module* revokes permissions like LBE Privacy Guard does.
 This modules offers a lot of other, interesting features.
 
-*Android 4.3+ Permission Manager* is like *CyanogenMod Incognito Mode*.
+The *Android 4.3+ Permission Manager* is like *CyanogenMod Incognito Mode*.
 
 *SRT AppGuard* does not require root and therefore revokes permissions by uninstalling the app to be monitored
-and reinstalling a modified version. Without a backup, app data will be lost in this process.
-Compared to XPrivacy, permission control is not as fine grained and comprehensive. System apps cannot be restricted.
+and reinstalling a modified version. Without a backup, application data will be lost in this process.
+Compared to XPrivacy, permission control is not as fine grained and comprehensive.
+System applications cannot be restricted.
 
 XPrivacy can restrict more data than any of the above solutions,
 also for closed source applications and libraries, like Google Play services.

@@ -152,6 +152,8 @@ public class XContentResolver extends XHook {
 		// Check URI
 		if (param.args.length > 1 && param.args[0] instanceof Uri && param.getResult() != null) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
+			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
+			String selection = (param.args[2] instanceof String ? (String) param.args[2] : null);
 			Cursor cursor = (Cursor) param.getResult();
 			Util.log(this, Log.INFO, "After uri=" + uri);
 
@@ -225,14 +227,16 @@ public class XContentResolver extends XHook {
 						while (cursor.moveToNext()) {
 							// Check if allowed
 							long id = cursor.getLong(iid);
-							boolean allowed = PrivacyManager.getSettingBool(Binder.getCallingUid(), Meta.cTypeContact,
+							boolean allowed = PrivacyManager.getSettingBool(-Binder.getCallingUid(), Meta.cTypeContact,
 									Long.toString(id), false, true);
 							if (allowed)
 								copyColumns(cursor, result, listColumn.size());
 						}
 					else
-						Util.log(this, Log.ERROR, "ID missing uri=" + uri + " added=" + added + "/" + cid + " columns="
-								+ TextUtils.join(",", cursor.getColumnNames()));
+						Util.log(this, Log.WARN, "ID missing URI=" + uri + " added=" + added + "/" + cid + " columns="
+								+ TextUtils.join(",", cursor.getColumnNames()) + " projection="
+								+ (projection == null ? "null" : TextUtils.join(",", projection)) + " selection="
+								+ selection);
 
 					result.respond(cursor.getExtras());
 					param.setResult(result);

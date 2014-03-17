@@ -66,7 +66,7 @@
     <string name="msg_register">Prosimo, registrirajte svojo napravo</string>
     <string name="msg_email">Prosimo, vnesite svoj e-mail naslov:</string>
     <string name="msg_registered">Za aktiviranje Vaše naprave, preverite e-pošto</string>
-    <string name="msg_service">Posodobi zagnane storitve</string>
+    <string name="msg_service">Storitev za posodobitve se zaganja</string>
     <string name="msg_migrating">Selim %1$s</string>
     <string name="msg_randomizing">Ustvarjam naključne podatke %1$s</string>
     <string name="msg_upgrading">Nadgrajujem %1$s</string>

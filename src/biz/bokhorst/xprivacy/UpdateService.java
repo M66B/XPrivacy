@@ -13,6 +13,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.os.Process;
 import android.os.RemoteException;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
@@ -132,19 +133,21 @@ public class UpdateService extends Service {
 			Util.log(null, Log.WARN, "Nothing to migrate");
 
 		// Complete migration
+		int userId = Util.getUserId(Process.myUid());
 		PrivacyService.getClient().setSetting(
-				new PSetting(0, "", PrivacyManager.cSettingMigrated, Boolean.toString(true)));
+				new PSetting(userId, "", PrivacyManager.cSettingMigrated, Boolean.toString(true)));
 	}
 
 	private static void upgrade(Context context) throws NameNotFoundException {
 		// Get previous version
+		int userId = Util.getUserId(Process.myUid());
 		String currentVersion = Util.getSelfVersionName(context);
-		Version sVersion = new Version(PrivacyManager.getSetting(0, PrivacyManager.cSettingVersion, "0.0", false));
+		Version sVersion = new Version(PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0", false));
 
 		// Upgrade packages
 		if (sVersion.compareTo(new Version("0.0")) != 0) {
 			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + currentVersion);
-			boolean dangerous = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingDangerous, false, false);
+			boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
 
 			int first = 0;
 			String format = context.getString(R.string.msg_upgrading);
@@ -166,7 +169,7 @@ public class UpdateService extends Service {
 		} else
 			Util.log(null, Log.WARN, "Noting to upgrade version=" + sVersion);
 
-		PrivacyManager.setSetting(0, PrivacyManager.cSettingVersion, currentVersion);
+		PrivacyManager.setSetting(userId, PrivacyManager.cSettingVersion, currentVersion);
 	}
 
 	private static void randomize(Context context) {

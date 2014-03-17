@@ -34,14 +34,18 @@ public class PackageChange extends BroadcastReceiver {
 
 					// Default deny new user apps
 					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 1) {
-						if (!replacing) {
+						if (replacing)
+							PrivacyManager.clearPermissionCache(uid);
+						else {
 							// Delete existing restrictions
 							PrivacyManager.deleteRestrictions(uid, null, false);
 							PrivacyManager.deleteSettings(uid);
 							PrivacyManager.deleteUsage(uid);
+							PrivacyManager.clearPermissionCache(uid);
 
-							boolean ondemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true,
-									false);
+							int userId = Util.getUserId(uid);
+							boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand,
+									true, false);
 
 							// Enable on demand
 							if (ondemand)
@@ -58,7 +62,7 @@ public class PackageChange extends BroadcastReceiver {
 							Integer.toString(ActivityMain.STATE_ATTENTION));
 
 					// New/update notification
-					boolean notify = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNotify, true, false);
+					boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true, false);
 					if (!replacing || notify) {
 						Intent resultIntent = new Intent(context, ActivityApp.class);
 						resultIntent.putExtra(ActivityApp.cUid, uid);

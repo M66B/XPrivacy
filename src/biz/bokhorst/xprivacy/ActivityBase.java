@@ -11,6 +11,7 @@ import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Process;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
@@ -26,7 +27,8 @@ public class ActivityBase extends Activity {
 
 		if (PrivacyService.checkClient()) {
 			// Set theme
-			String themeName = PrivacyManager.getSetting(0, PrivacyManager.cSettingTheme, "", false);
+			int userId = Util.getUserId(Process.myUid());
+			String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "", false);
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 			setTheme(mThemeId);
 		} else {

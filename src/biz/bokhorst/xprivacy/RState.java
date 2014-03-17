@@ -3,6 +3,8 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Process;
+
 public class RState {
 	public int mUid;
 	public String mRestrictionName;
@@ -17,8 +19,10 @@ public class RState {
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
 
+		int userId = Util.getUserId(Process.myUid());
+
 		// Get if on demand
-		boolean onDemand = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingOnDemand, true, false);
+		boolean onDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
 		if (onDemand)
 			onDemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
 
