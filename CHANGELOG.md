@@ -15,10 +15,12 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.6 BETA**
+
 * Fixed global settings for secondary user
 * Import/toggle performance optimization
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.5 TEST**
 
