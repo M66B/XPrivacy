@@ -580,9 +580,11 @@ In the app details view, it will. In the main list view you are protected agains
 <a name="FAQ17"></a>
 **(17) How can I export/import my settings?**
 
-You need the [pro version](http://www.xprivacy.eu/) to import your settings. Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*. You can copy this file to the same place on any other device. When importing, settings are only applied to applications and system applications that actually exist on the other device.
+You need the [pro version](http://www.xprivacy.eu/) to import your settings. Exported settings are stored in the folder *.xprivacy* in the file *XPrivacy.xml*. You can copy this file to the same place on any other device. When importing, settings are only applied to user and system applications that actually exist on the other device.
 
-Note that allowed accounts and allowed contacts (not the accounts and contacts themselves) can only be imported when the Android ID is the same. Also see the above FAQ about what to do when updating your ROM.
+The export file will contain all restrictions and settings, but note that allowed accounts and contacts (not the accounts and contacts themselves) can only be imported when the Android ID is the same.
+
+Also see the above FAQ about what to do when updating your ROM.
 
 <a name="FAQ18"></a>
 **(18) I have restricted locations, but my GPS status icon still appears.**
