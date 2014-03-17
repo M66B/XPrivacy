@@ -19,8 +19,8 @@ Changelog
 
 **Version 2.0.6 BETA**
 
-* Fixed global settings for secondary user
-* Import/toggle performance optimization
+* Fixed global settings for secondary users
+* Import performance optimization
 
 **Version 2.0.5 TEST**
 
