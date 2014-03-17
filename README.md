@@ -850,6 +850,12 @@ Support
 It is okay to use my personal or XDA e-mail for things that cannot be shared in public,
 such as security reports.
 
+**There is only support for official XPrivacy releases.**
+
+**There is no support for versions before the last stable version.**
+
+It is already enough work to support the official versions from the last stable version.
+
 **I will not look into issues of applications that have to be paid for.**
 
 **There is no support for anything other than privacy, so not for game cheating, root cloaking, etc.**

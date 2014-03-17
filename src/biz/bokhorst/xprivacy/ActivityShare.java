@@ -645,8 +645,10 @@ public class ActivityShare extends ActivityBase {
 					if (actionId == R.id.rbClear)
 						PrivacyManager.deleteRestrictions(uid, restrictionName, (restrictionName == null));
 
-					else if (actionId == R.id.rbRestrict)
+					else if (actionId == R.id.rbRestrict) {
 						PrivacyManager.setRestriction(uid, restrictionName, null, true, false);
+						PrivacyManager.updateState(uid);
+					}
 
 					else if (actionId == R.id.rbTemplateCategory)
 						PrivacyManager.applyTemplate(uid, restrictionName, false);
@@ -914,6 +916,7 @@ public class ActivityShare extends ActivityBase {
 									PrivacyManager.setRestriction(uid, restrictionName, md.getMethodName(),
 											md.isRestricted(), false);
 							}
+							PrivacyManager.updateState(uid);
 							List<Boolean> newState = PrivacyManager.getRestartStates(uid, null);
 
 							setState(uid, STATE_SUCCESS, !newState.equals(oldState) ? getString(R.string.msg_restart)
@@ -1096,6 +1099,7 @@ public class ActivityShare extends ActivityBase {
 						if (!mListUidRestrictions.contains(uid)) {
 							// Mark previous as success
 							if (lastUid > 0) {
+								PrivacyManager.updateState(lastUid);
 								boolean restart = !PrivacyManager.getRestartStates(lastUid, null).equals(mOldState);
 								setState(lastUid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
 							}
@@ -1128,6 +1132,7 @@ public class ActivityShare extends ActivityBase {
 		public void endElement(String uri, String localName, String qName) {
 			if (qName.equals("XPrivacy"))
 				if (lastUid > 0) {
+					PrivacyManager.updateState(lastUid);
 					boolean restart = !PrivacyManager.getRestartStates(lastUid, null).equals(mOldState);
 					setState(lastUid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
 				}

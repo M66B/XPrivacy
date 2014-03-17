@@ -17,6 +17,11 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 2.0.6 BETA**
+
+* Fixed global settings for secondary users
+* Import performance optimization
+
 **Version 2.0.5 TEST**
 
 * Fixed wrong uid for restricted profiles ([issue](/../../issues/1561))
