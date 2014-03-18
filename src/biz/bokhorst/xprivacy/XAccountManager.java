@@ -131,7 +131,7 @@ public class XAccountManager extends XHook {
 				Account account = (Account) param.args[0];
 				for (int i = 0; i < param.args.length; i++)
 					if (param.args[i] instanceof AccountManagerCallback<?>)
-						if (isRestricted(param, account == null ? null : account.name)) {
+						if (isRestrictedExtra(param, account == null ? null : account.name)) {
 							AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
 							param.args[i] = new XAccountManagerCallbackBundle(callback, Binder.getCallingUid());
 						}
@@ -141,7 +141,7 @@ public class XAccountManager extends XHook {
 			if (param.args.length > 0)
 				for (int i = 0; i < param.args.length; i++)
 					if (param.args[i] instanceof AccountManagerCallback<?>)
-						if (isRestricted(param, (String) param.args[0])) {
+						if (isRestrictedExtra(param, (String) param.args[0])) {
 							AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
 							param.args[i] = new XAccountManagerCallbackBundle(callback, Binder.getCallingUid());
 						}
@@ -151,7 +151,7 @@ public class XAccountManager extends XHook {
 				Account account = (Account) param.args[0];
 				for (int i = 0; i < param.args.length; i++)
 					if (param.args[i] instanceof AccountManagerCallback<?>)
-						if (isRestricted(param, account == null ? null : account.name)) {
+						if (isRestrictedExtra(param, account == null ? null : account.name)) {
 							AccountManagerCallback<Boolean> callback = (AccountManagerCallback<Boolean>) param.args[i];
 							param.args[i] = new XAccountManagerCallbackBoolean(callback);
 						}
@@ -206,7 +206,7 @@ public class XAccountManager extends XHook {
 				}
 
 			} else if (mMethod == Methods.getAuthTokenByFeatures) {
-				if (param.getResult() != null && isRestricted(param, (String) param.args[0])) {
+				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
 					AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
 					param.setResult(new XFutureBundle(future, uid));
 				}

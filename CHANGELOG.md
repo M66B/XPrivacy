@@ -15,9 +15,12 @@ Changelog
 
 **Next release**
 
-* Increase usage data period to 12 hours
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.7 STABLE**
+
+* Fixed restrictions *getAuthToken*, *getAuthTokenByFeatures* and *hasFeatures*
+* Increase usage data period to 12 hours
 
 **Version 2.0.6 BETA**
 

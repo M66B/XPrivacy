@@ -265,8 +265,10 @@ public class PrivacyManager {
 		if (methodName == null || methodName.equals("")) {
 			Util.log(hook, Log.WARN, "Method empty");
 			Util.logStack(hook, Log.WARN);
-		} else if (getHook(restrictionName, methodName) == null)
+		} else if (getHook(restrictionName, methodName) == null) {
 			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
+			Util.logStack(hook, Log.WARN);
+		}
 
 		// Check extra
 		if (extra != null && extra.length() > cMaxExtra)
