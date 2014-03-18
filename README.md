@@ -356,7 +356,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 
 I do not recommend using XPrivacy in combination with any of the
 [similar solutions](https://github.com/M66B/XPrivacy#similar-solutions),
-because this could result in conflicts, and possibly leak data.
+because this could result in conflicts and potential data leaks.
 
 There is an unofficial backported Gingerbread version available [here](http://forum.xda-developers.com/showpost.php?p=44034334).
 Please note that only the official version is supported.
