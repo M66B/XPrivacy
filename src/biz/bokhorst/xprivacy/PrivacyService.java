@@ -226,7 +226,8 @@ public class PrivacyService {
 		private Map<CRestriction, CRestriction> mAskedOnceCache = new HashMap<CRestriction, CRestriction>();
 		private Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 
-		private final long cUsageHours = 12;
+		private final long cMaxUsageDataHours = 12;
+		private final int cMaxUsageDataCount = 700;
 		private final int cMaxOnDemandDialog = 20; // seconds
 
 		private ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
@@ -797,7 +798,7 @@ public class PrivacyService {
 				mLockUsage.readLock().lock();
 				dbUsage.beginTransaction();
 				try {
-					String sFrom = Long.toString(new Date().getTime() - cUsageHours * 60L * 60L * 1000L);
+					String sFrom = Long.toString(new Date().getTime() - cMaxUsageDataHours * 60L * 60L * 1000L);
 					Cursor cursor;
 					if (uid == 0) {
 						if ("".equals(restrictionName))
@@ -824,7 +825,8 @@ public class PrivacyService {
 						Util.log(null, Log.WARN, "Database cursor null (usage data)");
 					else
 						try {
-							while (cursor.moveToNext()) {
+							int count = 0;
+							while (count++ < cMaxUsageDataCount && cursor.moveToNext()) {
 								PRestriction data = new PRestriction();
 								data.uid = cursor.getInt(0);
 								data.restrictionName = cursor.getString(1);
