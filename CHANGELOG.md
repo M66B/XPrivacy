@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Using secure links for documentation, thanks @[Phylon](https://github.com/Phylon)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.7 STABLE**
