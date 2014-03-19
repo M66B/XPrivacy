@@ -72,6 +72,8 @@
     <string name="msg_upgrading" formatted="false">ترقية %s</string>
     <string name="msg_support_info">فشل الفحص الداخلي, هل تريد إرسال معلومات الدعم؟</string>
     <string name="msg_restrictedby">تم التقييد بواسطة XPrivacy</string>
+    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
 \n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>

@@ -72,6 +72,8 @@
     <string name="msg_upgrading" formatted="false">正在更新 %s</string>
     <string name="msg_support_info">發生程式內部錯誤，請問是否傳送錯誤報告?</string>
     <string name="msg_restrictedby">已被 XPrivacy 限制權限</string>
+    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
     \n\n請自行承擔使用XPrivacy的可能風險。</b>
     \n\n請參閱說明文件：</string>

@@ -72,6 +72,8 @@
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>Az XPrivacy fejlesztése és tesztelése nagy gondossággal történik,
 de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön és az összes alkalmazással.
 \n\nCsak saját felelősségre.</b>\n\nNézze meg a licenszet is:</string>

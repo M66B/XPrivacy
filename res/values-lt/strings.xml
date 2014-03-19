@@ -72,6 +72,8 @@
     <string name="msg_upgrading" formatted="false">Atnaujinama %s</string>
     <string name="msg_support_info">Vidinis patikrinimas nepavyko, ar norite siųsti paramos informaciją?</string>
     <string name="msg_restrictedby">Ribojama su XPrivacy</string>
+    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>

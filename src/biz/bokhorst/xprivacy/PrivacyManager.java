@@ -437,8 +437,6 @@ public class PrivacyManager {
 
 		// Check on-demand
 		boolean ondemand = getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
-		if (ondemand)
-			ondemand = getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
 		boolean dangerous = getSettingBool(userId, cSettingDangerous, false, false);
 
 		// Build list of restrictions

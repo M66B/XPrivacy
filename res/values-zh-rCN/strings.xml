@@ -72,6 +72,8 @@
     <string name="msg_upgrading" formatted="false">正在升级 %s</string>
     <string name="msg_support_info">内部检查出现错误, 要发送支持信息吗?</string>
     <string name="msg_restrictedby">由 XPrivacy 限制</string>
+    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>

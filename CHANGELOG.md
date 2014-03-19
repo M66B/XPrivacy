@@ -15,6 +15,13 @@ Changelog
 
 **Next release**
 
+* Using secure links for documentation, thanks @[Phylon](https://github.com/Phylon)
+* Made reboot messages translatable ([issue](/../../issues/1580))
+* Limited usage data to 12 hours or 700 lines
+* Made applying template consistent with visible template
+* Updated Dutch translation
+* Updated Russian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.7 STABLE**
