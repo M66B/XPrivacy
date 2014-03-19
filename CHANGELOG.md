@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Using secure links for documentation, thanks @[Phylon](https://github.com/Phylon)
+* Made reboot messages translatable ([issue](/../../issues/1580))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

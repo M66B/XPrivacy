@@ -72,6 +72,8 @@
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
     <string name="restrict_accounts">Các tài khoản (Google, Facebook, ...)</string>

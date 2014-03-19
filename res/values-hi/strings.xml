@@ -72,6 +72,8 @@
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
+    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>XPrivacy बनाने मैं बहुत ख्याल रखा गया है,
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
 \n\nइसका उपयोग पूरी तरह से आपके अपने जोखिम पर है।</b>\n\nलाइसेंस को भी पढ़े:</string>

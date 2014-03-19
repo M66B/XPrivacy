@@ -72,6 +72,8 @@
     <string name="msg_upgrading" formatted="false">Oppdaterer %s</string>
     <string name="msg_support_info">En intern sjekk mislyktes, vil du sende støtteinformasjon?</string>
     <string name="msg_restrictedby">Blokkert av XPrivacy</string>
+    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>

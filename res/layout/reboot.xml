@@ -53,8 +53,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
-        android:text="Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot?"
+        android:text="@string/msg_service_missing"
         android:textAppearance="?android:attr/textAppearance"
+        android:textStyle="italic"
         android:visibility="gone"
         tools:ignore="HardcodedText" />
 
@@ -63,8 +64,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
-        android:text="Privacy service version mismatch; did you reboot after upgrading XPrivacy?"
+        android:text="@string/msg_service_version"
         android:textAppearance="?android:attr/textAppearance"
+        android:textStyle="italic"
         android:visibility="gone"
         tools:ignore="HardcodedText" />
 
