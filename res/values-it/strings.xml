@@ -8,7 +8,7 @@
     <string name="app_description">Il gestore di privacy definitivo</string>
     <string name="app_xversion" formatted="false">Xposed framework versione: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 di M. Bokhorst (M66B)</string>
-    <string name="app_licensed">Licenziato, grazie per il tuo supporto!</string>
+    <string name="app_licensed">Attivato, grazie per il tuo supporto!</string>
     <string name="menu_usage">Dati utilizzati</string>
     <string name="menu_refresh">Aggiorna</string>
     <string name="menu_settings">Impostazioni</string>
@@ -23,7 +23,7 @@
     <string name="menu_about">A proposito di</string>
     <string name="menu_help">Aiuto</string>
     <string name="menu_select_all">Seleziona tutto</string>
-    <string name="menu_sort">Organizza</string>
+    <string name="menu_sort">Ordina</string>
     <string name="menu_filter">Filtra</string>
     <string name="menu_all">Tutto</string>
     <string name="menu_toggle">Attiva restrizioni</string>
@@ -72,8 +72,8 @@
     <string name="msg_upgrading" formatted="false">Aggiornamento %s</string>
     <string name="msg_support_info">Un controllo interno è fallito, vuoi inviare le informazioni di supporto?</string>
     <string name="msg_restrictedby">Ristretto da XPrivacy</string>
-    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
-    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
+    <string name="msg_service_missing">Servizio Privacy non trovato; hai attivato XPrivacy nell\'installatore di Xposed e riavviato il dispositivo</string>
+    <string name="msg_service_version">Servizio Privacy conflitto di versione; hai riavviato il dispositivo dopo l\'aggiornamento di XPrivacy?</string>
     <string name="msg_first"><b>Grande cura è stata posta nello sviluppo e verifica di XPrivacy,
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
 \n\nL\'utilizzo è interamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
@@ -112,7 +112,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_fpermission">Filtra per permessi</string>
     <string name="title_frestricted">Filtra per restrizioni</string>
     <string name="title_fuser">Filtra per applicazioni utente</string>
-    <string name="title_fondemand">Filtra per su-richiesta</string>
+    <string name="title_fondemand">Filtra per "su-richiesta"</string>
     <string name="title_fsystem">Filtra per applicazioni di sistema</string>
     <string name="title_fnot">Nega</string>
     <string name="title_sname">Per nome</string>
@@ -120,13 +120,13 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_sinstalled">Per data di installazione</string>
     <string name="title_supdated">Per data di aggiornamento</string>
     <string name="title_smodified">Per data di modifica (XPrivacy)</string>
-    <string name="title_sinvert">Inverti ordine di disposizione</string>
+    <string name="title_sinvert">Inverti</string>
     <string name="title_attempt">Tentativo d\'uso di:</string>
     <string name="title_category">Categoria:</string>
     <string name="title_function">Funzione:</string>
     <string name="title_parameters">Parametri:</string>
     <string name="title_applycat">Applica a intera categoria</string>
-    <string name="title_once">Una volta per %s secondi</string>
+    <string name="title_once">Una volta per %1$s secondi</string>
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Consenti</string>
     <string name="title_deny">Rifiuta</string>
@@ -168,12 +168,12 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="help_longpress">Tieni premuto sul nome per selezionare</string>
     <string name="help_ondemand">le restrizioni verranno richieste</string>
     <string name="help_application">Applicazione</string>
-    <string name="help_internet">ha il permesso di internet</string>
-    <string name="help_granted">ha il permesso di Android</string>
+    <string name="help_internet">ha il permesso internet</string>
+    <string name="help_granted">ha il permesso Android</string>
     <string name="help_used">ha utilizzato questo dato</string>
     <string name="help_used_grayed">dati di utilizzo non disponibili</string>
     <string name="help_frozen">è disabilitato</string>
-    <string name="help_dangerous">è pericoloso, restringere può causare problemi</string>
+    <string name="help_dangerous">restringere può causare problemi</string>
     <string name="help_half">ristretto in parte</string>
     <string name="help_attention">restrizioni necessitano di attenzione</string>
     <string name="help_restricted">restrizioni modificate</string>
