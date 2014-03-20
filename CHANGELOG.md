@@ -20,8 +20,11 @@ Changelog
 * Limited usage data to 12 hours or 700 lines
 * Made applying template consistent with visible template
 * Updated Dutch translation
+* Updated French translation
+* Updated German translation
 * Updated Italian translation
 * Updated Russian translation
+* Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
