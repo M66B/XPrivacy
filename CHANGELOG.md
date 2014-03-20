@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Updated Slovenian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.8 BETA**
