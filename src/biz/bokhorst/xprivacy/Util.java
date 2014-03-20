@@ -273,7 +273,10 @@ public class Util {
 				String name = iniFile.get("name", "");
 				String email = iniFile.get("email", "");
 				String signature = iniFile.get("signature", "");
-				return new String[] { name, email, signature };
+				if (name == null || email == null || signature == null)
+					return null;
+				else
+					return new String[] { name, email, signature };
 			} catch (FileNotFoundException ex) {
 				return null;
 			} catch (Throwable ex) {
