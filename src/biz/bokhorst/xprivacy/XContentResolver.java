@@ -128,9 +128,15 @@ public class XContentResolver extends XHook {
 				String methodName = components[0] + "/" + components[1].split("\\?")[0];
 
 				if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
+					// Get ID from URL if any
+					int urlid = -1;
+					if ((methodName.equals("contacts/contacts") || methodName.equals("contacts/phone_lookup"))
+							&& components.length > 2 && TextUtils.isDigitsOnly(components[2]))
+						urlid = Integer.parseInt(components[2]);
+
 					// Modify projection
 					boolean added = false;
-					if (projection != null) {
+					if (projection != null && urlid < 0) {
 						List<String> listProjection = new ArrayList<String>();
 						listProjection.addAll(Arrays.asList(projection));
 						String cid = getIdForUri(uri);
@@ -209,6 +215,12 @@ public class XContentResolver extends XHook {
 				String[] components = uri.replace("content://com.android.", "").split("/");
 				String methodName = components[0] + "/" + components[1].split("\\?")[0];
 				if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
+					// Get ID from URL if any
+					int urlid = -1;
+					if ((methodName.equals("contacts/contacts") || methodName.equals("contacts/phone_lookup"))
+							&& components.length > 2 && TextUtils.isDigitsOnly(components[2]))
+						urlid = Integer.parseInt(components[2]);
+
 					// Modify column names back
 					Object column_added = param.getObjectExtra("column_added");
 					boolean added = (column_added == null ? false : (Boolean) param.getObjectExtra("column_added"));
@@ -223,10 +235,10 @@ public class XContentResolver extends XHook {
 					// Filter rows
 					String cid = getIdForUri(uri);
 					int iid = (cid == null ? -1 : cursor.getColumnIndex(cid));
-					if (iid >= 0)
+					if (iid >= 0 || urlid >= 0)
 						while (cursor.moveToNext()) {
 							// Check if allowed
-							long id = cursor.getLong(iid);
+							long id = (urlid >= 0 ? urlid : cursor.getLong(iid));
 							boolean allowed = PrivacyManager.getSettingBool(-Binder.getCallingUid(), Meta.cTypeContact,
 									Long.toString(id), false, true);
 							if (allowed)
