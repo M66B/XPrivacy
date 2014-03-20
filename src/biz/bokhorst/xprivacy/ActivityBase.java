@@ -47,6 +47,7 @@ public class ActivityBase extends Activity {
 			if (PrivacyService.getClient() == null) {
 				TextView tvRebootClient = (TextView) findViewById(R.id.tvRebootClient);
 				tvRebootClient.setVisibility(View.VISIBLE);
+				Requirements.checkCompatibility(this);
 			} else {
 				TextView tvRebootClient = (TextView) findViewById(R.id.tvRebootVersion);
 				tvRebootClient.setVisibility(View.VISIBLE);
