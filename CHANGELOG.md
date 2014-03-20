@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fixed photos for allowed contacts ([issue](/../../issues/1588))
+* Updated Lithuanian translation
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
