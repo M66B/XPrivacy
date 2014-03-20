@@ -15,6 +15,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.8 BETA**
+
 * Using secure links for documentation, thanks @[Phylon](https://github.com/Phylon)
 * Made reboot messages translatable ([issue](/../../issues/1580))
 * Limited usage data to 12 hours or 700 lines
@@ -25,8 +29,6 @@ Changelog
 * Updated Italian translation
 * Updated Russian translation
 * Updated Vietnamese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.7 STABLE**
 
