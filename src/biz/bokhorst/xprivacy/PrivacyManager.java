@@ -250,24 +250,25 @@ public class PrivacyManager {
 		if (uid <= 0)
 			return false;
 		if (secret == null) {
-			Util.log(null, Log.WARN, "Secret null");
+			Util.log(null, Log.ERROR, "Secret null");
+			Util.logStack(hook, Log.ERROR);
 			secret = "";
 		}
 
 		// Check restriction
 		if (restrictionName == null || restrictionName.equals("")) {
-			Util.log(hook, Log.WARN, "restriction empty method=" + methodName);
-			Util.logStack(hook, Log.WARN);
+			Util.log(hook, Log.ERROR, "restriction empty method=" + methodName);
+			Util.logStack(hook, Log.ERROR);
 			return false;
 		}
 
 		// Check usage
 		if (methodName == null || methodName.equals("")) {
-			Util.log(hook, Log.WARN, "Method empty");
-			Util.logStack(hook, Log.WARN);
+			Util.log(hook, Log.ERROR, "Method empty");
+			Util.logStack(hook, Log.ERROR);
 		} else if (getHook(restrictionName, methodName) == null) {
-			Util.log(hook, Log.WARN, "Unknown method=" + methodName);
-			Util.logStack(hook, Log.WARN);
+			Util.log(hook, Log.ERROR, "Unknown method=" + methodName);
+			Util.logStack(hook, Log.ERROR);
 		}
 
 		// Check extra
