@@ -65,7 +65,7 @@ public class XLocationClient extends XHook {
 				param.setResult(null);
 
 		} else if (mMethod == Methods.removeGeofences) {
-			if (isRestricted(param, PrivacyManager.cLocation, "addGeofences"))
+			if (isRestricted(param, PrivacyManager.cLocation, "GMS.addGeofences"))
 				param.setResult(null);
 
 		} else if (mMethod == Methods.getLastLocation) {
