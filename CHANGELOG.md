@@ -17,6 +17,7 @@ Changelog
 
 * Fixed photos for allowed contacts ([issue](/../../issues/1588))
 * Fixed *GMS.removeGeofences*
+* Fixed randomization for secondary users
 * Updated Lithuanian translation
 * Updated Slovenian translation
 

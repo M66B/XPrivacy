@@ -178,7 +178,8 @@ public class UpdateService extends Service {
 		List<ApplicationInfo> listApp = context.getPackageManager().getInstalledApplications(0);
 
 		// Randomize global
-		PrivacyManager.setSettingList(getRandomizeWork(context, 0));
+		int userId = Util.getUserId(Process.myUid());
+		PrivacyManager.setSettingList(getRandomizeWork(context, userId));
 
 		// Randomize applications
 		for (int i = 1; i <= listApp.size(); i++) {
