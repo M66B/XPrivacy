@@ -15,13 +15,15 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.9 BETA**
+
 * Fixed photos for allowed contacts ([issue](/../../issues/1588))
 * Fixed *GMS.removeGeofences*
 * Fixed randomization for secondary users
 * Updated Lithuanian translation
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.8 BETA**
 
