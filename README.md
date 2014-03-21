@@ -312,7 +312,7 @@ Limitations
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
 * The on demand restricting dialog does sometimes not respond and is sometimes hidden
 	* A known situation is starting an application from a notification for the restrictions *inet*, *sdcard* and *media*
-	* Another know situation are some restrictions triggered by hardware buttons, like the volume buttons
+	* Another known situation are some restrictions triggered by hardware buttons, like the volume buttons
 	* This cannot be fixed, because the on demand dialog is locking a system process
 	* The on demand dialog will timeout after 20 seconds, so this is not a major problem
 * You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions
