@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fixed multi threaded database access (for some ROMs this happens sometimes)
+* Added option to globally enable/disable update notifications
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

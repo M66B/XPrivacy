@@ -256,9 +256,6 @@ public class SettingsDialog {
 
 		// Set current values
 		if (uid == userId) {
-			// Disable app settings
-			cbNotify.setVisibility(View.GONE);
-
 			// Global settings
 			cbUsage.setChecked(usage);
 			cbParameters.setChecked(parameters);
@@ -293,9 +290,6 @@ public class SettingsDialog {
 			cbExperimental.setVisibility(View.GONE);
 			cbHttps.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
-
-			// Application specific settings
-			cbNotify.setChecked(notify);
 		}
 
 		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
@@ -305,6 +299,7 @@ public class SettingsDialog {
 			cbOnDemand.setVisibility(View.GONE);
 
 		// Common
+		cbNotify.setChecked(notify);
 		cbRandom.setChecked(random);
 
 		// Set randomize on access check boxes
@@ -453,15 +448,14 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHttps, Boolean.toString(cbHttps.isChecked()));
 					PrivacyManager
 							.setSetting(uid, PrivacyManager.cSettingConfidence, etConfidence.getText().toString());
-				} else {
-					// App specific settings
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingNotify,
-							Boolean.toString(cbNotify.isChecked()));
 				}
 
 				if (uid == userId || PrivacyManager.isApplication(uid))
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand,
 							Boolean.toString(cbOnDemand.isChecked()));
+
+				// Notifications
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingNotify, Boolean.toString(cbNotify.isChecked()));
 
 				// Random at boot
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingRandom,
