@@ -198,7 +198,7 @@ public class XTelephonyManager extends XHook {
 					param.setResult(TelephonyManager.NETWORK_TYPE_UNKNOWN);
 
 			} else if (mMethod == Methods.getPhoneType) {
-				if (isRestricted(param))
+				if (isRestricted(param) || isRestricted(param, "getDeviceId") || isRestricted(param, "getSubscriberId"))
 					param.setResult(TelephonyManager.PHONE_TYPE_GSM); // IMEI
 
 			} else {
