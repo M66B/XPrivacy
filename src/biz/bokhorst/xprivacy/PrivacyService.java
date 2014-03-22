@@ -574,12 +574,15 @@ public class PrivacyService {
 					ondemand = onDemandDialog(hook, restriction, mresult);
 
 				// Notify user
-				if (!ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify())
+				if (!ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify()) {
 					notifyRestricted(restriction);
+					mresult.time = new Date().getTime();
+				}
 
 				// Store usage data
 				if (usage && hook != null && hook.hasUsageData())
 					storeUsageData(restriction, secret, mresult);
+
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}

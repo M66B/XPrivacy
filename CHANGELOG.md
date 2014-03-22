@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Always notify *Restricted by ...* (disabled client side caching)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.10 TEST**
