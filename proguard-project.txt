@@ -29,4 +29,5 @@
 #XPrivacy
 -keep class biz.bokhorst.xprivacy.XPrivacy {*; }
 -keepnames class biz.bokhorst.xprivacy.X* { }
+-keepnames class biz.bokhorst.xprivacy.Util
 -keepclassmembers class biz.bokhorst.xprivacy.Util { public static boolean isXposedEnabled(); }
