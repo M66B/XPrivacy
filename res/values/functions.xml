@@ -50,7 +50,7 @@
     <string name="email_GMailProvider" translatable="false"><![CDATA[<a href="https://developers.google.com/gmail/android/">Google documentation</a>]]></string>
     <!-- identification -->
     <string name="identification__hostname" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'hostname\' (<a href="https://en.wikipedia.org/wiki/Hostname">Wikipedia</a>)]]></string>
-    <string name="identification__imei" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'imei\' (<a href="https://en.wikipedia.org/wiki/International_Mobile_Station_Equipment_Identity">Wikipedia</a>)]]></string>
+    <string name="identification__imei" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'imei\' (<a href="https://en.wikipedia.org/wiki/International_Mobile_Station_Equipment_Identity">Wikipedia</a>)<br />See also Phone/getDeviceId]]></string>
     <string name="identification__macaddr" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'macaddr\' (<a href="https://en.wikipedia.org/wiki/MAC_address">Wikipedia</a>)]]></string>
     <string name="identification__serialno" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'serialno\']]></string>
     <string name="identification__cid" translatable="false"><![CDATA[Will restrict access to any system property with the name containing \'cid\' (Card Identification Register = SD card serial number)]]></string>
