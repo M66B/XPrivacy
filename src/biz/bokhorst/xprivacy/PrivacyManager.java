@@ -584,8 +584,8 @@ public class PrivacyManager {
 			try {
 				value = PrivacyService.getSetting(new PSetting(Math.abs(uid), type, name, null)).value;
 				if (value == null)
-					if (uid > 99) {
-						int userId = Util.getUserId(uid);
+					if (Math.abs(uid) > 99) {
+						int userId = Util.getUserId(Math.abs(uid));
 						value = PrivacyService.getSetting(new PSetting(userId, type, name, defaultValue)).value;
 					} else
 						value = defaultValue;
