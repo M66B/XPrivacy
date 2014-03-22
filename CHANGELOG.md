@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Fixed multi threaded database access (for some ROMs this happens sometimes)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.9 BETA**

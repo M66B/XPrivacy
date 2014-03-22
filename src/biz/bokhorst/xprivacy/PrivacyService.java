@@ -320,35 +320,37 @@ public class PrivacyService {
 				// 2 not restricted, asked
 				// 3 restricted, asked
 
-				mLock.writeLock().lock();
-				db.beginTransaction();
-				try {
-					// Create category record
-					if (restriction.methodName == null) {
-						ContentValues cvalues = new ContentValues();
-						cvalues.put("uid", restriction.uid);
-						cvalues.put("restriction", restriction.restrictionName);
-						cvalues.put("method", "");
-						cvalues.put("restricted", (restriction.restricted ? 1 : 0) + (restriction.asked ? 2 : 0));
-						db.insertWithOnConflict(cTableRestriction, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
-					}
-
-					// Create method exception record
-					if (restriction.methodName != null) {
-						ContentValues mvalues = new ContentValues();
-						mvalues.put("uid", restriction.uid);
-						mvalues.put("restriction", restriction.restrictionName);
-						mvalues.put("method", restriction.methodName);
-						mvalues.put("restricted", (restriction.restricted ? 0 : 1) + (restriction.asked ? 2 : 0));
-						db.insertWithOnConflict(cTableRestriction, null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
-					}
-
-					db.setTransactionSuccessful();
-				} finally {
+				synchronized (mLock) {
+					mLock.writeLock().lock();
+					db.beginTransaction();
 					try {
-						db.endTransaction();
+						// Create category record
+						if (restriction.methodName == null) {
+							ContentValues cvalues = new ContentValues();
+							cvalues.put("uid", restriction.uid);
+							cvalues.put("restriction", restriction.restrictionName);
+							cvalues.put("method", "");
+							cvalues.put("restricted", (restriction.restricted ? 1 : 0) + (restriction.asked ? 2 : 0));
+							db.insertWithOnConflict(cTableRestriction, null, cvalues, SQLiteDatabase.CONFLICT_REPLACE);
+						}
+
+						// Create method exception record
+						if (restriction.methodName != null) {
+							ContentValues mvalues = new ContentValues();
+							mvalues.put("uid", restriction.uid);
+							mvalues.put("restriction", restriction.restrictionName);
+							mvalues.put("method", restriction.methodName);
+							mvalues.put("restricted", (restriction.restricted ? 0 : 1) + (restriction.asked ? 2 : 0));
+							db.insertWithOnConflict(cTableRestriction, null, mvalues, SQLiteDatabase.CONFLICT_REPLACE);
+						}
+
+						db.setTransactionSuccessful();
 					} finally {
-						mLock.writeLock().unlock();
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.writeLock().unlock();
+						}
 					}
 				}
 
@@ -474,49 +476,51 @@ public class PrivacyService {
 					}
 
 					// Execute statement
-					mLock.readLock().lock();
-					db.beginTransaction();
-					try {
+					synchronized (mLock) {
+						mLock.readLock().lock();
+						db.beginTransaction();
 						try {
-							synchronized (stmtGetRestriction) {
-								stmtGetRestriction.clearBindings();
-								stmtGetRestriction.bindLong(1, restriction.uid);
-								stmtGetRestriction.bindString(2, restriction.restrictionName);
-								stmtGetRestriction.bindString(3, "");
-								long state = stmtGetRestriction.simpleQueryForLong();
-								cresult.restricted = ((state & 1) != 0);
-								cresult.asked = ((state & 2) != 0);
-								mresult.restricted = cresult.restricted;
-								mresult.asked = cresult.asked;
-							}
-						} catch (SQLiteDoneException ignored) {
-						}
-
-						if (restriction.methodName != null)
 							try {
 								synchronized (stmtGetRestriction) {
 									stmtGetRestriction.clearBindings();
 									stmtGetRestriction.bindLong(1, restriction.uid);
 									stmtGetRestriction.bindString(2, restriction.restrictionName);
-									stmtGetRestriction.bindString(3, restriction.methodName);
+									stmtGetRestriction.bindString(3, "");
 									long state = stmtGetRestriction.simpleQueryForLong();
-									// Method can be excepted
-									if (mresult.restricted)
-										mresult.restricted = ((state & 1) == 0);
-									// Category asked=true takes precedence
-									if (!mresult.asked)
-										mresult.asked = ((state & 2) != 0);
-									methodFound = true;
+									cresult.restricted = ((state & 1) != 0);
+									cresult.asked = ((state & 2) != 0);
+									mresult.restricted = cresult.restricted;
+									mresult.asked = cresult.asked;
 								}
 							} catch (SQLiteDoneException ignored) {
 							}
 
-						db.setTransactionSuccessful();
-					} finally {
-						try {
-							db.endTransaction();
+							if (restriction.methodName != null)
+								try {
+									synchronized (stmtGetRestriction) {
+										stmtGetRestriction.clearBindings();
+										stmtGetRestriction.bindLong(1, restriction.uid);
+										stmtGetRestriction.bindString(2, restriction.restrictionName);
+										stmtGetRestriction.bindString(3, restriction.methodName);
+										long state = stmtGetRestriction.simpleQueryForLong();
+										// Method can be excepted
+										if (mresult.restricted)
+											mresult.restricted = ((state & 1) == 0);
+										// Category asked=true takes precedence
+										if (!mresult.asked)
+											mresult.asked = ((state & 2) != 0);
+										methodFound = true;
+									}
+								} catch (SQLiteDoneException ignored) {
+								}
+
+							db.setTransactionSuccessful();
 						} finally {
-							mLock.readLock().unlock();
+							try {
+								db.endTransaction();
+							} finally {
+								mLock.readLock().unlock();
+							}
 						}
 					}
 
@@ -615,25 +619,27 @@ public class PrivacyService {
 										if (getSettingBool(userId, PrivacyManager.cSettingParameters, false))
 											extra = restriction.extra;
 
-									mLockUsage.writeLock().lock();
-									dbUsage.beginTransaction();
-									try {
-										ContentValues values = new ContentValues();
-										values.put("uid", restriction.uid);
-										values.put("restriction", restriction.restrictionName);
-										values.put("method", restriction.methodName);
-										values.put("restricted", mresult.restricted);
-										values.put("time", new Date().getTime());
-										values.put("extra", extra);
-										dbUsage.insertWithOnConflict(cTableUsage, null, values,
-												SQLiteDatabase.CONFLICT_REPLACE);
-
-										dbUsage.setTransactionSuccessful();
-									} finally {
+									synchronized (mLockUsage) {
+										mLockUsage.writeLock().lock();
+										dbUsage.beginTransaction();
 										try {
-											dbUsage.endTransaction();
+											ContentValues values = new ContentValues();
+											values.put("uid", restriction.uid);
+											values.put("restriction", restriction.restrictionName);
+											values.put("method", restriction.methodName);
+											values.put("restricted", mresult.restricted);
+											values.put("time", new Date().getTime());
+											values.put("extra", extra);
+											dbUsage.insertWithOnConflict(cTableUsage, null, values,
+													SQLiteDatabase.CONFLICT_REPLACE);
+
+											dbUsage.setTransactionSuccessful();
 										} finally {
-											mLockUsage.writeLock().unlock();
+											try {
+												dbUsage.endTransaction();
+											} finally {
+												mLockUsage.writeLock().unlock();
+											}
 										}
 									}
 								}
@@ -687,22 +693,24 @@ public class PrivacyService {
 				if (db == null)
 					return;
 
-				mLock.writeLock().lock();
-				db.beginTransaction();
-				try {
-					if ("".equals(restrictionName))
-						db.delete(cTableRestriction, "uid=?", new String[] { Integer.toString(uid) });
-					else
-						db.delete(cTableRestriction, "uid=? AND restriction=?", new String[] { Integer.toString(uid),
-								restrictionName });
-					Util.log(null, Log.WARN, "Restrictions deleted uid=" + uid + " category=" + restrictionName);
-
-					db.setTransactionSuccessful();
-				} finally {
+				synchronized (mLock) {
+					mLock.writeLock().lock();
+					db.beginTransaction();
 					try {
-						db.endTransaction();
+						if ("".equals(restrictionName))
+							db.delete(cTableRestriction, "uid=?", new String[] { Integer.toString(uid) });
+						else
+							db.delete(cTableRestriction, "uid=? AND restriction=?",
+									new String[] { Integer.toString(uid), restrictionName });
+						Util.log(null, Log.WARN, "Restrictions deleted uid=" + uid + " category=" + restrictionName);
+
+						db.setTransactionSuccessful();
 					} finally {
-						mLock.writeLock().unlock();
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.writeLock().unlock();
+						}
 					}
 				}
 
@@ -745,39 +753,41 @@ public class PrivacyService {
 					stmtGetUsageMethod = dbUsage.compileStatement(sql);
 				}
 
-				mLockUsage.readLock().lock();
-				dbUsage.beginTransaction();
-				try {
-					for (PRestriction restriction : listRestriction) {
-						if (restriction.methodName == null)
-							try {
-								synchronized (stmtGetUsageRestriction) {
-									stmtGetUsageRestriction.clearBindings();
-									stmtGetUsageRestriction.bindLong(1, restriction.uid);
-									stmtGetUsageRestriction.bindString(2, restriction.restrictionName);
-									lastUsage = Math.max(lastUsage, stmtGetUsageRestriction.simpleQueryForLong());
-								}
-							} catch (SQLiteDoneException ignored) {
-							}
-						else
-							try {
-								synchronized (stmtGetUsageMethod) {
-									stmtGetUsageMethod.clearBindings();
-									stmtGetUsageMethod.bindLong(1, restriction.uid);
-									stmtGetUsageMethod.bindString(2, restriction.restrictionName);
-									stmtGetUsageMethod.bindString(3, restriction.methodName);
-									lastUsage = Math.max(lastUsage, stmtGetUsageMethod.simpleQueryForLong());
-								}
-							} catch (SQLiteDoneException ignored) {
-							}
-					}
-
-					dbUsage.setTransactionSuccessful();
-				} finally {
+				synchronized (mLockUsage) {
+					mLockUsage.readLock().lock();
+					dbUsage.beginTransaction();
 					try {
-						dbUsage.endTransaction();
+						for (PRestriction restriction : listRestriction) {
+							if (restriction.methodName == null)
+								try {
+									synchronized (stmtGetUsageRestriction) {
+										stmtGetUsageRestriction.clearBindings();
+										stmtGetUsageRestriction.bindLong(1, restriction.uid);
+										stmtGetUsageRestriction.bindString(2, restriction.restrictionName);
+										lastUsage = Math.max(lastUsage, stmtGetUsageRestriction.simpleQueryForLong());
+									}
+								} catch (SQLiteDoneException ignored) {
+								}
+							else
+								try {
+									synchronized (stmtGetUsageMethod) {
+										stmtGetUsageMethod.clearBindings();
+										stmtGetUsageMethod.bindLong(1, restriction.uid);
+										stmtGetUsageMethod.bindString(2, restriction.restrictionName);
+										stmtGetUsageMethod.bindString(3, restriction.methodName);
+										lastUsage = Math.max(lastUsage, stmtGetUsageMethod.simpleQueryForLong());
+									}
+								} catch (SQLiteDoneException ignored) {
+								}
+						}
+
+						dbUsage.setTransactionSuccessful();
 					} finally {
-						mLockUsage.readLock().unlock();
+						try {
+							dbUsage.endTransaction();
+						} finally {
+							mLockUsage.readLock().unlock();
+						}
 					}
 				}
 			} catch (Throwable ex) {
@@ -795,58 +805,60 @@ public class PrivacyService {
 				SQLiteDatabase dbUsage = getDbUsage();
 				int userId = Util.getUserId(Binder.getCallingUid());
 
-				mLockUsage.readLock().lock();
-				dbUsage.beginTransaction();
-				try {
-					String sFrom = Long.toString(new Date().getTime() - cMaxUsageDataHours * 60L * 60L * 1000L);
-					Cursor cursor;
-					if (uid == 0) {
-						if ("".equals(restrictionName))
-							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra" }, "time>?", new String[] { sFrom }, null, null,
-									"time DESC");
-						else
-							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra" }, "restriction=? AND time>?", new String[] {
-									restrictionName, sFrom }, null, null, "time DESC");
-					} else {
-						if ("".equals(restrictionName))
-							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra" }, "uid=? AND time>?",
-									new String[] { Integer.toString(uid), sFrom }, null, null, "time DESC");
-						else
-							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra" }, "uid=? AND restriction=? AND time>?",
-									new String[] { Integer.toString(uid), restrictionName, sFrom }, null, null,
-									"time DESC");
-					}
-
-					if (cursor == null)
-						Util.log(null, Log.WARN, "Database cursor null (usage data)");
-					else
-						try {
-							int count = 0;
-							while (count++ < cMaxUsageDataCount && cursor.moveToNext()) {
-								PRestriction data = new PRestriction();
-								data.uid = cursor.getInt(0);
-								data.restrictionName = cursor.getString(1);
-								data.methodName = cursor.getString(2);
-								data.restricted = (cursor.getInt(3) > 0);
-								data.time = cursor.getLong(4);
-								data.extra = cursor.getString(5);
-								if (userId == 0 || Util.getUserId(data.uid) == userId)
-									result.add(data);
-							}
-						} finally {
-							cursor.close();
+				synchronized (mLockUsage) {
+					mLockUsage.readLock().lock();
+					dbUsage.beginTransaction();
+					try {
+						String sFrom = Long.toString(new Date().getTime() - cMaxUsageDataHours * 60L * 60L * 1000L);
+						Cursor cursor;
+						if (uid == 0) {
+							if ("".equals(restrictionName))
+								cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
+										"restricted", "time", "extra" }, "time>?", new String[] { sFrom }, null, null,
+										"time DESC");
+							else
+								cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
+										"restricted", "time", "extra" }, "restriction=? AND time>?", new String[] {
+										restrictionName, sFrom }, null, null, "time DESC");
+						} else {
+							if ("".equals(restrictionName))
+								cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
+										"restricted", "time", "extra" }, "uid=? AND time>?",
+										new String[] { Integer.toString(uid), sFrom }, null, null, "time DESC");
+							else
+								cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
+										"restricted", "time", "extra" }, "uid=? AND restriction=? AND time>?",
+										new String[] { Integer.toString(uid), restrictionName, sFrom }, null, null,
+										"time DESC");
 						}
 
-					dbUsage.setTransactionSuccessful();
-				} finally {
-					try {
-						dbUsage.endTransaction();
+						if (cursor == null)
+							Util.log(null, Log.WARN, "Database cursor null (usage data)");
+						else
+							try {
+								int count = 0;
+								while (count++ < cMaxUsageDataCount && cursor.moveToNext()) {
+									PRestriction data = new PRestriction();
+									data.uid = cursor.getInt(0);
+									data.restrictionName = cursor.getString(1);
+									data.methodName = cursor.getString(2);
+									data.restricted = (cursor.getInt(3) > 0);
+									data.time = cursor.getLong(4);
+									data.extra = cursor.getString(5);
+									if (userId == 0 || Util.getUserId(data.uid) == userId)
+										result.add(data);
+								}
+							} finally {
+								cursor.close();
+							}
+
+						dbUsage.setTransactionSuccessful();
 					} finally {
-						mLockUsage.readLock().unlock();
+						try {
+							dbUsage.endTransaction();
+						} finally {
+							mLockUsage.readLock().unlock();
+						}
 					}
 				}
 			} catch (Throwable ex) {
@@ -862,21 +874,23 @@ public class PrivacyService {
 				enforcePermission(uid);
 				SQLiteDatabase dbUsage = getDbUsage();
 
-				mLockUsage.writeLock().lock();
-				dbUsage.beginTransaction();
-				try {
-					if (uid == 0)
-						dbUsage.delete(cTableUsage, null, new String[] {});
-					else
-						dbUsage.delete(cTableUsage, "uid=?", new String[] { Integer.toString(uid) });
-					Util.log(null, Log.WARN, "Usage data deleted uid=" + uid);
-
-					dbUsage.setTransactionSuccessful();
-				} finally {
+				synchronized (mLockUsage) {
+					mLockUsage.writeLock().lock();
+					dbUsage.beginTransaction();
 					try {
-						dbUsage.endTransaction();
+						if (uid == 0)
+							dbUsage.delete(cTableUsage, null, new String[] {});
+						else
+							dbUsage.delete(cTableUsage, "uid=?", new String[] { Integer.toString(uid) });
+						Util.log(null, Log.WARN, "Usage data deleted uid=" + uid);
+
+						dbUsage.setTransactionSuccessful();
 					} finally {
-						mLockUsage.writeLock().unlock();
+						try {
+							dbUsage.endTransaction();
+						} finally {
+							mLockUsage.writeLock().unlock();
+						}
 					}
 				}
 			} catch (Throwable ex) {
@@ -904,30 +918,32 @@ public class PrivacyService {
 				if (db == null)
 					return;
 
-				mLock.writeLock().lock();
-				db.beginTransaction();
-				try {
-					if (setting.value == null)
-						db.delete(cTableSetting, "uid=? AND type=? AND name=?",
-								new String[] { Integer.toString(setting.uid), setting.type, setting.name });
-					else {
-						// Create record
-						ContentValues values = new ContentValues();
-						values.put("uid", setting.uid);
-						values.put("type", setting.type);
-						values.put("name", setting.name);
-						values.put("value", setting.value);
-
-						// Insert/update record
-						db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-					}
-
-					db.setTransactionSuccessful();
-				} finally {
+				synchronized (mLock) {
+					mLock.writeLock().lock();
+					db.beginTransaction();
 					try {
-						db.endTransaction();
+						if (setting.value == null)
+							db.delete(cTableSetting, "uid=? AND type=? AND name=?",
+									new String[] { Integer.toString(setting.uid), setting.type, setting.name });
+						else {
+							// Create record
+							ContentValues values = new ContentValues();
+							values.put("uid", setting.uid);
+							values.put("type", setting.type);
+							values.put("name", setting.name);
+							values.put("value", setting.value);
+
+							// Insert/update record
+							db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+						}
+
+						db.setTransactionSuccessful();
 					} finally {
-						mLock.writeLock().unlock();
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.writeLock().unlock();
+						}
 					}
 				}
 
@@ -1022,28 +1038,30 @@ public class PrivacyService {
 				}
 
 				// Execute statement
-				mLock.readLock().lock();
-				db.beginTransaction();
-				try {
+				synchronized (mLock) {
+					mLock.readLock().lock();
+					db.beginTransaction();
 					try {
-						synchronized (stmtGetSetting) {
-							stmtGetSetting.clearBindings();
-							stmtGetSetting.bindLong(1, setting.uid);
-							stmtGetSetting.bindString(2, setting.type);
-							stmtGetSetting.bindString(3, setting.name);
-							String value = stmtGetSetting.simpleQueryForString();
-							if (value != null)
-								result.value = value;
+						try {
+							synchronized (stmtGetSetting) {
+								stmtGetSetting.clearBindings();
+								stmtGetSetting.bindLong(1, setting.uid);
+								stmtGetSetting.bindString(2, setting.type);
+								stmtGetSetting.bindString(3, setting.name);
+								String value = stmtGetSetting.simpleQueryForString();
+								if (value != null)
+									result.value = value;
+							}
+						} catch (SQLiteDoneException ignored) {
 						}
-					} catch (SQLiteDoneException ignored) {
-					}
 
-					db.setTransactionSuccessful();
-				} finally {
-					try {
-						db.endTransaction();
+						db.setTransactionSuccessful();
 					} finally {
-						mLock.readLock().unlock();
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.readLock().unlock();
+						}
 					}
 				}
 
@@ -1072,28 +1090,30 @@ public class PrivacyService {
 				if (db == null)
 					return listSetting;
 
-				mLock.readLock().lock();
-				db.beginTransaction();
-				try {
-					Cursor cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=?",
-							new String[] { Integer.toString(uid) }, null, null, null);
-					if (cursor == null)
-						Util.log(null, Log.WARN, "Database cursor null (settings)");
-					else
-						try {
-							while (cursor.moveToNext())
-								listSetting.add(new PSetting(uid, cursor.getString(0), cursor.getString(1), cursor
-										.getString(2)));
-						} finally {
-							cursor.close();
-						}
-
-					db.setTransactionSuccessful();
-				} finally {
+				synchronized (mLock) {
+					mLock.readLock().lock();
+					db.beginTransaction();
 					try {
-						db.endTransaction();
+						Cursor cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=?",
+								new String[] { Integer.toString(uid) }, null, null, null);
+						if (cursor == null)
+							Util.log(null, Log.WARN, "Database cursor null (settings)");
+						else
+							try {
+								while (cursor.moveToNext())
+									listSetting.add(new PSetting(uid, cursor.getString(0), cursor.getString(1), cursor
+											.getString(2)));
+							} finally {
+								cursor.close();
+							}
+
+						db.setTransactionSuccessful();
 					} finally {
-						mLock.readLock().unlock();
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.readLock().unlock();
+						}
 					}
 				}
 			} catch (Throwable ex) {
@@ -1111,18 +1131,20 @@ public class PrivacyService {
 				if (db == null)
 					return;
 
-				mLock.writeLock().lock();
-				db.beginTransaction();
-				try {
-					db.delete(cTableSetting, "uid=?", new String[] { Integer.toString(uid) });
-					Util.log(null, Log.WARN, "Settings deleted uid=" + uid);
-
-					db.setTransactionSuccessful();
-				} finally {
+				synchronized (mLock) {
+					mLock.writeLock().lock();
+					db.beginTransaction();
 					try {
-						db.endTransaction();
+						db.delete(cTableSetting, "uid=?", new String[] { Integer.toString(uid) });
+						Util.log(null, Log.WARN, "Settings deleted uid=" + uid);
+
+						db.setTransactionSuccessful();
 					} finally {
-						mLock.writeLock().unlock();
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.writeLock().unlock();
+						}
 					}
 				}
 
@@ -1146,27 +1168,29 @@ public class PrivacyService {
 				if (db == null || dbUsage == null)
 					return;
 
-				mLock.writeLock().lock();
-				db.beginTransaction();
-				try {
-					db.execSQL("DELETE FROM " + cTableRestriction);
-					db.execSQL("DELETE FROM " + cTableSetting);
-					Util.log(null, Log.WARN, "Database cleared");
-
-					// Reset migrated
-					ContentValues values = new ContentValues();
-					values.put("uid", 0);
-					values.put("type", "");
-					values.put("name", PrivacyManager.cSettingMigrated);
-					values.put("value", Boolean.toString(true));
-					db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-					db.setTransactionSuccessful();
-				} finally {
+				synchronized (mLock) {
+					mLock.writeLock().lock();
+					db.beginTransaction();
 					try {
-						db.endTransaction();
+						db.execSQL("DELETE FROM " + cTableRestriction);
+						db.execSQL("DELETE FROM " + cTableSetting);
+						Util.log(null, Log.WARN, "Database cleared");
+
+						// Reset migrated
+						ContentValues values = new ContentValues();
+						values.put("uid", 0);
+						values.put("type", "");
+						values.put("name", PrivacyManager.cSettingMigrated);
+						values.put("value", Boolean.toString(true));
+						db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+						db.setTransactionSuccessful();
 					} finally {
-						mLock.writeLock().unlock();
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.writeLock().unlock();
+						}
 					}
 				}
 
@@ -1184,18 +1208,20 @@ public class PrivacyService {
 				}
 				Util.log(null, Log.WARN, "Caches cleared");
 
-				mLockUsage.writeLock().lock();
-				dbUsage.beginTransaction();
-				try {
-					dbUsage.execSQL("DELETE FROM " + cTableUsage);
-					Util.log(null, Log.WARN, "Usage database cleared");
-
-					dbUsage.setTransactionSuccessful();
-				} finally {
+				synchronized (mLockUsage) {
+					mLockUsage.writeLock().lock();
+					dbUsage.beginTransaction();
 					try {
-						dbUsage.endTransaction();
+						dbUsage.execSQL("DELETE FROM " + cTableUsage);
+						Util.log(null, Log.WARN, "Usage database cleared");
+
+						dbUsage.setTransactionSuccessful();
 					} finally {
-						mLockUsage.writeLock().unlock();
+						try {
+							dbUsage.endTransaction();
+						} finally {
+							mLockUsage.writeLock().unlock();
+						}
 					}
 				}
 
@@ -1839,23 +1865,26 @@ public class PrivacyService {
 						// Update migration status
 						if (db.getVersion() > 1) {
 							Util.log(null, Log.WARN, "Updating migration status");
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								ContentValues values = new ContentValues();
-								values.put("uid", 0);
-								if (db.getVersion() > 9)
-									values.put("type", "");
-								values.put("name", PrivacyManager.cSettingMigrated);
-								values.put("value", Boolean.toString(true));
-								db.insertWithOnConflict(cTableSetting, null, values, SQLiteDatabase.CONFLICT_REPLACE);
-
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									ContentValues values = new ContentValues();
+									values.put("uid", 0);
+									if (db.getVersion() > 9)
+										values.put("type", "");
+									values.put("name", PrivacyManager.cSettingMigrated);
+									values.put("value", Boolean.toString(true));
+									db.insertWithOnConflict(cTableSetting, null, values,
+											SQLiteDatabase.CONFLICT_REPLACE);
+
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
@@ -1863,26 +1892,27 @@ public class PrivacyService {
 						// Upgrade database if needed
 						if (db.needUpgrade(1)) {
 							Util.log(null, Log.WARN, "Creating database");
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								// http://www.sqlite.org/lang_createtable.html
-								db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
-								db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
-								db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
-								db.execSQL("CREATE UNIQUE INDEX idx_restriction ON restriction(uid, restriction, method)");
-								db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, name)");
-								db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
-								db.setVersion(1);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									// http://www.sqlite.org/lang_createtable.html
+									db.execSQL("CREATE TABLE restriction (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL)");
+									db.execSQL("CREATE TABLE setting (uid INTEGER NOT NULL, name TEXT NOT NULL, value TEXT)");
+									db.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
+									db.execSQL("CREATE UNIQUE INDEX idx_restriction ON restriction(uid, restriction, method)");
+									db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, name)");
+									db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method)");
+									db.setVersion(1);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
-
 						}
 
 						if (db.needUpgrade(2)) {
@@ -1893,217 +1923,236 @@ public class PrivacyService {
 
 						if (db.needUpgrade(3)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								db.execSQL("DELETE FROM usage WHERE method=''");
-								db.setVersion(3);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									db.execSQL("DELETE FROM usage WHERE method=''");
+									db.setVersion(3);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						if (db.needUpgrade(4)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								db.execSQL("DELETE FROM setting WHERE value IS NULL");
-								db.setVersion(4);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									db.execSQL("DELETE FROM setting WHERE value IS NULL");
+									db.setVersion(4);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						if (db.needUpgrade(5)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								db.execSQL("DELETE FROM setting WHERE value = ''");
-								db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
-								db.setVersion(5);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									db.execSQL("DELETE FROM setting WHERE value = ''");
+									db.execSQL("DELETE FROM setting WHERE name = 'Random@boot' AND value = 'false'");
+									db.setVersion(5);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						if (db.needUpgrade(6)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
-								db.setVersion(6);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
+									db.setVersion(6);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						if (db.needUpgrade(7)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								db.execSQL("ALTER TABLE usage ADD COLUMN extra TEXT");
-								db.setVersion(7);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									db.execSQL("ALTER TABLE usage ADD COLUMN extra TEXT");
+									db.setVersion(7);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						if (db.needUpgrade(8)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								db.execSQL("DROP INDEX idx_usage");
-								db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method, extra)");
-								db.setVersion(8);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									db.execSQL("DROP INDEX idx_usage");
+									db.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method, extra)");
+									db.setVersion(8);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						if (db.needUpgrade(9)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								db.execSQL("DROP TABLE usage");
-								db.setVersion(9);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									db.execSQL("DROP TABLE usage");
+									db.setVersion(9);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						if (db.needUpgrade(10)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT");
-								db.execSQL("DROP INDEX idx_setting");
-								db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, type, name)");
-								db.execSQL("UPDATE setting SET type=''");
-								db.setVersion(10);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT");
+									db.execSQL("DROP INDEX idx_setting");
+									db.execSQL("CREATE UNIQUE INDEX idx_setting ON setting(uid, type, name)");
+									db.execSQL("UPDATE setting SET type=''");
+									db.setVersion(10);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						if (db.needUpgrade(11)) {
 							Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
-							mLock.writeLock().lock();
-							db.beginTransaction();
-							try {
-								List<PSetting> listSetting = new ArrayList<PSetting>();
-								Cursor cursor = db.query(cTableSetting, new String[] { "uid", "name", "value" }, null,
-										null, null, null, null);
-								if (cursor != null)
-									try {
-										while (cursor.moveToNext()) {
-											int uid = cursor.getInt(0);
-											String name = cursor.getString(1);
-											String value = cursor.getString(2);
-											if (name.startsWith("Account.") || name.startsWith("Application.")
-													|| name.startsWith("Contact.") || name.startsWith("Template.")) {
-												int dot = name.indexOf('.');
-												String type = name.substring(0, dot);
-												listSetting
-														.add(new PSetting(uid, type, name.substring(dot + 1), value));
-												listSetting.add(new PSetting(uid, "", name, null));
-
-											} else if (name.startsWith("Whitelist.")) {
-												String[] component = name.split("\\.");
-												listSetting.add(new PSetting(uid, component[1], name.replace(
-														component[0] + "." + component[1] + ".", ""), value));
-												listSetting.add(new PSetting(uid, "", name, null));
-											}
-										}
-									} finally {
-										cursor.close();
-									}
-
-								for (PSetting setting : listSetting) {
-									Util.log(null, Log.WARN, "Converting " + setting);
-									if (setting.value == null)
-										db.delete(cTableSetting, "uid=? AND type=? AND name=?",
-												new String[] { Integer.toString(setting.uid), setting.type,
-														setting.name });
-									else {
-										// Create record
-										ContentValues values = new ContentValues();
-										values.put("uid", setting.uid);
-										values.put("type", setting.type);
-										values.put("name", setting.name);
-										values.put("value", setting.value);
-
-										// Insert/update record
-										db.insertWithOnConflict(cTableSetting, null, values,
-												SQLiteDatabase.CONFLICT_REPLACE);
-									}
-								}
-
-								db.setVersion(11);
-								db.setTransactionSuccessful();
-							} finally {
+							synchronized (mLock) {
+								mLock.writeLock().lock();
+								db.beginTransaction();
 								try {
-									db.endTransaction();
+									List<PSetting> listSetting = new ArrayList<PSetting>();
+									Cursor cursor = db.query(cTableSetting, new String[] { "uid", "name", "value" },
+											null, null, null, null, null);
+									if (cursor != null)
+										try {
+											while (cursor.moveToNext()) {
+												int uid = cursor.getInt(0);
+												String name = cursor.getString(1);
+												String value = cursor.getString(2);
+												if (name.startsWith("Account.") || name.startsWith("Application.")
+														|| name.startsWith("Contact.") || name.startsWith("Template.")) {
+													int dot = name.indexOf('.');
+													String type = name.substring(0, dot);
+													listSetting.add(new PSetting(uid, type, name.substring(dot + 1),
+															value));
+													listSetting.add(new PSetting(uid, "", name, null));
+
+												} else if (name.startsWith("Whitelist.")) {
+													String[] component = name.split("\\.");
+													listSetting.add(new PSetting(uid, component[1], name.replace(
+															component[0] + "." + component[1] + ".", ""), value));
+													listSetting.add(new PSetting(uid, "", name, null));
+												}
+											}
+										} finally {
+											cursor.close();
+										}
+
+									for (PSetting setting : listSetting) {
+										Util.log(null, Log.WARN, "Converting " + setting);
+										if (setting.value == null)
+											db.delete(cTableSetting, "uid=? AND type=? AND name=?", new String[] {
+													Integer.toString(setting.uid), setting.type, setting.name });
+										else {
+											// Create record
+											ContentValues values = new ContentValues();
+											values.put("uid", setting.uid);
+											values.put("type", setting.type);
+											values.put("name", setting.name);
+											values.put("value", setting.value);
+
+											// Insert/update record
+											db.insertWithOnConflict(cTableSetting, null, values,
+													SQLiteDatabase.CONFLICT_REPLACE);
+										}
+									}
+
+									db.setVersion(11);
+									db.setTransactionSuccessful();
 								} finally {
-									mLock.writeLock().unlock();
+									try {
+										db.endTransaction();
+									} finally {
+										mLock.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						Util.log(null, Log.WARN, "Running VACUUM");
-						mLock.writeLock().lock();
-						try {
-							db.execSQL("VACUUM");
-						} catch (Throwable ex) {
-							Util.bug(null, ex);
-						} finally {
-							mLock.writeLock().unlock();
+						synchronized (mLock) {
+							mLock.writeLock().lock();
+							try {
+								db.execSQL("VACUUM");
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+							} finally {
+								mLock.writeLock().unlock();
+							}
 						}
 
 						Util.log(null, Log.WARN, "Database version=" + db.getVersion());
@@ -2156,30 +2205,34 @@ public class PrivacyService {
 						// Upgrade database if needed
 						if (dbUsage.needUpgrade(1)) {
 							Util.log(null, Log.WARN, "Creating usage database");
-							mLockUsage.writeLock().lock();
-							dbUsage.beginTransaction();
-							try {
-								dbUsage.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, extra TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
-								dbUsage.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method, extra)");
-								dbUsage.setVersion(1);
-								dbUsage.setTransactionSuccessful();
-							} finally {
+							synchronized (mLockUsage) {
+								mLockUsage.writeLock().lock();
+								dbUsage.beginTransaction();
 								try {
-									dbUsage.endTransaction();
+									dbUsage.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, extra TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
+									dbUsage.execSQL("CREATE UNIQUE INDEX idx_usage ON usage(uid, restriction, method, extra)");
+									dbUsage.setVersion(1);
+									dbUsage.setTransactionSuccessful();
 								} finally {
-									mLockUsage.writeLock().unlock();
+									try {
+										dbUsage.endTransaction();
+									} finally {
+										mLockUsage.writeLock().unlock();
+									}
 								}
 							}
 						}
 
 						Util.log(null, Log.WARN, "Running VACUUM");
-						mLockUsage.writeLock().lock();
-						try {
-							dbUsage.execSQL("VACUUM");
-						} catch (Throwable ex) {
-							Util.bug(null, ex);
-						} finally {
-							mLockUsage.writeLock().unlock();
+						synchronized (mLockUsage) {
+							mLockUsage.writeLock().lock();
+							try {
+								dbUsage.execSQL("VACUUM");
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
+							} finally {
+								mLockUsage.writeLock().unlock();
+							}
 						}
 
 						Util.log(null, Log.WARN, "Changing to asynchronous mode");
