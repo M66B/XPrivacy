@@ -15,11 +15,13 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.10 TEST**
+
 * Fixed multi threaded database access (for some ROMs this happens sometimes)
 * Added option to globally enable/disable update notifications
 * *getDeviceId* and *getSubscriberId* will automatically restrict *getPhoneType*, thanks @[Phylon](https://github.com/Phylon) for the suggestion
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.9 BETA**
 
