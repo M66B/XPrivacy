@@ -15,8 +15,9 @@ Changelog
 
 **Next release**
 
-* Always notify *Restricted by ...* (disabled client side caching)
 * Fixed application specific settings ([issue](/../../issues/1596))
+* Always notify *Restricted by ...* (disabled client side caching)
+* Hide application notifications settings when global setting disabled
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
