@@ -15,11 +15,13 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.11 BETA**
+
 * Fixed application specific settings ([issue](/../../issues/1596))
 * Always notify *Restricted by ...* (disabled client side caching)
 * Hide application notifications settings when global setting disabled
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.10 TEST**
 
