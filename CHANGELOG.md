@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Always notify *Restricted by ...* (disabled client side caching)
+* Fixed application specific settings ([issue](/../../issues/1596))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
