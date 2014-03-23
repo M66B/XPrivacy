@@ -117,7 +117,8 @@ public class XContentResolver extends XHook {
 			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
 			Util.log(this, Log.INFO, "Before uri=" + uri);
 
-			if (uri.startsWith("content://com.android.contacts/contacts/name_phone_or_email")) {
+			if (uri.startsWith("content://com.android.contacts/contacts_list")
+					|| uri.startsWith("content://com.android.contacts/contacts/name_phone_or_email")) {
 				// Do nothing
 
 			} else if (uri.startsWith("content://com.android.contacts/contacts")
@@ -204,7 +205,9 @@ public class XContentResolver extends XHook {
 						}
 				}
 
-			} else if (uri.startsWith("content://com.android.contacts/contacts/name_phone_or_email")) {
+			} else if (uri.startsWith("content://com.android.contacts/contacts_list")
+					|| uri.startsWith("content://com.android.contacts/contacts/name_phone_or_email")) {
+
 				// Do nothing
 
 			} else if (uri.startsWith("content://com.android.contacts/contacts")
