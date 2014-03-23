@@ -408,14 +408,22 @@ If an application has requested Android permissions for a data category,
 the category will be marked with a green key icon.
 If an application has used or tried to use data, the data category will be marked with an orange warning triangle icon.
 If an application has internet permissions, a world globe icon will be shown.
-These icons are just a guideline because an application can still access some privacy sensitive data without Android permissions, such as your device's serial number, and because it is not possible to monitor data usage in each and every situation, such as access to the internet or the external storage.
+These icons are just a guideline because an application can still access some privacy sensitive data without Android permissions,
+such as your device's serial number, and because it is not possible to monitor data usage in each and every situation,
+such as access to the internet or the external storage.
 Be aware that an application can still access the internet through other (sister) applications.
 
-Restricting internet or storage means blocking access to the internet and to external storage (typically the SD card), respectively. Either of these may result in error messages and even cause applications to force close (crash).
+Restricting internet or storage means blocking access to the internet and to external storage (typically the SD card), respectively.
+Either of these may result in error messages and even cause applications to force close (crash).
 
-Category and function restrictions considered dangerous are marked with a reddish background color. These dangerous categories and functions are more likely to cause applications to crash if you restrict them.
+Function restrictions considered dangerous are marked with a reddish background color.
+These dangerous functions are more likely to cause applications to crash if you restrict them.
 
-Global settings and application specific settings are accessible from the application list's menu and from the menu of the application's detailed view. The global settings, such as randomized or set latitude/longitude, apply to all applications unless you override them with specific application settings. But saving an empty set of specific application settings (you can use the clear button)
+Global settings and application specific settings are accessible from the application list's menu
+and from the menu of the application's detailed view. The global settings,
+such as randomized or set latitude/longitude, apply to all applications
+unless you override them with specific application settings.
+But saving an empty set of specific application settings (you can use the clear button)
 will erase all application specific settings so that the global settings will again be in force.
 
 The restrictions template (in the main menu) is applied automatically to newly installed applications
