@@ -206,7 +206,7 @@
     <string name="shell_start" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/lang/ProcessBuilder.html#start()">Google documentation</a>]]></string>
     <!-- storage -->
     <string name="storage_media" translatable="false"><![CDATA[Will restrict access to secondary external storage(s) (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)]]></string>
-    <string name="storage_sdcard" translatable="false"><![CDATA[Will restrict access to primary external storage (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)<br /><a href="http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE">Google documentation</a>]]></string>
+    <string name="storage_sdcard" translatable="false"><![CDATA[Will restrict access to primary external storage (<a href="http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/">article</a>)<br /><br /><a href="http://developer.android.com/reference/android/Manifest.permission.html#READ_EXTERNAL_STORAGE">Google documentation</a>]]></string>
     <string name="storage_getExternalStorageState" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/os/Environment.html#getExternalStorageState()">Google documentation</a>]]></string>
     <string name="storage_open" translatable="false"><![CDATA[Will restrict access to files on the SD card (or internal storage for devices without)]]></string>
     <!-- system -->
