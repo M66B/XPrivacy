@@ -78,7 +78,6 @@
 но е невъзможно да се гарантира безпроблемна работа на всякакви устройства при всякакви приложения.
 \n\nИзползвате го на свой собствен риск.</b>\n\nВижте и лиценза:</string>
     <string name="restrict_accounts">Сметки (Google, Facebook и т.н.)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Браузър (отметки/история)</string>
     <string name="restrict_calendar">Календар</string>
     <string name="restrict_calling">Обаждания, SMS, MMS</string>

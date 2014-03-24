@@ -78,7 +78,6 @@
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atď.)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Prehliadač (záložky/história)</string>
     <string name="restrict_calendar">Kalendár</string>
     <string name="restrict_calling">Volanie (telefón, SMS, MMS)</string>

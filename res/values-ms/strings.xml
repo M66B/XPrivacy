@@ -78,7 +78,6 @@
 namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap peranti dan untuk semua applikasi.
 \n\nPenggunaan adalah sepenuhnya di atas risiko sendiri.</b>\n\nLihat juga lesen:</string>
     <string name="restrict_accounts" tools:ignore="UnusedResources">Akaun (Google, Facebook, dll)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser" tools:ignore="UnusedResources">Pelayar (penanda buku/sejarah)</string>
     <string name="restrict_calendar" tools:ignore="UnusedResources">Kalendar</string>
     <string name="restrict_calling" tools:ignore="UnusedResources">Panggilan (telefon, SMS, MMS)</string>

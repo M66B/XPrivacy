@@ -78,7 +78,6 @@
     \n\n請自行承擔使用XPrivacy的可能風險。</b>
     \n\n請參閱說明文件：</string>
     <string name="restrict_accounts">帳戶 (Google, Facebook, etc)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">瀏覽器資訊 (書籤, 記錄)</string>
     <string name="restrict_calendar">行事曆</string>
     <string name="restrict_calling">通話功能 (撥號, 傳送簡訊)</string>

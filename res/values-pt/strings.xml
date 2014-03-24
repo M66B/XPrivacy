@@ -78,7 +78,6 @@
 porém é impossível garantir que irá funcionar sem problemas em todos os dispositivos e com todas as aplicações.
 \n\nO uso desta aplicação é inteiramente por sua conta e risco.</b>\n\nVer também a licença:</string>
     <string name="restrict_accounts">Contas (Google, Facebook, etc)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Navegador (favoritos/histórico)</string>
     <string name="restrict_calendar">Calendário</string>
     <string name="restrict_calling">Chamada (telefone, SMS, MMS)</string>

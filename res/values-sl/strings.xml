@@ -78,7 +78,6 @@
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
     odgovornost</b>\n\nPreberite si tudi licenco:</string>
     <string name="restrict_accounts">Računi (Google, Facebook, itd)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Brskalnik (zaznamki/zgodovina)</string>
     <string name="restrict_calendar">Koledar</string>
     <string name="restrict_calling">Klicanje (telefon, SMS, MMS)</string>

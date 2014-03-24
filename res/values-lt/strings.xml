@@ -78,7 +78,6 @@
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
     <string name="restrict_accounts">Paskyra (Google, Facebook, kita)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Naršyklė (žymės/istorija)</string>
     <string name="restrict_calendar">Kalendorius</string>
     <string name="restrict_calling">Skambučiai (telefonas, SMS, MMS)</string>

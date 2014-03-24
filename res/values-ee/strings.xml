@@ -78,7 +78,6 @@
 kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
 \n\nKasuta ainult omal vastutusel.</b>\n\nSee also the license:</string>
     <string name="restrict_accounts">Kasutajad (Google, Facebook, jne)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Brauser (järjehoidjad/ajalugu)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Helistamine (kõned, SMS, MMS)</string>

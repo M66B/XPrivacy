@@ -78,7 +78,6 @@
     ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa\'t isang aplikasyon. 
 \n\nAng paggamit nito ay ganap na nasa sa iyong pagbabakasakali.</b>\n\nAlamin din ang kanyang lisensiya at sangguni dito sa:</string>
     <string name="restrict_accounts">Mga Accounts (Google, Facebook, at iba pa)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Sa Browser (mga bookmarks/history)</string>
     <string name="restrict_calendar">Sa Kalendaryo</string>
     <string name="restrict_calling">Sa Pagtawag (sa telepono, SMS, MMS)</string>

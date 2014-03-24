@@ -78,7 +78,6 @@
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.
 \n\nUżywasz go całkowicie na własne ryzyko.</b>\n\nZobacz też licencję:</string>
     <string name="restrict_accounts">Konta (Google, Facebook, etc)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Przeglądarka (zakładki/historia)</string>
     <string name="restrict_calendar">Kalendarz</string>
     <string name="restrict_calling">Połączenia (telefoniczne, SMS, MMS)</string>

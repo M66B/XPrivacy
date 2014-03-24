@@ -78,7 +78,6 @@
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
     <string name="restrict_accounts">Conturi (Google, Facebook, etc)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Browser (semne de carte/istorie)</string>
     <string name="restrict_calendar">Calendar</string>
     <string name="restrict_calling">Conversatii (apeluri, SMS, MMS)</string>

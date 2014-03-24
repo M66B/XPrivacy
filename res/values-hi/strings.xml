@@ -78,7 +78,6 @@
 किन्तु वह सभी साधन और सभी application के लिए बरोबर चलेगा उसकी गारंटी देना असंभव है।
 \n\nइसका उपयोग पूरी तरह से आपके अपने जोखिम पर है।</b>\n\nलाइसेंस को भी पढ़े:</string>
     <string name="restrict_accounts">खाता (गूगल, फेसबुक, इत्यादी)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">ब्राउज़र (बुकमार्क्स/वृत्तांत)</string>
     <string name="restrict_calendar">कैलेंडर</string>
     <string name="restrict_calling">कालिंग (फ़ोन, SMS, MMS)</string>

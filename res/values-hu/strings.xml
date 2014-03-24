@@ -78,7 +78,6 @@
 de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön és az összes alkalmazással.
 \n\nCsak saját felelősségre.</b>\n\nNézze meg a licenszet is:</string>
     <string name="restrict_accounts">Fiókok (Google, Facebook, stb.)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Böngésző (könyvjelzők / előzmények)</string>
     <string name="restrict_calendar">Naptár</string>
     <string name="restrict_calling">Hívás (telefon, SMS, MMS)</string>

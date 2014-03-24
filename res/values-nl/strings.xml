@@ -78,7 +78,6 @@
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, enz)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Browser (favorieten/geschiedenis)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Oproepen (bellen, SMS, MMS)</string>

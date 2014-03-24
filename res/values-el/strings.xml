@@ -78,7 +78,6 @@
 ωστόσο, είναι αδύνατο να εγγυηθεί ότι θα λειτουργήσει άψογα σε κάθε συσκευή και για κάθε εφαρμογή.
 \n\nΗ χρήση γίνεται αποκλειστικά με δική σας ευθύνη.</b>\n\nΔείτε επίσης την άδεια:</string>
     <string name="restrict_accounts">Λογαριασμοί (Google, Facebook, κλπ)</string>
-    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Browser (σελιδοδείκτες/ιστορικό)</string>
     <string name="restrict_calendar">Ημερολόγιο</string>
     <string name="restrict_calling">Κλήσεις (τηλέφωνο, SMS, MMS)</string>
