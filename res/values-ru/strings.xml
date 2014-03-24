@@ -78,6 +78,7 @@
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
 \n\nИспользуйте исключительно на свой страх и риск.</b>\n\nСм. также лицензию:</string>
     <string name="restrict_accounts">Учетные записи (Google, Facebook и т.д.)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Браузер (закладки/история)</string>
     <string name="restrict_calendar">Календарь</string>
     <string name="restrict_calling">Инициация звонков, отправка SMS/MMS</string>

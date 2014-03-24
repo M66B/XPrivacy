@@ -78,6 +78,7 @@
 áfach, go bhfuil sé dodhéanta a ráthú go mbeidh sé obair flawless ar gach gléas agus do gach agus gach iarratas.
 \n\nBain úsáid as ar do phriacal féin.</b>\n\nFéach freisin an ceadúnas:</string>
     <string name="restrict_accounts">Cuntais (Google, Facebook, etc)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Brabhsálaí (leabharmharcanna/stair)</string>
     <string name="restrict_calendar">Féilire</string>
     <string name="restrict_calling">Ag glaoch ar (fón, SMS, MMS)</string>

@@ -78,6 +78,7 @@
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
     <string name="restrict_accounts">账户（ Google/Facebook 账户）</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">浏览器（收藏夹/历史）</string>
     <string name="restrict_calendar">日历</string>
     <string name="restrict_calling">通讯（语音呼叫/发送短信/发送彩信）</string>

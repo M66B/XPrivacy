@@ -35,6 +35,7 @@ import android.util.SparseArray;
 public class PrivacyManager {
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
+	public static final String cAnalytics = "analytics";
 	public static final String cBrowser = "browser";
 	public static final String cCalendar = "calendar";
 	public static final String cCalling = "calling";
@@ -60,9 +61,9 @@ public class PrivacyManager {
 	public static final String cView = "view";
 
 	// This should correspond with the above definitions
-	private static final String cRestrictionNames[] = new String[] { cAccounts, cBrowser, cCalendar, cCalling,
-			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cIPC, cLocation, cMedia, cMessages,
-			cNetwork, cNfc, cNotifications, cOverlay, cPhone, cSensors, cShell, cStorage, cSystem, cView };
+	private static final String cRestrictionNames[] = new String[] { cAccounts, cAnalytics, cBrowser, cCalendar,
+			cCalling, cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cIPC, cLocation, cMedia,
+			cMessages, cNetwork, cNfc, cNotifications, cOverlay, cPhone, cSensors, cShell, cStorage, cSystem, cView };
 
 	// Setting names
 	public final static String cSettingSerial = "Serial";
@@ -205,11 +206,12 @@ public class PrivacyManager {
 
 	public static List<Hook> getHooks(String restrictionName) {
 		List<Hook> listMethod = new ArrayList<Hook>();
-		for (String methodName : mMethod.get(restrictionName).keySet()) {
-			Hook md = mMethod.get(restrictionName).get(methodName);
-			if (Build.VERSION.SDK_INT >= md.getSdk())
-				listMethod.add(mMethod.get(restrictionName).get(methodName));
-		}
+		if (mMethod.containsKey(restrictionName))
+			for (String methodName : mMethod.get(restrictionName).keySet()) {
+				Hook md = mMethod.get(restrictionName).get(methodName);
+				if (Build.VERSION.SDK_INT >= md.getSdk())
+					listMethod.add(mMethod.get(restrictionName).get(methodName));
+			}
 		Collections.sort(listMethod);
 		return listMethod;
 	}

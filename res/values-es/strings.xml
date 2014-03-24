@@ -78,6 +78,7 @@
 sin embargo no puedo garantizar que funcione sin ningún fallo para cada dispositivo y aplicación.
 \n\nÚselo bajo su responsabilidad.</b>\n\nVéase también el permiso:</string>
     <string name="restrict_accounts">Cuentas (Google, Facebook, etc)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Navegador (marcadores/historial)</string>
     <string name="restrict_calendar">Calendario</string>
     <string name="restrict_calling">Llamadas (teléfono, SMS, MMS)</string>

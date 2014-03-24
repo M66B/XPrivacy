@@ -78,6 +78,7 @@
 nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a se všemi aplikacemi.
 \n\nPoužívejte pouze na vlastní riziko.</b>\n\nLicence aplikace:</string>
     <string name="restrict_accounts">Účty (Google, Facebook, atd.)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Prohlížeč (záložky/historie)</string>
     <string name="restrict_calendar">Kalendář</string>
     <string name="restrict_calling">Volání (telefon, SMS, MMS)</string>

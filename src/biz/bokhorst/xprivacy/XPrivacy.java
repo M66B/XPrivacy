@@ -180,6 +180,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		} catch (Throwable ignored) {
 		}
 
+		// Analytics
+		try {
+			Class.forName("com.google.analytics.tracking.android.EasyTracker", false, lpparam.classLoader);
+			Util.log(null, Log.WARN, "Hooking analytics for " + lpparam.packageName);
+			hookAll(XAnalytics.getInstances(), lpparam.classLoader, mSecret);
+		} catch (Throwable ignored) {
+		}
+
 		// Google auth
 		try {
 			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, lpparam.classLoader);

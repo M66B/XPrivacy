@@ -77,6 +77,7 @@
     <string name="msg_first"><b>هه ول و ماندو بوونیکی زور دراوه بو دروستکردن و تاقیکردنه وه ی ئه م به رنامه يه به لام له گه ل ئه وه شدا ناتوانين دلنياتان بكه ين له وه ىكه ئه م به رنامه يه بى هه له يه و له سه ر هه موو موبايليك ياخود بو هه ر به رنامه يه ك كار ده كات.
 \n\nته نيا خوت به رپرسیاریت له به کارهینانی ئه م به رنامه يه.</b>\n\nهه روه ها سه يريكى موله تى ريپیدان بکه:</string>
     <string name="restrict_accounts" tools:ignore="UnusedResources">حیسابه کان (گوگل, فه یسبوک, هتد)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser" tools:ignore="UnusedResources">Browser (bookmarks/history)</string>
     <string name="restrict_calendar" tools:ignore="UnusedResources">روژ ژمیر</string>
     <string name="restrict_calling" tools:ignore="UnusedResources">ته له فون کردن (ته له فون,کورته نامه, نامه ی ره نگی)</string>

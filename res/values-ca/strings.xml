@@ -76,6 +76,7 @@
     <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>S\'ha tingut molta cura desenvolupant i provant XPrivacy, però és impossible garantir que funcionarà perfectament a tots els dispositius i per a totes les aplicacions.\n\nUtilitzeu-lo sota el vostre propi risc.</b>\n\nVegeu també la llicència:</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc.)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Navegador (marcadors/historial)</string>
     <string name="restrict_calendar">Calendari</string>
     <string name="restrict_calling">Trucades (telèfon, SMS, MMS)</string>

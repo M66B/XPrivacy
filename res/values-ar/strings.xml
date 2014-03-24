@@ -78,6 +78,7 @@
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
 \n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>
     <string name="restrict_accounts">الحسابات (قوقل , فيسبوك , الخ)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">المتصفح (العلامات,السجل)</string>
     <string name="restrict_calendar">التقويم</string>
     <string name="restrict_calling">المكالمات (الهاتف,الرسائل النصية,رسائل الوسائط)</string>

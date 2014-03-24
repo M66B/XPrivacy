@@ -78,6 +78,7 @@
 どの端末、どのアプリでも動作するという保証はありません。
 \n\n自己責任でお使いください。</b>\n\nライセンスの詳細はこちら:</string>
     <string name="restrict_accounts">アカウント (Google, Facebookなど)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">ブラウザ (お気に入り/履歴)</string>
     <string name="restrict_calendar">カレンダー</string>
     <string name="restrict_calling">通話 (電話, SMS, MMS)</string>
