@@ -341,7 +341,7 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="XPrivacy">
 		<meta name="author" content="M66B">
-		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css" rel="stylesheet" media="screen">
+		<link href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" rel="stylesheet" media="screen">
 		<style type="text/css">
 			body { padding-left: 5px; padding-right: 5px; }
 			th, tr, td { padding: 0px !important; }
@@ -679,7 +679,7 @@
 			<div class="container">
 				<a id="privacy_policy" href="#">Privacy policy</a>
 				<p id="privacy_policy_text" style="display: none;">I will not, under any circumstances whatsoever, give out or sell your information to anyone, unless required by law.</p>
-				<p class="text-muted credit">&copy; 2013-<?php echo date("Y"); ?> <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
+				<p class="text-muted credit">Copyright &copy; 2013-<?php echo date("Y"); ?> by <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
 			</div>
 <?php
 		// Close database connection
@@ -687,8 +687,8 @@
 ?>
 		</div>
 
-		<script src="//code.jquery.com/jquery.js"></script>
-		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.2/js/bootstrap.min.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 		<script>
 			jQuery(document).ready(function($) {
 				$('#details').click(function() {
