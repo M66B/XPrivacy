@@ -80,6 +80,7 @@
 این نرم افزار بر روی تمامی دستگاه ها و در مورد تمامی نرم افزارها وجود ندارد.
 \n\n ریسک استفاده از این نرم افزار بر عهده ی شما می باشد</b>\n\n:همچنین پروانه ی برنامه را مشاهده کنید</string>
     <string name="restrict_accounts">حساب ها (گوگل، فیس بوک و غیره)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">مرورگر (نشانک ها، سابقه)</string>
     <string name="restrict_calendar">تقویم</string>
     <string name="restrict_calling">تماس ها (تلفن، اس ام اس، ام ام اس)</string>

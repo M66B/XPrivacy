@@ -78,6 +78,7 @@
 але не можна гарантувати, що вона буде працювати бездоганно на всіх пристроях та зі всімома програмами.
 \n\nВикористовуйте виключно на свій страх та ризик.</b>\n\nДив. також ліцензію:</string>
     <string name="restrict_accounts">Облікові записи (Google, Facebook і т.д.)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Браузер (закладки/історія)</string>
     <string name="restrict_calendar">Календар</string>
     <string name="restrict_calling">Ініціація дзвінків, відправлення SMS/MMS</string>

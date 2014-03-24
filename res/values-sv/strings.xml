@@ -78,6 +78,7 @@
 Det är emellertid omöjligt att garantera att appen fungerar på alla enheter och appar.
 \n\nAnvänding sker helt på egen risk.</b>\n\nSe också licensen:</string>
     <string name="restrict_accounts">Konton (Google, Facebook, m.fl.)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Webbläsare (bokmärken/historik)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Ringa (telefon, SMS, MMS)</string>

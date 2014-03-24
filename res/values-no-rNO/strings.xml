@@ -76,6 +76,7 @@
     <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>
     <string name="restrict_calling">Ringe (telefon, SMS, MMS)</string>

@@ -78,6 +78,7 @@
 however it is impossible to guarantee it will work flawless on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
     <string name="restrict_accounts">חשבונות (גוגל, פייסבוק, וכו\')</string>
+    <string name="restrict_analytics">Analytics</string>
     <string name="restrict_browser">דפדפן (מועדפים / היסטוריה)</string>
     <string name="restrict_calendar">יומן</string>
     <string name="restrict_calling">שיחות (טלפון, SMS, MMS)</string>

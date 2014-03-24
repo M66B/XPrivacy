@@ -84,6 +84,7 @@
 however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
     <string name="restrict_accounts" tools:ignore="UnusedResources">Accounts (Google, Facebook, etc)</string>
+    <string name="restrict_analytics" tools:ignore="UnusedResources">Analytics</string>
     <string name="restrict_browser" tools:ignore="UnusedResources">Browser (bookmarks/history)</string>
     <string name="restrict_calendar" tools:ignore="UnusedResources">Calendar</string>
     <string name="restrict_calling" tools:ignore="UnusedResources">Calling (phone, SMS, MMS)</string>
