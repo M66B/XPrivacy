@@ -337,7 +337,7 @@ public class XAccountManager extends XHook {
 			if (XAccountManager.this.isAccountAllowed(accountName, accountType, mUid))
 				return bundle;
 			else
-				throw new OperationCanceledException();
+				throw new OperationCanceledException("XPrivacy");
 		}
 
 		@Override
@@ -349,7 +349,7 @@ public class XAccountManager extends XHook {
 			if (XAccountManager.this.isAccountAllowed(accountName, accountType, mUid))
 				return bundle;
 			else
-				throw new OperationCanceledException();
+				throw new OperationCanceledException("XPrivacy");
 		}
 
 		@Override
