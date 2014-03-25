@@ -41,7 +41,7 @@
     <string name="menu_accounts">設定允許存取之帳戶</string>
     <string name="menu_applications">設定允許存取之app</string>
     <string name="menu_contacts">設定允許存取之聯絡人</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">設定白名單</string>
     <string name="menu_tutorial">說明</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">關閉</string>
@@ -72,8 +72,8 @@
     <string name="msg_upgrading" formatted="false">正在更新 %s</string>
     <string name="msg_support_info">發生程式內部錯誤，請問是否傳送錯誤報告?</string>
     <string name="msg_restrictedby">已被 XPrivacy 限制權限</string>
-    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
-    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
+    <string name="msg_service_missing">找不到 XPrivacy 服務。請確認已經在 Xposed installer 中啟用 XPrivacy 模組，並且重新開機。</string>
+    <string name="msg_service_version">XPrivacy 服務版本不符。請確認在更新 XPrivacy 後有重新開機。</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
     \n\n請自行承擔使用XPrivacy的可能風險。</b>
     \n\n請參閱說明文件：</string>
@@ -132,10 +132,10 @@
     <string name="title_pleasesubmit">稍後請上傳您的設定到社群網路利人利己 :)</string>
     <string name="title_permissions">權限</string>
     <string name="title_set_restrict">限制</string>
-    <string name="title_template_category">Apply template (categories)</string>
-    <string name="title_template_full">Apply template (categories+functions)</string>
-    <string name="title_enable_ondemand">Enable on demand restricting</string>
-    <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_template_category">套用預設規則 (僅大分類)</string>
+    <string name="title_template_full">套用預設規則 (分類及功能)</string>
+    <string name="title_enable_ondemand">開啟互動式限制</string>
+    <string name="title_disable_ondemand">關閉互動式限制</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>
@@ -161,7 +161,7 @@
     <string name="settings_https">使用加密連線 (HTTPS)</string>
     <string name="settings_syscomponents">可限制安卓系統元件(需重新啟動)</string>
     <string name="settings_usagedata">開啟操作記錄(需重新啟動)</string>
-    <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_parameters">顯示細部操作紀錄參數</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">長按程式名稱可選取</string>
