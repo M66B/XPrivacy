@@ -402,7 +402,16 @@ To see restriction in action, try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 or try restriction the category *Contacts* for the Contacts application.
 
-**Applying some restrictions require restarting applications and/or your device**
+**Applying some restrictions require restarting applications**
+
+You can turn on and off all restrictions for an application using the on/off switch.
+
+Since version 1.99 you can also restrict on demand.
+Restricting on demand is the default for newly installed applications.
+You can turn on and off restricting on demand in the application details view
+using either the settings or the check box next to the on/off switch.
+You can turn on and off restricting on demand for individual categories and functions
+using the second row of check boxes.
 
 If an application has requested Android permissions for a data category,
 the category will be marked with a green key icon.
