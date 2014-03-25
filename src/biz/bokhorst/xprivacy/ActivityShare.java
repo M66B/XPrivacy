@@ -1122,7 +1122,7 @@ public class ActivityShare extends ActivityBase {
 						PrivacyManager.setRestriction(uid, restrictionName, methodName, restricted, asked);
 					}
 				} else
-					Util.log(null, Log.ERROR, "Unknown element name=" + qName);
+					Util.log(null, Log.WARN, "Unknown element name=" + qName);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
