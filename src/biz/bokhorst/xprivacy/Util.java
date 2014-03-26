@@ -34,7 +34,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.os.RemoteException;
-import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
@@ -195,7 +194,8 @@ public class Util {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 			try {
 				// UserHandle: public static final int getAppId(int uid)
-				Method method = (Method) UserHandle.class.getDeclaredMethod("getAppId", int.class);
+				Class<?> clazz = Class.forName("android.os.UserHandle");
+				Method method = (Method) clazz.getDeclaredMethod("getAppId", int.class);
 				uid = (Integer) method.invoke(null, uid);
 			} catch (Throwable ex) {
 				Util.log(null, Log.WARN, ex.toString());
@@ -210,7 +210,8 @@ public class Util {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 				try {
 					// UserHandle: public static final int getUserId(int uid)
-					Method method = (Method) UserHandle.class.getDeclaredMethod("getUserId", int.class);
+					Class<?> clazz = Class.forName("android.os.UserHandle");
+					Method method = (Method) clazz.getDeclaredMethod("getUserId", int.class);
 					userId = (Integer) method.invoke(null, uid);
 				} catch (Throwable ex) {
 					Util.log(null, Log.WARN, ex.toString());
