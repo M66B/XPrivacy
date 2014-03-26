@@ -705,7 +705,7 @@ Note: by default, categories and functions are filtered by permission, so you ma
 <a name="FAQ29"></a>
 **(29) Why doesn't the  pro enabler make all pro features available?**
 
-The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) is in the Play Store by request of some early XPrivacy users. In the beginning, there was just one pro feature: export and import all restrictions and settings. Later, fetching [crowd sourced restrictions](http://crowd.xprivacy.eu/) was added as a pro feature. Processing the crowd sourced restrictions requires a big server that has to be paid for. The pro enabler's low price (don't forget Google takes 30%) prevented providing this feature for free. Looking back, I would never have added the pro enabler to the Play Store, but I can no longer remove it because of the existing users. Moreover, not everybody has access to PayPal or Bitcoin and not everybody needs all pro features, so for these people the pro enabler is still of use.
+The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) is in the Play Store by request of some early XPrivacy users. In the beginning, there was just one pro feature: export and import all restrictions and settings. Later, fetching [crowd sourced restrictions](http://crowd.xprivacy.eu/) was added as a pro feature. Processing the crowd sourced restrictions requires a big server that has to be paid for. The pro enabler's low price (don't forget Google takes 30%) prevented providing this feature for free. Looking back, I would never have added the pro enabler to the Play Store, but I can no longer remove it because of the existing users. Moreover, not everybody has access to PayPal and not everybody needs all pro features, so for these people the pro enabler is still of use.
 
 <a name="FAQ30"></a>
 **(30) What should I do if an application force closes (crashes)?**
@@ -770,7 +770,7 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 No, the pro license can be used independently.
 
 <a name="FAQ36"></a>
-**(36) Is PayPal/Bitcoin the only way to donate?**
+**(36) Is PayPal the only way to donate?**
 
 Yes, it is not feasible to add other donation methods at the moment.
 
