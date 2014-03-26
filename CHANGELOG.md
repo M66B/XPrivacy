@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Updated embedded documentation
+* Fixed some minor issues reported by support info
 * Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
