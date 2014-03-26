@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Fixed XPrivacy not being activated below JellyBean MR1 (SDK 17) ([issue](/../../issues/1602))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.12 STABLE**
