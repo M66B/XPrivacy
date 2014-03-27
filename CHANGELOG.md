@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fixed XPrivacy not being activated below JellyBean MR1 (SDK 17) ([issue](/../../issues/1602))
+* Reverted "Fixed multi threaded database access", since it leads to freezes on some ROMs
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
