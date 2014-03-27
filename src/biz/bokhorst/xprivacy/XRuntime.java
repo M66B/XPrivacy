@@ -66,12 +66,12 @@ public class XRuntime extends XHook {
 			if (progs != null) {
 				String command = TextUtils.join(" ", progs);
 				if (matches(command, mCommand) && isRestrictedExtra(param, command))
-					param.setThrowable(new IOException());
+					param.setThrowable(new IOException("XPrivacy"));
 			}
 
 		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
 			if (isRestrictedExtra(param, (String) param.args[0]))
-				param.setThrowable(new UnsatisfiedLinkError());
+				param.setThrowable(new UnsatisfiedLinkError("XPrivacy"));
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
