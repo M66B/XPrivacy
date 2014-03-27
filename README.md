@@ -90,14 +90,14 @@ OR
 
 **Using XPrivacy is entirely at your own risk**
 
-<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png" width="350" hspace="5"/>
-<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png" width="350" hspace="5"/>
-<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png" width="350" hspace="5"/>
-<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/expert.png" width="350" hspace="5"/>
-<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png" width="350" hspace="5"/>
-<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/settings.png" width="350" hspace="5"/>
-<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/usagedata.png" width="350" hspace="5"/>
-<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/menu.png" width="350" hspace="5"/>
+<img src="screenshots/applications.png" width="350" hspace="5"/>
+<img src="screenshots/categories.png" width="350" hspace="5"/>
+<img src="screenshots/application.png" width="350" hspace="5"/>
+<img src="screenshots/expert.png" width="350" hspace="5"/>
+<img src="screenshots/help.png" width="350" hspace="5"/>
+<img src="screenshots/settings.png" width="350" hspace="5"/>
+<img src="screenshots/usagedata.png" width="350" hspace="5"/>
+<img src="screenshots/menu.png" width="350" hspace="5"/>
 
 Features
 --------
