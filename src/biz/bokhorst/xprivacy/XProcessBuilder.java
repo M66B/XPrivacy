@@ -44,7 +44,7 @@ public class XProcessBuilder extends XHook {
 			if (listProg != null) {
 				String command = TextUtils.join(" ", listProg);
 				if (XRuntime.matches(command, mCommand) && isRestrictedExtra(param, command))
-					param.setThrowable(new IOException());
+					param.setThrowable(new IOException("XPrivacy"));
 			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + methodName);
