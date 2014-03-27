@@ -90,6 +90,15 @@ OR
 
 **Using XPrivacy is entirely at your own risk**
 
+<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png" width="350" hspace="5"/>
+<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png" width="350" hspace="5"/>
+<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png" width="350" hspace="5"/>
+<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/expert.png" width="350" hspace="5"/>
+<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png" width="350" hspace="5"/>
+<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/settings.png" width="350" hspace="5"/>
+<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/usagedata.png" width="350" hspace="5"/>
+<img src="https://raw.github.com/M66B/XPrivacy/master/screenshots/menu.png" width="350" hspace="5"/>
+
 ![Applications](https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png)
 ![Categories](https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png)
 ![Application](https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png)
