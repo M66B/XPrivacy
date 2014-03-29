@@ -17,6 +17,8 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+* Fixed restricting profile (owner name, etc) ([issue](/../../issues/1610))
+
 **Version 2.0.13 TEST**
 
 * Fixed error message for Android versions below JellyBean MR1 (SDK 17) ([issue](/../../issues/1602))

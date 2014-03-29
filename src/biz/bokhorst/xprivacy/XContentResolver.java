@@ -213,7 +213,7 @@ public class XContentResolver extends XHook {
 				String[] components = uri.replace("content://com.android.", "").split("/");
 				String methodName = components[0] + "/" + components[1].split("\\?")[0];
 				if (methodName.equals("contacts/contacts") || methodName.equals("contacts/data")
-						|| methodName.equals("contacts/phone_lookup") || methodName.equals("contacts/raw_contacts"))
+						|| methodName.equals("contacts/phone_lookup") || methodName.equals("contacts/raw_contacts")) {
 					if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
 						// Get ID from URL if any
 						int urlid = -1;
@@ -254,6 +254,22 @@ public class XContentResolver extends XHook {
 						param.setResult(result);
 						cursor.close();
 					}
+				} else {
+					methodName = null;
+					if (uri.startsWith("content://com.android.contacts/profile"))
+						methodName = "contacts/profile";
+					else
+						methodName = "ContactsProvider2"; // fall-back
+
+					if (methodName != null)
+						if (isRestrictedExtra(param, PrivacyManager.cContacts, methodName, uri)) {
+							// Return empty cursor
+							MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
+							result.respond(cursor.getExtras());
+							param.setResult(result);
+							cursor.close();
+						}
+				}
 
 			} else {
 				// Other uri restrictions
@@ -277,16 +293,6 @@ public class XContentResolver extends XHook {
 				else if (uri.startsWith("content://contacts/people")) {
 					restrictionName = PrivacyManager.cContacts;
 					methodName = "contacts/people";
-				}
-
-				else if (uri.startsWith("content://com.android.contacts/profile")) {
-					restrictionName = PrivacyManager.cContacts;
-					methodName = "contacts/profile";
-				}
-
-				else if (uri.startsWith("content://com.android.contacts")) {
-					restrictionName = PrivacyManager.cContacts;
-					methodName = "ContactsProvider2"; // fall-back
 				}
 
 				else if (uri.startsWith("content://downloads")) {
