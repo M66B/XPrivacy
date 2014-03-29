@@ -182,6 +182,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		} catch (Throwable ignored) {
 		}
 
+		// User activity
+		try {
+			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, lpparam.classLoader);
+			hookAll(XActivityRecognitionClient.getInstances(), lpparam.classLoader, mSecret);
+		} catch (Throwable ignored) {
+		}
+
 		// Google auth
 		try {
 			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, lpparam.classLoader);

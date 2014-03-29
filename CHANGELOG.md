@@ -17,6 +17,7 @@ Changelog
 
 * Fixed error message for Android versions below JellyBean MR1 (SDK 17) ([issue](/../../issues/1602))
 * Reverted "Fixed multi threaded database access", since it leads to freezes on some ROMs
+* Added restriction for [activity recognition](http://developer.android.com/training/location/activity-recognition.html) ([issue](/../../issues/1608))
 * Updated Arabic translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
