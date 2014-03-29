@@ -8,7 +8,7 @@
     <string name="app_description">مدير الخصوصية الرئيسي</string>
     <string name="app_xversion" formatted="false">إطار  Xposed نسخة : %d</string>
     <string name="app_copyright">حقوق الطبع \u00A9 2013–2014 ل M. Bokhorst (M66B)\u200E</string>
-    <string name="app_licensed">License found, thanks for your support!</string>
+    <string name="app_licensed">الترخيص موجود، شكرا لدعمكم!</string>
     <string name="menu_usage">الإستخدام</string>
     <string name="menu_refresh">إنعاش</string>
     <string name="menu_settings">الإعدادات</string>
@@ -41,7 +41,7 @@
     <string name="menu_applications">إختر التطبيقات التي تود تمكينها</string>
     <string name="menu_accounts">إختر الحسابات التي تود تمكينها</string>
     <string name="menu_contacts">إختر الأسماء التي تود تمكينها</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">إدارة القوائم البيضاء</string>
     <string name="menu_tutorial">تعليمي</string>
     <string name="menu_exclude">إستبعاد</string>
     <string name="menu_close">إغلاق</string>
@@ -72,7 +72,7 @@
     <string name="msg_upgrading" formatted="false">ترقية %s</string>
     <string name="msg_support_info">فشل الفحص الداخلي, هل تريد إرسال معلومات الدعم؟</string>
     <string name="msg_restrictedby">تم التقييد بواسطة XPrivacy</string>
-    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
+    <string name="msg_service_missing">لم يتم العثور على خدمة الخصوصية; هل قمت بتمكين XPrivacy  في مثبت إكسبوسيد وقمت بإعادة تشغيل جهازك ؟</string>
     <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
@@ -99,13 +99,13 @@
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>
     <string name="restrict_system">النظام (البرامج المنزلة)</string>
     <string name="restrict_view">تصفح (المتصفح)</string>
-    <string name="whitelist_ipaddress">IP addresses</string>
+    <string name="whitelist_ipaddress">عناوين الآيبي</string>
     <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_filename">File names</string>
-    <string name="whitelist_command">Shell commands</string>
-    <string name="whitelist_url">URLs</string>
+    <string name="whitelist_filename">أسماء الملفات</string>
+    <string name="whitelist_command">أوامر شل</string>
+    <string name="whitelist_url">عناوين URL</string>
     <string name="title_restrict">إختر للتقيد:</string>
-    <string name="title_check_whitelist">Check to allow:</string>
+    <string name="title_check_whitelist">إختر للتمكين:</string>
     <string name="title_fused">التصفية حسب استخدام البيانات</string>
     <string name="title_finternet">التصفية حسب الوصول للإنترنت</string>
     <string name="title_fpermission">التصفية حسب الأُذونات</string>
@@ -126,14 +126,14 @@
     <string name="title_parameters">مدخلات:</string>
     <string name="title_applycat">تطبيق على الفئة بأكملها</string>
     <string name="title_once">مرة واحدة ل %s ثانية</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_whitelist">القائمة البيضاء \'%s\'</string>
     <string name="title_allow">تمكين</string>
     <string name="title_deny">منع</string>
     <string name="title_pleasesubmit">الرجاء إرسال القيود لمساعدة الآخرين</string>
-    <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
-    <string name="title_template_category">Apply template (categories)</string>
-    <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_permissions">الأذونات</string>
+    <string name="title_set_restrict">تقييد</string>
+    <string name="title_template_category">تطبيق القالب (الفئات)</string>
+    <string name="title_template_full">تطبيق القالب (الفئات+الوظائف)</string>
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="settings_serial">السيريال#</string>
