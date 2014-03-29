@@ -90,14 +90,14 @@ OR
 
 **Using XPrivacy is entirely at your own risk**
 
-![Applications](https://raw.github.com/M66B/XPrivacy/master/screenshots/applications.png)
-![Categories](https://raw.github.com/M66B/XPrivacy/master/screenshots/categories.png)
-![Application](https://raw.github.com/M66B/XPrivacy/master/screenshots/application.png)
-![Expert](https://raw.github.com/M66B/XPrivacy/master/screenshots/expert.png)
-![Help](https://raw.github.com/M66B/XPrivacy/master/screenshots/help.png)
-![Settings](https://raw.github.com/M66B/XPrivacy/master/screenshots/settings.png)
-![Usage data](https://raw.github.com/M66B/XPrivacy/master/screenshots/usagedata.png)
-![Menu](https://raw.github.com/M66B/XPrivacy/master/screenshots/menu.png)
+<img src="screenshots/applications.png" width="350" hspace="5"/>
+<img src="screenshots/categories.png" width="350" hspace="5"/>
+<img src="screenshots/application.png" width="350" hspace="5"/>
+<img src="screenshots/expert.png" width="350" hspace="5"/>
+<img src="screenshots/help.png" width="350" hspace="5"/>
+<img src="screenshots/settings.png" width="350" hspace="5"/>
+<img src="screenshots/usagedata.png" width="350" hspace="5"/>
+<img src="screenshots/menu.png" width="350" hspace="5"/>
 
 Features
 --------
