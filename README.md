@@ -202,7 +202,7 @@ For easy usage, data is restricted by category:
 		* Cell location changed
 	* prevent sending extra commands (aGPS data)
 	* return an empty list of Wi-Fi scan results
-	* prevents connecting to Google Play services
+	* prevent [activity recognition](http://developer.android.com/training/location/activity-recognition.html)
 <a name="media"></a>
 * Media
 	* prevent recording audio
