@@ -17,6 +17,8 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 2.0.14 STABLE**
+
 * Fixed restricting profile (owner name, etc) ([issue](/../../issues/1610))
 
 **Version 2.0.13 TEST**
