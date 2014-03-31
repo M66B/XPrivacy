@@ -858,6 +858,9 @@ I have really spent a lot of time developing XPrivacy and I am happy to look int
 but I am asking you to properly document your issue.
 *It doesn't work* or *it crashes* is insufficient.
 So, please describe the exact steps to reproduce the problem and/or provide a logcat.
+
+If you requested a new feature: there is a feature stop since version 2.x.
+
 See [here](https://github.com/M66B/XPrivacy#support) for more details.
 
 <a name="FAQ53"></a>
@@ -922,7 +925,7 @@ and include information about your device type, Android and XPrivacy version.
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-Note that there is a stop on big new features, read [here](http://forum.xda-developers.com/showpost.php?p=50535073&postcount=7547) for more information.
+Note that there is a feature stop, read [here](http://forum.xda-developers.com/showpost.php?p=50535073&postcount=7547) for more information.
 
 **One feature request per issue please!**
 
