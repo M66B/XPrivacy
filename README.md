@@ -331,6 +331,9 @@ and is reported to work with most Android variants, including stock ROMs.
 
 **XPrivacy is not compatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231))
 
+XPrivacy seems not to be compatible with [OLYMPUS Image Share](https://play.google.com/store/apps/details?id=jp.olympusimaging.oishare)
+for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1607)).
+
 Installation
 ------------
 
