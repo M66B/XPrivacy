@@ -90,14 +90,24 @@ OR
 
 **Using XPrivacy is entirely at your own risk**
 
-<img src="screenshots/applications.png" width="350" hspace="5"/>
-<img src="screenshots/categories.png" width="350" hspace="5"/>
-<img src="screenshots/application.png" width="350" hspace="5"/>
-<img src="screenshots/expert.png" width="350" hspace="5"/>
-<img src="screenshots/help.png" width="350" hspace="5"/>
-<img src="screenshots/settings.png" width="350" hspace="5"/>
-<img src="screenshots/usagedata.png" width="350" hspace="5"/>
-<img src="screenshots/menu.png" width="350" hspace="5"/>
+<img src="screenshots/about.png" width="232" hspace="4"/>
+<img src="screenshots/help.png" width="232" hspace="4"/>
+<img src="screenshots/menu.png" width="232" hspace="4"/>
+<img src="screenshots/sort.png" width="232" hspace="4"/>
+<img src="screenshots/filter.png" width="232" hspace="4"/>
+<img src="screenshots/template.png" width="232" hspace="4"/>
+<img src="screenshots/categories.png" width="232" hspace="4"/>
+<img src="screenshots/applications.png" width="232" hspace="4"/>
+<img src="screenshots/toggle.png" width="232" hspace="4"/>
+<img src="screenshots/application.png" width="232" hspace="4"/>
+<img src="screenshots/expert.png" width="232" hspace="4"/>
+<img src="screenshots/expert-2.png" width="232" hspace="4"/>
+<img src="screenshots/settings.png" width="232" hspace="4"/>
+<img src="screenshots/settings-2.png" width="232" hspace="4"/>
+<img src="screenshots/settings-3.png" width="232" hspace="4"/>
+<img src="screenshots/usagedata.png" width="232" hspace="4"/>
+<img src="screenshots/on-demand-dialogue.png" width="232" hspace="4"/>
+<img src="screenshots/whitelist.png" width="232" hspace="4"/>
 
 Features
 --------
