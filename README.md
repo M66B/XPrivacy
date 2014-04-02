@@ -925,7 +925,8 @@ and include information about your device type, Android and XPrivacy version.
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-Note that there is a feature stop, read [here](http://forum.xda-developers.com/showpost.php?p=50535073&postcount=7547) for more information.
+New features are only implemented when requested on GitHub with a detailed description of the feature and only if there are ten +1's.
+See [here](http://forum.xda-developers.com/showpost.php?p=51574315&postcount=8776) for some more information.
 
 **One feature request per issue please!**
 
