@@ -344,6 +344,8 @@ and is reported to work with most Android variants, including stock ROMs.
 XPrivacy seems not to be compatible with [OLYMPUS Image Share](https://play.google.com/store/apps/details?id=jp.olympusimaging.oishare)
 for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1607)).
 
+XPrivacy seems to cause camera lag on a Samsung Galaxy Note II ([issue](https://github.com/M66B/XPrivacy/issues/715))
+
 Installation
 ------------
 
