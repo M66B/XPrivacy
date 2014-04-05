@@ -37,7 +37,7 @@
     <string name="menu_app_launch">Uruchom</string>
     <string name="menu_app_settings">Ustawienia</string>
     <string name="menu_app_store">Sklep Play</string>
-    <string name="menu_app_kill">Zabij</string>
+    <string name="menu_app_kill">Zatrzymaj</string>
     <string name="menu_accounts">Wybierz dozwolone konta</string>
     <string name="menu_applications">Wybierz dozwolone aplikacje</string>
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
@@ -72,8 +72,8 @@
     <string name="msg_upgrading" formatted="false">Aktualizacja %s</string>
     <string name="msg_support_info">Wewnętrzna kontrola się nie powiodła. Czy chcesz wysłać informacje do supportu?</string>
     <string name="msg_restrictedby">Ograniczone przez XPrivacy</string>
-    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
-    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
+    <string name="msg_service_missing">Usługa prywatności nie została znaleziona; czy włączyłeś XPrivacy w instalatorze Xposed oraz uruchomiłeś ponownie urządzenie?</string>
+    <string name="msg_service_version">Inna wersja usługi prywatności; czy uruchomiłeś ponownie urządzenie po aktualizacji XPrivacy?</string>
     <string name="msg_first"><b>Dołożyliśmy wszelkich starań podczas programowania i testów XPrivacy.
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.
 \n\nUżywasz go całkowicie na własne ryzyko.</b>\n\nZobacz też licencję:</string>
