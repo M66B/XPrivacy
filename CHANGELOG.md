@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Updated Polish translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.14 STABLE**
