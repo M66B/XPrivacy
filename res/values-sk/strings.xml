@@ -55,16 +55,16 @@
     <string name="msg_saved_to">Uložené do %1$s</string>
     <string name="msg_no_restrictions">Nenájdené žiadne obmedzenia</string>
     <string name="msg_sure">Ste si istý?</string>
-    <string name="msg_select">Vyberte prosím nejaké aplikácie</string>
-    <string name="msg_limit">Vyberte prosím menej než %1$d aplikácií</string>
+    <string name="msg_select">Vyberte, prosím, nejaké aplikácie</string>
+    <string name="msg_limit">Vyberte, prosím, menej než %1$d aplikácií</string>
     <string name="msg_done">Hotovo</string>
     <string name="msg_reboot">Vyžadovaný reštart zariadenia</string>
     <string name="msg_random_now">Náhodné hodnoty</string>
     <string name="msg_random_access">Náhodné hodnoty po prístupe</string>
     <string name="msg_random_boot">Náhodné hodnoty pri štarte zariadenia</string>
     <string name="msg_restart">Vyžadovaný reštart aplikácie</string>
-    <string name="msg_register">Zaregistruje prosím vaše zariadenie</string>
-    <string name="msg_email">Zadajte prosím vašu e-mailovú adresu:</string>
+    <string name="msg_register">Zaregistruje, prosím, vaše zariadenie</string>
+    <string name="msg_email">Zadajte, prosím, vašu e-mailovú adresu:</string>
     <string name="msg_registered">Skontrolujte váš e-mail pre aktiváciu vášho zariadenia</string>
     <string name="msg_service">Aktualizačná služba je spustená</string>
     <string name="msg_migrating">Migrácia %1$s</string>
@@ -72,8 +72,8 @@
     <string name="msg_upgrading">Aktualizácia %1$s</string>
     <string name="msg_support_info">Vnútorná kontrola zlyhala. Chcete odoslať informácie na podporu?</string>
     <string name="msg_restrictedby">Obmedzené pomocou XPrivacy</string>
-    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
-    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
+    <string name="msg_service_missing">Nenájdená služba súkromia; povolili ste XPrivacy v Xposed Inštalátori a vykonali reštart vášho zariadenia?</string>
+    <string name="msg_service_version">Verzia služby súkromia sa nezhoduje; vykonali ste reštart vášho zariadenia po aktualizovaní XPrivacy?</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
@@ -129,7 +129,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_whitelist">Biela listina \'%1$s\'</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
-    <string name="title_pleasesubmit">Odošlite prosím vaše obmedzenia na pomoc ostatným</string>
+    <string name="title_pleasesubmit">Odošlite, prosím, vaše obmedzenia na pomoc ostatným</string>
     <string name="title_permissions">Povolenia</string>
     <string name="title_set_restrict">Obmedziť</string>
     <string name="title_template_category">Použiť šablónu (kategórie)</string>
