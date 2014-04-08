@@ -15,7 +15,6 @@ Changelog
 
 **Next release**
 
-* No allow/deny once for functions that require a restart ([issue](/../../issues/1622))
 * On demand restricting control in application list ([issue](/../../issues/1615))
 * Updated Polish translation
 * Updated Slovak translation

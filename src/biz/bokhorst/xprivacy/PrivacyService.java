@@ -1433,10 +1433,7 @@ public class PrivacyService {
 				tvParameters.setText(restriction.extra);
 
 			cbCategory.setChecked(mSelectCategory);
-			if (hook.isRestartRequired())
-				cbOnce.setEnabled(false);
-			else
-				cbOnce.setChecked(mSelectOnce);
+			cbOnce.setChecked(mSelectOnce);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
 					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
 
