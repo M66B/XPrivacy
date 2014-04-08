@@ -34,6 +34,7 @@ public class RState {
 		if (methodName == null) {
 			if (restrictionName == null) {
 				// Examine the category state
+				someAsk = onDemand;
 				for (String rRestrictionName : PrivacyManager.getRestrictions()) {
 					PRestriction query = PrivacyManager.getRestrictionEx(uid, rRestrictionName, null);
 					allRestricted = (allRestricted && query.restricted);
