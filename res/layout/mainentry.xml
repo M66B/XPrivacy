@@ -16,7 +16,8 @@
         android:id="@+id/llAppType"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:paddingLeft="6dip" >
 
         <ImageView
             android:id="@+id/imgIcon"
@@ -78,8 +79,7 @@
             android:background="@drawable/list_item_pressed"
             android:clickable="true"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
-            android:orientation="horizontal"
-            android:paddingLeft="6dip" >
+            android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/tvName"
@@ -107,7 +107,6 @@
                 android:layout_height="32dip"
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="3dip"
-                android:layout_marginRight="3dip"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -116,8 +115,8 @@
             android:layout_width="32dip"
             android:layout_height="32dip"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dip"
             android:contentDescription="@string/title_restrict"
-            android:paddingLeft="3dip"
             android:visibility="invisible" />
     </LinearLayout>
 

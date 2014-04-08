@@ -1778,9 +1778,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 									@Override
 									protected void onPostExecute(Object result) {
-										// Needed to update children
-										notifyDataSetChanged();
-
+										holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 										holder.pbRunning.setVisibility(View.GONE);
 										holder.imgCbAsk.setVisibility(View.VISIBLE);
 									}
