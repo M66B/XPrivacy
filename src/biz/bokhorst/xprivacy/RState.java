@@ -41,7 +41,7 @@ public class RState {
 					allAsk = (allAsk && !query.asked);
 					someAsk = (someAsk || !query.asked);
 				}
-				asked = !someAsk;
+				asked = !onDemand;
 			} else {
 				// Examine the category/method states
 				PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
