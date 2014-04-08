@@ -15,12 +15,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.15 BETA**
+
 * On demand restricting control in application list ([issue](/../../issues/1615))
 * Updated embedded documentation, thanks @[Phylon](https://github.com/Phylon)
 * Updated Polish translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.14 STABLE**
 
