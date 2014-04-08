@@ -1773,6 +1773,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									@Override
 									protected Object doInBackground(Object... arg0) {
 										rstate.toggleAsked();
+										rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 										return null;
 									}
 
