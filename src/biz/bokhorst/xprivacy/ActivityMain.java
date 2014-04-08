@@ -1595,6 +1595,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			private RState rstate;
 			private boolean gondemand;
 			private boolean ondemand;
+			private boolean dangerous;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
@@ -1622,6 +1623,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					ondemand = (PrivacyManager.isApplication(xAppInfo.getUid()) && (mRestrictionName == null ? true
 							: PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,
 									false)));
+					dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
 
 					// Get if granted
 					granted = true;
@@ -1662,7 +1664,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
 					// Display on demand
-					if (gondemand) {
+					if (gondemand && dangerous) {
 						if (ondemand) {
 							holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 							holder.imgCbAsk.setVisibility(View.VISIBLE);
@@ -1762,7 +1764,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					});
 
 					// Listen for ask changes
-					if (gondemand && ondemand)
+					if (gondemand && dangerous && ondemand)
 						holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
