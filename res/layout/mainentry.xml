@@ -71,9 +71,10 @@
 
         <LinearLayout
             android:id="@+id/llName"
-            android:layout_width="match_parent"
+            android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_weight="1"
             android:background="@drawable/list_item_pressed"
             android:clickable="true"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
@@ -86,7 +87,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                tools:ignore="NestedWeights" />
 
             <ImageView
                 android:id="@+id/imgCbRestricted"
@@ -107,17 +109,16 @@
                 android:layout_marginLeft="3dip"
                 android:layout_marginRight="3dip"
                 android:visibility="gone" />
-
-            <TextView
-                android:id="@+id/tvOnDemand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:text="@string/msg_question"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="bold"
-                android:visibility="invisible" />
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/imgCbAsk"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/title_restrict"
+            android:paddingLeft="3dip"
+            android:visibility="invisible" />
     </LinearLayout>
 
 </LinearLayout>

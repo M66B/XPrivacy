@@ -1563,8 +1563,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public TextView tvName;
 			public ImageView imgCbRestricted;
 			public ProgressBar pbRunning;
-			public TextView tvOnDemand;
 			public LinearLayout llName;
+			public ImageView imgCbAsk;
 
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
@@ -1579,8 +1579,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
-				tvOnDemand = (TextView) row.findViewById(R.id.tvOnDemand);
 				llName = (LinearLayout) row.findViewById(R.id.llName);
+				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 			}
 		}
 
@@ -1593,6 +1593,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			private boolean enabled;
 			private boolean granted;
 			private RState rstate;
+			private boolean gondemand;
 			private boolean ondemand;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
@@ -1617,7 +1618,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							false);
 
 					// Get if on demand
-					ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
+					gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
+					ondemand = (PrivacyManager.isApplication(xAppInfo.getUid()) && (mRestrictionName == null ? true
+							: PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,
+									false)));
 
 					// Get if granted
 					granted = true;
@@ -1658,10 +1662,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
 					// Display on demand
-					if (ondemand)
-						holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
-					else
-						holder.tvOnDemand.setVisibility(View.GONE);
+					if (gondemand) {
+						if (ondemand) {
+							holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+							holder.imgCbAsk.setVisibility(View.VISIBLE);
+						} else
+							holder.imgCbAsk.setVisibility(View.INVISIBLE);
+					} else
+						holder.imgCbAsk.setVisibility(View.GONE);
 
 					// Display usage
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
@@ -1752,6 +1760,35 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							}
 						}
 					});
+
+					// Listen for ask changes
+					if (gondemand && ondemand)
+						holder.imgCbAsk.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								holder.imgCbAsk.setVisibility(View.GONE);
+								holder.pbRunning.setVisibility(View.VISIBLE);
+
+								new AsyncTask<Object, Object, Object>() {
+									@Override
+									protected Object doInBackground(Object... arg0) {
+										rstate.toggleAsked();
+										return null;
+									}
+
+									@Override
+									protected void onPostExecute(Object result) {
+										// Needed to update children
+										notifyDataSetChanged();
+
+										holder.pbRunning.setVisibility(View.GONE);
+										holder.imgCbAsk.setVisibility(View.VISIBLE);
+									}
+								}.executeOnExecutor(mExecutor);
+							}
+						});
+					else
+						holder.imgCbAsk.setClickable(false);
 				}
 			}
 
@@ -1782,8 +1819,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						// Update stored state
 						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-						if (ondemand)
-							holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 
 						// Notify restart
 						if (oldState.contains(true))
@@ -1823,10 +1859,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						// Update restriction display
 						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-
-						// Update on demand
-						if (ondemand)
-							holder.tvOnDemand.setVisibility(rstate.asked ? View.INVISIBLE : View.VISIBLE);
+						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 
 						// Notify restart
 						if (!newState.equals(oldState))
@@ -1893,7 +1926,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
 			holder.imgCbRestricted.setVisibility(View.INVISIBLE);
-			holder.tvOnDemand.setVisibility(View.INVISIBLE);
+			holder.imgCbAsk.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);
 			holder.imgCbRestricted.setEnabled(false);
 			holder.llName.setEnabled(false);
