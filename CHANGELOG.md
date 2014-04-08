@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * On demand restricting control in application list ([issue](/../../issues/1615))
+* Updated embedded documentation, thanks @[Phylon](https://github.com/Phylon)
 * Updated Polish translation
 * Updated Slovak translation
 
