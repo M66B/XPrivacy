@@ -15,6 +15,7 @@ Changelog
 
 **Next release**
 
+* No allow/deny once for functions that require a restart ([issue](/../../issues/1622))
 * Updated Polish translation
 * Updated Slovak translation
 
