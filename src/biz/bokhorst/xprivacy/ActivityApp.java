@@ -1027,7 +1027,7 @@ public class ActivityApp extends ActivityBase {
 
 		@Override
 		public long getGroupId(int groupPosition) {
-			return groupPosition;
+			return groupPosition * 1000;
 		}
 
 		private class GroupViewHolder {
@@ -1264,7 +1264,7 @@ public class ActivityApp extends ActivityBase {
 
 		@Override
 		public long getChildId(int groupPosition, int childPosition) {
-			return childPosition;
+			return groupPosition * 1000 + childPosition;
 		}
 
 		@Override
