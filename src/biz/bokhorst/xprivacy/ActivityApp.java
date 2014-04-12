@@ -2,7 +2,6 @@ package biz.bokhorst.xprivacy;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -239,7 +238,7 @@ public class ActivityApp extends ActivityBase {
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
+		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 		if (restrictionName != null) {
 			int groupPosition = new ArrayList<String>(PrivacyManager.getRestrictions(this).values())
@@ -987,42 +986,20 @@ public class ActivityApp extends ActivityBase {
 
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
 		private ApplicationInfoEx mAppInfo;
-		private String mSelectedRestrictionName;
-		private String mSelectedMethodName;
-		private List<String> mListRestriction;
-		private HashMap<Integer, List<Hook>> mHook;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, String selectedRestrictionName,
-				String selectedMethodName) {
+		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo) {
 			mAppInfo = appInfo;
-			mSelectedRestrictionName = selectedRestrictionName;
-			mSelectedMethodName = selectedMethodName;
-			mListRestriction = new ArrayList<String>();
-			mHook = new LinkedHashMap<Integer, List<Hook>>();
-
-			int userId = Util.getUserId(Process.myUid());
-			boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false, false);
-			boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, false,
-					false);
-
-			for (String rRestrictionName : PrivacyManager.getRestrictions(ActivityApp.this).values()) {
-				boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), rRestrictionName, null) > 0);
-				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, rRestrictionName);
-				if (mSelectedRestrictionName != null
-						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
-					mListRestriction.add(rRestrictionName);
-			}
 		}
 
 		@Override
 		public Object getGroup(int groupPosition) {
-			return mListRestriction.get(groupPosition);
+			return PrivacyManager.getRestrictions(ActivityApp.this).values().toArray()[groupPosition];
 		}
 
 		@Override
 		public int getGroupCount() {
-			return mListRestriction.size();
+			return PrivacyManager.getRestrictions(ActivityApp.this).size();
 		}
 
 		@Override
@@ -1237,29 +1214,9 @@ public class ActivityApp extends ActivityBase {
 			return convertView;
 		}
 
-		private List<Hook> getHooks(int groupPosition) {
-			if (!mHook.containsKey(groupPosition)) {
-				int userId = Util.getUserId(Process.myUid());
-				boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false, false);
-				boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, false,
-						false);
-				List<Hook> listMethod = new ArrayList<Hook>();
-				String restrictionName = mListRestriction.get(groupPosition);
-				for (Hook md : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
-					boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName()) > 0);
-					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
-					if (mSelectedMethodName != null
-							|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
-						listMethod.add(md);
-				}
-				mHook.put(groupPosition, listMethod);
-			}
-			return mHook.get(groupPosition);
-		}
-
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return getHooks(groupPosition).get(childPosition);
+			return PrivacyManager.getHooks((String) getGroup(groupPosition)).get(childPosition);
 		}
 
 		@Override
@@ -1269,7 +1226,7 @@ public class ActivityApp extends ActivityBase {
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return getHooks(groupPosition).size();
+			return PrivacyManager.getHooks((String) getGroup(groupPosition)).size();
 		}
 
 		@Override
