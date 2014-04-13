@@ -1224,7 +1224,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Set data
 			if (hook.isDangerous())
-				holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+				holder.row.setBackgroundColor(getResources().getColor(
+						getThemed(hook.isDangerousDefined() ? R.attr.color_dangerous : R.attr.color_dangerous_user)));
 			else
 				holder.row.setBackgroundColor(Color.TRANSPARENT);
 			holder.tvRestriction.setText(hook.getName());
@@ -1243,7 +1244,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						// Change background color
 						if (hook.isDangerous())
-							holder.row.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_dangerous)));
+							holder.row.setBackgroundColor(getResources().getColor(
+									getThemed(hook.isDangerousDefined() ? R.attr.color_dangerous
+											: R.attr.color_dangerous_user)));
 						else
 							holder.row.setBackgroundColor(Color.TRANSPARENT);
 

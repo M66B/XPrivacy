@@ -17,6 +17,8 @@ Changelog
 
 * Fixed applying template in relation to default restrictions ([issue](/../../issues/1566))
 * Prefix export file name with date ([issue](/../../issues/1625))
+* Display user defined dangerous functions orangish ([issue](/../../issues/1626))
+	* Long press on a function in the template to define dangerous functions
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
