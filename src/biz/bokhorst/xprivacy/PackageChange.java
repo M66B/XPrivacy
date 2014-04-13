@@ -39,7 +39,7 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.clearPermissionCache(uid);
 						else {
 							// Delete existing restrictions
-							PrivacyManager.deleteRestrictions(uid, null, false);
+							PrivacyManager.deleteRestrictions(uid, null, true);
 							PrivacyManager.deleteSettings(uid);
 							PrivacyManager.deleteUsage(uid);
 							PrivacyManager.clearPermissionCache(uid);
