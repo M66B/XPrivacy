@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Fixed applying template in relation to default restrictions ([issue](/../../issues/1566))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.15 BETA**
