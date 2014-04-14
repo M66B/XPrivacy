@@ -20,6 +20,7 @@
     <attr name="drawable_background" format="reference" />
     <attr name="drawable_card" format="reference" />
     <attr name="color_dangerous" format="reference" />
+    <attr name="color_dangerous_off" format="reference" />
     <attr name="color_dangerous_user" format="reference" />
     <attr name="color_state_attention" format="reference" />
     <attr name="color_state_restricted" format="reference" />
