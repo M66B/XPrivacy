@@ -15,6 +15,7 @@ Changelog
 
 **Next release**
 
+* Fixed restricting activity recognition
 * Display disabled standard dangerous functions with a faint background color
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
