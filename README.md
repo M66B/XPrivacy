@@ -344,6 +344,8 @@ and is reported to work with most Android variants, including stock ROMs.
 XPrivacy seems not to be compatible with [OLYMPUS Image Share](https://play.google.com/store/apps/details?id=jp.olympusimaging.oishare)
 for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1607)).
 
+XPrivacy seems to cause camera lag on a Samsung Galaxy Note II ([issue](https://github.com/M66B/XPrivacy/issues/715))
+
 Installation
 ------------
 
@@ -925,7 +927,8 @@ and include information about your device type, Android and XPrivacy version.
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-Note that there is a feature stop, read [here](http://forum.xda-developers.com/showpost.php?p=50535073&postcount=7547) for more information.
+New features are only implemented when requested on GitHub with a detailed description of the feature and only if there are ten +1's.
+See [here](http://forum.xda-developers.com/showpost.php?p=51574315&postcount=8776) for some more information.
 
 **One feature request per issue please!**
 
@@ -986,6 +989,7 @@ News
 * [Black Duck Announces Open Source Rookies of the Year Winners](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners) (January 28, 2014)
 * [The Open Source Rookies of the Year Awards](http://www.infoworld.com/d/open-source-software/the-open-source-rookies-of-the-year-awards-235116) (January 28, 2014)
 * [XPrivacy تطبيق](http://waleedhassan.wordpress.com/2014/01/31/xprivacy/) (January 31, 2014)
+* [Android privacy tool feeds fake data to prying apps](http://www.wired.co.uk/news/archive/2014-04/01/x-privacy-android-app) (April 1, 2014)
 
 Contributing
 ------------

@@ -85,6 +85,10 @@ public class Hook implements Comparable<Hook> {
 		PrivacyManager.setSetting(0, name, Boolean.toString(!isDangerous()));
 	}
 
+	public boolean isDangerousDefined() {
+		return mDangerous;
+	}
+
 	public void annotate(String text) {
 		mAnnotation = text;
 	}

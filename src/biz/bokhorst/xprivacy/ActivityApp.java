@@ -1027,7 +1027,7 @@ public class ActivityApp extends ActivityBase {
 
 		@Override
 		public long getGroupId(int groupPosition) {
-			return groupPosition;
+			return groupPosition * 1000;
 		}
 
 		private class GroupViewHolder {
@@ -1264,7 +1264,7 @@ public class ActivityApp extends ActivityBase {
 
 		@Override
 		public long getChildId(int groupPosition, int childPosition) {
-			return childPosition;
+			return groupPosition * 1000 + childPosition;
 		}
 
 		@Override
@@ -1375,39 +1375,42 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodAsk.setVisibility(View.GONE);
 
 					// Listen for restriction changes
-					holder.llMethodName.setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							holder.llMethodName.setEnabled(false);
-							holder.imgCbMethodRestricted.setVisibility(View.GONE);
-							holder.pbRunning.setVisibility(View.VISIBLE);
+					if (parent.restricted)
+						holder.llMethodName.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								holder.llMethodName.setEnabled(false);
+								holder.imgCbMethodRestricted.setVisibility(View.GONE);
+								holder.pbRunning.setVisibility(View.VISIBLE);
 
-							new AsyncTask<Object, Object, Object>() {
-								@Override
-								protected Object doInBackground(Object... arg0) {
-									// Change restriction
-									rstate.toggleRestriction();
-									return null;
-								}
+								new AsyncTask<Object, Object, Object>() {
+									@Override
+									protected Object doInBackground(Object... arg0) {
+										// Change restriction
+										rstate.toggleRestriction();
+										return null;
+									}
 
-								@Override
-								protected void onPostExecute(Object result) {
-									// Refresh display
-									// Needed to update parent
-									notifyDataSetChanged();
+									@Override
+									protected void onPostExecute(Object result) {
+										// Refresh display
+										// Needed to update parent
+										notifyDataSetChanged();
 
-									// Notify restart
-									if (md.isRestartRequired())
-										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
-												Toast.LENGTH_SHORT).show();
+										// Notify restart
+										if (md.isRestartRequired())
+											Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
+													Toast.LENGTH_SHORT).show();
 
-									holder.pbRunning.setVisibility(View.GONE);
-									holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
-									holder.llMethodName.setEnabled(true);
-								}
-							}.executeOnExecutor(mExecutor);
-						}
-					});
+										holder.pbRunning.setVisibility(View.GONE);
+										holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
+										holder.llMethodName.setEnabled(true);
+									}
+								}.executeOnExecutor(mExecutor);
+							}
+						});
+					else
+						holder.llMethodName.setClickable(false);
 
 					// Listen for ask changes
 					if (ondemand)
@@ -1529,7 +1532,8 @@ public class ActivityApp extends ActivityBase {
 			}
 
 			// Display restriction
-			holder.tvMethodName.setClickable(false);
+			holder.llMethodName.setClickable(false);
+			holder.imgCbMethodRestricted.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,

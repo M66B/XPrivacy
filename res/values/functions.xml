@@ -58,7 +58,7 @@
     <string name="identification__system_build_prop" translatable="false"><![CDATA[Will restrict access to the system build properties file]]></string>
     <string name="identification__sys_block_____cid" translatable="false"><![CDATA[Will restrict direct access to CID (Card Identification Register = SD card serial number)]]></string>
     <string name="identification__sys_class_____cid" translatable="false"><![CDATA[Will restrict direct access to CID (Card Identification Register = SD card serial number)]]></string>
-    <string name="identification_AdvertisingId" translatable="false"><![CDATA[Will restrict access to the Google advertising identifier]]></string>
+    <string name="identification_AdvertisingId" translatable="false"><![CDATA[<a href="https://developer.android.com/google/play-services/id.html">Google documentation</a>]]></string>
     <string name="identification_getString" translatable="false"><![CDATA[Will restrict access to the Android ID]]></string>
     <string name="identification_getDescriptor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/view/InputDevice.html#getDescriptor()">Google documentation</a>]]></string>
     <string name="identification_GservicesProvider" translatable="false"><![CDATA[Will restrict direct access to android_id, acquired through the Google services provider]]></string>

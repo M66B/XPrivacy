@@ -1806,8 +1806,8 @@ public class ActivityShare extends ActivityBase {
 		String fileName;
 		if (multiple) {
 			SimpleDateFormat format = new SimpleDateFormat("yyyyMMdd_HHmmss", Locale.ROOT);
-			fileName = String.format("XPrivacy_%s_%s_%s%s.xml", Util.getSelfVersionName(context),
-					format.format(new Date()), Build.DEVICE, (packageName == null ? "" : "_" + packageName));
+			fileName = String.format("%s_XPrivacy_%s_%s%s.xml", format.format(new Date()),
+					Util.getSelfVersionName(context), Build.DEVICE, (packageName == null ? "" : "_" + packageName));
 		} else
 			fileName = "XPrivacy.xml";
 		return new File(folder + File.separator + fileName).getAbsolutePath();

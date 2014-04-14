@@ -34,14 +34,15 @@ public class RState {
 		if (methodName == null) {
 			if (restrictionName == null) {
 				// Examine the category state
-				asked = true;
+				someAsk = onDemand;
 				for (String rRestrictionName : PrivacyManager.getRestrictions()) {
 					PRestriction query = PrivacyManager.getRestrictionEx(uid, rRestrictionName, null);
 					allRestricted = (allRestricted && query.restricted);
 					someRestricted = (someRestricted || query.restricted);
-					if (!query.asked)
-						asked = false;
+					allAsk = (allAsk && !query.asked);
+					someAsk = (someAsk || !query.asked);
 				}
+				asked = !onDemand;
 			} else {
 				// Examine the category/method states
 				PRestriction query = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
@@ -97,11 +98,16 @@ public class RState {
 
 	public void toggleAsked() {
 		asked = !asked;
-		// Avoid re-doing all exceptions for dangerous functions
-		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
-		listPRestriction.add(new PRestriction(mUid, mRestrictionName, mMethodName, restricted, asked));
-		PrivacyManager.setRestrictionList(listPRestriction);
-		PrivacyManager.setSetting(mUid, PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
-		PrivacyManager.setSetting(mUid, PrivacyManager.cSettingModifyTime, Long.toString(System.currentTimeMillis()));
+		if (mRestrictionName == null)
+			PrivacyManager.setSetting(mUid, PrivacyManager.cSettingOnDemand, Boolean.toString(!asked));
+		else {
+			// Avoid re-doing all exceptions for dangerous functions
+			List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
+			listPRestriction.add(new PRestriction(mUid, mRestrictionName, mMethodName, restricted, asked));
+			PrivacyManager.setRestrictionList(listPRestriction);
+			PrivacyManager.setSetting(mUid, PrivacyManager.cSettingState, Integer.toString(ActivityMain.STATE_CHANGED));
+			PrivacyManager.setSetting(mUid, PrivacyManager.cSettingModifyTime,
+					Long.toString(System.currentTimeMillis()));
+		}
 	}
 }
