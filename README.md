@@ -329,7 +329,7 @@ Limitations
 * You cannot restrict *IPC* for XPrivacy because it is needed for internal checks
 * You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file
 * You cannot restrict *system* for XPrivacy because it is needed to get an application list
-* You cannot restrict *view* for XPrivacy because it is needed to open links to the crowd sourced restrictions
+* You cannot restrict *view* for XPrivacy because it is needed to open links to the [crowd sourced restrictions](http://crowd.xprivacy.eu/)
 
 You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
 
@@ -978,6 +978,7 @@ System applications cannot be restricted.
 
 XPrivacy can restrict more data than any of the above solutions,
 also for closed source applications and libraries, like Google Play services.
+Unlike any other solution, XPrivacy has [crowd sourced restrictions](http://crowd.xprivacy.eu/).
 
 News
 ----
