@@ -15,10 +15,12 @@ Changelog
 
 **Next release**
 
-* Fixed restricting activity recognition
-* Display disabled standard dangerous functions with a faint background color
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.17 BETA**
+
+* Fixed restricting activity recognition (category location)
+* Display disabled standard dangerous functions with a faint background color
 
 **Version 2.0.16 BETA**
 
