@@ -15,9 +15,11 @@ Changelog
 
 **Next release**
 
-* Updated Italian translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.18 STABLE**
+
+* Updated Italian translation
 
 **Version 2.0.17 BETA**
 
