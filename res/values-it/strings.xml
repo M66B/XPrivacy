@@ -7,7 +7,7 @@
     <string name="app_version" formatted="false">XPrivacy versione: %s (%d)</string>
     <string name="app_description">Il gestore di privacy definitivo</string>
     <string name="app_xversion" formatted="false">Xposed framework versione: %d</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014 di M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 20132014 di M. Bokhorst (M66B)</string>
     <string name="app_licensed">Attivato, grazie per il tuo supporto!</string>
     <string name="menu_usage">Dati utilizzati</string>
     <string name="menu_refresh">Aggiorna</string>
@@ -78,7 +78,7 @@
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
 \n\nL\'utilizzo è interamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, ecc)</string>
-    <string name="restrict_browser">Browser (segnalibri/storico)</string>
+    <string name="restrict_browser">Browser (segnalibri/cronologia)</string>
     <string name="restrict_calendar">Calendario</string>
     <string name="restrict_calling">Chiamate (Telefono, SMS, MMS)</string>
     <string name="restrict_clipboard">Appunti</string>
@@ -112,7 +112,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_fpermission">Filtra per permessi</string>
     <string name="title_frestricted">Filtra per restrizioni</string>
     <string name="title_fuser">Filtra per applicazioni utente</string>
-    <string name="title_fondemand">Filtra per "su-richiesta"</string>
+    <string name="title_fondemand">Filtra per su-richiesta</string>
     <string name="title_fsystem">Filtra per applicazioni di sistema</string>
     <string name="title_fnot">Nega</string>
     <string name="title_sname">Per nome</string>
