@@ -17,6 +17,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 2.0.19 STABLE**
+
+* Fixed handling of *removeActivityUpdates*
+
 **Version 2.0.18 STABLE**
 
 * Updated Italian translation

@@ -44,7 +44,7 @@ public class XActivityRecognitionClient extends XHook {
 	@Override
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.removeActivityUpdates) {
-			if (isRestricted(param, "GMS.requestActivityUpdates"))
+			if (isRestricted(param, PrivacyManager.cLocation, "GMS.requestActivityUpdates"))
 				param.setResult(null);
 
 		} else if (mMethod == Methods.requestActivityUpdates) {
