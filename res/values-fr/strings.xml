@@ -64,19 +64,19 @@
     <string name="msg_random_boot">Randomiser après le démarrage</string>
     <string name="msg_restart">Redémarrage de l\'application nécessaire</string>
     <string name="msg_register">Inscrivez votre appareil, s.v.p.</string>
-    <string name="msg_email">Veuillez entrer votre adresse e-mail:</string>
+    <string name="msg_email">Veuillez entrer votre adresse e-mail :</string>
     <string name="msg_registered">Vérifiez vos mails pour activer votre appareil</string>
     <string name="msg_service">Service de mise à jour en fonctionnement</string>
     <string name="msg_migrating">Migration %1$s</string>
     <string name="msg_randomizing">Randomisation %1$s</string>
     <string name="msg_upgrading">Mise à niveau %1$s</string>
-    <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs?</string>
+    <string name="msg_support_info">Une vérification interne a échoué, voulez-vous envoyer le rapport d\'erreurs ?</string>
     <string name="msg_restrictedby">Restreint par XPrivacy</string>
-    <string name="msg_service_missing">Service Privacy pas trouvé: Avez-vous activé XPrivacy dans l\'installateur Xposed et redémarré votre appareil?</string>
-    <string name="msg_service_version">Décalage de la version du service Privacy: Avez-vous redémarré votre appareil après la mise à niveau XPrivacy?</string>
+    <string name="msg_service_missing">Service Privacy non trouvé : avez-vous activé XPrivacy dans l\'installateur Xposed et redémarré votre appareil ?</string>
+    <string name="msg_service_version">Décalage de la version du service Privacy : avez-vous redémarré votre appareil après la mise à niveau de XPrivacy ?</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
-\n\nSon utilisation est à vos risques et périls!</b>\n\nVeuillez prendre connaissance de la licence :</string>
+\n\nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc)</string>
     <string name="restrict_browser">Navigateur (marque-pages/historique)</string>
     <string name="restrict_calendar">Calendrier</string>
@@ -121,9 +121,9 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_smodified">Par date de modification (XPrivacy)</string>
     <string name="title_sinvert">Inverser l\'ordre</string>
     <string name="title_attempt">Tentative d\'utilisation de:</string>
-    <string name="title_category">Catégorie:</string>
-    <string name="title_function">Fonction:</string>
-    <string name="title_parameters">Paramètres:</string>
+    <string name="title_category">Catégorie :</string>
+    <string name="title_function">Fonction :</string>
+    <string name="title_parameters">Paramètres :</string>
     <string name="title_applycat">Appliquer à toute la catégorie</string>
     <string name="title_once">Une fois pendant %1$s secondes</string>
     <string name="title_whitelist">Se souvenir de \'%1$s\'</string>
@@ -161,10 +161,10 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_https">Utiliser des connexions sécurisée</string>
     <string name="settings_syscomponents">Restreindre composants système (Android) (redémarrage requis)</string>
     <string name="settings_usagedata">Montrer les données d\'usage pour chaque application (redémarrage requis)</string>
-    <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_parameters">Montrer les paramètres de données d\'usage</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
-    <string name="help_longpress">Maintenez appuyé le nom de l\'appli pour le selectionner</string>
+    <string name="help_longpress">Maintenez appuyé le nom de l\'appli pour le sélectionner</string>
     <string name="help_ondemand">Détermination des restrictions sur demande</string>
     <string name="help_application">Application</string>
     <string name="help_internet">a les permissions Internet</string>
@@ -177,12 +177,12 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_attention">les restrictions ont besoin d\'attention</string>
     <string name="help_restricted">les restrictions sont changées</string>
     <string name="help_shared">les restrictions sont envoyées</string>
-    <string name="tutorial_mainheader">Sélectionnez la catégorie à restreindre</string>
-    <string name="tutorial_mainlist">Cocher une case pour restreindre la catégorie choisie pour l’appli\n
-\nL’appli sera dupée par des données vides ou modifiées\n
-\nAppuyez sur l’icône de l’appli pour les restrictions détaillées et les paramètres</string>
-    <string name="tutorial_detailsheader">Appuyez sur l’icône pour plus d’actions</string>
-    <string name="tutorial_detailslist">Appuyez sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions</string>
+    <string name="tutorial_mainheader">Sélectionnez la catégorie à restreindre.</string>
+    <string name="tutorial_mainlist">Cocher une case pour restreindre la catégorie choisie pour l’appli.\n
+\nL’appli sera dupée par des données vides ou modifiées.\n
+\nAppuyez sur l’icône de l’appli pour les restrictions détaillées et les paramètres.</string>
+    <string name="tutorial_detailsheader">Appuyez sur l’icône pour plus d’actions.</string>
+    <string name="tutorial_detailslist">Appuyez sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions.</string>
     <string name="permission_manage">Gérer les applications, y compris les tuer</string>
 
 </resources>
