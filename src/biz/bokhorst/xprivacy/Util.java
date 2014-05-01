@@ -99,6 +99,8 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof NoClassDefFoundError)
 			priority = Log.WARN;
+		else if (ex instanceof SecurityException)
+			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
 

@@ -2153,7 +2153,7 @@ public class PrivacyService {
 							dbUsageFile.delete();
 							new File(dbUsageFile + "-journal").delete();
 							dbUsage = SQLiteDatabase.openOrCreateDatabase(dbUsageFile, null);
-							Util.log(null, Log.ERROR, "Deleted corrupt usage data database");
+							Util.log(null, Log.WARN, "Deleted corrupt usage data database");
 						}
 
 						// Upgrade database if needed

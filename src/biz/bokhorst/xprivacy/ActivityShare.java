@@ -1326,6 +1326,8 @@ public class ActivityShare extends ActivityBase {
 				return ex;
 			} catch (UnknownHostException ex) {
 				return ex;
+			} catch (IOException ex) {
+				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex;
@@ -1561,6 +1563,8 @@ public class ActivityShare extends ActivityBase {
 				return ex;
 			} catch (UnknownHostException ex) {
 				return ex;
+			} catch (IOException ex) {
+				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return ex;
@@ -1691,6 +1695,8 @@ public class ActivityShare extends ActivityBase {
 			} catch (SSLException ex) {
 				return ex;
 			} catch (UnknownHostException ex) {
+				return ex;
+			} catch (IOException ex) {
 				return ex;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
