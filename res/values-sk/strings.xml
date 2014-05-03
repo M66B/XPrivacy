@@ -1,7 +1,7 @@
 <resources>
 
     <string name="app_notxposed">Verzia Xposed frameworku %1$d+ nie je nainštalovaná</string>
-    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed Inštalátori</string>
+    <string name="app_notenabled">Modul XPrivacy nie je aktivovaný v Xposed Installeri</string>
     <string name="app_wrongandroid">Len pre Android 4.0.3+</string>
     <string name="app_incompatible">Aplikácia XPrivacy nie je kompatibilná s %1$s</string>
     <string name="app_version">Verzia XPrivacy: %1$s (%2$d)</string>
