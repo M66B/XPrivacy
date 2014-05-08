@@ -399,7 +399,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			for (Member member : listMember)
 				try {
 					if (Modifier.isAbstract(member.getModifiers()))
-						Util.log(hook, Log.ERROR, String.format("isAbstract: ", member));
+						Util.log(hook, Log.ERROR, String.format("isAbstract: %s", member));
 					else
 						XposedBridge.hookMethod(member, methodHook);
 				} catch (NoSuchFieldError ex) {
