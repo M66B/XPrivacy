@@ -15,11 +15,13 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.20 STABLE**
+
 * Updated French translation
 * Updated Slovak translation
-* Fixed hooking abstract methods
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+* Fixed hooking abstract methods ([issue](/../../issues/1647))
 
 **Version 2.0.19 STABLE**
 
