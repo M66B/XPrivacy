@@ -389,6 +389,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				} else {
 					for (Method method : clazz.getDeclaredMethods())
 						if (method.getName().equals(hook.getMethodName())
+								&& !Modifier.isAbstract(method.getModifiers())
 								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
 							listMember.add(method);
 				}
@@ -399,7 +400,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			for (Member member : listMember)
 				try {
 					if (Modifier.isAbstract(member.getModifiers()))
-						Util.log(hook, Log.ERROR, String.format("isAbstract: %s", member));
+						Util.log(hook, Log.ERROR, String.format("Abstract: %s", member));
 					else
 						XposedBridge.hookMethod(member, methodHook);
 				} catch (NoSuchFieldError ex) {

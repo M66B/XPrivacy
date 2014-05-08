@@ -17,6 +17,7 @@ Changelog
 
 * Updated French translation
 * Updated Slovak translation
+* Fixed hooking abstract methods
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
