@@ -339,12 +339,15 @@ Compatibility
 XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
 and is reported to work with most Android variants, including stock ROMs.
 
-**XPrivacy is not compatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231))
+**XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231))
 
-XPrivacy seems not to be compatible with [OLYMPUS Image Share](https://play.google.com/store/apps/details?id=jp.olympusimaging.oishare)
+XPrivacy seems to be incompatible with [OLYMPUS Image Share](https://play.google.com/store/apps/details?id=jp.olympusimaging.oishare)
 for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1607)).
 
 XPrivacy seems to cause camera lag on a Samsung Galaxy Note II ([issue](https://github.com/M66B/XPrivacy/issues/715))
+
+XPrivacy is reported to be incompatible with [WSM TOOLS](http://forum.xda-developers.com/showthread.php?t=2481178)
+([issue](https://github.com/M66B/XPrivacy/issues/1655)).
 
 Installation
 ------------
