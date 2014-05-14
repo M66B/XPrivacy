@@ -933,6 +933,8 @@ If you have a feature request, please [create an issue](https://github.com/M66B/
 New features are only implemented when requested on GitHub with a detailed description of the feature and only if there are ten +1's.
 See [here](http://forum.xda-developers.com/showpost.php?p=51574315&postcount=8776) for some more information.
 
+Please [read this](http://forum.xda-developers.com/showpost.php?p=52644313&postcount=9241) before voting.
+
 **One feature request per issue please!**
 
 ### Questions
