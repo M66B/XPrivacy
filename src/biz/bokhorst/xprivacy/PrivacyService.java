@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -1695,7 +1696,9 @@ public class PrivacyService {
 				Object am = cam.getMethod("self").invoke(null);
 				if (am == null)
 					return null;
-				return (Context) cam.getDeclaredField("mContext").get(am);
+				Field mContext = cam.getDeclaredField("mContext");
+				mContext.setAccessible(true);
+				return (Context) mContext.get(am);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return null;

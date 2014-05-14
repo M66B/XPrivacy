@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Fixed incompatibility with Xposed 2.6 beta 1 ([issue](/../../issues/1659))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.20 STABLE**

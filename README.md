@@ -346,9 +346,6 @@ for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1607)).
 
 XPrivacy seems to cause camera lag on a Samsung Galaxy Note II ([issue](https://github.com/M66B/XPrivacy/issues/715))
 
-XPrivacy is reported to be incompatible with [WSM TOOLS](http://forum.xda-developers.com/showthread.php?t=2481178)
-([issue](https://github.com/M66B/XPrivacy/issues/1655)).
-
 Installation
 ------------
 
