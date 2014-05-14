@@ -682,7 +682,7 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 * network type (mobile, Wi-Fi, etc.)
 * synchronization state
 * screen locking
-* display settings
+* display settings (DPI, resolution, etc)
 * Wi-Fi settings
 * Bluetooth settings
 * shortcuts
