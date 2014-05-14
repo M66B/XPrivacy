@@ -782,6 +782,11 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 	* You will never be asked whether to restrict dangerous functions, except for functions with a white/black list
 	* Setting any category to restricted will not restrict any of its dangerous functions
 * The default after dialog timeout is taken from the current restriction settings
+* There are four possiblities for the restriction / on demand checkboxes:
+	* [ ] [ ] You will not receive an on demand popup, the permission will always be allowed
+	* [ ] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will 		be allowed once
+	* [x] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will 		be denied once
+	* [x] [ ] You will not receive an on demand popup, the permission will always be denied
 
 <a name="FAQ35"></a>
 **(35) Do I need the pro enabler to use the pro license?**
