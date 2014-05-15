@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Fixed displaying contacts without display name ([issue](/../../issues/1660))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.22 STABLE**
