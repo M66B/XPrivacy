@@ -193,6 +193,7 @@ public class XActivityThread extends XHook {
 		if (param.thisObject != null)
 			try {
 				Method unschedule = param.thisObject.getClass().getDeclaredMethod("unscheduleGcIdler");
+				unschedule.setAccessible(true);
 				unschedule.invoke(param.thisObject);
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
