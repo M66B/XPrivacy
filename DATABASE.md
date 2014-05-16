@@ -13,6 +13,7 @@ A full disk (/data/system is mounted on internal memory) is fatal for XPrivacy, 
 All mentioned sqlite commands are properly documented on the [SQLite website](http://www.sqlite.org/)
 
 Accessing the databases:
+
 From a PC:
 
 adb shell
@@ -23,16 +24,20 @@ From a Terminal Emulator within Android:
 su
 sqlite3 /data/system/xprivacy/xprivacy.db
 
+
 *Note: You may need to install sqlite3 binaries
 
 xprivacy.db consists of 2 relevant TABLES
 
 TABLE:restriction
 
-uid         INTEGER   	NOTNULL
-restriction TEXT      	NOTNULL
-method      TEXT
-restricted  INTEGER   	NOTNULL
+uid		INTEGER		NOTNULL
+
+restriction	TEXT		NOTNULL
+
+method		TEXT
+
+restricted	INTEGER		NOTNULL
 
 The restriction table holds information pertaining to the restriction and onDemand settings on a per UID basis.
 The 'restriction' field always lists the restriction category (Accounts, Browser, Calendar, etc.).
@@ -43,17 +48,25 @@ The meaning of the 'value' field depends on whether the restriction pertains to 
 
 For category:
 
-0	[   ][ ? ]	(not restricted, ask)
-1	[ x ][ ? ]	(restricted, ask)
-2	[   ][   ]	(not restricted, asked)
-3	[ x ][   ]	(restricted, asked)
+0	[ ][?]		not restricted, ask
+
+1	[x][?]		restricted, ask
+
+2	[ ][ ]		not restricted, asked
+
+3	[x][ ]		restricted, asked
+
 
 For method:
 
-0	[ x ][ ? ]	(restricted, ask)
-1	[   ][ ? ]	(not restricted, ask)
-2	[ x ][   ]	(restricted, asked)
-3	[   ][   ]	(not restricted, asked)
+0	[ x ][ ? ]	restricted, ask
+
+1	[   ][ ? ]	not restricted, ask
+
+2	[ x ][   ]	restricted, asked
+
+3	[   ][   ]	not restricted, asked
+
 
 *NOTE: Although the 'method' field doesn't always contain data, it is still NOT NULL. To query empty entries: WHERE method=''
 
@@ -97,36 +110,47 @@ QUERY EXAMPLES:
 xprivacy.db
 
 SELECT * FROM setting WHERE uid='0';
+
 //This will show all global XPrivacy settings (including those not visible within the app)
 
 SELECT * FROM restriction WHERE uid='1000';
+
 //This will show all restriction settings for UID 1000
 
 SELECT * from setting WHERE name='OnDemand' and value='false';
+
 //This will list all apps where onDemand is not active
 
 SELECT * from restriction WHERE restriction='internet' and method='' and restricted='2' ORDER BY uid;
+
 //This will list all apps that have unrestricted access to the Internet category, ordered by UID
 
 SELECT * FROM restriction WHERE method='inet' and restricted='3';
+
 //This will list all apps that have unrestricted Internet/Inet access
 
 UPDATE setting SET value='true' where name='OnDemand' and uid IN (10001,10002,10003,);
+
 //This will enable onDemand for apps listed in the IN ()
 
 UPDATE restriction SET restricted='0' WHERE uid IN (10001,10002,10003) and method='connect';
+
 //This will turn on onDemand for Internet/Connect with a time out default to deny for apps listed in the IN ()
 
 UPDATE restriction SET restricted='3' WHERE uid IN (10001,10002,10003) and method='open';
+
 //This will allow unrestricted access to Storage/Open for the listed apps
 
 usage.db
 
 SELECT * FROM usage ORDER BY time DESC;
+
 //This will show all usage data ordered by TIME (newest entries first)
 
 DELETE FROM usage where uid='1000';
+
 //This will delete all usage entries for UID 1000
 
 DELETE FROM usage;
+
 //THIS WILL DELETE ALL USAGE DATA
