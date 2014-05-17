@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -168,6 +169,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, null, false);
 		if (salt != null && salt.equals(Build.SERIAL))
 			PrivacyManager.setSetting(userId, PrivacyManager.cSettingSalt, null);
+
+		// Import license file
+		if (getIntent().getAction().equals(Intent.ACTION_VIEW))
+			Util.importProLicense(new File(getIntent().getData().getEncodedPath()));
 
 		// Set layout
 		setContentView(R.layout.mainlist);

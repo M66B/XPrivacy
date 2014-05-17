@@ -18,6 +18,7 @@ Changelog
 * Fixed displaying contacts without display name ([issue](/../../issues/1660))
 * Fixed on demand restricting for dangerous methods with whitelists ([issue](/../../issues/1653))
 * Not storing salt into database anymore for increased privacy ([issue](/../../issues/1661))
+* Easier pro license file import ([issue](/../../issues/1658))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

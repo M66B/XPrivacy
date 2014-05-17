@@ -242,6 +242,33 @@ public class Util {
 		if (!licenseFile.exists())
 			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_FILE_NAME);
 
+		String importedLicense = importProLicense(licenseFile);
+
+		// Check license file
+		licenseFile = new File(importedLicense);
+		if (licenseFile.exists()) {
+			// Read license
+			try {
+				IniFile iniFile = new IniFile(licenseFile);
+				String name = iniFile.get("name", "");
+				String email = iniFile.get("email", "");
+				String signature = iniFile.get("signature", "");
+				if (name == null || email == null || signature == null)
+					return null;
+				else
+					return new String[] { name, email, signature };
+			} catch (FileNotFoundException ex) {
+				return null;
+			} catch (Throwable ex) {
+				bug(null, ex);
+				return null;
+			}
+		} else
+			Util.log(null, Log.INFO, "Licensing: no license file");
+		return null;
+	}
+
+	public static String importProLicense(File licenseFile) {
 		// Get imported license file name
 		String importedLicense = getUserDataDirectory(Process.myUid()) + File.separator + LICENSE_FILE_NAME;
 
@@ -269,29 +296,7 @@ public class Util {
 				Util.bug(null, ex);
 			}
 		}
-
-		// Check license file
-		licenseFile = new File(importedLicense);
-		if (licenseFile.exists()) {
-			// Read license
-			try {
-				IniFile iniFile = new IniFile(licenseFile);
-				String name = iniFile.get("name", "");
-				String email = iniFile.get("email", "");
-				String signature = iniFile.get("signature", "");
-				if (name == null || email == null || signature == null)
-					return null;
-				else
-					return new String[] { name, email, signature };
-			} catch (FileNotFoundException ex) {
-				return null;
-			} catch (Throwable ex) {
-				bug(null, ex);
-				return null;
-			}
-		} else
-			Util.log(null, Log.INFO, "Licensing: no license file");
-		return null;
+		return importedLicense;
 	}
 
 	public static Version getProEnablerVersion(Context context) {
