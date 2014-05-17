@@ -15,9 +15,11 @@ Changelog
 
 **Next release**
 
-* Reverted "Not storing salt into database anymore for increased privacy" ([issue](/../../issues/1661)) ([issue](/../../issues/1664))
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.24 BETA**
+
+* Reverted "Not storing salt into database anymore for increased privacy" ([issue](/../../issues/1661)) ([issue](/../../issues/1664))
 
 **Version 2.0.23 BETA**
 
