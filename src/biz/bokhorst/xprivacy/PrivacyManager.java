@@ -467,10 +467,10 @@ public class PrivacyManager {
 							Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
 									+ (parentAsked ? "+asked" : "+ask"), false);
 					boolean restricted = value.contains("true");
-					boolean asked = value.contains("asked");
-					if ((parentRestricted && !restricted) || (!parentAsked && asked))
+					boolean asked = (!ondemand || value.contains("asked"));
+					if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.isDangerous())
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
-								&& restricted, parentAsked || asked || !ondemand));
+								&& restricted, parentAsked || asked));
 				}
 		}
 		setRestrictionList(listPRestriction);
