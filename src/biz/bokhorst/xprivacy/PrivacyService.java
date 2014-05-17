@@ -525,7 +525,7 @@ public class PrivacyService {
 					if (!methodFound && hook != null && hook.isDangerous())
 						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
 							mresult.restricted = false;
-							mresult.asked = true;
+							mresult.asked = (hook.whitelist() == null);
 						}
 
 					// Check whitelist
