@@ -166,12 +166,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Salt should be the same when exporting/importing
 		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, null, false);
-		if (salt == null) {
-			salt = Build.SERIAL;
-			if (salt == null)
-				salt = "";
-			PrivacyManager.setSetting(userId, PrivacyManager.cSettingSalt, salt);
-		}
+		if (salt != null && salt.equals(Build.SERIAL))
+			PrivacyManager.setSetting(userId, PrivacyManager.cSettingSalt, null);
 
 		// Set layout
 		setContentView(R.layout.mainlist);

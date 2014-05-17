@@ -429,7 +429,7 @@ public class Util {
 	public static String sha1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		// SHA1
 		int userId = Util.getUserId(Process.myUid());
-		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, "", true);
+		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, Build.SERIAL, true);
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] bytes = (text + salt).getBytes("UTF-8");
 		digest.update(bytes, 0, bytes.length);
@@ -443,7 +443,7 @@ public class Util {
 	public static String md5(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		// MD5
 		int userId = Util.getUserId(Process.myUid());
-		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, "", true);
+		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, Build.SERIAL, true);
 		byte[] bytes = MessageDigest.getInstance("MD5").digest((text + salt).getBytes("UTF-8"));
 		StringBuilder sb = new StringBuilder();
 		for (byte b : bytes)
