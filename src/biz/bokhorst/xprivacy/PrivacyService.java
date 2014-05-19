@@ -533,9 +533,11 @@ public class PrivacyService {
 						String value = getSetting(new PSetting(restriction.uid, hook.whitelist(), restriction.extra,
 								null)).value;
 						if (value == null) {
-							String xextra = getXExtra(restriction, hook);
-							if (xextra != null)
+							for (String xextra : getXExtra(restriction, hook)) {
 								value = getSetting(new PSetting(restriction.uid, hook.whitelist(), xextra, null)).value;
+								if (value != null)
+									break;
+							}
 						}
 						if (value != null) {
 							// true means allow, false means block
@@ -1305,15 +1307,17 @@ public class PrivacyService {
 
 						if (restriction.extra != null && hook != null && hook.whitelist() != null) {
 							CSetting skey = new CSetting(restriction.uid, hook.whitelist(), restriction.extra);
-							CSetting xkey = null;
-							String xextra = getXExtra(restriction, hook);
-							if (xextra != null)
-								xkey = new CSetting(restriction.uid, hook.whitelist(), xextra);
 							synchronized (mSettingCache) {
-								if (mSettingCache.containsKey(skey)
-										|| (xkey != null && mSettingCache.containsKey(xkey))) {
+								if (mSettingCache.containsKey(skey)) {
 									Util.log(null, Log.WARN, "Already asked " + skey);
 									return false;
+								}
+								for (String xextra : getXExtra(restriction, hook)) {
+									CSetting xkey = new CSetting(restriction.uid, hook.whitelist(), xextra);
+									if (mSettingCache.containsKey(xkey)) {
+										Util.log(null, Log.WARN, "Already asked " + skey);
+										return false;
+									}
 								}
 							}
 						}
@@ -1412,7 +1416,8 @@ public class PrivacyService {
 			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
-			final CheckBox cbWhitelistExtra = (CheckBox) view.findViewById(R.id.cbWhitelistExtra);
+			final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
+			final CheckBox cbWhitelistExtra2 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra2);
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
@@ -1441,10 +1446,14 @@ public class PrivacyService {
 			if (hook != null && hook.whitelist() != null && restriction.extra != null) {
 				cbWhitelist.setText(resources.getString(R.string.title_whitelist, restriction.extra));
 				cbWhitelist.setVisibility(View.VISIBLE);
-				String xextra = getXExtra(restriction, hook);
-				if (xextra != null) {
-					cbWhitelistExtra.setText(resources.getString(R.string.title_whitelist, xextra));
-					cbWhitelistExtra.setVisibility(View.VISIBLE);
+				String[] xextra = getXExtra(restriction, hook);
+				if (xextra.length > 0) {
+					cbWhitelistExtra1.setText(resources.getString(R.string.title_whitelist, xextra[0]));
+					cbWhitelistExtra1.setVisibility(View.VISIBLE);
+				}
+				if (xextra.length > 1) {
+					cbWhitelistExtra2.setText(resources.getString(R.string.title_whitelist, xextra[1]));
+					cbWhitelistExtra2.setVisibility(View.VISIBLE);
 				}
 			}
 
@@ -1455,7 +1464,8 @@ public class PrivacyService {
 					if (isChecked) {
 						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
-						cbWhitelistExtra.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
 					}
 				}
 			});
@@ -1465,7 +1475,8 @@ public class PrivacyService {
 					if (isChecked) {
 						cbCategory.setChecked(false);
 						cbWhitelist.setChecked(false);
-						cbWhitelistExtra.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
 					}
 				}
 			});
@@ -1475,17 +1486,30 @@ public class PrivacyService {
 					if (isChecked) {
 						cbCategory.setChecked(false);
 						cbOnce.setChecked(false);
-						cbWhitelistExtra.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
 					}
 				}
 			});
-			cbWhitelistExtra.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			cbWhitelistExtra1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if (isChecked) {
 						cbCategory.setChecked(false);
 						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
+					}
+				}
+			});
+			cbWhitelistExtra2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked) {
+						cbCategory.setChecked(false);
+						cbOnce.setChecked(false);
+						cbWhitelist.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
 					}
 				}
 			});
@@ -1501,14 +1525,17 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Deny
 							result.restricted = true;
-							if (!cbWhitelist.isChecked() && !cbWhitelistExtra.isChecked()) {
+							if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked()
+									&& !cbWhitelistExtra2.isChecked()) {
 								mSelectCategory = cbCategory.isChecked();
 								mSelectOnce = cbOnce.isChecked();
 							}
 							if (cbWhitelist.isChecked())
 								onDemandWhitelist(restriction, null, result, hook);
-							else if (cbWhitelistExtra.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook), result, hook);
+							else if (cbWhitelistExtra1.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
+							else if (cbWhitelistExtra2.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
 							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
 							else
@@ -1522,14 +1549,17 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Allow
 							result.restricted = false;
-							if (!cbWhitelist.isChecked() && !cbWhitelistExtra.isChecked()) {
+							if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked()
+									&& !cbWhitelistExtra2.isChecked()) {
 								mSelectCategory = cbCategory.isChecked();
 								mSelectOnce = cbOnce.isChecked();
 							}
 							if (cbWhitelist.isChecked())
 								onDemandWhitelist(restriction, null, result, hook);
-							else if (cbWhitelistExtra.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook), result, hook);
+							else if (cbWhitelistExtra1.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
+							else if (cbWhitelistExtra1.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
 							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
 							else
@@ -1540,26 +1570,33 @@ public class PrivacyService {
 			return alertDialogBuilder;
 		}
 
-		private String getXExtra(PRestriction restriction, Hook hook) {
+		private String[] getXExtra(PRestriction restriction, Hook hook) {
 			if (hook != null)
 				if (hook.whitelist().equals(Meta.cTypeFilename)) {
 					String folder = new File(restriction.extra).getParent();
 					if (!TextUtils.isEmpty(folder))
-						return folder + File.separatorChar + "*";
+						return new String[] { folder + File.separatorChar + "*" };
 				} else if (hook.whitelist().equals(Meta.cTypeIPAddress)) {
 					int semi = restriction.extra.lastIndexOf(':');
 					String address = (semi >= 0 ? restriction.extra.substring(0, semi) : restriction.extra);
 					if (Patterns.IP_ADDRESS.matcher(address).matches()) {
 						int dot = address.lastIndexOf('.');
-						return address.substring(0, dot + 1) + '*'
-								+ (semi >= 0 ? restriction.extra.substring(semi) : "");
+						return new String[] {
+								address.substring(0, dot + 1) + '*'
+										+ (semi >= 0 ? restriction.extra.substring(semi) : ""),
+								address.substring(0, dot + 1) + '*' + (semi >= 0 ? '*' : "") };
 					} else {
 						int dot = restriction.extra.indexOf('.');
 						if (dot > 0)
-							return '*' + restriction.extra.substring(dot);
+							return new String[] {
+									'*' + restriction.extra.substring(dot),
+									'*'
+											+ restriction.extra.substring(dot,
+													semi >= 0 ? semi : restriction.extra.length())
+											+ (semi >= 0 ? '*' : "") };
 					}
 				}
-			return null;
+			return new String[0];
 		}
 
 		private void onDemandWhitelist(final PRestriction restriction, String xextra, final PRestriction result,
