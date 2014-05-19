@@ -67,11 +67,12 @@
 
 <p>The setting table holds information pertaining to settings on a global (uid='0') and per UID basis, as well as the white/blacklists.</p>
 
-| Field | Type | NULLABLE |
-|-------|------|----------|
-| name  | TEXT | NOTNULL  |
-| value | TEXT |          |
-| type  | TEXT |          |
+| Field | Type    | NULLABLE |
+|-------|---------|----------|
+| uid   | INTEGER | NOTNULL  |
+| name  | TEXT    | NOTNULL  |
+| value | TEXT    |          |
+| type  | TEXT    |          |
 
 <p>*Note: <code>WHERE name='State' and value='0'</code> means ‘restrictions need attention’ (orange), <code>WHERE name='State' and value='1'</code> means ‘restrictions are changed’ (grey), <code>WHERE name='State' and value='2'</code> means ‘restrictions are submitted’ (green)</p>
 <p>*Note: <code>WHERE uid='0' and type='Template'</code> contains the values designated in the restrictions template</p>
@@ -122,6 +123,7 @@
 <code>SELECT * FROM restriction WHERE method='inet' and restricted='3';</code>
 
 <p>This will list all apps that have unrestricted Internet/Inet access</p>
+
 
 <code>UPDATE setting SET value='true' where name='OnDemand' and uid IN (10001,10002,10003);</code>
 
