@@ -43,7 +43,7 @@
 
 <h4>For category:</h4>
 
-| Value | as seen in XPrivay | Meaning               |
+| Value | as seen in XPrivacy| Meaning               |
 |-------|--------------------|-----------------------|
 | 0     | [ ] [?]            | not restricted, ask   |
 | 1     | [x] [?]            | restricted, ask       |
@@ -52,7 +52,7 @@
 
 <h4>For method:</h4>
 
-| Value | as seen in XPrivay | Meaning               |
+| Value | as seen in XPrivacy| Meaning               |
 |-------|--------------------|-----------------------|
 | 0     | [x] [?]            | restricted, ask       |
 | 1     | [ ] [?]            | not restricted, ask   |
