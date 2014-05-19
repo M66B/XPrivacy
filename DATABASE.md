@@ -12,13 +12,13 @@
 
 <h3>From a PC:</h3>
 
-<code>adb shell</code>
-<code>sqlite3 /data/system/xprivacy/xprivacy.db</code>
+<p><code>adb shell</code></p>
+<p><code>sqlite3 /data/system/xprivacy/xprivacy.db</code></p>
 
 <h3>From a Terminal Emulator within Android:</h3>
 
-<code>su</code>
-<code>sqlite3 /data/system/xprivacy/xprivacy.db</code>
+<p><code>su</code></p>
+</p><code>sqlite3 /data/system/xprivacy/xprivacy.db</code></p>
 
 
 <p>*Note: You may need to install sqlite3 binaries</p>
