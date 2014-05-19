@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fixed applying template for functions with whitelists (reported on XDA)
+* Port number wildcard for IP-address and domain names ([issue](/../../issues/1649))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
