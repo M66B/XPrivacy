@@ -72,7 +72,7 @@
 | value | TEXT |          |
 | type  | TEXT |          |
 
-<p>*Note: <code>WHERE name='state' and value='0'</code> means ‘restrictions need attention’ (orange), <code>WHERE name='state' and value='1'</code> means ‘restrictions are changed’ (grey), <code>WHERE name='state' and value='2'</code> means ‘restrictions are submitted’ (green)</p>
+<p>*Note: <code>WHERE name='State' and value='0'</code> means ‘restrictions need attention’ (orange), <code>WHERE name='State' and value='1'</code> means ‘restrictions are changed’ (grey), <code>WHERE name='State' and value='2'</code> means ‘restrictions are submitted’ (green)</p>
 <p>*Note: <code>WHERE uid='0' and type='template'</code> contains the values in the designated in the restrictions template</p>
 <p>*Note: <code>WHERE type IN (Command, Filename, IPAddress, Library, Proc, Url)</code> pertain to the white/blacklist entries</p>
 
