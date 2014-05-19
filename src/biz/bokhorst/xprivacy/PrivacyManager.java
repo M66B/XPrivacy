@@ -468,7 +468,7 @@ public class PrivacyManager {
 									+ (parentAsked ? "+asked" : "+ask"), false);
 					boolean restricted = value.contains("true");
 					boolean asked = (!ondemand || value.contains("asked"));
-					if ((parentRestricted && !restricted) || (!parentAsked && asked))
+					if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.whitelist() != null)
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
 								&& restricted, parentAsked || asked));
 				}
