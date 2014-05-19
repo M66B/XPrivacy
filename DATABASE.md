@@ -122,7 +122,7 @@
 
 <p>This will list all apps that have unrestricted Internet/Inet access</p>
 
-<code>UPDATE setting SET value='true' where name='OnDemand' and uid IN (10001,10002,10003,);</code>
+<code>UPDATE setting SET value='true' where name='OnDemand' and uid IN (10001,10002,10003);</code>
 
 <p>This will enable onDemand for apps listed in the IN ()</p>
 
