@@ -3,10 +3,10 @@
 <h2>Introduction</h2>
 
 <p>XPrivacy utilizes 2 databases (<em>xprivacy.db</em> and <em>usage.db</em>), both are located in <em>/data/system/xprivacy</em>. Making a file backup of the database cannot safely be done in a running system and should be done from recovery!</p>
-<p>XPrivacy checks both the xprivacy database and usage database at system boot for integrity (using 'PRAGMA integrity_check'). If a database is found to be corrupt, the database is deleted, because repairing an sqlite database is mostly not possible (and Android doesn't have the tools for it installed). This can happen to the database of any application, but for XPrivacy it is of course a greater concern.Given the support info I receive, this fortunately happens rarely to the xprivacy database, but more to the usage database. The cause for this difference is that usage database is set to asynchronous mode for speed reasons (using 'PRAGMA synchronous=OFF').</p>
-<p>The usage database is just an aid and not critical for the operation of XPrivacy. Both the xprivacy and usage database are compacted at boot (using 'VACUUM'). This saves space and is good for performance, but the disadvantage is that twice the size of the database on disk space is needed.</p>
+<p>XPrivacy checks both the xprivacy database and usage database at system boot for integrity (using 'PRAGMA integrity_check'). If a database is found to be corrupt, the database is deleted, because repairing an sqlite database is mostly not possible (and Android doesn't have the tools for it installed). This can happen to the database of any application, but for XPrivacy it is of course a greater concern. Given the support info I receive, this fortunately happens rarely to the xprivacy database, but more to the usage database. The cause for this difference is that usage database is set to asynchronous mode for speed reasons (using 'PRAGMA synchronous=OFF').</p>
+<p>The usage database is just an aid and not critical for the operation of XPrivacy. Both the xprivacy and usage database are compacted at boot (using 'VACUUM'). This saves space and is good for performance, but the disadvantage is that twice the size of the database on disk space is temporarily needed.</p>
 <p>A full disk (/data/system is mounted on internal memory) is fatal for XPrivacy, because the database will become corrupt in this situation. Again looking at the support info, this also rarely happens.</p>
-<p>All mentioned sqlite commands are properly documented on the <a href="http://www.sqlite.org">SQLite Website</a></p>
+<p>All mentioned sqlite commands are properly documented on the <a href="http://www.sqlite.org">SQLite website</a></p>
 
 <h2>Accessing the databases:</h2>
 
@@ -24,14 +24,14 @@
 
 <p>*Note: You may need to install sqlite3 binaries</p>
 
-<h2><em>xprivacy.db</em> consists of two relevant TABLES</h2>
+<h2><em>xprivacy.db</em> consists of two relevant tables</h2>
 
 <h3>TABLE:restriction</h3>
 
 | FIELD       | TYPE    | NULLABLE |
 |-------------|---------|----------|
-| uid         | INTEGER | NOTNULL  |
-| restriction | TEXT    | NOTNULL  |
+| uid         | INTEGER | NOT NULL |
+| restriction | TEXT    | NOT NULL |
 | restricted  | INTEGER |          |
 
 <p>The restriction table holds information pertaining to the restriction and onDemand settings on a per UID basis.</p>
@@ -69,8 +69,8 @@
 
 | Field | Type    | NULLABLE |
 |-------|---------|----------|
-| uid   | INTEGER | NOTNULL  |
-| name  | TEXT    | NOTNULL  |
+| uid   | INTEGER | NOT NULL |
+| name  | TEXT    | NOT NULL |
 | value | TEXT    |          |
 | type  | TEXT    |          |
 
@@ -78,7 +78,7 @@
 <p>*Note: <code>WHERE uid='0' and type='Template'</code> contains the values designated in the restrictions template</p>
 <p>*Note: <code>WHERE type IN (Command, Filename, IPAddress, Library, Proc, Url)</code> pertain to the white/blacklist entries</p>
 
-<h2><em>usage.db</em> consists of one relevent table</h2>
+<h2><em>usage.db</em> consists of one relevant table</h2>
 
 <h3>TABLE:usage</h3>
 
@@ -155,3 +155,5 @@
 <code>DELETE FROM usage;</code>
 
 <p>THIS WILL DELETE ALL USAGE DATA</p>
+
+*This page was kindly contributed by [an0n981](https://github.com/an0n981)*
