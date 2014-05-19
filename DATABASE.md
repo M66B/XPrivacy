@@ -91,12 +91,12 @@
 
 | Field       | Type    | NULLABLE |
 |-------------|---------|----------|
-| uid         | INTEGER | NOTNULL  |
-| restriction | TEXT    | NOTNULL  |
-| method      | TEXT    | NOTNULL  |
-| extra       | TEXT    | NOTNULL  |
-| restricted  | INTEGER | NOTNULL  |
-| time        | INTEGER | NOTNULL  |
+| uid         | INTEGER | NOT NULL |
+| restriction | TEXT    | NOT NULL |
+| method      | TEXT    | NOT NULL |
+| extra       | TEXT    | NOT NULL |
+| restricted  | INTEGER | NOT NULL |
+| time        | INTEGER | NOT NULL |
 
 <p>NOTE: Although the 'extra' field doesn't always contain data, it is still NOT NULL. To query empty entries: <code>WHERE extra=''</code></p>
 
