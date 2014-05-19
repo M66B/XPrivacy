@@ -104,46 +104,46 @@
 
 <code>SELECT * FROM setting WHERE uid='0';</code>
 
-<p>//This will show all global XPrivacy settings (including those not visible within the app)</p>
+<p>This will show all global XPrivacy settings (including those not visible within the app)</p>
 
 <code>SELECT * FROM restriction WHERE uid='1000';</code>
 
-<p>//This will show all restriction settings for UID 1000</p>
+<p>This will show all restriction settings for UID 1000</p>
 
 <code>SELECT * from setting WHERE name='OnDemand' and value='false';</code>
 
-<p>//This will list all apps where onDemand is not active</p>
+<p>This will list all apps where onDemand is not active</p>
 
 <code>SELECT * from restriction WHERE restriction='internet' and method='' and restricted='2' ORDER BY uid;</code>
 
-<p>//This will list all apps that have unrestricted access to the Internet category, ordered by UID</p>
+<p>This will list all apps that have unrestricted access to the Internet category, ordered by UID</p>
 
 <code>SELECT * FROM restriction WHERE method='inet' and restricted='3';</code>
 
-<p>//This will list all apps that have unrestricted Internet/Inet access</p>
+<p>This will list all apps that have unrestricted Internet/Inet access</p>
 
 <code>UPDATE setting SET value='true' where name='OnDemand' and uid IN (10001,10002,10003,);</code>
 
-<p>//This will enable onDemand for apps listed in the IN ()</p>
+<p>This will enable onDemand for apps listed in the IN ()</p>
 
 <code>UPDATE restriction SET restricted='0' WHERE uid IN (10001,10002,10003) and method='connect';</code>
 
-<p>//This will turn on onDemand for Internet/Connect with a time out default to deny for apps listed in the IN ()</p>
+<p>This will turn on onDemand for Internet/Connect with a time out default to deny for apps listed in the IN ()</p>
 
 <code>UPDATE restriction SET restricted='3' WHERE uid IN (10001,10002,10003) and method='open';</code>
 
-<p>//This will allow unrestricted access to Storage/Open for the listed apps</p>
+<p>This will allow unrestricted access to Storage/Open for the listed apps</p>
 
 <h3><em>usage.db</em></h3>
 
 <code>SELECT * FROM usage ORDER BY time DESC;</code>
 
-<p>//This will show all usage data ordered by TIME (newest entries first)</p>
+<p>This will show all usage data ordered by TIME (newest entries first)</p>
 
 <code>DELETE FROM usage where uid='1000';</code>
 
-<p>//This will delete all usage entries for UID 1000</p>
+<p>This will delete all usage entries for UID 1000</p>
 
 <code>DELETE FROM usage;</code>
 
-<p>//THIS WILL DELETE ALL USAGE DATA</p>
+<p>THIS WILL DELETE ALL USAGE DATA</p>
