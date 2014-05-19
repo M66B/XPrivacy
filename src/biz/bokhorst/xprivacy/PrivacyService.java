@@ -1571,32 +1571,31 @@ public class PrivacyService {
 		}
 
 		private String[] getXExtra(PRestriction restriction, Hook hook) {
+			List<String> listResult = new ArrayList<String>();
 			if (hook != null)
 				if (hook.whitelist().equals(Meta.cTypeFilename)) {
 					String folder = new File(restriction.extra).getParent();
 					if (!TextUtils.isEmpty(folder))
-						return new String[] { folder + File.separatorChar + "*" };
+						listResult.add(folder + File.separatorChar + "*");
 				} else if (hook.whitelist().equals(Meta.cTypeIPAddress)) {
 					int semi = restriction.extra.lastIndexOf(':');
 					String address = (semi >= 0 ? restriction.extra.substring(0, semi) : restriction.extra);
 					if (Patterns.IP_ADDRESS.matcher(address).matches()) {
 						int dot = address.lastIndexOf('.');
-						return new String[] {
-								address.substring(0, dot + 1) + '*'
-										+ (semi >= 0 ? restriction.extra.substring(semi) : ""),
-								address.substring(0, dot + 1) + '*' + (semi >= 0 ? '*' : "") };
+						listResult.add(address.substring(0, dot) + ".*"
+								+ (semi >= 0 ? restriction.extra.substring(semi) : ""));
+						if (semi >= 0)
+							listResult.add(address.substring(0, dot) + ".*:*");
 					} else {
 						int dot = restriction.extra.indexOf('.');
-						if (dot > 0)
-							return new String[] {
-									'*' + restriction.extra.substring(dot),
-									'*'
-											+ restriction.extra.substring(dot,
-													semi >= 0 ? semi : restriction.extra.length())
-											+ (semi >= 0 ? '*' : "") };
+						if (dot > 0) {
+							listResult.add('*' + restriction.extra.substring(dot));
+							if (semi >= 0)
+								listResult.add('*' + restriction.extra.substring(dot, semi) + ":*");
+						}
 					}
 				}
-			return new String[0];
+			return listResult.toArray(new String[0]);
 		}
 
 		private void onDemandWhitelist(final PRestriction restriction, String xextra, final PRestriction result,
