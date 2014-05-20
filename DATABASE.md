@@ -40,7 +40,7 @@
 <p>Entries where the method field is blank always pertain to the restriction category.</p>
 <p>If a restriction category is set to block or allow the entire category, the individual methods will not be listed (with the exception of dangerous methods).</p>
 <p>The 'restricted' field lists the status of the restrictions settings, the possible values are 0-3.</p>
-<p>The meaning of the 'value' field depends on whether the restriction pertains to a category or a method:</p>
+<p>The meaning of the 'restricted' field depends on whether the restriction pertains to a category or a method:</p>
 
 <h4>For category:</h4>
 
@@ -142,6 +142,13 @@
 
 <p>This will allow unrestricted access to Storage/Open for the listed apps</p>
 
+<code>SELECT uid, restricted FROM restriction WHERE method='loadLibrary' and restricted IN (0,1,3) ORDER BY uid;</code>
+
+<p>This will list all apps that can load native libraries, either permanently or onDemand</p>
+
+<p><code>SELECT s.uid, s.name, r.restricted FROM setting s JOIN restriction r on s.uid=r.uid WHERE (r.method='inet' and r.restricted IN (0,1,3)) and (s.type='Library' and s.value='true') ORDER BY s.uid, s.name;</code></p>
+
+<p>This will list UID, native library name and INET permission value for all apps that have INET access (onDemand or permanent) as well as white listed native libraries</p>
 <h3><em>usage.db</em></h3>
 
 <code>SELECT * FROM usage ORDER BY time DESC;</code>
