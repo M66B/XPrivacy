@@ -1558,7 +1558,7 @@ public class PrivacyService {
 								onDemandWhitelist(restriction, null, result, hook);
 							else if (cbWhitelistExtra1.isChecked())
 								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
-							else if (cbWhitelistExtra1.isChecked())
+							else if (cbWhitelistExtra2.isChecked())
 								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
 							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
