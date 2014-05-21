@@ -26,12 +26,12 @@
     <string name="menu_sort">Ordina</string>
     <string name="menu_filter">Filtra</string>
     <string name="menu_all">Tutto</string>
-    <string name="menu_toggle">Attiva restrizioni</string>
+    <string name="menu_toggle">Attiva/Disattiva restrizioni</string>
     <string name="menu_clear_all">Azzera tutto</string>
     <string name="menu_restrict_all">Restringi tutto</string>
     <string name="menu_clear_usage">Azzera</string>
     <string name="menu_clear_db">Azzera tutti i dati di XPrivacy</string>
-    <string name="menu_usage_all">Attiva filtro</string>
+    <string name="menu_usage_all">Attiva/Disattiva filtro</string>
     <string name="menu_apply">Applica modello</string>
     <string name="menu_clear">Azzera</string>
     <string name="menu_app_launch">Lancia</string>
