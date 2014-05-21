@@ -887,6 +887,11 @@ and to select these applications using the action bar *select all* to only expor
 
 Batch enabling on demand restricting using the template could lead to an on demand "hell" and easily bring down your device. On demand restricting is enabled by default for new applications, but not for existing applications. The template enables on demand restricting only if the application on demand restricting master switch is enabled. The master switch can be found in the application specific settings or next to the on/off switch. You can batch enable the master switch by enabling "restrict dangerous" in the main settings.
 
+<a name="FAQ56"></a>
+**(56) How can I recover from a bootloop?**
+
+For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler-Recovery.zip](http://forum.xda-developers.com/attachment.php?attachmentid=2568891&d=1391958634). Alternatively (on most devices) press the volume down 5 times during boot (It will vibrate with each press when done correctly).
+
 Support
 -------
 
