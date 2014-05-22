@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Updated Italian translation
+* Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
