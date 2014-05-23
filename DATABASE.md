@@ -32,6 +32,7 @@
 |-------------|---------|----------|
 | uid         | INTEGER | NOT NULL |
 | restriction | TEXT    | NOT NULL |
+| method      | TEXT    | NOT NULL |
 | restricted  | INTEGER |          |
 
 <p>The restriction table holds information pertaining to the restriction and onDemand settings on a per UID basis.</p>
