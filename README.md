@@ -780,9 +780,10 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 * The default after dialog timeout is taken from the current restriction settings
 * There are four possiblities for the restriction / on demand checkboxes:
 	* [ ] [ ] You will not receive an on demand popup, the permission will always be allowed
-	* [ ] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will 		be allowed once
-	* [x] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will 		be denied once
+	* [ ] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will be allowed once
+	* [x] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will be denied once
 	* [x] [ ] You will not receive an on demand popup, the permission will always be denied
+* Be aware that the on demand popups are globally, which could be an issue if your device has multiple users. Unfortunately this cannot be change.
 
 <a name="FAQ35"></a>
 **(35) Do I need the pro enabler to use the pro license?**
@@ -878,9 +879,11 @@ This ensures that other applications cannot uninstall XPrivacy without your know
 **(54) Exporting and importing takes a long time**
 
 There are about 250 restrictions and additionally there can be quite some settings, for example when you use white/black lists.
-So, yes, exporting and importing can take quite some time. The default is to export everything, since the export is meant to be a full backup.
-However, it is possible to filter the applications you want to export, for example only user applications with restrictions,
-and to select these applications using the action bar *select all* to only export a part of the applications.
+So, yes, exporting and importing can take quite some time.
+The default is to export everything, since the export is meant to be a full backup.
+However, it is possible to filter the applications you want to export using the filter icon in the action bar,
+for example only user applications with restrictions,
+and to select these applications using the action bar *select all* (first icon) to only export a part of the applications.
 
 <a name="FAQ55"></a>
 **(55) Why does applying the template not enable on demand restricting?**
