@@ -64,6 +64,8 @@
 
 <p>*NOTE: Although the 'method' field doesn't always contain data, it is still NOT NULL. To query empty entries: <code>WHERE method=''</code></p>
 
+<p>*NOTE: Changes to the restriction table require a reboot to take effect, bacause the server side cache is only flushed during a reboot or when restriction changes are applied in the XPrivacy app. For more info see <a href="http://forum.xda-developers.com/showpost.php?p=52669913&postcount=9277">here</a></p>
+
 <h3>TABLE:setting</h3>
 
 <p>The setting table holds information pertaining to settings on a global (uid='0') and per UID basis, as well as the white/blacklists.</p>
