@@ -15,6 +15,7 @@ Changelog
 
 **Next release**
 
+* Acquire partial wakelock for batch operations ([issue](/../../issues/1683))
 * Updated Italian translation
 * Updated traditional Chinese translation
 

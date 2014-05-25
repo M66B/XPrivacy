@@ -466,6 +466,7 @@ XPrivacy asks for the following Android permissions:
 * Boot: to be able to check if XPrivacy is enabled
 * Internet: to be able to submit and fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
 * Storage: to be able to export XPrivacy's settings to the SD card (only [pro version](http://www.xprivacy.eu/))
+* Wakelock: to keep the processor running during batch operations
 
 If desired, you can even restrict XPrivacy from accessing any of the above,
 but there are some [limitations](https://github.com/M66B/XPrivacy#limitations).
