@@ -346,6 +346,8 @@ for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1607)).
 
 XPrivacy seems to cause camera lag on a Samsung Galaxy Note II ([issue](https://github.com/M66B/XPrivacy/issues/715))
 
+Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
+
 Installation
 ------------
 
