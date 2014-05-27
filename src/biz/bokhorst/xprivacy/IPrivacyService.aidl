@@ -25,5 +25,6 @@ interface IPrivacyService {
 	void deleteSettings(int uid);
 
 	void clear();
+	void flush();
 	void dump(int uid);
 }

@@ -1213,6 +1213,22 @@ public class PrivacyService {
 		}
 
 		@Override
+		public void flush() throws RemoteException {
+			try {
+				enforcePermission(0);
+				synchronized (mRestrictionCache) {
+					mRestrictionCache.clear();
+				}
+				synchronized (mSettingCache) {
+					mSettingCache.clear();
+				}
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
+			}
+		}
+
+		@Override
 		public void dump(int uid) throws RemoteException {
 			if (uid == 0) {
 
