@@ -940,7 +940,8 @@ and include information about your device type, Android and XPrivacy version.
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-New features are only implemented when requested on GitHub with a detailed description of the feature and only if there are ten +1's.
+New features are only considered for implementation when requested on GitHub with a detailed description of the feature and only if there are ten +1's within two weeks.
+You can promote your feature request on XDA, but for a maximum of two times only. Feature requests promoted more than two times will be closed and not be considered for implementation anymore.
 See [here](http://forum.xda-developers.com/showpost.php?p=51574315&postcount=8776) for some more information.
 
 Please [read this](http://forum.xda-developers.com/showpost.php?p=52644313&postcount=9241) before voting.
