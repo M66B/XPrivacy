@@ -45,6 +45,7 @@
     <string name="menu_tutorial">說明</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">關閉</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">正在取消...</string>
     <string name="msg_aborted">已取消</string>
     <string name="msg_new">已安裝</string>
@@ -184,5 +185,6 @@
     <string name="tutorial_detailsheader">點選APP圖示顯示進階動作選單</string>
     <string name="tutorial_detailslist">點選﹀符號可編輯細部權限設定</string>
     <string name="permission_manage">管理/強制停止app</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

@@ -610,6 +610,7 @@ public class ActivityApp extends ActivityBase {
 			public void onClick(DialogInterface dialog, int _which) {
 				XApplication.manage(ActivityApp.this, mAppInfo.getPackageName().get(which),
 						XApplication.cActionKillProcess);
+				Toast.makeText(ActivityApp.this, getString(R.string.msg_done), Toast.LENGTH_SHORT).show();
 			}
 		});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {

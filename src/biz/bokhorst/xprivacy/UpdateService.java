@@ -22,6 +22,7 @@ public class UpdateService extends Service {
 	public static String cAction = "Action";
 	public static int cActionBoot = 1;
 	public static int cActionUpdated = 2;
+	public static String cFlush = "biz.bokhorst.xprivacy.action.FLUSH";
 
 	private static Thread mWorkerThread;
 
@@ -34,6 +35,17 @@ public class UpdateService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		// Check if work
 		if (intent == null) {
+			stopSelf();
+			return 0;
+		}
+
+		// Check intent
+		if (cFlush.equals(intent.getAction())) {
+			try {
+				PrivacyService.getClient().flush();
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 			stopSelf();
 			return 0;
 		}

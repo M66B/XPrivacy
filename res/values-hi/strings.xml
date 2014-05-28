@@ -45,6 +45,7 @@
     <string name="menu_tutorial">शिक्षा</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">नया</string>
@@ -184,5 +185,6 @@
     <string name="tutorial_detailsheader">अधिक कार्य के लिए app icon को tap करे</string>
     <string name="tutorial_detailslist">प्रतिबंधित श्रेणी के अपवाद देखने के लिए down arrow को tap करे</string>
     <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

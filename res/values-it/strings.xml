@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Guida</string>
     <string name="menu_exclude">Escludi</string>
     <string name="menu_close">Chiudi</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Abortisco</string>
     <string name="msg_aborted">Abortito</string>
     <string name="msg_new">Nuovo</string>
@@ -185,5 +186,6 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="tutorial_detailsheader">Tocca l\'icona dell\'applicazione per ulteriori azioni</string>
     <string name="tutorial_detailslist">Tocca la freccia verso il basso per visualizzare le funzioni escluse di una categoria ristretta</string>
     <string name="permission_manage">Gestisci le applicazioni, inclusa la chiusura</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

@@ -15,7 +15,9 @@ Changelog
 
 **Next release**
 
-* Acquire partial wakelock for batch operations ([issue](/../../issues/1683))
+* Acquiring partial wakelock for batch operations ([issue](/../../issues/1683))
+* Added option/interface to clear service cache ([issue](/../../issues/1678))
+* Updated Dutch translation
 * Updated Italian translation
 * Updated traditional Chinese translation
 

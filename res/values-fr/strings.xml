@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Didacticiel</string>
     <string name="menu_exclude">Exclure</string>
     <string name="menu_close">Fermer</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Arrêt en cours</string>
     <string name="msg_aborted">Arrêté</string>
     <string name="msg_new">Nouv. :</string>
@@ -184,5 +185,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="tutorial_detailsheader">Appuyez sur l’icône pour plus d’actions.</string>
     <string name="tutorial_detailslist">Appuyez sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions.</string>
     <string name="permission_manage">Gérer les applications, y compris les tuer</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

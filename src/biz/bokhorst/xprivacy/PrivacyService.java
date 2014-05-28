@@ -1222,6 +1222,7 @@ public class PrivacyService {
 				synchronized (mSettingCache) {
 					mSettingCache.clear();
 				}
+				Util.log(null, Log.WARN, "Service cache flushed");
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());

@@ -16,7 +16,12 @@
     <permission
         android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES"
         android:description="@string/permission_manage"
-        android:label="@string/app_name"
+        android:label="@string/permission_manage"
+        android:protectionLevel="dangerous" />
+    <permission
+        android:name="biz.bokhorst.xprivacy.MANAGE_XPRIVACY"
+        android:description="@string/permission_restrictions"
+        android:label="@string/permission_restrictions"
         android:protectionLevel="dangerous" />
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -26,6 +31,7 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES" />
+    <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_XPRIVACY" />
     <uses-permission android:name="biz.bokhorst.xprivacy.pro.CHECK" />
 
     <supports-screens
@@ -171,7 +177,13 @@
         <service
             android:name=".UpdateService"
             android:enabled="true"
-            android:process=":update" />
+            android:exported="true"
+            android:permission="biz.bokhorst.xprivacy.MANAGE_XPRIVACY"
+            android:process=":update" >
+            <intent-filter>
+                <action android:name="biz.bokhorst.xprivacy.action.FLUSH" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

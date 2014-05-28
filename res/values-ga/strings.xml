@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">Nua</string>
@@ -184,5 +185,6 @@
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
     <string name="permission_manage">Manage applications, including killing</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

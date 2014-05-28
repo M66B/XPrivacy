@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Bimbingan</string>
     <string name="menu_exclude">Kecualikan</string>
     <string name="menu_close">Tutup</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Sedang dibatalkan</string>
     <string name="msg_aborted">Dibatalkan</string>
     <string name="msg_new">Baru</string>
@@ -184,5 +185,6 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="tutorial_detailsheader">Tekan ikon aplikasi untuk lebih lagi tindakan</string>
     <string name="tutorial_detailslist">Tekan anak panah ke bawah untuk lihat pengecualian fungsi sekatan kategori</string>
     <string name="permission_manage">Menguruskan aplikasi, termasuk mematikan</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

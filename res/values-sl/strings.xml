@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Navodila</string>
     <string name="menu_exclude">Izključi</string>
     <string name="menu_close">Zapri</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Preklicujem</string>
     <string name="msg_aborted">Preklicano</string>
     <string name="msg_new">Novo</string>
@@ -184,5 +185,6 @@
     <string name="tutorial_detailsheader">Tapni ikono aplikacije za več možnosti</string>
     <string name="tutorial_detailslist">Tapni puščico navzdol za pregled izjem funkcij v omejeni kategoriji</string>
     <string name="permission_manage">Upravljaj programe, vključno z ubijanjem(programov)</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>
