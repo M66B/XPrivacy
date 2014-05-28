@@ -17,6 +17,7 @@ Changelog
 
 * Acquiring partial wakelock for batch operations ([issue](/../../issues/1683))
 * Added option/interface to clear service cache ([issue](/../../issues/1678))
+* Not storing salt into database anymore for increased privacy ([issue](/../../issues/1661))
 * Updated Dutch translation
 * Updated German translation
 * Updated Italian translation
