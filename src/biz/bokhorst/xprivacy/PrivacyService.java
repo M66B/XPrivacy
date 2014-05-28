@@ -408,7 +408,7 @@ public class PrivacyService {
 				// Check for self
 				if (Util.getAppId(restriction.uid) == getXUid()) {
 					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
-							&& "getString".equals(restriction.methodName)) {
+							&& ("getString".equals(restriction.methodName) || "SERIAL".equals(restriction.methodName))) {
 						mresult.asked = true;
 						return mresult;
 					}

@@ -325,7 +325,9 @@ Limitations
 	* Another known situation are some restrictions triggered by hardware buttons, like the volume buttons
 	* This cannot be fixed, because the on demand dialog is locking a system process
 	* The on demand dialog will timeout after 20 seconds, so this is not a major problem
-* You cannot restrict the Android ID for XPrivacy because it is used for submitting restrictions
+* You cannot restrict the serial number and the Android ID for XPrivacy, because it is used for submitting restrictions
+	* The Android ID is salted with the serial number and MD5 hashed before communicating with the crowd sourced restrictions server
+	* This means that the crowd sourced restrictions server never gets the serial number nor the Android ID
 * You cannot restrict *IPC* for XPrivacy because it is needed for internal checks
 * You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file
 * You cannot restrict *system* for XPrivacy because it is needed to get an application list
