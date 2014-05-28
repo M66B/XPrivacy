@@ -168,6 +168,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		if (getIntent().getAction().equals(Intent.ACTION_VIEW))
 			Util.importProLicense(new File(getIntent().getData().getEncodedPath()));
 
+		// Delete legacy salt
+		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, null, false);
+		if (salt != null && salt.equals(PrivacyManager.getSalt(userId)))
+			PrivacyManager.setSetting(userId, PrivacyManager.cSettingSalt, null);
+
 		// Set layout
 		setContentView(R.layout.mainlist);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);

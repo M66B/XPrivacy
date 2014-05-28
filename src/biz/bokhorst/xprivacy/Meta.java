@@ -10,6 +10,7 @@ public class Meta {
 	private static List<Hook> mListHook = new ArrayList<Hook>();
 
 	public final static String cTypeAccount = "Account";
+	public final static String cTypeAccountHash = "AccountHash";
 	public final static String cTypeApplication = "Application";
 	public final static String cTypeContact = "Contact";
 	public final static String cTypeTemplate = "Template";

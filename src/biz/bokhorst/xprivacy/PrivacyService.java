@@ -989,6 +989,13 @@ public class PrivacyService {
 		@SuppressLint("DefaultLocale")
 		public PSetting getSetting(PSetting setting) throws RemoteException {
 			int userId = Util.getUserId(setting.uid);
+			if (Meta.cTypeAccountHash.equals(setting.type))
+				try {
+					setting.type = Meta.cTypeAccount;
+					setting.name = Util.sha1(setting.name);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
 			PSetting result = new PSetting(setting.uid, setting.type, setting.name, setting.value);
 
 			try {

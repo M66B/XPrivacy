@@ -99,7 +99,7 @@ public class PrivacyManager {
 	public final static String cSettingSortInverted = "SortInverted";
 	public final static String cSettingModifyTime = "ModifyTime";
 	public final static String cSettingTheme = "Theme";
-	private final static String cSettingSalt = "Salt";
+	public final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
 	public final static String cSettingTutorialMain = "TutorialMain";
