@@ -99,7 +99,7 @@ public class PrivacyManager {
 	public final static String cSettingSortInverted = "SortInverted";
 	public final static String cSettingModifyTime = "ModifyTime";
 	public final static String cSettingTheme = "Theme";
-	public final static String cSettingSalt = "Salt";
+	private final static String cSettingSalt = "Salt";
 	public final static String cSettingVersion = "Version";
 	public final static String cSettingFirstRun = "FirstRun";
 	public final static String cSettingTutorialMain = "TutorialMain";
@@ -550,6 +550,11 @@ public class PrivacyManager {
 	}
 
 	// Settings
+
+	public static String getSalt(int userId) {
+		String def = (Build.SERIAL == null ? "" : Build.SERIAL);
+		return getSetting(userId, PrivacyManager.cSettingSalt, def, true);
+	}
 
 	public static boolean getSettingBool(int uid, String name, boolean defaultValue, boolean useCache) {
 		return Boolean.parseBoolean(getSetting(uid, name, Boolean.toString(defaultValue), useCache));

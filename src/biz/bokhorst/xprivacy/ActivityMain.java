@@ -32,7 +32,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -164,15 +163,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Check privacy service client
 		if (!PrivacyService.checkClient())
 			return;
-
-		// Salt should be the same when exporting/importing
-		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, null, false);
-		if (salt == null) {
-			salt = Build.SERIAL;
-			if (salt == null)
-				salt = "";
-			PrivacyManager.setSetting(userId, PrivacyManager.cSettingSalt, salt);
-		}
 
 		// Import license file
 		if (getIntent().getAction().equals(Intent.ACTION_VIEW))
