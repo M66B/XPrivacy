@@ -5,6 +5,7 @@
         <item name="icon_help">@android:drawable/ic_menu_help</item>
         <item name="icon_info">@drawable/info_holo_dark</item>
         <item name="icon_info_book">@drawable/info_book_holo_dark</item>
+        <item name="icon_whitelist">@drawable/whitelist_holo_dark</item>
         <item name="icon_internet">@drawable/internet_holo_dark</item>
         <item name="icon_used">@drawable/used_holo_dark</item>
         <item name="icon_used_grayed">@drawable/used_holo_dark_grayed</item>
@@ -32,6 +33,7 @@
         <item name="icon_help">@android:drawable/ic_menu_help</item>
         <item name="icon_info">@drawable/info_holo_light</item>
         <item name="icon_info_book">@drawable/info_book_holo_light</item>
+        <item name="icon_whitelist">@drawable/whitelist_holo_light</item>
         <item name="icon_internet">@drawable/internet_holo_light</item>
         <item name="icon_used">@drawable/used_holo_light</item>
         <item name="icon_used_grayed">@drawable/used_holo_light_grayed</item>

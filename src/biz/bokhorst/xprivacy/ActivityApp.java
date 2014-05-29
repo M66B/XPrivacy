@@ -1286,6 +1286,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgInfo;
 			public TextView tvMethodName;
 			public ImageView imgCbMethodRestricted;
+			public ImageView imgCbMethodWhitelist;
 			public ProgressBar pbRunning;
 			public ImageView imgCbMethodAsk;
 			public LinearLayout llMethodName;
@@ -1299,6 +1300,7 @@ public class ActivityApp extends ActivityBase {
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
 				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
+				imgCbMethodWhitelist = (ImageView) row.findViewById(R.id.imgCbMethodWhitelist);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
 				imgCbMethodAsk = (ImageView) row.findViewById(R.id.imgCbMethodAsk);
 				llMethodName = (LinearLayout) row.findViewById(R.id.llMethodName);
@@ -1316,6 +1318,7 @@ public class ActivityApp extends ActivityBase {
 			private boolean permission;
 			private RState rstate;
 			private boolean ondemand;
+			private boolean whitelist;
 
 			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
@@ -1339,6 +1342,10 @@ public class ActivityApp extends ActivityBase {
 					if (ondemand)
 						ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false, false);
+					if (md.whitelist() == null)
+						whitelist = false;
+					else
+						whitelist = PrivacyManager.listWhitelisted(mAppInfo.getUid()).containsKey(md.whitelist());
 
 					return holder;
 				}
@@ -1367,6 +1374,8 @@ public class ActivityApp extends ActivityBase {
 					// Display restriction
 					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
+
+					holder.imgCbMethodWhitelist.setVisibility(whitelist ? View.VISIBLE : View.GONE);
 
 					if (ondemand) {
 						holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
@@ -1534,6 +1543,7 @@ public class ActivityApp extends ActivityBase {
 			// Display restriction
 			holder.llMethodName.setClickable(false);
 			holder.imgCbMethodRestricted.setVisibility(View.INVISIBLE);
+			holder.imgCbMethodWhitelist.setVisibility(View.GONE);
 
 			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,

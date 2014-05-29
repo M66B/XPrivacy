@@ -134,6 +134,16 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dip"
+            android:drawableLeft="?attr/icon_whitelist"
+            android:drawablePadding="6dip"
+            android:gravity="center_vertical"
+            android:text="@string/menu_whitelists"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
         <!-- dangerous -->
 
         <LinearLayout
