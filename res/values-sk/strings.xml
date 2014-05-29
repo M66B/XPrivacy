@@ -45,7 +45,7 @@
     <string name="menu_tutorial">Príručka</string>
     <string name="menu_exclude">Vylúčiť</string>
     <string name="menu_close">Zavrieť</string>
-    <string name="menu_flush">Flush cache</string>
+    <string name="menu_flush">Vymazať vyrovnávaciu pamäť</string>
     <string name="msg_abort">Rušenie</string>
     <string name="msg_aborted">Zrušené</string>
     <string name="msg_new">Nové</string>
@@ -185,6 +185,6 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="tutorial_detailsheader">Kliknite na ikonu aplikácie pre viac akcií</string>
     <string name="tutorial_detailslist">Kliknite na šípku nadol pre zobrazenie funkčných výnimiek pre kategóriu obmedzení</string>
     <string name="permission_manage">Spravovať aplikácie, vrátane ich ukončenia</string>
-    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
+    <string name="permission_restrictions">Spravovať obmedzenia a nastavenia XPrivacy</string>
 
 </resources>
