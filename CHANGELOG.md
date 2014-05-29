@@ -21,6 +21,12 @@ Changelog
 
 * Acquiring partial wakelock for batch operations ([issue](/../../issues/1683))
 * Added option/interface to clear service cache ([issue](/../../issues/1678))
+	* Run this as root to clear the service cache:
+
+```
+am startservice -a biz.bokhorst.xprivacy.action.FLUSH
+```
+
 * Not storing salt into database anymore for increased privacy ([issue](/../../issues/1661))
 * Updated Dutch translation
 * Updated German translation
