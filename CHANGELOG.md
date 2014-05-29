@@ -15,6 +15,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.26 BETA**
+
 * Acquiring partial wakelock for batch operations ([issue](/../../issues/1683))
 * Added option/interface to clear service cache ([issue](/../../issues/1678))
 * Not storing salt into database anymore for increased privacy ([issue](/../../issues/1661))
@@ -22,8 +26,6 @@ Changelog
 * Updated German translation
 * Updated Italian translation
 * Updated traditional Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.25 STABLE**
 
