@@ -903,7 +903,7 @@ For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler
 <a name='FAQ57'></a>
 **(57) How does 'Expert mode' work?**
 
-Expert mode has 3 sub-options which can be toggled indiviually.
+Expert mode has 3 sub-options which can be toggled individually.
 
 * *Restrict system component (Android)*
 	* Enabling this option will allow you to restrict applications which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc.). Note that restricting these core functions is very dangerous, and can easily lead to boot loops. Always create a backup (export/nadroid) before changing these restrictions.
