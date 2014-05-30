@@ -50,7 +50,7 @@
 | 0     | [ ] [?]            | not restricted, ask   |
 | 1     | [x] [?]            | restricted, ask       |
 | 2     | [ ] [ ]            | not restricted, asked |
-| 3     | [x] [ ]            | retricted, asked      |
+| 3     | [x] [ ]            | restricted, asked     |
 
 <h4>For method:</h4>
 
@@ -128,10 +128,10 @@
 <p>This will list all apps that have unrestricted Internet/Inet access</p>
 
 <code>SELECT * FROM setting WHERE type='Contact' ORDER BY uid;</code>
-<p>This will list all allowed contacts, orderd by UID. Note that contact value corresponds to the same entry in <em>/data/data/com.android.providers.contacts/databases/contacts2.db:raw_contacts:contact_id</em> (Location may very depending on your ROM)<p>
+<p>This will list all allowed contacts, ordered by UID. Note that contact value corresponds to the same entry in <em>/data/data/com.android.providers.contacts/databases/contacts2.db:raw_contacts:contact_id</em> (Location may very depending on your ROM)<p>
 
 <code>SELECT * FROM setting WHERE type='Application' ORDER BY uid;</code>
-<p>This will list all allowed applications, orderd by UID.</p>
+<p>This will list all allowed applications, ordered by UID.</p>
 
 <code>UPDATE setting SET value='true' where name='OnDemand' and uid IN (10001,10002,10003);</code>
 
