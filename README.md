@@ -903,13 +903,14 @@ For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler
 <a name='FAQ57'></a>
 **(57) How does 'Expert mode' work?**
 
-Expert mode has 3 suboptions which can be toogled indiviually.
-* 'Restrict system component (Android)'
-	* Enabling this option will allow you to restrict apps which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc...). Note that restricting these core functions is very dangerous, and can easily lead to boot loops. Always create a backup (export/NANDROID) before changing these restrictions.
-* 'Restrict dangerous functions'
-	* Enabling this option will allow you to restrict system applications (app with a red background in the app overview) and dangerous functions (functions with a red backgroud in the app detail view). Note that disabling this option or expert mode will not change the status of restictions already in place, it will only prevent dangerous functions from being checked while applying the template or checking a category. Also note that individual dangerous functions can be restricted without enabling this option.
-* 'Use secure connections'
-	* This will force communications with the crowd source server (submitting/fetching, device registration) to travel through a secure socket. Note that this enabled by default and can only be disabled by enabling 'Expert mode'.
+Expert mode has 3 sub-options which can be toggled indiviually.
+
+* *Restrict system component (Android)*
+	* Enabling this option will allow you to restrict applications which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc.). Note that restricting these core functions is very dangerous, and can easily lead to boot loops. Always create a backup (export/nadroid) before changing these restrictions.
+* *Restrict dangerous functions*
+	* Enabling this option will allow you to restrict dangerous functions (functions with a red backgroud in the application detail view). Note that disabling this option or expert mode will not change the status of restictions already in place, it will only prevent dangerous functions from being checked while applying the template or checking a category. Also note that individual dangerous functions can be restricted without enabling this option.
+* *Use secure connections*
+	* This will force communications with the crowd sourced restrictions server (submitting/fetching, device registration) to travel through a secure socket. Note that this is enabled by default and can only be disabled by enabling *Expert mode*.
 
 Support
 -------
