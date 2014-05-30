@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Showing icon if there is white/black list for a function ([issue](/../../issues/1654))
+	* Thanks @[an0n981](https://github.com/an0n981) for the icons
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
