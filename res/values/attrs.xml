@@ -5,6 +5,7 @@
     <attr name="icon_help" format="reference" />
     <attr name="icon_info" format="reference" />
     <attr name="icon_info_book" format="reference" />
+    <attr name="icon_whitelist" format="reference" />
     <attr name="icon_internet" format="reference" />
     <attr name="icon_used" format="reference" />
     <attr name="icon_used_grayed" format="reference" />

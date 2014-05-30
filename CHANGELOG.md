@@ -15,9 +15,70 @@ Changelog
 
 **Next release**
 
-* Display disabled standard dangerous functions with a faint background color
+* Showing icon if there is white/black list for a function ([issue](/../../issues/1654))
+	* Thanks @[an0n981](https://github.com/an0n981) for the icons
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.26 BETA**
+
+* Acquiring partial wakelock for batch operations ([issue](/../../issues/1683))
+* Added option/interface to clear service cache ([issue](/../../issues/1678))
+	* Run this as root to clear the service cache:
+
+```
+am startservice -a biz.bokhorst.xprivacy.action.FLUSH
+```
+
+* Not storing salt into database anymore for increased privacy ([issue](/../../issues/1661))
+* Updated Dutch translation
+* Updated German translation
+* Updated Italian translation
+* Updated traditional Chinese translation
+
+**Version 2.0.25 STABLE**
+
+* Fixed applying template for functions with whitelists (reported on XDA)
+* Port number wildcard for IP-address and domain names ([issue](/../../issues/1649))
+
+**Version 2.0.24 BETA**
+
+* Reverted "Not storing salt into database anymore for increased privacy" ([issue](/../../issues/1661)) ([issue](/../../issues/1664))
+
+**Version 2.0.23 BETA**
+
+* Fixed displaying contacts without display name ([issue](/../../issues/1660))
+* Fixed on demand restricting for dangerous methods with whitelists ([issue](/../../issues/1653))
+* Not storing salt into database anymore for increased privacy ([issue](/../../issues/1661))
+* Easier pro license file import ([issue](/../../issues/1658))
+
+**Version 2.0.22 STABLE**
+
+* Fixed incompatibility with Xposed 2.6 beta 1 ([issue](/../../issues/1659))
+
+**Version 2.0.21 STABLE**
+
+* Fixed incompatibility with Xposed 2.6 beta 1 ([issue](/../../issues/1659))
+
+**Version 2.0.20 STABLE**
+
+* Updated French translation
+* Updated Slovak translation
+* Fixed hooking abstract methods ([issue](/../../issues/1647))
+
+**Version 2.0.19 STABLE**
+
+* Fixed handling of *removeActivityUpdates*
+
+**Version 2.0.18 STABLE**
+
+* Updated Italian translation
+
+**Version 2.0.17 BETA**
+
+* Fixed restricting activity recognition (category location)
+* Display disabled standard dangerous functions with a faint background color
 
 **Version 2.0.16 BETA**
 

@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
@@ -70,8 +71,8 @@ public class PrivacyService {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 323;
-	private static final String cServiceName = "xprivacy305";
+	private static final int cCurrentVersion = 333;
+	private static final String cServiceName = "xprivacy333";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -407,7 +408,7 @@ public class PrivacyService {
 				// Check for self
 				if (Util.getAppId(restriction.uid) == getXUid()) {
 					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
-							&& "getString".equals(restriction.methodName)) {
+							&& ("getString".equals(restriction.methodName) || "SERIAL".equals(restriction.methodName))) {
 						mresult.asked = true;
 						return mresult;
 					}
@@ -524,7 +525,8 @@ public class PrivacyService {
 					if (!methodFound && hook != null && hook.isDangerous())
 						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
 							mresult.restricted = false;
-							mresult.asked = true;
+							if (hook.whitelist() == null)
+								mresult.asked = true;
 						}
 
 					// Check whitelist
@@ -532,9 +534,11 @@ public class PrivacyService {
 						String value = getSetting(new PSetting(restriction.uid, hook.whitelist(), restriction.extra,
 								null)).value;
 						if (value == null) {
-							String xextra = getXExtra(restriction, hook);
-							if (xextra != null)
+							for (String xextra : getXExtra(restriction, hook)) {
 								value = getSetting(new PSetting(restriction.uid, hook.whitelist(), xextra, null)).value;
+								if (value != null)
+									break;
+							}
 						}
 						if (value != null) {
 							// true means allow, false means block
@@ -985,6 +989,13 @@ public class PrivacyService {
 		@SuppressLint("DefaultLocale")
 		public PSetting getSetting(PSetting setting) throws RemoteException {
 			int userId = Util.getUserId(setting.uid);
+			if (Meta.cTypeAccountHash.equals(setting.type))
+				try {
+					setting.type = Meta.cTypeAccount;
+					setting.name = Util.sha1(setting.name);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
 			PSetting result = new PSetting(setting.uid, setting.type, setting.name, setting.value);
 
 			try {
@@ -1209,6 +1220,23 @@ public class PrivacyService {
 		}
 
 		@Override
+		public void flush() throws RemoteException {
+			try {
+				enforcePermission(0);
+				synchronized (mRestrictionCache) {
+					mRestrictionCache.clear();
+				}
+				synchronized (mSettingCache) {
+					mSettingCache.clear();
+				}
+				Util.log(null, Log.WARN, "Service cache flushed");
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
+			}
+		}
+
+		@Override
 		public void dump(int uid) throws RemoteException {
 			if (uid == 0) {
 
@@ -1304,15 +1332,17 @@ public class PrivacyService {
 
 						if (restriction.extra != null && hook != null && hook.whitelist() != null) {
 							CSetting skey = new CSetting(restriction.uid, hook.whitelist(), restriction.extra);
-							CSetting xkey = null;
-							String xextra = getXExtra(restriction, hook);
-							if (xextra != null)
-								xkey = new CSetting(restriction.uid, hook.whitelist(), xextra);
 							synchronized (mSettingCache) {
-								if (mSettingCache.containsKey(skey)
-										|| (xkey != null && mSettingCache.containsKey(xkey))) {
+								if (mSettingCache.containsKey(skey)) {
 									Util.log(null, Log.WARN, "Already asked " + skey);
 									return false;
+								}
+								for (String xextra : getXExtra(restriction, hook)) {
+									CSetting xkey = new CSetting(restriction.uid, hook.whitelist(), xextra);
+									if (mSettingCache.containsKey(xkey)) {
+										Util.log(null, Log.WARN, "Already asked " + skey);
+										return false;
+									}
 								}
 							}
 						}
@@ -1411,7 +1441,8 @@ public class PrivacyService {
 			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
-			final CheckBox cbWhitelistExtra = (CheckBox) view.findViewById(R.id.cbWhitelistExtra);
+			final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
+			final CheckBox cbWhitelistExtra2 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra2);
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
@@ -1440,10 +1471,14 @@ public class PrivacyService {
 			if (hook != null && hook.whitelist() != null && restriction.extra != null) {
 				cbWhitelist.setText(resources.getString(R.string.title_whitelist, restriction.extra));
 				cbWhitelist.setVisibility(View.VISIBLE);
-				String xextra = getXExtra(restriction, hook);
-				if (xextra != null) {
-					cbWhitelistExtra.setText(resources.getString(R.string.title_whitelist, xextra));
-					cbWhitelistExtra.setVisibility(View.VISIBLE);
+				String[] xextra = getXExtra(restriction, hook);
+				if (xextra.length > 0) {
+					cbWhitelistExtra1.setText(resources.getString(R.string.title_whitelist, xextra[0]));
+					cbWhitelistExtra1.setVisibility(View.VISIBLE);
+				}
+				if (xextra.length > 1) {
+					cbWhitelistExtra2.setText(resources.getString(R.string.title_whitelist, xextra[1]));
+					cbWhitelistExtra2.setVisibility(View.VISIBLE);
 				}
 			}
 
@@ -1454,7 +1489,8 @@ public class PrivacyService {
 					if (isChecked) {
 						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
-						cbWhitelistExtra.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
 					}
 				}
 			});
@@ -1464,7 +1500,8 @@ public class PrivacyService {
 					if (isChecked) {
 						cbCategory.setChecked(false);
 						cbWhitelist.setChecked(false);
-						cbWhitelistExtra.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
 					}
 				}
 			});
@@ -1474,17 +1511,30 @@ public class PrivacyService {
 					if (isChecked) {
 						cbCategory.setChecked(false);
 						cbOnce.setChecked(false);
-						cbWhitelistExtra.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
 					}
 				}
 			});
-			cbWhitelistExtra.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			cbWhitelistExtra1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if (isChecked) {
 						cbCategory.setChecked(false);
 						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
+					}
+				}
+			});
+			cbWhitelistExtra2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked) {
+						cbCategory.setChecked(false);
+						cbOnce.setChecked(false);
+						cbWhitelist.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
 					}
 				}
 			});
@@ -1500,14 +1550,17 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Deny
 							result.restricted = true;
-							if (!cbWhitelist.isChecked() && !cbWhitelistExtra.isChecked()) {
+							if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked()
+									&& !cbWhitelistExtra2.isChecked()) {
 								mSelectCategory = cbCategory.isChecked();
 								mSelectOnce = cbOnce.isChecked();
 							}
 							if (cbWhitelist.isChecked())
 								onDemandWhitelist(restriction, null, result, hook);
-							else if (cbWhitelistExtra.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook), result, hook);
+							else if (cbWhitelistExtra1.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
+							else if (cbWhitelistExtra2.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
 							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
 							else
@@ -1521,14 +1574,17 @@ public class PrivacyService {
 						public void onClick(DialogInterface dialog, int which) {
 							// Allow
 							result.restricted = false;
-							if (!cbWhitelist.isChecked() && !cbWhitelistExtra.isChecked()) {
+							if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked()
+									&& !cbWhitelistExtra2.isChecked()) {
 								mSelectCategory = cbCategory.isChecked();
 								mSelectOnce = cbOnce.isChecked();
 							}
 							if (cbWhitelist.isChecked())
 								onDemandWhitelist(restriction, null, result, hook);
-							else if (cbWhitelistExtra.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook), result, hook);
+							else if (cbWhitelistExtra1.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
+							else if (cbWhitelistExtra2.isChecked())
+								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
 							else if (cbOnce.isChecked())
 								onDemandOnce(restriction, result);
 							else
@@ -1539,26 +1595,32 @@ public class PrivacyService {
 			return alertDialogBuilder;
 		}
 
-		private String getXExtra(PRestriction restriction, Hook hook) {
+		private String[] getXExtra(PRestriction restriction, Hook hook) {
+			List<String> listResult = new ArrayList<String>();
 			if (hook != null)
 				if (hook.whitelist().equals(Meta.cTypeFilename)) {
 					String folder = new File(restriction.extra).getParent();
 					if (!TextUtils.isEmpty(folder))
-						return folder + File.separatorChar + "*";
+						listResult.add(folder + File.separatorChar + "*");
 				} else if (hook.whitelist().equals(Meta.cTypeIPAddress)) {
 					int semi = restriction.extra.lastIndexOf(':');
 					String address = (semi >= 0 ? restriction.extra.substring(0, semi) : restriction.extra);
 					if (Patterns.IP_ADDRESS.matcher(address).matches()) {
 						int dot = address.lastIndexOf('.');
-						return address.substring(0, dot + 1) + '*'
-								+ (semi >= 0 ? restriction.extra.substring(semi) : "");
+						listResult.add(address.substring(0, dot) + ".*"
+								+ (semi >= 0 ? restriction.extra.substring(semi) : ""));
+						if (semi >= 0)
+							listResult.add(address.substring(0, dot) + ".*:*");
 					} else {
 						int dot = restriction.extra.indexOf('.');
-						if (dot > 0)
-							return '*' + restriction.extra.substring(dot);
+						if (dot > 0) {
+							listResult.add('*' + restriction.extra.substring(dot));
+							if (semi >= 0)
+								listResult.add('*' + restriction.extra.substring(dot, semi) + ":*");
+						}
 					}
 				}
-			return null;
+			return listResult.toArray(new String[0]);
 		}
 
 		private void onDemandWhitelist(final PRestriction restriction, String xextra, final PRestriction result,
@@ -1695,7 +1757,9 @@ public class PrivacyService {
 				Object am = cam.getMethod("self").invoke(null);
 				if (am == null)
 					return null;
-				return (Context) cam.getDeclaredField("mContext").get(am);
+				Field mContext = cam.getDeclaredField("mContext");
+				mContext.setAccessible(true);
+				return (Context) mContext.get(am);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return null;
@@ -2153,7 +2217,7 @@ public class PrivacyService {
 							dbUsageFile.delete();
 							new File(dbUsageFile + "-journal").delete();
 							dbUsage = SQLiteDatabase.openOrCreateDatabase(dbUsageFile, null);
-							Util.log(null, Log.ERROR, "Deleted corrupt usage data database");
+							Util.log(null, Log.WARN, "Deleted corrupt usage data database");
 						}
 
 						// Upgrade database if needed

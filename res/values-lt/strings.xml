@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Instrukcija</string>
     <string name="menu_exclude">Išskirti</string>
     <string name="menu_close">Uždaryti</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Nutraukti</string>
     <string name="msg_aborted">Atmesti</string>
     <string name="msg_new">Naujas</string>
@@ -184,5 +185,6 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="tutorial_detailsheader">Bakstelėkite ant piktogramos papildomiems veiksmams</string>
     <string name="tutorial_detailslist">Paspauskite rodyklę žemyn, kad pamatytumėte funkcijų kategorijas</string>
     <string name="permission_manage">Valdyti programas, įskaitant nutrauktus veikimus</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

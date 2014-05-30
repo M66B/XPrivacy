@@ -45,6 +45,7 @@
     <string name="menu_tutorial">チュートリアル</string>
     <string name="menu_exclude">除外する</string>
     <string name="menu_close">閉じる</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">中断する</string>
     <string name="msg_aborted">中断されました</string>
     <string name="msg_new">新規</string>
@@ -184,5 +185,6 @@
     <string name="tutorial_detailsheader">アプリケーションのアイコンをタップすれば、いろんな設定することができる</string>
     <string name="tutorial_detailslist">下のアローキーを押してればファンクションの例外を選ぶことができます</string>
     <string name="permission_manage">アプリケーションを管理する、強制終了など</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

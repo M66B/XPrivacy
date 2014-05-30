@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Samouczek</string>
     <string name="menu_exclude">Wyklucz</string>
     <string name="menu_close">Zamknij</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Przerywanie</string>
     <string name="msg_aborted">Przerwano</string>
     <string name="msg_new">Nowa aplikacja</string>
@@ -184,5 +185,6 @@
     <string name="tutorial_detailsheader">Tapnij na ikone aplikacji po więcej akcji</string>
     <string name="tutorial_detailslist">Tapnij na strzałkę w dół aby zobaczyć wyjątki ograniczeń w danej kategorii</string>
     <string name="permission_manage">Zarządzaj aplikacjami, włącznie z zabijaniem</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

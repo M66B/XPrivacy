@@ -53,9 +53,10 @@ public class SettingsDialog {
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
 		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
 
-		final Button btnClear = (Button) dlgSettings.findViewById(R.id.btnClear);
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
+		final Button btnClear = (Button) dlgSettings.findViewById(R.id.btnClear);
+		final Button btnFlush = (Button) dlgSettings.findViewById(R.id.btnFlush);
 
 		final EditText etSerial = (EditText) dlgSettings.findViewById(R.id.etSerial);
 		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
@@ -398,19 +399,6 @@ public class SettingsDialog {
 			}
 		});
 
-		// Handle clear
-		btnClear.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				for (EditText edit : edits)
-					edit.setText("");
-				etSearch.setText("");
-
-				for (CheckBox box : boxes)
-					box.setChecked(false);
-			}
-		});
-
 		// Handle manual randomize
 		btnRandom.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -430,6 +418,32 @@ public class SettingsDialog {
 				etSSID.setText(PrivacyManager.getRandomProp("SSID"));
 			}
 		});
+
+		// Handle clear
+		btnClear.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				for (EditText edit : edits)
+					edit.setText("");
+				etSearch.setText("");
+
+				for (CheckBox box : boxes)
+					box.setChecked(false);
+			}
+		});
+
+		// Handle flush
+		if (uid == 0)
+			btnFlush.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					Intent flushIntent = new Intent(UpdateService.cFlush);
+					context.startService(flushIntent);
+					Toast.makeText(context, context.getString(R.string.msg_done), Toast.LENGTH_SHORT).show();
+				}
+			});
+		else
+			btnFlush.setVisibility(View.GONE);
 
 		// Handle OK
 		btnOk.setOnClickListener(new View.OnClickListener() {

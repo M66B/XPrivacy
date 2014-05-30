@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Anleitung</string>
     <string name="menu_exclude">Ausschließen</string>
     <string name="menu_close">Schließen</string>
+    <string name="menu_flush">Cache Speicher löschen</string>
     <string name="msg_abort">Abbrechen</string>
     <string name="msg_aborted">Abgebrochen</string>
     <string name="msg_new">Neu</string>
@@ -184,5 +185,6 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="tutorial_detailsheader">Tippen Sie auf das App-Icon für weitere Aktionen</string>
     <string name="tutorial_detailslist">Tippen Sie auf den Pfeil, um die Ausnahmen der Funktionen einer beschränkten Kategorie zu sehen</string>
     <string name="permission_manage">Verwalte Apps, inklusive Beenden (kill)</string>
+    <string name="permission_restrictions">Verwalte XPrivacy Beschränkungen und Einstellungen</string>
 
 </resources>

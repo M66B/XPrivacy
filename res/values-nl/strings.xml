@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Zelfstudie</string>
     <string name="menu_exclude">Sluit uit</string>
     <string name="menu_close">Sluiten</string>
+    <string name="menu_flush">Leeg cache</string>
     <string name="msg_abort">Afbreken</string>
     <string name="msg_aborted">Afgebroken</string>
     <string name="msg_new">Nieuw</string>
@@ -184,5 +185,6 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="tutorial_detailsheader">Klik op het app icoon voor meer akties</string>
     <string name="tutorial_detailslist">Klik op de pijl naar beneden voor functie-uitzonderingen</string>
     <string name="permission_manage">Applicaties beheren, inclusief geforceerd stoppen</string>
+    <string name="permission_restrictions">XPrivacy beperkingen en instellingen beheren</string>
 
 </resources>

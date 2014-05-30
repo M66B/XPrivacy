@@ -242,7 +242,7 @@
 				$signature = bin2hex($signature);
 
 			if (empty($signature) || $signature != $data->signature) {
-				log_error('fetch: not authorized', $my_email, $data);
+				//log_error('fetch: not authorized', $my_email, $data);
 				echo json_encode(array('ok' => false, 'errno' => 301, 'error' => 'Not authorized'));
 				exit();
 			}
@@ -687,7 +687,7 @@
 ?>
 		</div>
 
-		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+		<script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 		<script>
 			jQuery(document).ready(function($) {

@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Příručka</string>
     <string name="menu_exclude">Vyloučit</string>
     <string name="menu_close">Zavřít</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Probíha přerušení</string>
     <string name="msg_aborted">Přerušeno</string>
     <string name="msg_new">Nové</string>
@@ -184,5 +185,6 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="tutorial_detailsheader">Stiskněte ikonu aplikace pro zobrazení dalších akcí</string>
     <string name="tutorial_detailslist">Stiskněte šipku dolu pro zobrazení vyjímek funkce omezené kategorie</string>
     <string name="permission_manage">Správa aplikací, včetně možnosti ukončení</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

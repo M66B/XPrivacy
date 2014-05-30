@@ -349,7 +349,8 @@ public class PrivacyManager {
 				for (String rRestrictionName : listRestriction)
 					for (Hook md : getHooks(rRestrictionName))
 						if (md.isDangerous())
-							listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
+							listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, md
+									.whitelist() == null));
 		}
 
 		setRestrictionList(listPRestriction);
@@ -467,10 +468,10 @@ public class PrivacyManager {
 							Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
 									+ (parentAsked ? "+asked" : "+ask"), false);
 					boolean restricted = value.contains("true");
-					boolean asked = value.contains("asked");
-					if ((parentRestricted && !restricted) || (!parentAsked && asked))
+					boolean asked = (!ondemand || value.contains("asked"));
+					if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.whitelist() != null)
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
-								&& restricted, parentAsked || asked || !ondemand));
+								&& restricted, parentAsked || asked));
 				}
 		}
 		setRestrictionList(listPRestriction);
@@ -549,6 +550,11 @@ public class PrivacyManager {
 	}
 
 	// Settings
+
+	public static String getSalt(int userId) {
+		String def = (Build.SERIAL == null ? "" : Build.SERIAL);
+		return getSetting(userId, PrivacyManager.cSettingSalt, def, true);
+	}
 
 	public static boolean getSettingBool(int uid, String name, boolean defaultValue, boolean useCache) {
 		return Boolean.parseBoolean(getSetting(uid, name, Boolean.toString(defaultValue), useCache));

@@ -26,12 +26,12 @@
     <string name="menu_sort">Ordina</string>
     <string name="menu_filter">Filtra</string>
     <string name="menu_all">Tutto</string>
-    <string name="menu_toggle">Attiva restrizioni</string>
+    <string name="menu_toggle">Gestisci restrizioni</string>
     <string name="menu_clear_all">Azzera tutto</string>
     <string name="menu_restrict_all">Restringi tutto</string>
     <string name="menu_clear_usage">Azzera</string>
     <string name="menu_clear_db">Azzera tutti i dati di XPrivacy</string>
-    <string name="menu_usage_all">Attiva filtro</string>
+    <string name="menu_usage_all">Filtra</string>
     <string name="menu_apply">Applica modello</string>
     <string name="menu_clear">Azzera</string>
     <string name="menu_app_launch">Lancia</string>
@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Guida</string>
     <string name="menu_exclude">Escludi</string>
     <string name="menu_close">Chiudi</string>
+    <string name="menu_flush">Svuota cache</string>
     <string name="msg_abort">Abortisco</string>
     <string name="msg_aborted">Abortito</string>
     <string name="msg_new">Nuovo</string>
@@ -78,7 +79,7 @@
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
 \n\nL\'utilizzo è interamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
     <string name="restrict_accounts">Accounts (Google, Facebook, ecc)</string>
-    <string name="restrict_browser">Browser (segnalibri/storico)</string>
+    <string name="restrict_browser">Browser (segnalibri/cronologia)</string>
     <string name="restrict_calendar">Calendario</string>
     <string name="restrict_calling">Chiamate (Telefono, SMS, MMS)</string>
     <string name="restrict_clipboard">Appunti</string>
@@ -96,7 +97,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
     <string name="restrict_sensors">Sensori</string>
     <string name="restrict_storage">Memoria (media, scheda SD)</string>
-    <string name="restrict_shell">Shell (comandi, superuser)</string>
+    <string name="restrict_shell">Shell (comandi, super utente)</string>
     <string name="restrict_system">Sistema (applicazioni installate)</string>
     <string name="restrict_view">Visualizza (browser)</string>
     <string name="whitelist_ipaddress">Indirizzi IP</string>
@@ -112,7 +113,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_fpermission">Filtra per permessi</string>
     <string name="title_frestricted">Filtra per restrizioni</string>
     <string name="title_fuser">Filtra per applicazioni utente</string>
-    <string name="title_fondemand">Filtra per "su-richiesta"</string>
+    <string name="title_fondemand">Filtra per su-richiesta</string>
     <string name="title_fsystem">Filtra per applicazioni di sistema</string>
     <string name="title_fnot">Nega</string>
     <string name="title_sname">Per nome</string>
@@ -185,5 +186,6 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="tutorial_detailsheader">Tocca l\'icona dell\'applicazione per ulteriori azioni</string>
     <string name="tutorial_detailslist">Tocca la freccia verso il basso per visualizzare le funzioni escluse di una categoria ristretta</string>
     <string name="permission_manage">Gestisci le applicazioni, inclusa la chiusura</string>
+    <string name="permission_restrictions">Gestisci restrizioni e impostazioni di XPrivacy</string>
 
 </resources>

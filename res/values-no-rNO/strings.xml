@@ -45,6 +45,7 @@
     <string name="menu_tutorial">Innføring</string>
     <string name="menu_exclude">Ekskluder</string>
     <string name="menu_close">Lukk</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">Avbryter</string>
     <string name="msg_aborted">Avbrutt</string>
     <string name="msg_new">Nytt</string>
@@ -182,5 +183,6 @@
     <string name="tutorial_detailsheader">Trykk på app ikonet for å få flere valg/aksjoner</string>
     <string name="tutorial_detailslist">Trykk på pilene som viser ned for å se funksjonene innen en kategorie</string>
     <string name="permission_manage">Behandle apper, inklusive avslutting</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

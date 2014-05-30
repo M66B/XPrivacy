@@ -45,6 +45,7 @@
     <string name="menu_tutorial">فیربون</string>
     <string name="menu_exclude">جیاکردن</string>
     <string name="menu_close">داخستن</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">پاشگه ز بوونه وه</string>
     <string name="msg_aborted">پاشگه ز کرا</string>
     <string name="msg_new">نوی</string>
@@ -183,5 +184,6 @@
     <string name="tutorial_detailsheader">په نجه بنی به سه ر ئايكونى به رنامه كه بو فرمانى زياتر</string>
     <string name="tutorial_detailslist">په نجه بنی له سه ر هیمای به ره و خوار بو دیتنی فرمانه کان و ووردتر سنوردار کردنی به شه که</string>
     <string name="permission_manage">به ریوه بردنی به رنامه کان ,داخستنیشیان</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

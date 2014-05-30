@@ -45,6 +45,7 @@
     <string name="menu_tutorial">تعليمي</string>
     <string name="menu_exclude">إستبعاد</string>
     <string name="menu_close">إغلاق</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">إيقاف</string>
     <string name="msg_aborted">تم الإيقاف</string>
     <string name="msg_new">جديد</string>
@@ -184,5 +185,6 @@
     <string name="tutorial_detailsheader">انقر على أيقونة التطبيق لمزيد من الإجراءات</string>
     <string name="tutorial_detailslist">انقر على السهم المتجه لأسفل لرؤية الوظائف الإستثنائية في الفئة المُقيدة</string>
     <string name="permission_manage">إدارة التطبيقات, متضمناَ الإغلاق</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>

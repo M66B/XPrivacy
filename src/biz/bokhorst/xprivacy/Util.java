@@ -99,6 +99,8 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof NoClassDefFoundError)
 			priority = Log.WARN;
+		else if (ex instanceof SecurityException)
+			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
 
@@ -240,6 +242,33 @@ public class Util {
 		if (!licenseFile.exists())
 			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_FILE_NAME);
 
+		String importedLicense = importProLicense(licenseFile);
+
+		// Check license file
+		licenseFile = new File(importedLicense);
+		if (licenseFile.exists()) {
+			// Read license
+			try {
+				IniFile iniFile = new IniFile(licenseFile);
+				String name = iniFile.get("name", "");
+				String email = iniFile.get("email", "");
+				String signature = iniFile.get("signature", "");
+				if (name == null || email == null || signature == null)
+					return null;
+				else
+					return new String[] { name, email, signature };
+			} catch (FileNotFoundException ex) {
+				return null;
+			} catch (Throwable ex) {
+				bug(null, ex);
+				return null;
+			}
+		} else
+			Util.log(null, Log.INFO, "Licensing: no license file");
+		return null;
+	}
+
+	public static String importProLicense(File licenseFile) {
 		// Get imported license file name
 		String importedLicense = getUserDataDirectory(Process.myUid()) + File.separator + LICENSE_FILE_NAME;
 
@@ -267,29 +296,7 @@ public class Util {
 				Util.bug(null, ex);
 			}
 		}
-
-		// Check license file
-		licenseFile = new File(importedLicense);
-		if (licenseFile.exists()) {
-			// Read license
-			try {
-				IniFile iniFile = new IniFile(licenseFile);
-				String name = iniFile.get("name", "");
-				String email = iniFile.get("email", "");
-				String signature = iniFile.get("signature", "");
-				if (name == null || email == null || signature == null)
-					return null;
-				else
-					return new String[] { name, email, signature };
-			} catch (FileNotFoundException ex) {
-				return null;
-			} catch (Throwable ex) {
-				bug(null, ex);
-				return null;
-			}
-		} else
-			Util.log(null, Log.INFO, "Licensing: no license file");
-		return null;
+		return importedLicense;
 	}
 
 	public static Version getProEnablerVersion(Context context) {
@@ -427,7 +434,7 @@ public class Util {
 	public static String sha1(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		// SHA1
 		int userId = Util.getUserId(Process.myUid());
-		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, "", true);
+		String salt = PrivacyManager.getSalt(userId);
 		MessageDigest digest = MessageDigest.getInstance("SHA-1");
 		byte[] bytes = (text + salt).getBytes("UTF-8");
 		digest.update(bytes, 0, bytes.length);
@@ -441,7 +448,7 @@ public class Util {
 	public static String md5(String text) throws NoSuchAlgorithmException, UnsupportedEncodingException {
 		// MD5
 		int userId = Util.getUserId(Process.myUid());
-		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, "", true);
+		String salt = PrivacyManager.getSalt(userId);
 		byte[] bytes = MessageDigest.getInstance("MD5").digest((text + salt).getBytes("UTF-8"));
 		StringBuilder sb = new StringBuilder();
 		for (byte b : bytes)

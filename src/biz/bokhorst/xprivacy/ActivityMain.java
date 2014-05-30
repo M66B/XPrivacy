@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -31,7 +32,6 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -164,14 +164,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		if (!PrivacyService.checkClient())
 			return;
 
-		// Salt should be the same when exporting/importing
+		// Import license file
+		if (getIntent().getAction().equals(Intent.ACTION_VIEW))
+			Util.importProLicense(new File(getIntent().getData().getEncodedPath()));
+
+		// Delete legacy salt
 		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, null, false);
-		if (salt == null) {
-			salt = Build.SERIAL;
-			if (salt == null)
-				salt = "";
-			PrivacyManager.setSetting(userId, PrivacyManager.cSettingSalt, salt);
-		}
+		if (salt != null && salt.equals(PrivacyManager.getSalt(userId)))
+			PrivacyManager.setSetting(userId, PrivacyManager.cSettingSalt, null);
 
 		// Set layout
 		setContentView(R.layout.mainlist);

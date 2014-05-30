@@ -45,6 +45,7 @@
     <string name="menu_tutorial">界面功能指引</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">关闭</string>
+    <string name="menu_flush">Flush cache</string>
     <string name="msg_abort">正在中止</string>
     <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>
@@ -184,6 +185,7 @@
     <string name="tutorial_detailsheader">点击应用图标以查看更多操作</string>
     <string name="tutorial_detailslist">点击左侧向下的箭头以查看该类别的子权限</string>
     <string name="permission_manage">管理应用程序，包括强行停止</string>
+    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
 
 </resources>
 

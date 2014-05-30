@@ -9,12 +9,12 @@ public class XActivityRecognitionClient extends XHook {
 	private Methods mMethod;
 
 	private XActivityRecognitionClient(Methods method, String restrictionName) {
-		super(restrictionName, "GMS." + method.name(), null);
+		super(restrictionName, method.name(), String.format("GMS.%s", method.name()));
 		mMethod = method;
 	}
 
 	private XActivityRecognitionClient(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, "GMS." + method.name(), null, sdk);
+		super(restrictionName, method.name(), String.format("GMS.%s", method.name()), sdk);
 		mMethod = method;
 	}
 
@@ -44,7 +44,7 @@ public class XActivityRecognitionClient extends XHook {
 	@Override
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.removeActivityUpdates) {
-			if (isRestricted(param, "GMS.requestActivityUpdates"))
+			if (isRestricted(param, PrivacyManager.cLocation, "GMS.requestActivityUpdates"))
 				param.setResult(null);
 
 		} else if (mMethod == Methods.requestActivityUpdates) {
