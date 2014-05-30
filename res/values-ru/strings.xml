@@ -45,7 +45,7 @@
     <string name="menu_tutorial">Обучение</string>
     <string name="menu_exclude">Исключить</string>
     <string name="menu_close">Закрыть</string>
-    <string name="menu_flush">Flush cache</string>
+    <string name="menu_flush">Очистить кэш</string>
     <string name="msg_abort">Прерывается</string>
     <string name="msg_aborted">Прервано</string>
     <string name="msg_new">Новое</string>
@@ -185,6 +185,6 @@
     <string name="tutorial_detailsheader">Тапните по иконке приложения для дополнительных действий.</string>
     <string name="tutorial_detailslist">Тапните по стрелке, чтобы увидеть отдельные функции и их разрешения в категории.</string>
     <string name="permission_manage">Управление приложениями, включая завершение</string>
-    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
+    <string name="permission_restrictions">Управление разрешениями и настройками XPrivacy</string>
 
 </resources>
