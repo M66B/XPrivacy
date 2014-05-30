@@ -898,7 +898,18 @@ Batch enabling on demand restricting using the template could lead to an on dema
 <a name="FAQ56"></a>
 **(56) How can I recover from a bootloop?**
 
-For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler-Recovery.zip](http://forum.xda-developers.com/attachment.php?attachmentid=2568891&d=1391958634). Alternatively (on most devices) press the volume down 5 times during boot (It will vibrate with each press when done correctly).
+For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler-Recovery.zip](http://forum.xda-developers.com/attachment.php?attachmentid=2568891&d=1391958634). Alternatively (on most devices) press the volume down button 5 times during boot (It will vibrate with each press when done correctly).
+
+<a name='FAQ57'></a>
+**(57) How does 'Expert mode' work?**
+
+Expert mode has 3 suboptions which can be toogled indiviually.
+* 'Restrict system component (Android)'
+	* Enabling this option will allow you to restrict apps which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc...). Note that restricting these core functions is very dangerous, and can easily lead to boot loops. Always create a backup (export/NANDROID) before changing these restrictions.
+* 'Restrict dangerous functions'
+	* Enabling this option will allow you to restrict system applications (app with a red background in the app overview) and dangerous functions (functions with a red backgroud in the app detail view). Note that disabling this option or expert mode will not change the status of restictions already in place, it will only prevent dangerous functions from being checked while applying the template or checking a category. Also note that individual dangerous functions can be restricted without enabling this option.
+* 'Use secure connections'
+	* This will force communications with the crowd source server (submitting/fetching, device registration) to travel through a secure socket. Note that this enabled by default and can only be disabled by enabling 'Expert mode'.
 
 Support
 -------
