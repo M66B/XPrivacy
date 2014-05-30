@@ -438,7 +438,7 @@ public class ActivityApp extends ActivityBase {
 			optionContacts();
 			return true;
 		case R.id.menu_whitelists:
-			optionWhitelists();
+			optionWhitelists(null);
 			return true;
 		case R.id.menu_settings:
 			optionSettings();
@@ -575,12 +575,12 @@ public class ActivityApp extends ActivityBase {
 		}
 	}
 
-	private void optionWhitelists() {
+	private void optionWhitelists(String type) {
 		if (Util.hasProLicense(this) == null) {
 			// Redirect to pro page
 			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
-			WhitelistsTask whitelistsTask = new WhitelistsTask();
+			WhitelistsTask whitelistsTask = new WhitelistsTask(type);
 			whitelistsTask.executeOnExecutor(mExecutor, (Object) null);
 		}
 	}
@@ -834,8 +834,13 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	private class WhitelistsTask extends AsyncTask<Object, Object, Object> {
+		private String mType;
 		private WhitelistAdapter mWhitelistAdapter;
 		private Map<String, TreeMap<String, Boolean>> mListWhitelist;
+
+		public WhitelistsTask(String type) {
+			mType = type;
+		}
 
 		@Override
 		protected Object doInBackground(Object... params) {
@@ -860,7 +865,8 @@ public class ActivityApp extends ActivityBase {
 					LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 					View llWhitelists = inflater.inflate(R.layout.whitelists, null);
 
-					// TODO: sort localized whitelist types
+					int index = 0;
+					int selected = -1;
 					final List<String> localizedType = new ArrayList<String>();
 					for (String type : mListWhitelist.keySet()) {
 						String name = "whitelist_" + type.toLowerCase().replace("/", "");
@@ -869,6 +875,10 @@ public class ActivityApp extends ActivityBase {
 							localizedType.add(name);
 						else
 							localizedType.add(getResources().getString(id));
+
+						if (type.equals(mType))
+							selected = index;
+						index++;
 					}
 
 					Spinner spWhitelistType = (Spinner) llWhitelists.findViewById(R.id.spWhitelistType);
@@ -885,6 +895,8 @@ public class ActivityApp extends ActivityBase {
 						public void onNothingSelected(AdapterView<?> view) {
 						}
 					});
+					if (selected >= 0)
+						spWhitelistType.setSelection(selected);
 
 					ListView lvWhitelist = (ListView) llWhitelists.findViewById(R.id.lvWhitelist);
 					lvWhitelist.setAdapter(mWhitelistAdapter);
@@ -1381,7 +1393,7 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodWhitelist.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
-								ActivityApp.this.optionWhitelists();
+								ActivityApp.this.optionWhitelists(md.whitelist());
 							}
 						});
 					else
