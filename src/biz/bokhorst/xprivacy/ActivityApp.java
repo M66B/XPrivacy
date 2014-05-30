@@ -1375,8 +1375,19 @@ public class ActivityApp extends ActivityBase {
 					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate));
 					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
 
+					// Show whitelist icon
 					holder.imgCbMethodWhitelist.setVisibility(whitelist ? View.VISIBLE : View.GONE);
+					if (whitelist)
+						holder.imgCbMethodWhitelist.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								ActivityApp.this.optionWhitelists();
+							}
+						});
+					else
+						holder.imgCbMethodWhitelist.setClickable(false);
 
+					// Show asked state
 					if (ondemand) {
 						holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
 						holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
