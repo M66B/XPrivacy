@@ -638,7 +638,7 @@ That is correct. XPrivacy only replaces the real location with a fake location. 
 
 Secondary users can install and use XPrivacy the same way as the primary user.
 The primary user cannot manage the restrictions of secondary users.
-This is because Android totally separates the enviroments of the users
+This is because Android totally separates the environments of the users
 (which is a good thing from a security perspective).
 Each user has its own set of settings, so each user can define its own template and global fake values.
 
@@ -655,7 +655,7 @@ Each user has its own set of settings, so each user can define its own template 
 Because some Google components are not installed.
 
 <a name="FAQ21"></a>
-**(31) Do I still need root after installing Xposed?**
+**(21) Do I still need root after installing Xposed?**
 
 No, root is only required to install Xposed one time.
 
@@ -783,7 +783,7 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 	* You will never be asked whether to restrict dangerous functions, except for functions with a white/black list
 	* Setting any category to restricted will not restrict any of its dangerous functions
 * The default after dialog timeout is taken from the current restriction settings
-* There are four possiblities for the restriction / on demand checkboxes:
+* There are four possibilities for the restriction / on demand checkboxes:
 	* [ ] [ ] You will not receive an on demand popup, the permission will always be allowed
 	* [ ] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will be allowed once
 	* [x] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will be denied once
@@ -906,9 +906,9 @@ For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler
 Expert mode has 3 sub-options which can be toggled individually.
 
 * *Restrict system component (Android)*
-	* Enabling this option will allow you to restrict applications which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc.). Note that restricting these core functions is very dangerous, and can easily lead to boot loops. Always create a backup (export/nadroid) before changing these restrictions.
+	* Enabling this option will allow you to restrict applications which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc.). Note that restricting these core functions is very dangerous, and can easily lead to boot loops. Always create a backup (export/nandroid) before changing these restrictions.
 * *Restrict dangerous functions*
-	* Enabling this option will allow you to restrict dangerous functions (functions with a red backgroud in the application detail view). Note that disabling this option or expert mode will not change the status of restictions already in place, it will only prevent dangerous functions from being checked while applying the template or checking a category. Also note that individual dangerous functions can be restricted without enabling this option.
+	* Enabling this option will allow you to restrict dangerous functions (functions with a red background in the application detail view). Note that disabling this option or expert mode will not change the status of restrictions already in place, it will only prevent dangerous functions from being checked while applying the template or checking a category. Also note that individual dangerous functions can be restricted without enabling this option.
 * *Use secure connections*
 	* This will force communications with the crowd sourced restrictions server (submitting/fetching, device registration) to travel through a secure socket. Note that this is enabled by default and can only be disabled by enabling *Expert mode*.
 
