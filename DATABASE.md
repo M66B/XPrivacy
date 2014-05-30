@@ -64,7 +64,7 @@
 
 <p>*NOTE: Although the 'method' field doesn't always contain data, it is still NOT NULL. To query empty entries: <code>WHERE method=''</code></p>
 
-<p>*NOTE: Changes to the restriction table require a reboot to take effect, bacause the server side cache is only flushed during a reboot or when restriction changes are applied in the XPrivacy app. For more info see <a href="http://forum.xda-developers.com/showpost.php?p=52669913&postcount=9277">here</a></p>
+<p>*NOTE: Changes to the restriction table require a flush of the server side cache to take effect, this can be achieved with a reboot, using the option 'Flush cache' found in Menu - Settings, or by sending the intent <code>am startservice -a biz.bokhorst.xprivacy.action.FLUSH</code>. The intent can either be sent with root privaleges or from an app which has permission <code>biz.bokhorst.xprivacy.MANAGE_XPRIVACY</code>. For more info see <a href="http://forum.xda-developers.com/showpost.php?p=52669913&postcount=9277">here</a> and <a href="https://github.com/M66B/XPrivacy/issues/1678">here</a></p>
 
 <h3>TABLE:setting</h3>
 
