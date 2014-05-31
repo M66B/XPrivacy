@@ -15,12 +15,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.27 BETA**
+
 * Showing icon if there is white/black list for a function ([issue](/../../issues/1654))
 	* Thanks @[an0n981](https://github.com/an0n981) for the icons
 * Updated Russian translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.26 BETA**
 
