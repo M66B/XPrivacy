@@ -17,6 +17,7 @@ Changelog
 
 * Showing icon if there is white/black list for a function ([issue](/../../issues/1654))
 	* Thanks @[an0n981](https://github.com/an0n981) for the icons
+* Updated Russian translation
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -36,7 +37,6 @@ am startservice -a biz.bokhorst.xprivacy.action.FLUSH
 * Updated German translation
 * Updated Italian translation
 * Updated traditional Chinese translation
-* Updated Russian translation
 
 **Version 2.0.25 STABLE**
 
