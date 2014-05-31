@@ -36,6 +36,7 @@ am startservice -a biz.bokhorst.xprivacy.action.FLUSH
 * Updated German translation
 * Updated Italian translation
 * Updated traditional Chinese translation
+* Updated Russian translation
 
 **Version 2.0.25 STABLE**
 
