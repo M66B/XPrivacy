@@ -580,7 +580,7 @@ public class PrivacyService {
 				}
 
 				// Store usage data
-				if (usage && hook != null && hook.hasUsageData())
+				if (usage && hook != null)
 					storeUsageData(restriction, secret, mresult);
 
 			} catch (Throwable ex) {
