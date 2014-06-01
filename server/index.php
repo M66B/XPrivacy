@@ -679,7 +679,7 @@
 			<div class="container">
 				<a id="privacy_policy" href="#">Privacy policy</a>
 				<p id="privacy_policy_text" style="display: none;">I will not, under any circumstances whatsoever, give out or sell your information to anyone, unless required by law.</p>
-				<p class="text-muted credit">Copyright &copy; 2013-<?php echo date("Y"); ?> by <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
+				<p class="text-muted credit">Copyright &copy; 2013&ndash;<?php echo date("Y"); ?> by <a href="http://blog.bokhorst.biz/about/" target="_blank">Marcel Bokhorst</a></p>
 			</div>
 <?php
 		// Close database connection
