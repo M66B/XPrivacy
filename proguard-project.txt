@@ -24,7 +24,7 @@
 -keepattributes SourceFile,LineNumberTable
 
 #Xposed
--libraryjars XposedBridgeApi-42.jar
+-libraryjars XposedBridgeApi-54.jar
 
 #XPrivacy
 -keep class biz.bokhorst.xprivacy.XPrivacy {*; }
