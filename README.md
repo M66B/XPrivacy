@@ -321,7 +321,7 @@ Limitations
 * It is not possible to restrict external hardware MAC addresses or the external IP address
 * You cannot restrict *Configuration.MCC/MNC* on demand
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
-* Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/) 
+* Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/)
 * The on demand restricting dialog does sometimes not respond and is sometimes hidden
 	* A known situation is starting an application from a notification for the restrictions *inet*, *sdcard* and *media*
 	* Another known situation are some restrictions triggered by hardware buttons, like the volume buttons
