@@ -15,7 +15,8 @@ Changelog
 
 **Next release**
 
-* Add *WRITE_CALENDAR* permissions to calendar restriction
+* Added *WRITE_CALENDAR* permissions to calendar restriction
+* Updated XposedBridge to version 54 (Xposed version 2.6 is required now)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
