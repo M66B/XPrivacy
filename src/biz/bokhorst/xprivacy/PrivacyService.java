@@ -141,7 +141,8 @@ public class PrivacyService {
 			IPrivacyService client = getClient();
 			if (client != null)
 				return (client.getVersion() == cCurrentVersion);
-		} catch (RemoteException ex) {
+		} catch (SecurityException ignored) {
+		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
 		return false;
@@ -247,6 +248,7 @@ public class PrivacyService {
 
 		@Override
 		public int getVersion() throws RemoteException {
+			enforcePermission(-1);
 			return cCurrentVersion;
 		}
 
