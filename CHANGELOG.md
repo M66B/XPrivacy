@@ -18,6 +18,7 @@ Changelog
 * Added *WRITE_CALENDAR* permissions to calendar restriction
 * Updated XposedBridge to version 54 (Xposed version 2.6 is required now)
 * Show all usage data ([issue](/../../issues/1695))
+* Show toggle on demand restricting on/off always ([issue](/../../issues/1697))
 * Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

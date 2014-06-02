@@ -275,10 +275,9 @@ public class ActivityShare extends ActivityBase {
 				}
 			});
 
-			boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
 			boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
-			rbODEnable.setVisibility(dangerous && ondemand ? View.VISIBLE : View.GONE);
-			rbODDisable.setVisibility(dangerous && ondemand ? View.VISIBLE : View.GONE);
+			rbODEnable.setVisibility(ondemand ? View.VISIBLE : View.GONE);
+			rbODDisable.setVisibility(ondemand ? View.VISIBLE : View.GONE);
 
 			if (choice == CHOICE_CLEAR)
 				rbClear.setChecked(true);
