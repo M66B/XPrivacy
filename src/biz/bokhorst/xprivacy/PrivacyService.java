@@ -1385,6 +1385,8 @@ public class PrivacyService {
 										}
 									};
 									mHandler.postDelayed(rProgress, 50);
+								} catch (NameNotFoundException ex) {
+									latch.countDown();
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
 									latch.countDown();
