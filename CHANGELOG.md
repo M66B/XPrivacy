@@ -20,6 +20,7 @@ Changelog
 * Show all usage data ([issue](/../../issues/1695))
 * Show toggle on demand restricting on/off always ([issue](/../../issues/1697))
 * Updated Lithuanian translation
+* Updated Norwegian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
