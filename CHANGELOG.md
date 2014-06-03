@@ -21,6 +21,7 @@ Changelog
 * Show toggle on demand restricting on/off always ([issue](/../../issues/1697))
 * Added option to merge template with existing restrictions ([issue](/../../issues/1700))
 * Updated Dutch translation
+* Updated German translation
 * Updated Lithuanian translation
 * Updated Norwegian translation
 
