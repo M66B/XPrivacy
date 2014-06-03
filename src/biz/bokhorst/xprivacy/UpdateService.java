@@ -181,7 +181,11 @@ public class UpdateService extends Service {
 		} else
 			Util.log(null, Log.WARN, "Noting to upgrade version=" + sVersion);
 
+		// Finalize
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingVersion, currentVersion);
+
+		// Cleanup
+		PrivacyManager.removeLegacySalt(userId);
 	}
 
 	private static void randomize(Context context) {

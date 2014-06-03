@@ -1155,12 +1155,17 @@ public class ActivityShare extends ActivityBase {
 
 		@Override
 		public void endElement(String uri, String localName, String qName) {
-			if (qName.equals("XPrivacy"))
+			if (qName.equals("XPrivacy")) {
 				if (lastUid > 0) {
 					PrivacyManager.updateState(lastUid);
 					boolean restart = !PrivacyManager.getRestartStates(lastUid, null).equals(mOldState);
 					setState(lastUid, STATE_SUCCESS, restart ? getString(R.string.msg_restart) : null);
 				}
+
+				// Cleanup salt
+				int userId = Util.getUserId(Process.myUid());
+				PrivacyManager.removeLegacySalt(userId);
+			}
 		}
 
 		private int getUid(int id) {

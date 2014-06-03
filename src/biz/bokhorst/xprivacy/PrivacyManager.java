@@ -570,7 +570,14 @@ public class PrivacyManager {
 
 	public static String getSalt(int userId) {
 		String def = (Build.SERIAL == null ? "" : Build.SERIAL);
-		return getSetting(userId, PrivacyManager.cSettingSalt, def, true);
+		return getSetting(userId, cSettingSalt, def, true);
+	}
+
+	public static void removeLegacySalt(int userId) {
+		String def = (Build.SERIAL == null ? "" : Build.SERIAL);
+		String salt = getSetting(userId, cSettingSalt, null, false);
+		if (def.equals(salt))
+			setSetting(userId, cSettingSalt, null);
 	}
 
 	public static boolean getSettingBool(int uid, String name, boolean defaultValue, boolean useCache) {
