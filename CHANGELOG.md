@@ -20,6 +20,7 @@ Changelog
 * Show all usage data ([issue](/../../issues/1695))
 * Show toggle on demand restricting on/off always ([issue](/../../issues/1697))
 * Added option to merge template with existing restrictions ([issue](/../../issues/1700))
+* Fixed selected accounts when imported from another device ([issue](/../../issues/1699))
 * Updated Dutch translation
 * Updated German translation
 * Updated Lithuanian translation

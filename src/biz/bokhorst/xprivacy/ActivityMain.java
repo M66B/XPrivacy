@@ -32,6 +32,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -169,8 +170,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			Util.importProLicense(new File(getIntent().getData().getEncodedPath()));
 
 		// Delete legacy salt
+		String def = (Build.SERIAL == null ? "" : Build.SERIAL);
 		String salt = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSalt, null, false);
-		if (salt != null && salt.equals(PrivacyManager.getSalt(userId)))
+		if (def.equals(salt))
 			PrivacyManager.setSetting(userId, PrivacyManager.cSettingSalt, null);
 
 		// Set layout
