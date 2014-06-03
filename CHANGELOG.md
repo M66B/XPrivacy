@@ -15,6 +15,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.28 BETA**
+
 * Added *WRITE_CALENDAR* permissions to calendar restriction
 * Updated XposedBridge to version 54 (Xposed version 2.6 is required now)
 * Show all usage data ([issue](/../../issues/1695))
@@ -25,8 +29,6 @@ Changelog
 * Updated German translation
 * Updated Lithuanian translation
 * Updated Norwegian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.27 STABLE**
 
