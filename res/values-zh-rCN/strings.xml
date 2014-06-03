@@ -135,6 +135,7 @@
     <string name="title_set_restrict">限制</string>
     <string name="title_template_category">Apply template (categories)</string>
     <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">开启按需权限限制</string>
     <string name="title_disable_ondemand">关闭按需权限限制</string>
     <string name="settings_serial">序列号</string>

@@ -19,6 +19,7 @@ Changelog
 * Updated XposedBridge to version 54 (Xposed version 2.6 is required now)
 * Show all usage data ([issue](/../../issues/1695))
 * Show toggle on demand restricting on/off always ([issue](/../../issues/1697))
+* Added option to merge template with existing restrictions ([issue](/../../issues/1700))
 * Updated Dutch translation
 * Updated Lithuanian translation
 * Updated Norwegian translation

@@ -656,10 +656,13 @@ public class ActivityShare extends ActivityBase {
 						}
 
 						else if (actionId == R.id.rbTemplateCategory)
-							PrivacyManager.applyTemplate(uid, restrictionName, false);
+							PrivacyManager.applyTemplate(uid, restrictionName, false, true);
 
 						else if (actionId == R.id.rbTemplateFull)
-							PrivacyManager.applyTemplate(uid, restrictionName, true);
+							PrivacyManager.applyTemplate(uid, restrictionName, true, true);
+
+						else if (actionId == R.id.rbTemplateMerge)
+							PrivacyManager.applyTemplate(uid, restrictionName, true, false);
 
 						else if (actionId == R.id.rbEnableOndemand) {
 							PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));

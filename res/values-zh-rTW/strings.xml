@@ -135,6 +135,7 @@
     <string name="title_set_restrict">限制</string>
     <string name="title_template_category">套用預設規則 (僅大分類)</string>
     <string name="title_template_full">套用預設規則 (分類及功能)</string>
+    <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">開啟互動式限制</string>
     <string name="title_disable_ondemand">關閉互動式限制</string>
     <string name="settings_serial">序號</string>

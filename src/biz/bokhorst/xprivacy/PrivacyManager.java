@@ -432,7 +432,7 @@ public class PrivacyManager {
 		return listRestartRestriction;
 	}
 
-	public static void applyTemplate(int uid, String restrictionName, boolean methods) {
+	public static void applyTemplate(int uid, String restrictionName, boolean methods, boolean clear) {
 		checkCaller();
 
 		int userId = Util.getUserId(uid);
@@ -451,7 +451,8 @@ public class PrivacyManager {
 		// Apply template
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction) {
-			deleteRestrictions(uid, rRestrictionName, false);
+			if (clear)
+				deleteRestrictions(uid, rRestrictionName, false);
 
 			// Parent
 			String parentValue = getSetting(userId, Meta.cTypeTemplate, rRestrictionName, Boolean.toString(!ondemand)

@@ -71,6 +71,13 @@
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <RadioButton
+                android:id="@+id/rbTemplateMerge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_template_merge"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
                 android:id="@+id/rbEnableOndemand"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
