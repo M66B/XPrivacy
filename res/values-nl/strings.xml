@@ -127,7 +127,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Pas toe op gehele categorie</string>
     <string name="title_once">Één keer voor %1$s seconden</string>
-    <string name="title_whitelist">Negeerlijst \'%1$s\'</string>
+    <string name="title_whitelist">Negeerlijst &#8216;%1$s&#8217;</string>
     <string name="title_allow">Toestaan</string>
     <string name="title_deny">Blokkeren</string>
     <string name="title_pleasesubmit">Zend a.u.b. uw beperkingen om anderen te helpen</string>
