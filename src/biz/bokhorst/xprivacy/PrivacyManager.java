@@ -459,14 +459,13 @@ public class PrivacyManager {
 					+ "+ask", false);
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
-			if (!clear) {
-				PRestriction parentMerge = getRestrictionEx(uid, rRestrictionName, null);
-				if (parentMerge.restricted)
-					parentRestricted = true;
-				if (!parentMerge.asked)
-					parentAsked = false;
-			}
-			listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked));
+			PRestriction parentMerge;
+			if (clear)
+				parentMerge = new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked);
+			else
+				parentMerge = getRestrictionEx(uid, rRestrictionName, null);
+			listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentMerge.restricted
+					|| parentRestricted, parentMerge.asked && parentAsked));
 
 			// Childs
 			if (methods)
@@ -477,17 +476,19 @@ public class PrivacyManager {
 									+ (parentAsked ? "+asked" : "+ask"), false);
 					boolean restricted = value.contains("true");
 					boolean asked = (!ondemand || value.contains("asked"));
-					if (!clear) {
-						PRestriction childMerge = getRestrictionEx(uid, rRestrictionName, hook.getName());
-						if (childMerge.restricted)
-							restricted = true;
-						if (!childMerge.asked)
-							asked = false;
-					}
+					PRestriction childMerge;
+					if (clear)
+						childMerge = new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
+								&& restricted, parentAsked || asked);
+					else
+						childMerge = getRestrictionEx(uid, rRestrictionName, hook.getName());
 					if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.whitelist() != null
-							|| !clear)
-						listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
-								&& restricted, parentAsked || asked));
+							|| !clear) {
+						PRestriction child = new PRestriction(uid, rRestrictionName, hook.getName(),
+								(parentRestricted && restricted) || childMerge.restricted, (parentAsked || asked)
+										&& childMerge.asked);
+						listPRestriction.add(child);
+					}
 				}
 		}
 		setRestrictionList(listPRestriction);
