@@ -477,8 +477,8 @@ public class PrivacyManager {
 								&& restricted, parentAsked || asked);
 					else
 						childMerge = getRestrictionEx(uid, rRestrictionName, hook.getName());
-					if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.whitelist() != null
-							|| !clear) {
+					if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.isDangerous()
+							|| hook.whitelist() != null || !clear) {
 						PRestriction child = new PRestriction(uid, rRestrictionName, hook.getName(),
 								(parentRestricted && restricted) || childMerge.restricted, (parentAsked || asked)
 										&& childMerge.asked);
