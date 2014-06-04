@@ -50,10 +50,6 @@ public class PackageChange extends BroadcastReceiver {
 							// Enable on demand
 							if (ondemand)
 								PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
-
-							// Restrict new non-system apps
-							if (!appInfo.isSystem())
-								PrivacyManager.applyTemplate(uid, null, true, true);
 						}
 					}
 
