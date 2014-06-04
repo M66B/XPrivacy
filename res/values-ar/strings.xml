@@ -157,7 +157,6 @@
     <string name="settings_ondemand">تقييد عند الطلب</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>
-    <string name="settings_dangerous">تقييد الوظائف الخطيرة</string>
     <string name="settings_confidence">الحد الأقصى لجلب فترة الثقة</string>
     <string name="settings_experimental">وظائف تجريبية</string>
     <string name="settings_https">إستخدم الإتصال الآمن</string>

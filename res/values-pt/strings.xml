@@ -157,7 +157,6 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Relatório de depuração (requer reinicialização)</string>
     <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="settings_https">Use secure connections</string>

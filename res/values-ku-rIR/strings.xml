@@ -156,7 +156,6 @@
     <string name="settings_ondemand">داوات لیبکریت بو سنوردار کردنیان</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">چه ند هه لبژاردنیکی مه ترسیدار که تایبه ته به که سانی شاره زا</string>
-    <string name="settings_dangerous">سنوردار کردنی ئه و فرمانانه ى كه سنوردار كردنيان مه ترسيداره</string>
     <string name="settings_confidence">زورترین راده ی دلنیابوون له زانیاریه دابه زینراوه کان</string>
     <string name="settings_experimental">فرمانی ئه زمونى(پیویست به دوباره داگیرساندنی موبایل ده کات)</string>
     <string name="settings_https">به کارهینانی هیلی پاریزراو</string>

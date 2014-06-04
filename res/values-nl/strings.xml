@@ -157,7 +157,6 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_ondemand">Beperken op verzoek</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="settings_expert">Expertmodus</string>
-    <string name="settings_dangerous">Beperk gevaarlijke functies</string>
     <string name="settings_confidence">Maximum betrouwbaarheidsinterval voor ophalen</string>
     <string name="settings_experimental">Experimentele functies (herstart vereist)</string>
     <string name="settings_https">Gebruik veilige verbindingen</string>

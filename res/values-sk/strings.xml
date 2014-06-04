@@ -157,7 +157,6 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_ondemand">Obmedziť na požiadanie</string>
     <string name="settings_log">Záznam na ladenie (vyžadovaný reštart)</string>
     <string name="settings_expert">Režim experta</string>
-    <string name="settings_dangerous">Obmedziť nebezpečné funkcie</string>
     <string name="settings_confidence">Maximálny interval spoľahlivosti sťahovania</string>
     <string name="settings_experimental">Experimentálne funkcie (vyžadovaný reštart)</string>
     <string name="settings_https">Použiť zabezpečené pripojenie</string>

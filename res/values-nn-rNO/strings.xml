@@ -155,7 +155,6 @@
     <string name="settings_ondemand">Blokkering på forespørsel</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
-    <string name="settings_dangerous">Blokker farlige funksjoner</string>
     <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>
     <string name="settings_experimental">Eksperimentelle funksjoner (omstart nødvendig)</string>
     <string name="settings_https">Bruk trygg forbindelse</string>

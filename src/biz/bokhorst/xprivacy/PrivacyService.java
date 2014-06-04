@@ -508,12 +508,11 @@ public class PrivacyService {
 					}
 
 					// Default dangerous
-					if (!methodFound && hook != null && hook.isDangerous())
-						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
-							mresult.restricted = false;
-							if (hook.whitelist() == null)
-								mresult.asked = true;
-						}
+					if (!methodFound && hook != null && hook.isDangerous()) {
+						mresult.restricted = false;
+						if (hook.whitelist() == null)
+							mresult.asked = true;
+					}
 
 					// Check whitelist
 					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
@@ -1265,11 +1264,6 @@ public class PrivacyService {
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
 					return false;
 
-				// Skip dangerous methods
-				final boolean dangerous = getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
-				if (!dangerous && hook != null && hook.isDangerous() && hook.whitelist() == null)
-					return false;
-
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
@@ -1339,7 +1333,7 @@ public class PrivacyService {
 								try {
 									// Dialog
 									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
-											dangerous, result, context, latch);
+											result, context, latch);
 									AlertDialog alertDialog = builder.create();
 									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_PHONE);
 									alertDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
@@ -1406,8 +1400,8 @@ public class PrivacyService {
 		}
 
 		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, final Hook hook,
-				ApplicationInfoEx appInfo, boolean dangerous, final PRestriction result, Context context,
-				final CountDownLatch latch) throws NameNotFoundException {
+				ApplicationInfoEx appInfo, final PRestriction result, Context context, final CountDownLatch latch)
+				throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1633,7 +1627,6 @@ public class PrivacyService {
 
 		private void onDemandChoice(PRestriction restriction, boolean category, boolean restrict) {
 			try {
-				int userId = Util.getUserId(restriction.uid);
 				PRestriction result = new PRestriction(restriction);
 
 				// Get current category restriction state
@@ -1655,10 +1648,9 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Clear category on change
-					boolean dangerous = getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
 					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
 						result.methodName = md.getName();
-						result.restricted = (md.isDangerous() && !dangerous ? false : restrict);
+						result.restricted = !md.isDangerous() && restrict;
 						result.asked = category;
 						setRestrictionInternal(result);
 					}

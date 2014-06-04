@@ -157,7 +157,6 @@
     <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Відлагоджувальний лог (потрібне перезавантаження)</string>
     <string name="settings_expert">Експертний режим</string>
-    <string name="settings_dangerous">Заборона небезпечних функцій</string>
     <string name="settings_confidence">Максимальний інтервал отримання конфіденційних даних</string>
     <string name="settings_experimental">Експериментальні функціі (потрібне перезавантаження)</string>
     <string name="settings_https">Use secure connections</string>

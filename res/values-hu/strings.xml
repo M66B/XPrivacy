@@ -157,7 +157,6 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Debug log (újraindítás szükséges)</string>
     <string name="settings_expert">Szakértői mód</string>
-    <string name="settings_dangerous">Veszélyes funkciók korlátozása</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="settings_https">Use secure connections</string>

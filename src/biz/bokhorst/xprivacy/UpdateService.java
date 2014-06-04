@@ -159,7 +159,6 @@ public class UpdateService extends Service {
 		// Upgrade packages
 		if (sVersion.compareTo(new Version("0.0")) != 0) {
 			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + currentVersion);
-			boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
 
 			int first = 0;
 			String format = context.getString(R.string.msg_upgrading);
@@ -167,7 +166,7 @@ public class UpdateService extends Service {
 
 			for (int i = 1; i <= listApp.size(); i++) {
 				int uid = listApp.get(i - 1).uid;
-				List<PRestriction> listRestriction = getUpgradeWork(sVersion, dangerous, uid);
+				List<PRestriction> listRestriction = getUpgradeWork(sVersion, uid);
 				PrivacyManager.setRestrictionList(listRestriction);
 
 				if (first == 0)
@@ -268,14 +267,14 @@ public class UpdateService extends Service {
 		return PrivacyManager.cValueRandom.equals(PrivacyManager.getSetting(uid, setting, null, false));
 	}
 
-	private static List<PRestriction> getUpgradeWork(Version sVersion, boolean dangerous, int uid) {
+	private static List<PRestriction> getUpgradeWork(Version sVersion, int uid) {
 		List<PRestriction> listWork = new ArrayList<PRestriction>();
 		for (String restrictionName : PrivacyManager.getRestrictions())
 			for (Hook md : PrivacyManager.getHooks(restrictionName))
 				if (md.getFrom() != null)
 					if (sVersion.compareTo(md.getFrom()) < 0) {
 						// Disable new dangerous restrictions
-						if (!dangerous && md.isDangerous()) {
+						if (md.isDangerous()) {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " uid="
 									+ uid);
 							listWork.add(new PRestriction(uid, md.getRestrictionName(), md.getName(), false));

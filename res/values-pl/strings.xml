@@ -157,7 +157,6 @@
     <string name="settings_ondemand">Ograniczanie na żądanie</string>
     <string name="settings_log">Log debugowania (wymaga restartu)</string>
     <string name="settings_expert">Tryb eksperta</string>
-    <string name="settings_dangerous">Ogranicz niebezpieczne funkcje</string>
     <string name="settings_confidence">Maksymalna wartość wspołczynnika zaufania</string>
     <string name="settings_experimental">Eksperymentalne funkcje (wymaga restartu)</string>
     <string name="settings_https">Użyj bezpiecznych połaczeń</string>

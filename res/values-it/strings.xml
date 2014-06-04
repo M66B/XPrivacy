@@ -158,7 +158,6 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_ondemand">Restringi su richiesta</string>
     <string name="settings_log">Registro errori (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
-    <string name="settings_dangerous">Restringi funzioni pericolose</string>
     <string name="settings_confidence">Intervallo massimo di confidenza nella ricezione</string>
     <string name="settings_experimental">Funzioni sperimentali (richiede riavvio)</string>
     <string name="settings_https">Usa connessioni sicure</string>

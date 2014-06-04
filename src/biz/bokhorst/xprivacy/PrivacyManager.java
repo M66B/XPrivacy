@@ -343,15 +343,12 @@ public class PrivacyManager {
 			listPRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
 
 		// Make exceptions for dangerous methods
-		if (methodName == null) {
-			int userId = Util.getUserId(uid);
-			if (!getSettingBool(userId, cSettingDangerous, false, false))
-				for (String rRestrictionName : listRestriction)
-					for (Hook md : getHooks(rRestrictionName))
-						if (md.isDangerous())
-							listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, md
-									.whitelist() == null));
-		}
+		if (methodName == null)
+			for (String rRestrictionName : listRestriction)
+				for (Hook md : getHooks(rRestrictionName))
+					if (md.isDangerous())
+						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, md
+								.whitelist() == null));
 
 		setRestrictionList(listPRestriction);
 	}
@@ -439,7 +436,6 @@ public class PrivacyManager {
 
 		// Check on-demand
 		boolean ondemand = getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
-		boolean dangerous = getSettingBool(userId, cSettingDangerous, false, false);
 
 		// Build list of restrictions
 		List<String> listRestriction = new ArrayList<String>();
@@ -472,8 +468,7 @@ public class PrivacyManager {
 				for (Hook hook : getHooks(rRestrictionName)) {
 					String settingName = rRestrictionName + "." + hook.getName();
 					String value = getSetting(userId, Meta.cTypeTemplate, settingName,
-							Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
-									+ (parentAsked ? "+asked" : "+ask"), false);
+							Boolean.toString(parentRestricted) + (parentAsked ? "+asked" : "+ask"), false);
 					boolean restricted = value.contains("true");
 					boolean asked = (!ondemand || value.contains("asked"));
 					PRestriction childMerge;

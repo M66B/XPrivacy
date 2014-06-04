@@ -1226,8 +1226,6 @@ public class ActivityShare extends ActivityBase {
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				PackageInfo xInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
 				String confidence = PrivacyManager.getSetting(userId, PrivacyManager.cSettingConfidence, "", false);
-				boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false,
-						false);
 
 				// Initialize progress
 				mProgressCurrent = 0;
@@ -1309,16 +1307,12 @@ public class ActivityShare extends ActivityBase {
 										JSONObject entry = settings.getJSONObject(i);
 										String restrictionName = entry.getString("restriction");
 										String methodName = entry.has("method") ? entry.getString("method") : null;
-										Hook hook = (methodName == null ? null : PrivacyManager.getHook(
-												restrictionName, methodName));
-										if (dangerous || hook == null || !hook.isDangerous()) {
-											int voted_restricted = entry.getInt("restricted");
-											int voted_not_restricted = entry.getInt("not_restricted");
-											boolean restricted = (voted_restricted > voted_not_restricted);
-											if (clear || restricted)
-												listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
-														methodName, restricted));
-										}
+										int voted_restricted = entry.getInt("restricted");
+										int voted_not_restricted = entry.getInt("not_restricted");
+										boolean restricted = (voted_restricted > voted_not_restricted);
+										if (clear || restricted)
+											listRestriction.add(new PRestriction(appInfo.getUid(), restrictionName,
+													methodName, restricted));
 									}
 									PrivacyManager.setRestrictionList(listRestriction);
 									List<Boolean> newState = PrivacyManager.getRestartStates(appInfo.getUid(), null);

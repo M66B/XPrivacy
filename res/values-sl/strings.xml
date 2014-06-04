@@ -157,7 +157,6 @@
     <string name="settings_ondemand">Omeji na zahtevo</string>
     <string name="settings_log">Beleženje za razvijalce (zahtevan ponovni zagon)</string>
     <string name="settings_expert">Način za strokovnjake</string>
-    <string name="settings_dangerous">Omeji nevarne funkcije</string>
     <string name="settings_confidence">Največji interval prenašanja omejitev</string>
     <string name="settings_experimental">Funkcije za strokovnjake (zahtevan ponovni zagon)</string>
     <string name="settings_https">Uporabi varne povezave</string>

@@ -157,7 +157,6 @@
     <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Ipakita kaalaman ukol sa Debug (kailangan muling paumpisahin ang iyong kagamitan)</string>
     <string name="settings_expert">Gamitin XPrivacy sa sanay na paraan</string>
-    <string name="settings_dangerous">Pahigpitan mga may panganib na tungkulin</string>
     <string name="settings_confidence">Pinakamataas na Confidence Interval na puwedeng kunin</string>
     <string name="settings_experimental">Gamitin mga hindi pa tiyak na tungkulin (kailangan muling paumpisahin ang iyong kagamitan)</string>
     <string name="settings_https">Use secure connections</string>

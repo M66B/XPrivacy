@@ -157,7 +157,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_ondemand">Restrictions sur demande</string>
     <string name="settings_log">Debug log (redémarrage requis)</string>
     <string name="settings_expert">Mode expert</string>
-    <string name="settings_dangerous">Restreindre fonctions dangereuses</string>
     <string name="settings_confidence">Intervalle de confiance maximum</string>
     <string name="settings_experimental">Fonctions expérimentales (redémarrage requis)</string>
     <string name="settings_https">Utiliser des connexions sécurisée</string>

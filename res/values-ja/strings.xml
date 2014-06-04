@@ -157,7 +157,6 @@
     <string name="settings_ondemand">要求に応じて制限する</string>
     <string name="settings_log">デバッグログ（再起動が必要）</string>
     <string name="settings_expert">エキスパートモード</string>
-    <string name="settings_dangerous">危険な可能を制限する</string>
     <string name="settings_confidence">最大のfetch confidenceインターバル</string>
     <string name="settings_experimental">実験的な機能 （再起動が必要）</string>
     <string name="settings_https">セキュリティーで保護された接続を使用する</string>
