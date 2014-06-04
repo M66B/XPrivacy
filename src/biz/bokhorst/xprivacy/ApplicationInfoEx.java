@@ -232,7 +232,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return Long.parseLong(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingModifyTime, "0", false));
 	}
 
-	public boolean _isSystem() {
+	public boolean isSystem() {
 		boolean mSystem = false;
 		for (ApplicationInfo appInfo : mMapAppInfo.values()) {
 			mSystem = ((appInfo.flags & (ApplicationInfo.FLAG_SYSTEM | ApplicationInfo.FLAG_UPDATED_SYSTEM_APP)) != 0);
