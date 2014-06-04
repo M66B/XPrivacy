@@ -15,7 +15,8 @@ Changelog
 
 **Next release**
 
-* Updated simplified chinese translation
+* Show restrictions which cannot be applied as disabled, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

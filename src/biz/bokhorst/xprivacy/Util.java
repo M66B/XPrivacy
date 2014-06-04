@@ -393,35 +393,17 @@ public class Util {
 		}
 	}
 
-	/**
-	 * get uid for context
-	 * @param context
-	 * @return uid
-	 */
-	public static int getSelfUid(Context context) {
-		try {
-			String self = Util.class.getPackage().getName();
-			PackageManager pm = context.getPackageManager();
-			ApplicationInfo xInfo = pm.getApplicationInfo(self, 0);
-			return xInfo.uid;
-		} catch (NameNotFoundException ex) {
-			Util.bug(null, ex);
-			return 0;
-		}
-	}
-
-	/**
-	 * check whether restrictionName and methodName is required by self
-	 * @param restrictionName
-	 * @param methodName
-	 * @return true for required, false for no
-	 */
-	public static boolean isSelfRequired(String restrictionName, String methodName) {
-		return ((PrivacyManager.cIdentification.equals(restrictionName) &&("getString".equals(methodName) || "SERIAL".equals(methodName)))
+	public static boolean cannotRestrict(int uid, int xuid, String restrictionName, String methodName) {
+		// @formatter:off
+		return
+			(getAppId(uid) == getAppId(xuid)) &&
+			(((PrivacyManager.cIdentification.equals(restrictionName) &&
+			("getString".equals(methodName) || "SERIAL".equals(methodName)))
 			|| PrivacyManager.cIPC.equals(restrictionName)
 			|| PrivacyManager.cStorage.equals(restrictionName)
 			|| PrivacyManager.cSystem.equals(restrictionName)
-			|| PrivacyManager.cView.equals(restrictionName));
+			|| PrivacyManager.cView.equals(restrictionName)));
+		// @formatter:on
 	}
 
 	private static byte[] hex2bytes(String hex) {

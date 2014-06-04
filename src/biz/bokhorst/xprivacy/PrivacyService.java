@@ -407,9 +407,8 @@ public class PrivacyService {
 					return mresult;
 				}
 
-				// Check for self
-				if (Util.getAppId(restriction.uid) == getXUid() &&
-					Util.isSelfRequired(restriction.restrictionName, restriction.methodName)) {
+				// Check if can be restricted
+				if (Util.cannotRestrict(restriction.uid, getXUid(), restriction.restrictionName, restriction.methodName)) {
 					mresult.asked = true;
 					return mresult;
 				}
