@@ -715,7 +715,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				intent.putExtra(
 						ActivityShare.cUidList,
 						mAppAdapter == null ? new int[0] : mAppAdapter
-								.getSelectedOrVisibleUid(AppListAdapter.cSelectAppUser));
+								.getSelectedOrVisibleUid(AppListAdapter.cSelectAppAll));
 				startActivity(intent);
 			}
 		}
@@ -1297,7 +1297,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		public final static int cSelectAppAll = 1;
 		public final static int cSelectAppNone = 2;
-		public final static int cSelectAppUser = 3;
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1329,13 +1328,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					return mListAppAll;
 				else {
 					List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
-					if (flags == cSelectAppUser)
-						for (int i = 0; i < this.getCount(); i++) {
-							ApplicationInfoEx appInfo = this.getItem(i);
-							if (!appInfo.isSystem())
-								listApp.add(appInfo);
-						}
-					else if (flags != cSelectAppNone)
+					if (flags != cSelectAppNone)
 						for (int i = 0; i < this.getCount(); i++)
 							listApp.add(this.getItem(i));
 					return listApp;
