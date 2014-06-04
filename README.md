@@ -914,6 +914,13 @@ Expert mode has 3 sub-options which can be toggled individually.
 * *Use secure connections*
 	* This will force communications with the crowd sourced restrictions server (submitting/fetching, device registration) to travel through a secure socket. Note that this is enabled by default and can only be disabled by enabling *Expert mode*.
 
+**(58) Can I write a thesis about XPrivacy?**
+
+Yes, you can and I will even help you with it.
+However, I will not write code nor text for you. Nevertheless, I will try to answer any questions you have.
+XPrivacy is open source (see also the license section) and all code you write needs to be contributed back to the project.
+To help you I want to see an e-mail from your professor with a confirmation he or she has read and agrees to this FAQ.
+
 Support
 -------
 
