@@ -19,7 +19,7 @@
     <string name="menu_submit">分享权限限制规则</string>
     <string name="menu_fetch">下载权限限制规则</string>
     <string name="menu_theme">切换明/暗主题</string>
-    <string name="menu_pro">捐赠/升级到专业版</string>
+    <string name="menu_pro">专业版</string>
     <string name="menu_about">关于</string>
     <string name="menu_help">帮助</string>
     <string name="menu_select_all">选择全部</string>
@@ -45,7 +45,7 @@
     <string name="menu_tutorial">界面功能指引</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">关闭</string>
-    <string name="menu_flush">Flush cache</string>
+    <string name="menu_flush">请除缓存</string>
     <string name="msg_abort">正在中止</string>
     <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>
@@ -73,8 +73,8 @@
     <string name="msg_upgrading" formatted="false">正在升级 %s</string>
     <string name="msg_support_info">内部检查出现错误, 要发送支持信息吗?</string>
     <string name="msg_restrictedby">由 XPrivacy 限制</string>
-    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
-    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
+    <string name="msg_service_missing">没有找到Privacy服务，您是否在Xposed Installer中启用XPrivacy并重启设备？</string>
+    <string name="msg_service_version">Privacy服务版本不对，您是否在升级XPrivacy后忘了重启？</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -133,9 +133,9 @@
     <string name="title_pleasesubmit">请发送你的应用限制信息来帮助其他人</string>
     <string name="title_permissions">权限</string>
     <string name="title_set_restrict">限制</string>
-    <string name="title_template_category">Apply template (categories)</string>
-    <string name="title_template_full">Apply template (categories+functions)</string>
-    <string name="title_template_merge">Apply template (merge)</string>
+    <string name="title_template_category">应用模板(分类)</string>
+    <string name="title_template_full">应用模板(分类和功能)</string>
+    <string name="title_template_merge">应用模板(合并)</string>
     <string name="title_enable_ondemand">开启按需权限限制</string>
     <string name="title_disable_ondemand">关闭按需权限限制</string>
     <string name="settings_serial">序列号</string>
@@ -163,11 +163,11 @@
     <string name="settings_https">使用安全连接(https)</string>
     <string name="settings_syscomponents">限制系统组件 (Android) (需要重启)</string>
     <string name="settings_usagedata">显示应用权限使用情况 (需要重启)</string>
-    <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_parameters">显示使用情况参数</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">长按名称进行选择</string>
-    <string name="help_ondemand">限制将被请求</string>
+    <string name="help_ondemand">当限制时询问</string>
     <string name="help_application">请输入应用名称</string>
     <string name="help_internet">应用含有网络访问权限</string>
     <string name="help_granted">应用已经含有这种权限</string>
@@ -186,7 +186,7 @@
     <string name="tutorial_detailsheader">点击应用图标以查看更多操作</string>
     <string name="tutorial_detailslist">点击左侧向下的箭头以查看该类别的子权限</string>
     <string name="permission_manage">管理应用程序，包括强行停止</string>
-    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
+    <string name="permission_restrictions">管理XPrivacy限制和设置</string>
 
 </resources>
 
