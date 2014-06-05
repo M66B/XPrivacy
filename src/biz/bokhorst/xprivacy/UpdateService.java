@@ -151,17 +151,18 @@ public class UpdateService extends Service {
 	}
 
 	private static void upgrade(Context context) throws NameNotFoundException {
-		// Get previous version
+		// Get previous version number
 		int userId = Util.getUserId(Process.myUid());
 		String currentVersion = Util.getSelfVersionName(context);
 		Version sVersion = new Version(PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0", false));
 		boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
 
-		// Upgrade packages
+		// Check if upgrade needed
 		if (sVersion.compareTo(new Version("0.0")) != 0) {
 			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + currentVersion
 					+ " dangerous=" + dangerous);
 
+			// Upgrade packages
 			int first = 0;
 			String format = context.getString(R.string.msg_upgrading);
 			List<ApplicationInfo> listApp = context.getPackageManager().getInstalledApplications(0);
@@ -179,12 +180,14 @@ public class UpdateService extends Service {
 			}
 			if (first == 0)
 				Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
+
+			// Remove legacy setting
+			PrivacyManager.setSetting(userId, PrivacyManager.cSettingDangerous, null);
 		} else
 			Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
 
-		// Finalize
+		// Set new version number
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingVersion, currentVersion);
-		PrivacyManager.setSetting(userId, PrivacyManager.cSettingDangerous, null);
 
 		// Cleanup
 		PrivacyManager.removeLegacySalt(userId);
@@ -278,9 +281,9 @@ public class UpdateService extends Service {
 		for (String restrictionName : PrivacyManager.getRestrictions()) {
 			boolean restricted = PrivacyManager.getRestrictionEx(uid, restrictionName, null).restricted;
 
-			for (Hook hook : PrivacyManager.getHooks(restrictionName))
+			for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
+				// Disable new dangerous restrictions
 				if (hook.getFrom() != null) {
-					// Disable new dangerous restrictions
 					if (sVersion.compareTo(hook.getFrom()) < 0) {
 						if (hook.isDangerous()) {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + hook + " from=" + hook.getFrom()
@@ -297,14 +300,19 @@ public class UpdateService extends Service {
 							}
 					}
 
-				} else if (dangerous && restricted && hook.isDangerous()) {
-					// Restrict dangerous
+				}
+
+				// Restrict dangerous
+				if (dangerous && restricted && hook.isDangerous()) {
 					PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true);
-					if (!PrivacyManager.isRestrictionSet(restriction)) {
-						Util.log(null, Log.WARN, "Restrict dangerous restriction=" + restriction);
+					if (PrivacyManager.isRestrictionSet(restriction))
+						Util.log(null, Log.WARN, "Restrict dangerous set restriction=" + restriction);
+					else {
+						Util.log(null, Log.WARN, "Restrict dangerous setting restriction=" + restriction);
 						listWork.add(restriction);
 					}
 				}
+			}
 		}
 
 		return listWork;
