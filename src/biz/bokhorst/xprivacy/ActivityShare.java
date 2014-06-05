@@ -1221,7 +1221,7 @@ public class ActivityShare extends ActivityBase {
 				String[] license = Util.getProLicenseUnchecked();
 				String android_id = Secure.getString(ActivityShare.this.getContentResolver(), Secure.ANDROID_ID);
 				PackageInfo xInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-				String confidence = PrivacyManager.getSetting(userId, PrivacyManager.cSettingConfidence, "", false);
+				String confidence = PrivacyManager.getSetting(userId, PrivacyManager.cSettingConfidence, "");
 
 				// Initialize progress
 				mProgressCurrent = 0;

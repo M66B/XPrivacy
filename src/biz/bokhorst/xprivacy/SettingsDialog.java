@@ -27,7 +27,7 @@ public class SettingsDialog {
 		final int uid = (appInfo == null ? userId : appInfo.getUid());
 
 		// Build dialog
-		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
 		int themeId = (themeName.equals("Dark") ? R.style.CustomTheme_Dialog : R.style.CustomTheme_Light_Dialog);
 		final Dialog dlgSettings = new Dialog(context, themeId);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
@@ -226,7 +226,7 @@ public class SettingsDialog {
 		boolean components = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSystem, false, false);
 		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false, false);
 		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true, false);
-		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "", false);
+		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
 		final boolean expert = (components || experimental || !https || !"".equals(confidence));
 
 		// Application specific
@@ -236,19 +236,19 @@ public class SettingsDialog {
 		// Common
 		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false, false);
 
-		String serial = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSerial, "", false);
-		String lat = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLatitude, "", false);
-		String lon = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLongitude, "", false);
-		String alt = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingAltitude, "", false);
-		String mac = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMac, "", false);
-		String imei = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingImei, "", false);
-		String phone = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingPhone, "", false);
-		String id = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingId, "", false);
-		String gsfid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingGsfId, "", false);
-		String adid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingAdId, "", false);
-		String country = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingCountry, "", false);
-		String subscriber = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSubscriber, "", false);
-		String ssid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSSID, "", false);
+		String serial = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSerial, "");
+		String lat = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLatitude, "");
+		String lon = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLongitude, "");
+		String alt = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingAltitude, "");
+		String mac = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMac, "");
+		String imei = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingImei, "");
+		String phone = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingPhone, "");
+		String id = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingId, "");
+		String gsfid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingGsfId, "");
+		String adid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingAdId, "");
+		String country = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingCountry, "");
+		String subscriber = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSubscriber, "");
+		String ssid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSSID, "");
 
 		// Set current values
 		if (uid == userId) {
@@ -348,14 +348,14 @@ public class SettingsDialog {
 		etSubscriber.setEnabled(!cbSubscriber.isChecked());
 		etSSID.setEnabled(!cbSSID.isChecked());
 
-		etIP.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingIP, "", false));
-		etMcc.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMcc, "", false));
-		etMnc.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMnc, "", false));
-		etOperator.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingOperator, "", false));
-		etIccId.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingIccId, "", false));
-		etCid.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingCid, "", false));
-		etLac.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLac, "", false));
-		etUa.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingUa, "", false));
+		etIP.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingIP, ""));
+		etMcc.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMcc, ""));
+		etMnc.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMnc, ""));
+		etOperator.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingOperator, ""));
+		etIccId.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingIccId, ""));
+		etCid.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingCid, ""));
+		etLac.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLac, ""));
+		etUa.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingUa, ""));
 
 		// Handle search
 		btnSearch.setOnClickListener(new View.OnClickListener() {

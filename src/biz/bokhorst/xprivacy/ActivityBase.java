@@ -28,7 +28,7 @@ public class ActivityBase extends Activity {
 		if (PrivacyService.checkClient()) {
 			// Set theme
 			int userId = Util.getUserId(Process.myUid());
-			String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "", false);
+			String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 			setTheme(mThemeId);
 		} else {

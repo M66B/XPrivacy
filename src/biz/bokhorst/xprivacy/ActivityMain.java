@@ -200,8 +200,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Setup spinner
 		int pos = 0;
-		String restrictionName = PrivacyManager
-				.getSetting(userId, PrivacyManager.cSettingSelectedCategory, null, false);
+		String restrictionName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSelectedCategory, null);
 		if (restrictionName != null)
 			for (String restriction : PrivacyManager.getRestrictions(this).values()) {
 				pos++;
@@ -215,7 +214,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		spRestriction.setSelection(pos);
 
 		// Setup sort
-		mSortMode = Integer.parseInt(PrivacyManager.getSetting(userId, PrivacyManager.cSettingSortMode, "0", false));
+		mSortMode = Integer.parseInt(PrivacyManager.getSetting(userId, PrivacyManager.cSettingSortMode, "0"));
 		mSortInvert = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingSortInverted, false, false);
 
 		// Setup name filter
@@ -723,7 +722,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private void optionSwitchTheme() {
 		int userId = Util.getUserId(Process.myUid());
-		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
 		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTheme, themeName);
 		this.recreate();
@@ -1119,7 +1118,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			// Get info
 			final int userId = Util.getUserId(Process.myUid());
 			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, restrictionName,
-					Boolean.toString(!ondemand) + "+ask", false);
+					Boolean.toString(!ondemand) + "+ask");
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
 
@@ -1130,7 +1129,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					String settingName = restrictionName + "." + hook.getName();
 					String childValue = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName,
 							Boolean.toString(holder.restricted && !hook.isDangerous())
-									+ (holder.asked ? "+asked" : "+ask"), false);
+									+ (holder.asked ? "+asked" : "+ask"));
 					if (!childValue.contains("true"))
 						partialRestricted = true;
 					if (childValue.contains("asked"))
@@ -1213,14 +1212,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Get parent info
 			String parentValue = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, restrictionName,
-					Boolean.toString(!ondemand) + "+ask", false);
+					Boolean.toString(!ondemand) + "+ask");
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
 
 			// Get child info
 			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName,
-					Boolean.toString(parentRestricted && !hook.isDangerous()) + (parentAsked ? "+asked" : "+ask"),
-					false);
+					Boolean.toString(parentRestricted && !hook.isDangerous()) + (parentAsked ? "+asked" : "+ask"));
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
 			Bitmap bmRestricted = (parentRestricted && holder.restricted ? getFullCheckBox() : getOffCheckBox());

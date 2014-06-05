@@ -154,7 +154,7 @@ public class UpdateService extends Service {
 		// Get previous version number
 		int userId = Util.getUserId(Process.myUid());
 		String currentVersion = Util.getSelfVersionName(context);
-		Version sVersion = new Version(PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0", false));
+		Version sVersion = new Version(PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0"));
 		boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
 
 		// Check if upgrade needed
@@ -272,7 +272,7 @@ public class UpdateService extends Service {
 	}
 
 	private static boolean hasRandomOnAccess(int uid, String setting) {
-		return PrivacyManager.cValueRandom.equals(PrivacyManager.getSetting(uid, setting, null, false));
+		return PrivacyManager.cValueRandom.equals(PrivacyManager.getSetting(uid, setting, null));
 	}
 
 	private static List<PRestriction> getUpgradeWork(Version sVersion, int uid, boolean dangerous) {
