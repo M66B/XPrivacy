@@ -308,6 +308,7 @@ public class UpdateService extends Service {
 					if (PrivacyManager.isRestrictionSet(restriction))
 						Util.log(null, Log.WARN, "Restrict dangerous set restriction=" + restriction);
 					else {
+						restriction.asked = true;
 						Util.log(null, Log.WARN, "Restrict dangerous setting restriction=" + restriction);
 						listWork.add(restriction);
 					}
