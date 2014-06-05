@@ -20,7 +20,8 @@ Changelog
 * Made toggle restrictions dialog scrollable
 * Removed setting *Restrict dangerous functions* ([issue](/../../issues/1704))
 * Added half check boxes to template ([issue](/../../issues/1706))
-* Always use settings cache
+* Always use settings cache for UI
+* Always use restriction cache for UI
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

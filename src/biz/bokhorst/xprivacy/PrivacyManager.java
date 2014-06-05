@@ -228,13 +228,43 @@ public class PrivacyManager {
 
 	public static PRestriction getRestrictionEx(int uid, String restrictionName, String methodName) {
 		PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
+		PRestriction result = new PRestriction(uid, restrictionName, methodName, false, true);
 		try {
-			// TODO: use cache?
-			return PrivacyService.getRestriction(query, false, "");
+			// Check cache
+			boolean cached = false;
+			CRestriction key = new CRestriction(uid, restrictionName, methodName, null);
+			synchronized (mRestrictionCache) {
+				if (mRestrictionCache.containsKey(key)) {
+					CRestriction entry = mRestrictionCache.get(key);
+					if (!entry.isExpired()) {
+						cached = true;
+						result.restricted = entry.restricted;
+						result.asked = entry.asked;
+					}
+				}
+			}
+
+			if (!cached) {
+				// Get restriction
+				result = PrivacyService.getRestriction(query, false, "");
+
+				// Add to cache
+				key.restricted = result.restricted;
+				key.asked = result.asked;
+				if (result.time > 0) {
+					key.setExpiry(result.time);
+					Util.log(null, Log.WARN, "Caching " + result + " until " + new Date(result.time));
+				}
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(key))
+						mRestrictionCache.remove(key);
+					mRestrictionCache.put(key, key);
+				}
+			}
 		} catch (RemoteException ex) {
 			Util.bug(null, ex);
-			return query;
 		}
+		return result;
 	}
 
 	public static boolean getRestriction(final XHook hook, int uid, String restrictionName, String methodName,
@@ -286,6 +316,7 @@ public class PrivacyManager {
 				if (!entry.isExpired()) {
 					cached = true;
 					result.restricted = entry.restricted;
+					result.asked = entry.asked;
 				}
 			}
 		}
@@ -300,6 +331,7 @@ public class PrivacyManager {
 				// Add to cache
 				if (result.time >= 0) {
 					key.restricted = result.restricted;
+					key.asked = result.asked;
 					if (result.time > 0) {
 						key.setExpiry(result.time);
 						Util.log(null, Log.WARN, "Caching " + result + " until " + new Date(result.time));
