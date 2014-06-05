@@ -13,7 +13,7 @@ public class CSetting {
 
 	public CSetting(int uid, String type, String name) {
 		mTimestamp = new Date().getTime();
-		mUid = uid;
+		mUid = Math.abs(uid);
 		mType = type;
 		mName = name;
 		mValue = null;
@@ -66,5 +66,4 @@ public class CSetting {
 	public String toString() {
 		return mUid + ":" + mType + "/" + mName + "=" + mValue;
 	}
-
 }
