@@ -22,9 +22,8 @@ Changelog
 * Added half check boxes to template ([issue](/../../issues/1706))
 * Always use settings cache for UI
 * Always use restriction cache for UI
-* Made *network/getScanResults* dangerous
-* Fixed user defined dangerous functions
-	* Unfortunately you need to set these again
+* Fixed user defined dangerous functions (some names did overlap)
+	* Unfortunately you need to define them again
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
