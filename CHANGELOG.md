@@ -23,6 +23,8 @@ Changelog
 * Always use settings cache for UI
 * Always use restriction cache for UI
 * Made *network/getScanResults* dangerous
+* Fixed user defined dangerous functions
+	* Unfortunately you need to set these again
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
