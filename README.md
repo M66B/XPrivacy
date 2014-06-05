@@ -931,6 +931,12 @@ However, I will not write code nor text for you. Nevertheless, I will try to ans
 XPrivacy is open source (see also the license section) and all code you write needs to be contributed back to the project.
 To help you I want to see an e-mail from your professor with a confirmation he or she has read and agrees to this FAQ.
 
+**(59) Will you implement multiple profiles?**
+
+No, because privacy is not something that is optional.
+It makes no sense to restrict something during the day and not during the night
+or on your work and not at home.
+
 Support
 -------
 
