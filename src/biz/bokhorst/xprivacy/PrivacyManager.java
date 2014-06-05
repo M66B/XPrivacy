@@ -365,7 +365,6 @@ public class PrivacyManager {
 			try {
 				PrivacyService.getClient().setRestrictionList(listRestriction);
 			} catch (Throwable ex) {
-				Util.log(null, Log.ERROR, "setRestrictionList");
 				Util.bug(null, ex);
 			}
 	}
@@ -376,10 +375,18 @@ public class PrivacyManager {
 		try {
 			return PrivacyService.getClient().getRestrictionList(new PRestriction(uid, restrictionName, null, false));
 		} catch (Throwable ex) {
-			Util.log(null, Log.ERROR, "getRestrictionList");
 			Util.bug(null, ex);
 		}
 		return new ArrayList<PRestriction>();
+	}
+
+	public static boolean isRestrictionSet(PRestriction restriction) {
+		try {
+			return PrivacyService.getClient().isRestrictionSet(restriction);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return false;
+		}
 	}
 
 	public static void deleteRestrictions(int uid, String restrictionName, boolean deleteWhitelists) {

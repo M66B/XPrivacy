@@ -72,7 +72,7 @@ public class PrivacyService {
 	private static final String cTableSetting = "setting";
 
 	private static final int cCurrentVersion = 335;
-	private static final String cServiceName = "xprivacy333";
+	private static final String cServiceName = "xprivacy336";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -508,11 +508,12 @@ public class PrivacyService {
 					}
 
 					// Default dangerous
-					if (!methodFound && hook != null && hook.isDangerous()) {
-						mresult.restricted = false;
-						if (hook.whitelist() == null)
-							mresult.asked = true;
-					}
+					if (!methodFound && hook != null && hook.isDangerous())
+						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
+							mresult.restricted = false;
+							if (hook.whitelist() == null)
+								mresult.asked = true;
+						}
 
 					// Check whitelist
 					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
@@ -669,6 +670,54 @@ public class PrivacyService {
 				throw new RemoteException(ex.toString());
 			}
 			return result;
+		}
+
+		@Override
+		public boolean isRestrictionSet(PRestriction restriction) throws RemoteException {
+			try {
+				// No permissions required
+				boolean set = false;
+
+				SQLiteDatabase db = getDb();
+				if (db != null) {
+					// Precompile statement when needed
+					if (stmtGetRestriction == null) {
+						String sql = "SELECT restricted FROM " + cTableRestriction
+								+ " WHERE uid=? AND restriction=? AND method=?";
+						stmtGetRestriction = db.compileStatement(sql);
+					}
+
+					// Execute statement
+					mLock.readLock().lock();
+					db.beginTransaction();
+					try {
+						try {
+							synchronized (stmtGetRestriction) {
+								stmtGetRestriction.clearBindings();
+								stmtGetRestriction.bindLong(1, restriction.uid);
+								stmtGetRestriction.bindString(2, restriction.restrictionName);
+								stmtGetRestriction.bindString(3, restriction.methodName);
+								stmtGetRestriction.simpleQueryForLong();
+								set = true;
+							}
+						} catch (SQLiteDoneException ignored) {
+						}
+
+						db.setTransactionSuccessful();
+					} finally {
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.readLock().unlock();
+						}
+					}
+				}
+
+				return set;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
+			}
 		}
 
 		@Override

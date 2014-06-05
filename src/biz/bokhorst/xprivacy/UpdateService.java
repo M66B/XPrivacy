@@ -155,10 +155,12 @@ public class UpdateService extends Service {
 		int userId = Util.getUserId(Process.myUid());
 		String currentVersion = Util.getSelfVersionName(context);
 		Version sVersion = new Version(PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0", false));
+		boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
 
 		// Upgrade packages
 		if (sVersion.compareTo(new Version("0.0")) != 0) {
-			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + currentVersion);
+			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + currentVersion
+					+ " dangerous=" + dangerous);
 
 			int first = 0;
 			String format = context.getString(R.string.msg_upgrading);
@@ -166,7 +168,7 @@ public class UpdateService extends Service {
 
 			for (int i = 1; i <= listApp.size(); i++) {
 				int uid = listApp.get(i - 1).uid;
-				List<PRestriction> listRestriction = getUpgradeWork(sVersion, uid);
+				List<PRestriction> listRestriction = getUpgradeWork(sVersion, uid, dangerous);
 				PrivacyManager.setRestrictionList(listRestriction);
 
 				if (first == 0)
@@ -178,10 +180,11 @@ public class UpdateService extends Service {
 			if (first == 0)
 				Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
 		} else
-			Util.log(null, Log.WARN, "Noting to upgrade version=" + sVersion);
+			Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
 
 		// Finalize
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingVersion, currentVersion);
+		PrivacyManager.setSetting(userId, PrivacyManager.cSettingDangerous, null);
 
 		// Cleanup
 		PrivacyManager.removeLegacySalt(userId);
@@ -214,6 +217,7 @@ public class UpdateService extends Service {
 
 	private static List<PSetting> getRandomizeWork(Context context, int uid) {
 		List<PSetting> listWork = new ArrayList<PSetting>();
+
 		if (PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false, true)) {
 			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingLatitude))
 				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
@@ -260,6 +264,7 @@ public class UpdateService extends Service {
 			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingSSID))
 				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingSSID, PrivacyManager.getRandomProp("SSID")));
 		}
+
 		return listWork;
 	}
 
@@ -267,28 +272,41 @@ public class UpdateService extends Service {
 		return PrivacyManager.cValueRandom.equals(PrivacyManager.getSetting(uid, setting, null, false));
 	}
 
-	private static List<PRestriction> getUpgradeWork(Version sVersion, int uid) {
+	private static List<PRestriction> getUpgradeWork(Version sVersion, int uid, boolean dangerous) {
 		List<PRestriction> listWork = new ArrayList<PRestriction>();
-		for (String restrictionName : PrivacyManager.getRestrictions())
-			for (Hook md : PrivacyManager.getHooks(restrictionName))
-				if (md.getFrom() != null)
-					if (sVersion.compareTo(md.getFrom()) < 0) {
-						// Disable new dangerous restrictions
-						if (md.isDangerous()) {
-							Util.log(null, Log.WARN, "Upgrading dangerous " + md + " from=" + md.getFrom() + " uid="
-									+ uid);
-							listWork.add(new PRestriction(uid, md.getRestrictionName(), md.getName(), false));
+
+		for (String restrictionName : PrivacyManager.getRestrictions()) {
+			boolean restricted = PrivacyManager.getRestrictionEx(uid, restrictionName, null).restricted;
+
+			for (Hook hook : PrivacyManager.getHooks(restrictionName))
+				if (hook.getFrom() != null) {
+					// Disable new dangerous restrictions
+					if (sVersion.compareTo(hook.getFrom()) < 0) {
+						if (hook.isDangerous()) {
+							Util.log(null, Log.WARN, "Upgrading dangerous " + hook + " from=" + hook.getFrom()
+									+ " uid=" + uid);
+							listWork.add(new PRestriction(uid, hook.getRestrictionName(), hook.getName(), false));
 						}
 
 						// Restrict replaced methods
-						if (md.getReplaces() != null)
-							if (PrivacyManager.getRestrictionEx(uid, md.getRestrictionName(), md.getReplaces()).restricted) {
-								Util.log(null, Log.WARN,
-										"Replaced " + md.getReplaces() + " by " + md + " from=" + md.getFrom()
-												+ " uid=" + uid);
-								listWork.add(new PRestriction(uid, md.getRestrictionName(), md.getName(), true));
+						if (hook.getReplaces() != null)
+							if (PrivacyManager.getRestrictionEx(uid, hook.getRestrictionName(), hook.getReplaces()).restricted) {
+								Util.log(null, Log.WARN, "Replaced " + hook.getReplaces() + " by " + hook + " from="
+										+ hook.getFrom() + " uid=" + uid);
+								listWork.add(new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true));
 							}
 					}
+
+				} else if (dangerous && restricted && hook.isDangerous()) {
+					// Restrict dangerous
+					PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true);
+					if (!PrivacyManager.isRestrictionSet(restriction)) {
+						Util.log(null, Log.WARN, "Restrict dangerous restriction=" + restriction);
+						listWork.add(restriction);
+					}
+				}
+		}
+
 		return listWork;
 	}
 
