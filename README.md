@@ -699,6 +699,17 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 
 No, because I don't consider this information to be privacy-sensitive data, i.e., able to identify you and collect data about you. I am happy to add new restrictions for data that is really privacy-sensitive.
 
+* Calendars by account
+* Contacts by account
+
+For the few users who will be using this, it is too much work to implement.
+The [calendar](http://developer.android.com/guide/topics/providers/calendar-provider.html)
+and [contacts](http://developer.android.com/guide/topics/providers/contacts-provider.html) API are quite complicated.
+There is also a better way to accomplish this.
+You can use different users on your device with different accounts.
+To enable multiple users for a phone you can follow [these instructions](http://www.pocketables.com/2013/03/how-to-enable-multiple-user-mode-on-cyanogenmod-10-1-and-some-other-android-4-2-2-roms.html).
+Note that the user selector on the lockscreen works in landscape only.
+
 <a name="FAQ26"></a>
 **(26) Will you revoke permissions?**
 

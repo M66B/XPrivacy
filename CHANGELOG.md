@@ -17,7 +17,7 @@ Changelog
 
 * Showing restrictions which cannot be applied as disabled, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Made filter and sort dialog scrollable, thanks @[liudongmiao](https://github.com/liudongmiao)
-* Made toggle restrictions scrollable
+* Made toggle restrictions dialog scrollable
 * Removed setting *Restrict dangerous functions* ([issue](/../../issues/1704))
 * Added half check boxes to template ([issue](/../../issues/1706))
 * Updated simplified Chinese translation
