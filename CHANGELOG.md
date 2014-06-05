@@ -19,9 +19,10 @@ Changelog
 * Made filter and sort dialog scrollable, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Made toggle restrictions dialog scrollable
 * Removed setting *Restrict dangerous functions* ([issue](/../../issues/1704))
+	* The issue contains additional information
 * Added half check boxes to template ([issue](/../../issues/1706))
-* Always use settings cache for UI
-* Always use restriction cache for UI
+* Always use settings cache for UI (performance)
+* Always use restriction cache for UI (performance)
 * Fixed user defined dangerous functions (some names did overlap)
 	* Unfortunately you need to define them again
 * Updated simplified Chinese translation
