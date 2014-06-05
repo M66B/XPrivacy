@@ -182,7 +182,7 @@ public class Meta {
 		mListHook.add(new Hook("network", "getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getConnectionInfo", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getDhcpInfo", "ACCESS_WIFI_STATE", 10, null, null));
-		mListHook.add(new Hook("network", "getScanResults", "ACCESS_WIFI_STATE", 10, null, null));
+		mListHook.add(new Hook("network", "getScanResults", "ACCESS_WIFI_STATE", 10, null, null).dangerous());
 		mListHook.add(new Hook("network", "getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, null, null));
 
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
