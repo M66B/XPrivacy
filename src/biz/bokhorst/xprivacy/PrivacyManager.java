@@ -487,7 +487,7 @@ public class PrivacyManager {
 		int userId = Util.getUserId(uid);
 
 		// Check on-demand
-		boolean ondemand = getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
+		boolean ondemand = getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 
 		// Build list of restrictions
 		List<String> listRestriction = new ArrayList<String>();
@@ -627,11 +627,11 @@ public class PrivacyManager {
 			setSetting(userId, cSettingSalt, null);
 	}
 
-	public static boolean getSettingBool(int uid, String name, boolean defaultValue, boolean useCache) {
+	public static boolean getSettingBool(int uid, String name, boolean defaultValue) {
 		return Boolean.parseBoolean(getSetting(uid, name, Boolean.toString(defaultValue)));
 	}
 
-	public static boolean getSettingBool(int uid, String type, String name, boolean defaultValue, boolean useCache) {
+	public static boolean getSettingBool(int uid, String type, String name, boolean defaultValue) {
 		return Boolean.parseBoolean(getSetting(uid, type, name, Boolean.toString(defaultValue)));
 	}
 

@@ -45,7 +45,7 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.clearPermissionCache(uid);
 
 							boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand,
-									true, false);
+									true);
 
 							// Enable on demand
 							if (ondemand)
@@ -58,9 +58,9 @@ public class PackageChange extends BroadcastReceiver {
 							Integer.toString(ActivityMain.STATE_ATTENTION));
 
 					// New/update notification
-					boolean notify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true, false);
+					boolean notify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);
 					if (notify)
-						notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true, false);
+						notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
 					if (!replacing || notify) {
 						Intent resultIntent = new Intent(context, ActivityApp.class);
 						resultIntent.putExtra(ActivityApp.cUid, uid);

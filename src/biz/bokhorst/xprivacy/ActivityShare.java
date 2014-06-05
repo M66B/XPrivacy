@@ -275,7 +275,7 @@ public class ActivityShare extends ActivityBase {
 				}
 			});
 
-			boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
+			boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 			rbODEnable.setVisibility(ondemand ? View.VISIBLE : View.GONE);
 			rbODDisable.setVisibility(ondemand ? View.VISIBLE : View.GONE);
 
@@ -1402,7 +1402,7 @@ public class ActivityShare extends ActivityBase {
 						for (Account account : accountManager.getAccounts()) {
 							String sha1 = Util.sha1(account.name + account.type);
 							boolean allowed = PrivacyManager.getSettingBool(appInfo.getUid(), Meta.cTypeAccount, sha1,
-									false, false);
+									false);
 							if (allowed) {
 								allowedAccounts = true;
 								break;
@@ -1415,7 +1415,7 @@ public class ActivityShare extends ActivityBase {
 								null))
 							for (String packageName : aAppInfo.getPackageName()) {
 								boolean allowed = PrivacyManager.getSettingBool(-appInfo.getUid(),
-										Meta.cTypeApplication, packageName, false, false);
+										Meta.cTypeApplication, packageName, false);
 								if (allowed) {
 									allowedApplications = true;
 									break;
@@ -1431,7 +1431,7 @@ public class ActivityShare extends ActivityBase {
 								while (cursor.moveToNext()) {
 									long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
 									boolean allowed = PrivacyManager.getSettingBool(-appInfo.getUid(),
-											Meta.cTypeContact, Long.toString(id), false, false);
+											Meta.cTypeContact, Long.toString(id), false);
 									if (allowed) {
 										allowedContacts = true;
 										break;
@@ -1618,7 +1618,7 @@ public class ActivityShare extends ActivityBase {
 	public static boolean registerDevice(final ActivityBase context) {
 		int userId = Util.getUserId(Process.myUid());
 		if (Util.hasProLicense(context) == null
-				&& !PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingRegistered, false, false)) {
+				&& !PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingRegistered, false)) {
 			// Get accounts
 			String email = null;
 			for (Account account : AccountManager.get(context).getAccounts())
@@ -1833,7 +1833,7 @@ public class ActivityShare extends ActivityBase {
 
 	public static String getBaseURL(Context context) {
 		int userId = Util.getUserId(Process.myUid());
-		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingHttps, true, true))
+		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingHttps, true))
 			return HTTPS_BASE_URL;
 		else
 			return HTTP_BASE_URL;

@@ -220,21 +220,21 @@ public class SettingsDialog {
 			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
 		// Get current values
-		boolean usage = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingUsage, true, false);
-		boolean parameters = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingParameters, false, false);
-		boolean log = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingLog, false, false);
-		boolean components = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSystem, false, false);
-		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false, false);
-		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true, false);
+		boolean usage = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingUsage, true);
+		boolean parameters = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingParameters, false);
+		boolean log = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingLog, false);
+		boolean components = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSystem, false);
+		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false);
+		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true);
 		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
 		final boolean expert = (components || experimental || !https || !"".equals(confidence));
 
 		// Application specific
-		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true, false);
-		boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == userId, false);
+		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
+		boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == userId);
 
 		// Common
-		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false, false);
+		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false);
 
 		String serial = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSerial, "");
 		String lat = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLatitude, "");
@@ -285,13 +285,13 @@ public class SettingsDialog {
 			llConfidence.setVisibility(View.GONE);
 		}
 
-		boolean gnotify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true, false);
+		boolean gnotify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);
 		if (uid == userId || gnotify)
 			cbNotify.setChecked(notify);
 		else
 			cbNotify.setVisibility(View.GONE);
 
-		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
+		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 		if (uid == userId || (PrivacyManager.isApplication(uid) && gondemand))
 			cbOnDemand.setChecked(ondemand);
 		else

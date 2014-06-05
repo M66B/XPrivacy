@@ -155,7 +155,7 @@ public class UpdateService extends Service {
 		int userId = Util.getUserId(Process.myUid());
 		String currentVersion = Util.getSelfVersionName(context);
 		Version sVersion = new Version(PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0"));
-		boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
+		boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
 
 		// Check if upgrade needed
 		if (sVersion.compareTo(new Version("0.0")) != 0) {
@@ -221,7 +221,7 @@ public class UpdateService extends Service {
 	private static List<PSetting> getRandomizeWork(Context context, int uid) {
 		List<PSetting> listWork = new ArrayList<PSetting>();
 
-		if (PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false, true)) {
+		if (PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false)) {
 			if (!hasRandomOnAccess(uid, PrivacyManager.cSettingLatitude))
 				listWork.add(new PSetting(uid, "", PrivacyManager.cSettingLatitude, PrivacyManager.getRandomProp("LAT")));
 
