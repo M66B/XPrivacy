@@ -867,6 +867,7 @@ IMHO you should at least install an ad blocker and a firewall.
 * [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
 * [NOGAPPS](http://forum.xda-developers.com/showthread.php?t=1715375)
 * [OS Monitor](https://f-droid.org/repository/browse/?fdfilter=os%20monitor&fdid=com.eolwral.osmonitor)
+* [Shadowsocks](https://play.google.com/store/apps/details?id=com.github.shadowsocks)
 
 Please note that these applications are not written by me
 and that you should contact the author for support questions.
