@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -9,10 +9,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityShare" >
 
-    <!-- Header -->
-
     <ScrollView
-        android:id="@+id/svHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
@@ -21,6 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
+
+            <!-- Header -->
 
             <TextView
                 android:id="@+id/tvDescription"
@@ -98,78 +97,68 @@
                     android:text="@string/title_disable_ondemand"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
             </RadioGroup>
+
+            <!-- Footer -->
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                style="?android:attr/buttonBarButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btnCancel"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:text="@android:string/cancel" />
+
+                <View
+                    android:layout_width="1dip"
+                    android:layout_height="match_parent"
+                    android:background="@android:color/darker_gray" />
+
+                <Button
+                    android:id="@+id/btnOk"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:enabled="false"
+                    android:persistent="true"
+                    android:text="@android:string/ok" />
+            </LinearLayout>
+
+            <!-- Progress -->
+
+            <RelativeLayout
+                android:id="@+id/rlProgress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" >
+
+                <View
+                    android:id="@+id/vShareProgressEmpty"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="@android:color/darker_gray"
+                    android:paddingBottom="2dip" />
+
+                <View
+                    android:id="@+id/vShareProgressFull"
+                    android:layout_width="0dip"
+                    android:layout_height="3dip"
+                    android:background="?android:attr/colorActivatedHighlight" />
+            </RelativeLayout>
         </LinearLayout>
     </ScrollView>
-
-    <!-- Progress -->
-
-    <RelativeLayout
-        android:id="@+id/rlProgress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/svHeader"
-        android:paddingTop="3dip" >
-
-        <View
-            android:id="@+id/vShareProgressEmpty"
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_alignParentTop="true"
-            android:layout_marginBottom="-3dip"
-            android:background="@android:color/darker_gray" />
-
-        <View
-            android:id="@+id/vShareProgressFull"
-            android:layout_width="0dip"
-            android:layout_height="3dip"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:background="?android:attr/colorActivatedHighlight" />
-    </RelativeLayout>
-
-    <!-- Footer -->
-
-    <LinearLayout
-        android:id="@+id/llButtons"
-        style="?android:attr/buttonBarButtonStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal" >
-
-        <Button
-            android:id="@+id/btnCancel"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:text="@android:string/cancel" />
-
-        <View
-            android:id="@+id/vButtonSeparator"
-            android:layout_width="1dip"
-            android:layout_height="match_parent"
-            android:background="@android:color/darker_gray" />
-
-        <Button
-            android:id="@+id/btnOk"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="0dip"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_weight="1"
-            android:enabled="false"
-            android:persistent="true"
-            android:text="@android:string/ok" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/vBorder"
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_above="@id/llButtons"
-        android:background="@android:color/darker_gray" />
 
     <!-- What it is all about -->
 
@@ -177,9 +166,7 @@
         android:id="@+id/lvShare"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/vBorder"
-        android:layout_below="@id/rlProgress"
         android:layout_marginTop="6dip"
         android:scrollbarStyle="insideInset" />
 
-</RelativeLayout>
+</LinearLayout>

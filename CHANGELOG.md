@@ -15,7 +15,10 @@ Changelog
 
 **Next release**
 
-* Show restrictions which cannot be applied as disabled, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Showing restrictions which cannot be applied as disabled, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Made filter and sort dialog scrollable, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Made toggle restrictions scrollable
+* Removed setting *Restrict dangerous functions* ([issue](/../../issues/1704))
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
