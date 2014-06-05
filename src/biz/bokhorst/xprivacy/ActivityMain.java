@@ -1122,8 +1122,25 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					Boolean.toString(!ondemand) + "+ask", false);
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
-			Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
-			Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
+
+			boolean partialRestricted = false;
+			boolean partialAsked = false;
+			if (holder.restricted)
+				for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
+					String settingName = restrictionName + "." + hook.getName();
+					String childValue = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName,
+							Boolean.toString(holder.restricted && !hook.isDangerous())
+									+ (holder.asked ? "+asked" : "+ask"), false);
+					if (!childValue.contains("true"))
+						partialRestricted = true;
+					if (childValue.contains("asked"))
+						partialAsked = true;
+				}
+
+			Bitmap bmRestricted = (holder.restricted ? partialRestricted ? getHalfCheckBox() : getFullCheckBox()
+					: getOffCheckBox());
+			Bitmap bmAsked = (holder.asked ? getOffCheckBox() : partialAsked ? getHalfCheckBox()
+					: getOnDemandCheckBox());
 
 			// Set data
 			holder.tvRestriction.setTypeface(null, Typeface.BOLD);
@@ -1139,9 +1156,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.restricted = !holder.restricted;
 					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
-					// Update view
-					Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
-					holder.imgCbRestrict.setImageBitmap(bmRestricted);
 					notifyDataSetChanged(); // update childs
 				}
 			});
@@ -1153,9 +1167,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.asked = (!ondemand || !holder.asked);
 					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
-					// Update view
-					Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
-					holder.imgCbAsk.setImageBitmap(bmAsked);
 					notifyDataSetChanged(); // update childs
 				}
 			});
@@ -1208,8 +1219,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Get child info
 			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName,
-					Boolean.toString(parentRestricted && !hook.isDangerous())
-							+ (parentAsked ? "+asked" : "+ask"), false);
+					Boolean.toString(parentRestricted && !hook.isDangerous()) + (parentAsked ? "+asked" : "+ask"),
+					false);
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
 			Bitmap bmRestricted = (parentRestricted && holder.restricted ? getFullCheckBox() : getOffCheckBox());
@@ -1256,9 +1267,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.restricted = !holder.restricted;
 					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, settingName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
-					// Update view
-					Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
-					holder.imgCbRestrict.setImageBitmap(bmRestricted);
+					notifyDataSetChanged(); // update parent
 				}
 			});
 
@@ -1269,9 +1278,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.asked = !holder.asked;
 					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, settingName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
-					// Update view
-					Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
-					holder.imgCbAsk.setImageBitmap(bmAsked);
+					notifyDataSetChanged(); // update parent
 				}
 			});
 
