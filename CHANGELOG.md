@@ -37,6 +37,7 @@ Changelog
 * Show toggle on demand restricting on/off always ([issue](/../../issues/1697))
 * Added option to merge template with existing restrictions ([issue](/../../issues/1700))
 * Fixed selected accounts when imported from another device ([issue](/../../issues/1699))
+	* Some people need to allow accounts again, unfortunately there is no way to fix this
 * Updated Dutch translation
 * Updated German translation
 * Updated Lithuanian translation
