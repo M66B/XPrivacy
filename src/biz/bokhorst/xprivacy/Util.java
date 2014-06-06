@@ -396,7 +396,7 @@ public class Util {
 	public static boolean cannotRestrict(int uid, int xuid, String restrictionName, String methodName) {
 		int _uid = getAppId(uid);
 		if (_uid == Process.SYSTEM_UID && PrivacyManager.cIdentification.equals(restrictionName))
-			return false;
+			return true;
 		// @formatter:off
 		return
 			(_uid == getAppId(xuid)) &&
