@@ -15,6 +15,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.29 TEST**
+
 * Showing restrictions which cannot be applied as disabled, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Made filter and sort dialog scrollable, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Made toggle restrictions dialog scrollable
@@ -27,8 +31,6 @@ Changelog
 	* Unfortunately you need to define them again
 * Prevent restriction of identification category for Android
 * Updated simplified Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.28 BETA**
 
