@@ -25,6 +25,7 @@ Changelog
 * Always use restriction cache for UI (performance)
 * Fixed user defined dangerous functions (some names did overlap)
 	* Unfortunately you need to define them again
+* Prevent restriction of identification category for Android
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
