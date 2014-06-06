@@ -125,6 +125,7 @@ public class PackageChange extends BroadcastReceiver {
 						PrivacyManager.deleteRestrictions(uid, null, false);
 						PrivacyManager.deleteSettings(uid);
 						PrivacyManager.deleteUsage(uid);
+						PrivacyManager.clearPermissionCache(uid);
 					}
 
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {
