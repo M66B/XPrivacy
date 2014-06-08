@@ -862,12 +862,14 @@ If these suggestions don't help, please create an issue and provide a logcat (se
 
 IMHO you should at least install an ad blocker and a firewall.
 
-* [AdAway](http://sufficientlysecure.org/index.php/adaway/)
-* [CrappaLinks](http://forum.xda-developers.com/showthread.php?t=2603868)
-* [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall)
-* [NOGAPPS](http://forum.xda-developers.com/showthread.php?t=1715375)
-* [OS Monitor](https://f-droid.org/repository/browse/?fdfilter=os%20monitor&fdid=com.eolwral.osmonitor)
-* [Shadowsocks](https://play.google.com/store/apps/details?id=com.github.shadowsocks)
+* [AdAway](http://sufficientlysecure.org/index.php/adaway/) ([Source Code](https://github.com/dschuermann/ad-away))
+* [CrappaLinks](http://forum.xda-developers.com/showthread.php?t=2603868) ([Source Code](https://github.com/GermainZ/CrappaLinks))
+* [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall) ([Source Code](https://github.com/ukanth/afwall))
+* [NOGAPPS](http://forum.xda-developers.com/showthread.php?t=1715375) ([Source Code/Multiple Apps](https://github.com/mar-v-in))
+* [OS Monitor](https://f-droid.org/repository/browse/?fdfilter=os%20monitor&fdid=com.eolwral.osmonitor) ([Source Code](https://github.com/eolwral/OSMonitor))
+* [Shadowsocks](https://play.google.com/store/apps/details?id=com.github.shadowsocks) ([Source Code](https://github.com/clowwindy/shadowsocks))
+* [Orbot](https://play.google.com/store/apps/details?id=org.torproject.android) ([Source Code](https://gitweb.torproject.org/orbot.git))
+* [Xabber](https://play.google.com/store/apps/details?id=com.xabber.android) ([Source Code](https://github.com/redsolution/xabber-android))
 
 Please note that these applications are not written by me
 and that you should contact the author for support questions.
