@@ -15,9 +15,14 @@ Changelog
 
 **Next release**
 
-* Updated Italian translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.30 TEST**
+
+* Fixed template settings caching
+* Fixed applying template
+* Fixed function exceptions defaults
+* Updated Italian translation
 
 **Version 2.0.29 TEST**
 
