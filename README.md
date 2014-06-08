@@ -809,7 +809,7 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 No, the pro license can be used independently.
 
 <a name="FAQ36"></a>
-**(36) Is PayPal the only way to donate?**
+**(36) Is PayPal or Bitcoin the only way to donate?**
 
 Yes, it is not feasible to add other donation methods at the moment.
 
