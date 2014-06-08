@@ -71,7 +71,7 @@ Depending on the function, XPrivacy skips execution of the original function
 (for example when an application tries to set a proximity alert)
 or alters the result of the original function (for example to return an empty message list).
 
-XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat),
+XPrivacy has been tested with Android version 4.0.3 - 4.4.3 (ICS, JellyBean, KitKat),
 and is reported to work with most Android variants, including stock ROMs.
 Root access is needed to install the Xposed framework.
 
@@ -115,7 +115,7 @@ Features
 
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
-* For any (stock) variant of Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
+* For any (stock) variant of Android version 4.0.3 - 4.4.3 (ICS, JellyBean, KitKat)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Option to restrict on demand
@@ -340,7 +340,7 @@ You can still restrict the XPrivacy app's access to accounts, contacts, and othe
 Compatibility
 -------------
 
-XPrivacy has been tested with Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat)
+XPrivacy has been tested with Android version 4.0.3 - 4.4.3 (ICS, JellyBean, KitKat)
 and is reported to work with most Android variants, including stock ROMs.
 
 **XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231))
@@ -360,7 +360,7 @@ Installation
 Installation may seem lengthy, but you can actually do it quickly:
 
 1. Requirements:
-	* Android version 4.0.3 - 4.4.2 (ICS, JellyBean, KitKat); check with *System Settings* > *About phone* > *Android version*
+	* Android version 4.0.3 - 4.4.3 (ICS, JellyBean, KitKat); check with *System Settings* > *About phone* > *Android version*
 	* Read about [compatibility](https://github.com/M66B/XPrivacy#compatibility) before installing
 1. **Make a backup**
 1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
