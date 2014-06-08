@@ -1213,8 +1213,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
 
 			// Get child info
-			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName,
-					Boolean.toString(parentRestricted && !hook.isDangerous()) + (parentAsked ? "+asked" : "+ask"));
+			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName, null);
+			if (value == null)
+				value = Boolean.toString(parentRestricted && !hook.isDangerous()) + (parentAsked ? "+asked" : "+ask");
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
 			Bitmap bmRestricted = (parentRestricted && holder.restricted ? getFullCheckBox() : getOffCheckBox());
