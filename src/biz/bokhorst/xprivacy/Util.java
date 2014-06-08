@@ -393,22 +393,6 @@ public class Util {
 		}
 	}
 
-	public static boolean cannotRestrict(int uid, int xuid, String restrictionName, String methodName) {
-		int _uid = getAppId(uid);
-		if (_uid == Process.SYSTEM_UID && PrivacyManager.cIdentification.equals(restrictionName))
-			return true;
-		// @formatter:off
-		return
-			(_uid == getAppId(xuid)) &&
-			(((PrivacyManager.cIdentification.equals(restrictionName) &&
-			("getString".equals(methodName) || "SERIAL".equals(methodName)))
-			|| PrivacyManager.cIPC.equals(restrictionName)
-			|| PrivacyManager.cStorage.equals(restrictionName)
-			|| PrivacyManager.cSystem.equals(restrictionName)
-			|| PrivacyManager.cView.equals(restrictionName)));
-		// @formatter:on
-	}
-
 	private static byte[] hex2bytes(String hex) {
 		// Convert hex string to byte array
 		int len = hex.length();

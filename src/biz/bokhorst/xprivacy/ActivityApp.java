@@ -1119,7 +1119,7 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbAsk.setVisibility(View.GONE);
 
 					// Check if can be restricted
-					if (Util.cannotRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null)) {
+					if (!PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null)) {
 						holder.llName.setEnabled(false);
 						holder.tvName.setEnabled(false);
 						holder.imgCbAsk.setEnabled(false);
@@ -1410,7 +1410,8 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodAsk.setVisibility(View.GONE);
 
 					// Check if can be restricted
-					if (Util.cannotRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, rstate.mMethodName)) {
+					if (!PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
+							rstate.mMethodName)) {
 						holder.llMethodName.setEnabled(false);
 						holder.tvMethodName.setEnabled(false);
 						holder.imgCbMethodAsk.setEnabled(false);

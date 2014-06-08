@@ -408,7 +408,8 @@ public class PrivacyService {
 				}
 
 				// Check if can be restricted
-				if (Util.cannotRestrict(restriction.uid, getXUid(), restriction.restrictionName, restriction.methodName)) {
+				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+						restriction.methodName)) {
 					mresult.asked = true;
 					return mresult;
 				}

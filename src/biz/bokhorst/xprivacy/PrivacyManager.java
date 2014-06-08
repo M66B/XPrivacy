@@ -382,11 +382,31 @@ public class PrivacyManager {
 					if (md.isDangerous())
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, md
 								.whitelist() == null));
-					if (!Util.cannotRestrict(uid, Process.myUid(), rRestrictionName, md.getName()))
+					else if (!canRestrict(uid, Process.myUid(), rRestrictionName, md.getName()))
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
 				}
 
 		setRestrictionList(listPRestriction);
+	}
+
+	public static boolean canRestrict(int uid, int xuid, String restrictionName, String methodName) {
+		int _uid = Util.getAppId(uid);
+
+		if (_uid == Process.SYSTEM_UID && PrivacyManager.cIdentification.equals(restrictionName))
+			return false;
+
+		// @formatter:off
+		if ((_uid == Util.getAppId(xuid)) &&
+			(((PrivacyManager.cIdentification.equals(restrictionName) &&
+			("getString".equals(methodName) || "SERIAL".equals(methodName)))
+			|| PrivacyManager.cIPC.equals(restrictionName)
+			|| PrivacyManager.cStorage.equals(restrictionName)
+			|| PrivacyManager.cSystem.equals(restrictionName)
+			|| PrivacyManager.cView.equals(restrictionName))))
+			return false;
+		// @formatter:on
+
+		return true;
 	}
 
 	public static void updateState(int uid) {
