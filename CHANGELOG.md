@@ -22,6 +22,7 @@ Changelog
 * Fixed template settings caching
 * Fixed applying template
 * Fixed function exceptions defaults
+* Fixed displaying functions which cannot be restricted
 * Updated Italian translation
 
 **Version 2.0.29 TEST**

@@ -1119,11 +1119,11 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbAsk.setVisibility(View.GONE);
 
 					// Check if can be restricted
-					if (!PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null)) {
-						holder.llName.setEnabled(false);
-						holder.tvName.setEnabled(false);
-						holder.imgCbAsk.setEnabled(false);
-					}
+					boolean can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
+							null);
+					holder.llName.setEnabled(can);
+					holder.tvName.setEnabled(can);
+					holder.imgCbAsk.setEnabled(can);
 
 					// Listen for restriction changes
 					holder.llName.setOnClickListener(new View.OnClickListener() {
@@ -1410,12 +1410,11 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodAsk.setVisibility(View.GONE);
 
 					// Check if can be restricted
-					if (!PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
-							rstate.mMethodName)) {
-						holder.llMethodName.setEnabled(false);
-						holder.tvMethodName.setEnabled(false);
-						holder.imgCbMethodAsk.setEnabled(false);
-					}
+					boolean can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
+							rstate.mMethodName);
+					holder.llMethodName.setEnabled(can);
+					holder.tvMethodName.setEnabled(can);
+					holder.imgCbMethodAsk.setEnabled(can);
 
 					// Listen for restriction changes
 					if (parent.restricted)
