@@ -688,9 +688,11 @@ public class PrivacyManager {
 				if (value == null)
 					if (uid > 99) {
 						int userId = Util.getUserId(uid);
-						value = PrivacyService.getSetting(new PSetting(userId, type, name, defaultValue)).value;
-					} else
-						value = defaultValue;
+						value = PrivacyService.getSetting(new PSetting(userId, type, name, null)).value;
+					}
+
+				if (value == null)
+					value = defaultValue;
 
 				// Add to cache
 				key.setValue(value);
@@ -699,6 +701,7 @@ public class PrivacyManager {
 						mSettingsCache.remove(key);
 					mSettingsCache.put(key, key);
 				}
+
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
