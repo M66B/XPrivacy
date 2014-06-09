@@ -529,4 +529,20 @@ public class Util {
 		}
 		return src.delete();
 	}
+
+	public static Intent getXInstallerIntent(Context context) {
+		try {
+			// check xposed installer
+			context.getPackageManager().getPackageInfo("de.robv.android.xposed.installer", 0);
+			// @formatter:off
+			return new Intent("de.robv.android.xposed.installer.OPEN_SECTION")
+					.setPackage("de.robv.android.xposed.installer")
+					.putExtra("section", "modules")
+					.putExtra("module", context.getPackageName())
+					.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			// @formatter:on
+		} catch (NameNotFoundException e) {
+			return null;
+		}
+	}
 }

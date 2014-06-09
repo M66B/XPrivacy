@@ -93,8 +93,7 @@ public class Requirements {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Intent xInstallerIntent = context.getPackageManager().getLaunchIntentForPackage(
-									"de.robv.android.xposed.installer");
+							Intent xInstallerIntent = Util.getXInstallerIntent(context);
 							if (xInstallerIntent != null)
 								context.startActivity(xInstallerIntent);
 						}
