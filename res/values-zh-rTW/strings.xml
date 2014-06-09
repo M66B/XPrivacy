@@ -160,8 +160,8 @@
     <string name="settings_confidence">最大擷取信賴區間</string>
     <string name="settings_experimental">實驗性功能 (需重新啟動)</string>
     <string name="settings_https">使用加密連線 (HTTPS)</string>
-    <string name="settings_syscomponents">可限制安卓系統元件(需重新啟動)</string>
-    <string name="settings_usagedata">開啟操作記錄(需重新啟動)</string>
+    <string name="settings_syscomponents">可限制安卓系統元件</string>
+    <string name="settings_usagedata">開啟操作記錄</string>
     <string name="settings_parameters">顯示細部操作紀錄參數</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
