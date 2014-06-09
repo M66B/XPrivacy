@@ -17,6 +17,29 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 2.0.30 TEST**
+
+* Fixed template settings caching
+* Fixed applying template
+* Fixed function exceptions defaults
+* Fixed displaying functions which cannot be restricted
+* Updated Italian translation
+
+**Version 2.0.29 TEST**
+
+* Showing restrictions which cannot be applied as disabled, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Made filter and sort dialog scrollable, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Made toggle restrictions dialog scrollable
+* Removed setting *Restrict dangerous functions* ([issue](/../../issues/1704))
+	* The issue contains additional information
+* Added half check boxes to template ([issue](/../../issues/1706))
+* Always use settings cache for UI (performance)
+* Always use restriction cache for UI (performance)
+* Fixed user defined dangerous functions (some names did overlap)
+	* Unfortunately you need to define them again
+* Prevent restriction of identification category for Android
+* Updated simplified Chinese translation
+
 **Version 2.0.28 BETA**
 
 * Added *WRITE_CALENDAR* permissions to calendar restriction
@@ -25,6 +48,7 @@ Changelog
 * Show toggle on demand restricting on/off always ([issue](/../../issues/1697))
 * Added option to merge template with existing restrictions ([issue](/../../issues/1700))
 * Fixed selected accounts when imported from another device ([issue](/../../issues/1699))
+	* Some people need to allow accounts again, unfortunately there is no way to fix this
 * Updated Dutch translation
 * Updated German translation
 * Updated Lithuanian translation

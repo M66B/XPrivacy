@@ -73,7 +73,7 @@
     <string name="msg_upgrading" formatted="false">Aggiornamento %s</string>
     <string name="msg_support_info">Un controllo interno è fallito, vuoi inviare le informazioni di supporto?</string>
     <string name="msg_restrictedby">Ristretto da XPrivacy</string>
-    <string name="msg_service_missing">Servizio Privacy non trovato; hai attivato XPrivacy nell\'installatore di Xposed e riavviato il dispositivo</string>
+    <string name="msg_service_missing">Servizio Privacy non trovato; hai attivato XPrivacy nell\'installatore di Xposed e riavviato il dispositivo?</string>
     <string name="msg_service_version">Servizio Privacy conflitto di versione; hai riavviato il dispositivo dopo l\'aggiornamento di XPrivacy?</string>
     <string name="msg_first"><b>Grande cura è stata posta nello sviluppo e verifica di XPrivacy,
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
@@ -136,7 +136,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_set_restrict">Restringi</string>
     <string name="title_template_category">Applica modello (categorie)</string>
     <string name="title_template_full">Applica modello (categorie+funzioni)</string>
-    <string name="title_template_merge">Apply template (merge)</string>
+    <string name="title_template_merge">Applica modello (unisci)</string>
     <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
     <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
     <string name="settings_serial">Seriale#</string>
@@ -158,7 +158,6 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_ondemand">Restringi su richiesta</string>
     <string name="settings_log">Registro errori (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
-    <string name="settings_dangerous">Restringi funzioni pericolose</string>
     <string name="settings_confidence">Intervallo massimo di confidenza nella ricezione</string>
     <string name="settings_experimental">Funzioni sperimentali (richiede riavvio)</string>
     <string name="settings_https">Usa connessioni sicure</string>

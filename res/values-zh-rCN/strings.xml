@@ -157,7 +157,6 @@
     <string name="settings_ondemand">按需限制权限</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
-    <string name="settings_dangerous">限制可能导致应用异常的权限</string>
     <string name="settings_confidence">最大采样置信区间</string>
     <string name="settings_experimental">实验性功能</string>
     <string name="settings_https">使用安全连接(https)</string>

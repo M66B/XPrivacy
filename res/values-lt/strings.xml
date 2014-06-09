@@ -157,7 +157,6 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_ondemand">Riboti pagal reikalavimą</string>
     <string name="settings_log">DEBUG žurnalas (perkrauti prietaisą)</string>
     <string name="settings_expert">Eksperto režimas</string>
-    <string name="settings_dangerous">Apriboti pavojingas funkcijas</string>
     <string name="settings_confidence">Maks. pasitikėjimo gavimo intervalas</string>
     <string name="settings_experimental">Eksperimentinės funkcijos (perkrauti prietaisą)</string>
     <string name="settings_https">Naudojamas saugus ryšys</string>

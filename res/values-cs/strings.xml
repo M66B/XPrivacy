@@ -157,7 +157,6 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Ukládat ladící záznam (vyžaduje restart)</string>
     <string name="settings_expert">Režim experta</string>
-    <string name="settings_dangerous">Omezovat nebezpečné funkce</string>
     <string name="settings_confidence">Maximální rozsah spolehlivosti stahování</string>
     <string name="settings_experimental">Experimentální funkce (vyžaduje restart)</string>
     <string name="settings_https">Použít zabezpečené připojení</string>

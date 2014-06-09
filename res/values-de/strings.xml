@@ -157,7 +157,6 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="settings_ondemand">Beschränkungen nach Aufforderung festlegen</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
-    <string name="settings_dangerous">Beschränke "bedenkliche" Funktionen</string>
     <string name="settings_confidence">Maximales Abruf-Konfidenzintervall</string>
     <string name="settings_experimental">Experimentelle Funktionen\n (erfordert Geräteneustart)</string>
     <string name="settings_https">Benutze sichere Verbindung</string>

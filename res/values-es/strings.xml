@@ -157,7 +157,6 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_ondemand">Restringir en demanda</string>
     <string name="settings_log">Registro de depuración (requiere inicio)</string>
     <string name="settings_expert">Modo experto</string>
-    <string name="settings_dangerous">Denegar funciones peligrosas</string>
     <string name="settings_confidence">Intervalo de confianza para bajar restricciones</string>
     <string name="settings_experimental">Funciones experimentales (requiere reinicio)</string>
     <string name="settings_https">Usar conexiones seguras</string>

@@ -156,7 +156,6 @@
     <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_log">Hata ayıklama modu (Yeniden başlatma gerekir)</string>
     <string name="settings_expert">Expert mode</string>
-    <string name="settings_dangerous">Restrict dangerous functions</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires restart)</string>
     <string name="settings_https">Use secure connections</string>

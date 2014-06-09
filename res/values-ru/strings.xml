@@ -157,7 +157,6 @@
     <string name="settings_ondemand">Запрос разрешений</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Режим эксперта</string>
-    <string name="settings_dangerous">Запрет опасных функций</string>
     <string name="settings_confidence">Макс. доверительный интервал выборки</string>
     <string name="settings_experimental">Экспериментальные функции</string>
     <string name="settings_https">Использовать безопасные соединения</string>

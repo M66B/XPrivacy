@@ -44,16 +44,14 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.deleteUsage(uid);
 							PrivacyManager.clearPermissionCache(uid);
 
-							boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand,
-									true, false);
-
 							// Enable on demand
+							boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand,
+									true);
 							if (ondemand)
 								PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
-							// Restrict new non-system apps
-							if (!appInfo.isSystem())
-								PrivacyManager.applyTemplate(uid, null, true, true);
+							// Apply template
+							PrivacyManager.applyTemplate(uid, null, true, true);
 						}
 					}
 
@@ -62,9 +60,9 @@ public class PackageChange extends BroadcastReceiver {
 							Integer.toString(ActivityMain.STATE_ATTENTION));
 
 					// New/update notification
-					boolean notify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true, false);
+					boolean notify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);
 					if (notify)
-						notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true, false);
+						notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
 					if (!replacing || notify) {
 						Intent resultIntent = new Intent(context, ActivityApp.class);
 						resultIntent.putExtra(ActivityApp.cUid, uid);
@@ -129,6 +127,7 @@ public class PackageChange extends BroadcastReceiver {
 						PrivacyManager.deleteRestrictions(uid, null, false);
 						PrivacyManager.deleteSettings(uid);
 						PrivacyManager.deleteUsage(uid);
+						PrivacyManager.clearPermissionCache(uid);
 					}
 
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {

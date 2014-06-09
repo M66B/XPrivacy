@@ -157,7 +157,6 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="settings_ondemand">Sekatan di atas permintaan</string>
     <string name="settings_log">Log nyahsilap (perlu mula semula)</string>
     <string name="settings_expert">Mod pakar</string>
-    <string name="settings_dangerous">Sekat fungsi bahaya</string>
     <string name="settings_confidence">Selang keyakinan pengambilan maxima</string>
     <string name="settings_experimental">Fungsi dalam percubaan (perlu mula semula)</string>
     <string name="settings_https">Guna sambungan terjamin</string>

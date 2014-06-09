@@ -71,8 +71,8 @@ public class PrivacyService {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 335;
-	private static final String cServiceName = "xprivacy333";
+	private static final int cCurrentVersion = 337;
+	private static final String cServiceName = "xprivacy336";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -407,26 +407,11 @@ public class PrivacyService {
 					return mresult;
 				}
 
-				// Check for self
-				if (Util.getAppId(restriction.uid) == getXUid()) {
-					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
-							&& ("getString".equals(restriction.methodName) || "SERIAL".equals(restriction.methodName))) {
-						mresult.asked = true;
-						return mresult;
-					}
-					if (PrivacyManager.cIPC.equals(restriction.restrictionName)) {
-						mresult.asked = true;
-						return mresult;
-					} else if (PrivacyManager.cStorage.equals(restriction.restrictionName)) {
-						mresult.asked = true;
-						return mresult;
-					} else if (PrivacyManager.cSystem.equals(restriction.restrictionName)) {
-						mresult.asked = true;
-						return mresult;
-					} else if (PrivacyManager.cView.equals(restriction.restrictionName)) {
-						mresult.asked = true;
-						return mresult;
-					}
+				// Check if can be restricted
+				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+						restriction.methodName)) {
+					mresult.asked = true;
+					return mresult;
 				}
 
 				// Get meta data
@@ -686,6 +671,54 @@ public class PrivacyService {
 				throw new RemoteException(ex.toString());
 			}
 			return result;
+		}
+
+		@Override
+		public boolean isRestrictionSet(PRestriction restriction) throws RemoteException {
+			try {
+				// No permissions required
+				boolean set = false;
+
+				SQLiteDatabase db = getDb();
+				if (db != null) {
+					// Precompile statement when needed
+					if (stmtGetRestriction == null) {
+						String sql = "SELECT restricted FROM " + cTableRestriction
+								+ " WHERE uid=? AND restriction=? AND method=?";
+						stmtGetRestriction = db.compileStatement(sql);
+					}
+
+					// Execute statement
+					mLock.readLock().lock();
+					db.beginTransaction();
+					try {
+						try {
+							synchronized (stmtGetRestriction) {
+								stmtGetRestriction.clearBindings();
+								stmtGetRestriction.bindLong(1, restriction.uid);
+								stmtGetRestriction.bindString(2, restriction.restrictionName);
+								stmtGetRestriction.bindString(3, restriction.methodName);
+								stmtGetRestriction.simpleQueryForLong();
+								set = true;
+							}
+						} catch (SQLiteDoneException ignored) {
+						}
+
+						db.setTransactionSuccessful();
+					} finally {
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.readLock().unlock();
+						}
+					}
+				}
+
+				return set;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
+			}
 		}
 
 		@Override
@@ -1281,11 +1314,6 @@ public class PrivacyService {
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
 					return false;
 
-				// Skip dangerous methods
-				final boolean dangerous = getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
-				if (!dangerous && hook != null && hook.isDangerous() && hook.whitelist() == null)
-					return false;
-
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
@@ -1297,10 +1325,6 @@ public class PrivacyService {
 
 					// Get application info
 					final ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
-
-					// Check if system application
-					if (!dangerous && appInfo.isSystem())
-						return false;
 
 					// Check if activity manager agrees
 					if (!XActivityManagerService.canOnDemand())
@@ -1359,7 +1383,7 @@ public class PrivacyService {
 								try {
 									// Dialog
 									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
-											dangerous, result, context, latch);
+											result, context, latch);
 									AlertDialog alertDialog = builder.create();
 									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_PHONE);
 									alertDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
@@ -1426,8 +1450,8 @@ public class PrivacyService {
 		}
 
 		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, final Hook hook,
-				ApplicationInfoEx appInfo, boolean dangerous, final PRestriction result, Context context,
-				final CountDownLatch latch) throws NameNotFoundException {
+				ApplicationInfoEx appInfo, final PRestriction result, Context context, final CountDownLatch latch)
+				throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1653,7 +1677,6 @@ public class PrivacyService {
 
 		private void onDemandChoice(PRestriction restriction, boolean category, boolean restrict) {
 			try {
-				int userId = Util.getUserId(restriction.uid);
 				PRestriction result = new PRestriction(restriction);
 
 				// Get current category restriction state
@@ -1675,10 +1698,9 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Clear category on change
-					boolean dangerous = getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
 					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
 						result.methodName = md.getName();
-						result.restricted = (md.isDangerous() && !dangerous ? false : restrict);
+						result.restricted = !md.isDangerous() && restrict;
 						result.asked = category;
 						setRestrictionInternal(result);
 					}

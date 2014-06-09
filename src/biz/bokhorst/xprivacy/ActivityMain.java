@@ -200,8 +200,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Setup spinner
 		int pos = 0;
-		String restrictionName = PrivacyManager
-				.getSetting(userId, PrivacyManager.cSettingSelectedCategory, null, false);
+		String restrictionName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSelectedCategory, null);
 		if (restrictionName != null)
 			for (String restriction : PrivacyManager.getRestrictions(this).values()) {
 				pos++;
@@ -215,8 +214,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		spRestriction.setSelection(pos);
 
 		// Setup sort
-		mSortMode = Integer.parseInt(PrivacyManager.getSetting(userId, PrivacyManager.cSettingSortMode, "0", false));
-		mSortInvert = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingSortInverted, false, false);
+		mSortMode = Integer.parseInt(PrivacyManager.getSetting(userId, PrivacyManager.cSettingSortMode, "0"));
+		mSortInvert = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingSortInverted, false);
 
 		// Setup name filter
 		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
@@ -266,13 +265,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		mPackageChangeReceiverRegistered = true;
 
 		// First run
-		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFirstRun, true, false)) {
+		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFirstRun, true)) {
 			optionAbout();
 			PrivacyManager.setSetting(userId, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
 
 		// Tutorial
-		if (!PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingTutorialMain, false, false)) {
+		if (!PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingTutorialMain, false)) {
 			((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
 			((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		}
@@ -382,13 +381,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Update filter count
 
 		// Get settings
-		boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false, false);
-		boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false, false);
-		boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false, false);
-		boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, true, false);
-		boolean fOnDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemand, false, false);
-		boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true, false);
-		boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false, false);
+		boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false);
+		boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false);
+		boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false);
+		boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, true);
+		boolean fOnDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemand, false);
+		boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true);
+		boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false);
 
 		// Count number of active filters
 		int numberOfFilters = 0;
@@ -531,19 +530,16 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Get settings
 			int userId = Util.getUserId(Process.myUid());
-			boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false, false);
-			boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false, false);
-			boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false,
-					false);
+			boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false);
+			boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false);
+			boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false);
 			boolean fRestrictionNot = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestrictionNot,
-					false, false);
-			boolean fPermission = PrivacyManager
-					.getSettingBool(userId, PrivacyManager.cSettingFPermission, true, false);
-			boolean fOnDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemand, false, false);
-			boolean fOnDemandNot = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemandNot, false,
 					false);
-			boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true, false);
-			boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false, false);
+			boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, true);
+			boolean fOnDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemand, false);
+			boolean fOnDemandNot = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemandNot, false);
+			boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true);
+			boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false);
 
 			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(),
 					fUsed, fInternet, fRestriction, fRestrictionNot, fPermission, fOnDemand, fOnDemandNot, fUser,
@@ -715,7 +711,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				intent.putExtra(
 						ActivityShare.cUidList,
 						mAppAdapter == null ? new int[0] : mAppAdapter
-								.getSelectedOrVisibleUid(AppListAdapter.cSelectAppUser));
+								.getSelectedOrVisibleUid(AppListAdapter.cSelectAppAll));
 				startActivity(intent);
 			}
 		}
@@ -723,7 +719,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private void optionSwitchTheme() {
 		int userId = Util.getUserId(Process.myUid());
-		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
 		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTheme, themeName);
 		this.recreate();
@@ -879,18 +875,17 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Get settings
 		final int userId = Util.getUserId(Process.myUid());
-		boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false, false);
-		boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false, false);
-		boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, true, false);
-		boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false, false);
-		boolean fRestrictionNot = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestrictionNot, false,
-				false);
-		boolean fOnDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemand, false, false);
-		boolean fOnDemandNot = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemandNot, false, false);
-		boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true, false);
-		boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false, false);
+		boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false);
+		boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false);
+		boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, true);
+		boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false);
+		boolean fRestrictionNot = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestrictionNot, false);
+		boolean fOnDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemand, false);
+		boolean fOnDemandNot = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemandNot, false);
+		boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true);
+		boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false);
 
-		boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
+		boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 
 		// Setup checkboxes
 		cbFUsed.setChecked(fUsed);
@@ -1059,7 +1054,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		private List<String> listRestrictionName;
 		private List<String> listLocalizedTitle;
 		private boolean ondemand;
-		private boolean dangerous;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public TemplateListAdapter(Context context, int resource) {
@@ -1070,8 +1064,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			listLocalizedTitle = new ArrayList<String>(tmRestriction.navigableKeySet());
 
 			int userId = Util.getUserId(Process.myUid());
-			ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
-			dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false, false);
+			ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 		}
 
 		private class ViewHolder {
@@ -1121,11 +1114,28 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			// Get info
 			final int userId = Util.getUserId(Process.myUid());
 			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, restrictionName,
-					Boolean.toString(!ondemand) + "+ask", false);
+					Boolean.toString(!ondemand) + "+ask");
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
-			Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
-			Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
+
+			boolean partialRestricted = false;
+			boolean partialAsked = false;
+			if (holder.restricted)
+				for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
+					String settingName = restrictionName + "." + hook.getName();
+					String childValue = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName,
+							Boolean.toString(holder.restricted && !hook.isDangerous())
+									+ (holder.asked ? "+asked" : "+ask"));
+					if (!childValue.contains("true"))
+						partialRestricted = true;
+					if (childValue.contains("asked"))
+						partialAsked = true;
+				}
+
+			Bitmap bmRestricted = (holder.restricted ? partialRestricted ? getHalfCheckBox() : getFullCheckBox()
+					: getOffCheckBox());
+			Bitmap bmAsked = (holder.asked ? getOffCheckBox() : partialAsked ? getHalfCheckBox()
+					: getOnDemandCheckBox());
 
 			// Set data
 			holder.tvRestriction.setTypeface(null, Typeface.BOLD);
@@ -1141,9 +1151,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.restricted = !holder.restricted;
 					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
-					// Update view
-					Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
-					holder.imgCbRestrict.setImageBitmap(bmRestricted);
 					notifyDataSetChanged(); // update childs
 				}
 			});
@@ -1155,9 +1162,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.asked = (!ondemand || !holder.asked);
 					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
-					// Update view
-					Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
-					holder.imgCbAsk.setImageBitmap(bmAsked);
 					notifyDataSetChanged(); // update childs
 				}
 			});
@@ -1204,14 +1208,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Get parent info
 			String parentValue = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, restrictionName,
-					Boolean.toString(!ondemand) + "+ask", false);
+					Boolean.toString(!ondemand) + "+ask");
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
 
 			// Get child info
-			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName,
-					Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
-							+ (parentAsked ? "+asked" : "+ask"), false);
+			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName, null);
+			if (value == null)
+				value = Boolean.toString(parentRestricted && !hook.isDangerous()) + (parentAsked ? "+asked" : "+ask");
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
 			Bitmap bmRestricted = (parentRestricted && holder.restricted ? getFullCheckBox() : getOffCheckBox());
@@ -1258,9 +1262,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.restricted = !holder.restricted;
 					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, settingName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
-					// Update view
-					Bitmap bmRestricted = (holder.restricted ? getFullCheckBox() : getOffCheckBox());
-					holder.imgCbRestrict.setImageBitmap(bmRestricted);
+					notifyDataSetChanged(); // update parent
 				}
 			});
 
@@ -1271,9 +1273,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.asked = !holder.asked;
 					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, settingName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
-					// Update view
-					Bitmap bmAsked = (holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
-					holder.imgCbAsk.setImageBitmap(bmAsked);
+					notifyDataSetChanged(); // update parent
 				}
 			});
 
@@ -1299,7 +1299,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		public final static int cSelectAppAll = 1;
 		public final static int cSelectAppNone = 2;
-		public final static int cSelectAppUser = 3;
 
 		public AppListAdapter(Context context, int resource, List<ApplicationInfoEx> objects,
 				String initialRestrictionName) {
@@ -1331,13 +1330,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					return mListAppAll;
 				else {
 					List<ApplicationInfoEx> listApp = new ArrayList<ApplicationInfoEx>();
-					if (flags == cSelectAppUser)
-						for (int i = 0; i < this.getCount(); i++) {
-							ApplicationInfoEx appInfo = this.getItem(i);
-							if (!appInfo.isSystem())
-								listApp.add(appInfo);
-						}
-					else if (flags != cSelectAppNone)
+					if (flags != cSelectAppNone)
 						for (int i = 0; i < this.getCount(); i++)
 							listApp.add(this.getItem(i));
 					return listApp;
@@ -1470,7 +1463,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					boolean onDemand = false;
 					if (fOnDemand && PrivacyManager.isApplication(xAppInfo.getUid())) {
 						onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
-								false, false);
+								false);
 						if (onDemand && mRestrictionName != null)
 							onDemand = !PrivacyManager.getRestrictionEx(xAppInfo.getUid(), mRestrictionName, null).asked;
 					}
@@ -1614,14 +1607,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					used = (PrivacyManager.getUsage(xAppInfo.getUid(), mRestrictionName, null) != 0);
 
 					// Get if enabled
-					enabled = PrivacyManager.getSettingBool(xAppInfo.getUid(), PrivacyManager.cSettingRestricted, true,
-							false);
+					enabled = PrivacyManager.getSettingBool(xAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
 
 					// Get if on demand
-					gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
+					gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 					ondemand = (PrivacyManager.isApplication(xAppInfo.getUid()) && (mRestrictionName == null ? true
-							: PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false,
-									false)));
+							: PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false)));
 
 					// Get if granted
 					granted = true;
