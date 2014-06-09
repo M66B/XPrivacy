@@ -16,6 +16,9 @@ Changelog
 **Next release**
 
 * Update notifications only if XPrivacy is enabled in Xposed
+* Directly open Xposed pages, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Updated simplified Chinese translation
+* Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
