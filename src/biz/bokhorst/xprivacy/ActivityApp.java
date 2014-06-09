@@ -32,6 +32,8 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Process;
 import android.provider.ContactsContract;
+import android.provider.ContactsContract.CommonDataKinds.GroupMembership;
+import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.Html;
@@ -335,6 +337,9 @@ public class ActivityApp extends ActivityBase {
 			inflater.inflate(R.menu.app, menu);
 
 			// Add contact groups
+			menu.findItem(R.id.menu_contacts).getSubMenu()
+					.add(-1, R.id.menu_contacts, Menu.NONE, getString(R.string.menu_all));
+
 			String where = ContactsContract.Groups.GROUP_VISIBLE + " = 1";
 			where += " AND " + ContactsContract.Groups.SUMMARY_COUNT + " > 0";
 			Cursor cursor = getContentResolver().query(
@@ -342,6 +347,7 @@ public class ActivityApp extends ActivityBase {
 					new String[] { ContactsContract.Groups._ID, ContactsContract.Groups.TITLE,
 							ContactsContract.Groups.ACCOUNT_NAME, ContactsContract.Groups.SUMMARY_COUNT }, where, null,
 					ContactsContract.Groups.TITLE + ", " + ContactsContract.Groups.ACCOUNT_NAME);
+
 			if (cursor != null)
 				try {
 					while (cursor.moveToNext()) {
@@ -455,7 +461,7 @@ public class ActivityApp extends ActivityBase {
 			optionApplications();
 			return true;
 		case R.id.menu_contacts:
-			if (item.getGroupId() > 0) {
+			if (item.getGroupId() != 0) {
 				optionContacts(item.getGroupId());
 				return true;
 			} else
@@ -795,18 +801,22 @@ public class ActivityApp extends ActivityBase {
 		protected Object doInBackground(Integer... params) {
 			// Map contacts
 			Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
-			Cursor cursor = getContentResolver().query(
-					ContactsContract.Data.CONTENT_URI,
-					new String[] { ContactsContract.Contacts._ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
-							ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID },
-					ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID + "= ?",
-					new String[] { Integer.toString(params[0]) }, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
+			Cursor cursor;
+			if (params[0] < 0)
+				cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+						new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME }, null, null,
+						Phone.DISPLAY_NAME);
+			else
+				cursor = getContentResolver()
+						.query(ContactsContract.Data.CONTENT_URI,
+								new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME,
+										GroupMembership.GROUP_ROW_ID }, GroupMembership.GROUP_ROW_ID + "= ?",
+								new String[] { Integer.toString(params[0]) }, Phone.DISPLAY_NAME);
 			if (cursor != null)
 				try {
 					while (cursor.moveToNext()) {
 						long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-						String contact = cursor.getString(cursor
-								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
 						if (contact != null)
 							mapContact.put(id, contact);
 					}
