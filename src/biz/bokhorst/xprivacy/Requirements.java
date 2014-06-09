@@ -93,9 +93,14 @@ public class Requirements {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Intent xInstallerIntent = Util.getXInstallerIntent(context);
-							if (xInstallerIntent != null)
-								context.startActivity(xInstallerIntent);
+							// @formatter:off
+							Intent xInstallerIntent = new Intent("de.robv.android.xposed.installer.OPEN_SECTION")
+								.setPackage("de.robv.android.xposed.installer")
+								.putExtra("section", "modules")
+								.putExtra("module", context.getPackageName())
+								.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							// @formatter:on
+							context.startActivity(xInstallerIntent);
 						}
 					});
 			AlertDialog alertDialog = alertDialogBuilder.create();
