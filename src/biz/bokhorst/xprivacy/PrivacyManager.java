@@ -693,9 +693,6 @@ public class PrivacyManager {
 						value = PrivacyService.getSetting(new PSetting(userId, type, name, null)).value;
 					}
 
-				if (value == null)
-					value = defaultValue;
-
 				// Add to cache
 				key.setValue(value);
 				synchronized (mSettingsCache) {
@@ -707,6 +704,9 @@ public class PrivacyManager {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+
+		if (value == null)
+			value = defaultValue;
 
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
