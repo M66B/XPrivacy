@@ -32,7 +32,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Process;
 import android.provider.ContactsContract;
-import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.Html;
@@ -334,6 +333,28 @@ public class ActivityApp extends ActivityBase {
 		MenuInflater inflater = getMenuInflater();
 		if (inflater != null && PrivacyService.checkClient()) {
 			inflater.inflate(R.menu.app, menu);
+
+			// Add contact groups
+			String where = ContactsContract.Groups.GROUP_VISIBLE + " = 1";
+			where += " AND " + ContactsContract.Groups.SUMMARY_COUNT + " > 0";
+			Cursor cursor = getContentResolver().query(
+					ContactsContract.Groups.CONTENT_SUMMARY_URI,
+					new String[] { ContactsContract.Groups._ID, ContactsContract.Groups.TITLE,
+							ContactsContract.Groups.ACCOUNT_NAME, ContactsContract.Groups.SUMMARY_COUNT }, where, null,
+					ContactsContract.Groups.TITLE + ", " + ContactsContract.Groups.ACCOUNT_NAME);
+			if (cursor != null)
+				try {
+					while (cursor.moveToNext()) {
+						int id = cursor.getInt(cursor.getColumnIndex(ContactsContract.Groups._ID));
+						String title = cursor.getString(cursor.getColumnIndex(ContactsContract.Groups.TITLE));
+						String account = cursor.getString(cursor.getColumnIndex(ContactsContract.Groups.ACCOUNT_NAME));
+						menu.findItem(R.id.menu_contacts).getSubMenu()
+								.add(id, R.id.menu_contacts, Menu.NONE, title + "/" + account);
+					}
+				} finally {
+					cursor.close();
+				}
+
 			return true;
 		} else
 			return false;
@@ -434,8 +455,11 @@ public class ActivityApp extends ActivityBase {
 			optionApplications();
 			return true;
 		case R.id.menu_contacts:
-			optionContacts();
-			return true;
+			if (item.getGroupId() > 0) {
+				optionContacts(item.getGroupId());
+				return true;
+			} else
+				return false;
 		case R.id.menu_whitelists:
 			optionWhitelists(null);
 			return true;
@@ -564,13 +588,13 @@ public class ActivityApp extends ActivityBase {
 		}
 	}
 
-	private void optionContacts() {
+	private void optionContacts(int groupId) {
 		if (Util.hasProLicense(this) == null) {
 			// Redirect to pro page
 			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
 			ContactsTask contactsTask = new ContactsTask();
-			contactsTask.executeOnExecutor(mExecutor, (Object) null);
+			contactsTask.executeOnExecutor(mExecutor, groupId);
 		}
 	}
 
@@ -762,22 +786,27 @@ public class ActivityApp extends ActivityBase {
 		}
 	}
 
-	private class ContactsTask extends AsyncTask<Object, Object, Object> {
+	private class ContactsTask extends AsyncTask<Integer, Object, Object> {
 		private List<CharSequence> mListContact;
 		private long[] mIds;
 		private boolean[] mSelection;
 
 		@Override
-		protected Object doInBackground(Object... params) {
+		protected Object doInBackground(Integer... params) {
 			// Map contacts
 			Map<Long, String> mapContact = new LinkedHashMap<Long, String>();
-			Cursor cursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
-					new String[] { ContactsContract.Contacts._ID, Phone.DISPLAY_NAME }, null, null, Phone.DISPLAY_NAME);
+			Cursor cursor = getContentResolver().query(
+					ContactsContract.Data.CONTENT_URI,
+					new String[] { ContactsContract.Contacts._ID, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+							ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID },
+					ContactsContract.CommonDataKinds.GroupMembership.GROUP_ROW_ID + "= ?",
+					new String[] { Integer.toString(params[0]) }, ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
 			if (cursor != null)
 				try {
 					while (cursor.moveToNext()) {
 						long id = cursor.getLong(cursor.getColumnIndex(ContactsContract.Contacts._ID));
-						String contact = cursor.getString(cursor.getColumnIndex(Phone.DISPLAY_NAME));
+						String contact = cursor.getString(cursor
+								.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
 						if (contact != null)
 							mapContact.put(id, contact);
 					}
