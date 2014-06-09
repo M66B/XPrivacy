@@ -45,7 +45,7 @@
     <string name="menu_tutorial">界面功能指引</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">关闭</string>
-    <string name="menu_flush">请除缓存</string>
+    <string name="menu_flush">清除缓存</string>
     <string name="msg_abort">正在中止</string>
     <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>
@@ -158,10 +158,10 @@
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_confidence">最大采样置信区间</string>
-    <string name="settings_experimental">实验性功能</string>
+    <string name="settings_experimental">实验性功能 (需要重启)</string>
     <string name="settings_https">使用安全连接(https)</string>
-    <string name="settings_syscomponents">限制系统组件 (Android) (需要重启)</string>
-    <string name="settings_usagedata">显示应用权限使用情况 (需要重启)</string>
+    <string name="settings_syscomponents">限制安卓系统组件</string>
+    <string name="settings_usagedata">显示应用权限使用情况</string>
     <string name="settings_parameters">显示使用情况参数</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
