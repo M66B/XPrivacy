@@ -241,7 +241,7 @@ For easy usage, data is restricted by category:
 	* prevent receiving TECH discovered
 <a name="notifications"></a>
 * Notifications
-	* prevent receiving statusbar notifications (Android 4.3+)
+	* prevent applications from receiving [statusbar notifications](https://developer.android.com/reference/android/service/notification/NotificationListenerService.html) (Android 4.3+)
 	* prevent [C2DM](https://developers.google.com/android/c2dm/) messages
 <a name="overlay"></a>
 * Overlay
