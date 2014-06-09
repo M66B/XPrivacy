@@ -24,7 +24,7 @@ Changelog
 * Added multiple template definitions
 	* The first template will always be applied to new applications
 * Added allow contacts by group
-* Fixed caching of no set settings
+* Fixed caching of not set settings
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
 
