@@ -188,7 +188,7 @@ public class ActivityShare extends ActivityBase {
 		RadioButton rbTemplateFull = (RadioButton) findViewById(R.id.rbTemplateFull);
 		RadioButton rbODEnable = (RadioButton) findViewById(R.id.rbEnableOndemand);
 		RadioButton rbODDisable = (RadioButton) findViewById(R.id.rbDisableOndemand);
-		Spinner spTemplate = (Spinner) findViewById(R.id.spTemplate);
+		final Spinner spTemplate = (Spinner) findViewById(R.id.spTemplate);
 		final CheckBox cbClear = (CheckBox) findViewById(R.id.cbClear);
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
 		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -280,6 +280,9 @@ public class ActivityShare extends ActivityBase {
 								getPackageName());
 						tvDescription.setText(stringId);
 					}
+
+					spTemplate.setVisibility(checkedId == R.id.rbTemplateCategory || checkedId == R.id.rbTemplateFull
+							|| checkedId == R.id.rbTemplateMerge ? View.VISIBLE : View.GONE);
 				}
 			});
 
