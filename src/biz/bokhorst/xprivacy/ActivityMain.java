@@ -616,15 +616,40 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	}
 
 	private void optionTemplate() {
+		// Build view
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.template, null);
+		Spinner spTemplate = (Spinner) view.findViewById(R.id.spTemplate);
+		ExpandableListView elvTemplate = (ExpandableListView) view.findViewById(R.id.elvTemplate);
+
+		// Template selector
+		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		for (int i = 1; i <= 5; i++)
+			spAdapter.add(getString(R.string.menu_template) + " " + i);
+		spTemplate.setAdapter(spAdapter);
+
+		// Template definition
+		final TemplateListAdapter templateAdapter = new TemplateListAdapter(this, spTemplate, R.layout.templateentry);
+		elvTemplate.setAdapter(templateAdapter);
+
+		spTemplate.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				templateAdapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				templateAdapter.notifyDataSetChanged();
+			}
+		});
+
 		// Build dialog
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(R.string.menu_template);
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		ExpandableListView elvTemplate = new ExpandableListView(this);
-		elvTemplate.setPadding(6, 0, 6, 0);
-		elvTemplate.setAdapter(new TemplateListAdapter(this, R.layout.templateentry));
-		elvTemplate.setScrollBarStyle(ExpandableListView.SCROLLBARS_INSIDE_INSET);
-		alertDialogBuilder.setView(elvTemplate);
+		alertDialogBuilder.setView(view);
 		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
 			@Override
 			public void onClick(DialogInterface dialog, int which) {
@@ -792,8 +817,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	}
 
 	private void optionSort() {
-		LayoutInflater LayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = LayoutInflater.inflate(R.layout.sort, null);
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.sort, null);
 		final RadioGroup rgSMode = (RadioGroup) view.findViewById(R.id.rgSMode);
 		final CheckBox cbSInvert = (CheckBox) view.findViewById(R.id.cbSInvert);
 
@@ -860,8 +885,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	}
 
 	private void optionFilter() {
-		LayoutInflater LayoutInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = LayoutInflater.inflate(R.layout.filters, null);
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.filters, null);
 		final CheckBox cbFUsed = (CheckBox) view.findViewById(R.id.cbFUsed);
 		final CheckBox cbFInternet = (CheckBox) view.findViewById(R.id.cbFInternet);
 		final CheckBox cbFPermission = (CheckBox) view.findViewById(R.id.cbFPermission);
@@ -1051,12 +1076,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	@SuppressLint("DefaultLocale")
 	private class TemplateListAdapter extends BaseExpandableListAdapter {
+		private Spinner mSpinner;
 		private List<String> listRestrictionName;
 		private List<String> listLocalizedTitle;
 		private boolean ondemand;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public TemplateListAdapter(Context context, int resource) {
+		public TemplateListAdapter(Context context, Spinner spinner, int resource) {
+			mSpinner = spinner;
 
 			// Get restriction categories
 			TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(context);
@@ -1065,6 +1092,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			int userId = Util.getUserId(Process.myUid());
 			ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+		}
+
+		private String getTemplate() {
+			if (mSpinner.getSelectedItemPosition() == 0)
+				return Meta.cTypeTemplate;
+			else
+				return Meta.cTypeTemplate + mSpinner.getSelectedItemPosition();
 		}
 
 		private class ViewHolder {
@@ -1113,7 +1147,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Get info
 			final int userId = Util.getUserId(Process.myUid());
-			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, restrictionName,
+			String value = PrivacyManager.getSetting(userId, getTemplate(), restrictionName,
 					Boolean.toString(!ondemand) + "+ask");
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
@@ -1123,7 +1157,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			if (holder.restricted)
 				for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
 					String settingName = restrictionName + "." + hook.getName();
-					String childValue = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName,
+					String childValue = PrivacyManager.getSetting(userId, getTemplate(), settingName,
 							Boolean.toString(holder.restricted && !hook.isDangerous())
 									+ (holder.asked ? "+asked" : "+ask"));
 					if (!childValue.contains("true"))
@@ -1149,7 +1183,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				public void onClick(View arg0) {
 					// Update setting
 					holder.restricted = !holder.restricted;
-					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
+					PrivacyManager.setSetting(userId, getTemplate(), restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
 					notifyDataSetChanged(); // update childs
 				}
@@ -1160,7 +1194,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				public void onClick(View arg0) {
 					// Update setting
 					holder.asked = (!ondemand || !holder.asked);
-					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, restrictionName, (holder.restricted ? "true"
+					PrivacyManager.setSetting(userId, getTemplate(), restrictionName, (holder.restricted ? "true"
 							: "false") + "+" + (holder.asked ? "asked" : "ask"));
 					notifyDataSetChanged(); // update childs
 				}
@@ -1207,13 +1241,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			final String settingName = restrictionName + "." + hook.getName();
 
 			// Get parent info
-			String parentValue = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, restrictionName,
+			String parentValue = PrivacyManager.getSetting(userId, getTemplate(), restrictionName,
 					Boolean.toString(!ondemand) + "+ask");
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
 
 			// Get child info
-			String value = PrivacyManager.getSetting(userId, Meta.cTypeTemplate, settingName, null);
+			String value = PrivacyManager.getSetting(userId, getTemplate(), settingName, null);
 			if (value == null)
 				value = Boolean.toString(parentRestricted && !hook.isDangerous()) + (parentAsked ? "+asked" : "+ask");
 			holder.restricted = value.contains("true");
@@ -1260,8 +1294,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				public void onClick(View view) {
 					// Update setting
 					holder.restricted = !holder.restricted;
-					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, settingName, (holder.restricted ? "true"
-							: "false") + "+" + (holder.asked ? "asked" : "ask"));
+					PrivacyManager.setSetting(userId, getTemplate(), settingName,
+							(holder.restricted ? "true" : "false") + "+" + (holder.asked ? "asked" : "ask"));
 					notifyDataSetChanged(); // update parent
 				}
 			});
@@ -1271,8 +1305,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				public void onClick(View view) {
 					// Update setting
 					holder.asked = !holder.asked;
-					PrivacyManager.setSetting(userId, Meta.cTypeTemplate, settingName, (holder.restricted ? "true"
-							: "false") + "+" + (holder.asked ? "asked" : "ask"));
+					PrivacyManager.setSetting(userId, getTemplate(), settingName,
+							(holder.restricted ? "true" : "false") + "+" + (holder.asked ? "asked" : "ask"));
 					notifyDataSetChanged(); // update parent
 				}
 			});

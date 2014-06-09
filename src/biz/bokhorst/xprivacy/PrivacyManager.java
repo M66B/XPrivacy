@@ -504,7 +504,8 @@ public class PrivacyManager {
 		return listRestartRestriction;
 	}
 
-	public static void applyTemplate(int uid, String restrictionName, boolean methods, boolean clear) {
+	public static void applyTemplate(int uid, String templateName, String restrictionName, boolean methods,
+			boolean clear) {
 		checkCaller();
 
 		int userId = Util.getUserId(uid);
@@ -520,13 +521,14 @@ public class PrivacyManager {
 			listRestriction.add(restrictionName);
 
 		// Apply template
+		Util.log(null, Log.WARN, "Applying template=" + templateName);
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction) {
 			if (clear)
 				deleteRestrictions(uid, rRestrictionName, false);
 
 			// Parent
-			String parentValue = getSetting(userId, Meta.cTypeTemplate, rRestrictionName, Boolean.toString(!ondemand)
+			String parentValue = getSetting(userId, templateName, rRestrictionName, Boolean.toString(!ondemand)
 					+ "+ask");
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
@@ -542,8 +544,8 @@ public class PrivacyManager {
 			if (methods)
 				for (Hook hook : getHooks(rRestrictionName)) {
 					String settingName = rRestrictionName + "." + hook.getName();
-					String value = getSetting(userId, Meta.cTypeTemplate, settingName,
-							Boolean.toString(parentRestricted) + (parentAsked ? "+asked" : "+ask"));
+					String value = getSetting(userId, templateName, settingName, Boolean.toString(parentRestricted)
+							+ (parentAsked ? "+asked" : "+ask"));
 					boolean restricted = value.contains("true");
 					boolean asked = (!ondemand || value.contains("asked"));
 					PRestriction childMerge;

@@ -80,6 +80,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.EditText;
@@ -187,6 +188,7 @@ public class ActivityShare extends ActivityBase {
 		RadioButton rbTemplateFull = (RadioButton) findViewById(R.id.rbTemplateFull);
 		RadioButton rbODEnable = (RadioButton) findViewById(R.id.rbEnableOndemand);
 		RadioButton rbODDisable = (RadioButton) findViewById(R.id.rbDisableOndemand);
+		Spinner spTemplate = (Spinner) findViewById(R.id.spTemplate);
 		final CheckBox cbClear = (CheckBox) findViewById(R.id.cbClear);
 		final Button btnOk = (Button) findViewById(R.id.btnOk);
 		final Button btnCancel = (Button) findViewById(R.id.btnCancel);
@@ -211,6 +213,12 @@ public class ActivityShare extends ActivityBase {
 			finish();
 			return;
 		}
+
+		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		for (int i = 1; i <= 5; i++)
+			spAdapter.add(getString(R.string.menu_template) + " " + i);
+		spTemplate.setAdapter(spAdapter);
 
 		// Build application list
 		AppListTask appListTask = new AppListTask();
@@ -426,6 +434,12 @@ public class ActivityShare extends ActivityBase {
 
 	// Adapters
 
+	private class SpinnerAdapter extends ArrayAdapter<String> {
+		public SpinnerAdapter(Context context, int textViewResourceId) {
+			super(context, textViewResourceId);
+		}
+	}
+
 	private class AppListAdapter extends ArrayAdapter<AppState> {
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -631,6 +645,10 @@ public class ActivityShare extends ActivityBase {
 				List<Integer> lstUid = mAppAdapter.getListUid();
 				final String restrictionName = params[0];
 				int actionId = ((RadioGroup) ActivityShare.this.findViewById(R.id.rgToggle)).getCheckedRadioButtonId();
+				Spinner spTemplate = ((Spinner) ActivityShare.this.findViewById(R.id.spTemplate));
+				String templateName = Meta.cTypeTemplate;
+				if (spTemplate.getSelectedItemPosition() > 0)
+					templateName = Meta.cTypeTemplate + spTemplate.getSelectedItemPosition();
 
 				for (Integer uid : lstUid)
 					try {
@@ -652,13 +670,13 @@ public class ActivityShare extends ActivityBase {
 						}
 
 						else if (actionId == R.id.rbTemplateCategory)
-							PrivacyManager.applyTemplate(uid, restrictionName, false, true);
+							PrivacyManager.applyTemplate(uid, templateName, restrictionName, false, true);
 
 						else if (actionId == R.id.rbTemplateFull)
-							PrivacyManager.applyTemplate(uid, restrictionName, true, true);
+							PrivacyManager.applyTemplate(uid, templateName, restrictionName, true, true);
 
 						else if (actionId == R.id.rbTemplateMerge)
-							PrivacyManager.applyTemplate(uid, restrictionName, true, false);
+							PrivacyManager.applyTemplate(uid, templateName, restrictionName, true, false);
 
 						else if (actionId == R.id.rbEnableOndemand) {
 							PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));

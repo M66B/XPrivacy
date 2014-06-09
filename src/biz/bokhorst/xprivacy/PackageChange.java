@@ -55,7 +55,7 @@ public class PackageChange extends BroadcastReceiver {
 								PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
 							// Apply template
-							PrivacyManager.applyTemplate(uid, null, true, true);
+							PrivacyManager.applyTemplate(uid, Meta.cTypeTemplate, null, true, true);
 						}
 					}
 

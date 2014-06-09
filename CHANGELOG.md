@@ -17,6 +17,8 @@ Changelog
 
 * Update notifications only if XPrivacy is enabled in Xposed
 * Directly open Xposed pages, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Added multiple template definitions
+	* The first template will always be applied to new applications
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
 
