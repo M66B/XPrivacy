@@ -23,8 +23,13 @@ public class BootReceiver extends BroadcastReceiver {
 			context.sendBroadcast(new Intent("biz.bokhorst.xprivacy.action.ACTIVE"));
 		else {
 			// Create Xposed installer intent
-			Intent xInstallerIntent = context.getPackageManager().getLaunchIntentForPackage(
-					"de.robv.android.xposed.installer");
+			// @formatter:off
+			Intent xInstallerIntent = new Intent("de.robv.android.xposed.installer.OPEN_SECTION")
+				.setPackage("de.robv.android.xposed.installer")
+				.putExtra("section", "modules")
+				.putExtra("module", context.getPackageName())
+				.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			// @formatter:on
 
 			PendingIntent pi = (xInstallerIntent == null ? null : PendingIntent.getActivity(context, 0,
 					xInstallerIntent, PendingIntent.FLAG_UPDATE_CURRENT));
