@@ -15,15 +15,18 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.31 TEST**
+
 * Update notifications only if XPrivacy is enabled in Xposed
 * Directly open Xposed pages, thanks @[liudongmiao](https://github.com/liudongmiao)
 * Added multiple template definitions
 	* The first template will always be applied to new applications
 * Added allow contacts by group
+* Fixed caching of no set settings
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.30 TEST**
 
