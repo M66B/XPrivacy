@@ -477,6 +477,8 @@ XPrivacy asks for the following Android permissions:
 If desired, you can even restrict XPrivacy from accessing any of the above,
 but there are some [limitations](https://github.com/M66B/XPrivacy#limitations).
 
+Please note that any Xposed module has basically root permissions and can therefore circumvent any Android permission.
+
 Frequently asked questions
 --------------------------
 
