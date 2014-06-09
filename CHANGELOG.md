@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Update notifications only if XPrivacy is enabled in Xposed
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.30 TEST**

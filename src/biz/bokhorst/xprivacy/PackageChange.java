@@ -29,12 +29,16 @@ public class PackageChange extends BroadcastReceiver {
 
 				// Check action
 				if (intent.getAction().equals(Intent.ACTION_PACKAGE_ADDED)) {
+					// Check privacy service
+					if (PrivacyService.getClient() == null)
+						return;
+
 					// Get data
 					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
 					String packageName = inputUri.getSchemeSpecificPart();
 
 					// Default deny new user apps
-					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 1) {
+					if (appInfo.getPackageName().size() == 1) {
 						if (replacing)
 							PrivacyManager.clearPermissionCache(uid);
 						else {
@@ -118,12 +122,16 @@ public class PackageChange extends BroadcastReceiver {
 					}
 
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
+					// Check privacy service
+					if (PrivacyService.getClient() == null)
+						return;
+
 					// Package removed
 					notificationManager.cancel(uid);
 
 					// Delete restrictions
 					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
-					if (PrivacyService.getClient() != null && appInfo.getPackageName().size() == 0) {
+					if (appInfo.getPackageName().size() == 0) {
 						PrivacyManager.deleteRestrictions(uid, null, false);
 						PrivacyManager.deleteSettings(uid);
 						PrivacyManager.deleteUsage(uid);
