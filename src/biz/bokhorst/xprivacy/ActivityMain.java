@@ -733,10 +733,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
 				intent.putExtra(ActivityShare.cInteractive, true);
-				intent.putExtra(
-						ActivityShare.cUidList,
-						mAppAdapter == null ? new int[0] : mAppAdapter
-								.getSelectedOrVisibleUid(AppListAdapter.cSelectAppAll));
+				intent.putExtra(ActivityShare.cUidList,
+						mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
 				startActivity(intent);
 			}
 		}
