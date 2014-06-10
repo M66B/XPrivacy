@@ -18,6 +18,7 @@ Changelog
 * Fetch user applications only by default
 * Added option to allow/disallow all contacts
 * Fixed dangerous restrictions being asked after update
+* Enable on demand restricting on application update
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

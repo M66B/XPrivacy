@@ -48,16 +48,15 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.deleteUsage(uid);
 							PrivacyManager.clearPermissionCache(uid);
 
-							// Enable on demand
-							boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand,
-									true);
-							if (ondemand)
-								PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
-
 							// Apply template
 							PrivacyManager.applyTemplate(uid, Meta.cTypeTemplate, null, true, true);
 						}
 					}
+
+					// Enable on demand
+					boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+					if (ondemand)
+						PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
 					// Mark as new/changed
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
