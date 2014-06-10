@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fetch user applications only by default
+* Added option to allow/disallow all contacts
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

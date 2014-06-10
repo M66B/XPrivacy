@@ -826,13 +826,18 @@ public class ActivityApp extends ActivityBase {
 
 			// Build dialog data
 			mListContact = new ArrayList<CharSequence>();
-			mIds = new long[mapContact.size()];
-			mSelection = new boolean[mapContact.size()];
+			mIds = new long[mapContact.size() + 1];
+			mSelection = new boolean[mapContact.size() + 1];
+
+			mListContact.add("[" + getString(R.string.menu_all) + "]");
+			mIds[0] = -1;
+			mSelection[0] = false;
+
 			int i = 0;
 			for (Long id : mapContact.keySet()) {
 				mListContact.add(mapContact.get(id));
-				mIds[i] = id;
-				mSelection[i++] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeContact,
+				mIds[i + 1] = id;
+				mSelection[i++ + 1] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeContact,
 						Long.toString(id), false);
 			}
 			return null;
@@ -847,10 +852,39 @@ public class ActivityApp extends ActivityBase {
 				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 				alertDialogBuilder.setMultiChoiceItems(mListContact.toArray(new CharSequence[0]), mSelection,
 						new DialogInterface.OnMultiChoiceClickListener() {
-							public void onClick(DialogInterface dialog, int whichButton, boolean isChecked) {
+							public void onClick(final DialogInterface dialog, int whichButton, final boolean isChecked) {
 								// Contact
-								PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeContact,
-										Long.toString(mIds[whichButton]), Boolean.toString(isChecked));
+								if (whichButton == 0) {
+									((AlertDialog) dialog).getListView().setEnabled(false);
+									((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+									((AlertDialog) dialog).setCancelable(false);
+
+									new AsyncTask<Object, Object, Object>() {
+										@Override
+										protected Object doInBackground(Object... arg0) {
+											for (int i = 1; i < mSelection.length; i++) {
+												mSelection[i] = isChecked;
+												PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeContact,
+														Long.toString(mIds[i]), Boolean.toString(mSelection[i]));
+											}
+											return null;
+										}
+
+										@Override
+										protected void onPostExecute(Object result) {
+											for (int i = 1; i < mSelection.length; i++)
+												((AlertDialog) dialog).getListView().setItemChecked(i, mSelection[i]);
+
+											((AlertDialog) dialog).getListView().setEnabled(true);
+											((AlertDialog) dialog).getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(
+													true);
+											((AlertDialog) dialog).setCancelable(true);
+										}
+									}.executeOnExecutor(mExecutor);
+
+								} else
+									PrivacyManager.setSetting(mAppInfo.getUid(), Meta.cTypeContact,
+											Long.toString(mIds[whichButton]), Boolean.toString(isChecked));
 							}
 						});
 				alertDialogBuilder.setPositiveButton(getString(R.string.msg_done),
