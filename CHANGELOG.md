@@ -18,7 +18,7 @@ Changelog
 * Fetch user applications only by default
 * Added option to allow/disallow all contacts
 * Fixed dangerous restrictions being asked after update
-* Enable on demand restricting on application update
+* Enable on demand restricting on application update ([reason](http://www.xda-developers.com/android/play-store-permissions-change-opens-door-to-rogue-apps/))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
