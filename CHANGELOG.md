@@ -15,6 +15,9 @@ Changelog
 
 **Next release**
 
+* Fixed applying template / dangerous functions
+* Fixed default on demand restricting / dangerous functions
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.32 BETA**
