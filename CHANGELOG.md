@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Removed delay when opening application details
+* Setting on demand restriction to enabled for functions with a white list when on demand restricting a category
 * Made *network/getScanResults* dangerous
 	* Because *location/getScanResults* is dangerous too
 * Made *accounts/getTokenGoogle* and *accounts/getTokenWithNotification* dangerous
