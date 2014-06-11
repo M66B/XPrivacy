@@ -15,6 +15,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.34 BETA**
+
 * Removed delay when opening application details
 * Setting on demand restriction to enabled for functions with a white list when on demand restricting a category
 * Made *network/getScanResults* dangerous
@@ -29,8 +33,6 @@ All above functions throw an exception when restricted.
 Although the exception is part of the standard API, a lot of applications are not prepared to handle an exception.
 
 **This version will erase the existing main template**
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.33 BETA**
 
