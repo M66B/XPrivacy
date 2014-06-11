@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Removed delay when opening application details
+* Made *network/getScanResults* dangerous
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
