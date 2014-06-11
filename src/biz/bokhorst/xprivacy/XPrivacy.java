@@ -27,6 +27,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 @SuppressLint("DefaultLocale")
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+	private static boolean cydia = false;
 	private static String mSecret = null;
 
 	private static boolean mAccountManagerHooked = false;
@@ -46,20 +47,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// Cydia substrate
 	public static void initialize() {
-		try {
-			Class<?> cSystemServer = Class.forName("com.android.server.SystemServer");
-			Method mMain = cSystemServer.getDeclaredMethod("main", String[].class);
-			MS.hookMethod(cSystemServer, mMain, new MS.MethodAlteration<Object, Void>() {
-				@Override
-				public Void invoked(Object thiz, Object... args) throws Throwable {
-					Log.w("XPrivacy/Cydia", "Before main");
-					invoke(thiz, args);
-					return null;
-				}
-			});
-		} catch (Throwable ex) {
-			Log.e("XPrivacy/Cydia", ex.toString());
-		}
+		cydia = true;
+		hookup();
 	}
 
 	@SuppressLint("InlinedApi")
@@ -72,6 +61,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			return;
 		}
 
+		hookup();
+	}
+
+	private static void hookup() {
+
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
@@ -80,12 +74,21 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// frameworks/base/services/java/com/android/server/SystemServer.java
 			Class<?> cSystemServer = Class.forName("com.android.server.SystemServer");
 			Method mMain = cSystemServer.getDeclaredMethod("main", String[].class);
-			XposedBridge.hookMethod(mMain, new XC_MethodHook() {
-				@Override
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					PrivacyService.register(mListHookError, mSecret);
-				}
-			});
+			if (cydia)
+				MS.hookMethod(cSystemServer, mMain, new MS.MethodAlteration<Object, Void>() {
+					@Override
+					public Void invoked(Object thiz, Object... args) throws Throwable {
+						PrivacyService.register(mListHookError, mSecret);
+						return invoke(thiz, args);
+					}
+				});
+			else
+				XposedBridge.hookMethod(mMain, new XC_MethodHook() {
+					@Override
+					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+						PrivacyService.register(mListHookError, mSecret);
+					}
+				});
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -421,8 +424,27 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				try {
 					if (Modifier.isAbstract(member.getModifiers()))
 						Util.log(hook, Log.ERROR, String.format("Abstract: %s", member));
-					else
-						XposedBridge.hookMethod(member, methodHook);
+					else {
+						if (cydia)
+							if (member instanceof Method)
+								MS.hookMethod(member.getDeclaringClass(), (Method) member,
+										new MS.MethodAlteration<Object, Void>() {
+											@Override
+											public Void invoked(Object thiz, Object... args) throws Throwable {
+												return invoke(thiz, args);
+											}
+										});
+							else
+								MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member,
+										new MS.MethodAlteration<Object, Void>() {
+											@Override
+											public Void invoked(Object thiz, Object... args) throws Throwable {
+												return invoke(thiz, args);
+											}
+										});
+						else
+							XposedBridge.hookMethod(member, methodHook);
+					}
 				} catch (NoSuchFieldError ex) {
 					Util.log(hook, Log.WARN, ex.toString());
 				} catch (Throwable ex) {
