@@ -20,6 +20,7 @@ Changelog
 * Made *accounts/getTokenGoogle* and *accounts/getTokenWithNotification* dangerous
 * Made *accounts/getAuthToken* and *accounts/getAuthTokenByFeatures* dangerous
 * Made *identification//sys/block/.../cid* and *identification//sys/class/.../cid* dangerous
+* Made *internet/getAllByName*, *internet/getByAddress* and *internet/getByName* dangerous
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
