@@ -157,6 +157,10 @@
 
 <p>This will enabled debug logging</p>
 
+<code>UPDATE setting SET value='false' WHERE name LIKE 'Dangerous%';</code>
+
+<p>This will remove all 'dangerous restrictions' from the template</p>
+
 <h3><em>usage.db</em></h3>
 
 <code>SELECT * FROM usage ORDER BY time DESC;</code>
