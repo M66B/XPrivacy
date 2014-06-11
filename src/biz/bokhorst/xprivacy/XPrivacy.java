@@ -474,59 +474,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					else {
 						if (cydia)
 							if (member instanceof Method)
-								MS.hookMethod(member.getDeclaringClass(), (Method) member,
-										new MS.MethodAlteration<Object, Object>() {
-											@Override
-											public Object invoked(Object thiz, Object... args) throws Throwable {
-												if (Process.myUid() <= 0)
-													return invoke(thiz, args);
-
-												XParam xparam = XParam.fromCydia(member, thiz, args);
-												hook.before(xparam);
-
-												if (!xparam.hasResult() || xparam.hasThrowable()) {
-													try {
-														Object result = invoke(thiz, args);
-														xparam.setResult(result);
-													} catch (Throwable ex) {
-														xparam.setThrowable(ex);
-													}
-
-													hook.after(xparam);
-												}
-
-												if (xparam.hasThrowable())
-													throw xparam.getThrowable();
-												return xparam.getResult();
-											}
-										});
+								MS.hookMethod(member.getDeclaringClass(), (Method) member, new MethodAlterationEx(hook,
+										member));
 							else
 								MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member,
-										new MS.MethodAlteration<Object, Object>() {
-											@Override
-											public Object invoked(Object thiz, Object... args) throws Throwable {
-												if (Process.myUid() <= 0)
-													return invoke(thiz, args);
-
-												XParam xparam = XParam.fromCydia(member, thiz, args);
-												hook.before(xparam);
-
-												if (!xparam.hasResult() || xparam.hasThrowable()) {
-													try {
-														Object result = invoke(thiz, args);
-														xparam.setResult(result);
-													} catch (Throwable ex) {
-														xparam.setThrowable(ex);
-													}
-
-													hook.after(xparam);
-												}
-
-												if (xparam.hasThrowable())
-													throw xparam.getThrowable();
-												return xparam.getResult();
-											}
-										});
+										new MethodAlterationEx(hook, member));
 						else
 							XposedBridge.hookMethod(member, methodHook);
 					}
@@ -594,6 +546,40 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+		}
+	}
+
+	public static class MethodAlterationEx extends MS.MethodAlteration<Object, Object> {
+		private XHook mHook;
+		private Member mMember;
+
+		public MethodAlterationEx(XHook hook, Member member) {
+			mHook = hook;
+			mMember = member;
+		}
+
+		@Override
+		public Object invoked(Object thiz, Object... args) throws Throwable {
+			if (Process.myUid() <= 0)
+				return invoke(thiz, args);
+
+			XParam xparam = XParam.fromCydia(mMember, thiz, args);
+			mHook.before(xparam);
+
+			if (!xparam.hasResult() || xparam.hasThrowable()) {
+				try {
+					Object result = invoke(thiz, args);
+					xparam.setResult(result);
+				} catch (Throwable ex) {
+					xparam.setThrowable(ex);
+				}
+
+				mHook.after(xparam);
+			}
+
+			if (xparam.hasThrowable())
+				throw xparam.getThrowable();
+			return xparam.getResult();
 		}
 	}
 }
