@@ -6,6 +6,8 @@ The ultimate, yet easy to use, privacy manager for Android
 ![Open source Rookie of the year](http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png)
 ([publication](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners))
 
+**The *cydia* branch of XPrivacy works, but I can't get Cydia to load the module if Xposed is disabled. Furthermore, Cydia Substrate is not able to hook *Settings.Secure*, for which a boot class loader is needed. Also Build.SERIAL cannot be restricted. Else everything seems to work okay.**
+
 Index
 -----
 
