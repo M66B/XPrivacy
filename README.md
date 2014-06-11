@@ -919,6 +919,8 @@ Batch enabling on demand restricting using the template could lead to an on dema
 
 For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler-Recovery.zip](http://forum.xda-developers.com/attachment.php?attachmentid=2568891&d=1391958634). Alternatively (on most devices) press the volume down button 5 times during boot (It will vibrate with each press when done correctly).
 
+See [here](https://github.com/M66B/XPrivacy/blob/master/DATABASE.md#xprivacydb) on how to enable debug logging without Xprivacy activated in XPosed.
+
 <a name='FAQ57'></a>
 **(57) How does 'Expert mode' work?**
 
