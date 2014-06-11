@@ -48,8 +48,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	// Cydia substrate
 	public static void initialize() {
 		cydia = true;
+
 		hook();
 
+		// Self
+		MS.hookClassLoad(Util.class.getName(), new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XUtilHook.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
+
+		// TODO: Cydia: Build.SERIAL
+
+		// Advertising Id
 		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", new MS.ClassLoadHook() {
 			@Override
 			public void classLoaded(Class<?> clazz) {
@@ -57,6 +69,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		});
 
+		// User activity
 		MS.hookClassLoad("com.google.android.gms.location.ActivityRecognitionClient", new MS.ClassLoadHook() {
 			@Override
 			public void classLoaded(Class<?> clazz) {
@@ -64,6 +77,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		});
 
+		// Google auth
 		MS.hookClassLoad("com.google.android.gms.auth.GoogleAuthUtil", new MS.ClassLoadHook() {
 			@Override
 			public void classLoaded(Class<?> clazz) {
@@ -71,6 +85,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		});
 
+		// Location client
 		MS.hookClassLoad("com.google.android.gms.location.LocationClient", new MS.ClassLoadHook() {
 			@Override
 			public void classLoaded(Class<?> clazz) {
@@ -420,7 +435,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			Class<?> hookClass = null;
 			try {
 				if (cydia)
-					hookClass = Class.forName(hook.getClassName(), true, classLoader);
+					if (classLoader == null)
+						hookClass = Class.forName(hook.getClassName());
+					else
+						hookClass = Class.forName(hook.getClassName(), true, classLoader);
 				else
 					hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
@@ -466,14 +484,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 												XParam xparam = XParam.fromCydia(member, thiz, args);
 												hook.before(xparam);
 
-												try {
-													Object result = invoke(thiz, args);
-													xparam.setResult(result);
-												} catch (Throwable ex) {
-													xparam.setThrowable(ex);
-												}
+												if (!xparam.hasResult() || xparam.hasThrowable()) {
+													try {
+														Object result = invoke(thiz, args);
+														xparam.setResult(result);
+													} catch (Throwable ex) {
+														xparam.setThrowable(ex);
+													}
 
-												hook.after(xparam);
+													hook.after(xparam);
+												}
 
 												if (xparam.hasThrowable())
 													throw xparam.getThrowable();
@@ -491,14 +511,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 												XParam xparam = XParam.fromCydia(member, thiz, args);
 												hook.before(xparam);
 
-												try {
-													Object result = invoke(thiz, args);
-													xparam.setResult(result);
-												} catch (Throwable ex) {
-													xparam.setThrowable(ex);
-												}
+												if (!xparam.hasResult() || xparam.hasThrowable()) {
+													try {
+														Object result = invoke(thiz, args);
+														xparam.setResult(result);
+													} catch (Throwable ex) {
+														xparam.setThrowable(ex);
+													}
 
-												hook.after(xparam);
+													hook.after(xparam);
+												}
 
 												if (xparam.hasThrowable())
 													throw xparam.getThrowable();
