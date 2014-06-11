@@ -379,11 +379,11 @@ public class PrivacyManager {
 		if (methodName == null)
 			for (String rRestrictionName : listRestriction)
 				for (Hook md : getHooks(rRestrictionName)) {
-					if (md.isDangerous())
+					if (!canRestrict(uid, Process.myUid(), rRestrictionName, md.getName()))
+						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
+					else if (md.isDangerous())
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, md
 								.whitelist() == null));
-					else if (!canRestrict(uid, Process.myUid(), rRestrictionName, md.getName()))
-						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
 				}
 
 		setRestrictionList(listPRestriction);

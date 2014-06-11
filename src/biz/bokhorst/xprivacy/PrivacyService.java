@@ -1702,12 +1702,19 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Clear category on change
-					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
-						result.methodName = md.getName();
-						result.restricted = !md.isDangerous() && restrict;
-						result.asked = category;
-						setRestrictionInternal(result);
-					}
+					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName))
+						if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+								md.getName())) {
+							result.methodName = md.getName();
+							result.restricted = false;
+							result.asked = true;
+							setRestrictionInternal(result);
+						} else {
+							result.methodName = md.getName();
+							result.restricted = !md.isDangerous() && restrict;
+							result.asked = category && (md.whitelist() == null);
+							setRestrictionInternal(result);
+						}
 				}
 
 				if (!category) {
