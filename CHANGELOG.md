@@ -17,6 +17,8 @@ Changelog
 
 * Removed delay when opening application details
 * Made *network/getScanResults* dangerous
+* Made *accounts/getTokenGoogle* and *accounts/getTokenWithNotification* dangerous
+* Made *accounts/getAuthToken* and *accounts/getAuthTokenByFeatures* dangerous
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
