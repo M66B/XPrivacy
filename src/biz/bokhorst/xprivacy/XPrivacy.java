@@ -49,6 +49,34 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	public static void initialize() {
 		cydia = true;
 		hookup();
+
+		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XAdvertisingIdClientInfo.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
+
+		MS.hookClassLoad("com.google.android.gms.location.ActivityRecognitionClient", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XActivityRecognitionClient.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
+
+		MS.hookClassLoad("com.google.android.gms.auth.GoogleAuthUtil", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XGoogleAuthUtil.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
+
+		MS.hookClassLoad("com.google.android.gms.location.LocationClient", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XLocationClient.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
 	}
 
 	@SuppressLint("InlinedApi")
