@@ -158,6 +158,10 @@
 
 <p>This will show all usage data ordered by TIME (newest entries first)</p>
 
+<code>UPDATE setting SET value = 'true' WHERE name = 'Log';</code>
+
+<p>This will enabled debug logging</p>
+
 <code>DELETE FROM usage where uid='1000';</code>
 
 <p>This will delete all usage entries for UID 1000</p>
