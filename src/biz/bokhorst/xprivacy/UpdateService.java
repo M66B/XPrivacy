@@ -181,8 +181,17 @@ public class UpdateService extends Service {
 			if (first == 0)
 				Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
 
-			// Remove legacy setting
-			PrivacyManager.setSetting(userId, PrivacyManager.cSettingDangerous, null);
+			if (dangerous) {
+				// Remove legacy setting
+				PrivacyManager.setSetting(userId, PrivacyManager.cSettingDangerous, null);
+
+				// Wipe template
+				for (PSetting setting : PrivacyManager.getSettingList(0))
+					if (Meta.cTypeTemplate.equals(setting.type)) {
+						Util.log(null, Log.WARN, "Deleting " + setting);
+						PrivacyManager.setSetting(setting.uid, setting.type, setting.name, null);
+					}
+			}
 		} else
 			Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
 
