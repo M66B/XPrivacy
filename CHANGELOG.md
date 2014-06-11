@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Removed delay when opening application details
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.33 BETA**

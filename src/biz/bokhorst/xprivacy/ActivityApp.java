@@ -331,35 +331,50 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
+	public boolean onCreateOptionsMenu(final Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		if (inflater != null && PrivacyService.checkClient()) {
 			inflater.inflate(R.menu.app, menu);
 
-			// Add contact groups
+			// Add all contact groups
 			menu.findItem(R.id.menu_contacts).getSubMenu()
 					.add(-1, R.id.menu_contacts, Menu.NONE, getString(R.string.menu_all));
 
-			String where = ContactsContract.Groups.GROUP_VISIBLE + " = 1";
-			where += " AND " + ContactsContract.Groups.SUMMARY_COUNT + " > 0";
-			Cursor cursor = getContentResolver().query(
-					ContactsContract.Groups.CONTENT_SUMMARY_URI,
-					new String[] { ContactsContract.Groups._ID, ContactsContract.Groups.TITLE,
-							ContactsContract.Groups.ACCOUNT_NAME, ContactsContract.Groups.SUMMARY_COUNT }, where, null,
-					ContactsContract.Groups.TITLE + ", " + ContactsContract.Groups.ACCOUNT_NAME);
+			// Add other contact groups in the background
+			new AsyncTask<Object, Object, Object>() {
+				@Override
+				protected Object doInBackground(Object... arg0) {
+					try {
+						String where = ContactsContract.Groups.GROUP_VISIBLE + " = 1";
+						where += " AND " + ContactsContract.Groups.SUMMARY_COUNT + " > 0";
+						Cursor cursor = getContentResolver().query(
+								ContactsContract.Groups.CONTENT_SUMMARY_URI,
+								new String[] { ContactsContract.Groups._ID, ContactsContract.Groups.TITLE,
+										ContactsContract.Groups.ACCOUNT_NAME, ContactsContract.Groups.SUMMARY_COUNT },
+								where, null,
+								ContactsContract.Groups.TITLE + ", " + ContactsContract.Groups.ACCOUNT_NAME);
 
-			if (cursor != null)
-				try {
-					while (cursor.moveToNext()) {
-						int id = cursor.getInt(cursor.getColumnIndex(ContactsContract.Groups._ID));
-						String title = cursor.getString(cursor.getColumnIndex(ContactsContract.Groups.TITLE));
-						String account = cursor.getString(cursor.getColumnIndex(ContactsContract.Groups.ACCOUNT_NAME));
-						menu.findItem(R.id.menu_contacts).getSubMenu()
-								.add(id, R.id.menu_contacts, Menu.NONE, title + "/" + account);
+						if (cursor != null)
+							try {
+								while (cursor.moveToNext()) {
+									int id = cursor.getInt(cursor.getColumnIndex(ContactsContract.Groups._ID));
+									String title = cursor.getString(cursor
+											.getColumnIndex(ContactsContract.Groups.TITLE));
+									String account = cursor.getString(cursor
+											.getColumnIndex(ContactsContract.Groups.ACCOUNT_NAME));
+									menu.findItem(R.id.menu_contacts).getSubMenu()
+											.add(id, R.id.menu_contacts, Menu.NONE, title + "/" + account);
+								}
+							} finally {
+								cursor.close();
+							}
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
 					}
-				} finally {
-					cursor.close();
+
+					return null;
 				}
+			}.executeOnExecutor(mExecutor);
 
 			return true;
 		} else
