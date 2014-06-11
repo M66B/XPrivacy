@@ -48,7 +48,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	// Cydia substrate
 	public static void initialize() {
 		cydia = true;
-		hookup();
+		hook();
 
 		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", new MS.ClassLoadHook() {
 			@Override
@@ -89,11 +89,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			return;
 		}
 
-		hookup();
+		hook();
 	}
 
-	private static void hookup() {
-
+	private static void hook() {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
@@ -420,8 +419,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Find class
 			Class<?> hookClass = null;
 			try {
-				// hookClass = Class.forName(hook.getClassName());
-				hookClass = findClass(hook.getClassName(), classLoader);
+				if (cydia)
+					hookClass = Class.forName(hook.getClassName(), true, classLoader);
+				else
+					hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
 				message = String.format("Class not found for %s", hook);
 				mListHookError.add(message);
@@ -448,7 +449,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 
 			// Hook members
-			for (Member member : listMember)
+			for (final Member member : listMember)
 				try {
 					if (Modifier.isAbstract(member.getModifiers()))
 						Util.log(hook, Log.ERROR, String.format("Abstract: %s", member));
@@ -456,18 +457,40 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						if (cydia)
 							if (member instanceof Method)
 								MS.hookMethod(member.getDeclaringClass(), (Method) member,
-										new MS.MethodAlteration<Object, Void>() {
+										new MS.MethodAlteration<Object, Object>() {
 											@Override
-											public Void invoked(Object thiz, Object... args) throws Throwable {
-												return invoke(thiz, args);
+											public Object invoked(Object thiz, Object... args) throws Throwable {
+												XParam xparam = XParam.fromCydia(member, thiz, args);
+												hook.before(xparam);
+												try {
+													Object result = invoke(thiz, args);
+													xparam.setResult(result);
+												} catch (Throwable ex) {
+													xparam.setThrowable(ex);
+												}
+												hook.after(xparam);
+												if (xparam.hasThrowable())
+													throw xparam.getThrowable();
+												return xparam.getResult();
 											}
 										});
 							else
 								MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member,
-										new MS.MethodAlteration<Object, Void>() {
+										new MS.MethodAlteration<Object, Object>() {
 											@Override
-											public Void invoked(Object thiz, Object... args) throws Throwable {
-												return invoke(thiz, args);
+											public Object invoked(Object thiz, Object... args) throws Throwable {
+												XParam xparam = XParam.fromCydia(member, thiz, args);
+												hook.before(xparam);
+												try {
+													Object result = invoke(thiz, args);
+													xparam.setResult(result);
+												} catch (Throwable ex) {
+													xparam.setThrowable(ex);
+												}
+												hook.after(xparam);
+												if (xparam.hasThrowable())
+													throw xparam.getThrowable();
+												return xparam.getResult();
 											}
 										});
 						else
