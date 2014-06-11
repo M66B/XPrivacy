@@ -26,9 +26,6 @@
 #Xposed
 -libraryjars XposedBridgeApi-54.jar
 
-#Cydia Substrate
--libraryjars substrate-api.jar
-
 #XPrivacy
 -keep class biz.bokhorst.xprivacy.XPrivacy {*; }
 -keepnames class biz.bokhorst.xprivacy.X* { }

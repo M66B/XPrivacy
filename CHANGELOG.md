@@ -21,7 +21,6 @@ Changelog
 
 * Removed delay when opening application details
 * Setting on demand restriction to enabled for functions with a white list when on demand restricting a category
-* Cydia Substrate support, see [here](https://github.com/M66B/XPrivacy/tree/cydia#xprivacy) for details
 * Made *network/getScanResults* dangerous
 	* Because *location/getScanResults* is dangerous too
 * Made *accounts/getTokenGoogle* and *accounts/getTokenWithNotification* dangerous
