@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import com.saurik.substrate.MS;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Binder;
@@ -41,6 +43,24 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static List<String> mListHookError = new ArrayList<String>();
 
 	// http://developer.android.com/reference/android/Manifest.permission.html
+
+	// Cydia substrate
+	public static void initialize() {
+		try {
+			Class<?> cSystemServer = Class.forName("com.android.server.SystemServer");
+			Method mMain = cSystemServer.getDeclaredMethod("main", String[].class);
+			MS.hookMethod(cSystemServer, mMain, new MS.MethodAlteration<Object, Void>() {
+				@Override
+				public Void invoked(Object thiz, Object... args) throws Throwable {
+					Log.w("XPrivacy/Cydia", "Before main");
+					invoke(thiz, args);
+					return null;
+				}
+			});
+		} catch (Throwable ex) {
+			Log.e("XPrivacy/Cydia", ex.toString());
+		}
+	}
 
 	@SuppressLint("InlinedApi")
 	public void initZygote(StartupParam startupParam) throws Throwable {
