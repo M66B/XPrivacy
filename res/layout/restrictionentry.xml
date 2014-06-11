@@ -10,7 +10,8 @@
         android:id="@+id/imgIndicator"
         android:layout_width="24dip"
         android:layout_height="24dip"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:background="?attr/color_dangerous"
         android:contentDescription="@string/app_name"
         android:src="@android:drawable/arrow_down_float" />
 

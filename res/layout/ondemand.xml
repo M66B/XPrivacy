@@ -84,13 +84,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="@string/title_function" />
+                    android:text="@string/title_function"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:id="@+id/tvFunction"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="6dip"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textStyle="bold" />
             </TableRow>
 
@@ -103,13 +105,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:singleLine="true"
-                    android:text="@string/title_parameters" />
+                    android:text="@string/title_parameters"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <TextView
                     android:id="@+id/tvParameters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="6dip"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textStyle="bold" />
             </TableRow>
         </TableLayout>
@@ -165,6 +169,7 @@
             android:layout_height="wrap_content"
             android:paddingTop="6dip"
             android:text="@string/title_pleasesubmit"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:textStyle="italic" />
     </LinearLayout>
 
