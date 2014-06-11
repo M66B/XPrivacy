@@ -460,15 +460,21 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 										new MS.MethodAlteration<Object, Object>() {
 											@Override
 											public Object invoked(Object thiz, Object... args) throws Throwable {
+												if (Process.myUid() <= 0)
+													return invoke(thiz, args);
+
 												XParam xparam = XParam.fromCydia(member, thiz, args);
 												hook.before(xparam);
+
 												try {
 													Object result = invoke(thiz, args);
 													xparam.setResult(result);
 												} catch (Throwable ex) {
 													xparam.setThrowable(ex);
 												}
+
 												hook.after(xparam);
+
 												if (xparam.hasThrowable())
 													throw xparam.getThrowable();
 												return xparam.getResult();
@@ -479,15 +485,21 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 										new MS.MethodAlteration<Object, Object>() {
 											@Override
 											public Object invoked(Object thiz, Object... args) throws Throwable {
+												if (Process.myUid() <= 0)
+													return invoke(thiz, args);
+
 												XParam xparam = XParam.fromCydia(member, thiz, args);
 												hook.before(xparam);
+
 												try {
 													Object result = invoke(thiz, args);
 													xparam.setResult(result);
 												} catch (Throwable ex) {
 													xparam.setThrowable(ex);
 												}
+
 												hook.after(xparam);
+
 												if (xparam.hasThrowable())
 													throw xparam.getThrowable();
 												return xparam.getResult();
