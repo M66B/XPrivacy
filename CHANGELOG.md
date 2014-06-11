@@ -17,10 +17,15 @@ Changelog
 
 * Removed delay when opening application details
 * Made *network/getScanResults* dangerous
+	* Because *location/getScanResults* is dangerous too
 * Made *accounts/getTokenGoogle* and *accounts/getTokenWithNotification* dangerous
 * Made *accounts/getAuthToken* and *accounts/getAuthTokenByFeatures* dangerous
 * Made *identification//sys/block/.../cid* and *identification//sys/class/.../cid* dangerous
 * Made *internet/getAllByName*, *internet/getByAddress* and *internet/getByName* dangerous
+* Made all *shell* functions dangerous
+
+All above functions throw an exception when restricted.
+Although the exception is part of the standard API, a lot of applications are not prepared to handle an exception.
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
