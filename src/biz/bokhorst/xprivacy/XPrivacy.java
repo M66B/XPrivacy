@@ -60,6 +60,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		});
 
 		// TODO: Cydia: Build.SERIAL
+		// TODO: Cydia: android.provider.Settings.Secure
 
 		// Advertising Id
 		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", new MS.ClassLoadHook() {
@@ -202,7 +203,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XRuntime.getInstances(), mSecret);
 
 		// Settings secure
-		hookAll(XSettingsSecure.getInstances(), mSecret);
+		if (!cydia)
+			hookAll(XSettingsSecure.getInstances(), mSecret);
 
 		// SMS manager
 		hookAll(XSmsManager.getInstances(), mSecret);
@@ -435,10 +437,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			Class<?> hookClass = null;
 			try {
 				if (cydia)
-					if (classLoader == null)
-						hookClass = Class.forName(hook.getClassName());
-					else
-						hookClass = Class.forName(hook.getClassName(), true, classLoader);
+					hookClass = Class.forName(hook.getClassName(), false, classLoader);
 				else
 					hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
