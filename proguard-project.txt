@@ -26,6 +26,10 @@
 #Xposed
 -libraryjars XposedBridgeApi-54.jar
 
+#Cydia substrate
+-dontwarn com.saurik.substrate._MS*
+-keep class com.saurik.substrate.MS* {*; }
+
 #XPrivacy
 -keep class biz.bokhorst.xprivacy.XPrivacy {*; }
 -keepnames class biz.bokhorst.xprivacy.X* { }
