@@ -60,6 +60,10 @@ public class XProcess extends XHook {
 	// system/core/include/private/android_filesystem_config.h
 	// frameworks/base/data/etc/platform.xml
 
+	// http://www.doubleencore.com/2014/03/android-external-storage/
+	// https://android.googlesource.com/platform/system/core/+/dfe0cba
+	// https://android.googlesource.com/platform/system/core/+/master/sdcard/sdcard.c
+
 	@Override
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.startViaZygote) {
