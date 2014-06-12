@@ -14,6 +14,8 @@ import java.util.concurrent.ThreadFactory;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningAppProcessInfo;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.NotificationManager;
@@ -402,6 +404,13 @@ public class ActivityApp extends ActivityBase {
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
 		super.onCreateContextMenu(menu, v, menuInfo);
 
+		// Check if running
+		boolean running = false;
+		ActivityManager activityManager = (ActivityManager) this.getSystemService(ACTIVITY_SERVICE);
+		for (RunningAppProcessInfo info : activityManager.getRunningAppProcesses())
+			if (info.uid == mAppInfo.getUid())
+				running = true;
+
 		PackageManager pm = getPackageManager();
 		List<String> listPackageNames = mAppInfo.getPackageName();
 		List<String> listApplicationName = mAppInfo.getApplicationName();
@@ -419,7 +428,7 @@ public class ActivityApp extends ActivityBase {
 
 			// Kill
 			MenuItem kill = appMenu.add(i, MENU_KILL, Menu.NONE, getString(R.string.menu_app_kill));
-			kill.setEnabled(PrivacyManager.isApplication(mAppInfo.getUid()));
+			kill.setEnabled(running && PrivacyManager.isApplication(mAppInfo.getUid()));
 
 			// Play store
 			MenuItem store = appMenu.add(i, MENU_STORE, Menu.NONE, getString(R.string.menu_app_store));
