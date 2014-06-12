@@ -21,7 +21,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -29,10 +28,8 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Style;
-import android.graphics.PorterDuff.Mode;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.StateListDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,7 +39,6 @@ import android.os.Process;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -625,21 +621,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		View view = inflater.inflate(R.layout.template, null);
 		Spinner spTemplate = (Spinner) view.findViewById(R.id.spTemplate);
 		ExpandableListView elvTemplate = (ExpandableListView) view.findViewById(R.id.elvTemplate);
-
-		// Modify indicator
-		TypedArray ta1 = getTheme().obtainStyledAttributes(new int[] { R.attr.color_dangerous });
-		int dangerousColor = ta1.getColor(0, 0xFF00FF);
-		ta1.recycle();
-
-		Resources.Theme theme = getTheme();
-		TypedValue typedValue = new TypedValue();
-		theme.resolveAttribute(android.R.attr.expandableListViewStyle, typedValue, true);
-		TypedArray ta2 = theme.obtainStyledAttributes(typedValue.resourceId,
-				new int[] { android.R.attr.groupIndicator });
-		StateListDrawable groupIndicator = (StateListDrawable) ta2.getDrawable(0);
-		ta2.recycle();
-		groupIndicator.setColorFilter(dangerousColor, Mode.XOR);
-		elvTemplate.setGroupIndicator(groupIndicator);
 
 		// Template selector
 		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
