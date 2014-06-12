@@ -40,6 +40,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// http://developer.android.com/reference/android/Manifest.permission.html
 
+	// Cydia Substrate
+	// https://github.com/M66B/XPrivacy/commit/30d47aec2a6d26957687eae73753a813c6213a20
+
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		Util.log(null, Log.WARN, String.format("Load %s", startupParam.modulePath));
 
