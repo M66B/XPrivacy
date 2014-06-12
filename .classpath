@@ -7,6 +7,5 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="src" path="gen"/>
 	<classpathentry kind="lib" path="XposedBridgeApi-54.jar"/>
-	<classpathentry exported="true" kind="lib" path="substrate-api.jar"/>
 	<classpathentry kind="output" path="bin/classes"/>
 </classpath>

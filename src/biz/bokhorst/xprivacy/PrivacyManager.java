@@ -281,7 +281,7 @@ public class PrivacyManager {
 		if (uid <= 0)
 			return false;
 		if (secret == null) {
-			Util.log(null, Log.ERROR, "Secret null");
+			Util.log(null, Log.ERROR, "Secret null restriction=" + restrictionName + "/" + methodName);
 			Util.logStack(hook, Log.ERROR);
 			secret = "";
 		}
