@@ -15,6 +15,12 @@ Changelog
 
 **Next release**
 
+* Fixed toggling dangerous functions not immediately displaying correct template restriction
+* Removed exception for disabling on demand restricting when changing category restriction on demand
+* Enable kill application menu only if application is running
+
+**This version will erase the existing main template** (if not done by an earlier version)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.34 BETA**

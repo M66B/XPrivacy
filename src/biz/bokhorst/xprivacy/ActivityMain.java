@@ -1283,6 +1283,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							holder.row.setBackgroundColor(hook.isDangerousDefined() ? getResources().getColor(
 									getThemed(R.attr.color_dangerous_off)) : Color.TRANSPARENT);
 
+						notifyDataSetChanged();
+
 						return true;
 					}
 				});

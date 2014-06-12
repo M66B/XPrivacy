@@ -258,8 +258,8 @@ public class Meta {
 		mListHook.add(new Hook("system", "getInstalledProviders", "", 3, null, null).dangerous());
 
 		mListHook.add(new Hook("system", "getRecentTasks", "GET_TASKS", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "getRunningAppProcesses", "GET_TASKS", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "getRunningServices", "GET_TASKS", 10, null, null).dangerous());
+		mListHook.add(new Hook("system", "getRunningAppProcesses", "", 10, null, null).dangerous());
+		mListHook.add(new Hook("system", "getRunningServices", "", 10, null, null).dangerous());
 		mListHook.add(new Hook("system", "getRunningTasks", "GET_TASKS", 10, null, null).dangerous());
 
 		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_ADDED", "", 1, null, null).dangerous());
