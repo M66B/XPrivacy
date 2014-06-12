@@ -18,6 +18,11 @@ Changelog
 * Fixed toggling dangerous functions not immediately displaying correct template restriction
 * Removed exception for disabling on demand restricting when changing category restriction on demand
 * Enable kill application menu only if application is running
+* Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
+	* I can't get Cydia Substrate working if Xposed is not installed, which may be caused by an incompatible *app_process*
+	* Cydia Substrate is not able to hook *Settings.Secure*, for which a boot class loader is needed
+	* *Build.SERIAL* cannot be restricted
+	* There will be limited support for this
 
 **This version will erase the existing main template** (if not done by an earlier version)
 

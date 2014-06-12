@@ -6,12 +6,6 @@ The ultimate, yet easy to use, privacy manager for Android
 ![Open source Rookie of the year](http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png)
 ([publication](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners))
 
-The *cydia* branch of XPrivacy works okay, but:
-
-* I can't get [Cydia Substrate](http://www.cydiasubstrate.com/) to load XPrivacy if Xposed is disabled (it works with Xposed enabled and XPrivacy disabled); This may be caused by an incompatible *app_process*
-* Cydia Substrate is not able to hook *Settings.Secure*, for which a boot class loader is needed
-* *Build.SERIAL* cannot be restricted
-
 Index
 -----
 
