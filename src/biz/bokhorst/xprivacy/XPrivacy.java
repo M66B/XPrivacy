@@ -17,16 +17,13 @@ import android.os.Build;
 import android.os.Process;
 import android.util.Log;
 
-import de.robv.android.xposed.IXposedHookZygoteInit;
-import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XposedHelpers;
 import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
 @SuppressLint("DefaultLocale")
-public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+public class XPrivacy {
 	private static boolean cydia = false;
 	private static String mSecret = null;
 
@@ -95,20 +92,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		});
 	}
 
-	@SuppressLint("InlinedApi")
-	public void initZygote(StartupParam startupParam) throws Throwable {
-		Util.log(null, Log.WARN, String.format("Load %s", startupParam.modulePath));
-
-		// Check for LBE security master
-		if (Util.hasLBE()) {
-			Util.log(null, Log.ERROR, "LBE installed");
-			return;
-		}
-
-		hook();
-	}
-
-	private static void hook() {
+	public static void hook() {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
@@ -222,18 +206,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XActivity.getInstances(), mSecret);
 	}
 
-	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-		// Check for LBE security master
-		if (Util.hasLBE())
-			return;
-
-		// Log load
-		Util.log(null, Log.INFO, String.format("Load package=%s uid=%d", lpparam.packageName, Process.myUid()));
-
+	public static void handleLoadPackage(String packageName, ClassLoader classLoader) throws Throwable {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
-		if (lpparam.packageName.equals(self)) {
-			hookAll(XUtilHook.getInstances(), lpparam.classLoader, mSecret);
+		if (packageName.equals(self)) {
+			hookAll(XUtilHook.getInstances(), classLoader, mSecret);
 			return;
 		}
 
@@ -244,29 +221,29 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Advertising Id
 		try {
-			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, lpparam.classLoader);
-			hookAll(XAdvertisingIdClientInfo.getInstances(), lpparam.classLoader, mSecret);
+			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, classLoader);
+			hookAll(XAdvertisingIdClientInfo.getInstances(), classLoader, mSecret);
 		} catch (Throwable ignored) {
 		}
 
 		// User activity
 		try {
-			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, lpparam.classLoader);
-			hookAll(XActivityRecognitionClient.getInstances(), lpparam.classLoader, mSecret);
+			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, classLoader);
+			hookAll(XActivityRecognitionClient.getInstances(), classLoader, mSecret);
 		} catch (Throwable ignored) {
 		}
 
 		// Google auth
 		try {
-			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, lpparam.classLoader);
-			hookAll(XGoogleAuthUtil.getInstances(), lpparam.classLoader, mSecret);
+			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, classLoader);
+			hookAll(XGoogleAuthUtil.getInstances(), classLoader, mSecret);
 		} catch (Throwable ignored) {
 		}
 
 		// Location client
 		try {
-			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
-			hookAll(XLocationClient.getInstances(), lpparam.classLoader, mSecret);
+			Class.forName("com.google.android.gms.location.LocationClient", false, classLoader);
+			hookAll(XLocationClient.getInstances(), classLoader, mSecret);
 		} catch (Throwable ignored) {
 		}
 	}
