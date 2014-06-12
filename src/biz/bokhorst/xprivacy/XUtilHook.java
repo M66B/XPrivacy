@@ -12,7 +12,7 @@ public class XUtilHook extends XHook {
 	}
 
 	public String getClassName() {
-		return "biz.bokhorst.xprivacy.Util";
+		return Util.class.getName();
 	}
 
 	// isXposedEnabled
