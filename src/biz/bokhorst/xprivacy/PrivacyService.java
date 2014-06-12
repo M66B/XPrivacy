@@ -1712,7 +1712,7 @@ public class PrivacyService {
 						} else {
 							result.methodName = md.getName();
 							result.restricted = !md.isDangerous() && restrict;
-							result.asked = category && (md.whitelist() == null);
+							result.asked = category;
 							setRestrictionInternal(result);
 						}
 				}

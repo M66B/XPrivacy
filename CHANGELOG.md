@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fixed toggling dangerous functions immediately displaying correct template restriction
+* Removed exception for disabling on demand restricting when changing category restriction on demand
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
