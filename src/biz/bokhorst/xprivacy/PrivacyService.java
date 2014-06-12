@@ -561,7 +561,7 @@ public class PrivacyService {
 
 				// Ask to restrict
 				boolean ondemand = false;
-				if (!mresult.asked && usage && PrivacyManager.isApplication(restriction.uid))
+				if (!mresult.asked && usage)
 					ondemand = onDemandDialog(hook, restriction, mresult);
 
 				// Notify user
@@ -595,7 +595,7 @@ public class PrivacyService {
 				if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
 					if (mSecret == null || !mSecret.equals(secret)) {
 						allowed = false;
-						Util.log(null, Log.WARN, "Invalid secret");
+						Util.log(null, Log.WARN, "Invalid secret restriction=" + restriction);
 					}
 				}
 
@@ -1308,8 +1308,15 @@ public class PrivacyService {
 				if (mHandler == null)
 					return false;
 
+				// Check if application
+				if (!PrivacyManager.isApplication(restriction.uid))
+					return false;
+
 				// Check for exceptions
 				if (hook != null && !hook.canOnDemand())
+					return false;
+				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+						restriction.methodName))
 					return false;
 
 				// Check if enabled

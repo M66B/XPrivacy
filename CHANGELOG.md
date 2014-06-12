@@ -17,6 +17,7 @@ Changelog
 
 * Reddish background for template group indicators
 * Enabling on demand restricting before application is being updated
+* No on demand restricting for restrictions which cannot be used
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
