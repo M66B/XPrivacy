@@ -21,6 +21,7 @@ public class PackageChange extends BroadcastReceiver {
 				int uid = intent.getIntExtra(Intent.EXTRA_UID, 0);
 				int userId = Util.getUserId(uid);
 				boolean replacing = intent.getBooleanExtra(Intent.EXTRA_REPLACING, false);
+				boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 				NotificationManager notificationManager = (NotificationManager) context
 						.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -50,13 +51,12 @@ public class PackageChange extends BroadcastReceiver {
 
 							// Apply template
 							PrivacyManager.applyTemplate(uid, Meta.cTypeTemplate, null, true, true);
+
+							// Enable on demand
+							if (ondemand)
+								PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 						}
 					}
-
-					// Enable on demand
-					boolean ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
-					if (ondemand)
-						PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 
 					// Mark as new/changed
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
@@ -120,21 +120,27 @@ public class PackageChange extends BroadcastReceiver {
 						notificationManager.notify(appInfo.getUid(), notification);
 					}
 
-				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED) && !replacing) {
+				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REMOVED)) {
 					// Check privacy service
 					if (PrivacyService.getClient() == null)
 						return;
 
-					// Package removed
-					notificationManager.cancel(uid);
+					if (replacing) {
+						// Enable on demand
+						if (ondemand)
+							PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
+					} else {
+						// Package removed
+						notificationManager.cancel(uid);
 
-					// Delete restrictions
-					ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
-					if (appInfo.getPackageName().size() == 0) {
-						PrivacyManager.deleteRestrictions(uid, null, false);
-						PrivacyManager.deleteSettings(uid);
-						PrivacyManager.deleteUsage(uid);
-						PrivacyManager.clearPermissionCache(uid);
+						// Delete restrictions
+						ApplicationInfoEx appInfo = new ApplicationInfoEx(context, uid);
+						if (appInfo.getPackageName().size() == 0) {
+							PrivacyManager.deleteRestrictions(uid, null, false);
+							PrivacyManager.deleteSettings(uid);
+							PrivacyManager.deleteUsage(uid);
+							PrivacyManager.clearPermissionCache(uid);
+						}
 					}
 
 				} else if (intent.getAction().equals(Intent.ACTION_PACKAGE_REPLACED)) {

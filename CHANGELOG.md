@@ -15,6 +15,9 @@ Changelog
 
 **Next release**
 
+* Reddish background for template group indicators
+* Enabling on demand restricting before application is being updated
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.35 BETA**
