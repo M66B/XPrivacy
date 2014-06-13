@@ -632,6 +632,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Template definition
 		final TemplateListAdapter templateAdapter = new TemplateListAdapter(this, spTemplate, R.layout.templateentry);
 		elvTemplate.setAdapter(templateAdapter);
+		elvTemplate.setGroupIndicator(null);
 
 		spTemplate.setOnItemSelectedListener(new OnItemSelectedListener() {
 			@Override
@@ -1101,6 +1102,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		private class ViewHolder {
 			private View row;
+			public ImageView imgIndicator;
 			public TextView tvRestriction;
 			public ImageView imgCbRestrict;
 			public ImageView imgCbAsk;
@@ -1109,6 +1111,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			public ViewHolder(View theRow) {
 				row = theRow;
+				imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
 				imgCbRestrict = (ImageView) row.findViewById(R.id.imgCbRestrict);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
@@ -1168,6 +1171,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					: getOffCheckBox());
 			Bitmap bmAsked = (holder.asked ? getOffCheckBox() : partialAsked ? getHalfCheckBox()
 					: getOnDemandCheckBox());
+
+			// Indicator state
+			holder.imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
+					: R.attr.icon_expander_minimized));
+			holder.imgIndicator.setVisibility(View.VISIBLE);
 
 			// Set data
 			holder.tvRestriction.setTypeface(null, Typeface.BOLD);
@@ -1252,6 +1260,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.asked = (!ondemand || value.contains("asked"));
 			Bitmap bmRestricted = (parentRestricted && holder.restricted ? getFullCheckBox() : getOffCheckBox());
 			Bitmap bmAsked = (parentAsked || holder.asked ? getOffCheckBox() : getOnDemandCheckBox());
+
+			// Set indicator
+			holder.imgIndicator.setVisibility(View.INVISIBLE);
 
 			// Set data
 			if (hook.isDangerous())
