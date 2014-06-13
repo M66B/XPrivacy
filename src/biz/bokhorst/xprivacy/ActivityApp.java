@@ -323,8 +323,10 @@ public class ActivityApp extends ActivityBase {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		if (mPrivacyListAdapter != null)
-			mPrivacyListAdapter.notifyDataSetChanged();
+
+		// Update switch
+		Switch swEnabled = (Switch) findViewById(R.id.swEnable);
+		swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true));
 
 		// Update on demand check box
 		int userId = Util.getUserId(Process.myUid());
@@ -335,6 +337,10 @@ public class ActivityApp extends ActivityBase {
 					.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false);
 			imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
 		}
+
+		// Update list
+		if (mPrivacyListAdapter != null)
+			mPrivacyListAdapter.notifyDataSetChanged();
 	}
 
 	@Override
