@@ -26,6 +26,7 @@ public class XSensorManager extends XHook {
 	// public List<Sensor> getSensorList(int type)
 	// frameworks/base/core/java/android/hardware/SensorManager.java
 	// http://developer.android.com/reference/android/hardware/SensorManager.html
+	// http://developer.android.com/reference/android/hardware/Sensor.html
 	
 	// @formatter:on
 
@@ -74,6 +75,7 @@ public class XSensorManager extends XHook {
 			}
 	}
 
+	@SuppressWarnings("deprecation")
 	private boolean isRestricted(XParam param, int type) throws Throwable {
 		if (type == Sensor.TYPE_ACCELEROMETER || type == Sensor.TYPE_LINEAR_ACCELERATION) {
 			if (isRestricted(param, "acceleration"))
@@ -93,7 +95,8 @@ public class XSensorManager extends XHook {
 		} else if (type == Sensor.TYPE_SIGNIFICANT_MOTION) {
 			if (isRestricted(param, "motion"))
 				return true;
-		} else if (type == Sensor.TYPE_GYROSCOPE || type == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
+		} else if (type == Sensor.TYPE_ORIENTATION || type == Sensor.TYPE_GYROSCOPE
+				|| type == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
 			if (isRestricted(param, "orientation"))
 				return true;
 		} else if (type == Sensor.TYPE_PRESSURE) {
@@ -112,7 +115,8 @@ public class XSensorManager extends XHook {
 		} else if (type == Sensor.TYPE_STEP_COUNTER || type == Sensor.TYPE_STEP_DETECTOR) {
 			if (isRestricted(param, "step"))
 				return true;
-		}
+		} else
+			Util.log(this, Log.WARN, "Unknown sensor type=" + type);
 		return false;
 	}
 }
