@@ -15,12 +15,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.36 STABLE**
+
 * Reddish background for template group indicators
 * Enabling on demand restricting before application is being updated
 * No on demand restricting for restrictions which cannot be used (see limitations)
 * Dropped support for Cydia Substrate, because there are too many unsolved problems
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.35 BETA**
 
