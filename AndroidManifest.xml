@@ -95,7 +95,7 @@
                 <data android:scheme="file" />
                 <data android:host="*" />
                 <data android:mimeType="*/*" />
-                <data android:pathPattern=".*XPrivacy_license.txt" />
+                <data android:pathPattern=".*XPrivacy_license\\.txt" />
             </intent-filter>
         </activity>
         <activity

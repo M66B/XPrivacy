@@ -165,7 +165,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			return;
 
 		// Import license file
-		if (getIntent().getAction().equals(Intent.ACTION_VIEW))
+		if (Intent.ACTION_VIEW.equals(getIntent().getAction()))
 			Util.importProLicense(new File(getIntent().getData().getEncodedPath()));
 
 		// Set layout
