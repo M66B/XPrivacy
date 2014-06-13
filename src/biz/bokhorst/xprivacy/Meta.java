@@ -228,8 +228,8 @@ public class Meta {
 		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData().noOnDemand());
 		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData().noOnDemand());
 
-		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null).dangerous());
+		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null).dangerous());
 		mListHook.add(new Hook("sensors", "acceleration", "", 3, null, null));
 		mListHook.add(new Hook("sensors", "gravity", "", 3, null, null));
 		mListHook.add(new Hook("sensors", "humidity", "", 3, null, null));
