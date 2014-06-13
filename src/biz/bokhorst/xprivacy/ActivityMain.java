@@ -299,6 +299,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	protected void onNewIntent(Intent intent) {
 		if (mAppAdapter != null)
 			mAppAdapter.notifyDataSetChanged();
+
+		if (Intent.ACTION_VIEW.equals(intent.getAction()))
+			Util.importProLicense(new File(intent.getData().getEncodedPath()));
 	}
 
 	@Override
