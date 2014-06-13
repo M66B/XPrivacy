@@ -198,19 +198,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			}
 		});
 
-		// Setup spinner
-		int pos = 0;
-		String restrictionName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSelectedCategory, null);
-		if (restrictionName != null)
-			for (String restriction : PrivacyManager.getRestrictions(this).values()) {
-				pos++;
-				if (restrictionName.equals(restriction))
-					break;
-			}
-
+		// Setup category spinner
 		spRestriction = (Spinner) findViewById(R.id.spRestriction);
 		spRestriction.setAdapter(spAdapter);
 		spRestriction.setOnItemSelectedListener(this);
+		int pos = getSelectedCategory(userId);
 		spRestriction.setSelection(pos);
 
 		// Setup sort
@@ -294,6 +286,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		super.onResume();
 		if (mAppAdapter != null)
 			mAppAdapter.notifyDataSetChanged();
+
+		int userId = Util.getUserId(Process.myUid());
+		int pos = getSelectedCategory(userId);
+		spRestriction.setSelection(pos);
 	}
 
 	@Override
@@ -1977,7 +1973,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 	}
 
-	// Share operations progress listener
+	// Helper methods
 
 	private void setProgress(String text, int progress, int max) {
 		// Set up the progress bar
@@ -1997,7 +1993,17 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		vProgressFull.getLayoutParams().width = mProgress;
 	}
 
-	// Helper methods
+	private int getSelectedCategory(final int userId) {
+		int pos = 0;
+		String restrictionName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingSelectedCategory, null);
+		if (restrictionName != null)
+			for (String restriction : PrivacyManager.getRestrictions(this).values()) {
+				pos++;
+				if (restrictionName.equals(restriction))
+					break;
+			}
+		return pos;
+	}
 
 	private void checkLicense() {
 		if (!Util.isProEnabled() && Util.hasProLicense(this) == null)
