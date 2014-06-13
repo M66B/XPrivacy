@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Showing enabled (on/off) state
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
