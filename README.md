@@ -280,6 +280,19 @@ For easy usage, data is restricted by category:
 * Sensors
 	* return an empty default sensor
 	* return an empty list of sensors
+	* restrict indiviual sensors:
+		* acceleration
+		* gravity
+		* humidity
+		* light
+		* magnetic
+		* motion
+		* orientation
+		* pressure
+		* proximity
+		* rotation
+		* step
+		* temperature
 <a name="shell"></a>
 * Shell
 	* return I/O exception for Linux shell
