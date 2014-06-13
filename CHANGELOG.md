@@ -24,6 +24,8 @@ Changelog
 * No on demand restricting for restrictions which cannot be used (see limitations)
 * Dropped support for Cydia Substrate, because there are too many unsolved problems
 
+**This version will erase the existing main template** (if not done by an earlier version)
+
 **Version 2.0.35 BETA**
 
 * Fixed toggling dangerous functions not immediately displaying correct template restriction
