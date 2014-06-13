@@ -730,9 +730,11 @@ public class ActivityApp extends ActivityBase {
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// Do nothing
+								if (mPrivacyListAdapter != null)
+									mPrivacyListAdapter.notifyDataSetChanged();
 							}
 						});
+				alertDialogBuilder.setCancelable(false);
 
 				// Show dialog
 				AlertDialog alertDialog = alertDialogBuilder.create();
@@ -803,9 +805,11 @@ public class ActivityApp extends ActivityBase {
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// Do nothing
+								if (mPrivacyListAdapter != null)
+									mPrivacyListAdapter.notifyDataSetChanged();
 							}
 						});
+				alertDialogBuilder.setCancelable(false);
 
 				// Show dialog
 				AlertDialog alertDialog = alertDialogBuilder.create();
@@ -915,9 +919,11 @@ public class ActivityApp extends ActivityBase {
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// Do nothing
+								if (mPrivacyListAdapter != null)
+									mPrivacyListAdapter.notifyDataSetChanged();
 							}
 						});
+				alertDialogBuilder.setCancelable(false);
 
 				// Show dialog
 				AlertDialog alertDialog = alertDialogBuilder.create();
@@ -1144,6 +1150,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgGranted;
 			public ImageView imgInfo;
 			public TextView tvName;
+			public ImageView imgWhitelist;
 			public ImageView imgCbRestricted;
 			public ProgressBar pbRunning;
 			public ImageView imgCbAsk;
@@ -1157,6 +1164,7 @@ public class ActivityApp extends ActivityBase {
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvName = (TextView) row.findViewById(R.id.tvName);
+				imgWhitelist = (ImageView) row.findViewById(R.id.imgWhitelist);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
@@ -1172,6 +1180,7 @@ public class ActivityApp extends ActivityBase {
 			private boolean permission;
 			private RState rstate;
 			private boolean ondemand;
+			private boolean whitelist;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -1193,6 +1202,21 @@ public class ActivityApp extends ActivityBase {
 						ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false);
 
+					whitelist = false;
+					String wName = null;
+					if (PrivacyManager.cAccounts.equals(restrictionName))
+						wName = Meta.cTypeAccount;
+					else if (PrivacyManager.cSystem.equals(restrictionName))
+						wName = Meta.cTypeApplication;
+					else if (PrivacyManager.cContacts.equals(restrictionName))
+						wName = Meta.cTypeContact;
+					if (wName != null)
+						for (PSetting setting : PrivacyManager.getSettingList(mAppInfo.getUid(), wName))
+							if (Boolean.parseBoolean(setting.value)) {
+								whitelist = true;
+								break;
+							}
+
 					return holder;
 				}
 				return null;
@@ -1205,6 +1229,23 @@ public class ActivityApp extends ActivityBase {
 					holder.tvName.setTypeface(null, used ? Typeface.BOLD_ITALIC : Typeface.NORMAL);
 					holder.imgUsed.setVisibility(used ? View.VISIBLE : View.INVISIBLE);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
+
+					// Show whitelist icon
+					holder.imgWhitelist.setVisibility(whitelist ? View.VISIBLE : View.GONE);
+					if (whitelist)
+						holder.imgWhitelist.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								if (PrivacyManager.cAccounts.equals(restrictionName))
+									optionAccounts();
+								else if (PrivacyManager.cSystem.equals(restrictionName))
+									optionApplications();
+								else if (PrivacyManager.cContacts.equals(restrictionName))
+									optionContacts(-1);
+							}
+						});
+					else
+						holder.imgWhitelist.setClickable(false);
 
 					// Display restriction
 					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
@@ -1339,6 +1380,7 @@ public class ActivityApp extends ActivityBase {
 			int index = new ArrayList<String>(tmRestriction.values()).indexOf(restrictionName);
 			String title = (String) tmRestriction.navigableKeySet().toArray()[index];
 			holder.tvName.setText(title);
+			holder.imgWhitelist.setVisibility(View.GONE);
 
 			// Display restriction
 			holder.imgCbRestricted.setVisibility(View.INVISIBLE);
@@ -1397,8 +1439,8 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgGranted;
 			public ImageView imgInfo;
 			public TextView tvMethodName;
+			public ImageView imgMethodWhitelist;
 			public ImageView imgCbMethodRestricted;
-			public ImageView imgCbMethodWhitelist;
 			public ProgressBar pbRunning;
 			public ImageView imgCbMethodAsk;
 			public LinearLayout llMethodName;
@@ -1411,8 +1453,8 @@ public class ActivityApp extends ActivityBase {
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
+				imgMethodWhitelist = (ImageView) row.findViewById(R.id.imgMethodWhitelist);
 				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
-				imgCbMethodWhitelist = (ImageView) row.findViewById(R.id.imgCbMethodWhitelist);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
 				imgCbMethodAsk = (ImageView) row.findViewById(R.id.imgCbMethodAsk);
 				llMethodName = (LinearLayout) row.findViewById(R.id.llMethodName);
@@ -1483,21 +1525,21 @@ public class ActivityApp extends ActivityBase {
 					holder.tvMethodName.setTypeface(null, lastUsage == 0 ? Typeface.NORMAL : Typeface.BOLD_ITALIC);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
-					// Display restriction
-					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate));
-					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
-
 					// Show whitelist icon
-					holder.imgCbMethodWhitelist.setVisibility(whitelist ? View.VISIBLE : View.GONE);
+					holder.imgMethodWhitelist.setVisibility(whitelist ? View.VISIBLE : View.GONE);
 					if (whitelist)
-						holder.imgCbMethodWhitelist.setOnClickListener(new View.OnClickListener() {
+						holder.imgMethodWhitelist.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {
 								ActivityApp.this.optionWhitelists(md.whitelist());
 							}
 						});
 					else
-						holder.imgCbMethodWhitelist.setClickable(false);
+						holder.imgMethodWhitelist.setClickable(false);
+
+					// Display restriction
+					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate));
+					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
 
 					// Show asked state
 					if (ondemand) {
@@ -1672,8 +1714,8 @@ public class ActivityApp extends ActivityBase {
 
 			// Display restriction
 			holder.llMethodName.setClickable(false);
+			holder.imgMethodWhitelist.setVisibility(View.GONE);
 			holder.imgCbMethodRestricted.setVisibility(View.INVISIBLE);
-			holder.imgCbMethodWhitelist.setVisibility(View.GONE);
 
 			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,

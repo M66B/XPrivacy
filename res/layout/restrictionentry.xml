@@ -67,6 +67,16 @@
             tools:ignore="NestedWeights" />
 
         <ImageView
+            android:id="@+id/imgWhitelist"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/menu_whitelists"
+            android:paddingLeft="3dip"
+            android:src="?attr/icon_whitelist"
+            android:visibility="gone" />
+
+        <ImageView
             android:id="@+id/imgCbRestricted"
             android:layout_width="32dip"
             android:layout_height="32dip"
