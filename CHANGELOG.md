@@ -19,6 +19,7 @@ Changelog
 * Restrictions for individual sensors
 	* *getDefaultSensor* and *getSensorList* needs to be disabled
 	* *getDefaultSensor* and *getSensorList* were made dangerous
+* Allow to select category when toggling restrictions
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

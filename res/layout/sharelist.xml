@@ -31,6 +31,12 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold" />
 
+            <Spinner
+                android:id="@+id/spRestriction"
+                android:layout_width="wrap_content"
+                android:layout_height="37dip"
+                android:visibility="gone" />
+
             <CheckBox
                 android:id="@+id/cbClear"
                 android:layout_width="match_parent"

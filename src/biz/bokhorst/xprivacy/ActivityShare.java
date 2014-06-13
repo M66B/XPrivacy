@@ -174,7 +174,7 @@ public class ActivityShare extends ActivityBase {
 			return;
 		}
 
-		// Check whether we need a ui
+		// Check whether we need a user interface
 		if (extras != null && extras.containsKey(cInteractive) && extras.getBoolean(cInteractive, false))
 			mInteractive = true;
 
@@ -184,6 +184,7 @@ public class ActivityShare extends ActivityBase {
 		// Reference controls
 		final TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
 		final RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
+		final Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);
 		RadioButton rbClear = (RadioButton) findViewById(R.id.rbClear);
 		RadioButton rbTemplateFull = (RadioButton) findViewById(R.id.rbTemplateFull);
 		RadioButton rbODEnable = (RadioButton) findViewById(R.id.rbEnableOndemand);
@@ -214,11 +215,33 @@ public class ActivityShare extends ActivityBase {
 			return;
 		}
 
-		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
-		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		// Get localized restriction name
+		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this).navigableKeySet());
+		listRestrictionName.add(0, getString(R.string.menu_all));
+
+		// Build restriction adapter
+		SpinnerAdapter saRestriction = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		saRestriction.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		saRestriction.addAll(listRestrictionName);
+
+		// Setup restriction spinner
+		int pos = 0;
+		if (restrictionName != null)
+			for (String restriction : PrivacyManager.getRestrictions(this).values()) {
+				pos++;
+				if (restrictionName.equals(restriction))
+					break;
+			}
+
+		spRestriction.setAdapter(saRestriction);
+		spRestriction.setSelection(pos);
+
+		// Build template adapter
+		SpinnerAdapter saAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		saAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		for (int i = 1; i <= 5; i++)
-			spAdapter.add(getString(R.string.menu_template) + " " + i);
-		spTemplate.setAdapter(spAdapter);
+			saAdapter.add(getString(R.string.menu_template) + " " + i);
+		spTemplate.setAdapter(saAdapter);
 
 		// Build application list
 		AppListTask appListTask = new AppListTask();
@@ -258,13 +281,8 @@ public class ActivityShare extends ActivityBase {
 			cbClear.setVisibility(View.VISIBLE);
 
 		} else if (action.equals(ACTION_TOGGLE)) {
-			// Show category
-			if (restrictionName == null)
-				tvDescription.setText(R.string.menu_all);
-			else {
-				int stringId = getResources().getIdentifier("restrict_" + restrictionName, "string", getPackageName());
-				tvDescription.setText(stringId);
-			}
+			tvDescription.setText(R.string.menu_toggle);
+			spRestriction.setVisibility(View.VISIBLE);
 			rgToggle.setVisibility(View.VISIBLE);
 
 			// Listen for radio button
@@ -272,14 +290,8 @@ public class ActivityShare extends ActivityBase {
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
 					btnOk.setEnabled(checkedId >= 0);
-					if (restrictionName == null
-							|| (checkedId == R.id.rbEnableOndemand || checkedId == R.id.rbDisableOndemand))
-						tvDescription.setText(R.string.menu_all);
-					else {
-						int stringId = getResources().getIdentifier("restrict_" + restrictionName, "string",
-								getPackageName());
-						tvDescription.setText(stringId);
-					}
+					spRestriction.setVisibility(checkedId == R.id.rbEnableOndemand
+							|| checkedId == R.id.rbDisableOndemand ? View.GONE : View.VISIBLE);
 
 					spTemplate.setVisibility(checkedId == R.id.rbTemplateCategory || checkedId == R.id.rbTemplateFull
 							|| checkedId == R.id.rbTemplateMerge ? View.VISIBLE : View.GONE);
@@ -315,6 +327,9 @@ public class ActivityShare extends ActivityBase {
 						mRunning = true;
 						for (int i = 0; i < rgToggle.getChildCount(); i++)
 							((RadioButton) rgToggle.getChildAt(i)).setEnabled(false);
+						int pos = spRestriction.getSelectedItemPosition();
+						String restrictionName = (pos == 0 ? null : (String) PrivacyManager
+								.getRestrictions(ActivityShare.this).values().toArray()[pos - 1]);
 						new ToggleTask().executeOnExecutor(mExecutor, restrictionName);
 
 						// Import
