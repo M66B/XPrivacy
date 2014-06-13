@@ -15,7 +15,7 @@ Changelog
 
 **Next release**
 
-* Display whitelist icon when allowed account, applications or contacts
+* Display whitelist icon when there are allowed accounts, applications and/or contacts
 * Restrictions for individual sensors
 	* *getDefaultSensor* and *getSensorList* needs to be disabled
 
