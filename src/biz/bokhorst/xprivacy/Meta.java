@@ -246,8 +246,8 @@ public class Meta {
 		mListHook.add(new Hook("shell", "sh", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
 		mListHook.add(new Hook("shell", "su", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
 		mListHook.add(new Hook("shell", "exec", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "load", "", 10, "0.0", null).dangerous().whitelist(cTypeLibrary));
-		mListHook.add(new Hook("shell", "loadLibrary", "", 10, "0.0", null).dangerous().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "load", "", 10, "0.0", null).dangerous().restart().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "loadLibrary", "", 10, "0.0", null).dangerous().restart().whitelist(cTypeLibrary));
 		mListHook.add(new Hook("shell", "start", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
 
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());

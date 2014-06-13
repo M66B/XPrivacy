@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Showing enabled (on/off) state
+* Requesting restart for *load* and *loadLibrary*
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
