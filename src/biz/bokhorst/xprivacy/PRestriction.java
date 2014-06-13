@@ -75,7 +75,9 @@ public class PRestriction implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(uid);
-		out.writeString(restrictionName);
+		out.writeInt(restrictionName == null ? 1 : 0);
+		if (restrictionName != null)
+			out.writeString(restrictionName);
 		out.writeInt(methodName == null ? 1 : 0);
 		if (methodName != null)
 			out.writeString(methodName);
@@ -89,15 +91,9 @@ public class PRestriction implements Parcelable {
 
 	public void readFromParcel(Parcel in) {
 		uid = in.readInt();
-		restrictionName = in.readString();
-		if (in.readInt() > 0)
-			methodName = null;
-		else
-			methodName = in.readString();
-		if (in.readInt() > 0)
-			extra = null;
-		else
-			extra = in.readString();
+		restrictionName = (in.readInt() > 0 ? null : in.readString());
+		methodName = (in.readInt() > 0 ? null : in.readString());
+		extra = (in.readInt() > 0 ? null : in.readString());
 		restricted = (in.readInt() > 0 ? true : false);
 		asked = (in.readInt() > 0 ? true : false);
 		time = in.readLong();

@@ -460,7 +460,7 @@ public class PrivacyManager {
 
 			// Clear associated whitelists
 			if (deleteWhitelists && uid > 0) {
-				for (PSetting setting : getSettingList(uid))
+				for (PSetting setting : getSettingList(uid, null))
 					if (Meta.isWhitelist(setting.type))
 						setSetting(uid, setting.type, setting.name, null);
 			}
@@ -568,11 +568,11 @@ public class PrivacyManager {
 	// White listing
 	// TODO: add specialized get to privacy service
 
-	public static Map<String, TreeMap<String, Boolean>> listWhitelisted(int uid) {
+	public static Map<String, TreeMap<String, Boolean>> listWhitelisted(int uid, String type) {
 		checkCaller();
 
 		Map<String, TreeMap<String, Boolean>> mapWhitelisted = new HashMap<String, TreeMap<String, Boolean>>();
-		for (PSetting setting : getSettingList(uid))
+		for (PSetting setting : getSettingList(uid, type))
 			if (Meta.isWhitelist(setting.type)) {
 				if (!mapWhitelisted.containsKey(setting.type))
 					mapWhitelisted.put(setting.type, new TreeMap<String, Boolean>());
@@ -751,18 +751,16 @@ public class PrivacyManager {
 					mSettingsCache.clear();
 				}
 			} catch (Throwable ex) {
-				Util.log(null, Log.ERROR, "setSettingList");
 				Util.bug(null, ex);
 			}
 	}
 
-	public static List<PSetting> getSettingList(int uid) {
+	public static List<PSetting> getSettingList(int uid, String type) {
 		checkCaller();
 
 		try {
-			return PrivacyService.getClient().getSettingList(uid);
+			return PrivacyService.getClient().getSettingList(new PSetting(uid, type, null, null));
 		} catch (Throwable ex) {
-			Util.log(null, Log.ERROR, "getSettingList");
 			Util.bug(null, ex);
 		}
 		return new ArrayList<PSetting>();

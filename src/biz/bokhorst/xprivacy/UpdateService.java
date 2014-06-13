@@ -187,7 +187,7 @@ public class UpdateService extends Service {
 
 			// Wipe template
 			if (sVersion.compareTo(new Version("2.0.34")) < 0)
-				for (PSetting setting : PrivacyManager.getSettingList(0))
+				for (PSetting setting : PrivacyManager.getSettingList(0, null))
 					if (Meta.cTypeTemplate.equals(setting.type)) {
 						Util.log(null, Log.WARN, "Deleting " + setting);
 						PrivacyManager.setSetting(setting.uid, setting.type, setting.name, null);

@@ -940,7 +940,7 @@ public class ActivityApp extends ActivityBase {
 		@Override
 		protected Object doInBackground(Object... params) {
 			// Get whitelisted elements
-			mListWhitelist = PrivacyManager.listWhitelisted(mAppInfo.getUid());
+			mListWhitelist = PrivacyManager.listWhitelisted(mAppInfo.getUid(), null);
 			mWhitelistAdapter = new WhitelistAdapter(ActivityApp.this, R.layout.whitelistentry, mListWhitelist);
 
 			// Build dialog data
@@ -1457,7 +1457,7 @@ public class ActivityApp extends ActivityBase {
 					if (md.whitelist() == null)
 						whitelist = false;
 					else
-						whitelist = PrivacyManager.listWhitelisted(mAppInfo.getUid()).containsKey(md.whitelist());
+						whitelist = PrivacyManager.listWhitelisted(mAppInfo.getUid(), md.whitelist()).size() > 0;
 
 					return holder;
 				}

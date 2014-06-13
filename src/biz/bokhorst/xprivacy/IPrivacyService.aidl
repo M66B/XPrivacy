@@ -22,7 +22,7 @@ interface IPrivacyService {
 	void setSetting(in PSetting setting);
 	void setSettingList(in List<PSetting> listSetting);
 	PSetting getSetting(in PSetting setting);
-	List<PSetting> getSettingList(int uid);
+	List<PSetting> getSettingList(in PSetting selector);
 	void deleteSettings(int uid);
 
 	void clear();

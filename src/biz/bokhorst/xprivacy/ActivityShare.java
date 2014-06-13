@@ -760,7 +760,7 @@ public class ActivityShare extends ActivityBase {
 
 					// Process global settings
 					if (listUid.size() > 1) {
-						List<PSetting> listGlobalSetting = PrivacyManager.getSettingList(0);
+						List<PSetting> listGlobalSetting = PrivacyManager.getSettingList(0, null);
 						for (PSetting setting : listGlobalSetting) {
 							// Serialize setting
 							serializer.startTag(null, "Setting");
@@ -783,7 +783,7 @@ public class ActivityShare extends ActivityBase {
 							setState(uid, STATE_RUNNING, null);
 
 							// Process application settings
-							List<PSetting> listAppSetting = PrivacyManager.getSettingList(uid);
+							List<PSetting> listAppSetting = PrivacyManager.getSettingList(uid, null);
 							for (PSetting setting : listAppSetting) {
 								// Bind accounts/contacts to same device
 								if (Meta.cTypeAccount.equals(setting.type) || Meta.cTypeContact.equals(setting.type))
@@ -1463,8 +1463,8 @@ public class ActivityShare extends ActivityBase {
 							}
 
 						// Get white lists
-						Map<String, TreeMap<String, Boolean>> mapWhitelist = PrivacyManager.listWhitelisted(appInfo
-								.getUid());
+						Map<String, TreeMap<String, Boolean>> mapWhitelist = PrivacyManager.listWhitelisted(
+								appInfo.getUid(), null);
 
 						// Encode restrictions
 						JSONArray jSettings = new JSONArray();

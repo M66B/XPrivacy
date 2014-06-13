@@ -72,7 +72,7 @@ public class PrivacyService {
 	private static final String cTableSetting = "setting";
 
 	private static final int cCurrentVersion = 343;
-	private static final String cServiceName = "xprivacy336";
+	private static final String cServiceName = "xprivacy344";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -1117,10 +1117,10 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<PSetting> getSettingList(int uid) throws RemoteException {
+		public List<PSetting> getSettingList(PSetting selector) throws RemoteException {
 			List<PSetting> listSetting = new ArrayList<PSetting>();
 			try {
-				enforcePermission(uid);
+				enforcePermission(selector.uid);
 				SQLiteDatabase db = getDb();
 				if (db == null)
 					return listSetting;
@@ -1128,15 +1128,20 @@ public class PrivacyService {
 				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
-					Cursor cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=?",
-							new String[] { Integer.toString(uid) }, null, null, null);
+					Cursor cursor;
+					if (selector.type == null)
+						cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=?",
+								new String[] { Integer.toString(selector.uid) }, null, null, null);
+					else
+						cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=? AND type=?",
+								new String[] { Integer.toString(selector.uid), selector.type }, null, null, null);
 					if (cursor == null)
 						Util.log(null, Log.WARN, "Database cursor null (settings)");
 					else
 						try {
 							while (cursor.moveToNext())
-								listSetting.add(new PSetting(uid, cursor.getString(0), cursor.getString(1), cursor
-										.getString(2)));
+								listSetting.add(new PSetting(selector.uid, cursor.getString(0), cursor.getString(1),
+										cursor.getString(2)));
 						} finally {
 							cursor.close();
 						}
