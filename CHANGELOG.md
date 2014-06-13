@@ -15,13 +15,15 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.0.37 TEST**
+
 * Display whitelist icon when there are allowed accounts, applications and/or contacts
 * Restrictions for individual sensors
 	* *getDefaultSensor* and *getSensorList* needs to be disabled
 	* *getDefaultSensor* and *getSensorList* were made dangerous
 * Allow to select category when toggling restrictions
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.36 STABLE**
 
