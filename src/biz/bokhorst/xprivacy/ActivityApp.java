@@ -181,21 +181,10 @@ public class ActivityApp extends ActivityBase {
 			}
 		});
 
-		// Display restriction state
-		Switch swEnabled = (Switch) findViewById(R.id.swEnable);
-		swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true));
-		swEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingRestricted,
-						Boolean.toString(isChecked));
-			}
-		});
-
+		// Display on-demand state
 		final ImageView imgCbOnDemand = (ImageView) findViewById(R.id.imgCbOnDemand);
 		if (PrivacyManager.isApplication(mAppInfo.getUid())
 				&& PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true)) {
-			// Display on-demand state
 			boolean ondemand = PrivacyManager
 					.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false);
 			imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
@@ -214,6 +203,21 @@ public class ActivityApp extends ActivityBase {
 			});
 		} else
 			imgCbOnDemand.setVisibility(View.GONE);
+
+		// Display restriction state
+		Switch swEnabled = (Switch) findViewById(R.id.swEnable);
+		swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true));
+		swEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				PrivacyManager.setSetting(mAppInfo.getUid(), PrivacyManager.cSettingRestricted,
+						Boolean.toString(isChecked));
+				if (mPrivacyListAdapter != null)
+					mPrivacyListAdapter.notifyDataSetChanged();
+				imgCbOnDemand.setEnabled(isChecked);
+			}
+		});
+		imgCbOnDemand.setEnabled(swEnabled.isChecked());
 
 		// Add context menu to icon
 		registerForContextMenu(imgIcon);
@@ -1181,6 +1185,7 @@ public class ActivityApp extends ActivityBase {
 			private RState rstate;
 			private boolean ondemand;
 			private boolean whitelist;
+			private boolean enabled;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -1216,6 +1221,8 @@ public class ActivityApp extends ActivityBase {
 								whitelist = true;
 								break;
 							}
+
+					enabled = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
 
 					return holder;
 				}
@@ -1257,8 +1264,8 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbAsk.setVisibility(View.GONE);
 
 					// Check if can be restricted
-					boolean can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
-							null);
+					boolean can = enabled
+							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null);
 					holder.llName.setEnabled(can);
 					holder.tvName.setEnabled(can);
 					holder.imgCbAsk.setEnabled(can);
@@ -1473,6 +1480,7 @@ public class ActivityApp extends ActivityBase {
 			private RState rstate;
 			private boolean ondemand;
 			private boolean whitelist;
+			private boolean enabled;
 
 			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
@@ -1500,6 +1508,8 @@ public class ActivityApp extends ActivityBase {
 						whitelist = false;
 					else
 						whitelist = PrivacyManager.listWhitelisted(mAppInfo.getUid(), md.whitelist()).size() > 0;
+
+					enabled = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
 
 					return holder;
 				}
@@ -1549,8 +1559,9 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbMethodAsk.setVisibility(View.GONE);
 
 					// Check if can be restricted
-					boolean can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
-							rstate.mMethodName);
+					boolean can = enabled
+							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
+									rstate.mMethodName);
 					holder.llMethodName.setEnabled(can);
 					holder.tvMethodName.setEnabled(can);
 					holder.imgCbMethodAsk.setEnabled(can);

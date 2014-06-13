@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Showing enabled (on/off) state
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.37 TEST**

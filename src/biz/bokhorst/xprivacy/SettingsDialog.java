@@ -232,6 +232,7 @@ public class SettingsDialog {
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
 		boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == userId);
+		boolean enabled = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRestricted, true);
 
 		// Common
 		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false);
@@ -292,9 +293,10 @@ public class SettingsDialog {
 			cbNotify.setVisibility(View.GONE);
 
 		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
-		if (uid == userId || (PrivacyManager.isApplication(uid) && gondemand))
+		if (uid == userId || (PrivacyManager.isApplication(uid) && gondemand)) {
 			cbOnDemand.setChecked(ondemand);
-		else
+			cbOnDemand.setEnabled(enabled);
+		} else
 			cbOnDemand.setVisibility(View.GONE);
 
 		// Common

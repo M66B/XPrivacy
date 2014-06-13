@@ -1727,9 +1727,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.imgCbRestricted.setVisibility(View.VISIBLE);
 
 					// Display enabled state
-					holder.tvName.setEnabled(enabled);
-					holder.imgCbRestricted.setEnabled(enabled);
-					holder.llName.setEnabled(enabled);
+					boolean can = enabled
+							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
+									rstate.mMethodName);
+					holder.tvName.setEnabled(can);
+					holder.imgCbRestricted.setEnabled(can);
+					holder.imgCbAsk.setEnabled(can);
+					holder.llName.setEnabled(can);
 
 					// Display selection
 					if (mListAppSelected.contains(xAppInfo))
