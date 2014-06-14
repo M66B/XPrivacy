@@ -71,7 +71,7 @@ public class PrivacyService {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 344;
+	private static final int cCurrentVersion = 345;
 	private static final String cServiceName = "xprivacy344";
 
 	// TODO: define column names
