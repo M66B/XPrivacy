@@ -76,6 +76,7 @@ import android.widget.Toast;
 
 public class ActivityApp extends ActivityBase {
 	private ApplicationInfoEx mAppInfo = null;
+	private Switch swEnabled = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
 	public static final String cUid = "Uid";
@@ -205,7 +206,7 @@ public class ActivityApp extends ActivityBase {
 			imgCbOnDemand.setVisibility(View.GONE);
 
 		// Display restriction state
-		Switch swEnabled = (Switch) findViewById(R.id.swEnable);
+		swEnabled = (Switch) findViewById(R.id.swEnable);
 		swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true));
 		swEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
@@ -325,8 +326,9 @@ public class ActivityApp extends ActivityBase {
 		super.onResume();
 
 		// Update switch
-		Switch swEnabled = (Switch) findViewById(R.id.swEnable);
-		swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true));
+		if (swEnabled != null)
+			swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted,
+					true));
 
 		// Update on demand check box
 		int userId = Util.getUserId(Process.myUid());

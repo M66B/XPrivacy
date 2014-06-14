@@ -286,9 +286,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		super.onResume();
 
 		// Update category selection
-		int userId = Util.getUserId(Process.myUid());
-		int pos = getSelectedCategory(userId);
-		spRestriction.setSelection(pos);
+		if (spRestriction != null) {
+			int userId = Util.getUserId(Process.myUid());
+			int pos = getSelectedCategory(userId);
+			spRestriction.setSelection(pos);
+		}
 
 		// Update list
 		if (mAppAdapter != null)
