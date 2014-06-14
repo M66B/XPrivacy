@@ -172,6 +172,15 @@ public class UpdateService extends Service {
 				List<PRestriction> listRestriction = getUpgradeWork(sVersion, uid, dangerous);
 				PrivacyManager.setRestrictionList(listRestriction);
 
+				// Reset on demand for system applications
+				if (new ApplicationInfoEx(context, listApp.get(i - 1).uid).isSystem())
+					if (sVersion.compareTo(new Version("2.0.38")) < 0)
+						if (PrivacyManager.getSettingBool(listApp.get(i - 1).uid, PrivacyManager.cSettingOnDemand,
+								false)) {
+							Util.log(null, Log.WARN, "Disabling on demand for uid=" + listApp.get(i - 1).uid);
+							PrivacyManager.setSetting(listApp.get(i - 1).uid, PrivacyManager.cSettingOnDemand, null);
+						}
+
 				if (first == 0)
 					if (listRestriction.size() > 0)
 						first = i;

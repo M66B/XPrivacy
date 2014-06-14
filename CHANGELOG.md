@@ -17,6 +17,7 @@ Changelog
 
 * Showing enabled (on/off) state
 * Requesting restart for *load* and *loadLibrary*
+* Resetting on demand restricting for system applications on upgrade
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
