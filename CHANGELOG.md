@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+**This version will erase the existing main template** (if not done by an earlier version)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1 STABLE**
@@ -26,12 +28,16 @@ Changelog
 * Display *Default* as first template name ([issue](/../../issues/1723))
 * Updated Dutch translation
 
+**This version will erase the existing main template** (if not done by an earlier version)
+
 **Version 2.0.38 STABLE**
 
 * Showing enabled (on/off) state
 * Requesting restart for *load* and *loadLibrary*
 * Resetting on demand restricting for system applications on upgrade
 * Updated Slovak translation
+
+**This version will erase the existing main template** (if not done by an earlier version)
 
 **Version 2.0.37 TEST**
 
@@ -40,6 +46,8 @@ Changelog
 	* *getDefaultSensor* and *getSensorList* needs to be disabled
 	* *getDefaultSensor* and *getSensorList* were made dangerous
 * Allow to select category when toggling restrictions
+
+**This version will erase the existing main template** (if not done by an earlier version)
 
 **Version 2.0.36 STABLE**
 
