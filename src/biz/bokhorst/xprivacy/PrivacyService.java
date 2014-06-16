@@ -19,6 +19,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -1403,6 +1404,7 @@ public class PrivacyService {
 						// Run dialog in looper
 						mHandler.post(new Runnable() {
 							@Override
+							@SuppressLint("InlinedApi")
 							public void run() {
 								try {
 									// Dialog
@@ -1417,6 +1419,12 @@ public class PrivacyService {
 									alertDialog.setCanceledOnTouchOutside(false);
 									alertDialog.show();
 									holder.dialog = alertDialog;
+
+									// Hide status bar
+									// http://developer.android.com/training/system-ui/status.html
+									if (Build.VERSION.SDK_INT >= 16)
+										alertDialog.getWindow().getDecorView()
+												.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
 									// Progress bar
 									final ProgressBar mProgress = (ProgressBar) alertDialog
