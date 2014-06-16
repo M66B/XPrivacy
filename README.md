@@ -886,6 +886,7 @@ IMHO you should at least install an ad blocker and a firewall.
 * [AdAway](http://sufficientlysecure.org/index.php/adaway/) ([Source Code](https://github.com/dschuermann/ad-away))
 * [CrappaLinks](http://forum.xda-developers.com/showthread.php?t=2603868) ([Source Code](https://github.com/GermainZ/CrappaLinks))
 * [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall) ([Source Code](https://github.com/ukanth/afwall))
+* [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076)
 * [NOGAPPS](http://forum.xda-developers.com/showthread.php?t=1715375) ([Source Code/Multiple Apps](https://github.com/mar-v-in))
 * [OS Monitor](https://f-droid.org/repository/browse/?fdfilter=os%20monitor&fdid=com.eolwral.osmonitor) ([Source Code](https://github.com/eolwral/OSMonitor))
 * [Shadowsocks](https://play.google.com/store/apps/details?id=com.github.shadowsocks) ([Source Code](https://github.com/clowwindy/shadowsocks))
