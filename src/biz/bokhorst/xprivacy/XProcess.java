@@ -61,6 +61,7 @@ public class XProcess extends XHook {
 	// frameworks/base/data/etc/platform.xml
 
 	// http://www.doubleencore.com/2014/03/android-external-storage/
+	// http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/
 	// https://android.googlesource.com/platform/system/core/+/dfe0cba
 	// https://android.googlesource.com/platform/system/core/+/master/sdcard/sdcard.c
 
@@ -68,47 +69,46 @@ public class XProcess extends XHook {
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.startViaZygote) {
 			if (param.args.length >= 5) {
-				// Check if restricted
+				// Get IDs
 				int uid = (Integer) param.args[2];
-				if (getRestricted(uid, mAction)) {
-					// Get group IDs
-					int[] gids = (int[]) param.args[4];
-					if (gids == null)
-						return;
+				int[] gids = (int[]) param.args[4];
+				if (gids == null)
+					return;
 
-					// Build list of modified gids
-					List<Integer> listGids = new ArrayList<Integer>();
-					for (int i = 0; i < gids.length; i++) {
-						if (gids[i] == media_rw)
-							if (!(mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("media")))
-								listGids.add(gids[i]);
-							else
-								Util.log(this, Log.INFO, "Revoking media_rw uid=" + uid);
-
-						else if (gids[i] == sdcard_r || gids[i] == sdcard_rw || gids[i] == sdcard_pics
-								|| gids[i] == sdcard_av || gids[i] == sdcard_all)
-							if (!(mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("sdcard")))
-								listGids.add(gids[i]);
-							else
-								Util.log(this, Log.INFO, "Revoking sdcard_rw uid=" + uid);
-
-						else if (gids[i] == inet || gids[i] == inet_raw)
-							if (!(mRestrictionName.equals(PrivacyManager.cInternet)))
-								listGids.add(gids[i]);
-							else
-								Util.log(this, Log.INFO, "Revoking inet_raw uid=" + uid);
-
+				// Build list of modified gids
+				List<Integer> listGids = new ArrayList<Integer>();
+				for (int i = 0; i < gids.length; i++) {
+					if (gids[i] == media_rw)
+						if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("media")
+								&& getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking media_rw uid=" + uid);
 						else
 							listGids.add(gids[i]);
-					}
 
-					// Proces list of modified gids
-					int[] mGids = new int[listGids.size()];
-					for (int i = 0; i < listGids.size(); i++)
-						mGids[i] = listGids.get(i);
+					else if (gids[i] == sdcard_r || gids[i] == sdcard_rw || gids[i] == sdcard_pics
+							|| gids[i] == sdcard_av || gids[i] == sdcard_all)
+						if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("sdcard")
+								&& getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking sdcard_rw uid=" + uid);
+						else
+							listGids.add(gids[i]);
 
-					param.args[4] = (mGids.length == 0 ? null : mGids);
+					else if (gids[i] == inet || gids[i] == inet_raw)
+						if (mRestrictionName.equals(PrivacyManager.cInternet) && getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking inet_raw uid=" + uid);
+						else
+							listGids.add(gids[i]);
+
+					else
+						listGids.add(gids[i]);
 				}
+
+				// Proces list of modified gids
+				int[] mGids = new int[listGids.size()];
+				for (int i = 0; i < listGids.size(); i++)
+					mGids[i] = listGids.get(i);
+
+				param.args[4] = (mGids.length == 0 ? null : mGids);
 			}
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
