@@ -423,6 +423,19 @@ When following this procedure, your data will not leak because the Xposed part o
 Usage
 -----
 
+*Very short tutorial*
+
+* Don't think too much ;-)
+* Find the application(s) to restrict in the main application list
+* Tap on the application icon
+* Tap the first check box for any category you want to restrict
+
+Use common sense when restricting, don't expect internet access if you restricted the internet category, etc.
+
+Get used to XPrivacy before using more advanced features, like function exceptions.
+
+*Longer explanation*
+
 The application starts in the main view, where a data category can be selected at the top.
 By ticking one or more check boxes in the list below, you can restrict the selected data category for the chosen applications.
 The default category is *All*, meaning that all data categories will be restricted.
