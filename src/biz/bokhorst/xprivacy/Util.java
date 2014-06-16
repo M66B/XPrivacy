@@ -273,12 +273,12 @@ public class Util {
 	public static String importProLicense(File licenseFile) {
 		// Get imported license file name
 		String importedLicense = getUserDataDirectory(Process.myUid()) + File.separator + LICENSE_FILE_NAME;
+		File out = new File(importedLicense);
 
 		// Check if license file exists
 		if (licenseFile.exists() && licenseFile.canRead()) {
 			try {
 				// Import license file
-				File out = new File(importedLicense);
 				Util.log(null, Log.WARN, "Licensing: importing " + out.getAbsolutePath());
 				InputStream is = null;
 				is = new FileInputStream(licenseFile.getAbsolutePath());
@@ -305,15 +305,13 @@ public class Util {
 
 				// Remove original license file
 				licenseFile.delete();
-
-				// Success
-				return importedLicense;
 			} catch (FileNotFoundException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
 		}
-		return null;
+
+		return (out.exists() && out.canRead() ? importedLicense : null);
 	}
 
 	public static Version getProEnablerVersion(Context context) {
