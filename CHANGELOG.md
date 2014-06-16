@@ -18,6 +18,7 @@ Changelog
 * Fixed applying template restricting dangerous functions ([issue](/../../issues/1728))
 * Applying template with on demand restricting will enabled on demand restricting setting ([issue](/../../issues/1727))
 * Fixed *inet*, *media* and *sdcard* always on demand restricting ([issue](/../../issues/1722))
+* Do not import version number ([issue](/../../issues/1721))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

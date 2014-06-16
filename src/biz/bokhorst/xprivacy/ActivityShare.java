@@ -1050,6 +1050,15 @@ public class ActivityShare extends ActivityBase {
 					String name = attributes.getValue("Name");
 					String value = attributes.getValue("Value");
 
+					// Failsafe
+					if (name == null)
+						return;
+
+					// Do not import version number
+					if (name.equals(PrivacyManager.cSettingVersion))
+						return;
+
+					// Decode legacy type
 					if (name.startsWith("Account.") || name.startsWith("Application.") || name.startsWith("Contact.")
 							|| name.startsWith("Template.") || name.startsWith("Whitelist.")) {
 						name = name.replace("Whitelist.", "");
