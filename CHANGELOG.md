@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Fixed applying template restricting dangerous functions ([issue](/../../issues/1728))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.0.38 STABLE**
