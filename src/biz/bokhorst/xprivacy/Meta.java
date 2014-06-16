@@ -105,6 +105,10 @@ public class Meta {
 		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null));
 		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null));
 		mListHook.add(new Hook("internet", "inet", "INTERNET", 1, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "inet_admin", "NET_ADMIN", 1, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "inet_bw", "READ_NETWORK_USAGE_HISTORY,MODIFY_NETWORK_ACCOUNTING", 1, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "inet_vpn", "NET_TUNNELING", 1, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "inet_mesh", "LOOP_RADIO", 1, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "getActiveNetworkInfo", null, 1, null, null).dangerous());
 		mListHook.add(new Hook("internet", "getAllNetworkInfo", null, 1, null, null));
 		mListHook.add(new Hook("internet", "getNetworkInfo", null, 1, null, null).dangerous());
@@ -251,7 +255,8 @@ public class Meta {
 		mListHook.add(new Hook("shell", "start", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
 
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());
-		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_ALL_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("storage", "mtp", "ACCESS_MTP", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null));
 		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous().whitelist(cTypeFilename));
 

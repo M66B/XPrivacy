@@ -180,7 +180,11 @@ For easy usage, data is restricted by category:
 	* return fake input device descriptor
 <a name="internet"></a>
 * Internet
-	* revoke access to the internet
+	* revoke permission to internet access
+	* revoke permission to internet administration
+	* revoke permission to internet bandwidth statistics/administration
+	* revoke permission to [VPN](http://en.wikipedia.org/wiki/Vpn) services
+	* revoke permission to [Mesh networking](http://en.wikipedia.org/wiki/Mesh_networking) services
 	* return fake extra info
 	* return fake disconnected state
 	* return fake supplicant disconnected state
@@ -300,8 +304,9 @@ For easy usage, data is restricted by category:
 	* return unsatisfied link error for load/loadLibrary
 <a name="storage"></a>
 * Storage
-	* revoke permission to the [media storage](http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/)
+	* revoke permission to the [media storage](http://www.doubleencore.com/2014/03/android-external-storage/)
 	* revoke permission to the external storage (SD card)
+	* revoke permission to [MTP](http://en.wikipedia.org/wiki/Media_Transfer_Protocol)
 	* return fake unmounted state
 <a name="system"></a>
 * System

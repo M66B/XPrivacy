@@ -15,6 +15,12 @@ Changelog
 
 **Next release**
 
+* Added restriction for internet administration (*inet_admin*)
+* Added restriction for internet bandwidth statistics/administration (*inet_bw*)
+* Added restriction for [VPN]((http://en.wikipedia.org/wiki/Vpn) services (*inet_vpn*)
+* Added restriction for [Mesh networking](http://en.wikipedia.org/wiki/Mesh_networking) services (*inet_mesh*)
+* Added restriction for [MTP](http://en.wikipedia.org/wiki/Media_Transfer_Protocol)
+
 **This version will erase the existing main template** (if not done by an earlier version)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

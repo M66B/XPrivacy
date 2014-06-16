@@ -41,14 +41,20 @@ public class XProcess extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XProcess(Methods.startViaZygote, PrivacyManager.cInternet, "inet"));
+		listHook.add(new XProcess(Methods.startViaZygote, PrivacyManager.cInternet, "inet_admin"));
+		listHook.add(new XProcess(Methods.startViaZygote, PrivacyManager.cInternet, "inet_bw"));
+		listHook.add(new XProcess(Methods.startViaZygote, PrivacyManager.cInternet, "inet_vpn"));
+		listHook.add(new XProcess(Methods.startViaZygote, PrivacyManager.cInternet, "inet_mesh"));
 		listHook.add(new XProcess(Methods.startViaZygote, PrivacyManager.cStorage, "media"));
 		listHook.add(new XProcess(Methods.startViaZygote, PrivacyManager.cStorage, "sdcard"));
+		listHook.add(new XProcess(Methods.startViaZygote, PrivacyManager.cStorage, "mtp"));
 		return listHook;
 	}
 
 	final static int sdcard_r = 1028; // 4.1+
 	final static int sdcard_rw = 1015; // 4.0+
 	final static int media_rw = 1023; // 4.0+
+	final static int mtp = 1024;
 
 	final static int sdcard_pics = 1033; // 4.4+ photos
 	final static int sdcard_av = 1034; // 4.4+ audio/video
@@ -56,6 +62,11 @@ public class XProcess extends XHook {
 
 	final static int inet = 3003; // 4.0+
 	final static int inet_raw = 3004; // 4.0+
+	final static int inet_admin = 3005;
+	final static int inet_bw_stats = 3006;
+	final static int inet_bw_acct = 3007;
+	final static int inet_vpn = 1016;
+	final static int inet_mesh = 1030;
 
 	// system/core/include/private/android_filesystem_config.h
 	// frameworks/base/data/etc/platform.xml
@@ -81,21 +92,57 @@ public class XProcess extends XHook {
 					if (gids[i] == media_rw)
 						if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("media")
 								&& getRestricted(uid, mAction))
-							Util.log(this, Log.INFO, "Revoking media_rw uid=" + uid);
+							Util.log(this, Log.INFO, "Revoking media uid=" + uid);
 						else
 							listGids.add(gids[i]);
 
-					else if (gids[i] == sdcard_r || gids[i] == sdcard_rw || gids[i] == sdcard_pics
-							|| gids[i] == sdcard_av || gids[i] == sdcard_all)
+					else if (gids[i] == sdcard_r || gids[i] == sdcard_rw || gids[i] == sdcard_all
+							|| gids[i] == sdcard_pics || gids[i] == sdcard_av)
 						if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("sdcard")
 								&& getRestricted(uid, mAction))
-							Util.log(this, Log.INFO, "Revoking sdcard_rw uid=" + uid);
+							Util.log(this, Log.INFO, "Revoking sdcard uid=" + uid);
+						else
+							listGids.add(gids[i]);
+
+					else if (gids[i] == mtp)
+						if (mRestrictionName.equals(PrivacyManager.cStorage) && mAction.equals("mtp")
+								&& getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking mtp uid=" + uid);
 						else
 							listGids.add(gids[i]);
 
 					else if (gids[i] == inet || gids[i] == inet_raw)
-						if (mRestrictionName.equals(PrivacyManager.cInternet) && getRestricted(uid, mAction))
-							Util.log(this, Log.INFO, "Revoking inet_raw uid=" + uid);
+						if (mRestrictionName.equals(PrivacyManager.cInternet) && mAction.equals("inet")
+								&& getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking inet uid=" + uid);
+						else
+							listGids.add(gids[i]);
+
+					else if (gids[i] == inet_admin)
+						if (mRestrictionName.equals(PrivacyManager.cInternet) && mAction.equals("inet_admin")
+								&& getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking inet_admin uid=" + uid);
+						else
+							listGids.add(gids[i]);
+
+					else if (gids[i] == inet_bw_stats || gids[i] == inet_bw_acct)
+						if (mRestrictionName.equals(PrivacyManager.cInternet) && mAction.equals("inet_bw")
+								&& getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking inet_bw uid=" + uid);
+						else
+							listGids.add(gids[i]);
+
+					else if (gids[i] == inet_vpn)
+						if (mRestrictionName.equals(PrivacyManager.cInternet) && mAction.equals("inet_vpn")
+								&& getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking inet_vpn uid=" + uid);
+						else
+							listGids.add(gids[i]);
+
+					else if (gids[i] == inet_mesh)
+						if (mRestrictionName.equals(PrivacyManager.cInternet) && mAction.equals("inet_mesh")
+								&& getRestricted(uid, mAction))
+							Util.log(this, Log.INFO, "Revoking inet_mesh uid=" + uid);
 						else
 							listGids.add(gids[i]);
 
