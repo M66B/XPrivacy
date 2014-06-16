@@ -138,6 +138,8 @@
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Alternate</string>
     <string name="settings_serial">Серійний номер</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Довгота</string>

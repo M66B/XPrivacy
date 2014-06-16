@@ -237,11 +237,12 @@ public class ActivityShare extends ActivityBase {
 		spRestriction.setSelection(pos);
 
 		// Build template adapter
-		SpinnerAdapter saAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
-		saAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		for (int i = 1; i <= 5; i++)
-			saAdapter.add(getString(R.string.menu_template) + " " + i);
-		spTemplate.setAdapter(saAdapter);
+		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spAdapter.add(getString(R.string.title_default));
+		for (int i = 1; i <= 4; i++)
+			spAdapter.add(getString(R.string.title_alternate) + " " + i);
+		spTemplate.setAdapter(spAdapter);
 
 		// Build application list
 		AppListTask appListTask = new AppListTask();

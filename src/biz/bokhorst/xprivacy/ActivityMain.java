@@ -629,8 +629,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Template selector
 		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
 		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		for (int i = 1; i <= 5; i++)
-			spAdapter.add(getString(R.string.menu_template) + " " + i);
+		spAdapter.add(getString(R.string.title_default));
+		for (int i = 1; i <= 4; i++)
+			spAdapter.add(getString(R.string.title_alternate) + " " + i);
 		spTemplate.setAdapter(spAdapter);
 
 		// Template definition

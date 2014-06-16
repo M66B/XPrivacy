@@ -138,6 +138,8 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_template_merge">Pas sjabloon toe (samenvoegen)</string>
     <string name="title_enable_ondemand">Zet op verzoek beperken aan</string>
     <string name="title_disable_ondemand">Zet op verzoek beperken uit</string>
+    <string name="title_default">Standaard</string>
+    <string name="title_alternate">Alternatief</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>

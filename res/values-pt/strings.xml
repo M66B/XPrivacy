@@ -138,6 +138,8 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Alternate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

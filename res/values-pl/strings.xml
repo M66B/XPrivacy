@@ -138,6 +138,8 @@
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">Włącz restrykcje na żądanie</string>
     <string name="title_disable_ondemand">Wyłącz restrykcje na żądanie</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Alternate</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>

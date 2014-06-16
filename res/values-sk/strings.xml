@@ -138,6 +138,8 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_template_merge">Použiť šablónu (zlúčiť)</string>
     <string name="title_enable_ondemand">Povoliť obmedzenie na požiadanie</string>
     <string name="title_disable_ondemand">Zakázať obmedzenie na požiadanie</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Alternate</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>

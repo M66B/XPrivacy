@@ -138,6 +138,8 @@
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">開啟互動式限制</string>
     <string name="title_disable_ondemand">關閉互動式限制</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Alternate</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>

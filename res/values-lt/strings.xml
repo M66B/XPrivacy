@@ -138,6 +138,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">Įjungti ribojimus pagal reikalavimą</string>
     <string name="title_disable_ondemand">Išjungti ribojimus pagal reikalavimą</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Alternate</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
