@@ -989,7 +989,7 @@ It is already enough work to support the official versions from the last stable 
 
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-Include a [logcat](#FAQ14) when relevant (use [pastebin](http://pastebin.com/) or a similar service).
+Include a [logcat](#FAQ14) when relevant (use [gist](https://gist.github.com/) or a similar service).
 Try to keep the logcat as brief as possible, searching in large logcats is no fun and not useful.
 
 **Do not forget to enable XPrivacy logging using the settings menu!**
