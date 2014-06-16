@@ -428,7 +428,7 @@ Usage
 * Don't think too much ;-)
 * Find the application(s) to restrict in the main application list
 * Tap on the application icon
-* Tap the first check box for any category you want to restrict
+* Tap the first check box of any category you want to restrict
 
 Use common sense when restricting, don't expect internet access if you restricted the internet category, etc.
 
