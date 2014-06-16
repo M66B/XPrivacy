@@ -522,6 +522,7 @@ public class PrivacyManager {
 
 		// Apply template
 		Util.log(null, Log.WARN, "Applying template=" + templateName);
+		boolean hasOndemand = false;
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction) {
 			if (clear)
@@ -532,6 +533,7 @@ public class PrivacyManager {
 					+ "+ask");
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
+			hasOndemand = hasOndemand || !parentAsked;
 			PRestriction parentMerge;
 			if (clear)
 				parentMerge = new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked);
@@ -564,6 +566,8 @@ public class PrivacyManager {
 				}
 		}
 		setRestrictionList(listPRestriction);
+		if (hasOndemand)
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 	}
 
 	// White listing

@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fixed applying template restricting dangerous functions ([issue](/../../issues/1728))
+* Applying template with on demand restricting will enabled on demand restricting setting ([issue](/../../issues/1727))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
