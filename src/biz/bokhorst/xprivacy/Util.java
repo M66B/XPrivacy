@@ -243,6 +243,8 @@ public class Util {
 			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_FILE_NAME);
 
 		String importedLicense = importProLicense(licenseFile);
+		if (importedLicense == null)
+			return null;
 
 		// Check license file
 		licenseFile = new File(importedLicense);
@@ -272,31 +274,46 @@ public class Util {
 		// Get imported license file name
 		String importedLicense = getUserDataDirectory(Process.myUid()) + File.separator + LICENSE_FILE_NAME;
 
-		// Import license file
+		// Check if license file exists
 		if (licenseFile.exists() && licenseFile.canRead()) {
 			try {
+				// Import license file
 				File out = new File(importedLicense);
 				Util.log(null, Log.WARN, "Licensing: importing " + out.getAbsolutePath());
-				InputStream is = new FileInputStream(licenseFile.getAbsolutePath());
-				OutputStream os = new FileOutputStream(out.getAbsolutePath());
-				byte[] buffer = new byte[1024];
-				int read;
-				while ((read = is.read(buffer)) != -1)
-					os.write(buffer, 0, read);
-				is.close();
-				os.flush();
-				os.close();
+				InputStream is = null;
+				is = new FileInputStream(licenseFile.getAbsolutePath());
+				try {
+					OutputStream os = null;
+					try {
+						os = new FileOutputStream(out.getAbsolutePath());
+						byte[] buffer = new byte[1024];
+						int read;
+						while ((read = is.read(buffer)) != -1)
+							os.write(buffer, 0, read);
+						os.flush();
+					} finally {
+						if (os != null)
+							os.close();
+					}
+				} finally {
+					if (is != null)
+						is.close();
+				}
 
-				// Protect license file
+				// Protect imported license file
 				setPermissions(out.getAbsolutePath(), 0700, Process.myUid(), Process.myUid());
 
+				// Remove original license file
 				licenseFile.delete();
+
+				// Success
+				return importedLicense;
 			} catch (FileNotFoundException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
 		}
-		return importedLicense;
+		return null;
 	}
 
 	public static Version getProEnablerVersion(Context context) {

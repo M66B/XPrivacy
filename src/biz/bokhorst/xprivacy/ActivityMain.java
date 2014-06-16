@@ -166,7 +166,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Import license file
 		if (Intent.ACTION_VIEW.equals(getIntent().getAction()))
-			Util.importProLicense(new File(getIntent().getData().getEncodedPath()));
+			if (Util.importProLicense(new File(getIntent().getData().getEncodedPath())) != null)
+				Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG).show();
 
 		// Set layout
 		setContentView(R.layout.mainlist);
@@ -346,8 +347,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				if (code > 0) {
 					Util.setPro(true);
 					invalidateOptionsMenu();
-					Toast toast = Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG);
-					toast.show();
+					Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG).show();
 				} else if (reason == RETRY) {
 					Util.setPro(false);
 					mProHandler.postDelayed(new Runnable() {
