@@ -72,7 +72,7 @@ public class PrivacyService {
 	private static final String cTableSetting = "setting";
 
 	private static final int cCurrentVersion = 346;
-	private static final String cServiceName = "xprivacy344";
+	private static final String cServiceName = "xprivacy347";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -581,6 +581,9 @@ public class PrivacyService {
 			long ms = System.currentTimeMillis() - start;
 			Util.log(null, Log.INFO,
 					String.format("get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
+
+			if (mresult.debug)
+				Util.logStack(null, Log.WARN);
 
 			return mresult;
 		}

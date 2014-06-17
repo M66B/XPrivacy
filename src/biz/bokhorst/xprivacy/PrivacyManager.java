@@ -247,6 +247,8 @@ public class PrivacyManager {
 			if (!cached) {
 				// Get restriction
 				result = PrivacyService.getRestriction(query, false, "");
+				if (result.debug)
+					Util.logStack(null, Log.WARN);
 
 				// Add to cache
 				key.restricted = result.restricted;
@@ -326,7 +328,10 @@ public class PrivacyManager {
 			try {
 				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 				query.extra = extra;
-				result.restricted = PrivacyService.getRestriction(query, true, secret).restricted;
+				PRestriction restriction = PrivacyService.getRestriction(query, true, secret);
+				result.restricted = restriction.restricted;
+				if (restriction.debug)
+					Util.logStack(null, Log.WARN);
 
 				// Add to cache
 				if (result.time >= 0) {
