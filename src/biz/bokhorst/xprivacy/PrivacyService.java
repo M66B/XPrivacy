@@ -19,7 +19,6 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
@@ -1411,20 +1410,13 @@ public class PrivacyService {
 									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
 											result, context, latch);
 									AlertDialog alertDialog = builder.create();
-									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_PHONE);
-									alertDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
+									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD_DIALOG);
 									alertDialog.getWindow().setSoftInputMode(
 											WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 									alertDialog.setCancelable(false);
 									alertDialog.setCanceledOnTouchOutside(false);
 									alertDialog.show();
 									holder.dialog = alertDialog;
-
-									// Hide status bar
-									// http://developer.android.com/training/system-ui/status.html
-									if (Build.VERSION.SDK_INT >= 16)
-										alertDialog.getWindow().getDecorView()
-												.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
 
 									// Progress bar
 									final ProgressBar mProgress = (ProgressBar) alertDialog
