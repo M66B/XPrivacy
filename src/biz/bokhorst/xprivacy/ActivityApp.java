@@ -1623,7 +1623,7 @@ public class ActivityApp extends ActivityBase {
 						holder.llMethodName.setClickable(false);
 
 					// Listen for ask changes
-					if (ondemand)
+					if (ondemand && !parent.asked)
 						holder.imgCbMethodAsk.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View view) {

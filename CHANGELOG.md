@@ -20,6 +20,8 @@ Changelog
 * Added restriction for [VPN]((http://en.wikipedia.org/wiki/Vpn) services (*inet_vpn*)
 * Added restriction for [Mesh networking](http://en.wikipedia.org/wiki/Mesh_networking) services (*inet_mesh*)
 * Added restriction for [MTP](http://en.wikipedia.org/wiki/Media_Transfer_Protocol)
+* Fixed not disabling on demand function settings when on demand restricting for category is disabled
+* Hiding status bar when showing on demand restricting dialog 
 
 **This version will erase the existing main template** (if not done by an earlier version)
 
