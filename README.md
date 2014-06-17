@@ -953,7 +953,7 @@ For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler
 
 See [here](https://github.com/M66B/XPrivacy/blob/master/DATABASE.md#xprivacydb) on how to enable debug logging without Xprivacy activated in Xposed.
 
-<a name='FAQ57'></a>
+<a name="FAQ57"></a>
 **(57) How does 'Expert mode' work?**
 
 Expert mode has the following sub-options which can be toggled individually:
@@ -963,6 +963,7 @@ Expert mode has the following sub-options which can be toggled individually:
 * *Use secure connections*
 	* This will force communications with the crowd sourced restrictions server (submitting/fetching, device registration) to travel through a secure socket. Note that this is enabled by default and can only be disabled by enabling *Expert mode*.
 
+<a name="FAQ58"></a>
 **(58) Can I write a thesis about XPrivacy?**
 
 Yes, you can and I will even help you with it.
@@ -970,6 +971,7 @@ However, I will not write code nor text for you. Nevertheless, I will try to ans
 XPrivacy is open source (see also the license section) and all code you write needs to be contributed back to the project.
 To help you I want to see an e-mail from your professor with a confirmation he or she has read and agrees to this FAQ.
 
+<a name="FAQ59"></a>
 **(59) Will you implement multiple profiles?**
 
 No, because privacy is not something that is optional.
