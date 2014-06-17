@@ -1000,8 +1000,6 @@ It is already enough work to support the official versions from the last stable 
 
 ### Bugs
 
-**The issue tracker is temporarily closed, report your bugs in the [XDA XPrivacy forum](http://forum.xda-developers.com/showthread.php?p=42488236)**
-
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
 Include a [logcat](#FAQ14) when relevant (use [gist](https://gist.github.com/) or a similar service).
@@ -1020,8 +1018,6 @@ and include information about your device type, Android and XPrivacy version.
 
 ### Feature requests
 
-**The issue tracker is temporarily closed, request your features in the [XDA XPrivacy forum](http://forum.xda-developers.com/showthread.php?p=42488236)**
-
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
 New features are only considered for implementation when requested on GitHub with a detailed description of the feature and only if there are ten +1's within two weeks.
@@ -1034,7 +1030,7 @@ Please [read this](http://forum.xda-developers.com/showpost.php?p=52644313&postc
 
 ### Questions
 
-If you have any question, you can leave a message in the [XDA XPrivacy forum](http://forum.xda-developers.com/showthread.php?p=42488236).
+If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 
 Changelog
 ---------
