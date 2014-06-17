@@ -68,7 +68,7 @@
 
 <h3>TABLE:setting</h3>
 
-<p>The setting table holds information pertaining to settings on a global (uid='0') and per UID basis, as well as the white/blacklists.</p>
+<p>The setting table holds information pertaining to settings on a global (uid=userID; 0 for the main user) and per UID basis, as well as the white/blacklists.</p>
 
 | Field | Type    | NULLABLE |
 |-------|---------|----------|
