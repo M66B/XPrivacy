@@ -775,9 +775,12 @@ Note: by default, categories and functions are filtered by permission, so you ma
 The [pro enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) is in the Play Store by request of some early XPrivacy users. In the beginning, there was just one pro feature: export and import all restrictions and settings. Later, fetching [crowd sourced restrictions](http://crowd.xprivacy.eu/) was added as a pro feature. Processing the crowd sourced restrictions requires a big server that has to be paid for. The pro enabler's low price (don't forget Google takes 30%) prevented providing this feature for free. Looking back, I would never have added the pro enabler to the Play Store, but I can no longer remove it because of the existing users. Moreover, not everybody has access to PayPal and not everybody needs all pro features, so for these people the pro enabler is still of use.
 
 <a name="FAQ30"></a>
-**(30) What should I do if an application force closes (crashes)?**
+**(30) What should I do if an application force closes (crashes) or something doesn't work?**
 
-Inspect the application's usage view, via its menus "Usage data" item to see which restrictions the application accesses. Restrict and unrestrict one by one until you have found which one causes the application to force close. Help others by submitting your working set of restrictions.
+Inspect the application's usage view, via the main menu item *Usage data* to see which restrictions were enforced.
+Restrict and unrestrict one by one until you have found which one causes the application to force close.
+Wait 15 seconds after each change to let the XPrivacy cache time-out.
+Help others by submitting your working set of restrictions.
 
 <a name="FAQ31"></a>
 **(31) Can XPrivacy handle non-Java applications?**
@@ -940,11 +943,6 @@ The default is to export everything, since the export is meant to be a full back
 However, it is possible to filter the applications you want to export using the filter icon in the action bar,
 for example only user applications with restrictions,
 and to select these applications using the action bar *select all* (first icon) to only export a part of the applications.
-
-<a name="FAQ55"></a>
-**(55) Why does applying the template not enable on demand restricting?**
-
-Batch enabling on demand restricting using the template could lead to an on demand "hell" and easily bring down your device. On demand restricting is enabled by default for new applications, but not for existing applications. The template enables on demand restricting only if the application on demand restricting master switch is enabled. The master switch can be found in the application specific settings or next to the on/off switch. You can batch enable the master switch by enabling "restrict dangerous" in the main settings.
 
 <a name="FAQ56"></a>
 **(56) How can I recover from a bootloop?**
