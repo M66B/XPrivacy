@@ -15,6 +15,12 @@ Changelog
 
 **Next release**
 
+**This version will erase the existing main template** (if not done by an earlier version)
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.1 STABLE**
+
 * Added restriction for internet administration (*inet_admin*)
 * Added restriction for internet bandwidth statistics/administration (*inet_bw*)
 * Added restriction for [VPN]((http://en.wikipedia.org/wiki/Vpn) services (*inet_vpn*)
@@ -24,8 +30,6 @@ Changelog
 * Hiding status bar when showing on demand restricting dialog 
 
 **This version will erase the existing main template** (if not done by an earlier version)
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1 STABLE**
 
