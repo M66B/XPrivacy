@@ -141,7 +141,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="title_deny">Deny</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
-    <string name="title_set_restrict">Restrict</string>
+    <string name="title_set_restrict">Restrict (categories)</string>
     <string name="title_template_category">Apply template (categories)</string>
     <string name="title_template_full">Apply template (categories+functions)</string>
     <string name="title_template_merge">Apply template (merge)</string>

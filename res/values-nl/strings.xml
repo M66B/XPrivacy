@@ -132,7 +132,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_deny">Blokkeren</string>
     <string name="title_pleasesubmit">Zend a.u.b. uw beperkingen om anderen te helpen</string>
     <string name="title_permissions">Rechten</string>
-    <string name="title_set_restrict">Beperk</string>
+    <string name="title_set_restrict">Beperk (categorieën)</string>
     <string name="title_template_category">Pas sjabloon toe (categorieën)</string>
     <string name="title_template_full">Pas sjabloon toe (categorieën+functies)</string>
     <string name="title_template_merge">Pas sjabloon toe (samenvoegen)</string>
