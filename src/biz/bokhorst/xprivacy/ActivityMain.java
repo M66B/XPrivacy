@@ -606,7 +606,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						spRestriction.setSelection(0);
 						((EditText) findViewById(R.id.etFilter)).setText("");
 						ActivityMain.this.recreate();
-						Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_LONG).show();
+						Toast.makeText(ActivityMain.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG).show();
 					}
 				}.executeOnExecutor(mExecutor);
 			}
