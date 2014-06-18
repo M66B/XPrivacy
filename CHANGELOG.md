@@ -21,13 +21,15 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.3 STABLE**
+
 * Added short usage instructions (check *About*)
 * Added *I don't know* to the on demand restricting dialog, which will deny once
 * Updated Dutch translation
 * Updated German translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.2 STABLE**
 
