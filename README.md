@@ -982,6 +982,13 @@ or on your work and not at home.
 This is by design, so you can see the upgrade has completed successfully.
 You can swipe away the notification after you have seen it.
 
+<a name="FAQ61"></a>
+**(61) Can the on demand restricting time-out be increased?**
+
+Unfortunately this is not possible.
+The on demand restricting dialog is holding up system processes
+and Android reboots automatically if there is too long no response.
+
 Support
 -------
 
