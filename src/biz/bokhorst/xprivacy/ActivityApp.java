@@ -685,7 +685,7 @@ public class ActivityApp extends ActivityBase {
 			public void onClick(DialogInterface dialog, int _which) {
 				XApplication.manage(ActivityApp.this, mAppInfo.getPackageName().get(which),
 						XApplication.cActionKillProcess);
-				Toast.makeText(ActivityApp.this, getString(R.string.msg_done), Toast.LENGTH_SHORT).show();
+				Toast.makeText(ActivityApp.this, getString(R.string.msg_done), Toast.LENGTH_LONG).show();
 			}
 		});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
@@ -1318,7 +1318,7 @@ public class ActivityApp extends ActivityBase {
 									// Notify restart
 									if (!newState.equals(oldState))
 										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
-												Toast.LENGTH_SHORT).show();
+												Toast.LENGTH_LONG).show();
 
 									holder.pbRunning.setVisibility(View.GONE);
 									holder.imgCbRestricted.setVisibility(View.VISIBLE);
@@ -1610,7 +1610,7 @@ public class ActivityApp extends ActivityBase {
 										// Notify restart
 										if (md.isRestartRequired())
 											Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
-													Toast.LENGTH_SHORT).show();
+													Toast.LENGTH_LONG).show();
 
 										holder.pbRunning.setVisibility(View.GONE);
 										holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);

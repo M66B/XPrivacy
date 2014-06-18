@@ -362,7 +362,7 @@ public class ActivityShare extends ActivityBase {
 								new SubmitTask().executeOnExecutor(mExecutor);
 							} else {
 								String message = getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1);
-								Toast.makeText(ActivityShare.this, message, Toast.LENGTH_SHORT).show();
+								Toast.makeText(ActivityShare.this, message, Toast.LENGTH_LONG).show();
 								btnOk.setEnabled(false);
 							}
 						}
@@ -379,7 +379,7 @@ public class ActivityShare extends ActivityBase {
 			public void onClick(View v) {
 				if (mRunning) {
 					mAbort = true;
-					Toast.makeText(ActivityShare.this, getString(R.string.msg_abort), Toast.LENGTH_SHORT).show();
+					Toast.makeText(ActivityShare.this, getString(R.string.msg_abort), Toast.LENGTH_LONG).show();
 				} else
 					finish();
 			}

@@ -434,7 +434,7 @@ public class SettingsDialog {
 				public void onClick(View view) {
 					Intent flushIntent = new Intent(UpdateService.cFlush);
 					context.startService(flushIntent);
-					Toast.makeText(context, context.getString(R.string.msg_done), Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, context.getString(R.string.msg_done), Toast.LENGTH_LONG).show();
 				}
 			});
 		else

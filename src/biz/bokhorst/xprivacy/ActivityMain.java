@@ -606,6 +606,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						spRestriction.setSelection(0);
 						((EditText) findViewById(R.id.etFilter)).setText("");
 						ActivityMain.this.recreate();
+						Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_LONG).show();
 					}
 				}.executeOnExecutor(mExecutor);
 			}
@@ -1871,7 +1872,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						// Notify restart
 						if (oldState.contains(true))
-							Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+							Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_LONG)
 									.show();
 
 						// Display new state
@@ -1911,7 +1912,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						// Notify restart
 						if (!newState.equals(oldState))
-							Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_SHORT)
+							Toast.makeText(ActivityMain.this, getString(R.string.msg_restart), Toast.LENGTH_LONG)
 									.show();
 
 						// Display new state
