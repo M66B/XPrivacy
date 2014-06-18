@@ -976,6 +976,12 @@ No, because privacy is not something that is optional.
 It makes no sense to restrict something during the day and not during the night
 or on your work and not at home.
 
+<a name="FAQ60"></a>
+**(60) The upgrade notification is stuck at 100% !**
+
+This is by design, so you can see the upgrade has completed successfully.
+You can swipe away the notification after you have seen it.
+
 Support
 -------
 
