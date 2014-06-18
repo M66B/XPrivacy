@@ -707,10 +707,7 @@ public class PrivacyManager {
 					}
 
 				// Add to cache
-				if (value == null)
-					key.setValue(defaultValue);
-				else
-					key.setValue(value);
+				key.setValue(value);
 				synchronized (mSettingsCache) {
 					if (mSettingsCache.containsKey(key))
 						mSettingsCache.remove(key);
@@ -746,7 +743,9 @@ public class PrivacyManager {
 			CSetting key = new CSetting(uid, type, name);
 			key.setValue(value);
 			synchronized (mSettingsCache) {
-				mSettingsCache.clear();
+				if (mSettingsCache.containsKey(key))
+					mSettingsCache.remove(key);
+				mSettingsCache.put(key, key);
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
