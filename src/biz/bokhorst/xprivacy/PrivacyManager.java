@@ -551,13 +551,10 @@ public class PrivacyManager {
 			if (methods)
 				for (Hook hook : getHooks(rRestrictionName)) {
 					String settingName = rRestrictionName + "." + hook.getName();
-					String value = getSetting(
-							userId,
-							templateName,
-							settingName,
-							Boolean.toString(parentRestricted && !hook.isDangerous())
-									+ (parentAsked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked"
-											: "+ask"));
+					String value = getSetting(userId, templateName, settingName, null);
+					if (value == null)
+						value = Boolean.toString(parentRestricted && !hook.isDangerous())
+								+ (parentAsked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked" : "+ask");
 					boolean restricted = value.contains("true");
 					boolean asked = (!ondemand || value.contains("asked"));
 					PRestriction childMerge;
@@ -707,7 +704,10 @@ public class PrivacyManager {
 					}
 
 				// Add to cache
-				key.setValue(value);
+				if (value == null)
+					key.setValue(defaultValue);
+				else
+					key.setValue(value);
 				synchronized (mSettingsCache) {
 					if (mSettingsCache.containsKey(key))
 						mSettingsCache.remove(key);

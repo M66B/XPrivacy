@@ -22,6 +22,7 @@ Changelog
 **Next release**
 
 * Fixed applying template with dangerous function restrictions
+* Fixed caching of function template settings
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
