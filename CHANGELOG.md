@@ -15,6 +15,10 @@ Changelog
 
 **Next release**
 
+* Fixed displaying half on demand state template
+* Fixed on demand defaults when applying template
+* Fixed on demand defaults when on demand restricting category
+
 **This version will erase the existing main template** (if not done by an earlier version)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

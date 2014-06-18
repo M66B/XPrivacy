@@ -551,9 +551,13 @@ public class PrivacyManager {
 			if (methods)
 				for (Hook hook : getHooks(rRestrictionName)) {
 					String settingName = rRestrictionName + "." + hook.getName();
-					String value = getSetting(userId, templateName, settingName,
+					String value = getSetting(
+							userId,
+							templateName,
+							settingName,
 							Boolean.toString(parentRestricted && !hook.isDangerous())
-									+ (parentAsked ? "+asked" : "+ask"));
+									+ (parentAsked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked"
+											: "+ask"));
 					boolean restricted = value.contains("true");
 					boolean asked = (!ondemand || value.contains("asked"));
 					PRestriction childMerge;

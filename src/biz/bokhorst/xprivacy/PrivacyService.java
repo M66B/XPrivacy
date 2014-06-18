@@ -1732,17 +1732,17 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Clear category on change
-					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName))
+					for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
 						if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
-								md.getName())) {
-							result.methodName = md.getName();
+								hook.getName())) {
+							result.methodName = hook.getName();
 							result.restricted = false;
 							result.asked = true;
 							setRestrictionInternal(result);
 						} else {
-							result.methodName = md.getName();
-							result.restricted = !md.isDangerous() && restrict;
-							result.asked = category;
+							result.methodName = hook.getName();
+							result.restricted = restrict && !hook.isDangerous();
+							result.asked = category || (hook.isDangerous() && hook.whitelist() == null);
 							setRestrictionInternal(result);
 						}
 				}

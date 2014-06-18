@@ -1160,12 +1160,16 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			boolean partialRestricted = false;
 			boolean partialAsked = false;
-			if (holder.restricted)
+			if (holder.restricted || !holder.asked)
 				for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
 					String settingName = restrictionName + "." + hook.getName();
-					String childValue = PrivacyManager.getSetting(userId, getTemplate(), settingName,
+					String childValue = PrivacyManager.getSetting(
+							userId,
+							getTemplate(),
+							settingName,
 							Boolean.toString(holder.restricted && !hook.isDangerous())
-									+ (holder.asked ? "+asked" : "+ask"));
+									+ (holder.asked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked"
+											: "+ask"));
 					if (!childValue.contains("true"))
 						partialRestricted = true;
 					if (childValue.contains("asked"))
@@ -1258,9 +1262,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
 
 			// Get child info
-			String value = PrivacyManager.getSetting(userId, getTemplate(), settingName, null);
-			if (value == null)
-				value = Boolean.toString(parentRestricted && !hook.isDangerous()) + (parentAsked ? "+asked" : "+ask");
+			String value = PrivacyManager.getSetting(userId, getTemplate(), settingName,
+					Boolean.toString(parentRestricted && !hook.isDangerous())
+							+ (parentAsked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked" : "+ask"));
 			holder.restricted = value.contains("true");
 			holder.asked = (!ondemand || value.contains("asked"));
 			Bitmap bmRestricted = (parentRestricted && holder.restricted ? getFullCheckBox() : getOffCheckBox());
