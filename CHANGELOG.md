@@ -13,11 +13,16 @@ Changelog
 * [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 * [GitHub releases](https://github.com/M66B/XPrivacy/releases)
 
+**Important**
+
+* If you install a version from 2.0.35 the main template will be reset to defaults once
+* Dangerous functions need to be restricted always manually (manually include the template, if defined to do so)
+* Xposed version 2.6+ is required
+
 **Next release**
 
 * Updated German translation
-
-**This version will reset the main template to the default** (if not done by an earlier version)
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -27,8 +32,6 @@ Changelog
 * Fixed dangerous functions defaults
 * Fixed on demand defaults when applying template
 * Fixed on demand defaults when on demand restricting category
-
-**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.1.1 STABLE**
 
@@ -40,8 +43,6 @@ Changelog
 * Fixed not disabling on demand function settings when on demand restricting for category is disabled
 * Hiding status bar when showing on demand restricting dialog 
 
-**This version will reset the main template to the default** (if not done by an earlier version)
-
 **Version 2.1 STABLE**
 
 * Fixed applying template restricting dangerous functions ([issue](/../../issues/1728))
@@ -51,16 +52,12 @@ Changelog
 * Display *Default* as first template name ([issue](/../../issues/1723))
 * Updated Dutch translation
 
-**This version will reset the main template to the default** (if not done by an earlier version)
-
 **Version 2.0.38 STABLE**
 
 * Showing enabled (on/off) state
 * Requesting restart for *load* and *loadLibrary*
 * Resetting on demand restricting for system applications on upgrade
 * Updated Slovak translation
-
-**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.37 TEST**
 
@@ -70,16 +67,12 @@ Changelog
 	* *getDefaultSensor* and *getSensorList* were made dangerous
 * Allow to select category when toggling restrictions
 
-**This version will reset the main template to the default** (if not done by an earlier version)
-
 **Version 2.0.36 STABLE**
 
 * Reddish background for template group indicators
 * Enabling on demand restricting before application is being updated
 * No on demand restricting for restrictions which cannot be used (see limitations)
 * Dropped support for Cydia Substrate, because there are too many unsolved problems
-
-**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.35 BETA**
 
@@ -91,8 +84,6 @@ Changelog
 	* Cydia Substrate is not able to hook *Settings.Secure*, for which a boot class loader is needed
 	* *Build.SERIAL* cannot be restricted
 	* There will be limited support for this
-
-**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.34 BETA**
 
