@@ -15,6 +15,8 @@ Changelog
 
 **Next release**
 
+* Updated German translation
+
 **This version will reset the main template to the default** (if not done by an earlier version)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
