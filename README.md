@@ -988,6 +988,19 @@ Unfortunately this is not possible.
 The on demand restricting dialog is holding up system processes
 and Android reboots automatically if there is too long no response.
 
+<a name="FAQ62"></a>
+**(62) How can I 'toggle' multiple applications?**
+
+Multiple selection works as in any Android application.
+Tap and hold down on an application in the application list to start selecting
+and tap other applications to select more applications.
+Toggle restrictions will work on the selected applications.
+
+You can also use the filters to show the applications you want to act on,
+since toggle restrictions works on the visible applications by default.
+There is one exception to this: exporting will be done for all applications by default,
+since the export is meant as full backup.
+
 Support
 -------
 
