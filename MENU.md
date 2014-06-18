@@ -62,7 +62,7 @@
   * Submit restrictions - this will submit restrictions for the currently selected app to the crowd server
   * Fetch restrictions - this will fetch crowd restrictions for the currently seleted app *1
   * Select accounts to allow - this can be used to allow certain accounts access to the account category while restricting it for others *1
-  * Select applications to allow - this will allow the app to see allowed apps while restricting others *1 
+  * Select applications to allow - this will allow the app to see allowed apps while restricting others *1
   * Select contacts to allow - this will allow the apps to see certain contacts while restricting others *1
   * Manage whitelists - here previously defined white/blacklist items can be allowed/denied or removed from the list *1
     * Category drop down - Here you can select which white list category you want to manange
@@ -74,7 +74,7 @@
       * Randomize now - this will randomize all app specific fake values
       * Clear - this will clear all app specific fake values and all 'Randomize on access' check marks
       * Randomize on access - here you can check which values should be randomized each time it access by the selected app
-  
+
 <h3>Application list buttons</h3>
 * Select all - this will select or unselect all currently filtered applications
 * Sort by - here you can chose how the application should be sorted
@@ -118,3 +118,5 @@
 * Manage white list icon - this will be shown if a function has white/blacklist entries, pressing it will open the white list manager to the specific list *1
 
 *1 - Pro feature (see [Xprivacy.eu](http://xprivacy.eu) for more info)
+
+*This page was kindly contributed by [an0n981](https://github.com/an0n981)*
