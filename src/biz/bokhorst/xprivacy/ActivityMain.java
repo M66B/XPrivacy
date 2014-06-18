@@ -792,6 +792,19 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
+		dlgAbout.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				Dialog dlgUsage = new Dialog(ActivityMain.this);
+				dlgUsage.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+				dlgUsage.setTitle(R.string.title_usage_header);
+				dlgUsage.setContentView(R.layout.usage);
+				dlgUsage.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+				dlgUsage.setCancelable(true);
+				dlgUsage.show();
+			}
+		});
 	}
 
 	private void optionDump() {

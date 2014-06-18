@@ -425,8 +425,7 @@ Usage
 
 *Very short tutorial*
 
-* Don't think too much ;-)
-* Find the application(s) to restrict in the main application list
+* Find the application to restrict in the main application list
 * Tap on the application icon
 * Tap the first check box of any category you want to restrict
 
