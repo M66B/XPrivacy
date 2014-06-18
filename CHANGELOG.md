@@ -15,7 +15,7 @@ Changelog
 
 **Important**
 
-* If you install a version from 2.0.35 the main template will be reset to defaults once
+* If you install a version from 2.0.35 the main template will be reset to default once
 * Dangerous functions need to be restricted always manually (manually include the template, if defined to do so)
 * Xposed version 2.6+ is required
 
