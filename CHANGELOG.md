@@ -22,6 +22,7 @@ Changelog
 **Next release**
 
 * Added short usage instructions (check *About*)
+* Added *I don't know* to the on demand restricting dialog, which will deny once
 * Updated Dutch translation
 * Updated German translation
 * Updated Slovak translation

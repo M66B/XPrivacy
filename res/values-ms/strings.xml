@@ -130,6 +130,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Benarkan</string>
     <string name="title_deny">Tidak dibenarkan</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Sila kemukakan sekatan anda untuk menolong orang lain</string>
     <string name="title_permissions">Kebenaran</string>
     <string name="title_set_restrict">Restrict</string>

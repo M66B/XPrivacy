@@ -130,6 +130,7 @@
     <string name="title_whitelist">Dodaj \'%1$s\' na belo listo</string>
     <string name="title_allow">Dovoli</string>
     <string name="title_deny">Zavrni</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Prosimo, pošljite Vaše omejitve za pomoč drugim</string>
     <string name="title_permissions">Pravice</string>
     <string name="title_set_restrict">Omeji</string>

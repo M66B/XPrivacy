@@ -130,6 +130,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_whitelist">Positivliste \'%1$s\'</string>
     <string name="title_allow">Zulassen</string>
     <string name="title_deny">Blockieren</string>
+    <string name="title_dontknow">Ich weiß nicht</string>
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter um anderen zu helfen</string>
     <string name="title_permissions">Berechtigungen</string>
     <string name="title_set_restrict">Auswahl beschränken (Kategorien)</string>

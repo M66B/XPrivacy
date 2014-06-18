@@ -130,6 +130,7 @@
     <string name="title_whitelist">白名單 \'%s\'</string>
     <string name="title_allow">允許</string>
     <string name="title_deny">封鎖</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">稍後請上傳您的設定到社群網路利人利己 :)</string>
     <string name="title_permissions">權限</string>
     <string name="title_set_restrict">限制</string>

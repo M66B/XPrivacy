@@ -130,6 +130,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_whitelist">Biela listina \'%1$s\'</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Odošlite, prosím, vaše obmedzenia na pomoc ostatným</string>
     <string name="title_permissions">Povolenia</string>
     <string name="title_set_restrict">Obmedziť (kategórie)</string>

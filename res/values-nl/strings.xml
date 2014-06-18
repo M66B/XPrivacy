@@ -130,6 +130,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_whitelist">Negeerlijst &#8216;%1$s&#8217;</string>
     <string name="title_allow">Toestaan</string>
     <string name="title_deny">Blokkeren</string>
+    <string name="title_dontknow">Ik weet het niet</string>
     <string name="title_pleasesubmit">Zend a.u.b. uw beperkingen om anderen te helpen</string>
     <string name="title_permissions">Rechten</string>
     <string name="title_set_restrict">Beperk (categorieën)</string>

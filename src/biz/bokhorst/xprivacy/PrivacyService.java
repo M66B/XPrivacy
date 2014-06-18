@@ -1657,6 +1657,16 @@ public class PrivacyService {
 							latch.countDown();
 						}
 					});
+			alertDialogBuilder.setNeutralButton(resources.getString(R.string.title_dontknow),
+					new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							// Deny once
+							result.restricted = true;
+							onDemandOnce(restriction, result);
+							latch.countDown();
+						}
+					});
 			return alertDialogBuilder;
 		}
 

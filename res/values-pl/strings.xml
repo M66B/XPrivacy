@@ -130,6 +130,7 @@
     <string name="title_whitelist">Biała lista \'%s\'</string>
     <string name="title_allow">Pozwól</string>
     <string name="title_deny">Zabroń</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Proszę wyślij twoje ograniczenia aby pomóc innym</string>
     <string name="title_permissions">Uprawnienia</string>
     <string name="title_set_restrict">Ogranicz</string>

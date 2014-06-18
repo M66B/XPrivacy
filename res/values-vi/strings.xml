@@ -129,6 +129,7 @@
     <string name="title_whitelist">Danh sách cho phép \'%s\'</string>
     <string name="title_allow">Cho phép</string>
     <string name="title_deny">Từ chối</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Vui lòng gửi thông tin về các sự hạn chế để giúp đỡ người dùng khác</string>
     <string name="title_permissions">Các quyền</string>
     <string name="title_set_restrict">Hạn chế</string>

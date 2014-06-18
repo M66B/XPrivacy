@@ -130,6 +130,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_whitelist">Baltasis sąrašas \'%s\'</string>
     <string name="title_allow">Leisti</string>
     <string name="title_deny">Drausti</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Prašome pateikti savo leidimą</string>
     <string name="title_permissions">Leidimai</string>
     <string name="title_set_restrict">Riboti</string>

@@ -131,6 +131,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Consenti</string>
     <string name="title_deny">Rifiuta</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Per favore sottoponi le tue restrizioni per aiutare gli altri</string>
     <string name="title_permissions">Permessi</string>
     <string name="title_set_restrict">Restringi</string>

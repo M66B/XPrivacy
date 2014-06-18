@@ -130,6 +130,7 @@
     <string name="title_whitelist">Белый список \'%1$s\'</string>
     <string name="title_allow">Разрешить</string>
     <string name="title_deny">Запретить</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Пожалуйста, отправьте ваши разрешения, чтобы помочь остальным</string>
     <string name="title_permissions">Разрешения</string>
     <string name="title_set_restrict">Запретить</string>

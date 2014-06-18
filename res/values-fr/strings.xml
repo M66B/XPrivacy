@@ -130,6 +130,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_whitelist">Se souvenir de \'%1$s\'</string>
     <string name="title_allow">Permettre</string>
     <string name="title_deny">Bloquer</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Veuillez envoyer vos restrictions pour aider les autres</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restreindre la sélection</string>

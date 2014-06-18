@@ -130,6 +130,7 @@
     <string name="title_whitelist">白名单 \'%s\'</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">请发送你的应用限制信息来帮助其他人</string>
     <string name="title_permissions">权限</string>
     <string name="title_set_restrict">限制</string>

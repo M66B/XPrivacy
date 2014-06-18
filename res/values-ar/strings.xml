@@ -130,6 +130,7 @@
     <string name="title_whitelist">القائمة البيضاء \'%s\'</string>
     <string name="title_allow">تمكين</string>
     <string name="title_deny">منع</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">الرجاء إرسال القيود لمساعدة الآخرين</string>
     <string name="title_permissions">الأذونات</string>
     <string name="title_set_restrict">تقييد</string>

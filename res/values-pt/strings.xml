@@ -130,6 +130,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>

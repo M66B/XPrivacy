@@ -130,6 +130,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Permitir</string>
     <string name="title_deny">Denegar</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Por favor suba sus restricciones para ayudar a otros usuarios</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>

@@ -128,6 +128,7 @@
     <string name="title_whitelist">Positivliste \'%s\'</string>
     <string name="title_allow">Tillat</string>
     <string name="title_deny">Nekt</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Vennligst last opp restriksjonene dine for å hjelpe andre</string>
     <string name="title_permissions">Tillatelser</string>
     <string name="title_set_restrict">Blokker</string>

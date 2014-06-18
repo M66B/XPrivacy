@@ -129,6 +129,7 @@
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">ریگه دان</string>
     <string name="title_deny">ریگه نه دان</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">ته کایه بو یارمه تی دانی که سانی تریش ئه و شتانه ى سنوردارتكردوون به لاو بكه </string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
