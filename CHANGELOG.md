@@ -21,10 +21,12 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.4 STABLE**
+
 * Fixed applying template with dangerous function restrictions
 * Fixed caching of function template settings
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.3 STABLE**
 
