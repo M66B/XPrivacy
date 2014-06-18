@@ -21,7 +21,8 @@ Changelog
 
 **Next release**
 
-* Added usage dialog
+* Added short usage instructions (check *About*)
+* Updated Dutch translation
 * Updated German translation
 * Updated Slovak translation
 

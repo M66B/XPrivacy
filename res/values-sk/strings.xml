@@ -140,6 +140,11 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_disable_ondemand">Zakázať obmedzenie na požiadanie</string>
     <string name="title_default">Predvolená</string>
     <string name="title_alternate">Alternatívna</string>
+    <string name="title_usage_header">Usage</string>
+    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
+    <string name="title_usage_text_2">2. Tap on the application icon</string>
+    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
+    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
