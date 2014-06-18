@@ -517,6 +517,9 @@ public class PrivacyService {
 								mresult.restricted = false;
 								if (hook.whitelist() == null)
 									mresult.asked = true;
+							} else {
+								mresult.restricted = false;
+								mresult.asked = (hook.whitelist() == null);
 							}
 						}
 

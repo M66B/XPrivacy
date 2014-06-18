@@ -16,6 +16,7 @@ Changelog
 **Next release**
 
 * Fixed displaying half on demand state template
+* Fixed dangerous functions defaults
 * Fixed on demand defaults when applying template
 * Fixed on demand defaults when on demand restricting category
 
