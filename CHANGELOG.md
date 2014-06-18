@@ -15,14 +15,18 @@ Changelog
 
 **Next release**
 
+**This version will reset the main template to the default** (if not done by an earlier version)
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.2 STABLE**
+
 * Fixed displaying half on demand state template
 * Fixed dangerous functions defaults
 * Fixed on demand defaults when applying template
 * Fixed on demand defaults when on demand restricting category
 
-**This version will erase the existing main template** (if not done by an earlier version)
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.1.1 STABLE**
 
@@ -34,7 +38,7 @@ Changelog
 * Fixed not disabling on demand function settings when on demand restricting for category is disabled
 * Hiding status bar when showing on demand restricting dialog 
 
-**This version will erase the existing main template** (if not done by an earlier version)
+**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.1 STABLE**
 
@@ -45,7 +49,7 @@ Changelog
 * Display *Default* as first template name ([issue](/../../issues/1723))
 * Updated Dutch translation
 
-**This version will erase the existing main template** (if not done by an earlier version)
+**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.38 STABLE**
 
@@ -54,7 +58,7 @@ Changelog
 * Resetting on demand restricting for system applications on upgrade
 * Updated Slovak translation
 
-**This version will erase the existing main template** (if not done by an earlier version)
+**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.37 TEST**
 
@@ -64,7 +68,7 @@ Changelog
 	* *getDefaultSensor* and *getSensorList* were made dangerous
 * Allow to select category when toggling restrictions
 
-**This version will erase the existing main template** (if not done by an earlier version)
+**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.36 STABLE**
 
@@ -73,7 +77,7 @@ Changelog
 * No on demand restricting for restrictions which cannot be used (see limitations)
 * Dropped support for Cydia Substrate, because there are too many unsolved problems
 
-**This version will erase the existing main template** (if not done by an earlier version)
+**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.35 BETA**
 
@@ -86,7 +90,7 @@ Changelog
 	* *Build.SERIAL* cannot be restricted
 	* There will be limited support for this
 
-**This version will erase the existing main template** (if not done by an earlier version)
+**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.34 BETA**
 
@@ -103,7 +107,7 @@ Changelog
 All above functions throw an exception when restricted.
 Although the exception is part of the standard API, a lot of applications are not prepared to handle an exception.
 
-**This version will erase the existing main template**
+**This version will reset the main template to the default** (if not done by an earlier version)
 
 **Version 2.0.33 BETA**
 
