@@ -132,7 +132,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_deny">Blockieren</string>
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter um anderen zu helfen</string>
     <string name="title_permissions">Berechtigungen</string>
-    <string name="title_set_restrict">Auswahl beschränken</string>
+    <string name="title_set_restrict">Auswahl beschränken (Kategorien)</string>
     <string name="title_template_category">Template übernehmen (nur Kategorien)</string>
     <string name="title_template_full">Template übernehmen (Kategorien und Funktionen)</string>
     <string name="title_template_merge">Template übernehmen (zusammenfügen)</string>
