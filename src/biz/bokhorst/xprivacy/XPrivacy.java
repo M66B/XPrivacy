@@ -139,6 +139,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Settings secure
 		hookAll(XSettingsSecure.getInstances(), mSecret);
 
+		// SIP manager
+		hookAll(XSipManager.getInstances(), mSecret);
+
 		// SMS manager
 		hookAll(XSmsManager.getInstances(), mSecret);
 

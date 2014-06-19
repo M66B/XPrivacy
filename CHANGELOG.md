@@ -21,6 +21,8 @@ Changelog
 
 **Next release**
 
+* Added restrictions for [SIP](http://en.wikipedia.org/wiki/Session_Initiation_Protocol) calling ([issue](/../../issues/1739))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.4 STABLE**
