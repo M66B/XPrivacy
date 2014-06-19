@@ -131,7 +131,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Consenti</string>
     <string name="title_deny">Rifiuta</string>
-    <string name="title_dontknow">Don\'t know</string>
+    <string name="title_dontknow">Non so</string>
     <string name="title_pleasesubmit">Per favore sottoponi le tue restrizioni per aiutare gli altri</string>
     <string name="title_permissions">Permessi</string>
     <string name="title_set_restrict">Restringi</string>
@@ -141,12 +141,12 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
     <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
     <string name="title_default">Default</string>
-    <string name="title_alternate">Alternate</string>
-    <string name="title_usage_header">Usage</string>
-    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
-    <string name="title_usage_text_2">2. Tap on the application icon</string>
-    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
-    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
+    <string name="title_alternate">Opzione</string>
+    <string name="title_usage_header">Utilizzo</string>
+    <string name="title_usage_text_1">1. Cerca l\'applicazione da restringere nella lista principale</string>
+    <string name="title_usage_text_2">2. Tocca l\'icona dell\'applicazione</string>
+    <string name="title_usage_text_3">3. Tocca la prima casella di controllo di una categoria che desideri restringere</string>
+    <string name="title_usage_footer">Usa il buon senso, non aspettarti che l\'accesso internet funzioni se hai ristretto la categoria Internet, ecc.</string>
     <string name="settings_serial">Seriale#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
