@@ -16,7 +16,7 @@ Changelog
 **Important**
 
 * If you install a version from 2.0.35 the main template will be reset to default (once)
-* If you install a version from 2.1.5 on demand restricting will be disable until the update is completed (once)
+* If you install a version from 2.1.5 on demand restricting will be disabled until the update is completed (once)
 * Dangerous functions need to be restricted always manually (manually includes the template, if defined to do so)
 * Xposed version 2.6+ is required
 
