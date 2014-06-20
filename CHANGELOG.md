@@ -15,14 +15,18 @@ Changelog
 
 **Important**
 
-* If you install a version from 2.0.35 the main template will be reset to default once
-* Dangerous functions need to be restricted always manually (manually include the template, if defined to do so)
+* If you install a version from 2.0.35 the main template will be reset to default (once)
+* If you install a version from 2.1.5 on demand restricting will be disable until the update is completed (once)
+* Dangerous functions need to be restricted always manually (manually includes the template, if defined to do so)
 * Xposed version 2.6+ is required
 
 **Next release**
 
 * Added restrictions for [SIP](http://en.wikipedia.org/wiki/Session_Initiation_Protocol) calling ([issue](/../../issues/1739))
+* Disabling on demand restricting until update service completes
+* Made *About* scrollable
 * Updated Italian translation
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
