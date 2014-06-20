@@ -22,14 +22,16 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.5 STABLE**
+
 * Added restrictions for [SIP](http://en.wikipedia.org/wiki/Session_Initiation_Protocol) calling ([issue](/../../issues/1739))
 * Disabling on demand restricting until update service completes
 * Showing whitelist icon on category level ([issue](/../../issues/1741))
 * Made *About* scrollable
 * Updated Italian translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.4 STABLE**
 
