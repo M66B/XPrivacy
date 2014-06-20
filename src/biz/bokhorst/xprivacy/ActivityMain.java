@@ -1755,7 +1755,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Display enabled state
 					boolean can = enabled
 							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
-									rstate.mMethodName);
+									rstate.mMethodName, true);
 					holder.tvName.setEnabled(can);
 					holder.imgCbRestricted.setEnabled(can);
 					holder.imgCbAsk.setEnabled(can);

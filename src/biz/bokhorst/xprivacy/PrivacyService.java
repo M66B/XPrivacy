@@ -407,13 +407,6 @@ public class PrivacyService {
 					return mresult;
 				}
 
-				// Check if can be restricted
-				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
-						restriction.methodName)) {
-					mresult.asked = true;
-					return mresult;
-				}
-
 				// Get meta data
 				Hook hook = null;
 				if (restriction.methodName != null) {
@@ -424,9 +417,16 @@ public class PrivacyService {
 				}
 
 				// Check for system component
-				if (usage && !PrivacyManager.isApplication(restriction.uid))
+				if (!PrivacyManager.isApplication(restriction.uid))
 					if (!getSettingBool(userId, PrivacyManager.cSettingSystem, false))
 						return mresult;
+
+				// Check if can be restricted
+				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+						restriction.methodName, false)) {
+					mresult.asked = true;
+					return mresult;
+				}
 
 				// Check if restrictions enabled
 				if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
@@ -1319,7 +1319,7 @@ public class PrivacyService {
 				if (hook != null && !hook.canOnDemand())
 					return false;
 				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
-						restriction.methodName))
+						restriction.methodName, false))
 					return false;
 
 				// Check if enabled
@@ -1741,7 +1741,7 @@ public class PrivacyService {
 					// Clear category on change
 					for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
 						if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
-								hook.getName())) {
+								hook.getName(), false)) {
 							result.methodName = hook.getName();
 							result.restricted = false;
 							result.asked = true;

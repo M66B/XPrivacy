@@ -1290,7 +1290,8 @@ public class ActivityApp extends ActivityBase {
 
 					// Check if can be restricted
 					boolean can = enabled
-							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null);
+							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null,
+									true);
 					holder.llName.setEnabled(can);
 					holder.tvName.setEnabled(can);
 					holder.imgCbAsk.setEnabled(can);
@@ -1586,7 +1587,7 @@ public class ActivityApp extends ActivityBase {
 					// Check if can be restricted
 					boolean can = enabled
 							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
-									rstate.mMethodName);
+									rstate.mMethodName, true);
 					holder.llMethodName.setEnabled(can);
 					holder.tvMethodName.setEnabled(can);
 					holder.imgCbMethodAsk.setEnabled(can);

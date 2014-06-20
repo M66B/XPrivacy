@@ -23,6 +23,7 @@ Changelog
 **Next release**
 
 * Fixed updating dangerous functions restrictions when dangerous enabled ([issue](/../../issues/1742))
+* Display system components as disabled when restricting system components is not enabled ([issue](/../../issues/1744))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

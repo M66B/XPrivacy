@@ -380,11 +380,11 @@ public class PrivacyManager {
 		for (String rRestrictionName : listRestriction)
 			listPRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
 
-		// Make exceptions for dangerous methods
+		// Make exceptions
 		if (methodName == null)
 			for (String rRestrictionName : listRestriction)
 				for (Hook md : getHooks(rRestrictionName)) {
-					if (!canRestrict(uid, Process.myUid(), rRestrictionName, md.getName()))
+					if (!canRestrict(uid, Process.myUid(), rRestrictionName, md.getName(), false))
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
 					else if (md.isDangerous())
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, md
@@ -394,11 +394,17 @@ public class PrivacyManager {
 		setRestrictionList(listPRestriction);
 	}
 
-	public static boolean canRestrict(int uid, int xuid, String restrictionName, String methodName) {
+	public static boolean canRestrict(int uid, int xuid, String restrictionName, String methodName, boolean system) {
 		int _uid = Util.getAppId(uid);
+		int userId = Util.getUserId(uid);
 
 		if (_uid == Process.SYSTEM_UID && PrivacyManager.cIdentification.equals(restrictionName))
 			return false;
+
+		if (system)
+			if (!isApplication(_uid))
+				if (!getSettingBool(userId, PrivacyManager.cSettingSystem, false))
+					return false;
 
 		// @formatter:off
 		if ((_uid == Util.getAppId(xuid)) &&
