@@ -22,6 +22,8 @@ Changelog
 
 **Next release**
 
+* Fixed updating dangerous functions restrictions when dangerous enabled ([issue](/../../issues/1742))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.5 STABLE**

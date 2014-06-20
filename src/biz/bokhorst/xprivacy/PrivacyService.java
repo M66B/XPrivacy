@@ -511,15 +511,8 @@ public class PrivacyService {
 					// Default dangerous
 					if (!methodFound && hook != null && hook.isDangerous())
 						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
-							String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
-							if (new Version(version).compareTo(new Version("2.0.32")) < 0) {
-								mresult.restricted = false;
-								if (hook.whitelist() == null)
-									mresult.asked = true;
-							} else {
-								mresult.restricted = false;
-								mresult.asked = (hook.whitelist() == null);
-							}
+							mresult.restricted = false;
+							mresult.asked = (hook.whitelist() == null);
 						}
 
 					// Check whitelist
