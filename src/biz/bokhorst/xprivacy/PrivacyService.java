@@ -511,9 +511,8 @@ public class PrivacyService {
 					// Default dangerous
 					if (!methodFound && hook != null && hook.isDangerous())
 						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
-							Version sVersion = new Version(getSetting(new PSetting(userId, "",
-									PrivacyManager.cSettingVersion, "0.0")).value);
-							if (sVersion.compareTo(new Version("2.0.32")) < 0) {
+							String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
+							if (new Version(version).compareTo(new Version("2.0.32")) < 0) {
 								mresult.restricted = false;
 								if (hook.whitelist() == null)
 									mresult.asked = true;
@@ -1336,6 +1335,11 @@ public class PrivacyService {
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
 					return false;
 
+				// Check version
+				String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
+				if (new Version(version).compareTo(new Version("2.1.5")) < 0)
+					return false;
+
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
@@ -1349,12 +1353,9 @@ public class PrivacyService {
 					final ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
 
 					// Check for system application
-					if (appInfo.isSystem()) {
-						Version sVersion = new Version(getSetting(new PSetting(userId, "",
-								PrivacyManager.cSettingVersion, "0.0")).value);
-						if (sVersion.compareTo(new Version("2.0.38")) < 0)
+					if (appInfo.isSystem())
+						if (new Version(version).compareTo(new Version("2.0.38")) < 0)
 							return false;
-					}
 
 					// Check if activity manager agrees
 					if (!XActivityManagerService.canOnDemand())
