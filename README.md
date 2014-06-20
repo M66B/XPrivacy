@@ -490,6 +490,8 @@ will erase all application specific settings so that the global settings will ag
 The restrictions template (in the main menu) is applied automatically to newly installed applications
 and manually via the menu item "Apply template" in the application's detailed view.
 
+You can find an overview of all menu items [here](https://github.com/M66B/XPrivacy/blob/master/MENU.md).
+
 **Using XPrivacy is entirely at your own risk**
 
 Permissions
