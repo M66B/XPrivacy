@@ -1239,6 +1239,13 @@ public class ActivityApp extends ActivityBase {
 								whitelist = true;
 								break;
 							}
+					if (!whitelist)
+						for (Hook hook : PrivacyManager.getHooks(restrictionName))
+							if (hook.whitelist() != null)
+								if (PrivacyManager.getSettingList(mAppInfo.getUid(), hook.whitelist()).size() > 0) {
+									whitelist = true;
+									break;
+								}
 
 					enabled = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
 

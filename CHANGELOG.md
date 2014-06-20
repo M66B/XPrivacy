@@ -24,6 +24,7 @@ Changelog
 
 * Added restrictions for [SIP](http://en.wikipedia.org/wiki/Session_Initiation_Protocol) calling ([issue](/../../issues/1739))
 * Disabling on demand restricting until update service completes
+* Showing whitelist icon on category level ([issue](/../../issues/1741))
 * Made *About* scrollable
 * Updated Italian translation
 * Updated Lithuanian translation
