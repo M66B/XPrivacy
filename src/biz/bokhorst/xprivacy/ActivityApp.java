@@ -1204,6 +1204,7 @@ public class ActivityApp extends ActivityBase {
 			private boolean ondemand;
 			private boolean whitelist;
 			private boolean enabled;
+			private boolean can;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -1248,6 +1249,7 @@ public class ActivityApp extends ActivityBase {
 								}
 
 					enabled = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
+					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null, true);
 
 					return holder;
 				}
@@ -1289,12 +1291,9 @@ public class ActivityApp extends ActivityBase {
 						holder.imgCbAsk.setVisibility(View.GONE);
 
 					// Check if can be restricted
-					boolean can = enabled
-							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null,
-									true);
-					holder.llName.setEnabled(can);
-					holder.tvName.setEnabled(can);
-					holder.imgCbAsk.setEnabled(can);
+					holder.llName.setEnabled(enabled && can);
+					holder.tvName.setEnabled(enabled && can);
+					holder.imgCbAsk.setEnabled(enabled && can);
 
 					// Listen for restriction changes
 					holder.llName.setOnClickListener(new View.OnClickListener() {
@@ -1507,6 +1506,7 @@ public class ActivityApp extends ActivityBase {
 			private boolean ondemand;
 			private boolean whitelist;
 			private boolean enabled;
+			private boolean can;
 
 			public ChildHolderTask(int gPosition, int cPosition, ChildViewHolder theHolder, String theRestrictionName) {
 				groupPosition = gPosition;
@@ -1536,7 +1536,8 @@ public class ActivityApp extends ActivityBase {
 						whitelist = PrivacyManager.listWhitelisted(mAppInfo.getUid(), md.whitelist()).size() > 0;
 
 					enabled = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
-
+					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
+							rstate.mMethodName, true);
 					return holder;
 				}
 				return null;
@@ -1555,7 +1556,7 @@ public class ActivityApp extends ActivityBase {
 					holder.tvMethodName.setEnabled(parent.restricted);
 					holder.imgCbMethodAsk.setEnabled(!parent.asked);
 
-					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() ? R.attr.icon_used
+					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() && enabled && can ? R.attr.icon_used
 							: R.attr.icon_used_grayed));
 					holder.imgUsed.setVisibility(lastUsage == 0 && md.hasUsageData() ? View.INVISIBLE : View.VISIBLE);
 					holder.tvMethodName.setTypeface(null, lastUsage == 0 ? Typeface.NORMAL : Typeface.BOLD_ITALIC);
@@ -1584,13 +1585,9 @@ public class ActivityApp extends ActivityBase {
 					} else
 						holder.imgCbMethodAsk.setVisibility(View.GONE);
 
-					// Check if can be restricted
-					boolean can = enabled
-							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
-									rstate.mMethodName, true);
-					holder.llMethodName.setEnabled(can);
-					holder.tvMethodName.setEnabled(can);
-					holder.imgCbMethodAsk.setEnabled(can);
+					holder.llMethodName.setEnabled(enabled && can);
+					holder.tvMethodName.setEnabled(enabled && can);
+					holder.imgCbMethodAsk.setEnabled(enabled && can);
 
 					// Listen for restriction changes
 					if (parent.restricted)

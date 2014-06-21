@@ -1667,6 +1667,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			private RState rstate;
 			private boolean gondemand;
 			private boolean ondemand;
+			private boolean can;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
@@ -1702,6 +1703,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Get restriction/ask state
 					rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
 
+					// Get can restrict
+					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
+							rstate.mMethodName, true);
 					return holder;
 				}
 				return null;
@@ -1761,13 +1765,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.imgCbRestricted.setVisibility(View.VISIBLE);
 
 					// Display enabled state
-					boolean can = enabled
-							&& PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
-									rstate.mMethodName, true);
-					holder.tvName.setEnabled(can);
-					holder.imgCbRestricted.setEnabled(can);
-					holder.imgCbAsk.setEnabled(can);
-					holder.llName.setEnabled(can);
+					holder.tvName.setEnabled(enabled && can);
+					holder.imgCbRestricted.setEnabled(enabled && can);
+					holder.imgCbAsk.setEnabled(enabled && can);
+					holder.llName.setEnabled(enabled && can);
 
 					// Display selection
 					if (mListAppSelected.contains(xAppInfo))
