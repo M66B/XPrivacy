@@ -22,11 +22,13 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.6 BETA**
+
 * Fixed updating dangerous function restrictions when restrict dangerous enabled ([issue](/../../issues/1742))
 * Display system components as disabled when restricting system components is not enabled ([issue](/../../issues/1744))
 * Display no usage data when restriction not available or disabled
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.5 STABLE**
 
