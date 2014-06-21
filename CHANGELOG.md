@@ -22,7 +22,10 @@ Changelog
 
 **Next release**
 
+* Performance improvements
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
+	* *Build.SERIAL* cannot be restricted
+	* *Settings.Secure.ANDROID_ID* cannot be restricted
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

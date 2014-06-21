@@ -28,6 +28,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mCydia = false;
 	private static String mSecret = null;
 	private static List<String> mListHookError = new ArrayList<String>();
+	private static List<String> mListSystemService = new ArrayList<String>();
 
 	// http://developer.android.com/reference/android/Manifest.permission.html
 
@@ -271,6 +272,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public static void handleGetSystemService(String name, String className, String secret) {
 		Util.log(null, Log.INFO, "getSystemService " + name + "=" + className + " uid=" + Binder.getCallingUid());
+
+		synchronized (mListSystemService) {
+			if (mListSystemService.contains(className))
+				return;
+			else
+				mListSystemService.add(className);
+		}
 
 		if (name.equals(Context.ACCOUNT_SERVICE))
 			hookAllFilter(XAccountManager.getInstances(className), null, secret);
