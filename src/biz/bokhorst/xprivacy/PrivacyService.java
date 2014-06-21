@@ -1307,10 +1307,6 @@ public class PrivacyService {
 			try {
 				int userId = Util.getUserId(restriction.uid);
 
-				// Without handler nothing can be done
-				if (mHandler == null)
-					return false;
-
 				// Check if application
 				if (!PrivacyManager.isApplication(restriction.uid))
 					return false;
@@ -1400,8 +1396,27 @@ public class PrivacyService {
 						final AlertDialogHolder holder = new AlertDialogHolder();
 						final CountDownLatch latch = new CountDownLatch(1);
 
+						// Start a worker thread
+						final CountDownLatch sync = new CountDownLatch(1);
+						holder.thread = new Thread(new Runnable() {
+							@Override
+							public void run() {
+								try {
+									Looper.prepare();
+									holder.handler = new Handler();
+									holder.looper = Looper.myLooper();
+									sync.countDown();
+									Looper.loop();
+								} catch (Throwable ex) {
+									Util.bug(null, ex);
+								}
+							}
+						});
+						holder.thread.start();
+						sync.await();
+
 						// Run dialog in looper
-						mHandler.post(new Runnable() {
+						holder.handler.post(new Runnable() {
 							@Override
 							@SuppressLint("InlinedApi")
 							public void run() {
@@ -1437,11 +1452,11 @@ public class PrivacyService {
 											AlertDialog dialog = holder.dialog;
 											if (dialog != null && dialog.isShowing() && mProgress.getProgress() > 0) {
 												mProgress.incrementProgressBy(-1);
-												mHandler.postDelayed(this, 50);
+												holder.handler.postDelayed(this, 50);
 											}
 										}
 									};
-									mHandler.postDelayed(rProgress, 50);
+									holder.handler.postDelayed(rProgress, 50);
 								} catch (NameNotFoundException ex) {
 									latch.countDown();
 								} catch (Throwable ex) {
@@ -1452,17 +1467,26 @@ public class PrivacyService {
 						});
 
 						// Wait for dialog to complete
-						if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS)) {
+						if (latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS))
+							holder.handler.post(new Runnable() {
+								@Override
+								public void run() {
+									holder.looper.quit();
+								}
+							});
+						else {
 							Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
-							mHandler.post(new Runnable() {
+							holder.handler.post(new Runnable() {
 								@Override
 								public void run() {
 									AlertDialog dialog = holder.dialog;
 									if (dialog != null)
 										dialog.cancel();
+									holder.looper.quit();
 								}
 							});
 						}
+
 					} finally {
 						mOndemandSemaphore.release();
 					}
@@ -1477,6 +1501,9 @@ public class PrivacyService {
 		}
 
 		final class AlertDialogHolder {
+			public Thread thread = null;
+			public Handler handler = null;
+			public Looper looper = null;
 			public AlertDialog dialog = null;
 		}
 
