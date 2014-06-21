@@ -34,8 +34,7 @@ public class XSensorManager extends XHook {
 		getDefaultSensor, getSensorList
 	};
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = instance.getClass().getName();
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XSensorManager(Methods.getDefaultSensor, PrivacyManager.cSensors, className));
 		listHook.add(new XSensorManager(Methods.getSensorList, PrivacyManager.cSensors, className));

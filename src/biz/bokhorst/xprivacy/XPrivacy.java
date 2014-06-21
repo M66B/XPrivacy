@@ -207,69 +207,68 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	public static void handleGetSystemService(XHook hook, String name, Object instance) {
-		Util.log(hook, Log.INFO,
-				"getSystemService " + name + "=" + instance.getClass().getName() + " uid=" + Binder.getCallingUid());
+	public static void handleGetSystemService(String name, String className) {
+		Util.log(null, Log.INFO, "getSystemService " + name + "=" + className + " uid=" + Binder.getCallingUid());
 
 		// TODO: prevent multiple hooking
 		if (name.equals(Context.ACCOUNT_SERVICE)) {
 			// Account manager
 			if (!mAccountManagerHooked) {
-				hookAll(XAccountManager.getInstances(instance), mSecret);
+				hookAll(XAccountManager.getInstances(className), mSecret);
 				mAccountManagerHooked = true;
 			}
 		} else if (name.equals(Context.ACTIVITY_SERVICE)) {
 			// Activity manager
 			if (!mActivityManagerHooked) {
-				hookAll(XActivityManager.getInstances(instance), mSecret);
+				hookAll(XActivityManager.getInstances(className), mSecret);
 				mActivityManagerHooked = true;
 			}
 		} else if (name.equals(Context.CLIPBOARD_SERVICE)) {
 			// Clipboard manager
 			if (!mClipboardManagerHooked) {
-				XPrivacy.hookAll(XClipboardManager.getInstances(instance), mSecret);
+				XPrivacy.hookAll(XClipboardManager.getInstances(className), mSecret);
 				mClipboardManagerHooked = true;
 			}
 		} else if (name.equals(Context.CONNECTIVITY_SERVICE)) {
 			// Connectivity manager
 			if (!mConnectivityManagerHooked) {
-				hookAll(XConnectivityManager.getInstances(instance), mSecret);
+				hookAll(XConnectivityManager.getInstances(className), mSecret);
 				mConnectivityManagerHooked = true;
 			}
 		} else if (name.equals(Context.LOCATION_SERVICE)) {
 			// Location manager
 			if (!mLocationManagerHooked) {
-				hookAll(XLocationManager.getInstances(instance), mSecret);
+				hookAll(XLocationManager.getInstances(className), mSecret);
 				mLocationManagerHooked = true;
 			}
 		} else if (name.equals("PackageManager")) {
 			// Package manager
 			if (!mPackageManagerHooked) {
-				hookAll(XPackageManager.getInstances(instance), mSecret);
+				hookAll(XPackageManager.getInstances(className), mSecret);
 				mPackageManagerHooked = true;
 			}
 		} else if (name.equals(Context.SENSOR_SERVICE)) {
 			// Sensor manager
 			if (!mSensorManagerHooked) {
-				hookAll(XSensorManager.getInstances(instance), mSecret);
+				hookAll(XSensorManager.getInstances(className), mSecret);
 				mSensorManagerHooked = true;
 			}
 		} else if (name.equals(Context.TELEPHONY_SERVICE)) {
 			// Telephony manager
 			if (!mTelephonyManagerHooked) {
-				hookAll(XTelephonyManager.getInstances(instance), mSecret);
+				hookAll(XTelephonyManager.getInstances(className), mSecret);
 				mTelephonyManagerHooked = true;
 			}
 		} else if (name.equals(Context.WINDOW_SERVICE)) {
 			// Window manager
 			if (!mWindowManagerHooked) {
-				hookAll(XWindowManager.getInstances(instance), mSecret);
+				hookAll(XWindowManager.getInstances(className), mSecret);
 				mWindowManagerHooked = true;
 			}
 		} else if (name.equals(Context.WIFI_SERVICE)) {
 			// WiFi manager
 			if (!mWiFiManagerHooked) {
-				hookAll(XWifiManager.getInstances(instance), mSecret);
+				hookAll(XWifiManager.getInstances(className), mSecret);
 				mWiFiManagerHooked = true;
 			}
 		}

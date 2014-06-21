@@ -41,8 +41,7 @@ public class XWifiManager extends XHook {
 		getConfiguredNetworks, getConnectionInfo, getDhcpInfo, getScanResults, getWifiApConfiguration
 	};
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = instance.getClass().getName();
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods wifi : Methods.values())
 			listHook.add(new XWifiManager(wifi, PrivacyManager.cNetwork, className));

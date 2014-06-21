@@ -43,8 +43,7 @@ public class XClipboardManager extends XHook {
 		addPrimaryClipChangedListener, getPrimaryClip, getPrimaryClipDescription, getText, hasPrimaryClip, hasText, removePrimaryClipChangedListener
 	};
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = (instance == null ? null : instance.getClass().getName());
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods clip : Methods.values())
 			if (clip == Methods.removePrimaryClipChangedListener)

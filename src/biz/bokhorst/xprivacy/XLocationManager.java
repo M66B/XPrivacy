@@ -74,8 +74,7 @@ public class XLocationManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = instance.getClass().getName();
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods loc : Methods.values())
 			if (loc == Methods.removeUpdates)

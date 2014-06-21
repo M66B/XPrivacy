@@ -71,8 +71,7 @@ public class XAccountManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = instance.getClass().getName();
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
 		listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts, className));

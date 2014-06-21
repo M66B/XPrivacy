@@ -84,9 +84,7 @@ public class XTelephonyManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = instance.getClass().getName();
-
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
 
 		listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, null, className, 10));
