@@ -22,6 +22,8 @@ Changelog
 
 **Next release**
 
+* Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.6 BETA**

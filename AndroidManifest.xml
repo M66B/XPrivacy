@@ -33,6 +33,7 @@
     <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES" />
     <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_XPRIVACY" />
     <uses-permission android:name="biz.bokhorst.xprivacy.pro.CHECK" />
+    <uses-permission android:name="cydia.permission.SUBSTRATE" />
 
     <supports-screens
         android:anyDensity="true"
@@ -75,6 +76,11 @@
         <meta-data
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
             android:resource="@dimen/app_minimumsize_h" />
+
+        <!-- Cydia substrate -->
+        <meta-data
+            android:name="com.saurik.substrate.main"
+            android:value=".XPrivacy" />
 
         <activity
             android:name=".ActivityMain"
