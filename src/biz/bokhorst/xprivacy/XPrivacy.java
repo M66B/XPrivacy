@@ -46,7 +46,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		init();
 	}
 
-	// Xposed
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Check for LBE security master
 		if (Util.hasLBE())
@@ -107,6 +106,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		});
 	}
 
+	// Common
 	public static void init() {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
@@ -136,95 +136,95 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Activity manager service
-		hookAll(XActivityManagerService.getInstances(), mSecret);
+		hookAll(XActivityManagerService.getInstances(), null, mSecret);
 
 		// App widget manager
-		hookAll(XAppWidgetManager.getInstances(), mSecret);
+		hookAll(XAppWidgetManager.getInstances(), null, mSecret);
 
 		// Application
-		hookAll(XApplication.getInstances(), mSecret);
+		hookAll(XApplication.getInstances(), null, mSecret);
 
 		// Audio record
-		hookAll(XAudioRecord.getInstances(), mSecret);
+		hookAll(XAudioRecord.getInstances(), null, mSecret);
 
 		// Binder device
-		hookAll(XBinder.getInstances(), mSecret);
+		hookAll(XBinder.getInstances(), null, mSecret);
 
 		// Bluetooth adapater
-		hookAll(XBluetoothAdapter.getInstances(), mSecret);
+		hookAll(XBluetoothAdapter.getInstances(), null, mSecret);
 
 		// Bluetooth device
-		hookAll(XBluetoothDevice.getInstances(), mSecret);
+		hookAll(XBluetoothDevice.getInstances(), null, mSecret);
 
 		// Camera
-		hookAll(XCamera.getInstances(), mSecret);
+		hookAll(XCamera.getInstances(), null, mSecret);
 
 		// Content resolver
-		hookAll(XContentResolver.getInstances(), mSecret);
+		hookAll(XContentResolver.getInstances(), null, mSecret);
 
 		// Context wrapper
-		hookAll(XContextImpl.getInstances(), mSecret);
+		hookAll(XContextImpl.getInstances(), null, mSecret);
 
 		// Environment
-		hookAll(XEnvironment.getInstances(), mSecret);
+		hookAll(XEnvironment.getInstances(), null, mSecret);
 
 		// InetAddress
-		hookAll(XInetAddress.getInstances(), mSecret);
+		hookAll(XInetAddress.getInstances(), null, mSecret);
 
 		// InputDevice
-		hookAll(XInputDevice.getInstances(), mSecret);
+		hookAll(XInputDevice.getInstances(), null, mSecret);
 
 		// IO bridge
-		hookAll(XIoBridge.getInstances(), mSecret);
+		hookAll(XIoBridge.getInstances(), null, mSecret);
 
 		// Media recorder
-		hookAll(XMediaRecorder.getInstances(), mSecret);
+		hookAll(XMediaRecorder.getInstances(), null, mSecret);
 
 		// Network info
-		hookAll(XNetworkInfo.getInstances(), mSecret);
+		hookAll(XNetworkInfo.getInstances(), null, mSecret);
 
 		// Network interface
-		hookAll(XNetworkInterface.getInstances(), mSecret);
+		hookAll(XNetworkInterface.getInstances(), null, mSecret);
 
 		// NFC adapter
-		hookAll(XNfcAdapter.getInstances(), mSecret);
+		hookAll(XNfcAdapter.getInstances(), null, mSecret);
 
 		// Package manager service
-		hookAll(XProcess.getInstances(), mSecret);
+		hookAll(XProcess.getInstances(), null, mSecret);
 
 		// Process builder
-		hookAll(XProcessBuilder.getInstances(), mSecret);
+		hookAll(XProcessBuilder.getInstances(), null, mSecret);
 
 		// Resources
-		hookAll(XResources.getInstances(), mSecret);
+		hookAll(XResources.getInstances(), null, mSecret);
 
 		// Runtime
-		hookAll(XRuntime.getInstances(), mSecret);
+		hookAll(XRuntime.getInstances(), null, mSecret);
 
 		// Settings secure
 		if (!mCydia)
-			hookAll(XSettingsSecure.getInstances(), mSecret);
+			hookAll(XSettingsSecure.getInstances(), null, mSecret);
 
 		// SIP manager
-		hookAll(XSipManager.getInstances(), mSecret);
+		hookAll(XSipManager.getInstances(), null, mSecret);
 
 		// SMS manager
-		hookAll(XSmsManager.getInstances(), mSecret);
+		hookAll(XSmsManager.getInstances(), null, mSecret);
 
 		// System properties
-		hookAll(XSystemProperties.getInstances(), mSecret);
+		hookAll(XSystemProperties.getInstances(), null, mSecret);
 
 		// Web view
-		hookAll(XWebView.getInstances(), mSecret);
+		hookAll(XWebView.getInstances(), null, mSecret);
 
 		// Intent receive
-		hookAll(XActivityThread.getInstances(), mSecret);
+		hookAll(XActivityThread.getInstances(), null, mSecret);
 
 		// Intent send
-		hookAll(XActivity.getInstances(), mSecret);
+		hookAll(XActivity.getInstances(), null, mSecret);
 	}
 
-	public static void handleLoadPackage(String packageName, ClassLoader classLoader, String secret) {
+	private static void handleLoadPackage(String packageName, ClassLoader classLoader, String secret) {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
 		if (packageName.equals(self)) {
@@ -245,28 +245,28 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Advertising Id
 		try {
 			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, classLoader);
-			hookAllFilter(XAdvertisingIdClientInfo.getInstances(), classLoader, secret);
+			hookAll(XAdvertisingIdClientInfo.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}
 
 		// User activity
 		try {
 			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, classLoader);
-			hookAllFilter(XActivityRecognitionClient.getInstances(), classLoader, secret);
+			hookAll(XActivityRecognitionClient.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}
 
 		// Google auth
 		try {
 			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, classLoader);
-			hookAllFilter(XGoogleAuthUtil.getInstances(), classLoader, secret);
+			hookAll(XGoogleAuthUtil.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}
 
 		// Location client
 		try {
 			Class.forName("com.google.android.gms.location.LocationClient", false, classLoader);
-			hookAllFilter(XLocationClient.getInstances(), classLoader, secret);
+			hookAll(XLocationClient.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}
 	}
@@ -282,43 +282,33 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		if (name.equals(Context.ACCOUNT_SERVICE))
-			hookAllFilter(XAccountManager.getInstances(className), null, secret);
+			hookAll(XAccountManager.getInstances(className), null, secret);
 		else if (name.equals(Context.ACTIVITY_SERVICE))
-			hookAllFilter(XActivityManager.getInstances(className), null, secret);
+			hookAll(XActivityManager.getInstances(className), null, secret);
 		else if (name.equals(Context.CLIPBOARD_SERVICE))
-			hookAllFilter(XClipboardManager.getInstances(className), null, secret);
+			hookAll(XClipboardManager.getInstances(className), null, secret);
 		else if (name.equals(Context.CONNECTIVITY_SERVICE))
-			hookAllFilter(XConnectivityManager.getInstances(className), null, secret);
+			hookAll(XConnectivityManager.getInstances(className), null, secret);
 		else if (name.equals(Context.LOCATION_SERVICE))
-			hookAllFilter(XLocationManager.getInstances(className), null, secret);
+			hookAll(XLocationManager.getInstances(className), null, secret);
 		else if (name.equals("PackageManager"))
-			hookAllFilter(XPackageManager.getInstances(className), null, secret);
+			hookAll(XPackageManager.getInstances(className), null, secret);
 		else if (name.equals(Context.SENSOR_SERVICE))
-			hookAllFilter(XSensorManager.getInstances(className), null, secret);
+			hookAll(XSensorManager.getInstances(className), null, secret);
 		else if (name.equals(Context.TELEPHONY_SERVICE))
-			hookAllFilter(XTelephonyManager.getInstances(className), null, secret);
+			hookAll(XTelephonyManager.getInstances(className), null, secret);
 		else if (name.equals(Context.WINDOW_SERVICE))
-			hookAllFilter(XWindowManager.getInstances(className), null, secret);
+			hookAll(XWindowManager.getInstances(className), null, secret);
 		else if (name.equals(Context.WIFI_SERVICE))
-			hookAllFilter(XWifiManager.getInstances(className), null, secret);
-	}
-
-	public static void hookAll(List<XHook> listHook, String secret) {
-		for (XHook hook : listHook)
-			hook(hook, null, secret, false);
+			hookAll(XWifiManager.getInstances(className), null, secret);
 	}
 
 	public static void hookAll(List<XHook> listHook, ClassLoader classLoader, String secret) {
 		for (XHook hook : listHook)
-			hook(hook, classLoader, secret, false);
+			hook(hook, classLoader, secret);
 	}
 
-	public static void hookAllFilter(List<XHook> listHook, ClassLoader classLoader, String secret) {
-		for (XHook hook : listHook)
-			hook(hook, classLoader, secret, true);
-	}
-
-	private static void hook(final XHook hook, ClassLoader classLoader, String secret, boolean filter) {
+	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
 		// Check SDK version
 		Hook md = null;
 		String message = null;
@@ -427,20 +417,15 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Hook members
 			for (Member member : listMember)
 				try {
-					// TODO: isNative can return true for native methods
-					// TODO: isNative will return true for methods hooked by
-					// other modules
-					// TODO: isNative doesn't work for Cydia Substrate
-					if (!(filter && Modifier.isNative(member.getModifiers())))
-						if (mCydia)
-							if (member instanceof Method)
-								MS.hookMethod(member.getDeclaringClass(), (Method) member, new MethodAlterationEx(hook,
-										member));
-							else
-								MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member,
-										new MethodAlterationEx(hook, member));
+					if (mCydia)
+						if (member instanceof Method)
+							MS.hookMethod(member.getDeclaringClass(), (Method) member, new MethodAlterationEx(hook,
+									member));
 						else
-							XposedBridge.hookMethod(member, methodHook);
+							MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member, new MethodAlterationEx(
+									hook, member));
+					else
+						XposedBridge.hookMethod(member, methodHook);
 				} catch (NoSuchFieldError ex) {
 					Util.log(hook, Log.WARN, ex.toString());
 				} catch (Throwable ex) {
@@ -461,7 +446,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	public static class MethodAlterationEx extends MS.MethodAlteration<Object, Object> {
+	private static class MethodAlterationEx extends MS.MethodAlteration<Object, Object> {
 		private XHook mHook;
 		private Member mMember;
 
