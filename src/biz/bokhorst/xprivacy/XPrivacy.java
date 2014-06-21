@@ -24,6 +24,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
+// TODO: fix link error when using Cydia Substrate
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mCydia = false;
 	private static String mSecret = null;
@@ -426,7 +427,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Hook members
 			for (Member member : listMember)
 				try {
-					if (!filter || !Modifier.isNative(member.getModifiers()))
+					// TODO: isNative can return true for native methods
+					// TODO: isNative will return true for methods hooked by
+					// other modules
+					// TODO: isNative doesn't work for Cydia Substrate
+					if (!(filter && Modifier.isNative(member.getModifiers())))
 						if (mCydia)
 							if (member instanceof Method)
 								MS.hookMethod(member.getDeclaringClass(), (Method) member, new MethodAlterationEx(hook,
