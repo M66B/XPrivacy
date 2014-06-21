@@ -1415,12 +1415,6 @@ public class PrivacyService {
 									alertDialog.show();
 									holder.dialog = alertDialog;
 
-									// Hide status bar
-									// http://developer.android.com/training/system-ui/status.html
-									if (Build.VERSION.SDK_INT >= 16)
-										alertDialog.getWindow().getDecorView()
-												.setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
-
 									// Progress bar
 									final ProgressBar mProgress = (ProgressBar) alertDialog
 											.findViewById(R.id.pbProgress);
