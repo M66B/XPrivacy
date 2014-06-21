@@ -1031,6 +1031,14 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		int userId = Util.getUserId(Process.myUid());
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTutorialMain, Boolean.FALSE.toString());
+
+		Dialog dlgUsage = new Dialog(this);
+		dlgUsage.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dlgUsage.setTitle(R.string.title_usage_header);
+		dlgUsage.setContentView(R.layout.usage);
+		dlgUsage.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		dlgUsage.setCancelable(true);
+		dlgUsage.show();
 	}
 
 	// Tasks
