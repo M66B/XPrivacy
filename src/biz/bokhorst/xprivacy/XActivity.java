@@ -129,7 +129,7 @@ public class XActivity extends XHook {
 				String name = (String) param.args[0];
 				Object instance = param.getResult();
 				if (name != null && instance != null)
-					XPrivacy.handleGetSystemService(name, instance.getClass().getName());
+					XPrivacy.handleGetSystemService(name, instance.getClass().getName(), getSecret());
 			}
 		}
 	}

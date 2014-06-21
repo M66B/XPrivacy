@@ -154,70 +154,74 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Log load
 		Util.log(null, Log.INFO, String.format("Load package=%s uid=%d", lpparam.packageName, Process.myUid()));
 
+		handleLoadPackage(lpparam.packageName, lpparam.classLoader, mSecret);
+	}
+
+	public static void handleLoadPackage(String packageName, ClassLoader classLoader, String secret) {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
-		if (lpparam.packageName.equals(self)) {
-			hookAll(XUtilHook.getInstances(), lpparam.classLoader, mSecret, true);
+		if (packageName.equals(self)) {
+			hookAll(XUtilHook.getInstances(), classLoader, secret, true);
 			return;
 		}
 
 		// Build SERIAL
-		if (PrivacyManager.getRestriction(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", mSecret))
+		if (PrivacyManager.getRestriction(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", secret))
 			XposedHelpers.setStaticObjectField(Build.class, "SERIAL",
 					PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
 
 		// Advertising Id
 		try {
-			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, lpparam.classLoader);
-			hookAll(XAdvertisingIdClientInfo.getInstances(), lpparam.classLoader, mSecret, true);
+			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, classLoader);
+			hookAll(XAdvertisingIdClientInfo.getInstances(), classLoader, secret, true);
 		} catch (Throwable ignored) {
 		}
 
 		// User activity
 		try {
-			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, lpparam.classLoader);
-			hookAll(XActivityRecognitionClient.getInstances(), lpparam.classLoader, mSecret, true);
+			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, classLoader);
+			hookAll(XActivityRecognitionClient.getInstances(), classLoader, secret, true);
 		} catch (Throwable ignored) {
 		}
 
 		// Google auth
 		try {
-			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, lpparam.classLoader);
-			hookAll(XGoogleAuthUtil.getInstances(), lpparam.classLoader, mSecret, true);
+			Class.forName("com.google.android.gms.auth.GoogleAuthUtil", false, classLoader);
+			hookAll(XGoogleAuthUtil.getInstances(), classLoader, secret, true);
 		} catch (Throwable ignored) {
 		}
 
 		// Location client
 		try {
-			Class.forName("com.google.android.gms.location.LocationClient", false, lpparam.classLoader);
-			hookAll(XLocationClient.getInstances(), lpparam.classLoader, mSecret, true);
+			Class.forName("com.google.android.gms.location.LocationClient", false, classLoader);
+			hookAll(XLocationClient.getInstances(), classLoader, secret, true);
 		} catch (Throwable ignored) {
 		}
 	}
 
-	public static void handleGetSystemService(String name, String className) {
+	public static void handleGetSystemService(String name, String className, String secret) {
 		Util.log(null, Log.INFO, "getSystemService " + name + "=" + className + " uid=" + Binder.getCallingUid());
 
 		if (name.equals(Context.ACCOUNT_SERVICE))
-			hookAll(XAccountManager.getInstances(className), mSecret, true);
+			hookAll(XAccountManager.getInstances(className), secret, true);
 		else if (name.equals(Context.ACTIVITY_SERVICE))
-			hookAll(XActivityManager.getInstances(className), mSecret, true);
+			hookAll(XActivityManager.getInstances(className), secret, true);
 		else if (name.equals(Context.CLIPBOARD_SERVICE))
-			XPrivacy.hookAll(XClipboardManager.getInstances(className), mSecret, true);
+			XPrivacy.hookAll(XClipboardManager.getInstances(className), secret, true);
 		else if (name.equals(Context.CONNECTIVITY_SERVICE))
-			hookAll(XConnectivityManager.getInstances(className), mSecret, true);
+			hookAll(XConnectivityManager.getInstances(className), secret, true);
 		else if (name.equals(Context.LOCATION_SERVICE))
-			hookAll(XLocationManager.getInstances(className), mSecret, true);
+			hookAll(XLocationManager.getInstances(className), secret, true);
 		else if (name.equals("PackageManager"))
-			hookAll(XPackageManager.getInstances(className), mSecret, true);
+			hookAll(XPackageManager.getInstances(className), secret, true);
 		else if (name.equals(Context.SENSOR_SERVICE))
-			hookAll(XSensorManager.getInstances(className), mSecret, true);
+			hookAll(XSensorManager.getInstances(className), secret, true);
 		else if (name.equals(Context.TELEPHONY_SERVICE))
-			hookAll(XTelephonyManager.getInstances(className), mSecret, true);
+			hookAll(XTelephonyManager.getInstances(className), secret, true);
 		else if (name.equals(Context.WINDOW_SERVICE))
-			hookAll(XWindowManager.getInstances(className), mSecret, true);
+			hookAll(XWindowManager.getInstances(className), secret, true);
 		else if (name.equals(Context.WIFI_SERVICE))
-			hookAll(XWifiManager.getInstances(className), mSecret, true);
+			hookAll(XWifiManager.getInstances(className), secret, true);
 	}
 
 	public static void hookAll(List<XHook> listHook, String secret) {
