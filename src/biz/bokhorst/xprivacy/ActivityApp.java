@@ -1558,7 +1558,8 @@ public class ActivityApp extends ActivityBase {
 
 					holder.imgUsed.setImageResource(getThemed(md.hasUsageData() && enabled && can ? R.attr.icon_used
 							: R.attr.icon_used_grayed));
-					holder.imgUsed.setVisibility(lastUsage == 0 && md.hasUsageData() ? View.INVISIBLE : View.VISIBLE);
+					holder.imgUsed.setVisibility(lastUsage == 0 && md.hasUsageData() && enabled && can ? View.INVISIBLE
+							: View.VISIBLE);
 					holder.tvMethodName.setTypeface(null, lastUsage == 0 ? Typeface.NORMAL : Typeface.BOLD_ITALIC);
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
