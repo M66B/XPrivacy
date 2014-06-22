@@ -130,7 +130,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_whitelist">Biela listina \'%1$s\'</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
-    <string name="title_dontknow">Don\'t know</string>
+    <string name="title_dontknow">Neviem</string>
     <string name="title_pleasesubmit">Odošlite, prosím, vaše obmedzenia na pomoc ostatným</string>
     <string name="title_permissions">Povolenia</string>
     <string name="title_set_restrict">Obmedziť (kategórie)</string>
@@ -141,11 +141,11 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_disable_ondemand">Zakázať obmedzenie na požiadanie</string>
     <string name="title_default">Predvolená</string>
     <string name="title_alternate">Alternatívna</string>
-    <string name="title_usage_header">Usage</string>
-    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
-    <string name="title_usage_text_2">2. Tap on the application icon</string>
-    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
-    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
+    <string name="title_usage_header">Použitie</string>
+    <string name="title_usage_text_1">1. Nájdite aplikáciu na obmedzenie v hlavnom zozname aplikácií</string>
+    <string name="title_usage_text_2">2. Kliknite na ikonu aplikácie</string>
+    <string name="title_usage_text_3">3. Kliknite na prvé zaškrtávacie pole v akejkoľvek kategórii, ktorú chcete obmedziť</string>
+    <string name="title_usage_footer">Používajte zdravý rozum pri obmedzovaní. Nočakávajte prístup k internetu, ak ste obmedzili kategóriu Internet, atď.</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
