@@ -28,6 +28,7 @@ Changelog
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
 	* *Build.SERIAL* cannot be restricted
 	* *Settings.Secure.ANDROID_ID* cannot be restricted
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
