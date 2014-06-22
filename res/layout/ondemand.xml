@@ -1,177 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:paddingLeft="16dip"
+    android:paddingRight="16dip"
+    android:paddingTop="16dip" >
 
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables" >
+
+        <ImageView
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/ic_launcher" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="6dip"
+            android:text="@string/app_name"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dip"
+        android:layout_marginTop="6dip"
+        android:background="?android:attr/dividerVertical" />
+
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dip"
         android:orientation="vertical" >
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            tools:ignore="UseCompoundDrawables" >
+            android:orientation="vertical" >
 
-            <ImageView
-                android:id="@+id/ivAppIcon"
-                android:layout_width="32dip"
-                android:layout_height="32dip"
-                tools:ignore="ContentDescription" />
-
-            <TextView
-                android:id="@+id/tvUid"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="6dip"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:orientation="horizontal"
+                tools:ignore="UseCompoundDrawables" >
+
+                <ImageView
+                    android:id="@+id/ivAppIcon"
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    tools:ignore="ContentDescription" />
+
+                <TextView
+                    android:id="@+id/tvUid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <TextView
+                    android:id="@+id/tvAppName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="3dip"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/tvAppName"
+                android:id="@+id/tvAttempt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingLeft="3dip"
-                android:textAppearance="?android:attr/textAppearanceMedium" />
+                android:paddingTop="6dip" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@android:color/darker_gray" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dip"
+                android:shrinkColumns="1" >
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/title_category" />
+
+                    <TextView
+                        android:id="@+id/tvCategory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dip"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/title_function"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvFunction"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dip"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/rowParameters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/title_parameters"
+                        android:textSize="12sp" />
+
+                    <TextView
+                        android:id="@+id/tvParameters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dip"
+                        android:textSize="12sp"
+                        android:textStyle="bold" />
+                </TableRow>
+            </TableLayout>
+
+            <CheckBox
+                android:id="@+id/cbCategory"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dip"
+                android:text="@string/title_applycat" >
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/cbOnce"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/cbWhitelist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone" >
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/cbWhitelistExtra1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone" >
+            </CheckBox>
+
+            <CheckBox
+                android:id="@+id/cbWhitelistExtra2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone" >
+            </CheckBox>
+
+            <ProgressBar
+                android:id="@+id/pbProgress"
+                style="@android:style/Widget.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:indeterminate="false"
+                android:paddingTop="6dip" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dip"
+                android:text="@string/title_pleasesubmit"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="italic" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginTop="6dip"
+                android:background="?android:attr/dividerVertical" />
+
+            <LinearLayout
+                style="?android:attr/buttonBarStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" >
+
+                <Button
+                    android:id="@+id/btnAllow"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/title_allow"
+                    android:textAppearance="?android:attr/textAppearanceSmall" >
+                </Button>
+
+                <View
+                    android:layout_width="1dip"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/dividerVertical" />
+
+                <Button
+                    android:id="@+id/btnDontKnow"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/title_dontknow"
+                    android:textAppearance="?android:attr/textAppearanceSmall" >
+                </Button>
+
+                <View
+                    android:layout_width="1dip"
+                    android:layout_height="match_parent"
+                    android:background="?android:attr/dividerVertical" />
+
+                <Button
+                    android:id="@+id/btnDeny"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="left"
+                    android:layout_weight="1"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:text="@string/title_deny"
+                    android:textAppearance="?android:attr/textAppearanceSmall" >
+                </Button>
+            </LinearLayout>
         </LinearLayout>
+    </ScrollView>
 
-        <TextView
-            android:id="@+id/tvAttempt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="6dip" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@android:color/darker_gray" />
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="6dip"
-            android:shrinkColumns="1" >
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/title_category" />
-
-                <TextView
-                    android:id="@+id/tvCategory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="6dip"
-                    android:textStyle="bold" />
-            </TableRow>
-
-            <TableRow
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/title_function"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tvFunction"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="6dip"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </TableRow>
-
-            <TableRow
-                android:id="@+id/rowParameters"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:singleLine="true"
-                    android:text="@string/title_parameters"
-                    android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tvParameters"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingLeft="6dip"
-                    android:textSize="12sp"
-                    android:textStyle="bold" />
-            </TableRow>
-        </TableLayout>
-
-        <CheckBox
-            android:id="@+id/cbCategory"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="6dip"
-            android:text="@string/title_applycat" >
-        </CheckBox>
-
-        <CheckBox
-            android:id="@+id/cbOnce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </CheckBox>
-
-        <CheckBox
-            android:id="@+id/cbWhitelist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:visibility="gone" >
-        </CheckBox>
-
-        <CheckBox
-            android:id="@+id/cbWhitelistExtra1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:visibility="gone" >
-        </CheckBox>
-
-        <CheckBox
-            android:id="@+id/cbWhitelistExtra2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:visibility="gone" >
-        </CheckBox>
-
-        <ProgressBar
-            android:id="@+id/pbProgress"
-            style="@android:style/Widget.ProgressBar.Horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:indeterminate="false"
-            android:paddingTop="6dip" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingTop="6dip"
-            android:text="@string/title_pleasesubmit"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textStyle="italic" />
-    </LinearLayout>
-
-</ScrollView>
+</LinearLayout>

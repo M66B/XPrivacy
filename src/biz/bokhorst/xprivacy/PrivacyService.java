@@ -19,10 +19,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -45,9 +43,11 @@ import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -1395,6 +1395,7 @@ public class PrivacyService {
 
 						final AlertDialogHolder holder = new AlertDialogHolder();
 						final CountDownLatch latch = new CountDownLatch(1);
+						final WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
 						// Run dialog in looper
 						mHandler.post(new Runnable() {
@@ -1403,28 +1404,35 @@ public class PrivacyService {
 							public void run() {
 								try {
 									// Dialog
-									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
-											result, context, latch);
-									AlertDialog alertDialog = builder.create();
-									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_PHONE);
-									alertDialog.getWindow().setSoftInputMode(
-											WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-									alertDialog.setCancelable(false);
-									alertDialog.setCanceledOnTouchOutside(false);
-									alertDialog.show();
-									holder.dialog = alertDialog;
+									View dialog = getOnDemandDialog(restriction, hook, appInfo, result, context, latch);
+
+									// Get resources
+									String self = PrivacyService.class.getPackage().getName();
+									Resources resources = context.getPackageManager().getResourcesForApplication(self);
+
+									WindowManager.LayoutParams params = new WindowManager.LayoutParams(
+											WindowManager.LayoutParams.TYPE_PHONE);
+									params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+									params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+									params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
+									params.gravity = Gravity.CENTER;
+									params.setTitle(resources.getString(R.string.app_name));
+									//     android:background="@android:color/background_dark"
+
+
+									wm.addView(dialog, params);
+									holder.dialog = dialog;
 
 									// Progress bar
-									final ProgressBar mProgress = (ProgressBar) alertDialog
-											.findViewById(R.id.pbProgress);
+									final ProgressBar mProgress = (ProgressBar) dialog.findViewById(R.id.pbProgress);
 									mProgress.setMax(cMaxOnDemandDialog * 20);
 									mProgress.setProgress(cMaxOnDemandDialog * 20);
 
 									Runnable rProgress = new Runnable() {
 										@Override
 										public void run() {
-											AlertDialog dialog = holder.dialog;
-											if (dialog != null && dialog.isShowing() && mProgress.getProgress() > 0) {
+											View dialog = holder.dialog;
+											if (dialog != null && dialog.isShown() && mProgress.getProgress() > 0) {
 												mProgress.incrementProgressBy(-1);
 												mHandler.postDelayed(this, 50);
 											}
@@ -1441,17 +1449,17 @@ public class PrivacyService {
 						});
 
 						// Wait for dialog to complete
-						if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS)) {
+						if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS))
 							Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
-							mHandler.post(new Runnable() {
-								@Override
-								public void run() {
-									AlertDialog dialog = holder.dialog;
-									if (dialog != null)
-										dialog.cancel();
-								}
-							});
-						}
+
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								View dialog = holder.dialog;
+								if (dialog != null)
+									wm.removeView(dialog);
+							}
+						});
 
 					} finally {
 						mOndemandSemaphore.release();
@@ -1467,12 +1475,11 @@ public class PrivacyService {
 		}
 
 		final class AlertDialogHolder {
-			public AlertDialog dialog = null;
+			public View dialog = null;
 		}
 
-		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, final Hook hook,
-				ApplicationInfoEx appInfo, final PRestriction result, Context context, final CountDownLatch latch)
-				throws NameNotFoundException {
+		private View getOnDemandDialog(final PRestriction restriction, final Hook hook, ApplicationInfoEx appInfo,
+				final PRestriction result, Context context, final CountDownLatch latch) throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1492,6 +1499,9 @@ public class PrivacyService {
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
 			final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
 			final CheckBox cbWhitelistExtra2 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra2);
+			Button btnDeny = (Button) view.findViewById(R.id.btnDeny);
+			Button btnDontKnow = (Button) view.findViewById(R.id.btnDontKnow);
+			Button btnAllow = (Button) view.findViewById(R.id.btnAllow);
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
@@ -1588,70 +1598,63 @@ public class PrivacyService {
 				}
 			});
 
-			// Ask
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK);
-			alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
-			alertDialogBuilder.setView(view);
-			alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
-			alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// Deny
-							result.restricted = true;
-							if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked()
-									&& !cbWhitelistExtra2.isChecked()) {
-								mSelectCategory = cbCategory.isChecked();
-								mSelectOnce = cbOnce.isChecked();
-							}
-							if (cbWhitelist.isChecked())
-								onDemandWhitelist(restriction, null, result, hook);
-							else if (cbWhitelistExtra1.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
-							else if (cbWhitelistExtra2.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
-							else if (cbOnce.isChecked())
-								onDemandOnce(restriction, result);
-							else
-								onDemandChoice(restriction, cbCategory.isChecked(), true);
-							latch.countDown();
-						}
-					});
-			alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_allow),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// Allow
-							result.restricted = false;
-							if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked()
-									&& !cbWhitelistExtra2.isChecked()) {
-								mSelectCategory = cbCategory.isChecked();
-								mSelectOnce = cbOnce.isChecked();
-							}
-							if (cbWhitelist.isChecked())
-								onDemandWhitelist(restriction, null, result, hook);
-							else if (cbWhitelistExtra1.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
-							else if (cbWhitelistExtra2.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
-							else if (cbOnce.isChecked())
-								onDemandOnce(restriction, result);
-							else
-								onDemandChoice(restriction, cbCategory.isChecked(), false);
-							latch.countDown();
-						}
-					});
-			alertDialogBuilder.setNeutralButton(resources.getString(R.string.title_dontknow),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// Deny once
-							result.restricted = true;
-							onDemandOnce(restriction, result);
-							latch.countDown();
-						}
-					});
-			return alertDialogBuilder;
+			btnAllow.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// Allow
+					result.restricted = false;
+					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()) {
+						mSelectCategory = cbCategory.isChecked();
+						mSelectOnce = cbOnce.isChecked();
+					}
+					if (cbWhitelist.isChecked())
+						onDemandWhitelist(restriction, null, result, hook);
+					else if (cbWhitelistExtra1.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
+					else if (cbWhitelistExtra2.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
+					else if (cbOnce.isChecked())
+						onDemandOnce(restriction, result);
+					else
+						onDemandChoice(restriction, cbCategory.isChecked(), false);
+					latch.countDown();
+				}
+			});
+
+			btnDontKnow.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// Deny once
+					result.restricted = true;
+					onDemandOnce(restriction, result);
+					latch.countDown();
+				}
+			});
+
+			btnDeny.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// Deny
+					result.restricted = true;
+					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()) {
+						mSelectCategory = cbCategory.isChecked();
+						mSelectOnce = cbOnce.isChecked();
+					}
+					if (cbWhitelist.isChecked())
+						onDemandWhitelist(restriction, null, result, hook);
+					else if (cbWhitelistExtra1.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
+					else if (cbWhitelistExtra2.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
+					else if (cbOnce.isChecked())
+						onDemandOnce(restriction, result);
+					else
+						onDemandChoice(restriction, cbCategory.isChecked(), true);
+					latch.countDown();
+				}
+			});
+
+			return view;
 		}
 
 		private String[] getXExtra(PRestriction restriction, Hook hook) {
