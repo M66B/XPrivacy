@@ -159,6 +159,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Camera
 		hookAll(XCamera.getInstances(), null, mSecret);
 
+		// Class
+		hookAll(XClass.getInstances(), null, mSecret);
+
 		// Content resolver
 		hookAll(XContentResolver.getInstances(), null, mSecret);
 
@@ -207,6 +210,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// SIP manager
 		hookAll(XSipManager.getInstances(), null, mSecret);
+
+		// Service manager
+		hookAll(XServiceManager.getInstances(), null, mSecret);
 
 		// SMS manager
 		hookAll(XSmsManager.getInstances(), null, mSecret);
