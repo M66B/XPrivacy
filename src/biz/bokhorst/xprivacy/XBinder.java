@@ -119,6 +119,7 @@ public class XBinder extends XHook {
 
 	private void checkIPC(XParam param) throws Throwable {
 		// Entry point from android_util_Binder.cpp's onTransact
+		int code = (Integer) param.args[0];
 		int flags = (Integer) param.args[3];
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
 		flags &= FLAG_ALL;
@@ -130,7 +131,8 @@ public class XBinder extends XHook {
 			Binder binder = (Binder) param.thisObject;
 			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 			if (cServiceDescriptor.contains(descriptor)) {
-				Util.log(this, Log.WARN, "can restrict name=" + descriptor + " uid=" + uid + " my=" + Process.myUid());
+				Util.log(this, Log.WARN, "can restrict name=" + descriptor + " code=" + code + " flags=" + flags
+						+ " uid=" + uid + " my=" + Process.myUid());
 				if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
 					// Get reply parcel
 					Parcel reply = null;
