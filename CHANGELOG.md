@@ -22,6 +22,9 @@ Changelog
 
 **Next release**
 
+* Allow management binder transactions
+	* The IPC restrictions will not be triggered when not needed anymore
+	* *service list* will not trigger IPC restrictions anymore
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
 	* *Build.SERIAL* cannot be restricted
 	* *Settings.Secure.ANDROID_ID* cannot be restricted

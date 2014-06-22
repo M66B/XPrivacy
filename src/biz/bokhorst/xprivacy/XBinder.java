@@ -18,6 +18,13 @@ public class XBinder extends XHook {
 	private static int FLAG_ALL = 0xFFFF;
 	private static int MASK_TOKEN = 0xFFFF;
 
+	int PING_TRANSACTION = ('_' << 24) | ('P' << 16) | ('N' << 8) | 'G';
+	int DUMP_TRANSACTION = ('_' << 24) | ('D' << 16) | ('M' << 8) | 'P';
+	int INTERFACE_TRANSACTION = ('_' << 24) | ('N' << 16) | ('T' << 8) | 'F';
+	int TWEET_TRANSACTION = ('_' << 24) | ('T' << 16) | ('W' << 8) | 'T';
+	int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
+	int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
+
 	// Service name should one-to-one correspond to a service descriptor
 	// TODO: sensor interface
 
@@ -119,10 +126,16 @@ public class XBinder extends XHook {
 
 	private void checkIPC(XParam param) throws Throwable {
 		// Entry point from android_util_Binder.cpp's onTransact
+		int code = (Integer) param.args[0];
 		int flags = (Integer) param.args[3];
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
 		flags &= FLAG_ALL;
 		param.args[3] = flags;
+
+		// Allow management transaction
+		if (code == PING_TRANSACTION || code == DUMP_TRANSACTION || code == INTERFACE_TRANSACTION
+				|| code == TWEET_TRANSACTION || code == LIKE_TRANSACTION || code == SYSPROPS_TRANSACTION)
+			return;
 
 		int uid = Binder.getCallingUid();
 		if (token != mToken && PrivacyManager.isApplication(uid)) {
@@ -130,8 +143,8 @@ public class XBinder extends XHook {
 			Binder binder = (Binder) param.thisObject;
 			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 			if (cServiceDescriptor.contains(descriptor)) {
-				Util.log(this, Log.WARN, "can restrict name=" + descriptor + " code=" + param.args[0] + " flags="
-						+ param.args[3] + " uid=" + uid + " my=" + Process.myUid());
+				Util.log(this, Log.WARN, "can restrict name=" + descriptor + " code=" + code + " flags=" + flags
+						+ " uid=" + uid + " my=" + Process.myUid());
 				if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
 					// Get reply parcel
 					Parcel reply = null;
