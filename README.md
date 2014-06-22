@@ -1197,6 +1197,8 @@ Testing:
 Serious contributors do not have to donate for the [pro version](http://www.xprivacy.eu/).
 New translations are considered as a serious contribution, but translating a few lines of text is not.
 
+The goal of the project is to provide a decent, free and open source privacy solution for Android to as many as possible people.
+
 Please note that you agree to the license below by contributing, including the copyrights.
 
 License
