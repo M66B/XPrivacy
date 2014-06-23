@@ -55,7 +55,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="2dip"
                 android:layout_marginTop="6dip"
-                android:background="@android:color/darker_gray" />
+                android:background="?android:attr/divider" />
 
             <!-- Info -->
 
@@ -202,7 +202,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dip"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@android:color/darker_gray" />
+        android:background="?android:attr/divider" />
 
     <!-- What it is all about -->
 

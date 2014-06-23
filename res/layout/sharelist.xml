@@ -116,7 +116,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dip"
-                android:background="@android:color/darker_gray" />
+                android:background="?android:attr/divider" />
 
             <LinearLayout
                 style="?android:attr/buttonBarButtonStyle"
@@ -136,7 +136,7 @@
                 <View
                     android:layout_width="1dip"
                     android:layout_height="match_parent"
-                    android:background="@android:color/darker_gray" />
+                    android:background="?android:attr/divider" />
 
                 <Button
                     android:id="@+id/btnOk"
@@ -161,7 +161,7 @@
                     android:id="@+id/vShareProgressEmpty"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
-                    android:background="@android:color/darker_gray"
+                    android:background="?android:attr/divider"
                     android:paddingBottom="2dip" />
 
                 <View
