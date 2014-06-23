@@ -23,11 +23,14 @@ Changelog
 **Next release**
 
 * Allow management binder transactions
-	* The IPC restrictions will not be triggered when not needed anymore
 	* *service list* will not trigger IPC restrictions anymore
+* Made IPC restrictions apply to Java calls too
+	* **The IPC restrictions need to be set again, because they were renamed to prevent trouble** 
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
 	* *Build.SERIAL* cannot be restricted
 	* *Settings.Secure.ANDROID_ID* cannot be restricted
+* Made update service not run for future versions
+	* For testing purposes
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
