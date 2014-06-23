@@ -9,6 +9,7 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
+import android.text.TextUtils;
 import android.util.Log;
 
 public class XBinder extends XHook {
@@ -19,12 +20,12 @@ public class XBinder extends XHook {
 	private static int FLAG_ALL = 0xFFFF;
 	private static int MASK_TOKEN = 0xFFFF;
 
-	int PING_TRANSACTION = ('_' << 24) | ('P' << 16) | ('N' << 8) | 'G';
-	int DUMP_TRANSACTION = ('_' << 24) | ('D' << 16) | ('M' << 8) | 'P';
-	int INTERFACE_TRANSACTION = ('_' << 24) | ('N' << 16) | ('T' << 8) | 'F';
-	int TWEET_TRANSACTION = ('_' << 24) | ('T' << 16) | ('W' << 8) | 'T';
-	int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
-	int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
+	private static int PING_TRANSACTION = ('_' << 24) | ('P' << 16) | ('N' << 8) | 'G';
+	private static int DUMP_TRANSACTION = ('_' << 24) | ('D' << 16) | ('M' << 8) | 'P';
+	private static int INTERFACE_TRANSACTION = ('_' << 24) | ('N' << 16) | ('T' << 8) | 'F';
+	private static int TWEET_TRANSACTION = ('_' << 24) | ('T' << 16) | ('W' << 8) | 'T';
+	private static int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
+	private static int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
 
 	// Service name should one-to-one correspond to a service descriptor
 	// TODO: sensor interface
@@ -99,8 +100,6 @@ public class XBinder extends XHook {
 		"android.content.ContentResolver",
 		"com.android.providers.contacts.ContactsProvider2",
 		"com.android.location.provider.LocationProviderBase",
-
-		"android.os.Debug",
 
 		"android.view.ViewConfiguration",
 
@@ -178,6 +177,12 @@ public class XBinder extends XHook {
 	}
 
 	private void markIPC(XParam param) throws Throwable {
+
+		// Allow management transaction
+		int code = (Integer) param.args[0];
+		if (isManagementTransaction(code))
+			return;
+
 		int uid = Binder.getCallingUid();
 		if (PrivacyManager.isApplication(uid)) {
 			// Get interface name
@@ -195,8 +200,7 @@ public class XBinder extends XHook {
 				String[] serviceClassName = cServiceClassName.get(idx).split(",");
 				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
 				for (int i = 0; i < ste.length; i++)
-					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)
-							|| ste[i].getClassName().equals("android.os.BinderProxy")) {
+					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)) {
 						found = true;
 
 						// Check white list
@@ -204,21 +208,19 @@ public class XBinder extends XHook {
 							for (String whiteListed : cWhiteList)
 								if (ste[i + 1].getClassName().equals(whiteListed)) {
 									white = true;
-									// TODO: set OK
 									break;
 								}
 
 						// Check manager class name
-						if (!ok)
-							for (int j = i + 1; j < ste.length; j++) {
-								for (String name : serviceClassName)
-									if (ste[j].getClassName().startsWith(name)) {
-										ok = true;
-										break;
-									}
-								if (ok)
+						for (int j = i + 1; j < ste.length; j++) {
+							for (String name : serviceClassName)
+								if (ste[j].getClassName().startsWith(name)) {
+									ok = true;
 									break;
-							}
+								}
+							if (ok)
+								break;
+						}
 						break;
 					}
 
@@ -258,8 +260,7 @@ public class XBinder extends XHook {
 		param.args[3] = flags;
 
 		// Allow management transaction
-		if (code == PING_TRANSACTION || code == DUMP_TRANSACTION || code == INTERFACE_TRANSACTION
-				|| code == TWEET_TRANSACTION || code == LIKE_TRANSACTION || code == SYSPROPS_TRANSACTION)
+		if (isManagementTransaction(code))
 			return;
 
 		int uid = Binder.getCallingUid();
@@ -295,5 +296,11 @@ public class XBinder extends XHook {
 				}
 			}
 		}
+	}
+
+	private static boolean isManagementTransaction(int code) {
+		return (code == PING_TRANSACTION || code == DUMP_TRANSACTION || code == INTERFACE_TRANSACTION
+				|| code == TWEET_TRANSACTION || code == LIKE_TRANSACTION || code == SYSPROPS_TRANSACTION);
+
 	}
 }
