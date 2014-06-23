@@ -46,6 +46,8 @@ Changelog
 	* You can use [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) instead
 * Updated Slovak translation
 
+**Please send the support info when asked for**
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.6 BETA**
