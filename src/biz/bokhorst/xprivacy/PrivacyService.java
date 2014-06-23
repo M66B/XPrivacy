@@ -414,6 +414,11 @@ public class PrivacyService {
 					if (hook == null)
 						// Can happen after replacing apk
 						Util.log(null, Log.WARN, "Hook not found in service: " + restriction);
+					else if (hook.getFrom() != null) {
+						String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
+						if (new Version(version).compareTo(hook.getFrom()) < 0)
+							return mresult;
+					}
 				}
 
 				// Check for system component
@@ -1417,8 +1422,6 @@ public class PrivacyService {
 									params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 									params.gravity = Gravity.CENTER;
 									params.setTitle(resources.getString(R.string.app_name));
-									//     android:background="@android:color/background_dark"
-
 
 									wm.addView(dialog, params);
 									holder.dialog = dialog;

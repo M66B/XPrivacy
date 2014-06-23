@@ -153,13 +153,13 @@ public class UpdateService extends Service {
 	private static void upgrade(Context context) throws NameNotFoundException {
 		// Get previous version number
 		int userId = Util.getUserId(Process.myUid());
-		String currentVersion = Util.getSelfVersionName(context);
-		Version sVersion = new Version(PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0"));
+		Version currentVersion = new Version(Util.getSelfVersionName(context));
+		Version storedVersion = new Version(PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0"));
 		boolean dangerous = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
 
 		// Check if upgrade needed
-		if (sVersion.compareTo(new Version("0.0")) != 0) {
-			Util.log(null, Log.WARN, "Starting upgrade from version " + sVersion + " to version " + currentVersion
+		if (storedVersion.compareTo(new Version("0.0")) != 0 && currentVersion.compareTo(storedVersion) > 0) {
+			Util.log(null, Log.WARN, "Starting upgrade from version " + storedVersion + " to version " + currentVersion
 					+ " dangerous=" + dangerous);
 
 			// Upgrade packages
@@ -169,12 +169,12 @@ public class UpdateService extends Service {
 
 			for (int i = 1; i <= listApp.size(); i++) {
 				int uid = listApp.get(i - 1).uid;
-				List<PRestriction> listRestriction = getUpgradeWork(sVersion, uid, dangerous);
+				List<PRestriction> listRestriction = getUpgradeWork(storedVersion, uid, dangerous);
 				PrivacyManager.setRestrictionList(listRestriction);
 
 				// Reset on demand for system applications
 				if (new ApplicationInfoEx(context, listApp.get(i - 1).uid).isSystem())
-					if (sVersion.compareTo(new Version("2.0.38")) < 0)
+					if (storedVersion.compareTo(new Version("2.0.38")) < 0)
 						if (PrivacyManager.getSettingBool(listApp.get(i - 1).uid, PrivacyManager.cSettingOnDemand,
 								false)) {
 							Util.log(null, Log.WARN, "Disabling on demand for uid=" + listApp.get(i - 1).uid);
@@ -188,24 +188,25 @@ public class UpdateService extends Service {
 					notifyProgress(context, Util.NOTIFY_UPGRADE, format, 100 * (i - first) / (listApp.size() - first));
 			}
 			if (first == 0)
-				Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
+				Util.log(null, Log.WARN, "Nothing to upgrade from version " + storedVersion + " to " + currentVersion);
 
 			// Remove legacy setting
 			if (dangerous)
 				PrivacyManager.setSetting(userId, PrivacyManager.cSettingDangerous, null);
 
 			// Wipe template
-			if (sVersion.compareTo(new Version("2.0.34")) < 0)
+			if (storedVersion.compareTo(new Version("2.0.34")) < 0)
 				for (PSetting setting : PrivacyManager.getSettingList(0, null))
 					if (Meta.cTypeTemplate.equals(setting.type)) {
 						Util.log(null, Log.WARN, "Deleting " + setting);
 						PrivacyManager.setSetting(setting.uid, setting.type, setting.name, null);
 					}
 		} else
-			Util.log(null, Log.WARN, "Nothing to upgrade version=" + sVersion);
+			Util.log(null, Log.WARN, "No upgrade from version " + storedVersion + " to " + currentVersion);
 
 		// Set new version number
-		PrivacyManager.setSetting(userId, PrivacyManager.cSettingVersion, currentVersion);
+		if (currentVersion.compareTo(storedVersion) > 0)
+			PrivacyManager.setSetting(userId, PrivacyManager.cSettingVersion, currentVersion.toString());
 
 		// Cleanup
 		PrivacyManager.removeLegacySalt(userId);
