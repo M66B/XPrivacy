@@ -165,9 +165,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Camera
 		hookAll(XCamera.getInstances(), null, mSecret);
 
-		// Class
-		hookAll(XClass.getInstances(), null, mSecret);
-
 		// Clipboard manager
 		hookAll(XClipboardManager.getInstances(null), null, mSecret);
 
@@ -182,6 +179,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Environment
 		hookAll(XEnvironment.getInstances(), null, mSecret);
+
+		// Field
+		hookAll(XField.getInstances(), null, mSecret);
 
 		// InetAddress
 		hookAll(XInetAddress.getInstances(), null, mSecret);

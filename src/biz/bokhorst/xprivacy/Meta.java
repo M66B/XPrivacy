@@ -141,14 +141,7 @@ public class Meta {
 		mListHook.add(new Hook("ipc", "IWindowManager", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "IWifiManager", "", 1, "2.1.7", null).dangerous());
 
-		mListHook.add(new Hook("ipc", "getDeclaredField", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "getDeclaredFields", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "getDeclaredMethod", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "getDeclaredMethods", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "getField", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "getFields", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "getMethod", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "getMethods", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "Reflection", "", 1, "2.1.7", null).dangerous());
 
 		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
 		mListHook.add(new Hook("location", "addNmeaListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 5, null, null));
