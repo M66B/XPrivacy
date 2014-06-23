@@ -105,34 +105,66 @@ public class XBinder extends XHook {
 	// @formatter:on
 
 	// @formatter:off
-	public static List<String> cWhiteList = Arrays.asList(new String[] {
-		"android.app.Activity",
-		"android.app.ActivityThread",
-		"android.app.ActivityThread$Idler",
-		"android.app.ActivityThread$StopInfo",
-		"android.app.ContextImpl",
-		"android.app.Instrumentation",
-		"android.app.KeyguardManager",
-		"android.app.LoadedApk",
-		"android.app.PendingIntent",
-		"android.app.Service",
-
-		"android.appwidget.AppWidgetHost",
-
-		"android.content.BroadcastReceiver$PendingResult",
-
-		"com.android.providers.contacts.ContactsProvider2",
-		"com.android.location.provider.LocationProviderBase",
-
-		"com.android.systemui.recent.RecentsPanelView",
-		"com.android.systemui.statusbar.phone.NavigationBarView",
-		"com.android.systemui.statusbar.phone.PhoneStatusBar",
-		"com.android.systemui.statusbar.phone.QuickSettings",
-
-		"com.android.keyguard.KeyguardUpdateMonitor",
-		"com.android.keyguard.KeyguardViewMediator",
-
-		"com.android.internal.widget.LockPatternUtils"
+	public static List<String[]> cException = Arrays.asList(new String[][] {
+		new String[] {}, // "android.accounts.AccountManager",
+		new String[] {
+				"android.content.ContentResolver",
+				"android.content.BroadcastReceiver$PendingResult",
+				"android.app.Activity",
+				"android.app.ActivityThread",
+				"android.app.ActivityThread$Idler",
+				"android.app.ActivityThread$StopInfo",
+				"android.app.ContextImpl",
+				"android.app.PendingIntent",
+				"android.app.Service",
+				"android.app.SearchManager",
+				"android.app.Instrumentation",
+				"com.android.systemui.recent.RecentsPanelView",
+				"com.android.systemui.statusbar.BaseStatusBar$NotificationClicker",
+				"com.android.systemui.statusbar.phone.QuickSettings",
+				"com.android.systemui.statusbar.phone.NavigationBarView",
+				"com.android.keyguard.KeyguardActivityLauncher$2",
+				"com.android.keyguard.KeyguardUpdateMonitor",
+				"com.android.keyguard.KeyguardViewMediator", // "android.app.ActivityManager",
+		},
+		new String[] {}, // "android.content.ClipboardManager",
+		new String[] {
+				"android.app.ActivityThread"
+		}, // "android.net.ConnectivityManager",
+		new String[] {
+				"com.android.providers.contacts.ContactsProvider2"
+		}, // "android.content.ContentResolver,android.content.ContentProviderClient",
+		new String[] {
+				"com.android.location.provider.LocationProviderBase", // "android.location.LocationManager",
+		},
+		new String[] {}, // "android.telephony.TelephonyManager",
+		new String[] {}, // "android.telephony.TelephonyManager",
+		new String[] {
+				"android.app.ActivityThread",
+				"android.app.LoadedApk",
+				"android.nfc.NfcAdapter", // "android.app.ApplicationPackageManager",
+		},
+		new String[] {}, // "android.telephony.TelephonyManager",
+		new String[] {}, // "android.telephony.TelephonyManager",
+		new String[] {
+				"android.view.ViewConfiguration",
+				"android.app.KeyguardManager",
+				"com.android.internal.widget.LockPatternUtils",
+				"com.android.systemui.SearchPanelView",
+				"com.android.systemui.statusbar.phone.PhoneStatusBar", // "android.view.WindowManagerImpl",
+		},
+		new String[] {}, // "android.net.wifi.WifiManager",
+		new String[] {}, // "android.net.sip.SipManager",
+		new String[] {}, // "android.telephony.SmsManager",
+		new String[] {
+				"android.nfc.NfcActivityManager",
+		}, // "android.nfc.NfcAdapter",
+		new String[] {
+				"android.appwidget.AppWidgetHost", // "android.appwidget.AppWidgetManager",
+		},
+		new String[] {}, // "android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
+		new String[] {}, // "android.hardware.input.InputManager",
+		new String[] {}, // "android.hardware.SystemSensorManager"
 	});
 	// @formatter:on
 
@@ -221,25 +253,13 @@ public class XBinder extends XHook {
 						found = true;
 
 						// Check white list
-						if (i + 1 < ste.length)
-							if ("android.app.ActivityManagerProxy".equals(ste[i].getClassName())
-									&& "android.content.ContentResolver".equals(ste[i + 1].getClassName()))
-								white = true;
-
-							else if ("android.content.pm.IPackageManager$Stub$Proxy".equals(ste[i].getClassName())
-									&& "android.nfc.NfcAdapter".equals(ste[i + 1].getClassName()))
-								white = true;
-
-							else if ("android.view.IWindowManager$Stub$Proxy".equals(ste[i].getClassName())
-									&& "android.view.ViewConfiguration".equals(ste[i + 1].getClassName()))
-								white = true;
-
-							else
-								for (String whiteListed : cWhiteList)
-									if (ste[i + 1].getClassName().equals(whiteListed)) {
-										white = true;
-										break;
-									}
+						if (i + 1 < ste.length) {
+							for (String exception : cException.get(idx))
+								if (exception.equals(ste[i + 1].getClassName())) {
+									white = true;
+									break;
+								}
+						}
 
 						// Check manager class name
 						for (int j = i + 1; j < ste.length; j++) {
