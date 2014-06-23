@@ -9,7 +9,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
-import android.text.TextUtils;
 import android.util.Log;
 
 public class XBinder extends XHook {
@@ -97,7 +96,6 @@ public class XBinder extends XHook {
 		"android.app.Service",
 
 		"android.content.BroadcastReceiver$PendingResult",
-		"android.content.ContentResolver",
 		"com.android.providers.contacts.ContactsProvider2",
 		"com.android.location.provider.LocationProviderBase",
 
