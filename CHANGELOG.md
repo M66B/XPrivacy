@@ -31,6 +31,7 @@ Changelog
 	* *Settings.Secure.ANDROID_ID* cannot be restricted
 * Made update service not run for future versions
 	* For testing purposes
+* Performance improvements for AOSP based ROMs, including CyanogenMod and OmniROM
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

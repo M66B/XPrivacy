@@ -17,6 +17,7 @@ import android.location.GpsStatus;
 public class XLocationManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
+	private static final String cClassName = "android.location.LocationManager";
 	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
 
 	private XLocationManager(Methods method, String restrictionName, String className) {
@@ -76,11 +77,16 @@ public class XLocationManager extends XHook {
 
 	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		for (Methods loc : Methods.values())
-			if (loc == Methods.removeUpdates)
-				listHook.add(new XLocationManager(loc, null, className, 3));
-			else
-				listHook.add(new XLocationManager(loc, PrivacyManager.cLocation, className));
+		if (!cClassName.equals(className)) {
+			if (className == null)
+				className = cClassName;
+
+			for (Methods loc : Methods.values())
+				if (loc == Methods.removeUpdates)
+					listHook.add(new XLocationManager(loc, null, className, 3));
+				else
+					listHook.add(new XLocationManager(loc, PrivacyManager.cLocation, className));
+		}
 		return listHook;
 	}
 

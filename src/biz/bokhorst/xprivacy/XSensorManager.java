@@ -9,6 +9,7 @@ import android.util.Log;
 public class XSensorManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
+	private static final String cClassName = "android.hardware.SystemSensorManager";
 
 	private XSensorManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
@@ -36,8 +37,13 @@ public class XSensorManager extends XHook {
 
 	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XSensorManager(Methods.getDefaultSensor, PrivacyManager.cSensors, className));
-		listHook.add(new XSensorManager(Methods.getSensorList, PrivacyManager.cSensors, className));
+		if (!cClassName.equals(className)) {
+			if (className == null)
+				className = cClassName;
+
+			listHook.add(new XSensorManager(Methods.getDefaultSensor, PrivacyManager.cSensors, className));
+			listHook.add(new XSensorManager(Methods.getSensorList, PrivacyManager.cSensors, className));
+		}
 		return listHook;
 	}
 

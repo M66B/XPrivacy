@@ -135,6 +135,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			Util.bug(null, ex);
 		}
 
+		// Account manager
+		hookAll(XAccountManager.getInstances(null), null, mSecret);
+
+		// Activity manager
+		hookAll(XActivityManager.getInstances(null), null, mSecret);
+
 		// Activity manager service
 		hookAll(XActivityManagerService.getInstances(), null, mSecret);
 
@@ -162,6 +168,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Class
 		hookAll(XClass.getInstances(), null, mSecret);
 
+		// Clipboard manager
+		hookAll(XClipboardManager.getInstances(null), null, mSecret);
+
+		// Connectivity manager
+		hookAll(XConnectivityManager.getInstances(null), null, mSecret);
+
 		// Content resolver
 		hookAll(XContentResolver.getInstances(), null, mSecret);
 
@@ -180,6 +192,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// IO bridge
 		hookAll(XIoBridge.getInstances(), null, mSecret);
 
+		// Location manager
+		hookAll(XLocationManager.getInstances(null), null, mSecret);
+
 		// Media recorder
 		hookAll(XMediaRecorder.getInstances(), null, mSecret);
 
@@ -193,6 +208,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XNfcAdapter.getInstances(), null, mSecret);
 
 		// Package manager service
+		hookAll(XPackageManager.getInstances(null), null, mSecret);
+
+		// Process
 		hookAll(XProcess.getInstances(), null, mSecret);
 
 		// Process builder
@@ -203,6 +221,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Runtime
 		hookAll(XRuntime.getInstances(), null, mSecret);
+
+		// Sensor manager
+		hookAll(XSensorManager.getInstances(null), null, mSecret);
 
 		// Settings secure
 		if (!mCydia)
@@ -217,8 +238,17 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// System properties
 		hookAll(XSystemProperties.getInstances(), null, mSecret);
 
+		// Telephone service
+		hookAll(XTelephonyManager.getInstances(null), null, mSecret);
+
 		// Web view
 		hookAll(XWebView.getInstances(), null, mSecret);
+
+		// Window service
+		hookAll(XWindowManager.getInstances(null), null, mSecret);
+
+		// Wi-Fi service
+		hookAll(XWifiManager.getInstances(null), null, mSecret);
 
 		// Intent receive
 		hookAll(XActivityThread.getInstances(), null, mSecret);

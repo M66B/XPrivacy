@@ -9,6 +9,7 @@ import android.util.Log;
 public class XActivityManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
+	private static final String cClassName = "android.app.ActivityManager";
 
 	private XActivityManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
@@ -33,8 +34,13 @@ public class XActivityManager extends XHook {
 
 	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		for (Methods act : Methods.values())
-			listHook.add(new XActivityManager(act, PrivacyManager.cSystem, className));
+		if (!cClassName.equals(className)) {
+			if (className == null)
+				className = cClassName;
+
+			for (Methods act : Methods.values())
+				listHook.add(new XActivityManager(act, PrivacyManager.cSystem, className));
+		}
 		return listHook;
 	}
 

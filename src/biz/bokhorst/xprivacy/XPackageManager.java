@@ -15,6 +15,7 @@ import android.content.pm.ResolveInfo;
 public class XPackageManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
+	private static final String cClassName = "android.app.ApplicationPackageManager";
 
 	private XPackageManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
@@ -56,8 +57,13 @@ public class XPackageManager extends XHook {
 
 	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		for (Methods am : Methods.values())
-			listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
+		if (!cClassName.equals(className)) {
+			if (className == null)
+				className = cClassName;
+
+			for (Methods am : Methods.values())
+				listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
+		}
 		return listHook;
 	}
 

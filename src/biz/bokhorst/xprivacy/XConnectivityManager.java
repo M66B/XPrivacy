@@ -9,6 +9,7 @@ import android.util.Log;
 public class XConnectivityManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
+	private static final String cClassName = "android.net.ConnectivityManager";
 
 	private XConnectivityManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
@@ -32,8 +33,13 @@ public class XConnectivityManager extends XHook {
 
 	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		for (Methods connmgr : Methods.values())
-			listHook.add(new XConnectivityManager(connmgr, PrivacyManager.cInternet, className));
+		if (!cClassName.equals(className)) {
+			if (className == null)
+				className = cClassName;
+
+			for (Methods connmgr : Methods.values())
+				listHook.add(new XConnectivityManager(connmgr, PrivacyManager.cInternet, className));
+		}
 		return listHook;
 	}
 
