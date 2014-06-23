@@ -75,10 +75,10 @@ public class XBinder extends XHook {
 		"android.location.LocationManager",
 		"android.telephony.TelephonyManager",
 		"android.telephony.TelephonyManager",
-		"android.content.pm.PackageManager,android.app.ApplicationPackageManager",
+		"android.app.ApplicationPackageManager",
 		"android.telephony.TelephonyManager",
 		"android.telephony.TelephonyManager",
-		"android.view.WindowManager",
+		"android.view.WindowManagerImpl",
 		"android.net.wifi.WifiManager"
 	});
 	// @formatter:on
