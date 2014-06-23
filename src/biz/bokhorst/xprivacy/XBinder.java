@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.os.Binder;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
 import android.util.Log;
@@ -64,6 +65,58 @@ public class XBinder extends XHook {
 	});
 	// @formatter:on
 
+	// @formatter:off
+	public static List<String> cServiceClassName = Arrays.asList(new String[] {
+		"android.accounts.AccountManager",
+		"android.app.ActivityManager",
+		"android.text.ClipboardManager,android.content.ClipboardManager",
+		"android.net.ConnectivityManager",
+		"android.content.ContentResolver,android.content.ContentProviderClient",
+		"android.location.LocationManager",
+		"android.telephony.TelephonyManager",
+		"android.telephony.TelephonyManager",
+		"android.content.pm.PackageManager,android.app.ApplicationPackageManager",
+		"android.telephony.TelephonyManager",
+		"android.telephony.TelephonyManager",
+		"android.view.WindowManager",
+		"android.net.wifi.WifiManager"
+	});
+	// @formatter:on
+
+	// @formatter:off
+	public static List<String> cWhiteList = Arrays.asList(new String[] {
+		"android.app.Activity",
+		"android.app.ActivityThread",
+		"android.app.ActivityThread$Idler",
+		"android.app.ActivityThread$StopInfo",
+		"android.app.ContextImpl",
+		"android.app.Instrumentation",
+		"android.app.LoadedApk",
+		"android.app.PendingIntent",
+		"android.app.Service",
+
+		"android.content.BroadcastReceiver$PendingResult",
+		"com.android.providers.contacts.ContactsProvider2",
+		"com.android.location.provider.LocationProviderBase",
+
+		"android.view.ViewConfiguration",
+
+		"android.nfc.NfcAdapter",
+
+		"com.android.systemui.statusbar.phone.NavigationBarView",
+		"com.android.systemui.statusbar.phone.PhoneStatusBar",
+		"com.android.systemui.statusbar.phone.QuickSettings",
+
+		"android.app.KeyguardManager",
+		"com.android.keyguard.KeyguardUpdateMonitor",
+		"com.android.keyguard.KeyguardViewMediator",
+
+		"com.android.internal.widget.LockPatternUtils",
+
+		//"com.google.android.partnersetup.MccFallback",
+	});
+	// @formatter:on
+
 	private XBinder(Methods method, String restrictionName, int sdk) {
 		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
@@ -116,12 +169,80 @@ public class XBinder extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	private void markIPC(XParam param) {
-		int flags = (Integer) param.args[3];
-		if ((flags & ~FLAG_ALL) != 0)
-			Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags));
-		flags |= (mToken << BITS_TOKEN);
-		param.args[3] = flags;
+	@Override
+	protected void after(XParam param) throws Throwable {
+		// Do nothing
+	}
+
+	private void markIPC(XParam param) throws Throwable {
+		int uid = Binder.getCallingUid();
+		if (PrivacyManager.isApplication(uid)) {
+			// Get interface name
+			IBinder binder = (IBinder) param.thisObject;
+			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+
+			// Check if listed descriptor
+			int idx = cServiceDescriptor.indexOf(descriptor);
+			if (idx >= 0) {
+				// Search class in call stack
+				boolean ok = false;
+				boolean white = false;
+				boolean found = false;
+				String proxy = descriptor.replace(".I", ".") + "Proxy";
+				String[] className = cServiceClassName.get(idx).split(",");
+				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+				for (int i = 0; i < ste.length; i++)
+					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)) {
+						found = true;
+
+						// Check white list
+						if (i + 1 < ste.length)
+							for (String whiteListed : cWhiteList)
+								if (ste[i + 1].getClassName().equals(whiteListed)) {
+									white = true;
+									// TODO: set OK
+									break;
+								}
+
+						// Check manager class name
+						if (!ok)
+							for (int j = i + 1; j < ste.length; j++) {
+								for (String cname : className)
+									if (ste[j].getClassName().startsWith(cname)) {
+										ok = true;
+										break;
+									}
+								if (ok)
+									break;
+							}
+						break;
+					}
+
+				// Internal checks
+				if (!found) {
+					Util.log(this, Log.ERROR, "Missing descriptor=" + descriptor);
+					Util.logStack(this, Log.ERROR);
+				}
+				if (white)
+					if (ok) {
+						Util.log(this, Log.ERROR, "Whitelisted " + descriptor);
+						Util.logStack(this, Log.ERROR);
+					} else
+						ok = true;
+
+				// Conditionally mark
+				if (ok) {
+					int flags = (Integer) param.args[3];
+					if ((flags & ~FLAG_ALL) != 0)
+						Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags));
+					flags |= (mToken << BITS_TOKEN);
+					param.args[3] = flags;
+				} else {
+					Util.log(this, Log.WARN, "Unmarked descriptor=" + descriptor);
+					Util.logStack(this, Log.WARN);
+				}
+			}
+		}
 	}
 
 	private void checkIPC(XParam param) throws Throwable {
@@ -140,12 +261,13 @@ public class XBinder extends XHook {
 		int uid = Binder.getCallingUid();
 		if (token != mToken && PrivacyManager.isApplication(uid)) {
 			// Get interface name
-			Binder binder = (Binder) param.thisObject;
+			IBinder binder = (IBinder) param.thisObject;
 			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 			if (cServiceDescriptor.contains(descriptor)) {
 				Util.log(this, Log.WARN, "can restrict name=" + descriptor + " code=" + code + " flags=" + flags
 						+ " uid=" + uid + " my=" + Process.myUid());
-				if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
+				String[] name = descriptor.split("\\.");
+				if (getRestricted(uid, PrivacyManager.cIPC, name[name.length - 1])) {
 					// Get reply parcel
 					Parcel reply = null;
 					try {
@@ -169,10 +291,5 @@ public class XBinder extends XHook {
 				}
 			}
 		}
-	}
-
-	@Override
-	protected void after(XParam param) throws Throwable {
-		// Do nothing
 	}
 }

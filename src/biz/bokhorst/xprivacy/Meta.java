@@ -127,21 +127,20 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cTypeIPAddress));
 
-		mListHook.add(new Hook("ipc", "android.accounts.IAccountManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.app.IActivityManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.content.IClipboard", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.net.IConnectivityManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.content.IContentService", "", 1, "1.99.40", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.location.ILocationManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistry", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistryMSim", "", 1, "1.99.26", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.content.pm.IPackageManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.IPhoneSubInfo", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.msim.IPhoneSubInfoMSim", "", 1, "1.99.26", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.view.IWindowManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.net.wifi.IWifiManager", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "IAccountManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IActivityManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IClipboard", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IConnectivityManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IContentService", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "ILocationManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "ITelephonyRegistry", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "ITelephonyRegistryMSim", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IPackageManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IPhoneSubInfo", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IPhoneSubInfoMSim", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IWindowManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IWifiManager", "", 1, "2.1.7", null).dangerous());
 
-		mListHook.add(new Hook("ipc", "getService", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "getDeclaredField", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "getDeclaredFields", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "getDeclaredMethod", "", 1, "2.1.7", null).dangerous());
