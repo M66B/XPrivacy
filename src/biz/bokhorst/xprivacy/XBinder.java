@@ -96,8 +96,11 @@ public class XBinder extends XHook {
 		"android.app.Service",
 
 		"android.content.BroadcastReceiver$PendingResult",
+		"android.content.ContentResolver",
 		"com.android.providers.contacts.ContactsProvider2",
 		"com.android.location.provider.LocationProviderBase",
+
+		"android.os.Debug",
 
 		"android.view.ViewConfiguration",
 
@@ -189,10 +192,11 @@ public class XBinder extends XHook {
 				boolean white = false;
 				boolean found = false;
 				String proxy = descriptor.replace(".I", ".") + "Proxy";
-				String[] className = cServiceClassName.get(idx).split(",");
+				String[] serviceClassName = cServiceClassName.get(idx).split(",");
 				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
 				for (int i = 0; i < ste.length; i++)
-					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)) {
+					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)
+							|| ste[i].getClassName().equals("android.os.BinderProxy")) {
 						found = true;
 
 						// Check white list
@@ -207,8 +211,8 @@ public class XBinder extends XHook {
 						// Check manager class name
 						if (!ok)
 							for (int j = i + 1; j < ste.length; j++) {
-								for (String cname : className)
-									if (ste[j].getClassName().startsWith(cname)) {
+								for (String name : serviceClassName)
+									if (ste[j].getClassName().startsWith(name)) {
 										ok = true;
 										break;
 									}
