@@ -41,6 +41,7 @@ Changelog
 * Made update service not run for future versions
 	* For testing purposes
 * Performance improvements for AOSP based ROMs, including CyanogenMod and OmniROM
+* Attempt to fix on demand dialog freezing
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

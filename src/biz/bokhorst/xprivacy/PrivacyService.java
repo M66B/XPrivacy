@@ -30,6 +30,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
+import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
@@ -1415,10 +1416,13 @@ public class PrivacyService {
 									String self = PrivacyService.class.getPackage().getName();
 									Resources resources = context.getPackageManager().getResourcesForApplication(self);
 
-									WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-											WindowManager.LayoutParams.TYPE_PHONE);
+									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+									params.type = WindowManager.LayoutParams.TYPE_PHONE;
+									params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+									params.dimAmount = 0.75f;
 									params.width = WindowManager.LayoutParams.WRAP_CONTENT;
 									params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+									params.format = PixelFormat.TRANSLUCENT;
 									params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 									params.gravity = Gravity.CENTER;
 									params.setTitle(resources.getString(R.string.app_name));
@@ -1438,6 +1442,7 @@ public class PrivacyService {
 											if (dialog != null && dialog.isShown() && mProgress.getProgress() > 0) {
 												mProgress.incrementProgressBy(-1);
 												mHandler.postDelayed(this, 50);
+												dialog.bringToFront();
 											}
 										}
 									};
