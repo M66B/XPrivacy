@@ -1419,7 +1419,8 @@ public class PrivacyService {
 									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
 									params.type = WindowManager.LayoutParams.TYPE_PHONE;
 									params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-									params.dimAmount = 0.75f;
+									params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
+									params.dimAmount = 0.85f;
 									params.width = WindowManager.LayoutParams.WRAP_CONTENT;
 									params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 									params.format = PixelFormat.TRANSLUCENT;
@@ -1442,7 +1443,6 @@ public class PrivacyService {
 											if (dialog != null && dialog.isShown() && mProgress.getProgress() > 0) {
 												mProgress.incrementProgressBy(-1);
 												mHandler.postDelayed(this, 50);
-												dialog.bringToFront();
 											}
 										}
 									};
