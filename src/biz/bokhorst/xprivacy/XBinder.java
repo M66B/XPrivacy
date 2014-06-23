@@ -124,6 +124,7 @@ public class XBinder extends XHook {
 		"com.android.providers.contacts.ContactsProvider2",
 		"com.android.location.provider.LocationProviderBase",
 
+		"com.android.systemui.recent.RecentsPanelView",
 		"com.android.systemui.statusbar.phone.NavigationBarView",
 		"com.android.systemui.statusbar.phone.PhoneStatusBar",
 		"com.android.systemui.statusbar.phone.QuickSettings",
