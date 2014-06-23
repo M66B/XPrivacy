@@ -24,7 +24,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="1dip"
-        android:background="?android:attr/divider" />
+        android:background="@android:color/darker_gray" />
 
     <ListView
         android:id="@+id/lvWhitelist"
