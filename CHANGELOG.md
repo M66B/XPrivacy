@@ -34,14 +34,14 @@ Changelog
 	* *IBluetoothManager*
 	* *IInputManager*
 	* *SensorServer* 
-* Added IPC reflection restriction
+* Added reflection restriction (IPC category)
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
 	* *Build.SERIAL* cannot be restricted
 	* *Settings.Secure.ANDROID_ID* cannot be restricted
 * Made update service not run for future versions
 	* For testing purposes
 * Performance improvements for AOSP based ROMs, including CyanogenMod and OmniROM
-* Attempt to fix on demand dialog freezing
+* Attempted to fix on demand dialog freezing
 * Removed enabling on demand restricting on update
 	* You can use [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) instead
 * Updated Slovak translation

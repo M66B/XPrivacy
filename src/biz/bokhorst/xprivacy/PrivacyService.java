@@ -1748,6 +1748,7 @@ public class PrivacyService {
 							result.asked = true;
 							setRestrictionInternal(result);
 						} else {
+							// TODO: preserve asked state
 							result.methodName = hook.getName();
 							result.restricted = restrict && !hook.isDangerous();
 							result.asked = category || (hook.isDangerous() && hook.whitelist() == null);
