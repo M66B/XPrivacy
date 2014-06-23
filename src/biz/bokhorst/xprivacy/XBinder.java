@@ -99,7 +99,7 @@ public class XBinder extends XHook {
 		"android.nfc.NfcAdapter",
 		"android.appwidget.AppWidgetManager",
 		"android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
-		"android.view.InputDevice",
+		"android.hardware.input.InputManager",
 		"android.hardware.SystemSensorManager"
 	});
 	// @formatter:on
@@ -112,29 +112,26 @@ public class XBinder extends XHook {
 		"android.app.ActivityThread$StopInfo",
 		"android.app.ContextImpl",
 		"android.app.Instrumentation",
+		"android.app.KeyguardManager",
 		"android.app.LoadedApk",
 		"android.app.PendingIntent",
 		"android.app.Service",
 
+		"android.appwidget.AppWidgetHost",
+
 		"android.content.BroadcastReceiver$PendingResult",
+
 		"com.android.providers.contacts.ContactsProvider2",
 		"com.android.location.provider.LocationProviderBase",
-
-		"android.view.ViewConfiguration",
-
-		"android.nfc.NfcAdapter",
 
 		"com.android.systemui.statusbar.phone.NavigationBarView",
 		"com.android.systemui.statusbar.phone.PhoneStatusBar",
 		"com.android.systemui.statusbar.phone.QuickSettings",
 
-		"android.app.KeyguardManager",
 		"com.android.keyguard.KeyguardUpdateMonitor",
 		"com.android.keyguard.KeyguardViewMediator",
 
-		"com.android.internal.widget.LockPatternUtils",
-
-		//"com.google.android.partnersetup.MccFallback",
+		"com.android.internal.widget.LockPatternUtils"
 	});
 	// @formatter:on
 
@@ -227,6 +224,15 @@ public class XBinder extends XHook {
 							if ("android.app.ActivityManagerProxy".equals(ste[i].getClassName())
 									&& "android.content.ContentResolver".equals(ste[i + 1].getClassName()))
 								white = true;
+
+							else if ("android.content.pm.IPackageManager$Stub$Proxy".equals(ste[i].getClassName())
+									&& "android.nfc.NfcAdapter".equals(ste[i + 1].getClassName()))
+								white = true;
+
+							else if ("android.view.IWindowManager$Stub$Proxy".equals(ste[i].getClassName())
+									&& "android.view.ViewConfiguration".equals(ste[i + 1].getClassName()))
+								white = true;
+
 							else
 								for (String whiteListed : cWhiteList)
 									if (ste[i + 1].getClassName().equals(whiteListed)) {
@@ -254,7 +260,7 @@ public class XBinder extends XHook {
 				}
 				if (white)
 					if (ok) {
-						Util.log(this, Log.ERROR, "Whitelisted " + descriptor);
+						Util.log(this, Log.ERROR, "Whitelisted descriptor=" + descriptor);
 						Util.logStack(this, Log.ERROR);
 					} else
 						ok = true;
