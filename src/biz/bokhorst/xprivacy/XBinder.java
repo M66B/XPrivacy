@@ -69,7 +69,7 @@ public class XBinder extends XHook {
 	public static List<String> cServiceClassName = Arrays.asList(new String[] {
 		"android.accounts.AccountManager",
 		"android.app.ActivityManager",
-		"android.text.ClipboardManager,android.content.ClipboardManager",
+		"android.content.ClipboardManager",
 		"android.net.ConnectivityManager",
 		"android.content.ContentResolver,android.content.ContentProviderClient",
 		"android.location.LocationManager",

@@ -300,11 +300,9 @@ public class Requirements {
 		}
 
 		// Check context services
-
 		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager" });
 		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager" });
-		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.text.ClipboardManager",
-				"android.content.ClipboardManager" });
+		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
 		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager" });
 		checkService(context, Context.LOCATION_SERVICE, new String[] { "android.location.LocationManager" });
 		Class<?> serviceClass = context.getPackageManager().getClass();
