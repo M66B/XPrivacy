@@ -15,16 +15,16 @@ public class XBinder extends XHook {
 	private Methods mMethod;
 
 	private static long mToken = 0;
-	private static int BITS_TOKEN = 16;
-	private static int FLAG_ALL = 0xFFFF;
-	private static int MASK_TOKEN = 0xFFFF;
+	private static final int BITS_TOKEN = 16;
+	private static final int FLAG_ALL = 0xFFFF;
+	private static final int MASK_TOKEN = 0xFFFF;
 
-	private static int PING_TRANSACTION = ('_' << 24) | ('P' << 16) | ('N' << 8) | 'G';
-	private static int DUMP_TRANSACTION = ('_' << 24) | ('D' << 16) | ('M' << 8) | 'P';
-	private static int INTERFACE_TRANSACTION = ('_' << 24) | ('N' << 16) | ('T' << 8) | 'F';
-	private static int TWEET_TRANSACTION = ('_' << 24) | ('T' << 16) | ('W' << 8) | 'T';
-	private static int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
-	private static int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
+	private static final int PING_TRANSACTION = ('_' << 24) | ('P' << 16) | ('N' << 8) | 'G';
+	private static final int DUMP_TRANSACTION = ('_' << 24) | ('D' << 16) | ('M' << 8) | 'P';
+	private static final int INTERFACE_TRANSACTION = ('_' << 24) | ('N' << 16) | ('T' << 8) | 'F';
+	private static final int TWEET_TRANSACTION = ('_' << 24) | ('T' << 16) | ('W' << 8) | 'T';
+	private static final int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
+	private static final int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
 
 	// Service name should one-to-one correspond to a service descriptor
 	// TODO: sensor interface
@@ -203,11 +203,15 @@ public class XBinder extends XHook {
 
 						// Check white list
 						if (i + 1 < ste.length)
-							for (String whiteListed : cWhiteList)
-								if (ste[i + 1].getClassName().equals(whiteListed)) {
-									white = true;
-									break;
-								}
+							if ("android.app.ActivityManagerProxy".equals(ste[i].getClassName())
+									&& "android.content.ContentResolver".equals(ste[i + 1].getClassName()))
+								white = true;
+							else
+								for (String whiteListed : cWhiteList)
+									if (ste[i + 1].getClassName().equals(whiteListed)) {
+										white = true;
+										break;
+									}
 
 						// Check manager class name
 						for (int j = i + 1; j < ste.length; j++) {
@@ -267,7 +271,7 @@ public class XBinder extends XHook {
 			IBinder binder = (IBinder) param.thisObject;
 			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 			if (cServiceDescriptor.contains(descriptor)) {
-				Util.log(this, Log.WARN, "can restrict name=" + descriptor + " code=" + code + " flags=" + flags
+				Util.log(this, Log.INFO, "can restrict name=" + descriptor + " code=" + code + " flags=" + flags
 						+ " uid=" + uid + " my=" + Process.myUid());
 				String[] name = descriptor.split("\\.");
 				if (getRestricted(uid, PrivacyManager.cIPC, name[name.length - 1])) {
