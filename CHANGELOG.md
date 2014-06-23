@@ -42,6 +42,8 @@ Changelog
 	* For testing purposes
 * Performance improvements for AOSP based ROMs, including CyanogenMod and OmniROM
 * Attempt to fix on demand dialog freezing
+* Removed enabling on demand restricting on update
+	* You can use [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) instead
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
