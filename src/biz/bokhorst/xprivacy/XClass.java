@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.util.Log;
@@ -51,11 +52,61 @@ public class XClass extends XHook {
 		return listHook;
 	}
 
+	// @formatter:off
+	public static List<String> cClassName = Arrays.asList(new String[] {
+		"android.accounts.AccountManager",
+		"android.app.Activity",
+		"android.app.ActivityManager",
+		// "com.android.server.am.ActivityManagerService",
+		"com.google.android.gms.location.ActivityRecognitionClient",
+		"com.google.android.gms.ads.identifier.AdvertisingIdClient$Info",
+		"android.app.Application",
+		"android.appwidget.AppWidgetManager",
+		"android.media.AudioRecord",
+		// "android.os.BinderProxy",
+		// "android.os.Binder",
+		"android.bluetooth.BluetoothAdapter",
+		"android.bluetooth.BluetoothDevice",
+		"android.hardware.Camera",
+		"android.content.ClipboardManager",
+		"android.net.ConnectivityManager",
+		"android.content.ContentProviderClient",
+		"android.content.ContentResolver",
+		"android.app.ContextImpl",
+		"android.os.Environment",
+		"com.google.android.gms.auth.GoogleAuthUtil",
+		"java.net.InetAddress",
+		"android.view.InputDevice",
+		// "libcore.io.IoBridge",
+		"com.google.android.gms.location.LocationClient",
+		"android.location.LocationManager",
+		"android.media.MediaRecorder",
+		"android.net.NetworkInfo",
+		"java.net.NetworkInterface",
+		"android.nfc.NfcAdapter",
+		"android.app.ApplicationPackageManager",
+		"android.os.Process",
+		"java.lang.ProcessBuilder",
+		"android.content.res.Resources",
+		"android.content.res.Configuration",
+		"java.lang.Runtime",
+		"android.hardware.SystemSensorManager",
+		// "android.provider.Settings.Secure",
+		"android.net.sip.SipManager",
+		"android.telephony.SmsManager",
+		"android.os.SystemProperties",
+		"android.telephony.TelephonyManager",
+		// WebSettings
+		"android.webkit.WebView",
+		"android.net.wifi.WifiManager",
+		"android.view.WindowManagerImpl"
+	});
+	// @formatter:on
+
 	@Override
 	protected void before(XParam param) throws Throwable {
 		String className = ((Class<?>) param.thisObject).getName();
-		if (!("android.accounts.AccountManager".equals(className) || "android.telephony.TelephonyManager"
-				.equals(className)))
+		if (!className.contains(className))
 			return;
 
 		if (mMethod == Methods.getDeclaredField || mMethod == Methods.getField) {
