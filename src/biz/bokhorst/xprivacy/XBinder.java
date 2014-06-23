@@ -27,7 +27,7 @@ public class XBinder extends XHook {
 	private static final int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
 
 	// Service name should one-to-one correspond to a service descriptor
-	// TODO: sensor interface
+	// TODO: service list
 
 	// @formatter:off
 	public static List<String> cServiceName = Arrays.asList(new String[] {
@@ -43,7 +43,14 @@ public class XBinder extends XHook {
 		"iphonesubinfo",
 		"iphonesubinfo_msim",
 		"window",
-		"wifi"
+		"wifi",
+		"sip",
+		"isms",
+		"nfc",
+		"appwidget",
+		"bluetooth_manager",
+		"input",
+		"sensorservice"
 	});
 	// @formatter:on
 
@@ -61,7 +68,14 @@ public class XBinder extends XHook {
 		"com.android.internal.telephony.IPhoneSubInfo",
 		"com.android.internal.telephony.msim.IPhoneSubInfoMSim",
 		"android.view.IWindowManager",
-		"android.net.wifi.IWifiManager"
+		"android.net.wifi.IWifiManager",
+		"android.net.sip.ISipService",
+		"com.android.internal.telephony.ISms",
+		"android.nfc.INfcAdapter",
+		"com.android.internal.appwidget.IAppWidgetService",
+		"android.bluetooth.IBluetoothManager",
+		"android.hardware.input.IInputManager",
+		"android.gui.SensorServer"
 	});
 	// @formatter:on
 
@@ -79,7 +93,14 @@ public class XBinder extends XHook {
 		"android.telephony.TelephonyManager",
 		"android.telephony.TelephonyManager",
 		"android.view.WindowManagerImpl",
-		"android.net.wifi.WifiManager"
+		"android.net.wifi.WifiManager",
+		"android.net.sip.SipManager",
+		"android.telephony.SmsManager",
+		"android.nfc.NfcAdapter",
+		"android.appwidget.AppWidgetManager",
+		"android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
+		"android.view.InputDevice",
+		"android.hardware.SystemSensorManager"
 	});
 	// @formatter:on
 

@@ -25,8 +25,9 @@ Changelog
 * Allow management binder transactions
 	* *service list* will not trigger IPC restrictions anymore
 * Made IPC restrictions apply to Java calls too
-	* **The IPC restrictions need to be set again, because they were renamed to prevent trouble** 
-* Added reflection restrictions (*IPC/get...*)
+	* **The IPC restrictions need to be set again, because they were renamed to prevent trouble**
+* Added IPC restrictions *sip*, *isms*, *nfc*, *appwidget*, *bluetooth_manager*, *input* and *sensorservice* 
+* Added IPC reflection restriction
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
 	* *Build.SERIAL* cannot be restricted
 	* *Settings.Secure.ANDROID_ID* cannot be restricted
