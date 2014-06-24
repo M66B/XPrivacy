@@ -1185,13 +1185,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			if (holder.restricted || !holder.asked)
 				for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
 					String settingName = restrictionName + "." + hook.getName();
-					String childValue = PrivacyManager.getSetting(
-							userId,
-							getTemplate(),
-							settingName,
-							Boolean.toString(holder.restricted && !hook.isDangerous())
-									+ (holder.asked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked"
-											: "+ask"));
+					String childValue = PrivacyManager.getSetting(userId, getTemplate(), settingName, null);
+					if (childValue == null)
+						childValue = Boolean.toString(holder.restricted && !hook.isDangerous())
+								+ (holder.asked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked" : "+ask");
 					if (!childValue.contains("true"))
 						partialRestricted = true;
 					if (childValue.contains("asked"))

@@ -44,6 +44,7 @@ Changelog
 * Attempted to fix on demand dialog freezing
 * Removed enabling on demand restricting on update
 	* You can use [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) instead
+* Fixed template functions exceptions being display after 15 seconds
 * Updated Slovak translation
 
 **Please send the support info when asked for**
