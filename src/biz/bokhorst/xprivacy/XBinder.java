@@ -98,7 +98,7 @@ public class XBinder extends XHook {
 		"android.net.wifi.WifiManager",
 		"android.net.sip.SipManager",
 		"android.telephony.SmsManager",
-		"android.nfc.NfcAdapter",
+		"android.nfc.NfcActivityManager",
 		"android.appwidget.AppWidgetManager",
 		"android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
 		"android.hardware.input.InputManager",
@@ -171,7 +171,6 @@ public class XBinder extends XHook {
 		new String[] { // SmsManager
 		},
 		new String[] { // NfcManager
-				"android.nfc.NfcActivityManager",
 		},
 		new String[] { // AppWidgetManager
 				"android.appwidget.AppWidgetHost",
