@@ -102,6 +102,7 @@
     <string name="restrict_view">تصفح (المتصفح)</string>
     <string name="whitelist_ipaddress">عناوين الآيبي</string>
     <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">أسماء الملفات</string>
     <string name="whitelist_command">أوامر شل</string>
     <string name="whitelist_url">عناوين URL</string>

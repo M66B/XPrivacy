@@ -102,6 +102,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_view">Visualizza (browser)</string>
     <string name="whitelist_ipaddress">Indirizzi IP</string>
     <string name="whitelist_library">Librerie native</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">Nomi file</string>
     <string name="whitelist_command">Comandi Shell</string>
     <string name="whitelist_url">URLs</string>

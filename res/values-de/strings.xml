@@ -102,6 +102,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
     <string name="whitelist_ipaddress">IP Adressen</string>
     <string name="whitelist_library">Native Bibliotheken</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">Dateinamen</string>
     <string name="whitelist_command">Shell Kommandos</string>
     <string name="whitelist_url">URLs</string>

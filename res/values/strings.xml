@@ -110,6 +110,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="restrict_view" tools:ignore="UnusedResources">View (browser)</string>
     <string name="whitelist_ipaddress" tools:ignore="UnusedResources">IP addresses</string>
     <string name="whitelist_library" tools:ignore="UnusedResources">Native libraries</string>
+    <string name="whitelist_method" tools:ignore="UnusedResources">Method names</string>
     <string name="whitelist_filename" tools:ignore="UnusedResources">File names</string>
     <string name="whitelist_command" tools:ignore="UnusedResources">Shell commands</string>
     <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>

@@ -101,6 +101,7 @@
     <string name="restrict_view">Mở trình duyệt</string>
     <string name="whitelist_ipaddress">Các địa chỉ IP</string>
     <string name="whitelist_library">Các thư viện gốc của máy</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">Tên các tập tin</string>
     <string name="whitelist_command">Các câu lệnh</string>
     <string name="whitelist_url">Các URL</string>

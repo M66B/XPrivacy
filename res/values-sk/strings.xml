@@ -102,6 +102,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
     <string name="whitelist_ipaddress">Adresy IP</string>
     <string name="whitelist_library">Natívne knižnice</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">Názvy súborov</string>
     <string name="whitelist_command">Konzolové príkazy</string>
     <string name="whitelist_url">Adresy URL</string>

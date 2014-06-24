@@ -34,7 +34,8 @@ Changelog
 	* *IBluetoothManager*
 	* *IInputManager*
 	* *SensorServer* 
-* Added reflection restriction (IPC category)
+* Added get method [reflection](http://en.wikipedia.org/wiki/Reflection_(computer_programming)) restriction (IPC category)
+	* Methods can be white/black listed
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
 	* *Build.SERIAL* cannot be restricted
 	* *Settings.Secure.ANDROID_ID* cannot be restricted

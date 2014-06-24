@@ -102,6 +102,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_view">Tonen (browser)</string>
     <string name="whitelist_ipaddress">IP adressen</string>
     <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">Bestandsnamen</string>
     <string name="whitelist_command">Shell commando\'s</string>
     <string name="whitelist_url">URLs</string>

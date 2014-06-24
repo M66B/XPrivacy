@@ -102,6 +102,7 @@
     <string name="restrict_view">Pogled (brskalnik)</string>
     <string name="whitelist_ipaddress">IP naslovi</string>
     <string name="whitelist_library">Nativne knjižice</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">Imena datotek</string>
     <string name="whitelist_command">Ukazi lupine</string>
     <string name="whitelist_url">URLji</string>

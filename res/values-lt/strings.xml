@@ -102,6 +102,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_view">Peržiūra (Naršyklė)</string>
     <string name="whitelist_ipaddress">IP adresai</string>
     <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">failų vardai</string>
     <string name="whitelist_command">Vykdymo komandos</string>
     <string name="whitelist_url">URL adresai</string>

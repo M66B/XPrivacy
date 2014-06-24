@@ -19,12 +19,14 @@ public class Meta {
 	public final static String cTypeFilename = "Filename";
 	public final static String cTypeIPAddress = "IPAddress";
 	public final static String cTypeLibrary = "Library";
+	public final static String cTypeMethod = "Method";
 	public final static String cTypeProc = "Proc";
 	public final static String cTypeUrl = "Url";
 
 	public static boolean isWhitelist(String type) {
 		return (cTypeCommand.equals(type) || cTypeFilename.equals(type) || cTypeIPAddress.equals(type)
-				|| cTypeLibrary.equals(type) || cTypeProc.equals(type) || cTypeUrl.equals(type));
+				|| cTypeLibrary.equals(type) || cTypeMethod.equals(type) || cTypeProc.equals(type) || cTypeUrl
+					.equals(type));
 	}
 
 	public static List<Hook> get() {
@@ -152,7 +154,7 @@ public class Meta {
 		mListHook.add(new Hook("ipc", "SensorServer", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "IUsbManager", "", 1, "2.1.7", null).dangerous());
 
-		mListHook.add(new Hook("ipc", "Reflection", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "Reflection", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 
 		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
 		mListHook.add(new Hook("location", "addNmeaListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 5, null, null));

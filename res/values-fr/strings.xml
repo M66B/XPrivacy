@@ -102,6 +102,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_view">Vue (navigateur)</string>
     <string name="whitelist_ipaddress">Adresses IP</string>
     <string name="whitelist_library">Bibliothèques natives</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">Noms de fichier</string>
     <string name="whitelist_command">Commandes shell</string>
     <string name="whitelist_url">URLs</string>

@@ -101,6 +101,7 @@
     <string name="restrict_view">Katso (selaimessa)</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">File names</string>
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>

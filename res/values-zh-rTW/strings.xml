@@ -102,6 +102,7 @@
     <string name="restrict_view">瀏覽器介面</string>
     <string name="whitelist_ipaddress">IP 位址</string>
     <string name="whitelist_library">原生資料庫元件</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">檔案名稱</string>
     <string name="whitelist_command">Shell 指令</string>
     <string name="whitelist_url">網址</string>
