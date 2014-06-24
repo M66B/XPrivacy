@@ -291,10 +291,16 @@ public class XBinder extends XHook {
 				if (ok) {
 					int flags = (Integer) param.args[3];
 					if ((flags & ~FLAG_ALL) != 0)
-						Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " code=" + code
-								+ " uid=" + Binder.getCallingUid());
+						Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " descriptor="
+								+ descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
 					flags |= (mToken << BITS_TOKEN);
 					param.args[3] = flags;
+				}
+
+				if (!ok && !PrivacyService.getClient().isSystemApp(uid)) {
+					Util.log(this, Log.ERROR,
+							"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
+					Util.logStack(this, Log.ERROR);
 				}
 			}
 		}

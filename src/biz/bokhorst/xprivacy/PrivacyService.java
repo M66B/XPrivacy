@@ -73,7 +73,7 @@ public class PrivacyService {
 	private static final String cTableSetting = "setting";
 
 	private static final int cCurrentVersion = 352;
-	private static final String cServiceName = "xprivacy347";
+	private static final String cServiceName = "xprivacy353";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -293,6 +293,16 @@ public class PrivacyService {
 		public void reportError(String message) throws RemoteException {
 			reportErrorInternal(message);
 		}
+
+		// Application
+		@Override
+		public boolean isSystemApp(int uid) throws RemoteException {
+			try {
+				return new ApplicationInfoEx(getContext(), uid).isSystem();
+			} catch (Throwable ex) {
+				return false;
+			}
+		};
 
 		// Restrictions
 
