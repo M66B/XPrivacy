@@ -536,6 +536,7 @@ public class PrivacyManager {
 		boolean hasOndemand = false;
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction) {
+			// Cleanup
 			if (clear)
 				deleteRestrictions(uid, rRestrictionName, false);
 
@@ -545,45 +546,59 @@ public class PrivacyManager {
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
 			hasOndemand = hasOndemand || !parentAsked;
+
+			// Merge
 			PRestriction parentMerge;
 			if (clear)
 				parentMerge = new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked);
 			else
 				parentMerge = getRestrictionEx(uid, rRestrictionName, null);
-			listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentMerge.restricted
-					|| parentRestricted, parentMerge.asked && parentAsked));
+
+			// Apply
+			if (canRestrict(uid, Process.myUid(), rRestrictionName, null, true))
+				listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentMerge.restricted
+						|| parentRestricted, parentMerge.asked && parentAsked));
 
 			// Childs
 			if (methods)
-				for (Hook hook : getHooks(rRestrictionName)) {
-					String settingName = rRestrictionName + "." + hook.getName();
-					String childValue = getSetting(userId, templateName, settingName, null);
-					if (childValue == null)
-						childValue = Boolean.toString(parentRestricted && !hook.isDangerous())
-								+ (parentAsked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked" : "+ask");
-					boolean restricted = childValue.contains("true");
-					boolean asked = (!ondemand || childValue.contains("asked"));
-					PRestriction childMerge;
-					if (clear)
-						childMerge = new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
-								&& restricted, parentAsked || asked);
-					else
-						childMerge = getRestrictionEx(uid, rRestrictionName, hook.getName());
-					if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.isDangerous() || !clear) {
-						PRestriction child = new PRestriction(uid, rRestrictionName, hook.getName(),
-								(parentRestricted && restricted) || childMerge.restricted, (parentAsked || asked)
-										&& childMerge.asked);
-						listPRestriction.add(child);
+				for (Hook hook : getHooks(rRestrictionName))
+					if (canRestrict(uid, Process.myUid(), rRestrictionName, hook.getName(), true)) {
+						// Child
+						String settingName = rRestrictionName + "." + hook.getName();
+						String childValue = getSetting(userId, templateName, settingName, null);
+						if (childValue == null)
+							childValue = Boolean.toString(parentRestricted && !hook.isDangerous())
+									+ (parentAsked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked"
+											: "+ask");
+						boolean restricted = childValue.contains("true");
+						boolean asked = (!ondemand || childValue.contains("asked"));
+
+						// Merge
+						PRestriction childMerge;
+						if (clear)
+							childMerge = new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
+									&& restricted, parentAsked || asked);
+						else
+							childMerge = getRestrictionEx(uid, rRestrictionName, hook.getName());
+
+						// APply
+						if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.isDangerous()
+								|| !clear) {
+							PRestriction child = new PRestriction(uid, rRestrictionName, hook.getName(),
+									(parentRestricted && restricted) || childMerge.restricted, (parentAsked || asked)
+											&& childMerge.asked);
+							listPRestriction.add(child);
+						}
 					}
-				}
 		}
+
+		// Apply result
 		setRestrictionList(listPRestriction);
 		if (hasOndemand)
 			PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 	}
 
-	// White listing
-	// TODO: add specialized get to privacy service
+	// White/black listing
 
 	public static Map<String, TreeMap<String, Boolean>> listWhitelisted(int uid, String type) {
 		checkCaller();
