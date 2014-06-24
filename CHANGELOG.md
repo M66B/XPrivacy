@@ -39,16 +39,15 @@ Changelog
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
 	* *Build.SERIAL* cannot be restricted
 	* *Settings.Secure.ANDROID_ID* cannot be restricted
-* Made update service not run for future versions
-	* For testing purposes
+* Made update service not run for future versions (for testing purposes)
 * Performance improvements for AOSP based ROMs, including CyanogenMod and OmniROM
-* Attempted to fix on demand dialog freezing
+* Attempted to fix on demand dialog freezing by rewriting on demand dialog
 * Removed enabling on demand restricting on update
 	* You can use [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) instead
-* Fixed template functions exceptions being display after 15 seconds
-* Applying template will not apply to disabled restrictions anymore ([issue](/../../issues/1747))
+* Fixed template functions exceptions being display wrong for 15 seconds in some situations
+* Applying template will not set disabled restrictions anymore ([issue](/../../issues/1747))
 * Displaying changed state when all restrictions are cleared ([issue](/../../issues/1748))
-	* The application state is shown with a color left in the application list
+	* The application state is shown with a color left in the application list (see also help legend)
 * Added restrictions for [UsbDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html) ([issue](/../../issues/1750))
 * Updated Slovak translation
 
