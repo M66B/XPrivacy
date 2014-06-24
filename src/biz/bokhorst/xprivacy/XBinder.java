@@ -124,6 +124,7 @@ public class XBinder extends XHook {
 				"android.content.BroadcastReceiver$PendingResult",
 				"android.content.ContentResolver",
 				"android.os.StrictMode$AndroidBlockGuardPolicy",
+				"com.android.internal.os.RuntimeInit$UncaughtHandler",
 				"com.android.systemui.recent.RecentsPanelView",
 				"com.android.systemui.statusbar.BaseStatusBar$NotificationClicker",
 				"com.android.systemui.statusbar.phone.NavigationBarView",
