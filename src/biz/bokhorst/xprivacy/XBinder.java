@@ -26,7 +26,7 @@ public class XBinder extends XHook {
 	private static final int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
 	private static final int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
 
-	// Service name should one-to-one correspond to a service descriptor
+	// Service name should one-to-one correspond to the other lists
 	// TODO: service list
 
 	// @formatter:off
@@ -108,66 +108,81 @@ public class XBinder extends XHook {
 	// @formatter:on
 
 	// @formatter:off
-	public static List<String[]> cException = Arrays.asList(new String[][] {
-		new String[] {}, // "android.accounts.AccountManager",
-		new String[] {
-				"android.content.ContentResolver",
-				"android.content.BroadcastReceiver$PendingResult",
+	public static List<String[]> cExceptionClassName = Arrays.asList(new String[][] {
+		new String[] { // AccountManager
+		},
+		new String[] { // ActivityManager
 				"android.app.Activity",
 				"android.app.ActivityThread",
 				"android.app.ActivityThread$Idler",
 				"android.app.ActivityThread$StopInfo",
 				"android.app.ContextImpl",
+				"android.app.Instrumentation",
 				"android.app.PendingIntent",
 				"android.app.Service",
 				"android.app.SearchManager",
-				"android.app.Instrumentation",
+				"android.content.BroadcastReceiver$PendingResult",
+				"android.content.ContentResolver",
+				"android.os.StrictMode$AndroidBlockGuardPolicy",
 				"com.android.systemui.recent.RecentsPanelView",
 				"com.android.systemui.statusbar.BaseStatusBar$NotificationClicker",
-				"com.android.systemui.statusbar.phone.QuickSettings",
 				"com.android.systemui.statusbar.phone.NavigationBarView",
+				"com.android.systemui.statusbar.phone.QuickSettings",
 				"com.android.keyguard.KeyguardActivityLauncher$2",
 				"com.android.keyguard.KeyguardUpdateMonitor",
-				"com.android.keyguard.KeyguardViewMediator", // "android.app.ActivityManager",
+				"com.android.keyguard.KeyguardViewMediator",
 		},
-		new String[] {}, // "android.content.ClipboardManager",
-		new String[] {
+		new String[] { // ClipboardManager
+		},
+		new String[] { // ConnectivityManager
 				"android.app.ActivityThread"
-		}, // "android.net.ConnectivityManager",
-		new String[] {
-				"com.android.providers.contacts.ContactsProvider2"
-		}, // "android.content.ContentResolver,android.content.ContentProviderClient",
-		new String[] {
-				"com.android.location.provider.LocationProviderBase", // "android.location.LocationManager",
 		},
-		new String[] {}, // "android.telephony.TelephonyManager",
-		new String[] {}, // "android.telephony.TelephonyManager",
-		new String[] {
+		new String[] { // ContentProvider
+				"com.android.providers.contacts.ContactsProvider2"
+		},
+		new String[] { // LocationManager
+				"com.android.location.provider.LocationProviderBase",
+		},
+		new String[] { // TelephonyManager
+		},
+		new String[] { // TelephonyManager
+		},
+		new String[] { // PackageManager
 				"android.app.ActivityThread",
 				"android.app.LoadedApk",
-				"android.nfc.NfcAdapter", // "android.app.ApplicationPackageManager",
+				"android.nfc.NfcAdapter",
 		},
-		new String[] {}, // "android.telephony.TelephonyManager",
-		new String[] {}, // "android.telephony.TelephonyManager",
-		new String[] {
-				"android.view.ViewConfiguration",
+		new String[] { // TelephonyManager
+		},
+		new String[] { // TelephonyManager
+		},
+		new String[] { // WindowManager
 				"android.app.KeyguardManager",
+				"android.view.ViewConfiguration",
 				"com.android.internal.widget.LockPatternUtils",
 				"com.android.systemui.SearchPanelView",
-				"com.android.systemui.statusbar.phone.PhoneStatusBar", // "android.view.WindowManagerImpl",
+				"com.android.systemui.statusbar.phone.PhoneStatusBar",
 		},
-		new String[] {}, // "android.net.wifi.WifiManager",
-		new String[] {}, // "android.net.sip.SipManager",
-		new String[] {}, // "android.telephony.SmsManager",
-		new String[] {
+		new String[] { // WifiManager
+		},
+		new String[] { // SipManager
+		},
+		new String[] { // SmsManager
+		},
+		new String[] { // NfcManager
 				"android.nfc.NfcActivityManager",
-		}, // "android.nfc.NfcAdapter",
-		new String[] {
-				"android.appwidget.AppWidgetHost", // "android.appwidget.AppWidgetManager",
 		},
-		new String[] {}, // "android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
-		new String[] {}, // "android.hardware.input.InputManager",
-		new String[] {}, // "android.hardware.SystemSensorManager"
+		new String[] { // AppWidgetManager
+				"android.appwidget.AppWidgetHost",
+		},
+		new String[] { // BluetoothManager
+		},
+		new String[] { // InputManager
+		},
+		new String[] { // SensorManager
+		},
+		new String[] { // UsbManager
+		},
 	});
 	// @formatter:on
 
@@ -255,9 +270,9 @@ public class XBinder extends XHook {
 					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)) {
 						found = true;
 
-						// Check white list
+						// Check exceptions
 						if (i + 1 < ste.length) {
-							for (String exception : cException.get(idx))
+							for (String exception : cExceptionClassName.get(idx))
 								if (exception.equals(ste[i + 1].getClassName())) {
 									white = true;
 									break;
