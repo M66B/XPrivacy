@@ -33,7 +33,8 @@ Changelog
 	* *IAppWidgetService*
 	* *IBluetoothManager*
 	* *IInputManager*
-	* *SensorServer* 
+	* *SensorServer*
+	* *IUsbManager*
 * Added get method [reflection](http://en.wikipedia.org/wiki/Reflection_(computer_programming)) restriction (IPC category)
 	* Methods can be white/black listed
 * Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
@@ -99,7 +100,7 @@ Changelog
 * Added restriction for [Mesh networking](http://en.wikipedia.org/wiki/Mesh_networking) services (*inet_mesh*)
 * Added restriction for [MTP](http://en.wikipedia.org/wiki/Media_Transfer_Protocol)
 * Fixed not disabling on demand function settings when on demand restricting for category is disabled
-* Hiding status bar when showing on demand restricting dialog 
+* Hiding status bar when showing on demand restricting dialog
 
 **Version 2.1 STABLE**
 
