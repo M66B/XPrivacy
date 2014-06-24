@@ -1409,13 +1409,10 @@ public class PrivacyService {
 							@SuppressLint("InlinedApi")
 							public void run() {
 								try {
-									// Dialog
-									View dialog = getOnDemandDialog(restriction, hook, appInfo, result, context, latch);
+									// Dialog view
+									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, latch);
 
-									// Get resources
-									String self = PrivacyService.class.getPackage().getName();
-									Resources resources = context.getPackageManager().getResourcesForApplication(self);
-
+									// Dialog parameters
 									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
 									params.type = WindowManager.LayoutParams.TYPE_PHONE;
 									params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
@@ -1426,16 +1423,17 @@ public class PrivacyService {
 									params.format = PixelFormat.TRANSLUCENT;
 									params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
 									params.gravity = Gravity.CENTER;
-									params.setTitle(resources.getString(R.string.app_name));
 
-									wm.addView(dialog, params);
-									holder.dialog = dialog;
+									// Show dialog
+									wm.addView(holder.dialog, params);
 
-									// Progress bar
-									final ProgressBar mProgress = (ProgressBar) dialog.findViewById(R.id.pbProgress);
+									// Setup progress bar
+									final ProgressBar mProgress = (ProgressBar) holder.dialog
+											.findViewById(R.id.pbProgress);
 									mProgress.setMax(cMaxOnDemandDialog * 20);
 									mProgress.setProgress(cMaxOnDemandDialog * 20);
 
+									// Update progress
 									Runnable rProgress = new Runnable() {
 										@Override
 										public void run() {
@@ -1486,7 +1484,7 @@ public class PrivacyService {
 			public View dialog = null;
 		}
 
-		private View getOnDemandDialog(final PRestriction restriction, final Hook hook, ApplicationInfoEx appInfo,
+		private View getOnDemandView(final PRestriction restriction, final Hook hook, ApplicationInfoEx appInfo,
 				final PRestriction result, Context context, final CountDownLatch latch) throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
