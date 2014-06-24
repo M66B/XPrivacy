@@ -148,7 +148,8 @@ public class PrivacyManager {
 	static {
 		List<String> listRestriction = getRestrictions();
 
-		for (Hook hook : Meta.get()) {
+		List<Hook> listHook = Meta.get();
+		for (Hook hook : listHook) {
 			String restrictionName = hook.getRestrictionName();
 
 			// Check restriction
@@ -179,6 +180,7 @@ public class PrivacyManager {
 							mPermission.get(aPermission).add(hook);
 					}
 		}
+		Util.log(null, Log.WARN, listHook.size() + " restrictions");
 	}
 
 	public static List<String> getRestrictions() {
