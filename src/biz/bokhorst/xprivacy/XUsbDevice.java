@@ -3,8 +3,8 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Binder;
 import android.util.Log;
-
 import biz.bokhorst.xprivacy.XHook;
 
 public class XUsbDevice extends XHook {
@@ -44,7 +44,7 @@ public class XUsbDevice extends XHook {
 
 		} else if (mMethod == Methods.getDeviceName) {
 			if (isRestricted(param))
-				param.setResult(null);
+				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "USB"));
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());

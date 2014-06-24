@@ -1037,6 +1037,9 @@ public class PrivacyManager {
 				return -1;
 			}
 
+		if (name.equals("USB"))
+			return cDeface;
+
 		// Fallback
 		Util.log(null, Log.ERROR, "Fallback value name=" + name);
 		Util.logStack(null, Log.ERROR);
