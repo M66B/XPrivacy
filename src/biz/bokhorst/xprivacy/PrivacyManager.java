@@ -486,7 +486,8 @@ public class PrivacyManager {
 		}
 
 		// Mark as new/changed
-		setSetting(uid, cSettingState, Integer.toString(ActivityMain.STATE_ATTENTION));
+		setSetting(uid, cSettingState,
+				Integer.toString(restrictionName == null ? ActivityMain.STATE_CHANGED : ActivityMain.STATE_ATTENTION));
 
 		// Change app modification time
 		setSetting(uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));

@@ -46,6 +46,8 @@ Changelog
 	* You can use [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) instead
 * Fixed template functions exceptions being display after 15 seconds
 * Applying template will not apply to disabled restrictions anymore ([issue](/../../issues/1747))
+* Displaying changed state when all restrictions are cleared ([issue](/../../issues/1748))
+	* The application state is shown with a color left in the application list
 * Updated Slovak translation
 
 **Please send the support info when asked for**
