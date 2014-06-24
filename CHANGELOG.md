@@ -22,6 +22,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.8 TEST**
+
 * Allow management binder transactions
 	* *service list* will not trigger IPC restrictions anymore
 * Made IPC restrictions apply to Java calls too
@@ -53,8 +57,6 @@ Changelog
 * Updated Slovak translation
 
 **Please send the support info when asked for**
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.6 BETA**
 
