@@ -119,9 +119,12 @@ public class XBinder extends XHook {
 			"android.app.ActivityThread$StopInfo",
 			"android.app.ContextImpl",
 			"android.app.Instrumentation",
+			"android.app.LoadedApk",
 			"android.app.PendingIntent",
 			"android.app.Service",
+			"android.content.ContentResolver",
 			"android.content.BroadcastReceiver$PendingResult",
+			"com.android.internal.os.RuntimeInit$UncaughtHandler",
 		},
 		new String[] { // ClipboardManager
 		},
@@ -131,6 +134,7 @@ public class XBinder extends XHook {
 		new String[] { // ContentProvider
 		},
 		new String[] { // LocationManager
+			"android.location.Geocoder",
 		},
 		new String[] { // TelephonyManager
 		},
@@ -147,6 +151,7 @@ public class XBinder extends XHook {
 		},
 		new String[] { // WindowManager
 			"android.app.KeyguardManager",
+			"android.hardware.LegacySensorManager",
 			"android.view.ViewConfiguration",
 		},
 		new String[] { // WifiManager
