@@ -50,7 +50,6 @@ Changelog
 * Displaying *changed* state when all restrictions are cleared ([issue](/../../issues/1748))
 	* The application state is shown with a color left in the application list (see also the help legend)
 * Added restrictions for [UsbDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html) ([issue](/../../issues/1750))
-* Set dangerous functions to on demand restricting when the category restriction changes to restricted
 * Updated Slovak translation
 
 **Please send the support info when asked for**

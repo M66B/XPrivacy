@@ -1737,8 +1737,8 @@ public class PrivacyService {
 						prevRestricted = mRestrictionCache.get(key).restricted;
 				}
 
-				Util.log(null, Log.WARN, "On demand choice " + restriction + " category=" + category + "/"
-						+ prevRestricted + " restrict=" + restrict);
+				Util.log(null, Log.WARN, "On demand choice " + restriction + " category=" + category + " restrict="
+						+ restrict + " prev=" + prevRestricted);
 
 				if (category || (restrict && restrict != prevRestricted)) {
 					// Set category restriction
@@ -1759,7 +1759,7 @@ public class PrivacyService {
 							// TODO: preserve asked state
 							result.methodName = hook.getName();
 							result.restricted = restrict && !hook.isDangerous();
-							result.asked = category;
+							result.asked = category || (hook.isDangerous() && hook.whitelist() == null);
 							setRestrictionInternal(result);
 						}
 				}
