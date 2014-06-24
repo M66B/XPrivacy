@@ -50,7 +50,8 @@ public class XBinder extends XHook {
 		"appwidget",
 		"bluetooth_manager",
 		"input",
-		"sensorservice"
+		"sensorservice",
+		"usb"
 	});
 	// @formatter:on
 
@@ -75,7 +76,8 @@ public class XBinder extends XHook {
 		"com.android.internal.appwidget.IAppWidgetService",
 		"android.bluetooth.IBluetoothManager",
 		"android.hardware.input.IInputManager",
-		"android.gui.SensorServer"
+		"android.gui.SensorServer",
+		"android.hardware.usb.IUsbManager"
 	});
 	// @formatter:on
 
@@ -100,7 +102,8 @@ public class XBinder extends XHook {
 		"android.appwidget.AppWidgetManager",
 		"android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
 		"android.hardware.input.InputManager",
-		"android.hardware.SystemSensorManager"
+		"android.hardware.SystemSensorManager",
+		"android.hardware.usb.UsbManager"
 	});
 	// @formatter:on
 

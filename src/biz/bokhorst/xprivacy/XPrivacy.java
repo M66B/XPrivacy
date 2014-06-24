@@ -241,6 +241,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Telephone service
 		hookAll(XTelephonyManager.getInstances(null), null, mSecret);
 
+		// USB device
+		hookAll(XUsbDevice.getInstances(), null, mSecret);
+
 		// Web view
 		hookAll(XWebView.getInstances(), null, mSecret);
 

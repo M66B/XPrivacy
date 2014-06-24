@@ -48,6 +48,7 @@ Changelog
 * Applying template will not apply to disabled restrictions anymore ([issue](/../../issues/1747))
 * Displaying changed state when all restrictions are cleared ([issue](/../../issues/1748))
 	* The application state is shown with a color left in the application list
+* Added restrictions for [UsbDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html) ([issue](/../../issues/1750))
 * Updated Slovak translation
 
 **Please send the support info when asked for**

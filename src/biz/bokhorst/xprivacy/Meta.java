@@ -102,6 +102,9 @@ public class Meta {
 		mListHook.add(new Hook("identification", "GservicesProvider", "com.google.android.providers.gsf.permission.READ_GSERVICES,com.google.android.providers.gsf.permission.WRITE_GSERVICES", 1, null, null).dangerous());
 		mListHook.add(new Hook("identification", "SERIAL", "", 1, null, null).restart().noUsageData());
 
+		mListHook.add(new Hook("identification", "USB.getDeviceId", "", 12, "2.1.7", null));
+		mListHook.add(new Hook("identification", "USB.getDeviceName", "", 12, "2.1.7", null));
+
 		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).dangerous());
 		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, "0.0", null).dangerous());
 		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).dangerous());
@@ -147,6 +150,7 @@ public class Meta {
 		mListHook.add(new Hook("ipc", "IBluetoothManager", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "IInputManager", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "SensorServer", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IUsbManager", "", 1, "2.1.7", null).dangerous());
 
 		mListHook.add(new Hook("ipc", "Reflection", "", 1, "2.1.7", null).dangerous());
 
