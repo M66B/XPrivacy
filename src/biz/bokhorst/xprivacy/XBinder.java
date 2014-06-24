@@ -98,8 +98,8 @@ public class XBinder extends XHook {
 		"android.net.wifi.WifiManager",
 		"android.net.sip.SipManager",
 		"android.telephony.SmsManager",
-		"android.nfc.NfcActivityManager",
-		"android.appwidget.AppWidgetManager",
+		"android.nfc.NfcActivityManager,android.nfc.NfcAdapter",
+		"android.appwidget.AppWidgetManager,android.appwidget.AppWidgetHost",
 		"android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
 		"android.hardware.input.InputManager",
 		"android.hardware.SystemSensorManager",
@@ -108,61 +108,45 @@ public class XBinder extends XHook {
 	// @formatter:on
 
 	// @formatter:off
+	// Allow some common internal calls
 	public static List<String[]> cExceptionClassName = Arrays.asList(new String[][] {
 		new String[] { // AccountManager
 		},
 		new String[] { // ActivityManager
-				"android.app.Activity",
-				"android.app.ActivityThread",
-				"android.app.ActivityThread$Idler",
-				"android.app.ActivityThread$StopInfo",
-				"android.app.ContextImpl",
-				"android.app.Instrumentation",
-				"android.app.PendingIntent",
-				"android.app.Service",
-				"android.app.SearchManager",
-				"android.content.BroadcastReceiver$PendingResult",
-				"android.content.ContentResolver",
-				"android.os.StrictMode$AndroidBlockGuardPolicy",
-				"com.android.internal.os.RuntimeInit$UncaughtHandler",
-				"com.android.systemui.recent.RecentsPanelView",
-				"com.android.systemui.statusbar.BaseStatusBar$NotificationClicker",
-				"com.android.systemui.statusbar.phone.NavigationBarView",
-				"com.android.systemui.statusbar.phone.QuickSettings",
-				"com.android.keyguard.KeyguardActivityLauncher$2",
-				"com.android.keyguard.KeyguardUpdateMonitor",
-				"com.android.keyguard.KeyguardViewMediator",
+			"android.app.Activity",
+			"android.app.ActivityThread",
+			"android.app.ActivityThread$Idler",
+			"android.app.ActivityThread$StopInfo",
+			"android.app.ContextImpl",
+			"android.app.Instrumentation",
+			"android.app.PendingIntent",
+			"android.app.Service",
+			"android.content.BroadcastReceiver$PendingResult",
 		},
 		new String[] { // ClipboardManager
 		},
 		new String[] { // ConnectivityManager
-				"android.app.ActivityThread"
+			"android.app.ActivityThread",
 		},
 		new String[] { // ContentProvider
-				"com.android.providers.contacts.ContactsProvider2"
 		},
 		new String[] { // LocationManager
-				"com.android.location.provider.LocationProviderBase",
 		},
 		new String[] { // TelephonyManager
 		},
 		new String[] { // TelephonyManager
 		},
 		new String[] { // PackageManager
-				"android.app.ActivityThread",
-				"android.app.LoadedApk",
-				"android.nfc.NfcAdapter",
+			"android.app.ActivityThread",
+			"android.app.LoadedApk",
 		},
 		new String[] { // TelephonyManager
 		},
 		new String[] { // TelephonyManager
 		},
 		new String[] { // WindowManager
-				"android.app.KeyguardManager",
-				"android.view.ViewConfiguration",
-				"com.android.internal.widget.LockPatternUtils",
-				"com.android.systemui.SearchPanelView",
-				"com.android.systemui.statusbar.phone.PhoneStatusBar",
+			"android.app.KeyguardManager",
+			"android.view.ViewConfiguration",
 		},
 		new String[] { // WifiManager
 		},
@@ -173,7 +157,6 @@ public class XBinder extends XHook {
 		new String[] { // NfcManager
 		},
 		new String[] { // AppWidgetManager
-				"android.appwidget.AppWidgetHost",
 		},
 		new String[] { // BluetoothManager
 		},
@@ -244,7 +227,6 @@ public class XBinder extends XHook {
 	}
 
 	private void markIPC(XParam param) throws Throwable {
-
 		// Allow management transaction
 		int code = (Integer) param.args[0];
 		if (isManagementTransaction(code))
@@ -271,13 +253,11 @@ public class XBinder extends XHook {
 						found = true;
 
 						// Check exceptions
-						if (i + 1 < ste.length) {
-							for (String exception : cExceptionClassName.get(idx))
-								if (exception.equals(ste[i + 1].getClassName())) {
-									white = true;
-									break;
-								}
-						}
+						if (i + 1 < ste.length)
+							if (Arrays.asList(cExceptionClassName.get(idx)).contains(ste[i + 1].getClassName())) {
+								white = true;
+								break;
+							}
 
 						// Check manager class name
 						for (int j = i + 1; j < ste.length; j++) {
@@ -294,13 +274,14 @@ public class XBinder extends XHook {
 
 				// Internal checks
 				if (!found) {
-					Util.log(this, Log.ERROR, "Missing descriptor=" + descriptor + " uid=" + Binder.getCallingUid());
+					Util.log(this, Log.ERROR,
+							"Missing descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
 					Util.logStack(this, Log.ERROR);
 				}
 				if (white)
 					if (ok) {
-						Util.log(this, Log.ERROR,
-								"Whitelisted descriptor=" + descriptor + " uid=" + Binder.getCallingUid());
+						Util.log(this, Log.ERROR, "Whitelisted descriptor=" + descriptor + " code=" + code + " uid="
+								+ Binder.getCallingUid());
 						Util.logStack(this, Log.ERROR);
 					} else
 						ok = true;
@@ -309,13 +290,10 @@ public class XBinder extends XHook {
 				if (ok) {
 					int flags = (Integer) param.args[3];
 					if ((flags & ~FLAG_ALL) != 0)
-						Util.log(this, Log.ERROR,
-								"Unknown flags=" + Integer.toHexString(flags) + " uid=" + Binder.getCallingUid());
+						Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " code=" + code
+								+ " uid=" + Binder.getCallingUid());
 					flags |= (mToken << BITS_TOKEN);
 					param.args[3] = flags;
-				} else {
-					Util.log(this, Log.WARN, "Unmarked descriptor=" + descriptor + " uid=" + Binder.getCallingUid());
-					Util.logStack(this, Log.WARN);
 				}
 			}
 		}
@@ -339,10 +317,11 @@ public class XBinder extends XHook {
 			IBinder binder = (IBinder) param.thisObject;
 			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 			if (cServiceDescriptor.contains(descriptor)) {
-				Util.log(this, Log.INFO, "can restrict name=" + descriptor + " code=" + code + " flags=" + flags
-						+ " uid=" + uid + " my=" + Process.myUid());
 				String[] name = descriptor.split("\\.");
-				if (getRestricted(uid, PrivacyManager.cIPC, name[name.length - 1])) {
+				String methodName = name[name.length - 1];
+				Util.log(this, Log.INFO, "can restrict method=" + methodName + " code=" + code + " flags=" + flags
+						+ " uid=" + uid + " my=" + Process.myUid());
+				if (isRestrictedExtra(uid, PrivacyManager.cIPC, methodName, Integer.toString(code))) {
 					// Get reply parcel
 					Parcel reply = null;
 					try {
