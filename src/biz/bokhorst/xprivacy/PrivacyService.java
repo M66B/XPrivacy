@@ -1759,7 +1759,7 @@ public class PrivacyService {
 							// TODO: preserve asked state
 							result.methodName = hook.getName();
 							result.restricted = restrict && !hook.isDangerous();
-							result.asked = category || (hook.isDangerous() && hook.whitelist() == null);
+							result.asked = category;
 							setRestrictionInternal(result);
 						}
 				}
