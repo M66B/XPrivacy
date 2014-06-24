@@ -295,12 +295,13 @@ public class XBinder extends XHook {
 
 				// Internal checks
 				if (!found) {
-					Util.log(this, Log.ERROR, "Missing descriptor=" + descriptor);
+					Util.log(this, Log.ERROR, "Missing descriptor=" + descriptor + " uid=" + Binder.getCallingUid());
 					Util.logStack(this, Log.ERROR);
 				}
 				if (white)
 					if (ok) {
-						Util.log(this, Log.ERROR, "Whitelisted descriptor=" + descriptor);
+						Util.log(this, Log.ERROR,
+								"Whitelisted descriptor=" + descriptor + " uid=" + Binder.getCallingUid());
 						Util.logStack(this, Log.ERROR);
 					} else
 						ok = true;
@@ -309,11 +310,12 @@ public class XBinder extends XHook {
 				if (ok) {
 					int flags = (Integer) param.args[3];
 					if ((flags & ~FLAG_ALL) != 0)
-						Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags));
+						Util.log(this, Log.ERROR,
+								"Unknown flags=" + Integer.toHexString(flags) + " uid=" + Binder.getCallingUid());
 					flags |= (mToken << BITS_TOKEN);
 					param.args[3] = flags;
 				} else {
-					Util.log(this, Log.WARN, "Unmarked descriptor=" + descriptor);
+					Util.log(this, Log.WARN, "Unmarked descriptor=" + descriptor + " uid=" + Binder.getCallingUid());
 					Util.logStack(this, Log.WARN);
 				}
 			}
