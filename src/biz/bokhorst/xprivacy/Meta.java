@@ -149,6 +149,7 @@ public class Meta {
 		mListHook.add(new Hook("ipc", "ISms", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "INfcAdapter", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "IAppWidgetService", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IBluetooth", "", 1, "2.1.9", null).dangerous());
 		mListHook.add(new Hook("ipc", "IBluetoothManager", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "IInputManager", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "SensorServer", "", 1, "2.1.7", null).dangerous());
