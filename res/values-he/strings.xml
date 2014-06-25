@@ -147,6 +147,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_usage_text_2">2. Tap on the application icon</string>
     <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
     <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
+    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">קו אורך</string>
     <string name="settings_lon">קו רוחב</string>

@@ -147,6 +147,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_usage_text_2">2. Kliknite na ikonu aplikácie</string>
     <string name="title_usage_text_3">3. Kliknite na prvé zaškrtávacie pole v akejkoľvek kategórii, ktorú chcete obmedziť</string>
     <string name="title_usage_footer">Používajte zdravý rozum pri obmedzovaní. Nočakávajte prístup k internetu, ak ste obmedzili kategóriu Internet, atď.</string>
+    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
