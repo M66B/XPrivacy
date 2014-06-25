@@ -303,7 +303,8 @@ public class Requirements {
 		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager" });
 		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager" });
 		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
-		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager" });
+		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager",
+				"android.net.MultiSimConnectivityManager" });
 		checkService(context, Context.LOCATION_SERVICE, new String[] { "android.location.LocationManager" });
 		Class<?> serviceClass = context.getPackageManager().getClass();
 		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
