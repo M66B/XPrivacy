@@ -23,6 +23,7 @@ Changelog
 
 **Next release**
 
+* Added some help texts
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
