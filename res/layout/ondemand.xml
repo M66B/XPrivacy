@@ -188,6 +188,14 @@
                 android:visibility="gone" >
             </CheckBox>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="6dip"
+                android:text="@string/title_ondemand_category"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="italic" />
+
             <ProgressBar
                 android:id="@+id/pbProgress"
                 style="@android:style/Widget.ProgressBar.Horizontal"
