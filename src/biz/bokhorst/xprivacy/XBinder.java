@@ -124,6 +124,7 @@ public class XBinder extends XHook {
 			"android.app.Service",
 			"android.content.ContentResolver",
 			"android.content.BroadcastReceiver$PendingResult",
+			"android.hardware.SensorManager",
 			"com.android.internal.os.RuntimeInit$UncaughtHandler",
 		},
 		new String[] { // ClipboardManager
