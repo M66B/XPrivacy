@@ -121,7 +121,7 @@ public class XSensorManager extends XHook {
 			if (isRestricted(param, "step"))
 				return true;
 		} else
-			Util.log(this, Log.ERROR, "Unknown sensor type=" + type);
+			Util.log(this, Log.WARN, "Unknown sensor type=" + type);
 		return false;
 	}
 }
