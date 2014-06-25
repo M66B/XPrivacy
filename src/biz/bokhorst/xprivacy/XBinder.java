@@ -97,7 +97,7 @@ public class XBinder extends XHook {
 		"android.accounts.AccountManager",
 		"android.app.ActivityManager",
 		"android.content.ClipboardManager",
-		"android.net.ConnectivityManager",
+		"android.net.ConnectivityManager,android.net.MultiSimConnectivityManager",
 		"android.content.ContentResolver,android.content.ContentProviderClient",
 		"android.location.LocationManager",
 		"android.telephony.TelephonyManager",
