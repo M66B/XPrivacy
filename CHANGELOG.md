@@ -19,6 +19,7 @@ Changelog
 * If you install a version from 2.1.5 on demand restricting will be disabled until the update is completed (once)
 * Dangerous functions need to be restricted always manually (manually includes the template, if defined to do so)
 * Xposed version 2.6+ is required
+* **Please send the support info when XPrivacy asks for it**
 
 **Next release**
 
@@ -55,8 +56,6 @@ Changelog
 	* The application state is shown with a color left in the application list (see also the help legend)
 * Added restrictions for [UsbDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html) ([issue](/../../issues/1750))
 * Updated Slovak translation
-
-**Please send the support info when asked for**
 
 **Version 2.1.6 BETA**
 
