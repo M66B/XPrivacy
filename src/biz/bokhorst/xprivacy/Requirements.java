@@ -87,6 +87,7 @@ public class Requirements {
 				sendSupportInfo(ex.toString(), context);
 			}
 		} else {
+			// @formatter:off
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(R.string.app_name);
 			alertDialogBuilder.setMessage(R.string.app_notenabled);
@@ -95,16 +96,15 @@ public class Requirements {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							// @formatter:off
 							Intent xInstallerIntent = new Intent("de.robv.android.xposed.installer.OPEN_SECTION")
 								.setPackage("de.robv.android.xposed.installer")
 								.putExtra("section", "modules")
 								.putExtra("module", context.getPackageName())
 								.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-							// @formatter:on
 							context.startActivity(xInstallerIntent);
 						}
 					});
+			// @formatter:on
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 		}
@@ -322,7 +322,8 @@ public class Requirements {
 		Class<?> serviceClass = context.getPackageManager().getClass();
 		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
 			reportClass(serviceClass, context);
-		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SystemSensorManager" });
+		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SystemSensorManager",
+				"android.hardware.SensorManager" });
 		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager",
 				"android.telephony.MultiSimTelephonyManager" });
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
