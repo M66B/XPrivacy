@@ -27,6 +27,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 2.1.10 BETA**
+
+* Fixed IPC restrictions
+
 **Version 2.1.9 BETA**
 
 * Added some help texts
