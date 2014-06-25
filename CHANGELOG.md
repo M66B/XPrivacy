@@ -23,14 +23,18 @@ Changelog
 
 **Next release**
 
+* ...
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.9 BETA**
+
 * Added some help texts
-* Fixed all problems reported with the support info
-	* Thanks for sending the support info!
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
 * Added IPC restriction *bluetooth*
 * Updated Dutch translation
 * Updated German translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.8 TEST**
 
