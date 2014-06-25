@@ -94,7 +94,7 @@ public class XBinder extends XHook {
 		"android.app.ApplicationPackageManager",
 		"android.telephony.TelephonyManager",
 		"android.telephony.TelephonyManager",
-		"android.view.WindowManagerImpl,android.view.ViewRootImpl,android.view.View",
+		"android.view.WindowManagerImpl,android.view.ViewRootImpl,android.view.View,android.view.Display",
 		"android.net.wifi.WifiManager",
 		"android.net.sip.SipManager",
 		"android.telephony.SmsManager",
