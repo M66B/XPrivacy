@@ -323,7 +323,8 @@ public class Requirements {
 		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
 			reportClass(serviceClass, context);
 		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SystemSensorManager" });
-		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager" });
+		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager",
+				"android.telephony.MultiSimTelephonyManager" });
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
 				"android.view.Window$LocalWindowManager" });
 		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager" });
