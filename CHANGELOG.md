@@ -27,6 +27,7 @@ Changelog
 * Fixed all problems reported with the support info
 	* Thanks for sending the support info!
 * Updated Dutch translation
+* Updated German translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
