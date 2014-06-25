@@ -224,7 +224,7 @@ public class Requirements {
 					List<String> listMissing = new ArrayList<String>();
 					for (String name : XBinder.cServiceName) {
 						String descriptor = XBinder.cServiceDescriptor.get(i++);
-						if (descriptor != null && !name.equals("iphonesubinfo") && !name.equals("iphonesubinfo_msim")) {
+						if (descriptor != null && !XBinder.cServiceOptional.contains(name)) {
 							// Check name
 							boolean checkDescriptor = false;
 

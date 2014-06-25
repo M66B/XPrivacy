@@ -57,6 +57,14 @@ public class XBinder extends XHook {
 	// @formatter:on
 
 	// @formatter:off
+	public static List<String> cServiceOptional = Arrays.asList(new String[] {
+		"iphonesubinfo",
+		"iphonesubinfo_msim",
+		"nfc"
+	});
+	// @formatter:on
+
+	// @formatter:off
 	public static List<String> cServiceDescriptor = Arrays.asList(new String[] {
 		"android.accounts.IAccountManager",
 		"android.app.IActivityManager",
