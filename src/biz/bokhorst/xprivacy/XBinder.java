@@ -144,6 +144,7 @@ public class XBinder extends XHook {
 			"android.app.ActivityThread",
 			"android.app.LoadedApk",
 			"android.app.ResourcesManager",
+			"android.content.res.Resources",
 			"android.nfc.NfcAdapter",
 		},
 		new String[] { // TelephonyManager
