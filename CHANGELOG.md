@@ -26,6 +26,7 @@ Changelog
 * Added some help texts
 * Fixed all problems reported with the support info
 	* Thanks for sending the support info!
+* Added IPC restriction *bluetooth*
 * Updated Dutch translation
 * Updated German translation
 

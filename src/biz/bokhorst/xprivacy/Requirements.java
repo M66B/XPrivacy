@@ -227,6 +227,7 @@ public class Requirements {
 						if (descriptor != null && !name.equals("iphonesubinfo") && !name.equals("iphonesubinfo_msim")) {
 							// Check name
 							boolean checkDescriptor = false;
+
 							if (name.equals("telephony.registry")) {
 								if (mapService.containsKey(name))
 									checkDescriptor = true;
@@ -237,6 +238,18 @@ public class Requirements {
 								if (mapService.containsKey(name))
 									checkDescriptor = true;
 								else if (!mapService.containsKey("telephony.registry"))
+									listMissing.add(name);
+
+							} else if (name.equals("bluetooth")) {
+								if (mapService.containsKey(name))
+									checkDescriptor = true;
+								else if (!mapService.containsKey("bluetooth_manager"))
+									listMissing.add(name);
+
+							} else if (name.equals("bluetooth_manager")) {
+								if (mapService.containsKey(name))
+									checkDescriptor = true;
+								else if (!mapService.containsKey("bluetooth"))
 									listMissing.add(name);
 
 							} else {
