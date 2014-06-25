@@ -200,6 +200,10 @@ public class Requirements {
 				// public static IBinder checkService(String name)
 				// @formatter:on
 
+				if (XBinder.cServiceName.size() != XBinder.cServiceDescriptor.size()
+						|| XBinder.cServiceName.size() != XBinder.cExceptionClassName.size())
+					sendSupportInfo("XBinder size mismatch", context);
+
 				Method listServices = clazz.getDeclaredMethod("listServices");
 				Method getService = clazz.getDeclaredMethod("getService", String.class);
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
