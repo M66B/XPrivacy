@@ -326,8 +326,8 @@ public class Requirements {
 		Class<?> serviceClass = context.getPackageManager().getClass();
 		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
 			reportClass(serviceClass, context);
-		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SystemSensorManager",
-				"android.hardware.SensorManager" });
+		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SensorManager",
+				"android.hardware.SystemSensorManager" });
 		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager",
 				"android.telephony.MultiSimTelephonyManager" });
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",

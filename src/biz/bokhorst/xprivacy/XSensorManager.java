@@ -9,7 +9,7 @@ import android.util.Log;
 public class XSensorManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
-	private static final String cClassName = "android.hardware.SystemSensorManager";
+	private static final String cClassName = "android.hardware.SensorManager";
 
 	private XSensorManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
