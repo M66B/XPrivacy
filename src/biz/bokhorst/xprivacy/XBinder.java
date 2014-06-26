@@ -105,7 +105,7 @@ public class XBinder extends XHook {
 		"android.app.ApplicationPackageManager",
 		"android.telephony.TelephonyManager",
 		"android.telephony.TelephonyManager",
-		"android.view.WindowManagerImpl,android.view.ViewRootImpl,android.view.View,android.view.Display",
+		"android.view.WindowManagerImpl,android.view.WindowManagerGlobal,android.view.ViewRootImpl,android.view.View,android.view.Display",
 		"android.net.wifi.WifiManager",
 		"android.net.sip.SipManager",
 		"android.telephony.SmsManager",
@@ -178,7 +178,6 @@ public class XBinder extends XHook {
 		new String[] { // WindowManager
 			"android.app.KeyguardManager",
 			"android.hardware.LegacySensorManager",
-			"android.view.WindowManagerGlobal",
 		},
 		new String[] { // WifiManager
 		},
