@@ -111,7 +111,7 @@ public class XBinder extends XHook {
 		"android.telephony.SmsManager",
 		"android.nfc.NfcActivityManager,android.nfc.NfcAdapter",
 		"android.appwidget.AppWidgetManager,android.appwidget.AppWidgetHost",
-		"android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
+		"com.android.server.BluetoothManagerService,android.bluetooth.BluetoothSocket",
 		"android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
 		"android.hardware.input.InputManager",
 		"android.hardware.SystemSensorManager",
