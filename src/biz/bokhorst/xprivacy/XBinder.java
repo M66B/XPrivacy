@@ -61,7 +61,9 @@ public class XBinder extends XHook {
 		"iphonesubinfo",
 		"iphonesubinfo_msim",
 		"sip",
-		"nfc"
+		"nfc",
+		"bluetooth",
+		"bluetooth_manager"
 	});
 	// @formatter:on
 
