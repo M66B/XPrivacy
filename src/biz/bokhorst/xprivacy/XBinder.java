@@ -122,7 +122,7 @@ public class XBinder extends XHook {
 	// @formatter:off
 	// Forbidden classes
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
-		"java.lang.reflect.Method.invokeNative"
+		"java.lang.reflect.Method"
 	});
 	// @formatter:on
 
