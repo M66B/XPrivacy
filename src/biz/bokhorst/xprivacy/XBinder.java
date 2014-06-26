@@ -136,6 +136,7 @@ public class XBinder extends XHook {
 			"android.app.ActivityThread",
 			"android.app.ActivityThread$Idler",
 			"android.app.ActivityThread$StopInfo",
+			"android.app.Application",
 			"android.app.ContextImpl",
 			"android.app.Instrumentation",
 			"android.app.LoadedApk",
