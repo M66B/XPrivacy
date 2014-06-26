@@ -170,6 +170,7 @@ public class XBinder extends XHook {
 			"android.app.ResourcesManager",
 			"android.content.res.Resources",
 			"android.content.thm.ThemeIconManager",
+			"android.hardware.SensorManager",
 			"android.nfc.NfcAdapter",
 		},
 		new String[] { // TelephonyManager
