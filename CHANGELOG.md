@@ -25,6 +25,7 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
+* Fixed on demand transparency ([issue](/../../issues/1755))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

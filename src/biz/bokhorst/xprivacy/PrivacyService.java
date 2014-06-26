@@ -1421,6 +1421,7 @@ public class PrivacyService {
 								try {
 									// Dialog view
 									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, latch);
+									holder.dialog.setBackgroundResource(android.R.color.background_dark);
 
 									// Dialog parameters
 									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
