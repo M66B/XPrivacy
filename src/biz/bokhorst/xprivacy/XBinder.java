@@ -120,8 +120,15 @@ public class XBinder extends XHook {
 	// @formatter:on
 
 	// @formatter:off
+	// Forbidden classes
+	public static List<String> cBlackClassName = Arrays.asList(new String[] {
+		"java.lang.reflect.Method.invokeNative"
+	});
+	// @formatter:on
+
+	// @formatter:off
 	// Allow some common internal calls
-	public static List<String[]> cExceptionClassName = Arrays.asList(new String[][] {
+	public static List<String[]> cWhiteClassName = Arrays.asList(new String[][] {
 		new String[] { // AccountManager
 		},
 		new String[] { // ActivityManager
@@ -267,6 +274,7 @@ public class XBinder extends XHook {
 			if (idx >= 0) {
 				// Search class in call stack
 				boolean ok = false;
+				boolean black = false;
 				boolean white = false;
 				boolean found = false;
 				String proxy = descriptor.replace(".I", ".") + "Proxy";
@@ -277,11 +285,13 @@ public class XBinder extends XHook {
 						found = true;
 
 						// Check exceptions
-						if (i + 1 < ste.length)
-							if (Arrays.asList(cExceptionClassName.get(idx)).contains(ste[i + 1].getClassName())) {
-								white = true;
+						if (i + 1 < ste.length) {
+							String name = ste[i + 1].getClassName();
+							black = cBlackClassName.contains(name);
+							white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
+							if (black || white)
 								break;
-							}
+						}
 
 						// Check manager class name
 						for (int j = i + 1; j < ste.length; j++) {
@@ -302,12 +312,12 @@ public class XBinder extends XHook {
 							"Missing descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
 					Util.logStack(this, Log.ERROR);
 				}
-				if (white)
+				if (black || white)
 					if (ok) {
-						Util.log(this, Log.ERROR, "Whitelisted descriptor=" + descriptor + " code=" + code + " uid="
+						Util.log(this, Log.ERROR, "Black/whitelisted descriptor=" + descriptor + " code=" + code + " uid="
 								+ Binder.getCallingUid());
 						Util.logStack(this, Log.ERROR);
-					} else
+					} else if (white)
 						ok = true;
 
 				// Conditionally mark
@@ -320,7 +330,7 @@ public class XBinder extends XHook {
 					param.args[3] = flags;
 				}
 
-				if (!ok && !PrivacyService.getClient().isSystemApp(uid)) {
+				if (!ok && !black && !PrivacyService.getClient().isSystemApp(uid)) {
 					Util.log(this, Log.ERROR,
 							"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
 					Util.logStack(this, Log.ERROR);

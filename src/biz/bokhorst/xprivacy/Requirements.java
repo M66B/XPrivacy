@@ -201,7 +201,7 @@ public class Requirements {
 				// @formatter:on
 
 				if (XBinder.cServiceName.size() != XBinder.cServiceDescriptor.size()
-						|| XBinder.cServiceName.size() != XBinder.cExceptionClassName.size())
+						|| XBinder.cServiceName.size() != XBinder.cWhiteClassName.size())
 					sendSupportInfo("XBinder size mismatch", context);
 
 				Method listServices = clazz.getDeclaredMethod("listServices");
