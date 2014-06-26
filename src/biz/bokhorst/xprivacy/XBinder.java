@@ -148,6 +148,7 @@ public class XBinder extends XHook {
 			"android.content.BroadcastReceiver$PendingResult",
 			"android.content.ContentResolver",
 			"android.hardware.SensorManager",
+			"com.android.internal.os.RuntimeInit",
 			"android.os.StrictMode$AndroidBlockGuardPolicy",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.os.RuntimeInit$UncaughtHandler",
