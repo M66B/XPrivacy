@@ -177,7 +177,7 @@ public class XBinder extends XHook {
 		new String[] { // TelephonyManager
 		},
 		new String[] { // WindowManager
-			"android.app.KeyguardManager",
+			"android.app.KeyguardManager$KeyguardLock",
 			"android.hardware.LegacySensorManager",
 		},
 		new String[] { // WifiManager
