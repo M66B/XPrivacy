@@ -22,6 +22,7 @@ import android.util.Log;
 public class XAccountManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
+	private static final String cClassName = "android.accounts.AccountManager";
 	private static final Map<OnAccountsUpdateListener, XOnAccountsUpdateListener> mListener = new WeakHashMap<OnAccountsUpdateListener, XOnAccountsUpdateListener>();
 
 	private XAccountManager(Methods method, String restrictionName, String className) {
@@ -71,20 +72,24 @@ public class XAccountManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = instance.getClass().getName();
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.getAccounts, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.getAccountsByType, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.getAuthenticatorTypes, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
-		listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className, 5));
+		if (!cClassName.equals(className)) {
+			if (className == null)
+				className = cClassName;
+
+			listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.getAccounts, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.getAccountsByType, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.getAuthenticatorTypes, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
+			listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className, 5));
+		}
 		return listHook;
 	}
 
@@ -238,7 +243,7 @@ public class XAccountManager extends XHook {
 
 	private boolean isAccountAllowed(String accountName, String accountType, int uid) {
 		try {
-			if (PrivacyManager.getSettingBool(-uid, Meta.cTypeAccountHash, accountName + accountType, false, true))
+			if (PrivacyManager.getSettingBool(-uid, Meta.cTypeAccountHash, accountName + accountType, false))
 				return true;
 		} catch (Throwable ex) {
 			Util.bug(this, ex);

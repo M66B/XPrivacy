@@ -148,7 +148,8 @@ public class PrivacyManager {
 	static {
 		List<String> listRestriction = getRestrictions();
 
-		for (Hook hook : Meta.get()) {
+		List<Hook> listHook = Meta.get();
+		for (Hook hook : listHook) {
 			String restrictionName = hook.getRestrictionName();
 
 			// Check restriction
@@ -179,6 +180,7 @@ public class PrivacyManager {
 							mPermission.get(aPermission).add(hook);
 					}
 		}
+		Util.log(null, Log.WARN, listHook.size() + " restrictions");
 	}
 
 	public static List<String> getRestrictions() {
@@ -228,12 +230,45 @@ public class PrivacyManager {
 
 	public static PRestriction getRestrictionEx(int uid, String restrictionName, String methodName) {
 		PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
+		PRestriction result = new PRestriction(uid, restrictionName, methodName, false, true);
 		try {
-			return PrivacyService.getRestriction(query, false, "");
+			// Check cache
+			boolean cached = false;
+			CRestriction key = new CRestriction(uid, restrictionName, methodName, null);
+			synchronized (mRestrictionCache) {
+				if (mRestrictionCache.containsKey(key)) {
+					CRestriction entry = mRestrictionCache.get(key);
+					if (!entry.isExpired()) {
+						cached = true;
+						result.restricted = entry.restricted;
+						result.asked = entry.asked;
+					}
+				}
+			}
+
+			if (!cached) {
+				// Get restriction
+				result = PrivacyService.getRestriction(query, false, "");
+				if (result.debug)
+					Util.logStack(null, Log.WARN);
+
+				// Add to cache
+				key.restricted = result.restricted;
+				key.asked = result.asked;
+				if (result.time > 0) {
+					key.setExpiry(result.time);
+					Util.log(null, Log.WARN, "Caching " + result + " until " + new Date(result.time));
+				}
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(key))
+						mRestrictionCache.remove(key);
+					mRestrictionCache.put(key, key);
+				}
+			}
 		} catch (RemoteException ex) {
 			Util.bug(null, ex);
-			return query;
 		}
+		return result;
 	}
 
 	public static boolean getRestriction(final XHook hook, int uid, String restrictionName, String methodName,
@@ -250,7 +285,7 @@ public class PrivacyManager {
 		if (uid <= 0)
 			return false;
 		if (secret == null) {
-			Util.log(null, Log.ERROR, "Secret null");
+			Util.log(null, Log.ERROR, "Secret missing restriction=" + restrictionName + "/" + methodName);
 			Util.logStack(hook, Log.ERROR);
 			secret = "";
 		}
@@ -285,6 +320,7 @@ public class PrivacyManager {
 				if (!entry.isExpired()) {
 					cached = true;
 					result.restricted = entry.restricted;
+					result.asked = entry.asked;
 				}
 			}
 		}
@@ -294,11 +330,15 @@ public class PrivacyManager {
 			try {
 				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 				query.extra = extra;
-				result.restricted = PrivacyService.getRestriction(query, true, secret).restricted;
+				PRestriction restriction = PrivacyService.getRestriction(query, true, secret);
+				result.restricted = restriction.restricted;
+				if (restriction.debug)
+					Util.logStack(null, Log.WARN);
 
 				// Add to cache
 				if (result.time >= 0) {
 					key.restricted = result.restricted;
+					key.asked = result.asked;
 					if (result.time > 0) {
 						key.setExpiry(result.time);
 						Util.log(null, Log.WARN, "Caching " + result + " until " + new Date(result.time));
@@ -342,18 +382,44 @@ public class PrivacyManager {
 		for (String rRestrictionName : listRestriction)
 			listPRestriction.add(new PRestriction(uid, rRestrictionName, methodName, restricted, asked));
 
-		// Make exceptions for dangerous methods
-		if (methodName == null) {
-			int userId = Util.getUserId(uid);
-			if (!getSettingBool(userId, cSettingDangerous, false, false))
-				for (String rRestrictionName : listRestriction)
-					for (Hook md : getHooks(rRestrictionName))
-						if (md.isDangerous())
-							listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, md
-									.whitelist() == null));
-		}
+		// Make exceptions
+		if (methodName == null)
+			for (String rRestrictionName : listRestriction)
+				for (Hook md : getHooks(rRestrictionName)) {
+					if (!canRestrict(uid, Process.myUid(), rRestrictionName, md.getName(), false))
+						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
+					else if (md.isDangerous())
+						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, md
+								.whitelist() == null));
+				}
 
 		setRestrictionList(listPRestriction);
+	}
+
+	public static boolean canRestrict(int uid, int xuid, String restrictionName, String methodName, boolean system) {
+		int _uid = Util.getAppId(uid);
+		int userId = Util.getUserId(uid);
+
+		if (_uid == Process.SYSTEM_UID && PrivacyManager.cIdentification.equals(restrictionName))
+			return false;
+
+		if (system)
+			if (!isApplication(_uid))
+				if (!getSettingBool(userId, PrivacyManager.cSettingSystem, false))
+					return false;
+
+		// @formatter:off
+		if ((_uid == Util.getAppId(xuid)) &&
+			(((PrivacyManager.cIdentification.equals(restrictionName) &&
+			("getString".equals(methodName) || "SERIAL".equals(methodName)))
+			|| PrivacyManager.cIPC.equals(restrictionName)
+			|| PrivacyManager.cStorage.equals(restrictionName)
+			|| PrivacyManager.cSystem.equals(restrictionName)
+			|| PrivacyManager.cView.equals(restrictionName))))
+			return false;
+		// @formatter:on
+
+		return true;
 	}
 
 	public static void updateState(int uid) {
@@ -367,8 +433,13 @@ public class PrivacyManager {
 		if (listRestriction.size() > 0)
 			try {
 				PrivacyService.getClient().setRestrictionList(listRestriction);
+
+				// Clear cache
+				// TODO: selective clear
+				synchronized (mRestrictionCache) {
+					mRestrictionCache.clear();
+				}
 			} catch (Throwable ex) {
-				Util.log(null, Log.ERROR, "setRestrictionList");
 				Util.bug(null, ex);
 			}
 	}
@@ -379,10 +450,18 @@ public class PrivacyManager {
 		try {
 			return PrivacyService.getClient().getRestrictionList(new PRestriction(uid, restrictionName, null, false));
 		} catch (Throwable ex) {
-			Util.log(null, Log.ERROR, "getRestrictionList");
 			Util.bug(null, ex);
 		}
 		return new ArrayList<PRestriction>();
+	}
+
+	public static boolean isRestrictionSet(PRestriction restriction) {
+		try {
+			return PrivacyService.getClient().isRestrictionSet(restriction);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return false;
+		}
 	}
 
 	public static void deleteRestrictions(int uid, String restrictionName, boolean deleteWhitelists) {
@@ -394,16 +473,23 @@ public class PrivacyManager {
 
 			// Clear associated whitelists
 			if (deleteWhitelists && uid > 0) {
-				for (PSetting setting : getSettingList(uid))
+				for (PSetting setting : getSettingList(uid, null))
 					if (Meta.isWhitelist(setting.type))
 						setSetting(uid, setting.type, setting.name, null);
+			}
+
+			// Clear cache
+			// TODO: selective clear
+			synchronized (mRestrictionCache) {
+				mRestrictionCache.clear();
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
 
 		// Mark as new/changed
-		setSetting(uid, cSettingState, Integer.toString(ActivityMain.STATE_ATTENTION));
+		setSetting(uid, cSettingState,
+				Integer.toString(restrictionName == null ? ActivityMain.STATE_CHANGED : ActivityMain.STATE_ATTENTION));
 
 		// Change app modification time
 		setSetting(uid, cSettingModifyTime, Long.toString(System.currentTimeMillis()));
@@ -432,14 +518,14 @@ public class PrivacyManager {
 		return listRestartRestriction;
 	}
 
-	public static void applyTemplate(int uid, String restrictionName, boolean methods) {
+	public static void applyTemplate(int uid, String templateName, String restrictionName, boolean methods,
+			boolean clear) {
 		checkCaller();
 
 		int userId = Util.getUserId(uid);
 
 		// Check on-demand
-		boolean ondemand = getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
-		boolean dangerous = getSettingBool(userId, cSettingDangerous, false, false);
+		boolean ondemand = getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 
 		// Build list of restrictions
 		List<String> listRestriction = new ArrayList<String>();
@@ -449,42 +535,79 @@ public class PrivacyManager {
 			listRestriction.add(restrictionName);
 
 		// Apply template
+		Util.log(null, Log.WARN, "Applying template=" + templateName);
+		boolean hasOndemand = false;
 		List<PRestriction> listPRestriction = new ArrayList<PRestriction>();
 		for (String rRestrictionName : listRestriction) {
-			deleteRestrictions(uid, rRestrictionName, false);
+			// Cleanup
+			if (clear)
+				deleteRestrictions(uid, rRestrictionName, false);
 
 			// Parent
-			String parentValue = getSetting(userId, Meta.cTypeTemplate, rRestrictionName, Boolean.toString(!ondemand)
-					+ "+ask", false);
+			String parentValue = getSetting(userId, templateName, rRestrictionName, Boolean.toString(!ondemand)
+					+ "+ask");
 			boolean parentRestricted = parentValue.contains("true");
 			boolean parentAsked = (!ondemand || parentValue.contains("asked"));
-			listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked));
+			hasOndemand = hasOndemand || !parentAsked;
+
+			// Merge
+			PRestriction parentMerge;
+			if (clear)
+				parentMerge = new PRestriction(uid, rRestrictionName, null, parentRestricted, parentAsked);
+			else
+				parentMerge = getRestrictionEx(uid, rRestrictionName, null);
+
+			// Apply
+			if (canRestrict(uid, Process.myUid(), rRestrictionName, null, true))
+				listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentMerge.restricted
+						|| parentRestricted, parentMerge.asked && parentAsked));
 
 			// Childs
 			if (methods)
-				for (Hook hook : getHooks(rRestrictionName)) {
-					String settingName = rRestrictionName + "." + hook.getName();
-					String value = getSetting(userId, Meta.cTypeTemplate, settingName,
-							Boolean.toString(parentRestricted && (hook.isDangerous() ? dangerous : true))
-									+ (parentAsked ? "+asked" : "+ask"), false);
-					boolean restricted = value.contains("true");
-					boolean asked = (!ondemand || value.contains("asked"));
-					if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.whitelist() != null)
-						listPRestriction.add(new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
-								&& restricted, parentAsked || asked));
-				}
+				for (Hook hook : getHooks(rRestrictionName))
+					if (canRestrict(uid, Process.myUid(), rRestrictionName, hook.getName(), true)) {
+						// Child
+						String settingName = rRestrictionName + "." + hook.getName();
+						String childValue = getSetting(userId, templateName, settingName, null);
+						if (childValue == null)
+							childValue = Boolean.toString(parentRestricted && !hook.isDangerous())
+									+ (parentAsked || (hook.isDangerous() && hook.whitelist() == null) ? "+asked"
+											: "+ask");
+						boolean restricted = childValue.contains("true");
+						boolean asked = (!ondemand || childValue.contains("asked"));
+
+						// Merge
+						PRestriction childMerge;
+						if (clear)
+							childMerge = new PRestriction(uid, rRestrictionName, hook.getName(), parentRestricted
+									&& restricted, parentAsked || asked);
+						else
+							childMerge = getRestrictionEx(uid, rRestrictionName, hook.getName());
+
+						// APply
+						if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.isDangerous()
+								|| !clear) {
+							PRestriction child = new PRestriction(uid, rRestrictionName, hook.getName(),
+									(parentRestricted && restricted) || childMerge.restricted, (parentAsked || asked)
+											&& childMerge.asked);
+							listPRestriction.add(child);
+						}
+					}
 		}
+
+		// Apply result
 		setRestrictionList(listPRestriction);
+		if (hasOndemand)
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));
 	}
 
-	// White listing
-	// TODO: add specialized get to privacy service
+	// White/black listing
 
-	public static Map<String, TreeMap<String, Boolean>> listWhitelisted(int uid) {
+	public static Map<String, TreeMap<String, Boolean>> listWhitelisted(int uid, String type) {
 		checkCaller();
 
 		Map<String, TreeMap<String, Boolean>> mapWhitelisted = new HashMap<String, TreeMap<String, Boolean>>();
-		for (PSetting setting : getSettingList(uid))
+		for (PSetting setting : getSettingList(uid, type))
 			if (Meta.isWhitelist(setting.type)) {
 				if (!mapWhitelisted.containsKey(setting.type))
 					mapWhitelisted.put(setting.type, new TreeMap<String, Boolean>());
@@ -553,22 +676,29 @@ public class PrivacyManager {
 
 	public static String getSalt(int userId) {
 		String def = (Build.SERIAL == null ? "" : Build.SERIAL);
-		return getSetting(userId, PrivacyManager.cSettingSalt, def, true);
+		return getSetting(userId, cSettingSalt, def);
 	}
 
-	public static boolean getSettingBool(int uid, String name, boolean defaultValue, boolean useCache) {
-		return Boolean.parseBoolean(getSetting(uid, name, Boolean.toString(defaultValue), useCache));
+	public static void removeLegacySalt(int userId) {
+		String def = (Build.SERIAL == null ? "" : Build.SERIAL);
+		String salt = getSetting(userId, cSettingSalt, null);
+		if (def.equals(salt))
+			setSetting(userId, cSettingSalt, null);
 	}
 
-	public static boolean getSettingBool(int uid, String type, String name, boolean defaultValue, boolean useCache) {
-		return Boolean.parseBoolean(getSetting(uid, type, name, Boolean.toString(defaultValue), useCache));
+	public static boolean getSettingBool(int uid, String name, boolean defaultValue) {
+		return Boolean.parseBoolean(getSetting(uid, name, Boolean.toString(defaultValue)));
 	}
 
-	public static String getSetting(int uid, String name, String defaultValue, boolean useCache) {
-		return getSetting(uid, "", name, defaultValue, useCache);
+	public static boolean getSettingBool(int uid, String type, String name, boolean defaultValue) {
+		return Boolean.parseBoolean(getSetting(uid, type, name, Boolean.toString(defaultValue)));
 	}
 
-	public static String getSetting(int uid, String type, String name, String defaultValue, boolean useCache) {
+	public static String getSetting(int uid, String name, String defaultValue) {
+		return getSetting(uid, "", name, defaultValue);
+	}
+
+	public static String getSetting(int uid, String type, String name, String defaultValue) {
 		long start = System.currentTimeMillis();
 		String value = null;
 
@@ -576,17 +706,16 @@ public class PrivacyManager {
 		boolean cached = false;
 		boolean willExpire = false;
 		CSetting key = new CSetting(uid, type, name);
-		if (useCache)
-			synchronized (mSettingsCache) {
-				if (mSettingsCache.containsKey(key)) {
-					CSetting entry = mSettingsCache.get(key);
-					if (!entry.isExpired()) {
-						cached = true;
-						value = entry.getValue();
-						willExpire = entry.willExpire();
-					}
+		synchronized (mSettingsCache) {
+			if (mSettingsCache.containsKey(key)) {
+				CSetting entry = mSettingsCache.get(key);
+				if (!entry.isExpired()) {
+					cached = true;
+					value = entry.getValue();
+					willExpire = entry.willExpire();
 				}
 			}
+		}
 
 		// Get settings
 		if (!cached)
@@ -595,20 +724,26 @@ public class PrivacyManager {
 				if (value == null)
 					if (uid > 99) {
 						int userId = Util.getUserId(uid);
-						value = PrivacyService.getSetting(new PSetting(userId, type, name, defaultValue)).value;
-					} else
-						value = defaultValue;
+						value = PrivacyService.getSetting(new PSetting(userId, type, name, null)).value;
+					}
 
 				// Add to cache
-				key.setValue(value);
+				if (value == null)
+					key.setValue(defaultValue);
+				else
+					key.setValue(value);
 				synchronized (mSettingsCache) {
 					if (mSettingsCache.containsKey(key))
 						mSettingsCache.remove(key);
 					mSettingsCache.put(key, key);
 				}
+
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+
+		if (value == null)
+			value = defaultValue;
 
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
@@ -627,6 +762,15 @@ public class PrivacyManager {
 
 		try {
 			PrivacyService.getClient().setSetting(new PSetting(uid, type, name, value));
+
+			// Update cache
+			CSetting key = new CSetting(uid, type, name);
+			key.setValue(value);
+			synchronized (mSettingsCache) {
+				if (mSettingsCache.containsKey(key))
+					mSettingsCache.remove(key);
+				mSettingsCache.put(key, key);
+			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -638,19 +782,23 @@ public class PrivacyManager {
 		if (listSetting.size() > 0)
 			try {
 				PrivacyService.getClient().setSettingList(listSetting);
+
+				// Clear cache
+				// TODO: selective clear
+				synchronized (mSettingsCache) {
+					mSettingsCache.clear();
+				}
 			} catch (Throwable ex) {
-				Util.log(null, Log.ERROR, "setSettingList");
 				Util.bug(null, ex);
 			}
 	}
 
-	public static List<PSetting> getSettingList(int uid) {
+	public static List<PSetting> getSettingList(int uid, String type) {
 		checkCaller();
 
 		try {
-			return PrivacyService.getClient().getSettingList(uid);
+			return PrivacyService.getClient().getSettingList(new PSetting(uid, type, null, null));
 		} catch (Throwable ex) {
-			Util.log(null, Log.ERROR, "getSettingList");
 			Util.bug(null, ex);
 		}
 		return new ArrayList<PSetting>();
@@ -661,6 +809,11 @@ public class PrivacyManager {
 
 		try {
 			PrivacyService.getClient().deleteSettings(uid);
+
+			// Clear cache
+			synchronized (mSettingsCache) {
+				mSettingsCache.clear();
+			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -698,7 +851,7 @@ public class PrivacyManager {
 	public static Object getDefacedProp(int uid, String name) {
 		// Serial number
 		if (name.equals("SERIAL") || name.equals("%serialno")) {
-			String value = getSetting(uid, cSettingSerial, cDeface, true);
+			String value = getSetting(uid, cSettingSerial, cDeface);
 			return (cValueRandom.equals(value) ? getRandomProp("SERIAL") : value);
 		}
 
@@ -708,7 +861,7 @@ public class PrivacyManager {
 
 		// MAC addresses
 		if (name.equals("MAC") || name.equals("%macaddr")) {
-			String mac = getSetting(uid, cSettingMac, "DE:FA:CE:DE:FA:CE", true);
+			String mac = getSetting(uid, cSettingMac, "DE:FA:CE:DE:FA:CE");
 			if (cValueRandom.equals(mac))
 				return getRandomProp("MAC");
 			StringBuilder sb = new StringBuilder(mac.replace(":", ""));
@@ -727,20 +880,20 @@ public class PrivacyManager {
 
 		// IMEI
 		if (name.equals("getDeviceId") || name.equals("%imei")) {
-			String value = getSetting(uid, cSettingImei, "000000000000000", true);
+			String value = getSetting(uid, cSettingImei, "000000000000000");
 			return (cValueRandom.equals(value) ? getRandomProp("IMEI") : value);
 		}
 
 		// Phone
 		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
 				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber")) {
-			String value = getSetting(uid, cSettingPhone, cDeface, true);
+			String value = getSetting(uid, cSettingPhone, cDeface);
 			return (cValueRandom.equals(value) ? getRandomProp("PHONE") : value);
 		}
 
 		// Android ID
 		if (name.equals("ANDROID_ID")) {
-			String value = getSetting(uid, cSettingId, cDeface, true);
+			String value = getSetting(uid, cSettingId, cDeface);
 			return (cValueRandom.equals(value) ? getRandomProp("ANDROID_ID") : value);
 		}
 
@@ -756,37 +909,37 @@ public class PrivacyManager {
 
 		if (name.equals("getNetworkCountryIso")) {
 			// ISO country code
-			String value = getSetting(uid, cSettingCountry, "XX", true);
+			String value = getSetting(uid, cSettingCountry, "XX");
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
 		if (name.equals("getNetworkOperator"))
 			// MCC+MNC: test network
-			return getSetting(uid, cSettingMcc, "001", true) + getSetting(uid, cSettingMnc, "01", true);
+			return getSetting(uid, cSettingMcc, "001") + getSetting(uid, cSettingMnc, "01");
 		if (name.equals("getNetworkOperatorName"))
-			return getSetting(uid, cSettingOperator, cDeface, true);
+			return getSetting(uid, cSettingOperator, cDeface);
 
 		if (name.equals("getSimCountryIso")) {
 			// ISO country code
-			String value = getSetting(uid, cSettingCountry, "XX", true);
+			String value = getSetting(uid, cSettingCountry, "XX");
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);
 		}
 		if (name.equals("getSimOperator"))
 			// MCC+MNC: test network
-			return getSetting(uid, cSettingMcc, "001", true) + getSetting(uid, cSettingMnc, "01", true);
+			return getSetting(uid, cSettingMcc, "001") + getSetting(uid, cSettingMnc, "01");
 		if (name.equals("getSimOperatorName"))
-			return getSetting(uid, cSettingOperator, cDeface, true);
+			return getSetting(uid, cSettingOperator, cDeface);
 
 		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
-			return getSetting(uid, cSettingIccId, null, true);
+			return getSetting(uid, cSettingIccId, null);
 
 		if (name.equals("getSubscriberId")) { // IMSI for a GSM phone
-			String value = getSetting(uid, cSettingSubscriber, null, true);
+			String value = getSetting(uid, cSettingSubscriber, null);
 			return (cValueRandom.equals(value) ? getRandomProp("SubscriberId") : value);
 		}
 
 		if (name.equals("SSID")) {
 			// Default hidden network
-			String value = getSetting(uid, cSettingSSID, "", true);
+			String value = getSetting(uid, cSettingSSID, "");
 			return (cValueRandom.equals(value) ? getRandomProp("SSID") : value);
 		}
 
@@ -794,7 +947,7 @@ public class PrivacyManager {
 		if (name.equals("GSF_ID")) {
 			long gsfid = 0xDEFACE;
 			try {
-				String value = getSetting(uid, cSettingGsfId, "DEFACE", true);
+				String value = getSetting(uid, cSettingGsfId, "DEFACE");
 				if (cValueRandom.equals(value))
 					value = getRandomProp(name);
 				gsfid = Long.parseLong(value.toLowerCase(), 16);
@@ -805,7 +958,7 @@ public class PrivacyManager {
 
 		// Advertisement ID
 		if (name.equals("AdvertisingId")) {
-			String adid = getSetting(uid, cSettingAdId, "DEFACE00-0000-0000-0000-000000000000", true);
+			String adid = getSetting(uid, cSettingAdId, "DEFACE00-0000-0000-0000-000000000000");
 			if (cValueRandom.equals(adid))
 				adid = getRandomProp(name);
 			return adid;
@@ -813,7 +966,7 @@ public class PrivacyManager {
 
 		if (name.equals("InetAddress")) {
 			// Set address
-			String ip = getSetting(uid, cSettingIP, null, true);
+			String ip = getSetting(uid, cSettingIP, null);
 			if (ip != null)
 				try {
 					return InetAddress.getByName(ip);
@@ -833,7 +986,7 @@ public class PrivacyManager {
 
 		if (name.equals("IPInt")) {
 			// Set address
-			String ip = getSetting(uid, cSettingIP, null, true);
+			String ip = getSetting(uid, cSettingIP, null);
 			if (ip != null)
 				try {
 					InetAddress inet = InetAddress.getByName(ip);
@@ -854,7 +1007,7 @@ public class PrivacyManager {
 
 		if (name.equals("UA"))
 			return getSetting(uid, cSettingUa,
-					"Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9", true);
+					"Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9");
 
 		// InputDevice
 		if (name.equals("DeviceDescriptor"))
@@ -865,24 +1018,27 @@ public class PrivacyManager {
 			return cDeface;
 
 		if (name.equals("MCC"))
-			return getSetting(uid, cSettingMcc, "001", true);
+			return getSetting(uid, cSettingMcc, "001");
 
 		if (name.equals("MNC"))
-			return getSetting(uid, cSettingMnc, "01", true);
+			return getSetting(uid, cSettingMnc, "01");
 
 		if (name.equals("CID"))
 			try {
-				return Integer.parseInt(getSetting(uid, cSettingCid, "0", true)) & 0xFFFF;
+				return Integer.parseInt(getSetting(uid, cSettingCid, "0")) & 0xFFFF;
 			} catch (Throwable ignored) {
 				return -1;
 			}
 
 		if (name.equals("LAC"))
 			try {
-				return Integer.parseInt(getSetting(uid, cSettingLac, "0", true)) & 0xFFFF;
+				return Integer.parseInt(getSetting(uid, cSettingLac, "0")) & 0xFFFF;
 			} catch (Throwable ignored) {
 				return -1;
 			}
+
+		if (name.equals("USB"))
+			return cDeface;
 
 		// Fallback
 		Util.log(null, Log.ERROR, "Fallback value name=" + name);
@@ -892,9 +1048,9 @@ public class PrivacyManager {
 
 	public static Location getDefacedLocation(int uid, Location location) {
 		// Christmas Island ~ -10.5 / 105.667
-		String sLat = getSetting(uid, cSettingLatitude, "-10.5", true);
-		String sLon = getSetting(uid, cSettingLongitude, "105.667", true);
-		String sAlt = getSetting(uid, cSettingAltitude, "686", true);
+		String sLat = getSetting(uid, cSettingLatitude, "-10.5");
+		String sLon = getSetting(uid, cSettingLongitude, "105.667");
+		String sAlt = getSetting(uid, cSettingAltitude, "686");
 
 		// Backward compatibility
 		if ("".equals(sLat))

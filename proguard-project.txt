@@ -20,13 +20,17 @@
 #}
 
 #Line numbers
--renamesourcefileattribute SourceFile
+-renamesourcefileattribute XPrivacy
 -keepattributes SourceFile,LineNumberTable
 
 #Xposed
--libraryjars XposedBridgeApi-42.jar
+-libraryjars XposedBridgeApi-54.jar
 
 #XPrivacy
 -keep class biz.bokhorst.xprivacy.XPrivacy {*; }
 -keepnames class biz.bokhorst.xprivacy.X* { }
 -keepclassmembers class biz.bokhorst.xprivacy.Util { public static boolean isXposedEnabled(); }
+
+#Cydia substrate
+-dontwarn com.saurik.substrate._MS*
+-keep class com.saurik.substrate.MS* {*; }

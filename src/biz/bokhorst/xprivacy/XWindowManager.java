@@ -12,6 +12,7 @@ import android.view.WindowManager;
 public class XWindowManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
+	private static final String cClassName = "android.view.WindowManagerImpl";
 	private static final Map<View, WindowManager.LayoutParams> mViewParam = new WeakHashMap<View, WindowManager.LayoutParams>();
 
 	private XWindowManager(Methods method, String restrictionName, String className) {
@@ -44,12 +45,16 @@ public class XWindowManager extends XHook {
 		addView, removeView, updateViewLayout
 	};
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = instance.getClass().getName();
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XWindowManager(Methods.addView, PrivacyManager.cOverlay, className));
-		listHook.add(new XWindowManager(Methods.removeView, null, className, 1));
-		listHook.add(new XWindowManager(Methods.updateViewLayout, null, className, 1));
+		if (!cClassName.equals(className)) {
+			if (className == null)
+				className = cClassName;
+
+			listHook.add(new XWindowManager(Methods.addView, PrivacyManager.cOverlay, className));
+			listHook.add(new XWindowManager(Methods.removeView, null, className, 1));
+			listHook.add(new XWindowManager(Methods.updateViewLayout, null, className, 1));
+		}
 		return listHook;
 	}
 

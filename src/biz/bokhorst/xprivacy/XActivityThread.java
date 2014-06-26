@@ -43,8 +43,6 @@ public class XActivityThread extends XHook {
 	// @formatter:off
 
 	// private void handleReceiver(ReceiverData data)
-	// private static void performConfigurationChanged(ComponentCallbacks2 cb, Configuration config)
-	// private final void performConfigurationChanged(ComponentCallbacks2 cb, Configuration config)
 	// frameworks/base/core/java/android/app/ActivityThread.java
 
 	// @formatter:on

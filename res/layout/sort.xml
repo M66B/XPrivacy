@@ -1,55 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:orientation="vertical" >
 
-    <RadioGroup
-        android:id="@+id/rgSMode"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
 
-        <RadioButton
-            android:id="@+id/rbSName"
+        <RadioGroup
+            android:id="@+id/rgSMode"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RadioButton
+                android:id="@+id/rbSName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_sname" />
+
+            <RadioButton
+                android:id="@+id/rbSUid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_suid" />
+
+            <RadioButton
+                android:id="@+id/rbSInstalled"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_sinstalled" />
+
+            <RadioButton
+                android:id="@+id/rbSUpdated"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_supdated" />
+
+            <RadioButton
+                android:id="@+id/rbSModified"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/title_smodified" />
+        </RadioGroup>
+
+        <CheckBox
+            android:id="@+id/cbSInvert"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/title_sname" />
+            android:text="@string/title_sinvert"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+    </LinearLayout>
 
-        <RadioButton
-            android:id="@+id/rbSUid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_suid" />
-
-        <RadioButton
-            android:id="@+id/rbSInstalled"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_sinstalled" />
-
-        <RadioButton
-            android:id="@+id/rbSUpdated"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_supdated" />
-
-        <RadioButton
-            android:id="@+id/rbSModified"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/title_smodified" />
-    </RadioGroup>
-
-    <CheckBox
-        android:id="@+id/cbSInvert"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/title_sinvert"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-</LinearLayout>
+</ScrollView>

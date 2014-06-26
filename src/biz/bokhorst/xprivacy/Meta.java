@@ -19,12 +19,14 @@ public class Meta {
 	public final static String cTypeFilename = "Filename";
 	public final static String cTypeIPAddress = "IPAddress";
 	public final static String cTypeLibrary = "Library";
+	public final static String cTypeMethod = "Method";
 	public final static String cTypeProc = "Proc";
 	public final static String cTypeUrl = "Url";
 
 	public static boolean isWhitelist(String type) {
 		return (cTypeCommand.equals(type) || cTypeFilename.equals(type) || cTypeIPAddress.equals(type)
-				|| cTypeLibrary.equals(type) || cTypeProc.equals(type) || cTypeUrl.equals(type));
+				|| cTypeLibrary.equals(type) || cTypeMethod.equals(type) || cTypeProc.equals(type) || cTypeUrl
+					.equals(type));
 	}
 
 	public static List<Hook> get() {
@@ -38,12 +40,13 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "getAccounts", "GET_ACCOUNTS", 10, null, null));
 		mListHook.add(new Hook("accounts", "getAccountsByType", "GET_ACCOUNTS", 10, null, null));
 		mListHook.add(new Hook("accounts", "getAccountsByTypeAndFeatures", "GET_ACCOUNTS", 10, null, null));
-		mListHook.add(new Hook("accounts", "getAuthToken", "USE_CREDENTIALS", 10, null, null));
-		mListHook.add(new Hook("accounts", "getAuthTokenByFeatures", "MANAGE_ACCOUNTS", 10, null, null));
+		mListHook.add(new Hook("accounts", "getAuthToken", "USE_CREDENTIALS", 10, "0.0", null).dangerous());
+		mListHook.add(new Hook("accounts", "getAuthTokenByFeatures", "MANAGE_ACCOUNTS", 10, "0.0", null).dangerous());
 		mListHook.add(new Hook("accounts", "hasFeatures", "GET_ACCOUNTS", 10, null, null));
 		mListHook.add(new Hook("accounts", "getAccountsByTypeForPackage", "GET_ACCOUNTS", 18, null, null));
-		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 10, null, null));
-		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 10, null, null));
+
+		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 10, "0.0", null).dangerous());
+		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 10, "0.0", null).dangerous());
 
 		mListHook.add(new Hook("accounts", "getAuthenticatorTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
 		mListHook.add(new Hook("accounts", "getCurrentSync", "GET_ACCOUNTS", 8, "1.99.24", null).dangerous());
@@ -53,13 +56,17 @@ public class Meta {
 		mListHook.add(new Hook("browser", "BrowserProvider2", "com.android.browser.permission.READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
 		mListHook.add(new Hook("browser", "Downloads", "ACCESS_DOWNLOAD_MANAGER,ACCESS_DOWNLOAD_MANAGER_ADVANCED,ACCESS_ALL_DOWNLOADS", 1, "1.99.43", null).dangerous());
 
-		mListHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR", 1, null, null));
+		mListHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR,WRITE_CALENDAR", 1, null, null));
 
 		mListHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null).doNotify());
 		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).doNotify());
 		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).doNotify());
 		mListHook.add(new Hook("calling", "android.intent.action.RESPOND_VIA_MESSAGE", "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
 		mListHook.add(new Hook("calling", "android.intent.action.CALL", "CALL_PHONE", 10, null, null).doNotify());
+
+		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).doNotify());
+		mListHook.add(new Hook("calling", "SIP.isVoipSupported", "USE_SIP", 9, null, null).doNotify());
+		mListHook.add(new Hook("calling", "SIP.newInstance", "USE_SIP", 9, null, null).doNotify());
 
 		mListHook.add(new Hook("clipboard", "addPrimaryClipChangedListener", "", 11, null, null));
 		mListHook.add(new Hook("clipboard", "getPrimaryClip", "", 11, null, null).doNotify());
@@ -89,20 +96,28 @@ public class Meta {
 		mListHook.add(new Hook("identification", "%cid", "", 1, null, null));
 		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous().whitelist(cTypeProc));
 		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).dangerous());
-		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, null, null));
-		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, null, null));
+		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).dangerous());
+		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).dangerous());
 		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getString", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getDescriptor", "", 16, null, null));
 		mListHook.add(new Hook("identification", "GservicesProvider", "com.google.android.providers.gsf.permission.READ_GSERVICES,com.google.android.providers.gsf.permission.WRITE_GSERVICES", 1, null, null).dangerous());
 		mListHook.add(new Hook("identification", "SERIAL", "", 1, null, null).restart().noUsageData());
 
-		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, null, null));
-		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, null, null));
-		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, null, null));
+		mListHook.add(new Hook("identification", "USB.getDeviceId", "", 12, "2.1.7", null));
+		mListHook.add(new Hook("identification", "USB.getDeviceName", "", 12, "2.1.7", null));
+
+		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).dangerous());
+		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, "0.0", null).dangerous());
+		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).dangerous());
+
 		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null));
 		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null));
 		mListHook.add(new Hook("internet", "inet", "INTERNET", 1, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "inet_admin", "NET_ADMIN", 1, "2.1.1", null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "inet_bw", "READ_NETWORK_USAGE_HISTORY,MODIFY_NETWORK_ACCOUNTING", 1, "2.1.1", null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "inet_vpn", "NET_TUNNELING", 1, "2.1.1", null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("internet", "inet_mesh", "LOOP_RADIO", 1, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "getActiveNetworkInfo", null, 1, null, null).dangerous());
 		mListHook.add(new Hook("internet", "getAllNetworkInfo", null, 1, null, null));
 		mListHook.add(new Hook("internet", "getNetworkInfo", null, 1, null, null).dangerous());
@@ -117,19 +132,30 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cTypeIPAddress));
 
-		mListHook.add(new Hook("ipc", "android.accounts.IAccountManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.app.IActivityManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.content.IClipboard", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.net.IConnectivityManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.content.IContentService", "", 1, "1.99.40", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.location.ILocationManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistry", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.ITelephonyRegistryMSim", "", 1, "1.99.26", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.content.pm.IPackageManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.IPhoneSubInfo", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "com.android.internal.telephony.msim.IPhoneSubInfoMSim", "", 1, "1.99.26", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.view.IWindowManager", "", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("ipc", "android.net.wifi.IWifiManager", "", 1, "1.99.1", null).dangerous());
+		mListHook.add(new Hook("ipc", "IAccountManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IActivityManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IClipboard", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IConnectivityManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IContentService", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "ILocationManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "ITelephonyRegistry", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "ITelephonyRegistryMSim", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IPackageManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IPhoneSubInfo", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IPhoneSubInfoMSim", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IWindowManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IWifiManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "ISipService", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "ISms", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "INfcAdapter", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IAppWidgetService", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IBluetooth", "", 1, "2.1.9", null).dangerous());
+		mListHook.add(new Hook("ipc", "IBluetoothManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IInputManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "SensorServer", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IUsbManager", "", 1, "2.1.7", null).dangerous());
+
+		mListHook.add(new Hook("ipc", "Reflection", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 
 		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
 		mListHook.add(new Hook("location", "addNmeaListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 5, null, null));
@@ -182,7 +208,7 @@ public class Meta {
 		mListHook.add(new Hook("network", "getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getConnectionInfo", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getDhcpInfo", "ACCESS_WIFI_STATE", 10, null, null));
-		mListHook.add(new Hook("network", "getScanResults", "ACCESS_WIFI_STATE", 10, null, null));
+		mListHook.add(new Hook("network", "getScanResults", "ACCESS_WIFI_STATE", 10, "0.0", null).dangerous());
 		mListHook.add(new Hook("network", "getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, null, null));
 
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
@@ -226,18 +252,31 @@ public class Meta {
 		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData().noOnDemand());
 		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData().noOnDemand());
 
-		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null).dangerous());
+		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null).dangerous());
+		mListHook.add(new Hook("sensors", "acceleration", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "gravity", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "humidity", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "light", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "magnetic", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "motion", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "orientation", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "pressure", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "proximity", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "rotation", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "temperature", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "step", "", 3, null, null));
 
-		mListHook.add(new Hook("shell", "sh", "", 10, null, null).whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "su", "", 10, null, null).whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "exec", "", 10, null, null).whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "load", "", 10, null, null).dangerous().whitelist(cTypeLibrary));
-		mListHook.add(new Hook("shell", "loadLibrary", "", 10, null, null).dangerous().whitelist(cTypeLibrary));
-		mListHook.add(new Hook("shell", "start", "", 10, null, null).whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "sh", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "su", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "exec", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "load", "", 10, "0.0", null).dangerous().restart().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "loadLibrary", "", 10, "0.0", null).dangerous().restart().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "start", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
 
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());
-		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_ALL_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
+		mListHook.add(new Hook("storage", "mtp", "ACCESS_MTP", 10, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null));
 		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous().whitelist(cTypeFilename));
 
@@ -256,8 +295,8 @@ public class Meta {
 		mListHook.add(new Hook("system", "getInstalledProviders", "", 3, null, null).dangerous());
 
 		mListHook.add(new Hook("system", "getRecentTasks", "GET_TASKS", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "getRunningAppProcesses", "GET_TASKS", 10, null, null).dangerous());
-		mListHook.add(new Hook("system", "getRunningServices", "GET_TASKS", 10, null, null).dangerous());
+		mListHook.add(new Hook("system", "getRunningAppProcesses", "", 10, null, null).dangerous());
+		mListHook.add(new Hook("system", "getRunningServices", "", 10, null, null).dangerous());
 		mListHook.add(new Hook("system", "getRunningTasks", "GET_TASKS", 10, null, null).dangerous());
 
 		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_ADDED", "", 1, null, null).dangerous());

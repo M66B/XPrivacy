@@ -10,9 +10,10 @@
         android:id="@+id/imgIndicator"
         android:layout_width="24dip"
         android:layout_height="24dip"
-        android:layout_gravity="center_vertical"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:background="?attr/color_dangerous"
         android:contentDescription="@string/app_name"
-        android:src="@android:drawable/arrow_down_float" />
+        android:src="?attr/icon_expander_minimized" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -64,6 +65,16 @@
             android:paddingLeft="6dip"
             android:textAppearance="?android:attr/textAppearanceSmall"
             tools:ignore="NestedWeights" />
+
+        <ImageView
+            android:id="@+id/imgWhitelist"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/menu_whitelists"
+            android:paddingLeft="3dip"
+            android:src="?attr/icon_whitelist"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imgCbRestricted"

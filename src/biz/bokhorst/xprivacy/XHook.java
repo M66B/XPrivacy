@@ -55,10 +55,6 @@ public abstract class XHook {
 		return mSdk;
 	}
 
-	abstract protected void before(XParam param) throws Throwable;
-
-	abstract protected void after(XParam param) throws Throwable;
-
 	public void setSecret(String secret) {
 		mSecret = secret;
 	}
@@ -66,6 +62,10 @@ public abstract class XHook {
 	protected String getSecret() {
 		return mSecret;
 	}
+
+	abstract protected void before(XParam param) throws Throwable;
+
+	abstract protected void after(XParam param) throws Throwable;
 
 	protected boolean isRestricted(XParam param) throws Throwable {
 		return isRestricted(param, getSpecifier());
@@ -84,6 +84,11 @@ public abstract class XHook {
 	protected boolean isRestrictedExtra(XParam param, String restrictionName, String methodName, String extra)
 			throws Throwable {
 		int uid = Binder.getCallingUid();
+		return PrivacyManager.getRestrictionExtra(this, uid, restrictionName, methodName, extra, mSecret);
+	}
+
+	protected boolean isRestrictedExtra(int uid, String restrictionName, String methodName, String extra)
+			throws Throwable {
 		return PrivacyManager.getRestrictionExtra(this, uid, restrictionName, methodName, extra, mSecret);
 	}
 

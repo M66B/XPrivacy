@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -13,46 +14,40 @@
         android:orientation="vertical" >
 
         <TextView
-            android:id="@+id/tvVersion"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="true" />
-
-        <TextView
-            android:id="@+id/tvXVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="true" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/app_copyright"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/tvLicensed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/title_usage_text_1"
+            android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dip"
-            android:layout_marginTop="6dip"
-            android:autoLink="web"
-            android:text="@string/msg_first"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:text="@string/title_usage_text_2"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/title_usage_text_3"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dip"
+            android:text="@string/title_usage_footer"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="web"
             android:ellipsize="end"
+            android:paddingTop="6dip"
             android:singleLine="true"
             android:text="@string/app_help"
             android:textAppearance="?android:attr/textAppearanceSmall" />

@@ -6,6 +6,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import android.os.Binder;
+import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
 import android.util.Log;
@@ -14,12 +15,19 @@ public class XBinder extends XHook {
 	private Methods mMethod;
 
 	private static long mToken = 0;
-	private static int BITS_TOKEN = 16;
-	private static int FLAG_ALL = 0xFFFF;
-	private static int MASK_TOKEN = 0xFFFF;
+	private static final int BITS_TOKEN = 16;
+	private static final int FLAG_ALL = 0xFFFF;
+	private static final int MASK_TOKEN = 0xFFFF;
 
-	// Service name should one-to-one correspond to a service descriptor
-	// TODO: sensor interface
+	private static final int PING_TRANSACTION = ('_' << 24) | ('P' << 16) | ('N' << 8) | 'G';
+	private static final int DUMP_TRANSACTION = ('_' << 24) | ('D' << 16) | ('M' << 8) | 'P';
+	private static final int INTERFACE_TRANSACTION = ('_' << 24) | ('N' << 16) | ('T' << 8) | 'F';
+	private static final int TWEET_TRANSACTION = ('_' << 24) | ('T' << 16) | ('W' << 8) | 'T';
+	private static final int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
+	private static final int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
+
+	// Service name should one-to-one correspond to the other lists
+	// TODO: service list
 
 	// @formatter:off
 	public static List<String> cServiceName = Arrays.asList(new String[] {
@@ -35,7 +43,25 @@ public class XBinder extends XHook {
 		"iphonesubinfo",
 		"iphonesubinfo_msim",
 		"window",
-		"wifi"
+		"wifi",
+		"sip",
+		"isms",
+		"nfc",
+		"appwidget",
+		"bluetooth",
+		"bluetooth_manager",
+		"input",
+		"sensorservice",
+		"usb"
+	});
+	// @formatter:on
+
+	// @formatter:off
+	public static List<String> cServiceOptional = Arrays.asList(new String[] {
+		"iphonesubinfo",
+		"iphonesubinfo_msim",
+		"sip",
+		"nfc"
 	});
 	// @formatter:on
 
@@ -53,7 +79,127 @@ public class XBinder extends XHook {
 		"com.android.internal.telephony.IPhoneSubInfo",
 		"com.android.internal.telephony.msim.IPhoneSubInfoMSim",
 		"android.view.IWindowManager",
-		"android.net.wifi.IWifiManager"
+		"android.net.wifi.IWifiManager",
+		"android.net.sip.ISipService",
+		"com.android.internal.telephony.ISms",
+		"android.nfc.INfcAdapter",
+		"com.android.internal.appwidget.IAppWidgetService",
+		"android.bluetooth.IBluetooth",
+		"android.bluetooth.IBluetoothManager",
+		"android.hardware.input.IInputManager",
+		"android.gui.SensorServer",
+		"android.hardware.usb.IUsbManager"
+	});
+	// @formatter:on
+
+	// @formatter:off
+	public static List<String> cServiceClassName = Arrays.asList(new String[] {
+		"android.accounts.AccountManager",
+		"android.app.ActivityManager",
+		"android.content.ClipboardManager",
+		"android.net.ConnectivityManager,android.net.MultiSimConnectivityManager",
+		"android.content.ContentResolver,android.content.ContentProviderClient,com.android.providers.contacts.ContactsProvider2",
+		"android.location.LocationManager",
+		"android.telephony.TelephonyManager",
+		"android.telephony.TelephonyManager",
+		"android.app.ApplicationPackageManager",
+		"android.telephony.TelephonyManager",
+		"android.telephony.TelephonyManager",
+		"android.view.WindowManagerImpl,android.view.WindowManagerGlobal,android.view.ViewRootImpl,android.view.View,android.view.Display",
+		"android.net.wifi.WifiManager",
+		"android.net.sip.SipManager",
+		"android.telephony.SmsManager",
+		"android.nfc.NfcActivityManager,android.nfc.NfcAdapter",
+		"android.appwidget.AppWidgetManager,android.appwidget.AppWidgetHost",
+		"com.android.server.BluetoothManagerService,android.bluetooth.BluetoothSocket",
+		"android.bluetooth.BluetoothManager,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
+		"android.hardware.input.InputManager",
+		"android.hardware.SystemSensorManager",
+		"android.hardware.usb.UsbManager"
+	});
+	// @formatter:on
+
+	// @formatter:off
+	// Forbidden classes
+	public static List<String> cBlackClassName = Arrays.asList(new String[] {
+		"java.lang.reflect.Method.invokeNative"
+	});
+	// @formatter:on
+
+	// @formatter:off
+	// Allow some common internal calls
+	public static List<String[]> cWhiteClassName = Arrays.asList(new String[][] {
+		new String[] { // AccountManager
+		},
+		new String[] { // ActivityManager
+			"android.app.Activity",
+			"android.app.ActivityThread",
+			"android.app.ActivityThread$Idler",
+			"android.app.ActivityThread$StopInfo",
+			"android.app.Application",
+			"android.app.ContextImpl",
+			"android.app.Instrumentation",
+			"android.app.LoadedApk",
+			"android.app.PendingIntent",
+			"android.app.Service",
+			"android.content.BroadcastReceiver",
+			"android.content.BroadcastReceiver$PendingResult",
+			"android.content.ContentResolver",
+			"android.hardware.SensorManager",
+			"android.os.StrictMode$AndroidBlockGuardPolicy",
+			"com.android.internal.app.ResolverActivity",
+			"com.android.internal.os.RuntimeInit$UncaughtHandler",
+		},
+		new String[] { // ClipboardManager
+		},
+		new String[] { // ConnectivityManager
+			"android.app.ActivityThread",
+		},
+		new String[] { // ContentProvider
+		},
+		new String[] { // LocationManager
+			"android.location.Geocoder",
+		},
+		new String[] { // TelephonyManager
+		},
+		new String[] { // TelephonyManager
+		},
+		new String[] { // PackageManager
+			"android.app.ActivityThread",
+			"android.app.LoadedApk",
+			"android.app.ResourcesManager",
+			"android.content.res.Resources",
+			"android.content.thm.ThemeIconManager",
+			"android.nfc.NfcAdapter",
+		},
+		new String[] { // TelephonyManager
+		},
+		new String[] { // TelephonyManager
+		},
+		new String[] { // WindowManager
+			"android.app.KeyguardManager$KeyguardLock",
+			"android.hardware.LegacySensorManager",
+		},
+		new String[] { // WifiManager
+		},
+		new String[] { // SipManager
+		},
+		new String[] { // SmsManager
+		},
+		new String[] { // NfcManager
+		},
+		new String[] { // AppWidgetManager
+		},
+		new String[] { // Bluetooth
+		},
+		new String[] { // BluetoothManager
+		},
+		new String[] { // InputManager
+		},
+		new String[] { // SensorManager
+		},
+		new String[] { // UsbManager
+		},
 	});
 	// @formatter:on
 
@@ -109,29 +255,116 @@ public class XBinder extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	private void markIPC(XParam param) {
-		int flags = (Integer) param.args[3];
-		if ((flags & ~FLAG_ALL) != 0)
-			Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags));
-		flags |= (mToken << BITS_TOKEN);
-		param.args[3] = flags;
+	@Override
+	protected void after(XParam param) throws Throwable {
+		// Do nothing
+	}
+
+	private void markIPC(XParam param) throws Throwable {
+		// Allow management transaction
+		int code = (Integer) param.args[0];
+		if (isManagementTransaction(code))
+			return;
+
+		int uid = Binder.getCallingUid();
+		if (PrivacyManager.isApplication(uid)) {
+			// Get interface name
+			IBinder binder = (IBinder) param.thisObject;
+			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+
+			// Check if listed descriptor
+			int idx = cServiceDescriptor.indexOf(descriptor);
+			if (idx >= 0) {
+				// Search class in call stack
+				boolean ok = false;
+				boolean black = false;
+				boolean white = false;
+				boolean found = false;
+				String proxy = descriptor.replace(".I", ".") + "Proxy";
+				String[] serviceClassName = cServiceClassName.get(idx).split(",");
+				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+				for (int i = 0; i < ste.length; i++)
+					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)) {
+						found = true;
+
+						// Check exceptions
+						if (i + 1 < ste.length) {
+							String name = ste[i + 1].getClassName();
+							black = cBlackClassName.contains(name);
+							white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
+							if (black || white)
+								break;
+						}
+
+						// Check manager class name
+						for (int j = i + 1; j < ste.length; j++) {
+							for (String name : serviceClassName)
+								if (ste[j].getClassName().startsWith(name)) {
+									ok = true;
+									break;
+								}
+							if (ok)
+								break;
+						}
+						break;
+					}
+
+				// Internal checks
+				if (!found) {
+					Util.log(this, Log.ERROR,
+							"Missing descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
+					Util.logStack(this, Log.ERROR);
+				}
+				if (black || white)
+					if (ok) {
+						Util.log(this, Log.ERROR, "Black/whitelisted descriptor=" + descriptor + " code=" + code + " uid="
+								+ Binder.getCallingUid());
+						Util.logStack(this, Log.ERROR);
+					} else if (white)
+						ok = true;
+
+				// Conditionally mark
+				if (ok) {
+					int flags = (Integer) param.args[3];
+					if ((flags & ~FLAG_ALL) != 0)
+						Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " descriptor="
+								+ descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
+					flags |= (mToken << BITS_TOKEN);
+					param.args[3] = flags;
+				}
+
+				if (!ok && !black && !PrivacyService.getClient().isSystemApp(uid)) {
+					Util.log(this, Log.ERROR,
+							"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
+					Util.logStack(this, Log.ERROR);
+				}
+			}
+		}
 	}
 
 	private void checkIPC(XParam param) throws Throwable {
 		// Entry point from android_util_Binder.cpp's onTransact
+		int code = (Integer) param.args[0];
 		int flags = (Integer) param.args[3];
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
 		flags &= FLAG_ALL;
 		param.args[3] = flags;
 
+		// Allow management transaction
+		if (isManagementTransaction(code))
+			return;
+
 		int uid = Binder.getCallingUid();
 		if (token != mToken && PrivacyManager.isApplication(uid)) {
 			// Get interface name
-			Binder binder = (Binder) param.thisObject;
+			IBinder binder = (IBinder) param.thisObject;
 			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 			if (cServiceDescriptor.contains(descriptor)) {
-				Util.log(this, Log.WARN, "can restrict name=" + descriptor + " uid=" + uid + " my=" + Process.myUid());
-				if (getRestricted(uid, PrivacyManager.cIPC, descriptor)) {
+				String[] name = descriptor.split("\\.");
+				String methodName = name[name.length - 1];
+				Util.log(this, Log.INFO, "can restrict method=" + methodName + " code=" + code + " flags=" + flags
+						+ " uid=" + uid + " my=" + Process.myUid());
+				if (isRestrictedExtra(uid, PrivacyManager.cIPC, methodName, Integer.toString(code))) {
 					// Get reply parcel
 					Parcel reply = null;
 					try {
@@ -157,8 +390,9 @@ public class XBinder extends XHook {
 		}
 	}
 
-	@Override
-	protected void after(XParam param) throws Throwable {
-		// Do nothing
+	private static boolean isManagementTransaction(int code) {
+		return (code == PING_TRANSACTION || code == DUMP_TRANSACTION || code == INTERFACE_TRANSACTION
+				|| code == TWEET_TRANSACTION || code == LIKE_TRANSACTION || code == SYSPROPS_TRANSACTION);
+
 	}
 }

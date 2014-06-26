@@ -13,13 +13,243 @@ Changelog
 * [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 * [GitHub releases](https://github.com/M66B/XPrivacy/releases)
 
+**Important**
+
+* If you install a version from 2.0.35 the main template will be reset to default (once)
+* If you install a version from 2.1.5 on demand restricting will be disabled until the update is completed (once)
+* Dangerous functions need to be restricted always manually (manually includes the template, if defined to do so)
+* Xposed version 2.6+ is required
+* **Please send the support info when XPrivacy asks for it**
+
 **Next release**
 
-* Showing icon if there is white/black list for a function ([issue](/../../issues/1654))
-	* Thanks @[an0n981](https://github.com/an0n981) for the icons
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.11 BETA**
+
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Attempt to fix on demand transparency ([issue](/../../issues/1755))
+
+**Version 2.1.10 BETA**
+
+* Fixed IPC restrictions
+
+**Version 2.1.9 BETA**
+
+* Added some help texts
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Added IPC restriction *bluetooth*
+* Updated Dutch translation
+* Updated German translation
+
+**Version 2.1.8 TEST**
+
+* Allow management binder transactions
+	* *service list* will not trigger IPC restrictions anymore
+* Made IPC restrictions apply to Java calls too
+	* **The IPC restrictions need to be set again, because they were renamed to prevent trouble**
+* Added IPC restrictions
+	* *ISipService*
+	* *ISms*
+	* *INfcAdapter*
+	* *IAppWidgetService*
+	* *IBluetoothManager*
+	* *IInputManager*
+	* *SensorServer*
+	* *IUsbManager*
+* Added get method [reflection](http://en.wikipedia.org/wiki/Reflection_(computer_programming)) restriction (IPC category)
+	* Methods can be white/black listed
+* Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
+	* *Build.SERIAL* cannot be restricted
+	* *Settings.Secure.ANDROID_ID* cannot be restricted
+* Made update service not run for future versions (for testing purposes)
+* Performance improvements for AOSP based ROMs, including [CyanogenMod](http://www.cyanogenmod.org/) and [OmniROM](http://omnirom.org/)
+* Attempted to fix on demand dialog freezing by rewriting on demand dialog
+* Removed enabling on demand restricting on update
+	* You can use [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) instead
+* Fixed template function exceptions being display wrong for 15 seconds in some situations
+* Applying template will not set disabled restrictions anymore ([issue](/../../issues/1747))
+* Displaying *changed* state when all restrictions are cleared ([issue](/../../issues/1748))
+	* The application state is shown with a color left in the application list (see also the help legend)
+* Added restrictions for [UsbDevice](http://developer.android.com/reference/android/bluetooth/BluetoothDevice.html) ([issue](/../../issues/1750))
+* Updated Slovak translation
+
+**Version 2.1.6 BETA**
+
+* Fixed updating dangerous function restrictions when restrict dangerous enabled ([issue](/../../issues/1742))
+* Display system components as disabled when restricting system components is not enabled ([issue](/../../issues/1744))
+* Display no usage data when restriction not available or disabled
+
+**Version 2.1.5 STABLE**
+
+* Added restrictions for [SIP](http://en.wikipedia.org/wiki/Session_Initiation_Protocol) calling ([issue](/../../issues/1739))
+* Disabling on demand restricting until update service completes
+* Showing whitelist icon on category level ([issue](/../../issues/1741))
+* Made *About* scrollable
+* Updated Italian translation
+* Updated Lithuanian translation
+
+**Version 2.1.4 STABLE**
+
+* Fixed applying template with dangerous function restrictions
+* Fixed caching of function template settings
+
+**Version 2.1.3 STABLE**
+
+* Added short usage instructions (check *About*)
+* Added *I don't know* to the on demand restricting dialog, which will deny once
+* Updated Dutch translation
+* Updated German translation
+* Updated Slovak translation
+
+**Version 2.1.2 STABLE**
+
+* Fixed displaying half on demand state template
+* Fixed dangerous functions defaults
+* Fixed on demand defaults when applying template
+* Fixed on demand defaults when on demand restricting category
+
+**Version 2.1.1 STABLE**
+
+* Added restriction for internet administration (*inet_admin*)
+* Added restriction for internet bandwidth statistics/administration (*inet_bw*)
+* Added restriction for [VPN](http://en.wikipedia.org/wiki/Vpn) services (*inet_vpn*)
+* Added restriction for [Mesh networking](http://en.wikipedia.org/wiki/Mesh_networking) services (*inet_mesh*)
+* Added restriction for [MTP](http://en.wikipedia.org/wiki/Media_Transfer_Protocol)
+* Fixed not disabling on demand function settings when on demand restricting for category is disabled
+* Hiding status bar when showing on demand restricting dialog
+
+**Version 2.1 STABLE**
+
+* Fixed applying template restricting dangerous functions ([issue](/../../issues/1728))
+* Applying template with on demand restricting will enabled on demand restricting setting ([issue](/../../issues/1727))
+* Fixed *inet*, *media* and *sdcard* always on demand restricting ([issue](/../../issues/1722))
+* Do not import version number ([issue](/../../issues/1721))
+* Display *Default* as first template name ([issue](/../../issues/1723))
+* Updated Dutch translation
+
+**Version 2.0.38 STABLE**
+
+* Showing enabled (on/off) state
+* Requesting restart for *load* and *loadLibrary*
+* Resetting on demand restricting for system applications on upgrade
+* Updated Slovak translation
+
+**Version 2.0.37 TEST**
+
+* Display whitelist icon when there are allowed accounts, applications and/or contacts
+* Restrictions for individual sensors
+	* *getDefaultSensor* and *getSensorList* needs to be disabled
+	* *getDefaultSensor* and *getSensorList* were made dangerous
+* Allow to select category when toggling restrictions
+
+**Version 2.0.36 STABLE**
+
+* Reddish background for template group indicators
+* Enabling on demand restricting before application is being updated
+* No on demand restricting for restrictions which cannot be used (see limitations)
+* Dropped support for Cydia Substrate, because there are too many unsolved problems
+
+**Version 2.0.35 BETA**
+
+* Fixed toggling dangerous functions not immediately displaying correct template restriction
+* Removed exception for disabling on demand restricting when changing category restriction on demand
+* Enable kill application menu only if application is running
+* Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
+	* I can't get Cydia Substrate working if Xposed is not installed, which may be caused by an incompatible *app_process*
+	* Cydia Substrate is not able to hook *Settings.Secure*, for which a boot class loader is needed
+	* *Build.SERIAL* cannot be restricted
+	* There will be limited support for this
+
+**Version 2.0.34 BETA**
+
+* Removed delay when opening application details
+* Setting on demand restriction to enabled for functions with a white list when on demand restricting a category
+* Made *network/getScanResults* dangerous
+	* Because *location/getScanResults* is dangerous too
+* Made *accounts/getTokenGoogle* and *accounts/getTokenWithNotification* dangerous
+* Made *accounts/getAuthToken* and *accounts/getAuthTokenByFeatures* dangerous
+* Made *identification//sys/block/.../cid* and *identification//sys/class/.../cid* dangerous
+* Made *internet/getAllByName*, *internet/getByAddress* and *internet/getByName* dangerous
+* Made all *shell* functions dangerous
+
+All above functions throw an exception when restricted.
+Although the exception is part of the standard API, a lot of applications are not prepared to handle an exception.
+
+**This version will reset the main template to the default** (if not done by an earlier version)
+
+**Version 2.0.33 BETA**
+
+* Fixed applying template / dangerous functions
+* Fixed default on demand restricting / dangerous functions
+
+**Version 2.0.32 BETA**
+
+* Fetch user applications only by default
+* Added option to allow/disallow all contacts
+* Fixed dangerous restrictions being asked after update
+* Enable on demand restricting on application update ([reason](http://www.xda-developers.com/android/play-store-permissions-change-opens-door-to-rogue-apps/))
+
+**Version 2.0.31 TEST**
+
+* Update notifications only if XPrivacy is enabled in Xposed
+* Directly open Xposed pages, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Added multiple template definitions
+	* The first template will always be applied to new applications
+* Added allow contacts by group
+* Fixed caching of not set settings
+* Updated simplified Chinese translation
+* Updated traditional Chinese translation
+
+**Version 2.0.30 TEST**
+
+* Fixed template settings caching
+* Fixed applying template
+* Fixed function exceptions defaults
+* Fixed displaying functions which cannot be restricted
+* Updated Italian translation
+
+**Version 2.0.29 TEST**
+
+* Showing restrictions which cannot be applied as disabled, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Made filter and sort dialog scrollable, thanks @[liudongmiao](https://github.com/liudongmiao)
+* Made toggle restrictions dialog scrollable
+* Removed setting *Restrict dangerous functions* ([issue](/../../issues/1704))
+	* The issue contains additional information
+* Added half check boxes to template ([issue](/../../issues/1706))
+* Always use settings cache for UI (performance)
+* Always use restriction cache for UI (performance)
+* Fixed user defined dangerous functions (some names did overlap)
+	* Unfortunately you need to define them again
+* Prevent restriction of identification category for Android
+* Updated simplified Chinese translation
+
+**Version 2.0.28 BETA**
+
+* Added *WRITE_CALENDAR* permissions to calendar restriction
+* Updated XposedBridge to version 54 (Xposed version 2.6 is required now)
+* Show all usage data ([issue](/../../issues/1695))
+* Show toggle on demand restricting on/off always ([issue](/../../issues/1697))
+* Added option to merge template with existing restrictions ([issue](/../../issues/1700))
+* Fixed selected accounts when imported from another device ([issue](/../../issues/1699))
+	* Some people need to allow accounts again, unfortunately there is no way to fix this
+* Updated Dutch translation
+* Updated German translation
+* Updated Lithuanian translation
+* Updated Norwegian translation
+
+**Version 2.0.27 STABLE**
+
+* Showing icon if there is white/black list for a function ([issue](/../../issues/1654))
+	* Thanks @[an0n981](https://github.com/an0n981) for the icons
+* Updated Russian translation
+* Updated Slovak translation
 
 **Version 2.0.26 BETA**
 

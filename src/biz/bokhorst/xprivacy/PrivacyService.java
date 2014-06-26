@@ -19,10 +19,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -32,6 +30,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
+import android.graphics.PixelFormat;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
@@ -45,9 +44,11 @@ import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -71,8 +72,8 @@ public class PrivacyService {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 333;
-	private static final String cServiceName = "xprivacy333";
+	private static final int cCurrentVersion = 357;
+	private static final String cServiceName = "xprivacy353";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -141,7 +142,8 @@ public class PrivacyService {
 			IPrivacyService client = getClient();
 			if (client != null)
 				return (client.getVersion() == cCurrentVersion);
-		} catch (RemoteException ex) {
+		} catch (SecurityException ignored) {
+		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
 		return false;
@@ -247,6 +249,7 @@ public class PrivacyService {
 
 		@Override
 		public int getVersion() throws RemoteException {
+			enforcePermission(-1);
 			return cCurrentVersion;
 		}
 
@@ -290,6 +293,16 @@ public class PrivacyService {
 		public void reportError(String message) throws RemoteException {
 			reportErrorInternal(message);
 		}
+
+		// Application
+		@Override
+		public boolean isSystemApp(int uid) throws RemoteException {
+			try {
+				return new ApplicationInfoEx(getContext(), uid).isSystem();
+			} catch (Throwable ex) {
+				return false;
+			}
+		};
 
 		// Restrictions
 
@@ -405,28 +418,6 @@ public class PrivacyService {
 					return mresult;
 				}
 
-				// Check for self
-				if (Util.getAppId(restriction.uid) == getXUid()) {
-					if (PrivacyManager.cIdentification.equals(restriction.restrictionName)
-							&& ("getString".equals(restriction.methodName) || "SERIAL".equals(restriction.methodName))) {
-						mresult.asked = true;
-						return mresult;
-					}
-					if (PrivacyManager.cIPC.equals(restriction.restrictionName)) {
-						mresult.asked = true;
-						return mresult;
-					} else if (PrivacyManager.cStorage.equals(restriction.restrictionName)) {
-						mresult.asked = true;
-						return mresult;
-					} else if (PrivacyManager.cSystem.equals(restriction.restrictionName)) {
-						mresult.asked = true;
-						return mresult;
-					} else if (PrivacyManager.cView.equals(restriction.restrictionName)) {
-						mresult.asked = true;
-						return mresult;
-					}
-				}
-
 				// Get meta data
 				Hook hook = null;
 				if (restriction.methodName != null) {
@@ -434,12 +425,24 @@ public class PrivacyService {
 					if (hook == null)
 						// Can happen after replacing apk
 						Util.log(null, Log.WARN, "Hook not found in service: " + restriction);
+					else if (hook.getFrom() != null) {
+						String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
+						if (new Version(version).compareTo(hook.getFrom()) < 0)
+							return mresult;
+					}
 				}
 
 				// Check for system component
-				if (usage && !PrivacyManager.isApplication(restriction.uid))
+				if (!PrivacyManager.isApplication(restriction.uid))
 					if (!getSettingBool(userId, PrivacyManager.cSettingSystem, false))
 						return mresult;
+
+				// Check if can be restricted
+				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+						restriction.methodName, false)) {
+					mresult.asked = true;
+					return mresult;
+				}
 
 				// Check if restrictions enabled
 				if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
@@ -525,8 +528,7 @@ public class PrivacyService {
 					if (!methodFound && hook != null && hook.isDangerous())
 						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
 							mresult.restricted = false;
-							if (hook.whitelist() == null)
-								mresult.asked = true;
+							mresult.asked = (hook.whitelist() == null);
 						}
 
 					// Check whitelist
@@ -570,7 +572,7 @@ public class PrivacyService {
 
 				// Ask to restrict
 				boolean ondemand = false;
-				if (!mresult.asked && usage && PrivacyManager.isApplication(restriction.uid))
+				if (!mresult.asked && usage)
 					ondemand = onDemandDialog(hook, restriction, mresult);
 
 				// Notify user
@@ -580,7 +582,7 @@ public class PrivacyService {
 				}
 
 				// Store usage data
-				if (usage && hook != null && hook.hasUsageData())
+				if (usage && hook != null)
 					storeUsageData(restriction, secret, mresult);
 
 			} catch (Throwable ex) {
@@ -590,6 +592,9 @@ public class PrivacyService {
 			long ms = System.currentTimeMillis() - start;
 			Util.log(null, Log.INFO,
 					String.format("get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
+
+			if (mresult.debug)
+				Util.logStack(null, Log.WARN);
 
 			return mresult;
 		}
@@ -604,7 +609,7 @@ public class PrivacyService {
 				if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
 					if (mSecret == null || !mSecret.equals(secret)) {
 						allowed = false;
-						Util.log(null, Log.WARN, "Invalid secret");
+						Util.log(null, Log.WARN, "Invalid secret restriction=" + restriction);
 					}
 				}
 
@@ -684,6 +689,54 @@ public class PrivacyService {
 				throw new RemoteException(ex.toString());
 			}
 			return result;
+		}
+
+		@Override
+		public boolean isRestrictionSet(PRestriction restriction) throws RemoteException {
+			try {
+				// No permissions required
+				boolean set = false;
+
+				SQLiteDatabase db = getDb();
+				if (db != null) {
+					// Precompile statement when needed
+					if (stmtGetRestriction == null) {
+						String sql = "SELECT restricted FROM " + cTableRestriction
+								+ " WHERE uid=? AND restriction=? AND method=?";
+						stmtGetRestriction = db.compileStatement(sql);
+					}
+
+					// Execute statement
+					mLock.readLock().lock();
+					db.beginTransaction();
+					try {
+						try {
+							synchronized (stmtGetRestriction) {
+								stmtGetRestriction.clearBindings();
+								stmtGetRestriction.bindLong(1, restriction.uid);
+								stmtGetRestriction.bindString(2, restriction.restrictionName);
+								stmtGetRestriction.bindString(3, restriction.methodName);
+								stmtGetRestriction.simpleQueryForLong();
+								set = true;
+							}
+						} catch (SQLiteDoneException ignored) {
+						}
+
+						db.setTransactionSuccessful();
+					} finally {
+						try {
+							db.endTransaction();
+						} finally {
+							mLock.readLock().unlock();
+						}
+					}
+				}
+
+				return set;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				throw new RemoteException(ex.toString());
+			}
 		}
 
 		@Override
@@ -1078,10 +1131,10 @@ public class PrivacyService {
 		}
 
 		@Override
-		public List<PSetting> getSettingList(int uid) throws RemoteException {
+		public List<PSetting> getSettingList(PSetting selector) throws RemoteException {
 			List<PSetting> listSetting = new ArrayList<PSetting>();
 			try {
-				enforcePermission(uid);
+				enforcePermission(selector.uid);
 				SQLiteDatabase db = getDb();
 				if (db == null)
 					return listSetting;
@@ -1089,15 +1142,20 @@ public class PrivacyService {
 				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
-					Cursor cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=?",
-							new String[] { Integer.toString(uid) }, null, null, null);
+					Cursor cursor;
+					if (selector.type == null)
+						cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=?",
+								new String[] { Integer.toString(selector.uid) }, null, null, null);
+					else
+						cursor = db.query(cTableSetting, new String[] { "type", "name", "value" }, "uid=? AND type=?",
+								new String[] { Integer.toString(selector.uid), selector.type }, null, null, null);
 					if (cursor == null)
 						Util.log(null, Log.WARN, "Database cursor null (settings)");
 					else
 						try {
 							while (cursor.moveToNext())
-								listSetting.add(new PSetting(uid, cursor.getString(0), cursor.getString(1), cursor
-										.getString(2)));
+								listSetting.add(new PSetting(selector.uid, cursor.getString(0), cursor.getString(1),
+										cursor.getString(2)));
 						} finally {
 							cursor.close();
 						}
@@ -1265,12 +1323,15 @@ public class PrivacyService {
 			try {
 				int userId = Util.getUserId(restriction.uid);
 
-				// Without handler nothing can be done
-				if (mHandler == null)
+				// Check if application
+				if (!PrivacyManager.isApplication(restriction.uid))
 					return false;
 
 				// Check for exceptions
 				if (hook != null && !hook.canOnDemand())
+					return false;
+				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+						restriction.methodName, false))
 					return false;
 
 				// Check if enabled
@@ -1279,9 +1340,9 @@ public class PrivacyService {
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
 					return false;
 
-				// Skip dangerous methods
-				final boolean dangerous = getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
-				if (!dangerous && hook != null && hook.isDangerous() && hook.whitelist() == null)
+				// Check version
+				String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
+				if (new Version(version).compareTo(new Version("2.1.5")) < 0)
 					return false;
 
 				// Get am context
@@ -1296,9 +1357,10 @@ public class PrivacyService {
 					// Get application info
 					final ApplicationInfoEx appInfo = new ApplicationInfoEx(context, restriction.uid);
 
-					// Check if system application
-					if (!dangerous && appInfo.isSystem())
-						return false;
+					// Check for system application
+					if (appInfo.isSystem())
+						if (new Version(version).compareTo(new Version("2.0.38")) < 0)
+							return false;
 
 					// Check if activity manager agrees
 					if (!XActivityManagerService.canOnDemand())
@@ -1349,42 +1411,53 @@ public class PrivacyService {
 
 						final AlertDialogHolder holder = new AlertDialogHolder();
 						final CountDownLatch latch = new CountDownLatch(1);
+						final WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
 						// Run dialog in looper
 						mHandler.post(new Runnable() {
 							@Override
+							@SuppressLint("InlinedApi")
 							public void run() {
 								try {
-									// Dialog
-									AlertDialog.Builder builder = getOnDemandDialogBuilder(restriction, hook, appInfo,
-											dangerous, result, context, latch);
-									AlertDialog alertDialog = builder.create();
-									alertDialog.getWindow().setType(WindowManager.LayoutParams.TYPE_PHONE);
-									alertDialog.getWindow().addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN);
-									alertDialog.getWindow().setSoftInputMode(
-											WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-									alertDialog.setCancelable(false);
-									alertDialog.setCanceledOnTouchOutside(false);
-									alertDialog.show();
-									holder.dialog = alertDialog;
+									// Dialog view
+									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, latch);
+									holder.dialog.setBackgroundResource(android.R.color.background_dark);
 
-									// Progress bar
-									final ProgressBar mProgress = (ProgressBar) alertDialog
+									// Dialog parameters
+									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+									params.type = WindowManager.LayoutParams.TYPE_PHONE;
+									params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+									params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
+									params.dimAmount = 0.85f;
+									params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+									params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+									params.format = PixelFormat.TRANSLUCENT;
+									params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
+									params.gravity = Gravity.CENTER;
+
+									// Show dialog
+									wm.addView(holder.dialog, params);
+
+									// Setup progress bar
+									final ProgressBar mProgress = (ProgressBar) holder.dialog
 											.findViewById(R.id.pbProgress);
 									mProgress.setMax(cMaxOnDemandDialog * 20);
 									mProgress.setProgress(cMaxOnDemandDialog * 20);
 
+									// Update progress
 									Runnable rProgress = new Runnable() {
 										@Override
 										public void run() {
-											AlertDialog dialog = holder.dialog;
-											if (dialog != null && dialog.isShowing() && mProgress.getProgress() > 0) {
+											View dialog = holder.dialog;
+											if (dialog != null && dialog.isShown() && mProgress.getProgress() > 0) {
 												mProgress.incrementProgressBy(-1);
 												mHandler.postDelayed(this, 50);
 											}
 										}
 									};
 									mHandler.postDelayed(rProgress, 50);
+								} catch (NameNotFoundException ex) {
+									latch.countDown();
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
 									latch.countDown();
@@ -1393,17 +1466,18 @@ public class PrivacyService {
 						});
 
 						// Wait for dialog to complete
-						if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS)) {
+						if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS))
 							Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
-							mHandler.post(new Runnable() {
-								@Override
-								public void run() {
-									AlertDialog dialog = holder.dialog;
-									if (dialog != null)
-										dialog.cancel();
-								}
-							});
-						}
+
+						mHandler.post(new Runnable() {
+							@Override
+							public void run() {
+								View dialog = holder.dialog;
+								if (dialog != null)
+									wm.removeView(dialog);
+							}
+						});
+
 					} finally {
 						mOndemandSemaphore.release();
 					}
@@ -1418,12 +1492,11 @@ public class PrivacyService {
 		}
 
 		final class AlertDialogHolder {
-			public AlertDialog dialog = null;
+			public View dialog = null;
 		}
 
-		private AlertDialog.Builder getOnDemandDialogBuilder(final PRestriction restriction, final Hook hook,
-				ApplicationInfoEx appInfo, boolean dangerous, final PRestriction result, Context context,
-				final CountDownLatch latch) throws NameNotFoundException {
+		private View getOnDemandView(final PRestriction restriction, final Hook hook, ApplicationInfoEx appInfo,
+				final PRestriction result, Context context, final CountDownLatch latch) throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1443,6 +1516,9 @@ public class PrivacyService {
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
 			final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
 			final CheckBox cbWhitelistExtra2 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra2);
+			Button btnDeny = (Button) view.findViewById(R.id.btnDeny);
+			Button btnDontKnow = (Button) view.findViewById(R.id.btnDontKnow);
+			Button btnAllow = (Button) view.findViewById(R.id.btnAllow);
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
@@ -1539,60 +1615,63 @@ public class PrivacyService {
 				}
 			});
 
-			// Ask
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context, AlertDialog.THEME_HOLO_DARK);
-			alertDialogBuilder.setTitle(resources.getString(R.string.app_name));
-			alertDialogBuilder.setView(view);
-			alertDialogBuilder.setIcon(resources.getDrawable(R.drawable.ic_launcher));
-			alertDialogBuilder.setPositiveButton(resources.getString(R.string.title_deny),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// Deny
-							result.restricted = true;
-							if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked()
-									&& !cbWhitelistExtra2.isChecked()) {
-								mSelectCategory = cbCategory.isChecked();
-								mSelectOnce = cbOnce.isChecked();
-							}
-							if (cbWhitelist.isChecked())
-								onDemandWhitelist(restriction, null, result, hook);
-							else if (cbWhitelistExtra1.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
-							else if (cbWhitelistExtra2.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
-							else if (cbOnce.isChecked())
-								onDemandOnce(restriction, result);
-							else
-								onDemandChoice(restriction, cbCategory.isChecked(), true);
-							latch.countDown();
-						}
-					});
-			alertDialogBuilder.setNegativeButton(resources.getString(R.string.title_allow),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							// Allow
-							result.restricted = false;
-							if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked()
-									&& !cbWhitelistExtra2.isChecked()) {
-								mSelectCategory = cbCategory.isChecked();
-								mSelectOnce = cbOnce.isChecked();
-							}
-							if (cbWhitelist.isChecked())
-								onDemandWhitelist(restriction, null, result, hook);
-							else if (cbWhitelistExtra1.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
-							else if (cbWhitelistExtra2.isChecked())
-								onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
-							else if (cbOnce.isChecked())
-								onDemandOnce(restriction, result);
-							else
-								onDemandChoice(restriction, cbCategory.isChecked(), false);
-							latch.countDown();
-						}
-					});
-			return alertDialogBuilder;
+			btnAllow.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// Allow
+					result.restricted = false;
+					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()) {
+						mSelectCategory = cbCategory.isChecked();
+						mSelectOnce = cbOnce.isChecked();
+					}
+					if (cbWhitelist.isChecked())
+						onDemandWhitelist(restriction, null, result, hook);
+					else if (cbWhitelistExtra1.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
+					else if (cbWhitelistExtra2.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
+					else if (cbOnce.isChecked())
+						onDemandOnce(restriction, result);
+					else
+						onDemandChoice(restriction, cbCategory.isChecked(), false);
+					latch.countDown();
+				}
+			});
+
+			btnDontKnow.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// Deny once
+					result.restricted = true;
+					onDemandOnce(restriction, result);
+					latch.countDown();
+				}
+			});
+
+			btnDeny.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					// Deny
+					result.restricted = true;
+					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()) {
+						mSelectCategory = cbCategory.isChecked();
+						mSelectOnce = cbOnce.isChecked();
+					}
+					if (cbWhitelist.isChecked())
+						onDemandWhitelist(restriction, null, result, hook);
+					else if (cbWhitelistExtra1.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
+					else if (cbWhitelistExtra2.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
+					else if (cbOnce.isChecked())
+						onDemandOnce(restriction, result);
+					else
+						onDemandChoice(restriction, cbCategory.isChecked(), true);
+					latch.countDown();
+				}
+			});
+
+			return view;
 		}
 
 		private String[] getXExtra(PRestriction restriction, Hook hook) {
@@ -1649,7 +1728,6 @@ public class PrivacyService {
 
 		private void onDemandChoice(PRestriction restriction, boolean category, boolean restrict) {
 			try {
-				int userId = Util.getUserId(restriction.uid);
 				PRestriction result = new PRestriction(restriction);
 
 				// Get current category restriction state
@@ -1660,8 +1738,8 @@ public class PrivacyService {
 						prevRestricted = mRestrictionCache.get(key).restricted;
 				}
 
-				Util.log(null, Log.WARN, "On demand choice " + restriction + " category=" + category + "/"
-						+ prevRestricted + " restrict=" + restrict);
+				Util.log(null, Log.WARN, "On demand choice " + restriction + " category=" + category + " restrict="
+						+ restrict + " prev=" + prevRestricted);
 
 				if (category || (restrict && restrict != prevRestricted)) {
 					// Set category restriction
@@ -1671,13 +1749,20 @@ public class PrivacyService {
 					setRestrictionInternal(result);
 
 					// Clear category on change
-					boolean dangerous = getSettingBool(userId, PrivacyManager.cSettingDangerous, false);
-					for (Hook md : PrivacyManager.getHooks(restriction.restrictionName)) {
-						result.methodName = md.getName();
-						result.restricted = (md.isDangerous() && !dangerous ? false : restrict);
-						result.asked = category;
-						setRestrictionInternal(result);
-					}
+					for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
+						if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+								hook.getName(), false)) {
+							result.methodName = hook.getName();
+							result.restricted = false;
+							result.asked = true;
+							setRestrictionInternal(result);
+						} else {
+							// TODO: preserve asked state
+							result.methodName = hook.getName();
+							result.restricted = restrict && !hook.isDangerous();
+							result.asked = category || (hook.isDangerous() && hook.whitelist() == null);
+							setRestrictionInternal(result);
+						}
 				}
 
 				if (!category) {

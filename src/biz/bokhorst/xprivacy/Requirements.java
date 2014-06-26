@@ -6,11 +6,13 @@ import java.lang.reflect.Method;
 import java.net.Inet4Address;
 import java.net.InterfaceAddress;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
@@ -85,6 +87,7 @@ public class Requirements {
 				sendSupportInfo(ex.toString(), context);
 			}
 		} else {
+			// @formatter:off
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(R.string.app_name);
 			alertDialogBuilder.setMessage(R.string.app_notenabled);
@@ -93,12 +96,15 @@ public class Requirements {
 					new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
-							Intent xInstallerIntent = context.getPackageManager().getLaunchIntentForPackage(
-									"de.robv.android.xposed.installer");
-							if (xInstallerIntent != null)
-								context.startActivity(xInstallerIntent);
+							Intent xInstallerIntent = new Intent("de.robv.android.xposed.installer.OPEN_SECTION")
+								.setPackage("de.robv.android.xposed.installer")
+								.putExtra("section", "modules")
+								.putExtra("module", context.getPackageName())
+								.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							context.startActivity(xInstallerIntent);
 						}
 					});
+			// @formatter:on
 			AlertDialog alertDialog = alertDialogBuilder.create();
 			alertDialog.show();
 		}
@@ -187,10 +193,23 @@ public class Requirements {
 		try {
 			Class<?> clazz = Class.forName("android.os.ServiceManager");
 			try {
+				// @formatter:off
+				// public static void addService(String name, IBinder service)
+				// public static void addService(String name, IBinder service, boolean allowIsolated)
 				// public static String[] listServices()
 				// public static IBinder checkService(String name)
+				// @formatter:on
+
+				if (XBinder.cServiceName.size() != XBinder.cServiceDescriptor.size()
+						|| XBinder.cServiceName.size() != XBinder.cWhiteClassName.size())
+					sendSupportInfo("XBinder size mismatch", context);
+
 				Method listServices = clazz.getDeclaredMethod("listServices");
 				Method getService = clazz.getDeclaredMethod("getService", String.class);
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+					clazz.getDeclaredMethod("addService", String.class, IBinder.class, boolean.class);
+				else
+					clazz.getDeclaredMethod("addService", String.class, IBinder.class);
 
 				// Get services
 				Map<String, String> mapService = new HashMap<String, String>();
@@ -209,9 +228,10 @@ public class Requirements {
 					List<String> listMissing = new ArrayList<String>();
 					for (String name : XBinder.cServiceName) {
 						String descriptor = XBinder.cServiceDescriptor.get(i++);
-						if (descriptor != null && !name.equals("iphonesubinfo") && !name.equals("iphonesubinfo_msim")) {
+						if (descriptor != null && !XBinder.cServiceOptional.contains(name)) {
 							// Check name
 							boolean checkDescriptor = false;
+
 							if (name.equals("telephony.registry")) {
 								if (mapService.containsKey(name))
 									checkDescriptor = true;
@@ -222,6 +242,18 @@ public class Requirements {
 								if (mapService.containsKey(name))
 									checkDescriptor = true;
 								else if (!mapService.containsKey("telephony.registry"))
+									listMissing.add(name);
+
+							} else if (name.equals("bluetooth")) {
+								if (mapService.containsKey(name))
+									checkDescriptor = true;
+								else if (!mapService.containsKey("bluetooth_manager"))
+									listMissing.add(name);
+
+							} else if (name.equals("bluetooth_manager")) {
+								if (mapService.containsKey(name))
+									checkDescriptor = true;
+								else if (!mapService.containsKey("bluetooth"))
 									listMissing.add(name);
 
 							} else {
@@ -283,6 +315,32 @@ public class Requirements {
 		} catch (Throwable ex) {
 			reportClass(Inet4Address.class, context);
 		}
+
+		// Check context services
+		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager" });
+		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager" });
+		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
+		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager",
+				"android.net.MultiSimConnectivityManager" });
+		checkService(context, Context.LOCATION_SERVICE, new String[] { "android.location.LocationManager" });
+		Class<?> serviceClass = context.getPackageManager().getClass();
+		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
+			reportClass(serviceClass, context);
+		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SensorManager",
+				"android.hardware.SystemSensorManager" });
+		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager",
+				"android.telephony.MultiSimTelephonyManager" });
+		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
+				"android.view.Window$LocalWindowManager" });
+		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager" });
+	}
+
+	public static void checkService(ActivityBase context, String name, String[] className) {
+		Object service = context.getSystemService(name);
+		if (service == null)
+			sendSupportInfo("Service missing name=" + name, context);
+		else if (!Arrays.asList(className).contains(service.getClass().getName()))
+			reportClass(service.getClass(), context);
 	}
 
 	public static void checkCompatibility(ActivityBase context) {
@@ -318,35 +376,9 @@ public class Requirements {
 		}
 	}
 
-	private static void reportClass(final Class<?> clazz, final ActivityBase context) {
-		String msg = String.format("Incompatible %s", clazz.getName());
-		Util.log(null, Log.WARN, msg);
-
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-		alertDialogBuilder.setTitle(R.string.app_name);
-		alertDialogBuilder.setMessage(msg);
-		alertDialogBuilder.setIcon(context.getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						sendClassInfo(clazz, context);
-					}
-				});
-		alertDialogBuilder.setNegativeButton(context.getString(android.R.string.cancel),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
-	}
-
-	private static void sendClassInfo(Class<?> clazz, ActivityBase context) {
+	private static void reportClass(Class<?> clazz, ActivityBase context) {
 		StringBuilder sb = new StringBuilder();
-		sb.append(clazz.getName());
+		sb.append(String.format("Incompatible %s", clazz.getName()));
 		sb.append("\r\n");
 		sb.append("\r\n");
 		for (Constructor<?> constructor : clazz.getConstructors()) {
@@ -368,6 +400,8 @@ public class Requirements {
 	}
 
 	public static void sendSupportInfo(final String text, final ActivityBase context) {
+		Util.log(null, Log.WARN, text);
+
 		if (Util.hasValidFingerPrint(context) || Util.isDebuggable(context)) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(R.string.app_name);

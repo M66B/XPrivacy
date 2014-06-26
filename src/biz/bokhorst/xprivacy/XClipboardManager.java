@@ -8,6 +8,7 @@ import android.util.Log;
 public class XClipboardManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
+	private static final String cClassName = "android.content.ClipboardManager";
 
 	private XClipboardManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
@@ -22,7 +23,7 @@ public class XClipboardManager extends XHook {
 	}
 
 	public String getClassName() {
-		return (mClassName == null ? "android.content.ClipboardManager" : mClassName);
+		return mClassName;
 	}
 
 	// @formatter:off
@@ -43,14 +44,18 @@ public class XClipboardManager extends XHook {
 		addPrimaryClipChangedListener, getPrimaryClip, getPrimaryClipDescription, getText, hasPrimaryClip, hasText, removePrimaryClipChangedListener
 	};
 
-	public static List<XHook> getInstances(Object instance) {
-		String className = (instance == null ? null : instance.getClass().getName());
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		for (Methods clip : Methods.values())
-			if (clip == Methods.removePrimaryClipChangedListener)
-				listHook.add(new XClipboardManager(clip, null, className, 11));
-			else
-				listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard, className));
+		if (!cClassName.equals(className)) {
+			if (className == null)
+				className = cClassName;
+
+			for (Methods clip : Methods.values())
+				if (clip == Methods.removePrimaryClipChangedListener)
+					listHook.add(new XClipboardManager(clip, null, className, 11));
+				else
+					listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard, className));
+		}
 		return listHook;
 	}
 

@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
     android:installLocation="internalOnly"
-    android:versionCode="333"
-    android:versionName="2.0.26" >
+    android:versionCode="357"
+    android:versionName="2.1.11" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -33,6 +33,7 @@
     <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES" />
     <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_XPRIVACY" />
     <uses-permission android:name="biz.bokhorst.xprivacy.pro.CHECK" />
+    <uses-permission android:name="cydia.permission.SUBSTRATE" />
 
     <supports-screens
         android:anyDensity="true"
@@ -54,7 +55,7 @@
             android:value="true" />
         <meta-data
             android:name="xposedminversion"
-            android:value="42+" />
+            android:value="54" />
         <meta-data
             android:name="xposeddescription"
             android:value="@string/app_description" />
@@ -76,6 +77,11 @@
             android:name="com.sec.android.multiwindow.MINIMUM_SIZE_H"
             android:resource="@dimen/app_minimumsize_h" />
 
+        <!-- Cydia substrate -->
+        <meta-data
+            android:name="com.saurik.substrate.main"
+            android:value=".XPrivacy" />
+
         <activity
             android:name=".ActivityMain"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -89,13 +95,15 @@
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.SEND" />
+                <action android:name="android.intent.action.PICK" />
 
                 <category android:name="android.intent.category.DEFAULT" />
 
                 <data android:scheme="file" />
                 <data android:host="*" />
                 <data android:mimeType="*/*" />
-                <data android:pathPattern=".*XPrivacy_license.txt" />
+                <data android:pathPattern=".*XPrivacy_license\\.txt" />
             </intent-filter>
         </activity>
         <activity

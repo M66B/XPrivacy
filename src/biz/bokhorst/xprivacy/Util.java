@@ -61,7 +61,7 @@ public class Util {
 		if (!mLogDetermined && uid > 0) {
 			mLogDetermined = true;
 			try {
-				mLog = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingLog, false, false);
+				mLog = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingLog, false);
 			} catch (Throwable ignored) {
 				mLog = false;
 			}
@@ -243,6 +243,8 @@ public class Util {
 			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_FILE_NAME);
 
 		String importedLicense = importProLicense(licenseFile);
+		if (importedLicense == null)
+			return null;
 
 		// Check license file
 		licenseFile = new File(importedLicense);
@@ -271,32 +273,45 @@ public class Util {
 	public static String importProLicense(File licenseFile) {
 		// Get imported license file name
 		String importedLicense = getUserDataDirectory(Process.myUid()) + File.separator + LICENSE_FILE_NAME;
+		File out = new File(importedLicense);
 
-		// Import license file
+		// Check if license file exists
 		if (licenseFile.exists() && licenseFile.canRead()) {
 			try {
-				File out = new File(importedLicense);
+				// Import license file
 				Util.log(null, Log.WARN, "Licensing: importing " + out.getAbsolutePath());
-				InputStream is = new FileInputStream(licenseFile.getAbsolutePath());
-				OutputStream os = new FileOutputStream(out.getAbsolutePath());
-				byte[] buffer = new byte[1024];
-				int read;
-				while ((read = is.read(buffer)) != -1)
-					os.write(buffer, 0, read);
-				is.close();
-				os.flush();
-				os.close();
+				InputStream is = null;
+				is = new FileInputStream(licenseFile.getAbsolutePath());
+				try {
+					OutputStream os = null;
+					try {
+						os = new FileOutputStream(out.getAbsolutePath());
+						byte[] buffer = new byte[1024];
+						int read;
+						while ((read = is.read(buffer)) != -1)
+							os.write(buffer, 0, read);
+						os.flush();
+					} finally {
+						if (os != null)
+							os.close();
+					}
+				} finally {
+					if (is != null)
+						is.close();
+				}
 
-				// Protect license file
+				// Protect imported license file
 				setPermissions(out.getAbsolutePath(), 0700, Process.myUid(), Process.myUid());
 
+				// Remove original license file
 				licenseFile.delete();
 			} catch (FileNotFoundException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
 		}
-		return importedLicense;
+
+		return (out.exists() && out.canRead() ? importedLicense : null);
 	}
 
 	public static Version getProEnablerVersion(Context context) {

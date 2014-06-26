@@ -22,9 +22,9 @@ public class RState {
 		int userId = Util.getUserId(Process.myUid());
 
 		// Get if on demand
-		boolean onDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
+		boolean onDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
 		if (onDemand)
-			onDemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false, false);
+			onDemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, false);
 
 		boolean allRestricted = true;
 		boolean someRestricted = false;

@@ -94,7 +94,7 @@ public class XWebView extends XHook {
 				Class<?> clazz = param.getResult().getClass();
 				if (!mWebSettings.contains(clazz.getName())) {
 					mWebSettings.add(clazz.getName());
-					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()), getSecret());
+					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()), null, getSecret());
 				}
 			}
 

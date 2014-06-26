@@ -12,6 +12,7 @@ public class PRestriction implements Parcelable {
 	public boolean restricted;
 	public boolean asked;
 	public long time;
+	public boolean debug;
 
 	// The extra is never needed in the result
 
@@ -26,6 +27,7 @@ public class PRestriction implements Parcelable {
 		restricted = other.restricted;
 		asked = other.asked;
 		time = other.time;
+		debug = other.debug;
 	}
 
 	public PRestriction(int _uid, String category, String method) {
@@ -36,6 +38,7 @@ public class PRestriction implements Parcelable {
 		restricted = false;
 		asked = false;
 		time = 0;
+		debug = false;
 	}
 
 	public PRestriction(int _uid, String category, String method, boolean _restricted) {
@@ -46,6 +49,7 @@ public class PRestriction implements Parcelable {
 		restricted = _restricted;
 		asked = false;
 		time = 0;
+		debug = false;
 	}
 
 	public PRestriction(int _uid, String category, String method, boolean _restricted, boolean _asked) {
@@ -56,6 +60,7 @@ public class PRestriction implements Parcelable {
 		restricted = _restricted;
 		asked = _asked;
 		time = 0;
+		debug = false;
 	}
 
 	public static final Parcelable.Creator<PRestriction> CREATOR = new Parcelable.Creator<PRestriction>() {
@@ -75,7 +80,9 @@ public class PRestriction implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(uid);
-		out.writeString(restrictionName);
+		out.writeInt(restrictionName == null ? 1 : 0);
+		if (restrictionName != null)
+			out.writeString(restrictionName);
 		out.writeInt(methodName == null ? 1 : 0);
 		if (methodName != null)
 			out.writeString(methodName);
@@ -85,22 +92,18 @@ public class PRestriction implements Parcelable {
 		out.writeInt(restricted ? 1 : 0);
 		out.writeInt(asked ? 1 : 0);
 		out.writeLong(time);
+		out.writeInt(debug ? 1 : 0);
 	}
 
 	public void readFromParcel(Parcel in) {
 		uid = in.readInt();
-		restrictionName = in.readString();
-		if (in.readInt() > 0)
-			methodName = null;
-		else
-			methodName = in.readString();
-		if (in.readInt() > 0)
-			extra = null;
-		else
-			extra = in.readString();
+		restrictionName = (in.readInt() > 0 ? null : in.readString());
+		methodName = (in.readInt() > 0 ? null : in.readString());
+		extra = (in.readInt() > 0 ? null : in.readString());
 		restricted = (in.readInt() > 0 ? true : false);
 		asked = (in.readInt() > 0 ? true : false);
 		time = in.readLong();
+		debug = (in.readInt() > 0 ? true : false);
 	}
 
 	@Override

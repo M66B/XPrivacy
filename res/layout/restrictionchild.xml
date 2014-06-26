@@ -60,7 +60,7 @@
             tools:ignore="NestedWeights" />
 
         <ImageView
-            android:id="@+id/imgCbMethodWhitelist"
+            android:id="@+id/imgMethodWhitelist"
             android:layout_width="32dip"
             android:layout_height="32dip"
             android:layout_gravity="center_vertical"

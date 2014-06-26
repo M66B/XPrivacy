@@ -116,6 +116,7 @@
             android:layout_height="32dip"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="3dip"
+            android:background="?attr/color_dangerous"
             android:contentDescription="@string/title_restrict"
             android:visibility="invisible" />
     </LinearLayout>

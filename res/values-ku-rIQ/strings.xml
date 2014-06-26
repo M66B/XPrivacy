@@ -101,6 +101,7 @@
     <string name="restrict_view" tools:ignore="UnusedResources">View (browser)</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">File names</string>
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
@@ -129,13 +130,24 @@
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">ریگه دان</string>
     <string name="title_deny">ریگه نه دان</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">ته کایه بو یارمه تی دانی که سانی تریش ئه و شتانه ى سنوردارتكردوون به لاو بكه </string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
     <string name="title_template_category">Apply template (categories)</string>
     <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Alternate</string>
+    <string name="title_usage_header">Usage</string>
+    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
+    <string name="title_usage_text_2">2. Tap on the application icon</string>
+    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
+    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
+    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
+    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
     <string name="settings_serial">سريال نه مبرى موبايل</string>
     <string name="settings_lat">هیلی پانی</string>
     <string name="settings_lon">هیلی دریژی</string>
@@ -155,7 +167,6 @@
     <string name="settings_ondemand">داوات لیبکریت بو سنوردار کردنیان</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">چه ند هه لبژاردنیکی مه ترسیدار که تایبه ته به که سانی شاره زا</string>
-    <string name="settings_dangerous">سنوردار کردنی ئه و فرمانانه ى كه سنوردار كردنيان مه ترسيداره</string>
     <string name="settings_confidence">زورترین راده ی دلنیابوون له زانیاریه دابه زینراوه کان</string>
     <string name="settings_experimental">فرمانی ئه زمونى(پیویست به دوباره داگیرساندنی موبایل ده کات)</string>
     <string name="settings_https">به کارهینانی هیلی پاریزراو</string>

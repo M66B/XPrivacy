@@ -73,7 +73,7 @@
     <string name="msg_upgrading" formatted="false">Aggiornamento %s</string>
     <string name="msg_support_info">Un controllo interno è fallito, vuoi inviare le informazioni di supporto?</string>
     <string name="msg_restrictedby">Ristretto da XPrivacy</string>
-    <string name="msg_service_missing">Servizio Privacy non trovato; hai attivato XPrivacy nell\'installatore di Xposed e riavviato il dispositivo</string>
+    <string name="msg_service_missing">Servizio Privacy non trovato; hai attivato XPrivacy nell\'installatore di Xposed e riavviato il dispositivo?</string>
     <string name="msg_service_version">Servizio Privacy conflitto di versione; hai riavviato il dispositivo dopo l\'aggiornamento di XPrivacy?</string>
     <string name="msg_first"><b>Grande cura è stata posta nello sviluppo e verifica di XPrivacy,
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
@@ -102,6 +102,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_view">Visualizza (browser)</string>
     <string name="whitelist_ipaddress">Indirizzi IP</string>
     <string name="whitelist_library">Librerie native</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">Nomi file</string>
     <string name="whitelist_command">Comandi Shell</string>
     <string name="whitelist_url">URLs</string>
@@ -131,13 +132,24 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Consenti</string>
     <string name="title_deny">Rifiuta</string>
+    <string name="title_dontknow">Non so</string>
     <string name="title_pleasesubmit">Per favore sottoponi le tue restrizioni per aiutare gli altri</string>
     <string name="title_permissions">Permessi</string>
     <string name="title_set_restrict">Restringi</string>
     <string name="title_template_category">Applica modello (categorie)</string>
     <string name="title_template_full">Applica modello (categorie+funzioni)</string>
+    <string name="title_template_merge">Applica modello (unisci)</string>
     <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
     <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Opzione</string>
+    <string name="title_usage_header">Utilizzo</string>
+    <string name="title_usage_text_1">1. Cerca l\'applicazione da restringere nella lista principale</string>
+    <string name="title_usage_text_2">2. Tocca l\'icona dell\'applicazione</string>
+    <string name="title_usage_text_3">3. Tocca la prima casella di controllo di una categoria che desideri restringere</string>
+    <string name="title_usage_footer">Usa il buon senso, non aspettarti che l\'accesso internet funzioni se hai ristretto la categoria Internet, ecc.</string>
+    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
+    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
     <string name="settings_serial">Seriale#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
@@ -157,7 +169,6 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_ondemand">Restringi su richiesta</string>
     <string name="settings_log">Registro errori (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
-    <string name="settings_dangerous">Restringi funzioni pericolose</string>
     <string name="settings_confidence">Intervallo massimo di confidenza nella ricezione</string>
     <string name="settings_experimental">Funzioni sperimentali (richiede riavvio)</string>
     <string name="settings_https">Usa connessioni sicure</string>

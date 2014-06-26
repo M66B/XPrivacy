@@ -102,6 +102,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="restrict_view" tools:ignore="UnusedResources">Tinjauan (pelayar)</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">File names</string>
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
@@ -130,13 +131,24 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="title_whitelist">Whitelist \'%s\'</string>
     <string name="title_allow">Benarkan</string>
     <string name="title_deny">Tidak dibenarkan</string>
+    <string name="title_dontknow">Don\'t know</string>
     <string name="title_pleasesubmit">Sila kemukakan sekatan anda untuk menolong orang lain</string>
     <string name="title_permissions">Kebenaran</string>
     <string name="title_set_restrict">Restrict</string>
     <string name="title_template_category">Apply template (categories)</string>
     <string name="title_template_full">Apply template (categories+functions)</string>
+    <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_default">Default</string>
+    <string name="title_alternate">Alternate</string>
+    <string name="title_usage_header">Usage</string>
+    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
+    <string name="title_usage_text_2">2. Tap on the application icon</string>
+    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
+    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
+    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
+    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
     <string name="settings_serial">Siri#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>
@@ -156,7 +168,6 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="settings_ondemand">Sekatan di atas permintaan</string>
     <string name="settings_log">Log nyahsilap (perlu mula semula)</string>
     <string name="settings_expert">Mod pakar</string>
-    <string name="settings_dangerous">Sekat fungsi bahaya</string>
     <string name="settings_confidence">Selang keyakinan pengambilan maxima</string>
     <string name="settings_experimental">Fungsi dalam percubaan (perlu mula semula)</string>
     <string name="settings_https">Guna sambungan terjamin</string>

@@ -27,7 +27,7 @@ public class SettingsDialog {
 		final int uid = (appInfo == null ? userId : appInfo.getUid());
 
 		// Build dialog
-		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "", false);
+		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
 		int themeId = (themeName.equals("Dark") ? R.style.CustomTheme_Dialog : R.style.CustomTheme_Light_Dialog);
 		final Dialog dlgSettings = new Dialog(context, themeId);
 		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
@@ -47,7 +47,6 @@ public class SettingsDialog {
 
 		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
 		final CheckBox cbSystem = (CheckBox) dlgSettings.findViewById(R.id.cbSystem);
-		final CheckBox cbDangerous = (CheckBox) dlgSettings.findViewById(R.id.cbDangerous);
 		final CheckBox cbExperimental = (CheckBox) dlgSettings.findViewById(R.id.cbExperimental);
 		final CheckBox cbHttps = (CheckBox) dlgSettings.findViewById(R.id.cbHttps);
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
@@ -110,13 +109,11 @@ public class SettingsDialog {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				cbSystem.setEnabled(isChecked);
-				cbDangerous.setEnabled(isChecked);
 				cbExperimental.setEnabled(isChecked);
 				cbHttps.setEnabled(isChecked);
 				etConfidence.setEnabled(isChecked);
 				if (!isChecked) {
 					cbSystem.setChecked(false);
-					cbDangerous.setChecked(false);
 					cbExperimental.setChecked(false);
 					cbHttps.setChecked(true);
 					etConfidence.setText("");
@@ -223,36 +220,36 @@ public class SettingsDialog {
 			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
 		// Get current values
-		boolean usage = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingUsage, true, false);
-		boolean parameters = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingParameters, false, false);
-		boolean log = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingLog, false, false);
-		boolean components = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSystem, false, false);
-		boolean dangerous = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingDangerous, false, false);
-		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false, false);
-		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true, false);
-		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "", false);
-		final boolean expert = (components || dangerous || experimental || !https || !"".equals(confidence));
+		boolean usage = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingUsage, true);
+		boolean parameters = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingParameters, false);
+		boolean log = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingLog, false);
+		boolean components = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSystem, false);
+		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false);
+		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true);
+		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
+		final boolean expert = (components || experimental || !https || !"".equals(confidence));
 
 		// Application specific
-		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true, false);
-		boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == userId, false);
+		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
+		boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == userId);
+		boolean enabled = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRestricted, true);
 
 		// Common
-		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false, false);
+		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false);
 
-		String serial = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSerial, "", false);
-		String lat = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLatitude, "", false);
-		String lon = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLongitude, "", false);
-		String alt = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingAltitude, "", false);
-		String mac = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMac, "", false);
-		String imei = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingImei, "", false);
-		String phone = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingPhone, "", false);
-		String id = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingId, "", false);
-		String gsfid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingGsfId, "", false);
-		String adid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingAdId, "", false);
-		String country = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingCountry, "", false);
-		String subscriber = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSubscriber, "", false);
-		String ssid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSSID, "", false);
+		String serial = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSerial, "");
+		String lat = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLatitude, "");
+		String lon = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLongitude, "");
+		String alt = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingAltitude, "");
+		String mac = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMac, "");
+		String imei = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingImei, "");
+		String phone = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingPhone, "");
+		String id = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingId, "");
+		String gsfid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingGsfId, "");
+		String adid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingAdId, "");
+		String country = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingCountry, "");
+		String subscriber = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSubscriber, "");
+		String ssid = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSSID, "");
 
 		// Set current values
 		if (uid == userId) {
@@ -267,13 +264,11 @@ public class SettingsDialog {
 			cbExpert.setChecked(expert);
 			if (expert) {
 				cbSystem.setChecked(components);
-				cbDangerous.setChecked(dangerous);
 				cbExperimental.setChecked(experimental);
 				cbHttps.setChecked(https);
 				etConfidence.setText(confidence);
 			} else {
 				cbSystem.setEnabled(false);
-				cbDangerous.setEnabled(false);
 				cbExperimental.setEnabled(false);
 				cbHttps.setEnabled(false);
 				cbHttps.setChecked(true);
@@ -286,22 +281,22 @@ public class SettingsDialog {
 			cbLog.setVisibility(View.GONE);
 			cbExpert.setVisibility(View.GONE);
 			cbSystem.setVisibility(View.GONE);
-			cbDangerous.setVisibility(View.GONE);
 			cbExperimental.setVisibility(View.GONE);
 			cbHttps.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
 		}
 
-		boolean gnotify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true, false);
+		boolean gnotify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);
 		if (uid == userId || gnotify)
 			cbNotify.setChecked(notify);
 		else
 			cbNotify.setVisibility(View.GONE);
 
-		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true, false);
-		if (uid == userId || (PrivacyManager.isApplication(uid) && gondemand))
+		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+		if (uid == userId || (PrivacyManager.isApplication(uid) && gondemand)) {
 			cbOnDemand.setChecked(ondemand);
-		else
+			cbOnDemand.setEnabled(enabled);
+		} else
 			cbOnDemand.setVisibility(View.GONE);
 
 		// Common
@@ -355,14 +350,14 @@ public class SettingsDialog {
 		etSubscriber.setEnabled(!cbSubscriber.isChecked());
 		etSSID.setEnabled(!cbSSID.isChecked());
 
-		etIP.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingIP, "", false));
-		etMcc.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMcc, "", false));
-		etMnc.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMnc, "", false));
-		etOperator.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingOperator, "", false));
-		etIccId.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingIccId, "", false));
-		etCid.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingCid, "", false));
-		etLac.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLac, "", false));
-		etUa.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingUa, "", false));
+		etIP.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingIP, ""));
+		etMcc.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMcc, ""));
+		etMnc.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingMnc, ""));
+		etOperator.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingOperator, ""));
+		etIccId.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingIccId, ""));
+		etCid.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingCid, ""));
+		etLac.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLac, ""));
+		etUa.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingUa, ""));
 
 		// Handle search
 		btnSearch.setOnClickListener(new View.OnClickListener() {
@@ -439,7 +434,7 @@ public class SettingsDialog {
 				public void onClick(View view) {
 					Intent flushIntent = new Intent(UpdateService.cFlush);
 					context.startService(flushIntent);
-					Toast.makeText(context, context.getString(R.string.msg_done), Toast.LENGTH_SHORT).show();
+					Toast.makeText(context, context.getString(R.string.msg_done), Toast.LENGTH_LONG).show();
 				}
 			});
 		else
@@ -459,8 +454,6 @@ public class SettingsDialog {
 						PrivacyManager.setSetting(uid, PrivacyManager.cSettingLog, Boolean.toString(cbLog.isChecked()));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingSystem,
 							Boolean.toString(cbSystem.isChecked()));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingDangerous,
-							Boolean.toString(cbDangerous.isChecked()));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingExperimental,
 							Boolean.toString(cbExperimental.isChecked()));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHttps, Boolean.toString(cbHttps.isChecked()));
