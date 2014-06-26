@@ -162,6 +162,7 @@ public class XBinder extends XHook {
 		},
 		new String[] { // LocationManager
 			"android.location.Geocoder",
+			"android.telephony.cdma.CdmaCellLocation",
 		},
 		new String[] { // TelephonyManager
 		},
