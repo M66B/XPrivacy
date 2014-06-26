@@ -20,7 +20,7 @@
 #}
 
 #Line numbers
--renamesourcefileattribute SourceFile
+-renamesourcefileattribute XPrivacy
 -keepattributes SourceFile,LineNumberTable
 
 #Xposed
