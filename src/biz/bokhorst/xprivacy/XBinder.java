@@ -112,7 +112,7 @@ public class XBinder extends XHook {
 		"android.nfc.NfcActivityManager,android.nfc.NfcAdapter",
 		"android.appwidget.AppWidgetManager,android.appwidget.AppWidgetHost",
 		"com.android.server.BluetoothManagerService,android.bluetooth.BluetoothSocket",
-		"android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
+		"android.bluetooth.BluetoothManager,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
 		"android.hardware.input.InputManager",
 		"android.hardware.SystemSensorManager",
 		"android.hardware.usb.UsbManager"
