@@ -111,8 +111,12 @@ public class XField extends XHook {
 		if (Binder.getCallingUid() == android.os.Process.SYSTEM_UID)
 			return;
 
-		// Check if class listed
+		// Make accessible
 		Field field = (Field) param.thisObject;
+		param.setObjectExtra("accessible", (Boolean) field.isAccessible());
+		field.setAccessible(true);
+
+		// Check if class listed
 		String className = field.getDeclaringClass().getName();
 		if (!cClassName.contains(className))
 			return;
@@ -131,6 +135,12 @@ public class XField extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		// Do nothing
+		// Check if Android
+		if (Binder.getCallingUid() == android.os.Process.SYSTEM_UID)
+			return;
+
+		// Restore accessibility
+		Field field = (Field) param.thisObject;
+		field.setAccessible((Boolean) param.getObjectExtra("accessible"));
 	}
 }

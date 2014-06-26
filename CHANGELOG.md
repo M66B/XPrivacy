@@ -25,6 +25,7 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
+* Fixed compatibility with [Boat Browser](https://play.google.com/store/apps/details?id=com.boatbrowser.free)
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
