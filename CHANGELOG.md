@@ -23,11 +23,13 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.11 BETA**
+
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
-* Fixed on demand transparency ([issue](/../../issues/1755))
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+* Attempt to fix on demand transparency ([issue](/../../issues/1755))
 
 **Version 2.1.10 BETA**
 
