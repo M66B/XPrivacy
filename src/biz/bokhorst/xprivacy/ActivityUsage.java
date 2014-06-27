@@ -69,21 +69,8 @@ public class ActivityUsage extends ActivityBase {
 		mUid = (extras == null ? 0 : extras.getInt(cUid, 0));
 		mRestrictionName = (extras == null ? null : extras.getString(cRestriction));
 
-		// Get statistics
-		long count = 0;
-		double persec = 0;
-		try {
-			@SuppressWarnings("rawtypes")
-			Map statistics = PrivacyService.getClient().getStatistics();
-			count = (Long) statistics.get("restriction_count");
-			long uptime = (Long) statistics.get("uptime_milliseconds");
-			persec = (double) count / (uptime / 1000);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-
-		// Set title
-		setTitle(String.format("%s #%d %.2f/s", getString(R.string.app_name), count, persec));
+		// Show title
+		updateTitle();
 
 		// Start task to get usage data
 		UsageTask usageTask = new UsageTask();
@@ -122,20 +109,25 @@ public class ActivityUsage extends ActivityBase {
 				else
 					NavUtils.navigateUpTo(this, upIntent);
 			return true;
+
 		case R.id.menu_usage_all:
 			mAll = !mAll;
 			if (mUsageAdapter != null)
 				mUsageAdapter.getFilter().filter(Boolean.toString(mAll));
 			return true;
+
 		case R.id.menu_refresh:
+			updateTitle();
 			usageTask = new UsageTask();
 			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
+
 		case R.id.menu_clear:
 			PrivacyManager.deleteUsage(mUid);
 			usageTask = new UsageTask();
 			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}
@@ -339,5 +331,25 @@ public class ActivityUsage extends ActivityBase {
 
 			return convertView;
 		}
+	}
+
+	// Helpers
+
+	private void updateTitle() {
+		// Get statistics
+		long count = 0;
+		double persec = 0;
+		try {
+			@SuppressWarnings("rawtypes")
+			Map statistics = PrivacyService.getClient().getStatistics();
+			count = (Long) statistics.get("restriction_count");
+			long uptime = (Long) statistics.get("uptime_milliseconds");
+			persec = (double) count / (uptime / 1000);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+
+		// Set title
+		setTitle(String.format("%s #%d %.2f/s", getString(R.string.app_name), count, persec));
 	}
 }
