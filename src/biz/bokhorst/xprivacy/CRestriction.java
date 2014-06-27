@@ -43,6 +43,10 @@ public class CRestriction {
 		return mUid;
 	}
 
+	public void setMethodName(String methodName) {
+		mMethodName = methodName;
+	}
+
 	public boolean isSameMethod(PRestriction restriction) {
 		// @formatter:off
 		return (restriction.uid == mUid

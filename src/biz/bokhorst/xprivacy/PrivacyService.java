@@ -1585,7 +1585,6 @@ public class PrivacyService {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if (isChecked) {
-						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
 						cbWhitelistExtra1.setChecked(false);
 						cbWhitelistExtra2.setChecked(false);
@@ -1596,7 +1595,6 @@ public class PrivacyService {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 					if (isChecked) {
-						cbCategory.setChecked(false);
 						cbWhitelist.setChecked(false);
 						cbWhitelistExtra1.setChecked(false);
 						cbWhitelistExtra2.setChecked(false);
@@ -1653,7 +1651,7 @@ public class PrivacyService {
 					else if (cbWhitelistExtra2.isChecked())
 						onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
 					else if (cbOnce.isChecked())
-						onDemandOnce(restriction, result);
+						onDemandOnce(restriction, cbCategory.isChecked(), result);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), false);
 					latch.countDown();
@@ -1665,7 +1663,7 @@ public class PrivacyService {
 				public void onClick(View v) {
 					// Deny once
 					result.restricted = true;
-					onDemandOnce(restriction, result);
+					onDemandOnce(restriction, false, result);
 					latch.countDown();
 				}
 			});
@@ -1686,7 +1684,7 @@ public class PrivacyService {
 					else if (cbWhitelistExtra2.isChecked())
 						onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
 					else if (cbOnce.isChecked())
-						onDemandOnce(restriction, result);
+						onDemandOnce(restriction, cbCategory.isChecked(), result);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), true);
 					latch.countDown();
@@ -1737,16 +1735,30 @@ public class PrivacyService {
 			}
 		}
 
-		private void onDemandOnce(final PRestriction restriction, final PRestriction result) {
-			Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction);
+		private void onDemandOnce(final PRestriction restriction, boolean category, final PRestriction result) {
+			Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction + " category="
+					+ category);
 
 			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 
-			CRestriction key = new CRestriction(restriction, restriction.extra);
+			CRestriction key = new CRestriction(result, restriction.extra);
 			synchronized (mAskedOnceCache) {
 				if (mAskedOnceCache.containsKey(key))
 					mAskedOnceCache.remove(key);
 				mAskedOnceCache.put(key, key);
+			}
+
+			if (category) {
+				for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
+					if (!restriction.methodName.equals(hook.getName())) {
+						CRestriction mkey = new CRestriction(result, null);
+						mkey.setMethodName(hook.getName());
+						synchronized (mAskedOnceCache) {
+							if (mAskedOnceCache.containsKey(mkey))
+								mAskedOnceCache.remove(mkey);
+							mAskedOnceCache.put(mkey, mkey);
+						}
+					}
 			}
 		}
 

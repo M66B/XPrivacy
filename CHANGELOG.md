@@ -24,6 +24,7 @@ Changelog
 **Next release**
 
 * Fixed returning wrong restriction sometimes for repeated on demand restricting
+* Added allow/deny once for category ([issue](/../../issues/1764))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
