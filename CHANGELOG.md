@@ -23,6 +23,8 @@ Changelog
 
 **Next release**
 
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
 * Fixed returning wrong restriction sometimes for repeated on demand restricting
 * Added allow/deny once for category ([issue](/../../issues/1764))
 
