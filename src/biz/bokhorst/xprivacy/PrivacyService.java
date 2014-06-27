@@ -62,7 +62,6 @@ import android.widget.Toast;
 public class PrivacyService {
 	private static int mXUid = -1;
 	private static boolean mRegistered = false;
-	private static boolean mUseCache = false;
 	private static String mSecret = null;
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
@@ -107,12 +106,6 @@ public class PrivacyService {
 
 			// Publish semaphore to activity manager service
 			XActivityManagerService.setSemaphore(mOndemandSemaphore);
-
-			// Get memory class to enable/disable caching
-			// http://stackoverflow.com/questions/2630158/detect-application-heap-size-in-android
-			int memoryClass = (int) (Runtime.getRuntime().maxMemory() / 1024L / 1024L);
-			mUseCache = (memoryClass >= 32);
-			Util.log(null, Log.WARN, "Memory class=" + memoryClass + " cache=" + mUseCache);
 
 			// Start a worker thread
 			mWorker = new Thread(new Runnable() {
@@ -381,17 +374,16 @@ public class PrivacyService {
 				}
 
 				// Update cache
-				if (mUseCache)
-					synchronized (mRestrictionCache) {
-						for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
-							if (key.isSameMethod(restriction))
-								mRestrictionCache.remove(key);
-
-						CRestriction key = new CRestriction(restriction, restriction.extra);
-						if (mRestrictionCache.containsKey(key))
+				synchronized (mRestrictionCache) {
+					for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
+						if (key.isSameMethod(restriction))
 							mRestrictionCache.remove(key);
-						mRestrictionCache.put(key, key);
-					}
+
+					CRestriction key = new CRestriction(restriction, restriction.extra);
+					if (mRestrictionCache.containsKey(key))
+						mRestrictionCache.remove(key);
+					mRestrictionCache.put(key, key);
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
@@ -463,15 +455,13 @@ public class PrivacyService {
 					return mresult;
 
 				// Check cache
-				if (mUseCache) {
-					CRestriction key = new CRestriction(restriction, restriction.extra);
-					synchronized (mRestrictionCache) {
-						if (mRestrictionCache.containsKey(key)) {
-							cached = true;
-							CRestriction cache = mRestrictionCache.get(key);
-							mresult.restricted = cache.restricted;
-							mresult.asked = cache.asked;
-						}
+				CRestriction key = new CRestriction(restriction, restriction.extra);
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(key)) {
+						cached = true;
+						CRestriction cache = mRestrictionCache.get(key);
+						mresult.restricted = cache.restricted;
+						mresult.asked = cache.asked;
 					}
 				}
 
@@ -574,13 +564,11 @@ public class PrivacyService {
 					}
 
 					// Update cache
-					if (mUseCache) {
-						CRestriction key = new CRestriction(mresult, restriction.extra);
-						synchronized (mRestrictionCache) {
-							if (mRestrictionCache.containsKey(key))
-								mRestrictionCache.remove(key);
-							mRestrictionCache.put(key, key);
-						}
+					CRestriction ukey = new CRestriction(mresult, restriction.extra);
+					synchronized (mRestrictionCache) {
+						if (mRestrictionCache.containsKey(ukey))
+							mRestrictionCache.remove(ukey);
+						mRestrictionCache.put(ukey, ukey);
 					}
 				}
 
@@ -591,11 +579,11 @@ public class PrivacyService {
 
 					// Update cache
 					if (ondemand) {
-						CRestriction key = new CRestriction(mresult, restriction.extra);
+						CRestriction okey = new CRestriction(mresult, restriction.extra);
 						synchronized (mRestrictionCache) {
-							if (mRestrictionCache.containsKey(key))
-								mRestrictionCache.remove(key);
-							mRestrictionCache.put(key, key);
+							if (mRestrictionCache.containsKey(okey))
+								mRestrictionCache.remove(okey);
+							mRestrictionCache.put(okey, okey);
 						}
 					}
 				}
@@ -797,10 +785,9 @@ public class PrivacyService {
 				}
 
 				// Clear caches
-				if (mUseCache)
-					synchronized (mRestrictionCache) {
-						mRestrictionCache.clear();
-					}
+				synchronized (mRestrictionCache) {
+					mRestrictionCache.clear();
+				}
 				synchronized (mAskedOnceCache) {
 					mAskedOnceCache.clear();
 				}
@@ -1022,15 +1009,13 @@ public class PrivacyService {
 				}
 
 				// Update cache
-				if (mUseCache) {
-					CSetting key = new CSetting(setting.uid, setting.type, setting.name);
-					key.setValue(setting.value);
-					synchronized (mSettingCache) {
-						if (mSettingCache.containsKey(key))
-							mSettingCache.remove(key);
-						if (setting.value != null)
-							mSettingCache.put(key, key);
-					}
+				CSetting key = new CSetting(setting.uid, setting.type, setting.name);
+				key.setValue(setting.value);
+				synchronized (mSettingCache) {
+					if (mSettingCache.containsKey(key))
+						mSettingCache.remove(key);
+					if (setting.value != null)
+						mSettingCache.put(key, key);
 				}
 
 				// Clear restrictions for white list
@@ -1042,10 +1027,10 @@ public class PrivacyService {
 										hook.getName());
 								Util.log(null, Log.WARN, "Clearing cache for " + restriction);
 								synchronized (mRestrictionCache) {
-									for (CRestriction key : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
-										if (key.isSameMethod(restriction)) {
-											Util.log(null, Log.WARN, "Removing " + key);
-											mRestrictionCache.remove(key);
+									for (CRestriction mkey : new ArrayList<CRestriction>(mRestrictionCache.keySet()))
+										if (mkey.isSameMethod(restriction)) {
+											Util.log(null, Log.WARN, "Removing " + mkey);
+											mRestrictionCache.remove(mkey);
 										}
 								}
 							}
@@ -1085,7 +1070,7 @@ public class PrivacyService {
 				// No permissions enforced
 
 				// Check cache
-				if (mUseCache && setting.value != null) {
+				if (setting.value != null) {
 					CSetting key = new CSetting(setting.uid, setting.type, setting.name);
 					synchronized (mSettingCache) {
 						if (mSettingCache.containsKey(key)) {
@@ -1145,7 +1130,7 @@ public class PrivacyService {
 				}
 
 				// Add to cache
-				if (mUseCache && result.value != null) {
+				if (result.value != null) {
 					CSetting key = new CSetting(setting.uid, setting.type, setting.name);
 					key.setValue(result.value);
 					synchronized (mSettingCache) {
@@ -1229,10 +1214,9 @@ public class PrivacyService {
 				}
 
 				// Clear cache
-				if (mUseCache)
-					synchronized (mSettingCache) {
-						mSettingCache.clear();
-					}
+				synchronized (mSettingCache) {
+					mSettingCache.clear();
+				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				throw new RemoteException(ex.toString());
@@ -1273,13 +1257,11 @@ public class PrivacyService {
 				}
 
 				// Clear caches
-				if (mUseCache) {
-					synchronized (mRestrictionCache) {
-						mRestrictionCache.clear();
-					}
-					synchronized (mSettingCache) {
-						mSettingCache.clear();
-					}
+				synchronized (mRestrictionCache) {
+					mRestrictionCache.clear();
+				}
+				synchronized (mSettingCache) {
+					mSettingCache.clear();
 				}
 				synchronized (mAskedOnceCache) {
 					mAskedOnceCache.clear();
