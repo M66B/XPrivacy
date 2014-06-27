@@ -190,6 +190,7 @@ public class XBinder extends XHook {
 		new String[] { // WindowManager
 			"android.app.Activity",
 			"android.app.ActivityThread",
+			"android.app.KeyguardManager",
 			"android.app.KeyguardManager$KeyguardLock",
 			"android.hardware.LegacySensorManager",
 			"android.widget.PopupWindow",
