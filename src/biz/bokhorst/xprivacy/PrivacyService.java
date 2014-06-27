@@ -586,8 +586,19 @@ public class PrivacyService {
 
 				// Ask to restrict
 				boolean ondemand = false;
-				if (!mresult.asked && usage)
+				if (!mresult.asked && usage) {
 					ondemand = onDemandDialog(hook, restriction, mresult);
+
+					// Update cache
+					if (ondemand) {
+						CRestriction key = new CRestriction(mresult, restriction.extra);
+						synchronized (mRestrictionCache) {
+							if (mRestrictionCache.containsKey(key))
+								mRestrictionCache.remove(key);
+							mRestrictionCache.put(key, key);
+						}
+					}
+				}
 
 				// Notify user
 				if (!ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify()) {
@@ -1401,12 +1412,17 @@ public class PrivacyService {
 							if (mRestrictionCache.containsKey(key))
 								if (mRestrictionCache.get(key).asked) {
 									Util.log(null, Log.WARN, "Already asked " + restriction);
+									result.restricted = mRestrictionCache.get(key).restricted;
+									result.asked = true;
 									return false;
 								}
 						}
+
 						synchronized (mAskedOnceCache) {
 							if (mAskedOnceCache.containsKey(key) && !mAskedOnceCache.get(key).isExpired()) {
 								Util.log(null, Log.WARN, "Already asked once " + restriction);
+								result.restricted = mAskedOnceCache.get(key).restricted;
+								result.asked = true;
 								return false;
 							}
 						}
@@ -1416,12 +1432,16 @@ public class PrivacyService {
 							synchronized (mSettingCache) {
 								if (mSettingCache.containsKey(skey)) {
 									Util.log(null, Log.WARN, "Already asked " + skey);
+									result.restricted = Boolean.parseBoolean(mSettingCache.get(skey).getValue());
+									result.asked = true;
 									return false;
 								}
 								for (String xextra : getXExtra(restriction, hook)) {
 									CSetting xkey = new CSetting(restriction.uid, hook.whitelist(), xextra);
 									if (mSettingCache.containsKey(xkey)) {
-										Util.log(null, Log.WARN, "Already asked " + skey);
+										Util.log(null, Log.WARN, "Already asked " + xkey);
+										result.restricted = Boolean.parseBoolean(mSettingCache.get(xkey).getValue());
+										result.asked = true;
 										return false;
 									}
 								}
@@ -1737,7 +1757,9 @@ public class PrivacyService {
 
 		private void onDemandOnce(final PRestriction restriction, final PRestriction result) {
 			Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction);
+
 			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
+
 			CRestriction key = new CRestriction(restriction, restriction.extra);
 			synchronized (mAskedOnceCache) {
 				if (mAskedOnceCache.containsKey(key))

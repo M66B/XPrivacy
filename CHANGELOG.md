@@ -23,6 +23,8 @@ Changelog
 
 **Next release**
 
+* Fixed returning wrong restriction sometimes for repeated on demand restricting
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.12 BETA**
