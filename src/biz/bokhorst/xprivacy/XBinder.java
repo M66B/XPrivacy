@@ -332,8 +332,8 @@ public class XBinder extends XHook {
 				}
 				if (black || white)
 					if (ok) {
-						Util.log(this, Log.ERROR, "Black/whitelisted descriptor=" + descriptor + " code=" + code + " uid="
-								+ Binder.getCallingUid());
+						Util.log(this, Log.ERROR, "Black/whitelisted descriptor=" + descriptor + " code=" + code
+								+ " uid=" + Binder.getCallingUid());
 						Util.logStack(this, Log.ERROR);
 					} else if (white)
 						ok = true;
@@ -348,7 +348,7 @@ public class XBinder extends XHook {
 					param.args[3] = flags;
 				}
 
-				if (!ok && !black && !PrivacyService.getClient().isSystemApp(uid)) {
+				if (!(ok || black || PrivacyService.getClient().isSystemApp(uid))) {
 					Util.log(this, Log.ERROR,
 							"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
 					Util.logStack(this, Log.ERROR);
