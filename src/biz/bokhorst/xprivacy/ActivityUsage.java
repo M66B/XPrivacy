@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
@@ -68,8 +69,21 @@ public class ActivityUsage extends ActivityBase {
 		mUid = (extras == null ? 0 : extras.getInt(cUid, 0));
 		mRestrictionName = (extras == null ? null : extras.getString(cRestriction));
 
+		// Get statistics
+		long count = 0;
+		double persec = 0;
+		try {
+			@SuppressWarnings("rawtypes")
+			Map statistics = PrivacyService.getClient().getStatistics();
+			count = (Long) statistics.get("restriction_count");
+			long uptime = (Long) statistics.get("uptime_milliseconds");
+			persec = (double) count / (uptime / 1000);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+
 		// Set title
-		setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_usage)));
+		setTitle(String.format("%s #%d %.2f/s", getString(R.string.app_name), count, persec));
 
 		// Start task to get usage data
 		UsageTask usageTask = new UsageTask();

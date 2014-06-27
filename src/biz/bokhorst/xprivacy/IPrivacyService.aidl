@@ -7,6 +7,7 @@ interface IPrivacyService {
 	int getVersion();
 	List /* String */ check();
 	void reportError(String message);
+	Map getStatistics();
 
 	boolean isSystemApp(int uid);
 

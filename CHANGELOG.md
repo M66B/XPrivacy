@@ -27,6 +27,7 @@ Changelog
 	* Thanks for sending all the support info!
 * Fixed compatibility with [Boat Browser](https://play.google.com/store/apps/details?id=com.boatbrowser.free) ([issue](/../../issues/1760))
 * Fixed on demand restricting dialog background color for dangerous functions / system applications
+* Added statistics to title of usage list
 * Updated Slovak translation
 * Updated traditional Chinese translation
 
