@@ -225,6 +225,7 @@ public class PrivacyService {
 		private ReentrantReadWriteLock mLockUsage = new ReentrantReadWriteLock(true);
 
 		private AtomicLong mCount = new AtomicLong(0);
+		private AtomicLong mRestricted = new AtomicLong(0);
 		private boolean mSelectCategory = true;
 		private boolean mSelectOnce = false;
 
@@ -302,6 +303,7 @@ public class PrivacyService {
 		public Map getStatistics() throws RemoteException {
 			Map map = new HashMap();
 			map.put("restriction_count", mCount.longValue());
+			map.put("restriction_restricted", mRestricted.longValue());
 			map.put("uptime_milliseconds", SystemClock.elapsedRealtime());
 			return map;
 		};
@@ -607,8 +609,11 @@ public class PrivacyService {
 
 			if (mresult.debug)
 				Util.logStack(null, Log.WARN);
-			if (usage)
+			if (usage) {
 				mCount.incrementAndGet();
+				if (mresult.restricted)
+					mRestricted.incrementAndGet();
+			}
 
 			return mresult;
 		}

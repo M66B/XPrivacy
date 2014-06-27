@@ -338,11 +338,13 @@ public class ActivityUsage extends ActivityBase {
 	private void updateTitle() {
 		// Get statistics
 		long count = 0;
+		long restricted = 0;
 		double persec = 0;
 		try {
 			@SuppressWarnings("rawtypes")
 			Map statistics = PrivacyService.getClient().getStatistics();
 			count = (Long) statistics.get("restriction_count");
+			restricted = (Long) statistics.get("restriction_restricted");
 			long uptime = (Long) statistics.get("uptime_milliseconds");
 			persec = (double) count / (uptime / 1000);
 		} catch (Throwable ex) {
@@ -350,6 +352,6 @@ public class ActivityUsage extends ActivityBase {
 		}
 
 		// Set title
-		setTitle(String.format("%s #%d %.2f/s", getString(R.string.app_name), count, persec));
+		setTitle(String.format("%s %d/%d %.2f/s", getString(R.string.app_name), restricted, count, persec));
 	}
 }
