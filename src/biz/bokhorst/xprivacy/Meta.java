@@ -35,18 +35,18 @@ public class Meta {
 			return mListHook;
 
 		// @formatter:off
-		mListHook.add(new Hook("accounts", "addOnAccountsUpdatedListener", "GET_ACCOUNTS", 10, null, null));
-		mListHook.add(new Hook("accounts", "blockingGetAuthToken", "USE_CREDENTIALS", 10, null, null));
-		mListHook.add(new Hook("accounts", "getAccounts", "GET_ACCOUNTS", 10, null, null));
-		mListHook.add(new Hook("accounts", "getAccountsByType", "GET_ACCOUNTS", 10, null, null));
-		mListHook.add(new Hook("accounts", "getAccountsByTypeAndFeatures", "GET_ACCOUNTS", 10, null, null));
-		mListHook.add(new Hook("accounts", "getAuthToken", "USE_CREDENTIALS", 10, "0.0", null).dangerous());
-		mListHook.add(new Hook("accounts", "getAuthTokenByFeatures", "MANAGE_ACCOUNTS", 10, "0.0", null).dangerous());
-		mListHook.add(new Hook("accounts", "hasFeatures", "GET_ACCOUNTS", 10, null, null));
+		mListHook.add(new Hook("accounts", "addOnAccountsUpdatedListener", "GET_ACCOUNTS", 5, null, null));
+		mListHook.add(new Hook("accounts", "blockingGetAuthToken", "USE_CREDENTIALS", 5, null, null));
+		mListHook.add(new Hook("accounts", "getAccounts", "GET_ACCOUNTS", 5, null, null));
+		mListHook.add(new Hook("accounts", "getAccountsByType", "GET_ACCOUNTS", 5, null, null));
+		mListHook.add(new Hook("accounts", "getAccountsByTypeAndFeatures", "GET_ACCOUNTS", 5, null, null));
+		mListHook.add(new Hook("accounts", "getAuthToken", "USE_CREDENTIALS", 5, "0.0", null).dangerous());
+		mListHook.add(new Hook("accounts", "getAuthTokenByFeatures", "MANAGE_ACCOUNTS", 5, "0.0", null).dangerous());
+		mListHook.add(new Hook("accounts", "hasFeatures", "GET_ACCOUNTS", 8, null, null));
 		mListHook.add(new Hook("accounts", "getAccountsByTypeForPackage", "GET_ACCOUNTS", 18, null, null));
 
-		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 10, "0.0", null).dangerous());
-		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 10, "0.0", null).dangerous());
+		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 1, "0.0", null).dangerous());
+		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 1, "0.0", null).dangerous());
 
 		mListHook.add(new Hook("accounts", "getAuthenticatorTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
 		mListHook.add(new Hook("accounts", "getCurrentSync", "GET_ACCOUNTS", 8, "1.99.24", null).dangerous());
