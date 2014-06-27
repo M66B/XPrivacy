@@ -149,6 +149,7 @@ public class XBinder extends XHook {
 			"android.content.ContentResolver",
 			"android.hardware.SensorManager",
 			"android.media.MediaPlayer",
+			"android.media.MediaPlayer$EventHandler",
 			"android.widget.TextView",
 			"android.os.Looper",
 			"android.os.StrictMode$AndroidBlockGuardPolicy",
