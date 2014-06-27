@@ -1421,7 +1421,6 @@ public class PrivacyService {
 								try {
 									// Dialog view
 									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, latch);
-									holder.dialog.setBackgroundResource(android.R.color.background_dark);
 
 									// Dialog parameters
 									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
@@ -1523,6 +1522,8 @@ public class PrivacyService {
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
 				view.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
+			else
+				view.setBackgroundResource(android.R.color.background_dark);
 
 			ivAppIcon.setImageDrawable(appInfo.getIcon(context));
 			tvUid.setText(Integer.toString(appInfo.getUid()));
