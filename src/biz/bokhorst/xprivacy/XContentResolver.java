@@ -115,7 +115,6 @@ public class XContentResolver extends XHook {
 		if (param.args.length > 1 && param.args[0] instanceof Uri) {
 			String uri = ((Uri) param.args[0]).toString().toLowerCase();
 			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
-			Util.log(this, Log.INFO, "Before uri=" + uri);
 
 			if (uri.startsWith("content://com.android.contacts/contacts/name_phone_or_email")) {
 				// Do nothing
@@ -160,7 +159,6 @@ public class XContentResolver extends XHook {
 			String[] projection = (param.args[1] instanceof String[] ? (String[]) param.args[1] : null);
 			String selection = (param.args[2] instanceof String ? (String) param.args[2] : null);
 			Cursor cursor = (Cursor) param.getResult();
-			Util.log(this, Log.INFO, "After uri=" + uri);
 
 			if (uri.startsWith("content://applications")) {
 				// Applications provider: allow selected applications

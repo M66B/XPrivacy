@@ -308,8 +308,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	public static void handleGetSystemService(String name, String className, String secret) {
-		Util.log(null, Log.INFO, "getSystemService " + name + "=" + className + " uid=" + Binder.getCallingUid());
-
 		synchronized (mListSystemService) {
 			if (mListSystemService.contains(className))
 				return;
