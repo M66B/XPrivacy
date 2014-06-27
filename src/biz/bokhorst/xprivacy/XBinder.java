@@ -193,6 +193,7 @@ public class XBinder extends XHook {
 			"android.app.KeyguardManager",
 			"android.app.KeyguardManager$KeyguardLock",
 			"android.hardware.LegacySensorManager",
+			"android.hardware.SensorManager",
 			"android.widget.PopupWindow",
 		},
 		new String[] { // WifiManager
