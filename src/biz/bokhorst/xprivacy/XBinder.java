@@ -106,7 +106,7 @@ public class XBinder extends XHook {
 		"android.telephony.TelephonyManager",
 		"android.app.ApplicationPackageManager",
 		"android.telephony.TelephonyManager",
-		"android.telephony.TelephonyManager",
+		"android.telephony.MSimTelephonyManager",
 		"android.view.WindowManagerImpl,android.view.WindowManagerGlobal,android.view.ViewRootImpl,android.view.View,android.view.Display",
 		"android.net.wifi.WifiManager",
 		"android.net.sip.SipManager",
@@ -114,7 +114,7 @@ public class XBinder extends XHook {
 		"android.nfc.NfcActivityManager,android.nfc.NfcAdapter",
 		"android.appwidget.AppWidgetManager,android.appwidget.AppWidgetHost",
 		"com.android.server.BluetoothManagerService,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothSocket",
-		"android.bluetooth.BluetoothManager,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice",
+		"android.bluetooth.BluetoothManager,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice,android.bluetooth.BluetoothPan",
 		"android.hardware.input.InputManager",
 		"android.hardware.SystemSensorManager",
 		"android.hardware.usb.UsbManager"
@@ -148,16 +148,19 @@ public class XBinder extends XHook {
 			"android.content.BroadcastReceiver$PendingResult",
 			"android.content.ContentResolver",
 			"android.hardware.SensorManager",
+			"android.media.MediaPlayer",
 			"android.widget.TextView",
-			"com.android.internal.os.RuntimeInit",
+			"android.os.Looper",
 			"android.os.StrictMode$AndroidBlockGuardPolicy",
 			"com.android.internal.app.ResolverActivity",
+			"com.android.internal.os.RuntimeInit",
 			"com.android.internal.os.RuntimeInit$UncaughtHandler",
 		},
 		new String[] { // ClipboardManager
 		},
 		new String[] { // ConnectivityManager
 			"android.app.ActivityThread",
+			"android.net.VpnService",
 		},
 		new String[] { // ContentProvider
 		},
@@ -171,21 +174,25 @@ public class XBinder extends XHook {
 		},
 		new String[] { // PackageManager
 			"android.app.ActivityThread",
+			"android.app.ContextImpl$TctExtContextImpl",
 			"android.app.LoadedApk",
 			"android.app.ResourcesManager",
 			"android.content.res.Resources",
 			"android.content.thm.ThemeIconManager",
 			"android.hardware.SensorManager",
 			"android.nfc.NfcAdapter",
+			"com.android.internal.app.ResolverActivity$ResolveListAdapter",
 		},
 		new String[] { // TelephonyManager
 		},
 		new String[] { // TelephonyManager
 		},
 		new String[] { // WindowManager
+			"android.app.Activity",
 			"android.app.ActivityThread",
 			"android.app.KeyguardManager$KeyguardLock",
 			"android.hardware.LegacySensorManager",
+			"android.widget.PopupWindow",
 		},
 		new String[] { // WifiManager
 		},
