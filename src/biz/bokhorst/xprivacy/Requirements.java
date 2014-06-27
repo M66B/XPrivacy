@@ -318,7 +318,8 @@ public class Requirements {
 
 		// Check context services
 		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager" });
-		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager" });
+		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager",
+				"android.app.ActivityManagerEx" });
 		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
 		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager",
 				"android.net.MultiSimConnectivityManager" });
@@ -329,7 +330,7 @@ public class Requirements {
 		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SensorManager",
 				"android.hardware.SystemSensorManager" });
 		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager",
-				"android.telephony.MultiSimTelephonyManager" });
+				"android.telephony.MSimTelephonyManager", "android.telephony.MultiSimTelephonyManager" });
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
 				"android.view.Window$LocalWindowManager" });
 		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager" });

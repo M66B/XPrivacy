@@ -16,6 +16,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import android.annotation.SuppressLint;
@@ -40,6 +41,7 @@ import android.os.Looper;
 import android.os.Process;
 import android.os.RemoteException;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
@@ -72,8 +74,8 @@ public class PrivacyService {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 357;
-	private static final String cServiceName = "xprivacy353";
+	private static final int cCurrentVersion = 358;
+	private static final String cServiceName = "xprivacy358";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -222,6 +224,8 @@ public class PrivacyService {
 		private ReentrantReadWriteLock mLock = new ReentrantReadWriteLock(true);
 		private ReentrantReadWriteLock mLockUsage = new ReentrantReadWriteLock(true);
 
+		private AtomicLong mCount = new AtomicLong(0);
+		private AtomicLong mRestricted = new AtomicLong(0);
 		private boolean mSelectCategory = true;
 		private boolean mSelectOnce = false;
 
@@ -293,6 +297,16 @@ public class PrivacyService {
 		public void reportError(String message) throws RemoteException {
 			reportErrorInternal(message);
 		}
+
+		@Override
+		@SuppressWarnings({ "rawtypes", "unchecked" })
+		public Map getStatistics() throws RemoteException {
+			Map map = new HashMap();
+			map.put("restriction_count", mCount.longValue());
+			map.put("restriction_restricted", mRestricted.longValue());
+			map.put("uptime_milliseconds", SystemClock.elapsedRealtime());
+			return map;
+		};
 
 		// Application
 		@Override
@@ -595,6 +609,11 @@ public class PrivacyService {
 
 			if (mresult.debug)
 				Util.logStack(null, Log.WARN);
+			if (usage) {
+				mCount.incrementAndGet();
+				if (mresult.restricted)
+					mRestricted.incrementAndGet();
+			}
 
 			return mresult;
 		}
@@ -1421,7 +1440,6 @@ public class PrivacyService {
 								try {
 									// Dialog view
 									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, latch);
-									holder.dialog.setBackgroundResource(android.R.color.background_dark);
 
 									// Dialog parameters
 									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
@@ -1523,6 +1541,8 @@ public class PrivacyService {
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
 				view.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
+			else
+				view.setBackgroundResource(android.R.color.background_dark);
 
 			ivAppIcon.setImageDrawable(appInfo.getIcon(context));
 			tvUid.setText(Integer.toString(appInfo.getUid()));

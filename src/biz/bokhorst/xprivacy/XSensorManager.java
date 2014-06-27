@@ -82,7 +82,9 @@ public class XSensorManager extends XHook {
 
 	@SuppressWarnings("deprecation")
 	private boolean isRestricted(XParam param, int type) throws Throwable {
-		if (type == Sensor.TYPE_ACCELEROMETER || type == Sensor.TYPE_LINEAR_ACCELERATION) {
+		if (type == Sensor.TYPE_ALL)
+			return false;
+		else if (type == Sensor.TYPE_ACCELEROMETER || type == Sensor.TYPE_LINEAR_ACCELERATION) {
 			if (isRestricted(param, "acceleration"))
 				return true;
 		} else if (type == Sensor.TYPE_GRAVITY) {

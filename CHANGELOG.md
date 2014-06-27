@@ -23,11 +23,17 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.12 BETA**
+
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
+* Fixed compatibility with [Boat Browser](https://play.google.com/store/apps/details?id=com.boatbrowser.free) ([issue](/../../issues/1760))
+* Fixed on demand restricting dialog background color for dangerous functions / system applications
+* Added statistics to title of usage list
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+* Updated traditional Chinese translation
 
 **Version 2.1.11 BETA**
 
