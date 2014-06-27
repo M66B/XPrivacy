@@ -45,7 +45,7 @@
     <string name="menu_tutorial">說明</string>
     <string name="menu_exclude">排除</string>
     <string name="menu_close">關閉</string>
-    <string name="menu_flush">Flush cache</string>
+    <string name="menu_flush">清除快取</string>
     <string name="msg_abort">正在取消...</string>
     <string name="msg_aborted">已取消</string>
     <string name="msg_new">已安裝</string>
@@ -131,7 +131,7 @@
     <string name="title_whitelist">白名單 \'%s\'</string>
     <string name="title_allow">允許</string>
     <string name="title_deny">封鎖</string>
-    <string name="title_dontknow">Don\'t know</string>
+    <string name="title_dontknow">不確定</string>
     <string name="title_pleasesubmit">稍後請上傳您的設定到社群網路利人利己 :)</string>
     <string name="title_permissions">權限</string>
     <string name="title_set_restrict">限制</string>
@@ -140,15 +140,15 @@
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">開啟互動式限制</string>
     <string name="title_disable_ondemand">關閉互動式限制</string>
-    <string name="title_default">Default</string>
-    <string name="title_alternate">Alternate</string>
-    <string name="title_usage_header">Usage</string>
-    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
-    <string name="title_usage_text_2">2. Tap on the application icon</string>
-    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
-    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
-    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
-    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
+    <string name="title_default">預設</string>
+    <string name="title_alternate">其他</string>
+    <string name="title_usage_header">使用方法</string>
+    <string name="title_usage_text_1">1. 從應用程式清單中找出欲限制的APP</string>
+    <string name="title_usage_text_2">2. 點選該APP圖示</string>
+    <string name="title_usage_text_3">3. 點選想限制項目前的核取方塊</string>
+    <string name="title_usage_footer">請用常理判斷，比如限制了"網際網路"，那麼該程式就不能存取網路了。</string>
+    <string name="title_toggle_dangerous">欲選取不建議限制的項目時，需要長按項目名稱。</string>
+    <string name="title_ondemand_category">套用到整個分類時會覆寫預設限制列表的設定。</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>
@@ -196,6 +196,6 @@
     <string name="tutorial_detailsheader">點選APP圖示顯示進階動作選單</string>
     <string name="tutorial_detailslist">點選﹀符號可編輯細部權限設定</string>
     <string name="permission_manage">管理/強制停止app</string>
-    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
+    <string name="permission_restrictions">XPrivacy 設定及限制</string>
 
 </resources>
