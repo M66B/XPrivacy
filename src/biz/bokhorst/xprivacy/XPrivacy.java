@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
-import android.os.Binder;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
