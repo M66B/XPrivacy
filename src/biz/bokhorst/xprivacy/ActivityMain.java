@@ -1164,10 +1164,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.templateentry, parent);
+				convertView = mInflater.inflate(R.layout.templateentry, null);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			} else
@@ -1261,11 +1262,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 				ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.templateentry, parent);
+				convertView = mInflater.inflate(R.layout.templateentry, null);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			} else
@@ -1963,10 +1965,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.mainentry, parent);
+				convertView = mInflater.inflate(R.layout.mainentry, null);
 				holder = new ViewHolder(convertView, position);
 				convertView.setTag(holder);
 			} else {
