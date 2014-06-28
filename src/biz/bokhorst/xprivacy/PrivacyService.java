@@ -573,12 +573,12 @@ public class PrivacyService {
 				}
 
 				// Ask to restrict
-				boolean ondemand = false;
+				OnDemandResult oResult = new OnDemandResult();
 				if (!mresult.asked && usage) {
-					ondemand = onDemandDialog(hook, restriction, mresult);
+					oResult = onDemandDialog(hook, restriction, mresult);
 
 					// Update cache
-					if (ondemand) {
+					if (oResult.ondemand && !oResult.once) {
 						CRestriction okey = new CRestriction(mresult, restriction.extra);
 						synchronized (mRestrictionCache) {
 							if (mRestrictionCache.containsKey(okey))
@@ -589,7 +589,7 @@ public class PrivacyService {
 				}
 
 				// Notify user
-				if (!ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify()) {
+				if (!oResult.ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify()) {
 					notifyRestricted(restriction);
 					mresult.time = new Date().getTime();
 				}
@@ -1331,36 +1331,42 @@ public class PrivacyService {
 
 		// Helper methods
 
-		private boolean onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
+		class OnDemandResult {
+			public boolean ondemand = false;
+			public boolean once = false;
+		}
+
+		private OnDemandResult onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
+			final OnDemandResult oResult = new OnDemandResult();
 			try {
 				int userId = Util.getUserId(restriction.uid);
 
 				// Check if application
 				if (!PrivacyManager.isApplication(restriction.uid))
-					return false;
+					return oResult;
 
 				// Check for exceptions
 				if (hook != null && !hook.canOnDemand())
-					return false;
+					return oResult;
 				if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
 						restriction.methodName, false))
-					return false;
+					return oResult;
 
 				// Check if enabled
 				if (!getSettingBool(userId, PrivacyManager.cSettingOnDemand, true))
-					return false;
+					return oResult;
 				if (!getSettingBool(restriction.uid, PrivacyManager.cSettingOnDemand, false))
-					return false;
+					return oResult;
 
 				// Check version
 				String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
 				if (new Version(version).compareTo(new Version("2.1.5")) < 0)
-					return false;
+					return oResult;
 
 				// Get am context
 				final Context context = getContext();
 				if (context == null)
-					return false;
+					return oResult;
 
 				long token = 0;
 				try {
@@ -1372,11 +1378,11 @@ public class PrivacyService {
 					// Check for system application
 					if (appInfo.isSystem())
 						if (new Version(version).compareTo(new Version("2.0.38")) < 0)
-							return false;
+							return oResult;
 
 					// Check if activity manager agrees
 					if (!XActivityManagerService.canOnDemand())
-						return false;
+						return oResult;
 
 					// Go ask
 					Util.log(null, Log.WARN, "On demand " + restriction);
@@ -1384,7 +1390,7 @@ public class PrivacyService {
 					try {
 						// Check if activity manager still agrees
 						if (!XActivityManagerService.canOnDemand())
-							return false;
+							return oResult;
 
 						Util.log(null, Log.WARN, "On demanding " + restriction);
 
@@ -1396,7 +1402,7 @@ public class PrivacyService {
 									Util.log(null, Log.WARN, "Already asked " + restriction);
 									result.restricted = mRestrictionCache.get(mkey).restricted;
 									result.asked = true;
-									return false;
+									return oResult;
 								}
 						}
 
@@ -1405,7 +1411,7 @@ public class PrivacyService {
 								Util.log(null, Log.WARN, "Already asked once " + restriction);
 								result.restricted = mAskedOnceCache.get(mkey).restricted;
 								result.asked = true;
-								return false;
+								return oResult;
 							}
 						}
 
@@ -1416,7 +1422,7 @@ public class PrivacyService {
 								Util.log(null, Log.WARN, "Already asked once category " + restriction);
 								result.restricted = mAskedOnceCache.get(ckey).restricted;
 								result.asked = true;
-								return false;
+								return oResult;
 							}
 						}
 
@@ -1427,7 +1433,7 @@ public class PrivacyService {
 									Util.log(null, Log.WARN, "Already asked " + skey);
 									result.restricted = Boolean.parseBoolean(mSettingCache.get(skey).getValue());
 									result.asked = true;
-									return false;
+									return oResult;
 								}
 								for (String xextra : getXExtra(restriction, hook)) {
 									CSetting xkey = new CSetting(restriction.uid, hook.whitelist(), xextra);
@@ -1435,7 +1441,7 @@ public class PrivacyService {
 										Util.log(null, Log.WARN, "Already asked " + xkey);
 										result.restricted = Boolean.parseBoolean(mSettingCache.get(xkey).getValue());
 										result.asked = true;
-										return false;
+										return oResult;
 									}
 								}
 							}
@@ -1452,7 +1458,8 @@ public class PrivacyService {
 							public void run() {
 								try {
 									// Dialog view
-									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, latch);
+									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, latch,
+											oResult);
 
 									// Dialog parameters
 									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
@@ -1497,7 +1504,9 @@ public class PrivacyService {
 						});
 
 						// Wait for dialog to complete
-						if (!latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS))
+						if (latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS))
+							oResult.ondemand = true;
+						else
 							Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
 
 						mHandler.post(new Runnable() {
@@ -1519,7 +1528,7 @@ public class PrivacyService {
 				Util.bug(null, ex);
 			}
 
-			return true;
+			return oResult;
 		}
 
 		final class AlertDialogHolder {
@@ -1528,7 +1537,8 @@ public class PrivacyService {
 
 		@SuppressLint("InflateParams")
 		private View getOnDemandView(final PRestriction restriction, final Hook hook, ApplicationInfoEx appInfo,
-				final PRestriction result, Context context, final CountDownLatch latch) throws NameNotFoundException {
+				final PRestriction result, Context context, final CountDownLatch latch, final OnDemandResult oResult)
+				throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1688,7 +1698,7 @@ public class PrivacyService {
 					else if (cbWhitelistExtra3.isChecked())
 						onDemandWhitelist(restriction, getXExtra(restriction, hook)[2], result, hook);
 					else if (cbOnce.isChecked())
-						onDemandOnce(restriction, cbCategory.isChecked(), result);
+						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), false);
 					latch.countDown();
@@ -1700,7 +1710,7 @@ public class PrivacyService {
 				public void onClick(View v) {
 					// Deny once
 					result.restricted = true;
-					onDemandOnce(restriction, false, result);
+					onDemandOnce(restriction, false, result, oResult);
 					latch.countDown();
 				}
 			});
@@ -1724,7 +1734,7 @@ public class PrivacyService {
 					else if (cbWhitelistExtra3.isChecked())
 						onDemandWhitelist(restriction, getXExtra(restriction, hook)[2], result, hook);
 					else if (cbOnce.isChecked())
-						onDemandOnce(restriction, cbCategory.isChecked(), result);
+						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), true);
 					latch.countDown();
@@ -1780,10 +1790,12 @@ public class PrivacyService {
 			}
 		}
 
-		private void onDemandOnce(final PRestriction restriction, boolean category, final PRestriction result) {
+		private void onDemandOnce(final PRestriction restriction, boolean category, final PRestriction result,
+				final OnDemandResult oResult) {
 			Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction + " category="
 					+ category);
 
+			oResult.once = true;
 			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 
 			CRestriction key = new CRestriction(result, restriction.extra);

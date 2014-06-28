@@ -25,6 +25,7 @@ Changelog
 **Next release**
 
 * Added restrictions for NEW_PICTURE and ACTION_NEW_VIDEO broadcasts
+* Fixed on demand once caching restriction
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
