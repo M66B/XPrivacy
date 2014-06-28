@@ -95,29 +95,89 @@ public class XBinder extends XHook {
 	// @formatter:on
 
 	// @formatter:off
-	public static List<String> cServiceClassName = Arrays.asList(new String[] {
-		"android.accounts.AccountManager",
-		"android.app.ActivityManager",
-		"android.content.ClipboardManager",
-		"android.net.ConnectivityManager,android.net.MultiSimConnectivityManager",
-		"android.content.ContentResolver,android.content.ContentProviderClient,com.android.providers.contacts.ContactsProvider2",
-		"android.location.LocationManager",
-		"android.telephony.TelephonyManager",
-		"android.telephony.TelephonyManager",
-		"android.app.ApplicationPackageManager",
-		"android.telephony.TelephonyManager",
-		"android.telephony.MSimTelephonyManager",
-		"android.view.WindowManagerImpl,android.view.WindowManagerGlobal,android.view.ViewRootImpl,android.view.View,android.view.Display",
-		"android.net.wifi.WifiManager",
-		"android.net.sip.SipManager",
-		"android.telephony.SmsManager",
-		"android.nfc.NfcActivityManager,android.nfc.NfcAdapter",
-		"android.appwidget.AppWidgetManager,android.appwidget.AppWidgetHost",
-		"com.android.server.BluetoothManagerService,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice,android.bluetooth.BluetoothSocket",
-		"android.bluetooth.BluetoothManager,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice,android.bluetooth.BluetoothPan",
-		"android.hardware.input.InputManager",
-		"android.hardware.SystemSensorManager",
-		"android.hardware.usb.UsbManager"
+	public static List<String[]> cServiceClassName = Arrays.asList(new String[][] {
+		new String[] { // IAccountManager
+			"android.accounts.AccountManager",
+		},
+		new String[] { // IActivityManager
+			"android.app.ActivityManager",
+		},
+		new String[] { // IClipboard
+			"android.content.ClipboardManager",
+		},
+		new String[] { // IConnectivityManager
+			"android.net.ConnectivityManager",
+			"android.net.MultiSimConnectivityManager",
+		},
+		new String[] { // IContentService
+			"android.content.ContentResolver",
+			"android.content.ContentProviderClient",
+			"com.android.providers.contacts.ContactsProvider2",
+		},
+		new String[] { // ILocationManager
+			"android.location.LocationManager",
+		},
+		new String[] { // ITelephonyRegistry
+			"android.telephony.TelephonyManager",
+		},
+		new String[] { // ITelephonyRegistryMSim
+			"android.telephony.TelephonyManager",
+		},
+		new String[] { // IPackageManager
+			"android.app.ApplicationPackageManager",
+		},
+		new String[] { // IPhoneSubInfo
+			"android.telephony.TelephonyManager",
+		},
+		new String[] { // IPhoneSubInfoMSim
+			"android.telephony.MSimTelephonyManager",
+		},
+		new String[] { // IWindowManager
+			"android.view.WindowManagerImpl",
+			"android.view.WindowManagerGlobal",
+			"android.view.ViewRootImpl",
+			"android.view.View",
+			"android.view.Display",
+		},
+		new String[] { // IWifiManager
+			"android.net.wifi.WifiManager",
+		},
+		new String[] { // ISipService
+			"android.net.sip.SipManager",
+		},
+		new String[] { // ISms
+			"android.telephony.SmsManager",
+		},
+		new String[] { // INfcAdapter
+			"android.nfc.NfcActivityManager",
+			"android.nfc.NfcAdapter",
+		},
+		new String[] { // IAppWidgetService
+			"android.appwidget.AppWidgetManager",
+			"android.appwidget.AppWidgetHost",
+		},
+		new String[] { // IBluetooth
+			"com.android.server.BluetoothManagerService",
+			"android.bluetooth.BluetoothAdapter",
+			"android.bluetooth.BluetoothDevice",
+			"android.bluetooth.BluetoothSocket",
+		},
+		new String[] { // IBluetoothManager
+			"android.bluetooth.BluetoothManager",
+			"android.bluetooth.BluetoothAdapter",
+			"android.bluetooth.BluetoothDevice",
+			"android.bluetooth.BluetoothPan",
+			"android.bluetooth.BluetoothA2dp",
+		},
+		new String[] { // IInputManager
+			"android.hardware.input.InputManager",
+		},
+		new String[] { // SensorServer
+			"android.hardware.SystemSensorManager",
+		},
+		new String[] { // IUsbManager
+			"android.hardware.usb.UsbManager"
+		}
 	});
 	// @formatter:on
 
@@ -136,8 +196,6 @@ public class XBinder extends XHook {
 		new String[] { // ActivityManager
 			"android.app.Activity",
 			"android.app.ActivityThread",
-			"android.app.ActivityThread$Idler",
-			"android.app.ActivityThread$StopInfo",
 			"android.app.Application",
 			"android.app.ContextImpl",
 			"android.app.Instrumentation",
@@ -145,17 +203,14 @@ public class XBinder extends XHook {
 			"android.app.PendingIntent",
 			"android.app.Service",
 			"android.content.BroadcastReceiver",
-			"android.content.BroadcastReceiver$PendingResult",
 			"android.content.ContentResolver",
 			"android.hardware.SensorManager",
 			"android.media.MediaPlayer",
-			"android.media.MediaPlayer$EventHandler",
 			"android.widget.TextView",
 			"android.os.Looper",
-			"android.os.StrictMode$AndroidBlockGuardPolicy",
+			"android.os.StrictMode",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.os.RuntimeInit",
-			"com.android.internal.os.RuntimeInit$UncaughtHandler",
 		},
 		new String[] { // ClipboardManager
 		},
@@ -175,14 +230,14 @@ public class XBinder extends XHook {
 		},
 		new String[] { // PackageManager
 			"android.app.ActivityThread",
-			"android.app.ContextImpl$TctExtContextImpl",
+			"android.app.ContextImpl",
 			"android.app.LoadedApk",
 			"android.app.ResourcesManager",
 			"android.content.res.Resources",
 			"android.content.thm.ThemeIconManager",
 			"android.hardware.SensorManager",
 			"android.nfc.NfcAdapter",
-			"com.android.internal.app.ResolverActivity$ResolveListAdapter",
+			"com.android.internal.app.ResolverActivity",
 		},
 		new String[] { // TelephonyManager
 		},
@@ -192,7 +247,6 @@ public class XBinder extends XHook {
 			"android.app.Activity",
 			"android.app.ActivityThread",
 			"android.app.KeyguardManager",
-			"android.app.KeyguardManager$KeyguardLock",
 			"android.hardware.LegacySensorManager",
 			"android.hardware.SensorManager",
 			"android.widget.PopupWindow",
@@ -298,7 +352,7 @@ public class XBinder extends XHook {
 				boolean white = false;
 				boolean found = false;
 				String proxy = descriptor.replace(".I", ".") + "Proxy";
-				String[] serviceClassName = cServiceClassName.get(idx).split(",");
+				List<String> serviceName = Arrays.asList(cServiceClassName.get(idx));
 				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
 				for (int i = 0; i < ste.length; i++)
 					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)) {
@@ -306,7 +360,7 @@ public class XBinder extends XHook {
 
 						// Check exceptions
 						if (i + 1 < ste.length) {
-							String name = ste[i + 1].getClassName();
+							String name = ste[i + 1].getClassName().split("\\$")[0];
 							black = cBlackClassName.contains(name);
 							white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
 							if (black || white)
@@ -315,14 +369,13 @@ public class XBinder extends XHook {
 
 						// Check manager class name
 						for (int j = i + 1; j < ste.length; j++) {
-							for (String name : serviceClassName)
-								if (ste[j].getClassName().startsWith(name)) {
-									ok = true;
-									break;
-								}
-							if (ok)
+							String name = ste[j].getClassName().split("\\$")[0];
+							if (serviceName.contains(name)) {
+								ok = true;
 								break;
+							}
 						}
+
 						break;
 					}
 
