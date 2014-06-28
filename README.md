@@ -9,22 +9,22 @@ The ultimate, yet easy to use, privacy manager for Android
 Index
 -----
 
-* [Description](https://github.com/M66B/XPrivacy#description)
-* [Features](https://github.com/M66B/XPrivacy#features)
-* [Restrictions](https://github.com/M66B/XPrivacy#restrictions)
-* [Limitations](https://github.com/M66B/XPrivacy#limitations)
-* [Compatibility](https://github.com/M66B/XPrivacy#compatibility)
-* [Installation](https://github.com/M66B/XPrivacy#installation)
-* [Upgrading](https://github.com/M66B/XPrivacy#upgrading)
-* [Usage](https://github.com/M66B/XPrivacy#usage)
-* [Permissions](https://github.com/M66B/XPrivacy#permissions)
-* [Frequently asked questions](https://github.com/M66B/XPrivacy#frequently-asked-questions)
-* [Support](https://github.com/M66B/XPrivacy#support)
+* [Description](#description)
+* [Features](#features)
+* [Restrictions](#restrictions)
+* [Limitations](#limitations)
+* [Compatibility](#compatibility)
+* [Installation](#installation)
+* [Upgrading](#upgrading)
+* [Usage](#usage)
+* [Permissions](#permissions)
+* [Frequently asked questions](#frequently-asked-questions)
+* [Support](#support)
 * [Changelog](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md)
-* [Similar solutions](https://github.com/M66B/XPrivacy#similar-solutions)
-* [News](https://github.com/M66B/XPrivacy#news)
-* [Contributing](https://github.com/M66B/XPrivacy#contributing)
-* [License](https://github.com/M66B/XPrivacy#license)
+* [Similar solutions](#similar-solutions)
+* [News](#news)
+* [Contributing](#contributing)
+* [License](#license)
 
 Description
 -----------
@@ -382,7 +382,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 
 1. Requirements:
 	* Android version 4.0.3 - 4.4.4 (ICS, JellyBean, KitKat); check with *System Settings* > *About phone* > *Android version*
-	* Read about [compatibility](https://github.com/M66B/XPrivacy#compatibility) before installing
+	* Read about [compatibility](#compatibility) before installing
 1. **Make a backup**
 1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
@@ -397,7 +397,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 1. Reboot
 
 I do not recommend using XPrivacy in combination with any of the
-[similar solutions](https://github.com/M66B/XPrivacy#similar-solutions),
+[similar solutions](#similar-solutions),
 because this could result in conflicts and potential data leaks.
 
 There is an unofficial backported Gingerbread version available [here](http://forum.xda-developers.com/showpost.php?p=44034334).
@@ -510,7 +510,7 @@ XPrivacy asks for the following Android permissions:
 * Wakelock: to keep the processor running during batch operations
 
 If desired, you can even restrict XPrivacy from accessing any of the above,
-but there are some [limitations](https://github.com/M66B/XPrivacy#limitations).
+but there are some [limitations](#limitations).
 
 Please note that any Xposed module has basically root permissions and can therefore circumvent any Android permission.
 
@@ -931,7 +931,7 @@ So, please describe the exact steps to reproduce the problem and/or provide a lo
 
 If you requested a new feature: there is a feature stop since version 2.x.
 
-See [here](https://github.com/M66B/XPrivacy#support) for more details.
+See [here](#support) for more details.
 
 <a name="FAQ53"></a>
 **(53) What happens if I make XPrivacy device administrator?**
