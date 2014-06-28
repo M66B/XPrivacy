@@ -1554,7 +1554,7 @@ public class PrivacyService {
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
-				view.setBackgroundColor(resources.getColor(R.color.color_dangerous_dark));
+				view.setBackgroundResource(R.color.color_dangerous_dialog);
 			else
 				view.setBackgroundResource(android.R.color.background_dark);
 
