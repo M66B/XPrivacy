@@ -59,6 +59,7 @@ public class XField extends XHook {
 		"android.accounts.AccountManager",
 		"android.app.Activity",
 		"android.app.ActivityManager",
+		"android.app.ActivityManagerEx",
 		// "com.android.server.am.ActivityManagerService",
 		"com.google.android.gms.location.ActivityRecognitionClient",
 		"com.google.android.gms.ads.identifier.AdvertisingIdClient$Info",
@@ -72,6 +73,7 @@ public class XField extends XHook {
 		"android.hardware.Camera",
 		"android.content.ClipboardManager",
 		"android.net.ConnectivityManager",
+		"android.net.MultiSimConnectivityManager",
 		"android.content.ContentProviderClient",
 		"android.content.ContentResolver",
 		"android.app.ContextImpl",
@@ -92,16 +94,20 @@ public class XField extends XHook {
 		"android.content.res.Resources",
 		"android.content.res.Configuration",
 		"java.lang.Runtime",
+		"android.hardware.SensorManager",
 		"android.hardware.SystemSensorManager",
 		// "android.provider.Settings.Secure",
 		"android.net.sip.SipManager",
 		"android.telephony.SmsManager",
 		"android.os.SystemProperties",
 		"android.telephony.TelephonyManager",
+		"android.telephony.MSimTelephonyManager",
+		"android.telephony.MultiSimTelephonyManager",
 		// WebSettings
 		"android.webkit.WebView",
 		"android.net.wifi.WifiManager",
-		"android.view.WindowManagerImpl"
+		"android.view.WindowManagerImpl",
+		"android.view.Window$LocalWindowManager"
 	});
 	// @formatter:on
 
