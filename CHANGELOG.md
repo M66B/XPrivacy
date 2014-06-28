@@ -27,7 +27,7 @@ Changelog
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
 * Fixed returning wrong restriction sometimes for repeated on demand restricting
-* Attempt to fix finger print lockscreen ([issue](/../../issues/1759))
+* Fixed finger print lockscreen ([issue](/../../issues/1759))
 * Added allow/deny once for category ([issue](/../../issues/1764))
 * Added option to disable restrictions at boot:
 
