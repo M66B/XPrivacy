@@ -1684,6 +1684,7 @@ public class PrivacyService {
 				public void onClick(View v) {
 					// Allow
 					result.restricted = false;
+					result.asked = true;
 					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()
 							&& !cbWhitelistExtra3.isChecked()) {
 						mSelectCategory = cbCategory.isChecked();
@@ -1710,6 +1711,7 @@ public class PrivacyService {
 				public void onClick(View v) {
 					// Deny once
 					result.restricted = true;
+					result.asked = true;
 					onDemandOnce(restriction, false, result, oResult);
 					latch.countDown();
 				}
@@ -1720,6 +1722,7 @@ public class PrivacyService {
 				public void onClick(View view) {
 					// Deny
 					result.restricted = true;
+					result.asked = true;
 					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()
 							&& !cbWhitelistExtra3.isChecked()) {
 						mSelectCategory = cbCategory.isChecked();
