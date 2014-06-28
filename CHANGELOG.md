@@ -29,6 +29,13 @@ Changelog
 * Fixed returning wrong restriction sometimes for repeated on demand restricting
 * Attempt to fix finger print lockscreen ([issue](/../../issues/1759))
 * Added allow/deny once for category ([issue](/../../issues/1764))
+* Added option to disable restrictions at boot:
+
+```
+cd /data/system/xprivacy
+echo "ipc" >disabled
+echo "system/getInstalledProviders" >>disabled
+```
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

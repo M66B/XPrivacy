@@ -1,5 +1,9 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Member;
@@ -29,8 +33,37 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static String mSecret = null;
 	private static List<String> mListHookError = new ArrayList<String>();
 	private static List<String> mListSystemService = new ArrayList<String>();
+	private static List<CRestriction> mListDisabled = new ArrayList<CRestriction>();
 
 	// http://developer.android.com/reference/android/Manifest.permission.html
+
+	static {
+		if (mListDisabled.size() == 0) {
+			File disabled = new File("/data/system/xprivacy/disabled");
+			if (disabled.exists() && disabled.canRead())
+				try {
+					Log.w("XPrivacy", "Reading " + disabled.getAbsolutePath());
+					FileInputStream fis = new FileInputStream(disabled);
+					InputStreamReader ir = new InputStreamReader(fis);
+					BufferedReader br = new BufferedReader(ir);
+					String line;
+					while ((line = br.readLine()) != null) {
+						String[] name = line.split("\\.");
+						if (name.length > 0) {
+							String methodName = (name.length > 1 ? name[1] : null);
+							CRestriction restriction = new CRestriction(0, name[0], methodName, null);
+							Log.w("XPrivacy", "Disabling " + restriction);
+							mListDisabled.add(restriction);
+						}
+					}
+					br.close();
+					ir.close();
+					fis.close();
+				} catch (Throwable ex) {
+					Log.w("XPrivacy", ex.toString());
+				}
+		}
+	}
 
 	// Xposed
 	public void initZygote(StartupParam startupParam) throws Throwable {
@@ -338,7 +371,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public static void hookAll(List<XHook> listHook, ClassLoader classLoader, String secret) {
 		for (XHook hook : listHook)
-			hook(hook, classLoader, secret);
+			if (hook.getRestrictionName() != null) {
+				CRestriction crestriction = new CRestriction(0, hook.getRestrictionName(), null, null);
+				CRestriction mrestriction = new CRestriction(0, hook.getRestrictionName(), hook.getMethodName(), null);
+				if (!(mListDisabled.contains(crestriction) || mListDisabled.contains(mrestriction)))
+					hook(hook, classLoader, secret);
+			}
 	}
 
 	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
