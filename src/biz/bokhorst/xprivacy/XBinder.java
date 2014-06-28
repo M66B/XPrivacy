@@ -230,6 +230,7 @@ public class XBinder extends XHook {
 		new String[] { // TelephonyManager
 		},
 		new String[] { // PackageManager
+			"android.app.ActivityManager",
 			"android.app.ActivityThread",
 			"android.app.ContextImpl",
 			"android.app.LoadedApk",
