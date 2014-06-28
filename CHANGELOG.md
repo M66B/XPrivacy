@@ -34,7 +34,7 @@ Changelog
 ```
 cd /data/system/xprivacy
 echo "ipc" >disabled
-echo "system/getInstalledProviders" >>disabled
+echo "system.getInstalledProviders" >>disabled
 ```
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

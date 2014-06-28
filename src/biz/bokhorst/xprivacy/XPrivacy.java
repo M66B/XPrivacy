@@ -371,10 +371,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public static void hookAll(List<XHook> listHook, ClassLoader classLoader, String secret) {
 		for (XHook hook : listHook)
-			if (hook.getRestrictionName() != null) {
+			if (hook.getRestrictionName() == null)
+				hook(hook, classLoader, secret);
+			else {
 				CRestriction crestriction = new CRestriction(0, hook.getRestrictionName(), null, null);
 				CRestriction mrestriction = new CRestriction(0, hook.getRestrictionName(), hook.getMethodName(), null);
-				if (!(mListDisabled.contains(crestriction) || mListDisabled.contains(mrestriction)))
+				if (mListDisabled.contains(crestriction) || mListDisabled.contains(mrestriction))
+					Util.log(hook, Log.WARN, "Skipping " + hook);
+				else
 					hook(hook, classLoader, secret);
 			}
 	}
