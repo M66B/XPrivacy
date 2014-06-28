@@ -113,17 +113,18 @@ public class XField extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
+		Field field = (Field) param.thisObject;
+		String className = field.getDeclaringClass().getName();
+
+		// Make accessible: Xposed will invoke original method
+		param.setObjectExtra("accessible", (Boolean) field.isAccessible());
+		field.setAccessible(true);
+
 		// Check if Android
 		if (Binder.getCallingUid() == android.os.Process.SYSTEM_UID)
 			return;
 
-		// Make accessible
-		Field field = (Field) param.thisObject;
-		param.setObjectExtra("accessible", (Boolean) field.isAccessible());
-		field.setAccessible(true);
-
 		// Check if class listed
-		String className = field.getDeclaringClass().getName();
 		if (!cClassName.contains(className))
 			return;
 
@@ -141,12 +142,13 @@ public class XField extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
+		Field field = (Field) param.thisObject;
+
+		// Restore accessibility
+		field.setAccessible((Boolean) param.getObjectExtra("accessible"));
+
 		// Check if Android
 		if (Binder.getCallingUid() == android.os.Process.SYSTEM_UID)
 			return;
-
-		// Restore accessibility
-		Field field = (Field) param.thisObject;
-		field.setAccessible((Boolean) param.getObjectExtra("accessible"));
 	}
 }
