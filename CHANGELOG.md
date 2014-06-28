@@ -42,7 +42,7 @@ echo "ipc" >disabled
 echo "system.getInstalledProviders" >>disabled
 ```
 
-**Version 2.1.12 BETA**
+**Version 2.1.14 BETA**
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
