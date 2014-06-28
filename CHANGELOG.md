@@ -37,6 +37,8 @@ echo "ipc" >disabled
 echo "system.getInstalledProviders" >>disabled
 ```
 
+* Added white/black listing for parent folder ([issue](/../../issues/1474))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.12 BETA**

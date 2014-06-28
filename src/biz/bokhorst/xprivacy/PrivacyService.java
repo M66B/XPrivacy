@@ -1515,6 +1515,7 @@ public class PrivacyService {
 			public View dialog = null;
 		}
 
+		@SuppressLint("InflateParams")
 		private View getOnDemandView(final PRestriction restriction, final Hook hook, ApplicationInfoEx appInfo,
 				final PRestriction result, Context context, final CountDownLatch latch) throws NameNotFoundException {
 			// Get resources
@@ -1698,9 +1699,14 @@ public class PrivacyService {
 			List<String> listResult = new ArrayList<String>();
 			if (hook != null)
 				if (hook.whitelist().equals(Meta.cTypeFilename)) {
-					String folder = new File(restriction.extra).getParent();
-					if (!TextUtils.isEmpty(folder))
-						listResult.add(folder + File.separatorChar + "*");
+					File file = new File(restriction.extra);
+					for (int i = 1; i <= 3 && file != null; i++) {
+						String parent = file.getParent();
+						if (!TextUtils.isEmpty(parent))
+							listResult.add(parent + File.separatorChar + "*");
+						file = file.getParentFile();
+					}
+
 				} else if (hook.whitelist().equals(Meta.cTypeIPAddress)) {
 					int semi = restriction.extra.lastIndexOf(':');
 					String address = (semi >= 0 ? restriction.extra.substring(0, semi) : restriction.extra);
