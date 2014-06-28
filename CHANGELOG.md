@@ -24,11 +24,16 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.13 BETA**
+
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
 * Fixed returning wrong restriction sometimes for repeated on demand restricting
 * Fixed finger print lockscreen ([issue](/../../issues/1759))
 * Added allow/deny once for category ([issue](/../../issues/1764))
+* Added white/black listing for parent folder ([issue](/../../issues/1474))
 * Added option to disable restrictions at boot:
 
 ```
@@ -36,10 +41,6 @@ cd /data/system/xprivacy
 echo "ipc" >disabled
 echo "system.getInstalledProviders" >>disabled
 ```
-
-* Added white/black listing for parent folder ([issue](/../../issues/1474))
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.12 BETA**
 
