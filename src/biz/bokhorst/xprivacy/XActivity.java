@@ -45,12 +45,14 @@ public class XActivity extends XHook {
 	// public void startActivityFromFragment(Fragment fragment, Intent intent, int requestCode, Bundle options)
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode)
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode, Bundle options)
+	// public boolean startNextMatchingActivity(Intent intent)
+	// public boolean startNextMatchingActivity(Intent intent, Bundle options)
 	// frameworks/base/core/java/android/app/Activity.java
 
 	// @formatter:on
 
 	private enum Methods {
-		getSystemService, startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded
+		getSystemService, startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded, startNextMatchingActivity
 	};
 
 	@SuppressLint("InlinedApi")
