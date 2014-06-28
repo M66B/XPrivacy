@@ -47,6 +47,7 @@ public class XActivity extends XHook {
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode, Bundle options)
 	// public boolean startNextMatchingActivity(Intent intent)
 	// public boolean startNextMatchingActivity(Intent intent, Bundle options)
+	// TODO: double check startIntentSender ...
 	// frameworks/base/core/java/android/app/Activity.java
 
 	// @formatter:on
