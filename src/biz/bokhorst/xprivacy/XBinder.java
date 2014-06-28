@@ -137,6 +137,7 @@ public class XBinder extends XHook {
 			"android.view.WindowManagerGlobal",
 			"android.view.ViewRootImpl",
 			"android.view.View",
+			"android.view.ViewConfiguration",
 			"android.view.Display",
 		},
 		new String[] { // IWifiManager
