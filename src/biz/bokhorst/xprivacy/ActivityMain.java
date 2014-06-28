@@ -620,6 +620,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		alertDialog.show();
 	}
 
+	@SuppressLint("InflateParams")
 	private void optionTemplate() {
 		// Build view
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -834,6 +835,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			mAppAdapter.selectAllVisible();
 	}
 
+	@SuppressLint("InflateParams")
 	private void optionSort() {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.sort, null);
@@ -902,6 +904,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		alertDialog.show();
 	}
 
+	@SuppressLint("InflateParams")
 	private void optionFilter() {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.filters, null);
@@ -1164,7 +1167,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.templateentry, null);
+				convertView = mInflater.inflate(R.layout.templateentry, parent);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			} else
@@ -1262,7 +1265,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.templateentry, null);
+				convertView = mInflater.inflate(R.layout.templateentry, parent);
 				holder = new ViewHolder(convertView);
 				convertView.setTag(holder);
 			} else
@@ -1963,7 +1966,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.mainentry, null);
+				convertView = mInflater.inflate(R.layout.mainentry, parent);
 				holder = new ViewHolder(convertView, position);
 				convertView.setTag(holder);
 			} else {
