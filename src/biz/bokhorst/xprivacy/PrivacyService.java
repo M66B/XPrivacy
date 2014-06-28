@@ -1389,21 +1389,32 @@ public class PrivacyService {
 						Util.log(null, Log.WARN, "On demanding " + restriction);
 
 						// Check if not asked before
-						CRestriction key = new CRestriction(restriction, restriction.extra);
+						CRestriction mkey = new CRestriction(restriction, restriction.extra);
 						synchronized (mRestrictionCache) {
-							if (mRestrictionCache.containsKey(key))
-								if (mRestrictionCache.get(key).asked) {
+							if (mRestrictionCache.containsKey(mkey))
+								if (mRestrictionCache.get(mkey).asked) {
 									Util.log(null, Log.WARN, "Already asked " + restriction);
-									result.restricted = mRestrictionCache.get(key).restricted;
+									result.restricted = mRestrictionCache.get(mkey).restricted;
 									result.asked = true;
 									return false;
 								}
 						}
 
 						synchronized (mAskedOnceCache) {
-							if (mAskedOnceCache.containsKey(key) && !mAskedOnceCache.get(key).isExpired()) {
+							if (mAskedOnceCache.containsKey(mkey) && !mAskedOnceCache.get(mkey).isExpired()) {
 								Util.log(null, Log.WARN, "Already asked once " + restriction);
-								result.restricted = mAskedOnceCache.get(key).restricted;
+								result.restricted = mAskedOnceCache.get(mkey).restricted;
+								result.asked = true;
+								return false;
+							}
+						}
+
+						CRestriction ckey = new CRestriction(restriction, null);
+						ckey.setMethodName(null);
+						synchronized (mAskedOnceCache) {
+							if (mAskedOnceCache.containsKey(ckey) && !mAskedOnceCache.get(ckey).isExpired()) {
+								Util.log(null, Log.WARN, "Already asked once category " + restriction);
+								result.restricted = mAskedOnceCache.get(ckey).restricted;
 								result.asked = true;
 								return false;
 							}
@@ -1748,23 +1759,14 @@ public class PrivacyService {
 			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 
 			CRestriction key = new CRestriction(result, restriction.extra);
+			if (category) {
+				key.setMethodName(null);
+				key.setExtra(null);
+			}
 			synchronized (mAskedOnceCache) {
 				if (mAskedOnceCache.containsKey(key))
 					mAskedOnceCache.remove(key);
 				mAskedOnceCache.put(key, key);
-			}
-
-			if (category) {
-				for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
-					if (!restriction.methodName.equals(hook.getName())) {
-						CRestriction mkey = new CRestriction(result, null);
-						mkey.setMethodName(hook.getName());
-						synchronized (mAskedOnceCache) {
-							if (mAskedOnceCache.containsKey(mkey))
-								mAskedOnceCache.remove(mkey);
-							mAskedOnceCache.put(mkey, mkey);
-						}
-					}
 			}
 		}
 
