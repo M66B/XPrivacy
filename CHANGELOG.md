@@ -26,7 +26,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 2.1.13 BETA**
+**Version 2.1.14 BETA**
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
@@ -42,7 +42,7 @@ echo "ipc" >disabled
 echo "system.getInstalledProviders" >>disabled
 ```
 
-**Version 2.1.14 BETA**
+**Version 2.1.12 BETA**
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
