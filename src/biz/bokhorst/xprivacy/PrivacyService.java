@@ -1548,6 +1548,7 @@ public class PrivacyService {
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
 			final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
 			final CheckBox cbWhitelistExtra2 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra2);
+			final CheckBox cbWhitelistExtra3 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra3);
 			Button btnDeny = (Button) view.findViewById(R.id.btnDeny);
 			Button btnDontKnow = (Button) view.findViewById(R.id.btnDontKnow);
 			Button btnAllow = (Button) view.findViewById(R.id.btnAllow);
@@ -1590,6 +1591,10 @@ public class PrivacyService {
 					cbWhitelistExtra2.setText(resources.getString(R.string.title_whitelist, xextra[1]));
 					cbWhitelistExtra2.setVisibility(View.VISIBLE);
 				}
+				if (xextra.length > 2) {
+					cbWhitelistExtra3.setText(resources.getString(R.string.title_whitelist, xextra[2]));
+					cbWhitelistExtra3.setVisibility(View.VISIBLE);
+				}
 			}
 
 			// Category, once and whitelist exclude each other
@@ -1600,6 +1605,7 @@ public class PrivacyService {
 						cbWhitelist.setChecked(false);
 						cbWhitelistExtra1.setChecked(false);
 						cbWhitelistExtra2.setChecked(false);
+						cbWhitelistExtra3.setChecked(false);
 					}
 				}
 			});
@@ -1610,6 +1616,7 @@ public class PrivacyService {
 						cbWhitelist.setChecked(false);
 						cbWhitelistExtra1.setChecked(false);
 						cbWhitelistExtra2.setChecked(false);
+						cbWhitelistExtra3.setChecked(false);
 					}
 				}
 			});
@@ -1621,6 +1628,7 @@ public class PrivacyService {
 						cbOnce.setChecked(false);
 						cbWhitelistExtra1.setChecked(false);
 						cbWhitelistExtra2.setChecked(false);
+						cbWhitelistExtra3.setChecked(false);
 					}
 				}
 			});
@@ -1632,6 +1640,7 @@ public class PrivacyService {
 						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
 						cbWhitelistExtra2.setChecked(false);
+						cbWhitelistExtra3.setChecked(false);
 					}
 				}
 			});
@@ -1643,6 +1652,19 @@ public class PrivacyService {
 						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
 						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra3.setChecked(false);
+					}
+				}
+			});
+			cbWhitelistExtra3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked) {
+						cbCategory.setChecked(false);
+						cbOnce.setChecked(false);
+						cbWhitelist.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
 					}
 				}
 			});
@@ -1652,7 +1674,8 @@ public class PrivacyService {
 				public void onClick(View v) {
 					// Allow
 					result.restricted = false;
-					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()) {
+					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()
+							&& !cbWhitelistExtra3.isChecked()) {
 						mSelectCategory = cbCategory.isChecked();
 						mSelectOnce = cbOnce.isChecked();
 					}
@@ -1662,6 +1685,8 @@ public class PrivacyService {
 						onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
 					else if (cbWhitelistExtra2.isChecked())
 						onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
+					else if (cbWhitelistExtra3.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[2], result, hook);
 					else if (cbOnce.isChecked())
 						onDemandOnce(restriction, cbCategory.isChecked(), result);
 					else
@@ -1685,7 +1710,8 @@ public class PrivacyService {
 				public void onClick(View view) {
 					// Deny
 					result.restricted = true;
-					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()) {
+					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()
+							&& !cbWhitelistExtra3.isChecked()) {
 						mSelectCategory = cbCategory.isChecked();
 						mSelectOnce = cbOnce.isChecked();
 					}
@@ -1695,6 +1721,8 @@ public class PrivacyService {
 						onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
 					else if (cbWhitelistExtra2.isChecked())
 						onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
+					else if (cbWhitelistExtra3.isChecked())
+						onDemandWhitelist(restriction, getXExtra(restriction, hook)[2], result, hook);
 					else if (cbOnce.isChecked())
 						onDemandOnce(restriction, cbCategory.isChecked(), result);
 					else

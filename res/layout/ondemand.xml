@@ -188,6 +188,14 @@
                 android:visibility="gone" >
             </CheckBox>
 
+            <CheckBox
+                android:id="@+id/cbWhitelistExtra3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone" >
+            </CheckBox>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
