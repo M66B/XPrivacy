@@ -188,6 +188,8 @@ public class Meta {
 		mListHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE", "CAMERA", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE_SECURE", "CAMERA", 17, null, null).doNotify());
 		mListHook.add(new Hook("media", "android.media.action.VIDEO_CAPTURE", "CAMERA", 3, null, null).doNotify());
+		mListHook.add(new Hook("media", "android.hardware.action.NEW_PICTURE", "CAMERA", 14, null, null).doNotify());
+		mListHook.add(new Hook("media", "android.hardware.action.NEW_VIDEO", "CAMERA", 14, null, null).doNotify());
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
 		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 1, null, null));

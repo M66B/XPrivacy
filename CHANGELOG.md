@@ -24,6 +24,8 @@ Changelog
 
 **Next release**
 
+* Added restrictions for NEW_PICTURE and ACTION_NEW_VIDEO broadcasts
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.14 BETA**
