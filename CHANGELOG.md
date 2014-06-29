@@ -28,7 +28,7 @@ Changelog
 	* Thanks for sending all the support info!
 * Removed restrictions for NEW_PICTURE and ACTION_NEW_VIDEO broadcasts (not needed)
 * Added restriction for *LinkAddress.toString* (Android "L") ([issue](/../../issues/1757))
-* Added restrictions for [open...](file:///home/marcel/Documents/adt/sdk/docs/reference/android/content/ContentResolver.html)
+* Added restrictions for [ContentResolver.open...](http://developer.android.com/reference/android/content/ContentResolver.html)
 * Added restriction for *InputDevice.getName*
 * Added restriction for *addGpsStatusListener*, *getAllProviders* and *getBestProvider*
 * Added parameter provider name to *isProviderEnabled*, *getLastKnownLocation*, *requestLocationUpdates*, *requestSingleUpdate*, and *sendExtraCommand*
