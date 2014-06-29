@@ -41,6 +41,7 @@ Changelog
 * Added parameter destination address to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
 * Added parameter key to *%imei*, *%hostname*, *%serialno*, *%macaddr* and *%cid*
 * Added restriction for *USB.getSerialNumber* (Android "L") ([issue](/../../issues/1757))
+* Added parameter to *getUserAgentString*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
