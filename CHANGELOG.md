@@ -35,6 +35,7 @@ Changelog
 * Added parameter host name to *getAllByName*, *getByAddress* and *getByName*
 * Added parameter path to *MediaRecorder.setOutputFile*
 * Added restriction for *getPackagesForUid*
+* Added process name parameter to *queryContentProviders*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

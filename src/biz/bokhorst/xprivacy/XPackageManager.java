@@ -105,8 +105,9 @@ public class XPackageManager extends XHook {
 				param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
 
 		} else if (mMethod == Methods.queryContentProviders) {
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+			if (param.args.length > 0 && param.args[0] instanceof String)
+				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0]))
+					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
