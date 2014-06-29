@@ -268,6 +268,7 @@ public class XBinder extends XHook {
 		new String[] { // BluetoothManager
 		},
 		new String[] { // InputManager
+			"android.view.PointerIcon", // Samsung
 		},
 		new String[] { // SensorManager
 		},
