@@ -31,8 +31,9 @@ Changelog
 * Added restrictions for [open...](file:///home/marcel/Documents/adt/sdk/docs/reference/android/content/ContentResolver.html)
 * Added restriction for *InputDevice.getName*
 * Added restriction for *addGpsStatusListener*, *getAllProviders* and *getBestProvider*
-* Added provider name to *isProviderEnabled*, *getLastKnownLocation*, *requestLocationUpdates*, *requestSingleUpdate*, and *sendExtraCommand*
-* Added host name to *getAllByName*, *getByAddress* and *getByName*
+* Added parameter provider name to *isProviderEnabled*, *getLastKnownLocation*, *requestLocationUpdates*, *requestSingleUpdate*, and *sendExtraCommand*
+* Added parameter host name to *getAllByName*, *getByAddress* and *getByName*
+* Added parameter path to *MediaRecorder.setOutputFile*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
