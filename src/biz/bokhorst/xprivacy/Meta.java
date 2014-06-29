@@ -297,6 +297,7 @@ public class Meta {
 
 		mListHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "getPackagesForUid", "", 1, "2.1.17", null).dangerous());
 		mListHook.add(new Hook("system", "getPackagesHoldingPermissions", "", 18, "1.99.1", null).dangerous());
 		mListHook.add(new Hook("system", "getPreferredActivities", "", 1, "1.99.44", null).dangerous());
 		mListHook.add(new Hook("system", "getPreferredPackages", "", 1, null, null).dangerous());

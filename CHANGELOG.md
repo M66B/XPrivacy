@@ -34,6 +34,7 @@ Changelog
 * Added parameter provider name to *isProviderEnabled*, *getLastKnownLocation*, *requestLocationUpdates*, *requestSingleUpdate*, and *sendExtraCommand*
 * Added parameter host name to *getAllByName*, *getByAddress* and *getByName*
 * Added parameter path to *MediaRecorder.setOutputFile*
+* Added restriction for *getPackagesForUid*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

@@ -31,6 +31,7 @@ public class XPackageManager extends XHook {
 
 	// public List<ApplicationInfo> getInstalledApplications(int flags)
 	// public List<PackageInfo> getInstalledPackages(int flags)
+	// public String[] getPackagesForUid(int uid)
 	// public List<PackageInfo> getPackagesHoldingPermissions(String[] permissions, int flags)
 	// abstract int getPreferredActivities(List<IntentFilter> outFilters, List<ComponentName> outActivities, String packageName)
 	// public List<PackageInfo> getPreferredPackages(int flags)
@@ -41,12 +42,14 @@ public class XPackageManager extends XHook {
 	// public List<ResolveInfo> queryIntentContentProviders(Intent intent, int flags)
 	// public List<ResolveInfo> queryIntentServices(Intent intent, int flags)
 	// frameworks/base/core/java/android/app/ApplicationPackageManager.java
+	// http://developer.android.com/reference/android/content/pm/PackageManager.html
 	
 	// @formatter:on
 
 	// @formatter:off
 	private enum Methods {
 		getInstalledApplications, getInstalledPackages,
+		getPackagesForUid,
 		getPackagesHoldingPermissions,
 		getPreferredActivities, getPreferredPackages,
 		queryBroadcastReceivers, queryContentProviders,
@@ -78,6 +81,10 @@ public class XPackageManager extends XHook {
 		if (mMethod == Methods.getInstalledApplications) {
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
+
+		} else if (mMethod == Methods.getPackagesForUid) {
+			if (isRestricted(param))
+				param.setResult(null);
 
 		} else if (mMethod == Methods.getPreferredActivities) {
 			if (param.args.length > 1 && isRestricted(param)) {
