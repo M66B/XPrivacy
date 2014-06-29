@@ -121,7 +121,7 @@ public class XBinder extends XHook {
 			"android.telephony.TelephonyManager",
 		},
 		new String[] { // ITelephonyRegistryMSim
-			"android.telephony.TelephonyManager",
+			"android.telephony.MSimTelephonyManager",
 		},
 		new String[] { // IPackageManager
 			"android.app.ApplicationPackageManager",
