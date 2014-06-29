@@ -30,7 +30,7 @@ Changelog
 * Added restriction for *LinkAddress.toString* (Android "L") ([issue](/../../issues/1757))
 * Added restrictions for [open...](file:///home/marcel/Documents/adt/sdk/docs/reference/android/content/ContentResolver.html)
 * Added restriction for *InputDevice.getName*
-* Added restriction for *addGpsStatusListener*
+* Added restriction for *addGpsStatusListener*, *getAllProviders* and *getBestProvider*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

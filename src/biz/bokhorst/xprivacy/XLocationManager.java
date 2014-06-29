@@ -42,6 +42,8 @@ public class XLocationManager extends XHook {
 	// public boolean addGpsStatusListener(GpsStatus.Listener listener)
 	// public boolean addNmeaListener(GpsStatus.NmeaListener listener)
 	// public void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
+	// public List<String> getAllProviders()
+	// public String getBestProvider(Criteria criteria, boolean enabledOnly)
 	// public GpsStatus getGpsStatus(GpsStatus status)
 	// public Location getLastKnownLocation(String provider)
 	// public List<String> getProviders(boolean enabledOnly)
@@ -67,6 +69,7 @@ public class XLocationManager extends XHook {
 	// @formatter:off
 	private enum Methods {
 		addGeofence, addGpsStatusListener, addNmeaListener, addProximityAlert,
+		getAllProviders, getBestProvider,
 		getGpsStatus,
 		getLastKnownLocation,
 		getProviders, isProviderEnabled,
@@ -135,6 +138,15 @@ public class XLocationManager extends XHook {
 						Util.bug(null, ex);
 					}
 				}
+
+			} else if (mMethod == Methods.getAllProviders) {
+				if (isRestricted(param))
+					param.setResult(new ArrayList<String>());
+
+			} else if (mMethod == Methods.getBestProvider) {
+				if (param.getResult() != null && isRestricted(param))
+					param.setResult(null);
+
 			} else if (mMethod == Methods.getLastKnownLocation) {
 				Location location = (Location) param.getResult();
 				if (location != null && isRestricted(param))
