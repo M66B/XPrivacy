@@ -125,6 +125,7 @@ public class XBinder extends XHook {
 		},
 		new String[] { // IPackageManager
 			"android.app.ApplicationPackageManager",
+			"com.zte.security.ZTEIPackageManager", // ZTE
 		},
 		new String[] { // IPhoneSubInfo
 			"android.telephony.TelephonyManager",
