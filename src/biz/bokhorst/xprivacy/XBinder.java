@@ -212,6 +212,7 @@ public class XBinder extends XHook {
 			"android.os.StrictMode",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.os.RuntimeInit",
+			"com.android.internal.policy.impl.PhoneWindowManager",
 		},
 		new String[] { // ClipboardManager
 		},
