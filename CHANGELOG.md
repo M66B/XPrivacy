@@ -42,7 +42,7 @@ Changelog
 * Added parameter key to *%imei*, *%hostname*, *%serialno*, *%macaddr* and *%cid*
 * Added restriction for *USB.getSerialNumber* (Android "L") ([issue](/../../issues/1757))
 * Added parameter user agent to *getUserAgentString*
-* Added paramater device name to *USB.getDeviceId*
+* Added parameter device name to *USB.getDeviceId*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
