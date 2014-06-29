@@ -118,6 +118,7 @@ public class Meta {
 		mListHook.add(new Hook("internet", "inet_bw", "READ_NETWORK_USAGE_HISTORY,MODIFY_NETWORK_ACCOUNTING", 1, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "inet_vpn", "NET_TUNNELING", 1, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "inet_mesh", "LOOP_RADIO", 1, "2.1.1", null).dangerous().restart().noUsageData());
+
 		mListHook.add(new Hook("internet", "getActiveNetworkInfo", null, 1, null, null).dangerous());
 		mListHook.add(new Hook("internet", "getAllNetworkInfo", null, 1, null, null));
 		mListHook.add(new Hook("internet", "getNetworkInfo", null, 1, null, null).dangerous());
@@ -131,6 +132,8 @@ public class Meta {
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cTypeIPAddress));
+
+		mListHook.add(new Hook("internet", "LinkAddress.toString", null, 20, "2.1.17", null));
 
 		mListHook.add(new Hook("ipc", "IAccountManager", "", 1, "2.1.7", null).dangerous());
 		mListHook.add(new Hook("ipc", "IActivityManager", "", 1, "2.1.7", null).dangerous());

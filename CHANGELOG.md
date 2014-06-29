@@ -27,6 +27,7 @@ Changelog
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
 * Removed restrictions for NEW_PICTURE and ACTION_NEW_VIDEO broadcasts (not needed)
+* Added restriction for *LinkAddress.toString* (Android "L") ([issue](/../../issues/1757))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
