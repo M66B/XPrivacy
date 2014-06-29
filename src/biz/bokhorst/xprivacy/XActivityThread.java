@@ -8,7 +8,6 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.hardware.Camera;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Bundle;
@@ -58,10 +57,6 @@ public class XActivityThread extends XHook {
 
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cCalling,
 				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE));
-
-		// Intent receive: camera
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMedia, Camera.ACTION_NEW_PICTURE));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMedia, Camera.ACTION_NEW_VIDEO));
 
 		// Intent receive: C2DM
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,

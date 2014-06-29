@@ -26,6 +26,7 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
+* Removed restrictions for NEW_PICTURE and ACTION_NEW_VIDEO broadcasts (not needed)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
