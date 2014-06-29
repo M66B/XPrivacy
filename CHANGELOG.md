@@ -39,6 +39,7 @@ Changelog
 * Added restriction for heart rate sensor (Android "L") ([issue](/../../issues/1757))
 * Added restriction *SIP.isSipWifiOnly*
 * Added parameter destination address to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
+* Added parameter key to *%imei*, *%hostname*, *%serialno*, *%macaddr* and *%cid*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

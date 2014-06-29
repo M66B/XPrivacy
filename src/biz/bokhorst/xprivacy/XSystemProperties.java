@@ -52,11 +52,11 @@ public class XSystemProperties extends XHook {
 		if (key != null)
 			if (mPropertyName.startsWith("%") ? key.contains(mPropertyName.substring(1)) : key.equals(mPropertyName))
 				if (mMethod == Methods.get) {
-					if (param.getResult() != null && isRestricted(param, mPropertyName))
+					if (param.getResult() != null && isRestrictedExtra(param, mPropertyName, key))
 						param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mPropertyName));
 
 				} else if (param.args.length > 1) {
-					if (isRestricted(param, mPropertyName))
+					if (isRestrictedExtra(param, mPropertyName, key))
 						param.setResult(param.args[1]);
 
 				} else
