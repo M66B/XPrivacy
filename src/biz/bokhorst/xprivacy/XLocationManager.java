@@ -39,6 +39,7 @@ public class XLocationManager extends XHook {
 	// @formatter:off
 
 	// public void addGeofence(LocationRequest request, Geofence fence, PendingIntent intent)
+	// public boolean addGpsStatusListener(GpsStatus.Listener listener)
 	// public boolean addNmeaListener(GpsStatus.NmeaListener listener)
 	// public void addProximityAlert(double latitude, double longitude, float radius, long expiration, PendingIntent intent)
 	// public GpsStatus getGpsStatus(GpsStatus status)
@@ -65,7 +66,7 @@ public class XLocationManager extends XHook {
 
 	// @formatter:off
 	private enum Methods {
-		addGeofence, addNmeaListener, addProximityAlert,
+		addGeofence, addGpsStatusListener, addNmeaListener, addProximityAlert,
 		getGpsStatus,
 		getLastKnownLocation,
 		getProviders, isProviderEnabled,
@@ -92,7 +93,7 @@ public class XLocationManager extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.addNmeaListener) {
+		if (mMethod == Methods.addNmeaListener || mMethod == Methods.addGpsStatusListener) {
 			if (isRestricted(param))
 				param.setResult(false);
 
