@@ -41,8 +41,13 @@ public class XUsbDevice extends XHook {
 	@Override
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.getDeviceId) {
-			if (isRestricted(param))
-				param.setResult(0);
+			if (param.args.length > 0 && param.args[0] instanceof String) {
+				if (isRestrictedExtra(param, (String) param.args[0]))
+					param.setResult(0);
+			} else {
+				if (isRestricted(param))
+					param.setResult(0);
+			}
 
 		} else if (mMethod == Methods.getDeviceName) {
 			if (isRestricted(param))
