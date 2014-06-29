@@ -26,8 +26,7 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
-* Removed restrictions for NEW_PICTURE and ACTION_NEW_VIDEO broadcasts (not needed)
-* Added restriction for *LinkAddress.toString* (Android "L") ([issue](/../../issues/1757))
+* Removed restrictions for *NEW_PICTURE* and *ACTION_NEW_VIDEO* broadcasts (not needed, replaced by *ContentResolver.open...*)
 * Added restrictions for [ContentResolver.open...](http://developer.android.com/reference/android/content/ContentResolver.html)
 * Added restriction for *InputDevice.getName*
 * Added restriction for *addGpsStatusListener*, *getAllProviders* and *getBestProvider*
@@ -36,15 +35,17 @@ Changelog
 * Added parameter path to *MediaRecorder.setOutputFile*
 * Added restriction for *getPackagesForUid*
 * Added process name parameter to *queryContentProviders*
-* Added restriction for heart rate sensor (Android "L") ([issue](/../../issues/1757))
 * Added restriction *SIP.isSipWifiOnly*
-* Added parameter destination address, including white list, to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
+* Added parameter destination address to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
+* Added whitelist to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
 * Added parameter key to *%imei*, *%hostname*, *%serialno*, *%macaddr* and *%cid*
-* Added restriction for *USB.getSerialNumber* (Android "L") ([issue](/../../issues/1757))
 * Added parameter user agent to *getUserAgentString*
 * Added parameter device name to *USB.getDeviceId*
 * Added white list to *getAllByName*, *getByAddress* and *getByName*
-* Added restriction for camera2 device (Android "L") ([issue](/../../issues/1757))
+* Added restriction for *LinkAddress.toString* (Android "L") ([issue](/../../issues/1757))
+* Added restriction for heart rate sensor (Android "L") ([issue](/../../issues/1757))
+* Added restriction for *USB.getSerialNumber* (Android "L") ([issue](/../../issues/1757))
+* Added restriction for new camera device (Android "L") ([issue](/../../issues/1757))
 * Updated Dutch translation
 * Updated Italian translation
 
