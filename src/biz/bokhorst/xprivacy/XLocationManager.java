@@ -123,8 +123,11 @@ public class XLocationManager extends XHook {
 				&& mMethod != Methods.addProximityAlert && mMethod != Methods.removeUpdates
 				&& mMethod != Methods.requestLocationUpdates && mMethod != Methods.requestSingleUpdate)
 			if (mMethod == Methods.isProviderEnabled) {
-				if (isRestricted(param))
-					param.setResult(false);
+				if (param.args.length > 0) {
+					String provider = (String) param.args[0];
+					if (isRestrictedExtra(param, provider))
+						param.setResult(false);
+				}
 
 			} else if (mMethod == Methods.getGpsStatus) {
 				if (param.getResult() != null && isRestricted(param)) {
@@ -148,9 +151,12 @@ public class XLocationManager extends XHook {
 					param.setResult(null);
 
 			} else if (mMethod == Methods.getLastKnownLocation) {
-				Location location = (Location) param.getResult();
-				if (location != null && isRestricted(param))
-					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+				if (param.args.length > 0) {
+					String provider = (String) param.args[0];
+					Location location = (Location) param.getResult();
+					if (location != null && isRestrictedExtra(param, provider))
+						param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+				}
 
 			} else if (mMethod == Methods.getProviders) {
 				if (param.getResult() != null && isRestricted(param))

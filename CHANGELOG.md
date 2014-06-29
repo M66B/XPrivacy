@@ -31,6 +31,7 @@ Changelog
 * Added restrictions for [open...](file:///home/marcel/Documents/adt/sdk/docs/reference/android/content/ContentResolver.html)
 * Added restriction for *InputDevice.getName*
 * Added restriction for *addGpsStatusListener*, *getAllProviders* and *getBestProvider*
+* Added provider name to *isProviderEnabled* and *getLastKnownLocation*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
