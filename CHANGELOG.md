@@ -24,6 +24,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.17 TEST**
+
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
 * Removed restrictions for *NEW_PICTURE* and *ACTION_NEW_VIDEO* broadcasts
@@ -49,8 +53,6 @@ Changelog
 * Added restriction for new camera device (Android "L") ([issue](/../../issues/1757))
 * Updated Dutch translation
 * Updated Italian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.16 BETA**
 
