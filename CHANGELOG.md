@@ -26,6 +26,7 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
+* One second delay before enabling on demand dialog buttons
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

@@ -1494,6 +1494,16 @@ public class PrivacyService {
 										}
 									};
 									mHandler.postDelayed(rProgress, 50);
+
+									mHandler.postDelayed(new Runnable() {
+										@Override
+										public void run() {
+											holder.dialog.findViewById(R.id.btnAllow).setEnabled(true);
+											holder.dialog.findViewById(R.id.btnDontKnow).setEnabled(true);
+											holder.dialog.findViewById(R.id.btnDeny).setEnabled(true);
+										}
+									}, 1000);
+
 								} catch (NameNotFoundException ex) {
 									latch.countDown();
 								} catch (Throwable ex) {
