@@ -32,6 +32,7 @@ Changelog
 * Added restriction for *InputDevice.getName*
 * Added restriction for *addGpsStatusListener*, *getAllProviders* and *getBestProvider*
 * Added provider name to *isProviderEnabled* and *getLastKnownLocation*
+* Added host name to *getAllByName*, *getByAddress* and *getByName*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

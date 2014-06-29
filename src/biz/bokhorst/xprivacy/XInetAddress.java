@@ -63,8 +63,15 @@ public class XInetAddress extends XHook {
 				}
 
 			// Restrict
-			if (restrict && isRestricted(param))
-				param.setThrowable(new UnknownHostException("XPrivacy"));
+			if (restrict)
+				if (param.args.length > 0 && param.args[0] instanceof String) {
+					if (isRestrictedExtra(param, (String) param.args[0]))
+						param.setThrowable(new UnknownHostException("XPrivacy"));
+
+				} else {
+					if (isRestricted(param))
+						param.setThrowable(new UnknownHostException("XPrivacy"));
+				}
 		}
 	}
 }
