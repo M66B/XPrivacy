@@ -82,6 +82,7 @@ public class XField extends XHook {
 		"java.net.InetAddress",
 		"android.view.InputDevice",
 		// "libcore.io.IoBridge",
+		"android.net.LinkAddress",
 		"com.google.android.gms.location.LocationClient",
 		"android.location.LocationManager",
 		"android.media.MediaRecorder",
