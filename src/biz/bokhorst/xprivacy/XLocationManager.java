@@ -108,12 +108,22 @@ public class XLocationManager extends XHook {
 			removeLocationListener(param);
 
 		} else if (mMethod == Methods.requestLocationUpdates) {
-			if (isRestricted(param))
-				replaceLocationListener(param, 3);
+			if (param.args.length > 0 && param.args[0] instanceof String) {
+				if (isRestrictedExtra(param, (String) param.args[0]))
+					replaceLocationListener(param, 3);
+			} else {
+				if (isRestricted(param))
+					replaceLocationListener(param, 3);
+			}
 
 		} else if (mMethod == Methods.requestSingleUpdate) {
-			if (isRestricted(param))
-				replaceLocationListener(param, 1);
+			if (param.args.length > 0 && param.args[0] instanceof String) {
+				if (isRestrictedExtra(param, (String) param.args[0]))
+					replaceLocationListener(param, 1);
+			} else {
+				if (isRestricted(param))
+					replaceLocationListener(param, 1);
+			}
 		}
 	}
 
@@ -163,8 +173,11 @@ public class XLocationManager extends XHook {
 					param.setResult(new ArrayList<String>());
 
 			} else if (mMethod == Methods.sendExtraCommand) {
-				if (isRestricted(param))
-					param.setResult(false);
+				if (param.args.length > 0) {
+					String provider = (String) param.args[0];
+					if (isRestrictedExtra(param, provider))
+						param.setResult(false);
+				}
 
 			} else
 				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
