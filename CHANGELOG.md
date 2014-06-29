@@ -26,7 +26,8 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
-* Removed restrictions for *NEW_PICTURE* and *ACTION_NEW_VIDEO* broadcasts (not needed, replaced by *ContentResolver.open...*)
+* Removed restrictions for *NEW_PICTURE* and *ACTION_NEW_VIDEO* broadcasts
+	* Has been replaced by:
 * Added restrictions for [ContentResolver.open...](http://developer.android.com/reference/android/content/ContentResolver.html)
 * Added restriction for *InputDevice.getName*
 * Added restriction for *addGpsStatusListener*, *getAllProviders* and *getBestProvider*
