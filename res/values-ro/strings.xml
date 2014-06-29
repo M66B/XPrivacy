@@ -100,6 +100,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_shell">Interfata (Shell) (comenzi, superuser)</string>
     <string name="restrict_system">Sistem (aplicatii instalate)</string>
     <string name="restrict_view">Acces browser</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

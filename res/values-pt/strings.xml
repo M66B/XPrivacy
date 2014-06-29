@@ -100,6 +100,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_shell">Shell (linha de comandos, superuser)</string>
     <string name="restrict_system">Sistema (aplicações instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

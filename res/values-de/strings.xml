@@ -100,6 +100,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP Adressen</string>
     <string name="whitelist_library">Native Bibliotheken</string>
     <string name="whitelist_method">Methodennamen</string>

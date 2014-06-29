@@ -100,6 +100,7 @@
     <string name="restrict_shell">سطر الأوامر (الأوامر,المستخدم الجذر)</string>
     <string name="restrict_system">النظام (البرامج المنزلة)</string>
     <string name="restrict_view">تصفح (المتصفح)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">عناوين الآيبي</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

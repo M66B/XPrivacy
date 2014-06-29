@@ -15,6 +15,7 @@ public class Meta {
 	public final static String cTypeContact = "Contact";
 	public final static String cTypeTemplate = "Template";
 
+	public final static String cTypeAddress = "Address";
 	public final static String cTypeCommand = "Command";
 	public final static String cTypeFilename = "Filename";
 	public final static String cTypeIPAddress = "IPAddress";
@@ -24,9 +25,9 @@ public class Meta {
 	public final static String cTypeUrl = "Url";
 
 	public static boolean isWhitelist(String type) {
-		return (cTypeCommand.equals(type) || cTypeFilename.equals(type) || cTypeIPAddress.equals(type)
-				|| cTypeLibrary.equals(type) || cTypeMethod.equals(type) || cTypeProc.equals(type) || cTypeUrl
-					.equals(type));
+		return (cTypeAddress.equals(type) || cTypeCommand.equals(type) || cTypeFilename.equals(type)
+				|| cTypeIPAddress.equals(type) || cTypeLibrary.equals(type) || cTypeMethod.equals(type)
+				|| cTypeProc.equals(type) || cTypeUrl.equals(type));
 	}
 
 	public static List<Hook> get() {
@@ -58,9 +59,9 @@ public class Meta {
 
 		mListHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR,WRITE_CALENDAR", 1, null, null));
 
-		mListHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null).doNotify());
-		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).doNotify());
-		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).doNotify());
+		mListHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "android.intent.action.RESPOND_VIA_MESSAGE", "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
 		mListHook.add(new Hook("calling", "android.intent.action.CALL", "CALL_PHONE", 10, null, null).doNotify());
 

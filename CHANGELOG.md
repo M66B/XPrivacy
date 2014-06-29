@@ -38,13 +38,14 @@ Changelog
 * Added process name parameter to *queryContentProviders*
 * Added restriction for heart rate sensor (Android "L") ([issue](/../../issues/1757))
 * Added restriction *SIP.isSipWifiOnly*
-* Added parameter destination address to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
+* Added parameter destination address, including white list, to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
 * Added parameter key to *%imei*, *%hostname*, *%serialno*, *%macaddr* and *%cid*
 * Added restriction for *USB.getSerialNumber* (Android "L") ([issue](/../../issues/1757))
 * Added parameter user agent to *getUserAgentString*
 * Added parameter device name to *USB.getDeviceId*
 * Added white list to *getAllByName*, *getByAddress* and *getByName*
 * Added restriction for camera2 device (Android "L") ([issue](/../../issues/1757))
+* Updated Dutch translation
 * Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

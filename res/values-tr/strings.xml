@@ -99,6 +99,7 @@
     <string name="restrict_shell">Kabuk (komutlar, superuser)</string>
     <string name="restrict_system">Sistem (yüklü uygulamalar)</string>
     <string name="restrict_view">Göster (tarayıcı)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

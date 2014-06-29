@@ -100,6 +100,7 @@
     <string name="restrict_shell">Shell (orduithe, fhorúsáideoir)</string>
     <string name="restrict_system">Córas (suiteáilte apps)</string>
     <string name="restrict_view">Amharc (bhrabhsálaí)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

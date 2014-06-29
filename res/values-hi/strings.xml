@@ -100,6 +100,7 @@
     <string name="restrict_shell">Shell (आदेश, superuser)</string>
     <string name="restrict_system">सिस्टम (इन्सटाल्ड apps)</string>
     <string name="restrict_view">View (ब्राउज़र)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

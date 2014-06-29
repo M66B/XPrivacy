@@ -100,6 +100,7 @@
     <string name="restrict_shell">Lupina (ukazi, superuser)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
     <string name="restrict_view">Pogled (brskalnik)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP naslovi</string>
     <string name="whitelist_library">Nativne knjižice</string>
     <string name="whitelist_method">Method names</string>

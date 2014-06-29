@@ -100,6 +100,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">מערכת (יישומים מותקנים)</string>
     <string name="restrict_view">גישה (דפדפן)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

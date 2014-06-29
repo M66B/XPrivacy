@@ -100,6 +100,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="restrict_shell">Terminal (comandos, superusuario)</string>
     <string name="restrict_system">Sistema (aplicaciones instaladas)</string>
     <string name="restrict_view">Ver (navegador)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

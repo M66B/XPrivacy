@@ -100,6 +100,7 @@
     <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
     <string name="restrict_system">系统（查看已安装的应用）</string>
     <string name="restrict_view">显示网页（内置浏览器）</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP 地址</string>
     <string name="whitelist_library">本地库文件</string>
     <string name="whitelist_method">Method names</string>

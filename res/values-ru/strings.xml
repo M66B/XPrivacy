@@ -100,6 +100,7 @@
     <string name="restrict_shell">Команды shell (вкл. суперпользователя)</string>
     <string name="restrict_system">Система (установленные приложения)</string>
     <string name="restrict_view">Просмотр (браузер)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP адреса</string>
     <string name="whitelist_library">Системные библиотеки</string>
     <string name="whitelist_method">Method names</string>

@@ -100,6 +100,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="restrict_shell">Konzole (příkazy, superuser)</string>
     <string name="restrict_system">Systém (nainstalované aplikace)</string>
     <string name="restrict_view">Zobrazení (v prohlížeči)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>

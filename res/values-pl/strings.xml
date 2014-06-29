@@ -100,6 +100,7 @@
     <string name="restrict_shell">Powłoka (polecenia, superuser)</string>
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">Adresy IP</string>
     <string name="whitelist_library">Biblioteki natywne</string>
     <string name="whitelist_method">Method names</string>

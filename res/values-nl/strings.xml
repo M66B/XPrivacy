@@ -100,6 +100,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_shell">Shell (opdrachten, superuser)</string>
     <string name="restrict_system">Systeem (geïnstalleerde apps)</string>
     <string name="restrict_view">Tonen (browser)</string>
+    <string name="whitelist_address">Adressen</string>
     <string name="whitelist_ipaddress">IP adressen</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Methode namen</string>

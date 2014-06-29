@@ -99,6 +99,7 @@
     <string name="restrict_shell">Shell (câu lệnh, superuser)</string>
     <string name="restrict_system">Hệ thống (các ứng dụng)</string>
     <string name="restrict_view">Mở trình duyệt</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">Các địa chỉ IP</string>
     <string name="whitelist_library">Các thư viện gốc của máy</string>
     <string name="whitelist_method">Method names</string>

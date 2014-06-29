@@ -98,6 +98,7 @@
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
     <string name="restrict_system">System (installerte apper)</string>
     <string name="restrict_view">Betrakte (nettleser)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP adresser</string>
     <string name="whitelist_library">Lokale biblioteker</string>
     <string name="whitelist_method">Method names</string>

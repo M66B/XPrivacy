@@ -100,6 +100,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">Adresy IP</string>
     <string name="whitelist_library">Natívne knižnice</string>
     <string name="whitelist_method">Názvy metód</string>

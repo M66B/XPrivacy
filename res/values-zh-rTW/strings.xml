@@ -100,6 +100,7 @@
     <string name="restrict_shell">Shell (指令, ROOT指令)</string>
     <string name="restrict_system">系統資訊 (程式, 服務, etc)</string>
     <string name="restrict_view">瀏覽器介面</string>
+    <string name="whitelist_address">Addresses</string>
     <string name="whitelist_ipaddress">IP 位址</string>
     <string name="whitelist_library">原生資料庫元件</string>
     <string name="whitelist_method">Method names</string>
