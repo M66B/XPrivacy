@@ -273,6 +273,7 @@ public class Meta {
 		mListHook.add(new Hook("sensors", "rotation", "", 3, null, null));
 		mListHook.add(new Hook("sensors", "temperature", "", 3, null, null));
 		mListHook.add(new Hook("sensors", "step", "", 3, null, null));
+		mListHook.add(new Hook("sensors", "heartrate", "", 20, null, null));
 
 		mListHook.add(new Hook("shell", "sh", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
 		mListHook.add(new Hook("shell", "su", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));

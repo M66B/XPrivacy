@@ -36,6 +36,7 @@ Changelog
 * Added parameter path to *MediaRecorder.setOutputFile*
 * Added restriction for *getPackagesForUid*
 * Added process name parameter to *queryContentProviders*
+* Added restriction for heart rate sensor (Android "L") ([issue](/../../issues/1757))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
