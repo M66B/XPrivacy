@@ -130,8 +130,9 @@ public class XLocationManager extends XHook {
 	@Override
 	protected void after(XParam param) throws Throwable {
 		if (mMethod != Methods.addGeofence && mMethod != Methods.addNmeaListener
-				&& mMethod != Methods.addProximityAlert && mMethod != Methods.removeUpdates
-				&& mMethod != Methods.requestLocationUpdates && mMethod != Methods.requestSingleUpdate)
+				&& mMethod != Methods.addGpsStatusListener && mMethod != Methods.addProximityAlert
+				&& mMethod != Methods.removeUpdates && mMethod != Methods.requestLocationUpdates
+				&& mMethod != Methods.requestSingleUpdate)
 			if (mMethod == Methods.isProviderEnabled) {
 				if (param.args.length > 0) {
 					String provider = (String) param.args[0];
