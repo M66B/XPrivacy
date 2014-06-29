@@ -44,6 +44,7 @@ Changelog
 * Added parameter user agent to *getUserAgentString*
 * Added parameter device name to *USB.getDeviceId*
 * Added white list to *getAllByName*, *getByAddress* and *getByName*
+* Added restriction for camera2 device (Android "L") ([issue](/../../issues/1757))
 * Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
