@@ -503,6 +503,7 @@ public class ActivityShare extends ActivityBase {
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
@@ -1661,6 +1662,7 @@ public class ActivityShare extends ActivityBase {
 		}
 	}
 
+	@SuppressLint("InflateParams")
 	public static boolean registerDevice(final ActivityBase context) {
 		int userId = Util.getUserId(Process.myUid());
 		if (Util.hasProLicense(context) == null

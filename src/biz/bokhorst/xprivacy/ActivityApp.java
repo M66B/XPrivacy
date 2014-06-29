@@ -976,7 +976,7 @@ public class ActivityApp extends ActivityBase {
 		}
 
 		@Override
-		@SuppressLint("DefaultLocale")
+		@SuppressLint({ "DefaultLocale", "InflateParams" })
 		protected void onPostExecute(Object result) {
 			if (!ActivityApp.this.isFinishing()) {
 				// Build dialog
@@ -1080,6 +1080,7 @@ public class ActivityApp extends ActivityBase {
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getView(final int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
@@ -1368,6 +1369,7 @@ public class ActivityApp extends ActivityBase {
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 			GroupViewHolder holder;
 			if (convertView == null) {
@@ -1661,6 +1663,7 @@ public class ActivityApp extends ActivityBase {
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 				ViewGroup parent) {
 			ChildViewHolder holder;

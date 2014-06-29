@@ -106,7 +106,6 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="whitelist_filename">Nomi file</string>
     <string name="whitelist_command">Comandi Shell</string>
     <string name="whitelist_url">URLs</string>
-    <string name="whitelist_proc">/proc</string>
     <string name="title_restrict">Seleziona per restringere:</string>
     <string name="title_check_whitelist">Seleziona per consentire</string>
     <string name="title_fused">Filtra per dati di utilizzo</string>
