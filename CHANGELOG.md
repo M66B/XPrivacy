@@ -43,6 +43,7 @@ Changelog
 * Added restriction for *USB.getSerialNumber* (Android "L") ([issue](/../../issues/1757))
 * Added parameter user agent to *getUserAgentString*
 * Added parameter device name to *USB.getDeviceId*
+* Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
