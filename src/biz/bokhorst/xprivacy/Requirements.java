@@ -317,7 +317,8 @@ public class Requirements {
 		}
 
 		// Check context services
-		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager" });
+		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager",
+				"com.intel.arkham.ExtendAccountManager" });
 		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager",
 				"android.app.ActivityManagerEx" });
 		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
