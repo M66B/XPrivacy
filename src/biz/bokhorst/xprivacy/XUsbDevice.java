@@ -23,16 +23,18 @@ public class XUsbDevice extends XHook {
 	// public int getDeviceId()
 	// public String getDeviceName()
 	// public static String getDeviceName(int id)
+	// public String getSerialNumber()
 	// http://developer.android.com/reference/android/hardware/usb/UsbDevice.html
 
 	private enum Methods {
-		getDeviceId, getDeviceName
+		getDeviceId, getDeviceName, getSerialNumber
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XUsbDevice(Methods.getDeviceId, PrivacyManager.cIdentification));
 		listHook.add(new XUsbDevice(Methods.getDeviceName, PrivacyManager.cIdentification));
+		listHook.add(new XUsbDevice(Methods.getSerialNumber, PrivacyManager.cIdentification));
 		return listHook;
 	}
 

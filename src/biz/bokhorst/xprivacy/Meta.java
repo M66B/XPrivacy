@@ -108,6 +108,7 @@ public class Meta {
 
 		mListHook.add(new Hook("identification", "USB.getDeviceId", "", 12, "2.1.7", null));
 		mListHook.add(new Hook("identification", "USB.getDeviceName", "", 12, "2.1.7", null));
+		mListHook.add(new Hook("identification", "USB.getSerialNumber", "", 20, "2.1.17", null));
 
 		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).dangerous());
 		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, "0.0", null).dangerous());
