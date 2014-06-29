@@ -51,6 +51,7 @@ public class XConnectivityManager extends XHook {
 	@Override
 	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getActiveNetworkInfo || mMethod == Methods.getNetworkInfo) {
+			// TODO: network info extra
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(null);
 
