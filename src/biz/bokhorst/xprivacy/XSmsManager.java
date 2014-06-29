@@ -46,8 +46,9 @@ public class XSmsManager extends XHook {
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.sendDataMessage || mMethod == Methods.sendMultipartTextMessage
 				|| mMethod == Methods.sendTextMessage)
-			if (isRestricted(param))
-				param.setResult(null);
+			if (param.args.length > 0 && param.args[0] instanceof String)
+				if (isRestrictedExtra(param, (String) param.args[0]))
+					param.setResult(null);
 	}
 
 	@Override

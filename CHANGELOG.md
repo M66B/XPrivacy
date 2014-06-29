@@ -38,6 +38,7 @@ Changelog
 * Added process name parameter to *queryContentProviders*
 * Added restriction for heart rate sensor (Android "L") ([issue](/../../issues/1757))
 * Added restriction *SIP.isSipWifiOnly*
+* Added parameter destination address to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
