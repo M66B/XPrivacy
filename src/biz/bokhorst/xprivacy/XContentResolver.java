@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -17,19 +18,22 @@ import android.util.Log;
 
 public class XContentResolver extends XHook {
 	private Methods mMethod;
+	private boolean mClient;
 
-	private XContentResolver(Methods method, String restrictionName) {
+	private XContentResolver(Methods method, String restrictionName, boolean client) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
+		mClient = client;
 	}
 
-	private XContentResolver(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, "query", null, sdk);
+	private XContentResolver(Methods method, String restrictionName, int sdk, boolean client) {
+		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
+		mClient = client;
 	}
 
 	public String getClassName() {
-		return (mMethod == Methods.cquery ? "android.content.ContentProviderClient" : "android.content.ContentResolver");
+		return (mClient ? "android.content.ContentProviderClient" : "android.content.ContentResolver");
 	}
 
 	// @formatter:off
@@ -38,10 +42,23 @@ public class XContentResolver extends XHook {
 	// static List<SyncInfo> getCurrentSyncs()
 	// static SyncAdapterType[] getSyncAdapterTypes()
 
+	// final AssetFileDescriptor openAssetFileDescriptor(Uri uri, String mode)
+	// final AssetFileDescriptor openAssetFileDescriptor(Uri uri, String mode, CancellationSignal cancellationSignal)
+	// final ParcelFileDescriptor openFileDescriptor(Uri uri, String mode, CancellationSignal cancellationSignal)
+	// final ParcelFileDescriptor openFileDescriptor(Uri uri, String mode)
+	// final InputStream openInputStream(Uri uri)
+	// final OutputStream openOutputStream(Uri uri)
+	// final OutputStream openOutputStream(Uri uri, String mode)
+	// final AssetFileDescriptor openTypedAssetFileDescriptor(Uri uri, String mimeType, Bundle opts, CancellationSignal cancellationSignal)
+	// final AssetFileDescriptor openTypedAssetFileDescriptor(Uri uri, String mimeType, Bundle opts)
+
+	// AssetFileDescriptor openAssetFile(Uri url, String mode, CancellationSignal signal)
+	// AssetFileDescriptor openAssetFile(Uri url, String mode)
+	// ParcelFileDescriptor openFile(Uri url, String mode)
+	// ParcelFileDescriptor openFile(Uri url, String mode, CancellationSignal signal)
+
 	// public Cursor query(Uri url, String[] projection, String selection, String[] selectionArgs, String sortOrder)
 	// public Cursor query(Uri url, String[] projection, String selection, String[] selectionArgs, String sortOrder, CancellationSignal cancellationSignal)
-
-	// TODO: public final void registerContentObserver(Uri uri, boolean notifyForDescendents, ContentObserver observer)
 
 	// https://developers.google.com/gmail/android/
 	// http://developer.android.com/reference/android/content/ContentResolver.html
@@ -58,23 +75,38 @@ public class XContentResolver extends XHook {
 
 	// @formatter:on
 
+	// @formatter:off
 	private enum Methods {
-		getCurrentSync, getCurrentSyncs, getSyncAdapterTypes, query, cquery
+		getCurrentSync, getCurrentSyncs, getSyncAdapterTypes,
+		openAssetFile, openFile, openAssetFileDescriptor, openFileDescriptor, openInputStream, openOutputStream, openTypedAssetFileDescriptor,
+		query
 	};
+	// @formatter:on
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XContentResolver(Methods.getCurrentSync, PrivacyManager.cAccounts));
-		listHook.add(new XContentResolver(Methods.getCurrentSyncs, PrivacyManager.cAccounts));
-		listHook.add(new XContentResolver(Methods.getSyncAdapterTypes, PrivacyManager.cAccounts));
-		listHook.add(new XContentResolver(Methods.query, null, 1));
-		listHook.add(new XContentResolver(Methods.cquery, null, 1));
+		listHook.add(new XContentResolver(Methods.getCurrentSync, PrivacyManager.cAccounts, false));
+		listHook.add(new XContentResolver(Methods.getCurrentSyncs, PrivacyManager.cAccounts, false));
+		listHook.add(new XContentResolver(Methods.getSyncAdapterTypes, PrivacyManager.cAccounts, false));
+
+		listHook.add(new XContentResolver(Methods.openAssetFileDescriptor, PrivacyManager.cStorage, false));
+		listHook.add(new XContentResolver(Methods.openFileDescriptor, PrivacyManager.cStorage, false));
+		listHook.add(new XContentResolver(Methods.openInputStream, PrivacyManager.cStorage, false));
+		listHook.add(new XContentResolver(Methods.openOutputStream, PrivacyManager.cStorage, false));
+		listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, false));
+
+		listHook.add(new XContentResolver(Methods.openAssetFile, PrivacyManager.cStorage, true));
+		listHook.add(new XContentResolver(Methods.openFile, PrivacyManager.cStorage, true));
+		listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, true));
+
+		listHook.add(new XContentResolver(Methods.query, null, 1, false));
+		listHook.add(new XContentResolver(Methods.query, null, 1, true));
 		return listHook;
 	}
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.query || mMethod == Methods.cquery)
+		if (mMethod == Methods.query)
 			try {
 				handleUriBefore(param);
 			} catch (DeadObjectException ignored) {
@@ -97,7 +129,17 @@ public class XContentResolver extends XHook {
 			if (isRestricted(param))
 				param.setResult(new SyncAdapterType[0]);
 
-		} else if (mMethod == Methods.query || mMethod == Methods.cquery) {
+		} else if (mMethod == Methods.openAssetFileDescriptor || mMethod == Methods.openFileDescriptor
+				|| mMethod == Methods.openInputStream || mMethod == Methods.openOutputStream
+				|| mMethod == Methods.openTypedAssetFileDescriptor || mMethod == Methods.openAssetFile
+				|| mMethod == Methods.openFile) {
+			if (param.args.length > 0 && param.args[0] instanceof Uri) {
+				String uri = ((Uri) param.args[0]).toString();
+				if (isRestrictedExtra(param, uri))
+					param.setResult(new FileNotFoundException("XPrivacy"));
+			}
+
+		} else if (mMethod == Methods.query) {
 			try {
 				handleUriAfter(param);
 			} catch (DeadObjectException ignored) {

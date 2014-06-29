@@ -283,6 +283,14 @@ public class Meta {
 		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null));
 		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous().whitelist(cTypeFilename));
 
+		mListHook.add(new Hook("storage", "openAssetFileDescriptor", null, 3, "2.1.17", null).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("storage", "openFileDescriptor", null, 1, "2.1.17", null).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("storage", "openInputStream", null, 1, "2.1.17", null).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("storage", "openOutputStream", null, 1, "2.1.17", null).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("storage", "openTypedAssetFileDescriptor", null, 11, "2.1.17", null).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("storage", "openAssetFile", null, 5, "2.1.17", null).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("storage", "openFile", null, 5, "2.1.17", null).dangerous().whitelist(cTypeFilename));
+
 		mListHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getPackagesHoldingPermissions", "", 18, "1.99.1", null).dangerous());
