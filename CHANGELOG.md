@@ -26,7 +26,7 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
-* One second delay before enabling on demand dialog buttons
+* Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -55,6 +55,7 @@ Changelog
 * Added restriction for heart rate sensor (Android "L") ([issue](/../../issues/1757))
 * Added restriction for *USB.getSerialNumber* (Android "L") ([issue](/../../issues/1757))
 * Added restriction for new camera device (Android "L") ([issue](/../../issues/1757))
+* One second delay before enabling on demand dialog buttons
 * Updated Dutch translation
 * Updated Italian translation
 
