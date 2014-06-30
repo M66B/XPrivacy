@@ -26,6 +26,8 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
+* Leave on demand dialog button enabled when new dialog within 1 second
+* Updated German translation
 * Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
