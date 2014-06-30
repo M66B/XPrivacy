@@ -265,6 +265,7 @@ public class XBinder extends XHook {
 			"android.hardware.SensorManager",
 			"android.widget.PopupWindow",
 			"com.android.internal.widget.LockPatternUtils", // system
+			"com.android.internal.policy.impl.PhoneWindow",
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 		},
 		new String[] { // WifiManager
