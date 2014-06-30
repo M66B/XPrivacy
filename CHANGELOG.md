@@ -27,6 +27,7 @@ Changelog
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
 * Leave on demand dialog buttons enabled when new dialog within 1 second
+* Updated in application documentation, thanks @[an0n981](https://github.com/an0n981)
 * Updated German translation
 * Updated Vietnamese translation
 
