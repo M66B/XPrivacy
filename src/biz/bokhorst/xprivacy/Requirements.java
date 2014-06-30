@@ -331,7 +331,8 @@ public class Requirements {
 		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SensorManager",
 				"android.hardware.SystemSensorManager" });
 		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager",
-				"android.telephony.MSimTelephonyManager", "android.telephony.MultiSimTelephonyManager" });
+				"android.telephony.MSimTelephonyManager", "android.telephony.MultiSimTelephonyManager",
+				"android.telephony.ZTEPrivacyTelephonyManager" });
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
 				"android.view.Window$LocalWindowManager" });
 		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager" });
