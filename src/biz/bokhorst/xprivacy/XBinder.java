@@ -219,6 +219,8 @@ public class XBinder extends XHook {
 			"com.android.internal.widget.LockPatternUtils", // system
 			"com.android.keyguard.KeyguardViewMediator", // system
 			"com.android.keyguard.KeyguardUpdateMonitor", // system
+			"com.android.systemui.recent.RecentsPanelView", // system
+			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
 			"com.google.android.partnersetup.MccFallback", // system
