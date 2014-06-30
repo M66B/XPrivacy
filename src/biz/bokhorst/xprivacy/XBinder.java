@@ -243,6 +243,7 @@ public class XBinder extends XHook {
 			"android.hardware.SensorManager",
 			"android.nfc.NfcAdapter",
 			"com.android.internal.app.ResolverActivity",
+			"com.android.internal.telephony.SmsUsageMonitor,"
 		},
 		new String[] { // TelephonyManager
 		},
