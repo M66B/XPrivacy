@@ -229,6 +229,7 @@ public class XBinder extends XHook {
 			"android.net.VpnService",
 		},
 		new String[] { // ContentProvider
+			"com.android.contacts.model.AccountTypeManagerImpl",
 		},
 		new String[] { // LocationManager
 			"android.location.Geocoder",
