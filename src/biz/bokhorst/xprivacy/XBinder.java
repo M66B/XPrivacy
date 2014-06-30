@@ -230,7 +230,9 @@ public class XBinder extends XHook {
 			"android.net.VpnService",
 		},
 		new String[] { // ContentProvider
+			"com.android.contacts.common.model.AccountTypeManagerImpl",
 			"com.android.contacts.model.AccountTypeManagerImpl",
+			"com.lge.systemui.Utils",
 		},
 		new String[] { // LocationManager
 			"android.location.Geocoder",
@@ -373,8 +375,12 @@ public class XBinder extends XHook {
 				String proxy = descriptor.replace(".I", ".") + "Proxy";
 				List<String> serviceName = Arrays.asList(cServiceClassName.get(idx));
 				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-				for (int i = 0; i < ste.length; i++)
-					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)) {
+				for (int i = 0; i < ste.length; i++) {
+					String className = ste[i].getClassName();
+					if (className.startsWith(descriptor)
+							|| className.startsWith(proxy)
+							|| (descriptor.equals("android.content.IContentService") && className
+									.startsWith("com.android.server.content.IContentServiceEx$Stub$Proxy"))) {
 						found = true;
 
 						// Check exceptions
@@ -397,6 +403,7 @@ public class XBinder extends XHook {
 
 						break;
 					}
+				}
 
 				// Internal checks
 				if (!found) {
