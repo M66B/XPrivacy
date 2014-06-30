@@ -198,6 +198,7 @@ public class XBinder extends XHook {
 		new String[] { // ActivityManager
 			"android.app.Activity",
 			"android.app.ActivityThread",
+			"android.app.admin.DevicePolicyManager",
 			"android.app.Application",
 			"android.app.ContextImpl",
 			"android.app.Instrumentation",
