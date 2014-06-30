@@ -30,7 +30,11 @@
     <string name="calling_sendTextMessage" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendTextMessage(java.lang.String,%20java.lang.String,%20java.lang.String,%20android.app.PendingIntent,%20android.app.PendingIntent)">Google documentation</a>]]></string>
     <string name="calling_android_intent_action_RESPOND_VIA_MESSAGE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_RESPOND_VIA_MESSAGE">Google documentation</a>]]></string>
     <string name="calling_android_intent_action_CALL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_CALL">Google documentation</a>]]></string>
-
+    <string name="calling_SIP.isApiSupported" translatable="false"><![CDATA[a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isApiSupported%28android.content.Context%29">Google documentation</a>]]></string>
+    <string name="calling_SIP.isSipWifiOnly" translatable="false"><![CDATA[a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isSipWifiOnly(android.content.Context)">Google documentation</a>]]></string>
+    <string name="calling_SIP.isVoipSupported" translatable="false"><![CDATA[a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isVoipSupported(android.content.Context)">Google documentation</a>]]></string>
+    <string name="calling_SIP.newInstance" translatable="false"><![CDATA[a href="https://developer.android.com/reference/android/net/sip/SipManager.html#newInstance(android.content.Context)">Google documentation</a>]]></string>
+    
     <!-- clipboard -->
     <string name="clipboard_addPrimaryClipChangedListener" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#addPrimaryClipChangedListener(android.content.ClipboardManager.OnPrimaryClipChangedListener)">Google documentation</a>]]></string>
     <string name="clipboard_getPrimaryClip" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#getPrimaryClip()">Google documentation</a>]]></string>
@@ -71,6 +75,9 @@
     <string name="identification_getDescriptor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/view/InputDevice.html#getDescriptor()">Google documentation</a>]]></string>
     <string name="identification_GservicesProvider" translatable="false"><![CDATA[Will restrict direct access to android_id, acquired through the Google services provider]]></string>
     <string name="identification_SERIAL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/os/Build.html#SERIAL">Google documentation</a>]]></string>
+    <string name="identification_InputDevice_getName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/view/InputDevice.html#getName()">Google documentation</a>]]></string>
+    <string name="identification_USB_getDeviceId" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/usb/UsbDevice.html#getDeviceId(java.lang.String)">Google documentation</a>]]></string>
+    <string name="identification_USB_getDeviceName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/usb/UsbDevice.html#getDeviceName()">Google documentation</a>]]></string>
 
     <!-- internet -->
     <string name="internet_getAllByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getAllByName(java.lang.String)">Google documentation</a>]]></string>
@@ -130,6 +137,9 @@
     <string name="location_GMS_getLastLocation" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/com/google/android/gms/location/LocationClient.html#getLastLocation()">Google documentation</a>]]></string>
     <string name="location_GMS_requestLocationUpdates" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/com/google/android/gms/location/LocationClient.html#requestLocationUpdates(com.google.android.gms.location.LocationRequest,%20android.app.PendingIntent)">Google documentation</a>]]></string>
     <string name="location_GMS_requestActivityUpdates" translatable="false"><![CDATA[<a href="http://developer.android.com/training/location/activity-recognition.html">Google documentation</a>]]></string>
+    <string name="location_addGpsStatusListener" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/location/LocationManager.html#addGpsStatusListener(android.location.GpsStatus.Listener)">Google documentation</a>]]></string>
+    <string name="location_getAllProviders" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/location/LocationManager.html#getAllProviders()">Google documentation</a>]]></string>
+    <string name="location_getBestProvider" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/location/LocationManager.html#getBestProvider(android.location.Criteria,%20boolean)">Google documentation</a>]]></string>
 
     <!-- media -->
     <string name="media_startRecording" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/media/AudioRecord.html#startRecording()">Google documentation</a>]]></string>
@@ -248,6 +258,13 @@
     <string name="storage_mtp" translatable="false"><![CDATA[Will restrict access to <a href="http://en.wikipedia.org/wiki/Media_Transfer_Protocol">MTP</a>]]></string>
     <string name="storage_getExternalStorageState" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/os/Environment.html#getExternalStorageState()">Google documentation</a>]]></string>
     <string name="storage_open" translatable="false"><![CDATA[Will restrict access to files on the SD card (or internal storage for devices without)]]></string>
+    <string name="storage_openAssetFile" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentProvider.html#openAssetFile(android.net.Uri,%20java.lang.String)">Google documentation</a>]]></string>
+    <string name="storage_openAssetFileDescriptor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#openAssetFileDescriptor(android.net.Uri,%20java.lang.String)">Google documentation</a>]]></string>
+    <string name="storage_openFile" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentProvider.html#openFile(android.net.Uri,%20java.lang.String)">Google documentation</a>]]></string>
+    <string name="storage_openFileDescriptor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#openFileDescriptor(android.net.Uri,%20java.lang.String)">Google documentation</a>]]></string>
+    <string name="storage_openInputStream" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#openInputStream(android.net.Uri)">Google documentation</a>]]></string>
+    <string name="storage_openOutputStream" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#openOutputStream(android.net.Uri)">Google documentation</a>]]></string>
+    <string name="storage_openTypedAssetFileDescriptor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#openTypedAssetFileDescriptor(android.net.Uri,%20java.lang.String,%20android.os.Bundle)">Google documentation</a>]]></string>
 
     <!-- system -->
     <string name="system_getInstalledApplications" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getInstalledApplications(int)">Google documentation</a>]]></string>
@@ -279,6 +296,7 @@
     <string name="system_android_intent_action_EXTERNAL_APPLICATIONS_AVAILABLE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_EXTERNAL_APPLICATIONS_AVAILABLE">Google documentation</a>]]></string>
     <string name="system_android_intent_action_EXTERNAL_APPLICATIONS_UNAVAILABLE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE">Google documentation</a>]]></string>
     <string name="system_ApplicationsProvider" translatable="false"><![CDATA[Will restrict access to a list of applications installed on the phone to provide search suggestions]]></string>
+    <string name="system_getPackageForUid" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPackagesForUid(int)">Google documentation</a>]]></string>
 
     <!-- view -->
     <string name="view_loadUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>
