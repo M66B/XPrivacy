@@ -65,6 +65,7 @@ public class PrivacyService {
 	private static String mSecret = null;
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
+	private static long mOnDemandLastAnswer = 0;
 	private static Semaphore mOndemandSemaphore = new Semaphore(1, true);
 	private static List<String> mListError = new ArrayList<String>();
 	private static IPrivacyService mClient = null;
@@ -1495,6 +1496,7 @@ public class PrivacyService {
 									};
 									mHandler.postDelayed(rProgress, 50);
 
+									boolean repeat = (SystemClock.elapsedRealtime() - mOnDemandLastAnswer < 1000);
 									mHandler.postDelayed(new Runnable() {
 										@Override
 										public void run() {
@@ -1502,7 +1504,7 @@ public class PrivacyService {
 											holder.dialog.findViewById(R.id.btnDontKnow).setEnabled(true);
 											holder.dialog.findViewById(R.id.btnDeny).setEnabled(true);
 										}
-									}, 1000);
+									}, repeat ? 0 : 1000);
 
 								} catch (NameNotFoundException ex) {
 									latch.countDown();
@@ -1518,6 +1520,7 @@ public class PrivacyService {
 							oResult.ondemand = true;
 						else
 							Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
+						mOnDemandLastAnswer = SystemClock.elapsedRealtime();
 
 						mHandler.post(new Runnable() {
 							@Override
