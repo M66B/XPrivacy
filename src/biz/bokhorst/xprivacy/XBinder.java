@@ -215,6 +215,12 @@ public class XBinder extends XHook {
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.os.RuntimeInit",
 			"com.android.internal.policy.impl.PhoneWindowManager",
+			"com.android.internal.widget.LockPatternUtils", // system
+			"com.android.keyguard.KeyguardViewMediator", // system
+			"com.android.keyguard.KeyguardUpdateMonitor", // system
+			"com.android.systemui.statusbar.phone.NavigationBarView", // system
+			"com.android.systemui.statusbar.phone.QuickSettings", // system
+			"com.google.android.partnersetup.MccFallback", // system
 		},
 		new String[] { // ClipboardManager
 		},
@@ -227,6 +233,7 @@ public class XBinder extends XHook {
 		new String[] { // LocationManager
 			"android.location.Geocoder",
 			"android.telephony.cdma.CdmaCellLocation",
+			"com.android.location.provider.LocationProviderBase", // system
 		},
 		new String[] { // TelephonyManager
 		},
@@ -256,6 +263,8 @@ public class XBinder extends XHook {
 			"android.hardware.LegacySensorManager",
 			"android.hardware.SensorManager",
 			"android.widget.PopupWindow",
+			"com.android.internal.widget.LockPatternUtils", // system
+			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 		},
 		new String[] { // WifiManager
 		},
@@ -410,9 +419,10 @@ public class XBinder extends XHook {
 					param.args[3] = flags;
 				}
 
-				if (!(ok || black || PrivacyService.getClient().isSystemApp(uid))) {
+				if (!(ok || black)) {
 					Util.log(this, Log.ERROR,
-							"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
+							"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid()
+									+ " system=" + PrivacyService.getClient().isSystemApp(uid));
 					Util.logStack(this, Log.ERROR);
 				}
 			}
