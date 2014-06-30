@@ -30,11 +30,11 @@
     <string name="calling_sendTextMessage" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendTextMessage(java.lang.String,%20java.lang.String,%20java.lang.String,%20android.app.PendingIntent,%20android.app.PendingIntent)">Google documentation</a>]]></string>
     <string name="calling_android_intent_action_RESPOND_VIA_MESSAGE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_RESPOND_VIA_MESSAGE">Google documentation</a>]]></string>
     <string name="calling_android_intent_action_CALL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_CALL">Google documentation</a>]]></string>
-    <string name="calling_SIP.isApiSupported" translatable="false"><![CDATA[a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isApiSupported%28android.content.Context%29">Google documentation</a>]]></string>
-    <string name="calling_SIP.isSipWifiOnly" translatable="false"><![CDATA[a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isSipWifiOnly(android.content.Context)">Google documentation</a>]]></string>
-    <string name="calling_SIP.isVoipSupported" translatable="false"><![CDATA[a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isVoipSupported(android.content.Context)">Google documentation</a>]]></string>
-    <string name="calling_SIP.newInstance" translatable="false"><![CDATA[a href="https://developer.android.com/reference/android/net/sip/SipManager.html#newInstance(android.content.Context)">Google documentation</a>]]></string>
-    
+    <string name="calling_SIP_isApiSupported" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isApiSupported(android.content.Context)">Google documentation</a>]]></string>
+    <string name="calling_SIP_isSipWifiOnly" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isSipWifiOnly(android.content.Context)">Google documentation</a>]]></string>
+    <string name="calling_SIP_isVoipSupported" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isVoipSupported(android.content.Context)">Google documentation</a>]]></string>
+    <string name="calling_SIP_newInstance" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#newInstance(android.content.Context)">Google documentation</a>]]></string>
+
     <!-- clipboard -->
     <string name="clipboard_addPrimaryClipChangedListener" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#addPrimaryClipChangedListener(android.content.ClipboardManager.OnPrimaryClipChangedListener)">Google documentation</a>]]></string>
     <string name="clipboard_getPrimaryClip" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#getPrimaryClip()">Google documentation</a>]]></string>
