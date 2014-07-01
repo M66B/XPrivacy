@@ -75,7 +75,7 @@ public class PrivacyService {
 	private static final String cTableSetting = "setting";
 
 	private static final int cCurrentVersion = 364;
-	private static final String cServiceName = "xprivacy364";
+	private static final String cServiceName = "xprivacy358";
 
 	// TODO: define column names
 	// sqlite3 /data/system/xprivacy/xprivacy.db
@@ -300,6 +300,16 @@ public class PrivacyService {
 			map.put("restriction_restricted", mRestricted.longValue());
 			map.put("uptime_milliseconds", SystemClock.elapsedRealtime());
 			return map;
+		};
+
+		// Application
+		@Override
+		public boolean isSystemApp(int uid) throws RemoteException {
+			try {
+				return new ApplicationInfoEx(getContext(), uid).isSystem();
+			} catch (Throwable ex) {
+				return false;
+			}
 		};
 
 		// Restrictions

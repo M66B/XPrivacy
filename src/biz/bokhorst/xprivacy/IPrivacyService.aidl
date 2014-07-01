@@ -9,6 +9,8 @@ interface IPrivacyService {
 	void reportError(String message);
 	Map getStatistics();
 
+	boolean isSystemApp(int uid);
+
 	void setRestriction(in PRestriction restriction);
 	void setRestrictionList(in List<PRestriction> listRestriction);
 	PRestriction getRestriction(in PRestriction restriction, boolean usage, String secret);
