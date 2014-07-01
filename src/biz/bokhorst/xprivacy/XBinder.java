@@ -224,6 +224,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
+			"com.android.systemui.quicksettings.UserTile", // system
 			"com.google.android.partnersetup.MccFallback", // system
 		},
 		new String[] { // ClipboardManager
