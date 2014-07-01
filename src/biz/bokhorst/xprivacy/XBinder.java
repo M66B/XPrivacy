@@ -225,7 +225,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
 			"com.android.systemui.quicksettings.UserTile", // system
-			"com.google.android.partnersetup.MccFallback", // system
+			// "com.google.android.partnersetup.MccFallback", // system
 		},
 		new String[] { // ClipboardManager
 		},
@@ -293,7 +293,7 @@ public class XBinder extends XHook {
 		new String[] { // BluetoothManager
 		},
 		new String[] { // InputManager
-			"android.view.PointerIcon", // Samsung
+			// "android.view.PointerIcon", // Samsung
 		},
 		new String[] { // SensorManager
 		},
