@@ -324,7 +324,8 @@ public class Requirements {
 		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
 		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager",
 				"android.net.MultiSimConnectivityManager" });
-		checkService(context, Context.LOCATION_SERVICE, new String[] { "android.location.LocationManager" });
+		checkService(context, Context.LOCATION_SERVICE, new String[] { "android.location.LocationManager",
+				"android.location.ZTEPrivacyLocationManager " });
 		Class<?> serviceClass = context.getPackageManager().getClass();
 		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
 			reportClass(serviceClass, context);
