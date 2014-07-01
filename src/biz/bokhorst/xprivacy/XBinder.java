@@ -186,7 +186,9 @@ public class XBinder extends XHook {
 	// @formatter:off
 	// Forbidden classes
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
-		"java.lang.reflect.Method"
+		"com.lge.systemui.Utils",
+		"com.sec.android.app.FlashBarService", // system
+		"java.lang.reflect.Method",
 	});
 	// @formatter:on
 
@@ -242,7 +244,6 @@ public class XBinder extends XHook {
 		new String[] { // ContentProvider
 			"com.android.contacts.common.model.AccountTypeManagerImpl",
 			"com.android.contacts.model.AccountTypeManagerImpl",
-			// "com.lge.systemui.Utils",
 		},
 		new String[] { // LocationManager
 			"android.location.Geocoder",
@@ -268,7 +269,6 @@ public class XBinder extends XHook {
 			"com.android.defcontainer.DefaultContainerService",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.telephony.SmsUsageMonitor",
-			// "com.sec.android.app.FlashBarService", // system
 		},
 		new String[] { // TelephonyManager
 		},
@@ -303,7 +303,7 @@ public class XBinder extends XHook {
 		new String[] { // BluetoothManager
 		},
 		new String[] { // InputManager
-			// "android.view.PointerIcon", // Samsung
+			"android.view.PointerIcon",
 		},
 		new String[] { // SensorManager
 		},
