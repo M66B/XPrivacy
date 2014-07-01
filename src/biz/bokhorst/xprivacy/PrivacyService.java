@@ -1071,13 +1071,11 @@ public class PrivacyService {
 				// No permissions enforced
 
 				// Check cache
-				if (setting.value != null) {
-					CSetting key = new CSetting(setting.uid, setting.type, setting.name);
-					synchronized (mSettingCache) {
-						if (mSettingCache.containsKey(key)) {
-							result.value = mSettingCache.get(key).getValue();
-							return result;
-						}
+				CSetting key = new CSetting(setting.uid, setting.type, setting.name);
+				synchronized (mSettingCache) {
+					if (mSettingCache.containsKey(key)) {
+						result.value = mSettingCache.get(key).getValue();
+						return result;
 					}
 				}
 
@@ -1131,14 +1129,11 @@ public class PrivacyService {
 				}
 
 				// Add to cache
-				if (result.value != null) {
-					CSetting key = new CSetting(setting.uid, setting.type, setting.name);
-					key.setValue(result.value);
-					synchronized (mSettingCache) {
-						if (mSettingCache.containsKey(key))
-							mSettingCache.remove(key);
-						mSettingCache.put(key, key);
-					}
+				key.setValue(result.value);
+				synchronized (mSettingCache) {
+					if (mSettingCache.containsKey(key))
+						mSettingCache.remove(key);
+					mSettingCache.put(key, key);
 				}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);

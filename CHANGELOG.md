@@ -26,6 +26,7 @@ Changelog
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
+* Cache empty settings (performance)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
