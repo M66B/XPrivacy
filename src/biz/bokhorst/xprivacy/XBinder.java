@@ -205,8 +205,10 @@ public class XBinder extends XHook {
 			"android.app.LoadedApk",
 			"android.app.PendingIntent",
 			"android.app.Service",
+			"android.app.SearchManager", // system
 			"android.content.BroadcastReceiver",
 			"android.content.ContentResolver",
+			"android.hardware.Camera",
 			"android.hardware.SensorManager",
 			"android.media.MediaPlayer",
 			"android.media.RemoteControlClient",
@@ -227,6 +229,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
 			"com.android.systemui.quicksettings.UserTile", // system
+			"com.android.systemui.quicksettings.QuickSettingsTile", // system
 			"com.google.android.partnersetup.MccFallback", // system
 		},
 		new String[] { // ClipboardManager
@@ -261,6 +264,7 @@ public class XBinder extends XHook {
 			"android.content.thm.ThemeIconManager",
 			"android.hardware.SensorManager",
 			"android.nfc.NfcAdapter",
+			"android.os.Environment",
 			"com.android.defcontainer.DefaultContainerService",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.telephony.SmsUsageMonitor",
