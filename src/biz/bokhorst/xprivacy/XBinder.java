@@ -222,6 +222,7 @@ public class XBinder extends XHook {
 			"com.android.keyguard.KeyguardUpdateMonitor", // system
 			"com.android.systemui.recent.RecentsPanelView", // system
 			"com.android.systemui.statusbar.BaseStatusBar", // system
+			"com.android.systemui.statusbar.policy.DateView", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
 			"com.android.systemui.quicksettings.UserTile", // system
@@ -236,7 +237,7 @@ public class XBinder extends XHook {
 		new String[] { // ContentProvider
 			"com.android.contacts.common.model.AccountTypeManagerImpl",
 			"com.android.contacts.model.AccountTypeManagerImpl",
-			"com.lge.systemui.Utils",
+			// "com.lge.systemui.Utils",
 		},
 		new String[] { // LocationManager
 			"android.location.Geocoder",
