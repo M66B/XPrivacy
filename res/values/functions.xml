@@ -122,12 +122,9 @@
     <string name="ipc_IUsbManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/hardware/usb/UsbManager.html">USB manager</a>]]></string>
     <string name="ipc_IWifiManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html">Wi-Fi manager</a>]]></string>
     <string name="ipc_IWindowManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/view/WindowManager.html">window manager</a>]]></string>
-
     <string name="ipc_ISms" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/telephony/SmsManager.html">SMS manager</a>]]></string>
-   <string name="ipc_SensorServer" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/hardware/SensorManager.html">sensor server</a>]]></string>
-
-    <string name="ipc_Reflection" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href=""></a>]]></string>
- 
+    <string name="ipc_SensorServer" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/hardware/SensorManager.html">sensor server</a>]]></string>
+    <string name="ipc_Reflection" translatable="false"><![CDATA[<a href="http://en.wikipedia.org/wiki/Reflection_(computer_programming)#Java">Wikipedia</a>]]></string>
 
     <!-- location -->
     <string name="location_addGeofence" translatable="false"><![CDATA[Will restrict adding <a href="https://en.wikipedia.org/wiki/Geo-fence">geofences</a>]]></string>
