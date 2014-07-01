@@ -223,16 +223,18 @@ public class XBinder extends XHook {
 			"com.android.systemui.recent.RecentsPanelView", // system
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.policy.DateView", // system
+			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
 			"com.android.systemui.quicksettings.UserTile", // system
-			// "com.google.android.partnersetup.MccFallback", // system
+			"com.google.android.partnersetup.MccFallback", // system
 		},
 		new String[] { // ClipboardManager
 		},
 		new String[] { // ConnectivityManager
 			"android.app.ActivityThread",
 			"android.net.VpnService",
+			"com.android.systemui.statusbar.BaseStatusBar", // system
 		},
 		new String[] { // ContentProvider
 			"com.android.contacts.common.model.AccountTypeManagerImpl",
@@ -260,7 +262,8 @@ public class XBinder extends XHook {
 			"android.hardware.SensorManager",
 			"android.nfc.NfcAdapter",
 			"com.android.internal.app.ResolverActivity",
-			"com.android.internal.telephony.SmsUsageMonitor,"
+			"com.android.internal.telephony.SmsUsageMonitor",
+			// "com.sec.android.app.FlashBarService", // system
 		},
 		new String[] { // TelephonyManager
 		},
@@ -277,6 +280,7 @@ public class XBinder extends XHook {
 			"com.android.internal.policy.impl.PhoneWindow",
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
+			"com.android.systemui.statusbar.policy.NetworkControllerGemini", // system
 			"com.android.systemui.SystemUIService", // system
 		},
 		new String[] { // WifiManager
