@@ -213,6 +213,7 @@ public class XBinder extends XHook {
 			"android.widget.TextView",
 			"android.os.Looper",
 			"android.os.StrictMode",
+			"com.android.internal.app.AlertActivity",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.os.RuntimeInit",
 			"com.android.internal.policy.impl.PhoneWindowManager",
