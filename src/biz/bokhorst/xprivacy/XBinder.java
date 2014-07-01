@@ -261,6 +261,7 @@ public class XBinder extends XHook {
 			"android.content.thm.ThemeIconManager",
 			"android.hardware.SensorManager",
 			"android.nfc.NfcAdapter",
+			"com.android.defcontainer.DefaultContainerService",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.telephony.SmsUsageMonitor",
 			// "com.sec.android.app.FlashBarService", // system
