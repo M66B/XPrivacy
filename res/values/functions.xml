@@ -102,19 +102,32 @@
     <string name="internet_connect" translatable="false"><![CDATA[Will restrict access to the internet]]></string>
 
     <!-- ipc -->
-    <string name="ipc_android_accounts_IAccountManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/accounts/AccountManager.html">account manager</a>]]></string>
-    <string name="ipc_android_app_IActivityManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/app/ActivityManager.html">activity manager</a>]]></string>
-    <string name="ipc_android_content_IClipboard" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/content/ClipboardManager.html">clipboard manager</a>]]></string>
-    <string name="ipc_android_net_IConnectivityManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/net/ConnectivityManager.html">connectivity manager</a>]]></string>
-    <string name="ipc_android_content_IContentService" translatable="false"><![CDATA[Will restrict direct inter-process calls to <a href="https://developer.android.com/guide/topics/providers/content-providers.html">content providers</a>]]></string>
-    <string name="ipc_android_location_ILocationManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/location/LocationManager.html">location manager</a>]]></string>
-    <string name="ipc_com_android_internal_telephony_ITelephonyRegistry" translatable="false"><![CDATA[Will restrict direct inter-process calls to parts of the <a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html">telephony manager</a>]]></string>
-    <string name="ipc_com_android_internal_telephony_ITelephonyRegistryMSim" translatable="false"><![CDATA[Will restrict direct inter-process calls to parts of the <a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html">telephony manager</a>]]></string>
-    <string name="ipc_android_content_pm_IPackageManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/content/pm/PackageManager.html">package manager</a>]]></string>
-    <string name="ipc_com_android_internal_telephony_IPhoneSubInfo" translatable="false"><![CDATA[Will restrict direct inter-process calls to parts of the <a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html">telephony manager</a>]]></string>
-    <string name="ipc_com_android_internal_telephony_msim_IPhoneSubInfoMSim" translatable="false"><![CDATA[Will restrict direct inter-process calls to parts of the <a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html">telephony manager</a>]]></string>
-    <string name="ipc_android_view_IWindowManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/view/WindowManager.html">window manager</a>]]></string>
-    <string name="ipc_android_net_wifi_IWifiManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html">Wi-Fi manager</a>]]></string>
+    <string name="ipc_IAccountManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/accounts/AccountManager.html">account manager</a>]]></string>
+    <string name="ipc_IActivityManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/app/ActivityManager.html">activity manager</a>]]></string>
+    <string name="ipc_IAppWidgetService" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/appwidget/package-summary.html">app widget service</a>]]></string>
+    <string name="ipc_IBluetooth" translatable="false"><![CDATA[Will restrict direct inter-process calls to <a href="https://developer.android.com/reference/android/bluetooth/package-summary.html">bluetooth functionality</a>]]></string>
+    <string name="ipc_IBluetoothManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to <a href="https://developer.android.com/reference/android/bluetooth/BluetoothManager.html">bluetooth manager</a>]]></string>
+    <string name="ipc_IClipboard" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/content/ClipboardManager.html">clipboard manager</a>]]></string>
+    <string name="ipc_IConnectivityManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/net/ConnectivityManager.html">connectivity manager</a>]]></string>
+    <string name="ipc_IContentService" translatable="false"><![CDATA[Will restrict direct inter-process calls to <a href="https://developer.android.com/guide/topics/providers/content-providers.html">content providers</a>]]></string>
+    <string name="ipc_IInputManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to <a href="https://developer.android.com/reference/android/hardware/input/InputManager.html">input manager</a>]]></string>
+    <string name="ipc_ILocationManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/location/LocationManager.html">location manager</a>]]></string>
+    <string name="ipc_INfcAdapter" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html">NFC adapter</a>]]></string>
+    <string name="ipc_IPackageManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/content/pm/PackageManager.html">package manager</a>]]></string>
+    <string name="ipc_IPhoneSubInfo" translatable="false"><![CDATA[Will restrict direct inter-process calls to parts of the <a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html">telephony manager</a>]]></string>
+    <string name="ipc_IPhoneSubInfoMSim" translatable="false"><![CDATA[Will restrict direct inter-process calls to parts of the <a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html">telephony manager</a>]]></string>
+    <string name="ipc_ISipService" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/net/sip/package-summary.html">SIP service</a>]]></string>
+    <string name="ipc_ITelephonyRegistry" translatable="false"><![CDATA[Will restrict direct inter-process calls to parts of the <a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html">telephony manager</a>]]></string>
+    <string name="ipc_ITelephonyRegistryMSim" translatable="false"><![CDATA[Will restrict direct inter-process calls to parts of the <a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html">telephony manager</a>]]></string>
+    <string name="ipc_IUsbManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/hardware/usb/UsbManager.html">USB manager</a>]]></string>
+    <string name="ipc_IWifiManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html">Wi-Fi manager</a>]]></string>
+    <string name="ipc_IWindowManager" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/view/WindowManager.html">window manager</a>]]></string>
+
+    <string name="ipc_ISms" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/telephony/SmsManager.html">SMS manager</a>]]></string>
+   <string name="ipc_SensorServer" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href="https://developer.android.com/reference/android/hardware/SensorManager.html">sensor server</a>]]></string>
+
+    <string name="ipc_Reflection" translatable="false"><![CDATA[Will restrict direct inter-process calls to the <a href=""></a>]]></string>
+ 
 
     <!-- location -->
     <string name="location_addGeofence" translatable="false"><![CDATA[Will restrict adding <a href="https://en.wikipedia.org/wiki/Geo-fence">geofences</a>]]></string>
