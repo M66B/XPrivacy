@@ -229,6 +229,7 @@ public class XBinder extends XHook {
 			"com.android.keyguard.KeyguardMultiUserSelectorView", // system
 			"com.android.keyguard.KeyguardViewMediator", // system
 			"com.android.keyguard.KeyguardUpdateMonitor", // system
+			"com.android.packageinstaller.PackageInstallerActivity", // system
 			"com.android.systemui.recent.RecentsPanelView", // system
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.policy.DateView", // system
