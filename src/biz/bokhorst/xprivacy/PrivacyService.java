@@ -103,7 +103,7 @@ public class PrivacyService {
 
 			// This will and should open the database
 			mRegistered = true;
-			Util.log(null, Log.WARN, "Service registered name=" + cServiceName);
+			Util.log(null, Log.WARN, "Service registered name=" + cServiceName + " version=" + cCurrentVersion);
 
 			// Publish semaphore to activity manager service
 			XActivityManagerService.setSemaphore(mOndemandSemaphore);
