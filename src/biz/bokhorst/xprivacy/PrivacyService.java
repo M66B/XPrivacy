@@ -1055,7 +1055,6 @@ public class PrivacyService {
 		}
 
 		@Override
-		@SuppressLint("DefaultLocale")
 		public PSetting getSetting(PSetting setting) throws RemoteException {
 			int userId = Util.getUserId(setting.uid);
 
@@ -1436,18 +1435,24 @@ public class PrivacyService {
 							CSetting skey = new CSetting(restriction.uid, hook.whitelist(), restriction.extra);
 							synchronized (mSettingCache) {
 								if (mSettingCache.containsKey(skey)) {
-									Util.log(null, Log.WARN, "Already asked " + skey);
-									result.restricted = Boolean.parseBoolean(mSettingCache.get(skey).getValue());
-									result.asked = true;
-									return oResult;
+									String value = mSettingCache.get(skey).getValue();
+									if (value != null) {
+										Util.log(null, Log.WARN, "Already asked whitelist " + skey);
+										result.restricted = Boolean.parseBoolean(value);
+										result.asked = true;
+										return oResult;
+									}
 								}
 								for (String xextra : getXExtra(restriction, hook)) {
 									CSetting xkey = new CSetting(restriction.uid, hook.whitelist(), xextra);
 									if (mSettingCache.containsKey(xkey)) {
-										Util.log(null, Log.WARN, "Already asked " + xkey);
-										result.restricted = Boolean.parseBoolean(mSettingCache.get(xkey).getValue());
-										result.asked = true;
-										return oResult;
+										String value = mSettingCache.get(xkey).getValue();
+										if (value != null) {
+											Util.log(null, Log.WARN, "Already asked whitelist " + xkey);
+											result.restricted = Boolean.parseBoolean(value);
+											result.asked = true;
+											return oResult;
+										}
 									}
 								}
 							}
