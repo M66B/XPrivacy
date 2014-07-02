@@ -187,6 +187,7 @@ public class XBinder extends XHook {
 	// @formatter:off
 	// Forbidden classes
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
+		"com.android.systemui.slimrecent.RecentController", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.lge.systemui.Utils",
 		"com.mediatek.telephony.TelephonyManagerEx", // system
