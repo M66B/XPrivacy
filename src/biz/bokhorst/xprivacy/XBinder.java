@@ -192,6 +192,7 @@ public class XBinder extends XHook {
 		"com.mediatek.telephony.TelephonyManagerEx", // system
 		"com.sec.android.app.FlashBarService", // system
 		"com.sec.phone.Am", // system
+		"com.samsung.android.sdk.multiwindow.SMultiWindow", //system
 		"java.lang.reflect.Method",
 	});
 	// @formatter:on
@@ -199,9 +200,9 @@ public class XBinder extends XHook {
 	// @formatter:off
 	// Allow some common internal calls
 	public static List<String[]> cWhiteClassName = Arrays.asList(new String[][] {
-		new String[] { // AccountManager
+		new String[] { // IAccountManager
 		},
-		new String[] { // ActivityManager
+		new String[] { // IActivityManager
 			"android.app.Activity",
 			"android.app.ActivityThread",
 			"android.app.admin.DevicePolicyManager",
@@ -241,28 +242,29 @@ public class XBinder extends XHook {
 			"com.google.android.partnersetup.MccFallback", // system
 			"com.google.android.partnersetup.MccOverride", // system
 		},
-		new String[] { // ClipboardManager
+		new String[] { // IClipboard
 		},
-		new String[] { // ConnectivityManager
+		new String[] { // IConnectivityManager
 			"android.app.ActivityThread",
 			"android.net.VpnService",
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 		},
-		new String[] { // ContentProvider
+		new String[] { // IContentService
 			"com.android.contacts.common.model.AccountTypeManagerImpl",
 			"com.android.contacts.model.AccountTypeManagerImpl",
 		},
-		new String[] { // LocationManager
+		new String[] { // ILocationManager
 			"android.location.Geocoder",
 			"android.telephony.cdma.CdmaCellLocation",
 			"com.android.location.provider.LocationProvider", // system
 			"com.android.location.provider.LocationProviderBase", // system
 		},
-		new String[] { // TelephonyManager
+		new String[] { // ITelephonyRegistry
+			"com.android.systemui.statusbar.util.SIMHelper", //system
 		},
-		new String[] { // TelephonyManager
+		new String[] { // ITelephonyRegistryMSim
 		},
-		new String[] { // PackageManager
+		new String[] { // IPackageManager
 			"android.app.ActivityManager",
 			"android.app.ActivityThread",
 			"android.app.ContextImpl",
@@ -277,11 +279,11 @@ public class XBinder extends XHook {
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.telephony.SmsUsageMonitor",
 		},
-		new String[] { // TelephonyManager
+		new String[] { // IPhoneSubInfo
 		},
-		new String[] { // TelephonyManager
+		new String[] { // IPhoneSubInfoMSim
 		},
-		new String[] { // WindowManager
+		new String[] { // IWindowManager
 			"android.app.Activity",
 			"android.app.ActivityThread",
 			"android.app.KeyguardManager",
@@ -296,26 +298,26 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.policy.NetworkControllerGemini", // system
 			"com.android.systemui.SystemUIService", // system
 		},
-		new String[] { // WifiManager
+		new String[] { // IWifiManager
 		},
-		new String[] { // SipManager
+		new String[] { // ISipService
 		},
-		new String[] { // SmsManager
+		new String[] { // ISms
 		},
-		new String[] { // NfcManager
+		new String[] { // INfcAdapter
 		},
-		new String[] { // AppWidgetManager
+		new String[] { // IAppWidgetService
 		},
-		new String[] { // Bluetooth
+		new String[] { // IBluetooth
 		},
-		new String[] { // BluetoothManager
+		new String[] { // IBluetoothManager
 		},
-		new String[] { // InputManager
+		new String[] { // IInputManager
 			"android.view.PointerIcon",
 		},
-		new String[] { // SensorManager
+		new String[] { // SensorServer
 		},
-		new String[] { // UsbManager
+		new String[] { // IUsbManager
 		},
 	});
 	// @formatter:on
