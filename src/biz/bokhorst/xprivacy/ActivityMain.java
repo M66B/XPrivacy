@@ -90,6 +90,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int SORT_BY_INSTALL_TIME = 2;
 	private static final int SORT_BY_UPDATE_TIME = 3;
 	private static final int SORT_BY_MODIFY_TIME = 4;
+	private static final int SORT_BY_STATE = 5;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int LICENSED = 0x0100;
@@ -140,6 +141,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				Long mTime0 = appInfo0.getModificationTime(ActivityMain.this);
 				Long mTime1 = appInfo1.getModificationTime(ActivityMain.this);
 				return sortOrder * mTime1.compareTo(mTime0);
+			case SORT_BY_STATE:
+				Integer state0 = Integer.parseInt(PrivacyManager.getSetting(appInfo0.getUid(),
+						PrivacyManager.cSettingState, Integer.toString(STATE_CHANGED)));
+				Integer state1 = Integer.parseInt(PrivacyManager.getSetting(appInfo1.getUid(),
+						PrivacyManager.cSettingState, Integer.toString(STATE_CHANGED)));
+				return sortOrder * state0.compareTo(state1);
 			}
 			return 0;
 		}
@@ -886,6 +893,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							break;
 						case R.id.rbSModified:
 							mSortMode = SORT_BY_MODIFY_TIME;
+							break;
+						case R.id.rbSState:
+							mSortMode = SORT_BY_STATE;
 							break;
 						}
 						mSortInvert = cbSInvert.isChecked();

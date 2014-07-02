@@ -122,6 +122,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_sinstalled">Per data di installazione</string>
     <string name="title_supdated">Per data di aggiornamento</string>
     <string name="title_smodified">Per data di modifica (XPrivacy)</string>
+    <string name="title_sstate">By state (XPrivacy)</string>
     <string name="title_sinvert">Inverti</string>
     <string name="title_attempt">Tentativo d\'uso di:</string>
     <string name="title_category">Categoria:</string>

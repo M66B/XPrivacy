@@ -24,6 +24,8 @@ Changelog
 
 **Next release**
 
+* Added option to sort by state ([issue](/../../issues/1772))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.19 BETA**

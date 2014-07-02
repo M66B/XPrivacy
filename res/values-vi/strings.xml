@@ -121,6 +121,7 @@
     <string name="title_sinstalled">Theo ngày cài đặt</string>
     <string name="title_supdated">Theo ngày cập nhật</string>
     <string name="title_smodified">Theo ngày chỉnh sửa (XPrivacy)</string>
+    <string name="title_sstate">By state (XPrivacy)</string>
     <string name="title_sinvert">Đảo ngược vị trí sắp xếp</string>
     <string name="title_attempt">Cố gắng sử dụng của:</string>
     <string name="title_category">Danh mục:</string>
