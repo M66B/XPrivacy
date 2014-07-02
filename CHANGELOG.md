@@ -26,7 +26,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 2.1.19 BVETA**
+**Version 2.1.19 BETA**
 
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
