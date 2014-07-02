@@ -114,6 +114,7 @@ public class XBinder extends XHook {
 			"android.content.ContentResolver",
 			"android.content.ContentProviderClient",
 			"com.android.providers.contacts.ContactsProvider2",
+			"com.android.providers.contacts.contact.ContactsProvider2",
 		},
 		new String[] { // ILocationManager
 			"android.location.LocationManager",
@@ -187,9 +188,10 @@ public class XBinder extends XHook {
 	// @formatter:off
 	// Forbidden classes
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
+		"com.android.internal.util.aokp.AwesomeAction", // system
 		"com.android.systemui.slimrecent.RecentController", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
-		"com.lge.systemui.Utils",
+		"com.lge.systemui.Utils", // system
 		"com.mediatek.telephony.TelephonyManagerEx", // system
 		"com.sec.android.app.FlashBarService", // system
 		"com.sec.phone.Am", // system
