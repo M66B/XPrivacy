@@ -24,7 +24,10 @@ Changelog
 
 **Next release**
 
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
 * Added option to sort by state ([issue](/../../issues/1772))
+* Some small performance optimizations
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
