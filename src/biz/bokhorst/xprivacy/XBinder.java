@@ -101,6 +101,7 @@ public class XBinder extends XHook {
 		},
 		new String[] { // IActivityManager
 			"android.app.ActivityManager",
+			// "com.lbe.security.LBEApplication",
 		},
 		new String[] { // IClipboard
 			"android.content.ClipboardManager",
@@ -186,8 +187,11 @@ public class XBinder extends XHook {
 	// @formatter:off
 	// Forbidden classes
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
+		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.lge.systemui.Utils",
+		"com.mediatek.telephony.TelephonyManagerEx", // system
 		"com.sec.android.app.FlashBarService", // system
+		"com.sec.phone.Am", // system
 		"java.lang.reflect.Method",
 	});
 	// @formatter:on
@@ -281,6 +285,7 @@ public class XBinder extends XHook {
 			"android.hardware.LegacySensorManager",
 			"android.hardware.SensorManager",
 			"android.widget.PopupWindow",
+			"android.os.StrictMode",
 			"com.android.internal.widget.LockPatternUtils", // system
 			"com.android.internal.policy.impl.PhoneWindow",
 			"com.android.systemui.statusbar.BaseStatusBar", // system
