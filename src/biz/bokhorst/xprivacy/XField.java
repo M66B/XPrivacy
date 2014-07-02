@@ -129,8 +129,10 @@ public class XField extends XHook {
 		if (!cClassName.contains(className))
 			return;
 
-		// Check exception
+		// Check exceptions
 		String fieldName = field.getName();
+		if ("CREATOR".equals(fieldName))
+			return;
 		if ("java.net.Inet4Address".equals(className) && "ANY".equals(fieldName))
 			return;
 		if ("android.net.wifi.WifiInfo".equals(className) && "mWifiSsid".equals(fieldName))
