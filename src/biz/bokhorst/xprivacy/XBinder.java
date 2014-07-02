@@ -237,6 +237,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.quicksettings.UserTile", // system
 			"com.android.systemui.quicksettings.QuickSettingsTile", // system
 			"com.google.android.partnersetup.MccFallback", // system
+			"com.google.android.partnersetup.MccOverride", // system
 		},
 		new String[] { // ClipboardManager
 		},
