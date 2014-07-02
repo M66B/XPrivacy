@@ -8,3 +8,6 @@ For interested developers:
 * Accessibility: *android:labelFor="..."*
 * Hook location intents
 * Hook more package manager methods (which return info about one package)
+
+https://android.googlesource.com/?format=HTML
+git clone https://android.googlesource.com/platform/frameworks/base -b l-preview
