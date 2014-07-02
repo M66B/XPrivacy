@@ -1141,6 +1141,10 @@ public class PrivacyService {
 						mSettingCache.remove(key);
 					mSettingCache.put(key, key);
 				}
+
+				// Default value
+				if (result.value == null)
+					result.value = setting.value;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
