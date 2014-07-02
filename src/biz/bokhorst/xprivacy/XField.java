@@ -145,13 +145,8 @@ public class XField extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		Field field = (Field) param.thisObject;
-
 		// Restore accessibility
+		Field field = (Field) param.thisObject;
 		field.setAccessible((Boolean) param.getObjectExtra("accessible"));
-
-		// Check if Android
-		if (Binder.getCallingUid() == android.os.Process.SYSTEM_UID)
-			return;
 	}
 }
