@@ -1058,6 +1058,8 @@ public class PrivacyService {
 		@SuppressLint("DefaultLocale")
 		public PSetting getSetting(PSetting setting) throws RemoteException {
 			int userId = Util.getUserId(setting.uid);
+
+			// Special case
 			if (Meta.cTypeAccountHash.equals(setting.type))
 				try {
 					setting.type = Meta.cTypeAccount;
@@ -1065,6 +1067,8 @@ public class PrivacyService {
 				} catch (Throwable ex) {
 					Util.bug(null, ex);
 				}
+
+			// Default result
 			PSetting result = new PSetting(setting.uid, setting.type, setting.name, setting.value);
 
 			try {
@@ -1075,6 +1079,8 @@ public class PrivacyService {
 				synchronized (mSettingCache) {
 					if (mSettingCache.containsKey(key)) {
 						result.value = mSettingCache.get(key).getValue();
+						if (result.value == null)
+							result.value = setting.value; // default value
 						return result;
 					}
 				}
@@ -1103,6 +1109,7 @@ public class PrivacyService {
 				}
 
 				// Execute statement
+				boolean found = false;
 				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
@@ -1112,9 +1119,8 @@ public class PrivacyService {
 							stmtGetSetting.bindLong(1, setting.uid);
 							stmtGetSetting.bindString(2, setting.type);
 							stmtGetSetting.bindString(3, setting.name);
-							String value = stmtGetSetting.simpleQueryForString();
-							if (value != null)
-								result.value = value;
+							result.value = stmtGetSetting.simpleQueryForString();
+							found = true;
 						}
 					} catch (SQLiteDoneException ignored) {
 					}
@@ -1129,7 +1135,7 @@ public class PrivacyService {
 				}
 
 				// Add to cache
-				key.setValue(result.value);
+				key.setValue(found ? result.value : null);
 				synchronized (mSettingCache) {
 					if (mSettingCache.containsKey(key))
 						mSettingCache.remove(key);
