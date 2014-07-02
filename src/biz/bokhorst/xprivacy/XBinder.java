@@ -296,8 +296,9 @@ public class XBinder extends XHook {
 			"android.hardware.SensorManager",
 			"android.widget.PopupWindow",
 			"android.os.StrictMode",
-			"com.android.internal.widget.LockPatternUtils", // system
 			"com.android.internal.policy.impl.PhoneWindow",
+			"com.android.internal.view.RotationPolicy", // system
+			"com.android.internal.widget.LockPatternUtils", // system
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 			"com.android.systemui.statusbar.policy.NetworkControllerGemini", // system
