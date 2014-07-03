@@ -102,6 +102,7 @@ public class XBinder extends XHook {
 		new String[] { // IActivityManager
 			"android.app.ActivityManager",
 			// "com.lbe.security.LBEApplication",
+			// "com.lbe.security.service.SecurityService",
 		},
 		new String[] { // IClipboard
 			"android.content.ClipboardManager",
@@ -121,6 +122,7 @@ public class XBinder extends XHook {
 		},
 		new String[] { // ITelephonyRegistry
 			"android.telephony.TelephonyManager",
+			"android.telephony.MultiSimTelephonyManager",
 		},
 		new String[] { // ITelephonyRegistryMSim
 			"android.telephony.MSimTelephonyManager",
@@ -190,14 +192,17 @@ public class XBinder extends XHook {
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
 		"com.android.internal.util.aokp.AwesomeAction", // system
 		"com.android.internal.util.djl.SlimActions", // system
+		"com.android.internal.util.slim.SlimActions", // system
 		"com.android.systemui.slimrecent.RecentController", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.htc.util.skin.HtcSkinUtil", // system
 		"com.lge.systemui.Utils", // system
 		"com.mediatek.telephony.TelephonyManagerEx", // system
 		"com.sec.android.app.FlashBarService", // system
+		"com.sec.android.app.videoplayer.feature.VPFeature", // system
+		"com.sec.android.service.health.sensor.HealthService", // system
 		"com.sec.phone.Am", // system
-		"com.samsung.android.sdk.multiwindow.SMultiWindow", //system
+		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
 		"java.lang.reflect.Method",
 	});
 	// @formatter:on
@@ -232,12 +237,15 @@ public class XBinder extends XHook {
 			"com.android.internal.os.RuntimeInit",
 			"com.android.internal.policy.impl.PhoneWindowManager",
 			"com.android.internal.widget.LockPatternUtils", // system
+			"com.android.keyguard.KeyguardActivityLauncher", // system
 			"com.android.keyguard.KeyguardMultiUserSelectorView", // system
 			"com.android.keyguard.KeyguardViewMediator", // system
 			"com.android.keyguard.KeyguardUpdateMonitor", // system
 			"com.android.packageinstaller.PackageInstallerActivity", // system
 			"com.android.systemui.recent.RecentsPanelView", // system
+			"com.android.systemui.SearchPanelView", // system
 			"com.android.systemui.statusbar.BaseStatusBar", // system
+			"com.android.systemui.statusbar.pie.PieMenu", // system
 			"com.android.systemui.statusbar.policy.DateView", // system
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
