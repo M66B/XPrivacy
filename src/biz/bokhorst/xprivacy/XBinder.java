@@ -188,7 +188,7 @@ public class XBinder extends XHook {
 	// @formatter:on
 
 	// @formatter:off
-	// Forbidden classes
+	// Forbidden classes, no exceptions for vendor specific changes
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
 		"com.android.internal.util.aokp.AwesomeAction", // system
 		"com.android.internal.util.djl.SlimActions", // system
@@ -205,6 +205,7 @@ public class XBinder extends XHook {
 		"com.sec.android.service.health.sensor.HealthService", // system
 		"com.sec.phone.Am", // system
 		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
+		"com.sonymobile.systemui.statusbar.tools.ToolsMain", // system
 		"java.lang.reflect.Method",
 	});
 	// @formatter:on
