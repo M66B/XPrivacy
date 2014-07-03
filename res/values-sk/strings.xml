@@ -100,7 +100,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_shell">Konzola (príkazy, superuser)</string>
     <string name="restrict_system">Systém (nainštalované aplikácie)</string>
     <string name="restrict_view">Zobrazenie (prehliadač)</string>
-    <string name="whitelist_address">Addresses</string>
+    <string name="whitelist_address">Adresy</string>
     <string name="whitelist_ipaddress">Adresy IP</string>
     <string name="whitelist_library">Natívne knižnice</string>
     <string name="whitelist_method">Názvy metód</string>
@@ -122,13 +122,13 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_sinstalled">Podľa dátumu inštalácie</string>
     <string name="title_supdated">Podľa dátumu aktulizácie</string>
     <string name="title_smodified">Podľa dátumu zmeny (XPrivacy)</string>
-    <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_sstate">Podľa stavu (XPrivacy)</string>
     <string name="title_sinvert">Obrátiť poradie zoradenia</string>
     <string name="title_attempt">Pokus o použitie:</string>
     <string name="title_category">Kategória:</string>
     <string name="title_function">Funkcia:</string>
     <string name="title_parameters">Parametre:</string>
-    <string name="title_applycat">Aplikovať na celú kategóriu</string>
+    <string name="title_applycat">Použiť na celú kategóriu</string>
     <string name="title_once">Raz za %s sekúnd</string>
     <string name="title_whitelist">Biela listina \'%1$s\'</string>
     <string name="title_allow">Povoliť</string>
