@@ -110,6 +110,7 @@ public class XBinder extends XHook {
 		new String[] { // IConnectivityManager
 			"android.net.ConnectivityManager",
 			"android.net.MultiSimConnectivityManager",
+			"com.android.vpndialogs.ConfirmDialog",
 		},
 		new String[] { // IContentService
 			"android.content.ContentResolver",
