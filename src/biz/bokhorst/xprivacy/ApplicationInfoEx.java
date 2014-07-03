@@ -233,10 +233,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return Long.parseLong(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingModifyTime, "0"));
 	}
 
-	public long getLastUsageTime(Context context) {
-		return PrivacyManager.getUsage(-getUid(), null, null);
-	}
-
 	public boolean isSystem() {
 		boolean mSystem = false;
 		for (ApplicationInfo appInfo : mMapAppInfo.values()) {

@@ -123,7 +123,6 @@ Det är emellertid omöjligt att garantera att appen fungerar på alla enheter o
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
-    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="title_attempt">Usage attempt of:</string>
     <string name="title_category">Category:</string>

@@ -91,7 +91,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int SORT_BY_UPDATE_TIME = 3;
 	private static final int SORT_BY_MODIFY_TIME = 4;
 	private static final int SORT_BY_STATE = 5;
-	private static final int SORT_BY_USAGE_TIME = 6;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int LICENSED = 0x0100;
@@ -149,14 +148,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					return sortOrder * appInfo0.compareTo(appInfo1);
 				else
 					return sortOrder * state0.compareTo(state1);
-			case SORT_BY_USAGE_TIME:
-				// Default last used first
-				Long usage0 = appInfo0.getLastUsageTime(ActivityMain.this);
-				Long usage1 = appInfo1.getLastUsageTime(ActivityMain.this);
-				if (usage0.compareTo(usage1) == 0)
-					return sortOrder * appInfo0.compareTo(appInfo1);
-				else
-					return sortOrder * usage0.compareTo(usage1);
 			}
 			return 0;
 		}
@@ -879,9 +870,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		case SORT_BY_STATE:
 			rgSMode.check(R.id.rbSState);
 			break;
-		case SORT_BY_USAGE_TIME:
-			rgSMode.check(R.id.rbSUsage);
-			break;
 		}
 		cbSInvert.setChecked(mSortInvert);
 
@@ -912,9 +900,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							break;
 						case R.id.rbSState:
 							mSortMode = SORT_BY_STATE;
-							break;
-						case R.id.rbSUsage:
-							mSortMode = SORT_BY_USAGE_TIME;
 							break;
 						}
 						mSortInvert = cbSInvert.isChecked();
@@ -1737,6 +1722,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Get can restrict
 					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
 							rstate.mMethodName, true);
+
 					return holder;
 				}
 				return null;

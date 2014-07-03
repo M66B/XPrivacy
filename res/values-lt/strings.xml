@@ -123,7 +123,6 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_supdated">Pagal atnaujinimo datą</string>
     <string name="title_smodified">Pagal modifikavimo datą (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
-    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">Atvirkštinė rūšiavimo tvarka</string>
     <string name="title_attempt">Bando naudoti:</string>
     <string name="title_category">Kategorija:</string>
