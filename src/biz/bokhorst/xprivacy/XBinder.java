@@ -205,6 +205,7 @@ public class XBinder extends XHook {
 		"com.sec.android.app.videoplayer.feature.VPFeature", // system
 		"com.sec.android.service.health.sensor.HealthService", // system
 		"com.sec.phone.Am", // system
+		"com.samsung.android.sdk.look.SlookImpl", // system
 		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
 		"com.sonymobile.systemui.statusbar.tools.ToolsMain", // system
 		"java.lang.reflect.Method",
