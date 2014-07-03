@@ -123,6 +123,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_supdated">Par date de mise à jour</string>
     <string name="title_smodified">Par date de modification (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">Inverser l\'ordre</string>
     <string name="title_attempt">Tentative d\'utilisation de:</string>
     <string name="title_category">Catégorie :</string>

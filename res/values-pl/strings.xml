@@ -123,6 +123,7 @@
     <string name="title_supdated">Po dacie aktualizacji</string>
     <string name="title_smodified">Po dacie modyfikacji (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">Odwróć porządek sortowania</string>
     <string name="title_attempt">Próba odczytu:</string>
     <string name="title_category">Kategoria:</string>

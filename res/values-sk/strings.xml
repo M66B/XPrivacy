@@ -123,6 +123,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_supdated">Podľa dátumu aktulizácie</string>
     <string name="title_smodified">Podľa dátumu zmeny (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">Obrátiť poradie zoradenia</string>
     <string name="title_attempt">Pokus o použitie:</string>
     <string name="title_category">Kategória:</string>

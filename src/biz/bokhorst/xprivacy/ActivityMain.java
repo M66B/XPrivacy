@@ -91,6 +91,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int SORT_BY_UPDATE_TIME = 3;
 	private static final int SORT_BY_MODIFY_TIME = 4;
 	private static final int SORT_BY_STATE = 5;
+	private static final int SORT_BY_USAGE_TIME = 6;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int LICENSED = 0x0100;
@@ -124,29 +125,38 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			case SORT_BY_NAME:
 				return sortOrder * appInfo0.compareTo(appInfo1);
 			case SORT_BY_UID:
-				// default lowest first
+				// Default lowest first
 				return sortOrder * (appInfo0.getUid() - appInfo1.getUid());
 			case SORT_BY_INSTALL_TIME:
-				// default newest first
+				// Default newest first
 				Long iTime0 = appInfo0.getInstallTime(ActivityMain.this);
 				Long iTime1 = appInfo1.getInstallTime(ActivityMain.this);
 				return sortOrder * iTime1.compareTo(iTime0);
 			case SORT_BY_UPDATE_TIME:
-				// default newest first
+				// Default newest first
 				Long uTime0 = appInfo0.getUpdateTime(ActivityMain.this);
 				Long uTime1 = appInfo1.getUpdateTime(ActivityMain.this);
 				return sortOrder * uTime1.compareTo(uTime0);
 			case SORT_BY_MODIFY_TIME:
-				// default newest first
+				// Default newest first
 				Long mTime0 = appInfo0.getModificationTime(ActivityMain.this);
 				Long mTime1 = appInfo1.getModificationTime(ActivityMain.this);
 				return sortOrder * mTime1.compareTo(mTime0);
 			case SORT_BY_STATE:
-				Integer state0 = Integer.parseInt(PrivacyManager.getSetting(appInfo0.getUid(),
-						PrivacyManager.cSettingState, Integer.toString(STATE_CHANGED)));
-				Integer state1 = Integer.parseInt(PrivacyManager.getSetting(appInfo1.getUid(),
-						PrivacyManager.cSettingState, Integer.toString(STATE_CHANGED)));
-				return sortOrder * state0.compareTo(state1);
+				Integer state0 = appInfo0.getState(ActivityMain.this);
+				Integer state1 = appInfo1.getState(ActivityMain.this);
+				if (state0.compareTo(state1) == 0)
+					return sortOrder * appInfo0.compareTo(appInfo1);
+				else
+					return sortOrder * state0.compareTo(state1);
+			case SORT_BY_USAGE_TIME:
+				// Default last used first
+				Long usage0 = appInfo0.getLastUsageTime(ActivityMain.this);
+				Long usage1 = appInfo1.getLastUsageTime(ActivityMain.this);
+				if (usage0.compareTo(usage1) == 0)
+					return sortOrder * appInfo0.compareTo(appInfo1);
+				else
+					return sortOrder * usage0.compareTo(usage1);
 			}
 			return 0;
 		}
@@ -866,6 +876,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		case SORT_BY_MODIFY_TIME:
 			rgSMode.check(R.id.rbSModified);
 			break;
+		case SORT_BY_STATE:
+			rgSMode.check(R.id.rbSState);
+			break;
+		case SORT_BY_USAGE_TIME:
+			rgSMode.check(R.id.rbSUsage);
+			break;
 		}
 		cbSInvert.setChecked(mSortInvert);
 
@@ -896,6 +912,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							break;
 						case R.id.rbSState:
 							mSortMode = SORT_BY_STATE;
+							break;
+						case R.id.rbSUsage:
+							mSortMode = SORT_BY_USAGE_TIME;
 							break;
 						}
 						mSortInvert = cbSInvert.isChecked();

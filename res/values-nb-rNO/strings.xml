@@ -121,6 +121,7 @@
     <string name="title_supdated">Etter dato, oppdatert</string>
     <string name="title_smodified">Etter dato, modifisert (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">Inverter sorteringsrekkefølge</string>
     <string name="title_attempt">Forsøk å bruke:</string>
     <string name="title_category">Kategori:</string>

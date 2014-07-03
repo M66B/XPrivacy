@@ -123,6 +123,7 @@
     <string name="title_supdated">按 更新日期</string>
     <string name="title_smodified">按 修改日期 (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">反转分类次序</string>
     <string name="title_attempt">权限使用尝试:</string>
     <string name="title_category">权限类别:</string>

@@ -123,6 +123,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="title_supdated">Mengikut tarikh dikemaskini</string>
     <string name="title_smodified">Mengikut tarikh diubahsuai (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">Terbalikkan susunan</string>
     <string name="title_attempt">Percubaan penggunaan:</string>
     <string name="title_category">Kategori:</string>

@@ -123,6 +123,7 @@
     <string name="title_supdated">بواسطة تاريخ التحديث</string>
     <string name="title_smodified">بواسطة تاريخ التعديل (XPrivacy)</string>
     <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_susage">By last usage (XPrivacy)</string>
     <string name="title_sinvert">عكس ترتيب الفرز</string>
     <string name="title_attempt">محاولة استخدام:</string>
     <string name="title_category">فئة:</string>

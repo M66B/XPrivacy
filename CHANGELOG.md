@@ -27,7 +27,9 @@ Changelog
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
 * Added option to sort by state ([issue](/../../issues/1772))
+* Added option to sort by last usage time
 * Some small performance optimizations
+* Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
