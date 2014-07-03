@@ -154,7 +154,8 @@ public class ActivityShare extends ActivityBase {
 		int choice = (extras != null && extras.containsKey(cChoice) ? extras.getInt(cChoice) : -1);
 
 		// License check
-		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
+		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)
+				|| (action.equals(ACTION_TOGGLE) && uids.length > 1)) {
 			if (!Util.isProEnabled() && Util.hasProLicense(this) == null) {
 				Util.viewUri(this, ActivityMain.cProUri);
 				finish();
