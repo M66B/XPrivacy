@@ -60,7 +60,7 @@ public class PackageChange extends BroadcastReceiver {
 
 					// Mark as new/changed
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
-							Integer.toString(ActivityMain.STATE_ATTENTION));
+							Integer.toString(ApplicationInfoEx.STATE_ATTENTION));
 
 					// New/update notification
 					boolean notify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);

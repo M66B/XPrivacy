@@ -81,10 +81,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private Handler mProHandler = new Handler();
 
-	public static final int STATE_ATTENTION = 0;
-	public static final int STATE_CHANGED = 1;
-	public static final int STATE_SHARED = 2;
-
 	private static final int SORT_BY_NAME = 0;
 	private static final int SORT_BY_UID = 1;
 	private static final int SORT_BY_INSTALL_TIME = 2;
@@ -1738,10 +1734,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						holder.llAppType.setBackgroundColor(Color.TRANSPARENT);
 
 					// Display state
-					if (state == STATE_ATTENTION)
+					if (state == ApplicationInfoEx.STATE_ATTENTION)
 						holder.vwState.setBackgroundColor(getResources().getColor(
 								getThemed(R.attr.color_state_attention)));
-					else if (state == STATE_SHARED)
+					else if (state == ApplicationInfoEx.STATE_SHARED)
 						holder.vwState
 								.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_shared)));
 					else
@@ -1969,9 +1965,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			private void showState() {
 				state = xAppInfo.getState(ActivityMain.this);
-				if (state == STATE_ATTENTION)
+				if (state == ApplicationInfoEx.STATE_ATTENTION)
 					holder.vwState.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_attention)));
-				else if (state == STATE_SHARED)
+				else if (state == ApplicationInfoEx.STATE_SHARED)
 					holder.vwState.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_shared)));
 				else
 					holder.vwState

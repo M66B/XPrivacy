@@ -1886,7 +1886,7 @@ public class PrivacyService {
 
 				// Mark state as changed
 				setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingState,
-						Integer.toString(ActivityMain.STATE_CHANGED)));
+						Integer.toString(ApplicationInfoEx.STATE_CHANGED)));
 
 				// Update modification time
 				setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingModifyTime,

@@ -39,6 +39,10 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private long mInstallTime = -1;
 	private long mUpdateTime = -1;
 
+	public static final int STATE_ATTENTION = 0;
+	public static final int STATE_CHANGED = 1;
+	public static final int STATE_SHARED = 2;
+
 	public ApplicationInfoEx(Context context, int uid) {
 		mUid = uid;
 		mMapAppInfo = new TreeMap<String, ApplicationInfo>();
@@ -192,7 +196,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	public int getState(Context context) {
 		return Integer.parseInt(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingState,
-				Integer.toString(ActivityMain.STATE_CHANGED)));
+				Integer.toString(STATE_CHANGED)));
 	}
 
 	public long getInstallTime(Context context) {

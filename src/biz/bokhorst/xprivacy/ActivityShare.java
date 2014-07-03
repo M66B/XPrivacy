@@ -1361,7 +1361,7 @@ public class ActivityShare extends ActivityBase {
 
 								// Mark as new/changed
 								PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingState,
-										Integer.toString(ActivityMain.STATE_ATTENTION));
+										Integer.toString(ApplicationInfoEx.STATE_ATTENTION));
 
 								// Change app modification time
 								PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingModifyTime,
@@ -1602,7 +1602,7 @@ public class ActivityShare extends ActivityBase {
 							if (status.getBoolean("ok")) {
 								// Mark as shared
 								PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingState,
-										Integer.toString(ActivityMain.STATE_SHARED));
+										Integer.toString(ApplicationInfoEx.STATE_SHARED));
 								setState(appInfo.getUid(), STATE_SUCCESS, null);
 							} else {
 								int errno = status.getInt("errno");
