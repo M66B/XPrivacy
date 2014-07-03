@@ -32,6 +32,7 @@ import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 import android.graphics.PixelFormat;
+import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
@@ -1772,8 +1773,9 @@ public class PrivacyService {
 
 		private String[] getXExtra(PRestriction restriction, Hook hook) {
 			List<String> listResult = new ArrayList<String>();
-			if (hook != null)
+			if (restriction.extra != null && hook != null)
 				if (hook.whitelist().equals(Meta.cTypeFilename)) {
+					// Top folders of file name
 					File file = new File(restriction.extra);
 					for (int i = 1; i <= 3 && file != null; i++) {
 						String parent = file.getParent();
@@ -1783,23 +1785,39 @@ public class PrivacyService {
 					}
 
 				} else if (hook.whitelist().equals(Meta.cTypeIPAddress)) {
-					int semi = restriction.extra.lastIndexOf(':');
-					String address = (semi >= 0 ? restriction.extra.substring(0, semi) : restriction.extra);
+					// sub-domain or sub-net
+					int colon = restriction.extra.lastIndexOf(':');
+					String address = (colon >= 0 ? restriction.extra.substring(0, colon) : restriction.extra);
 					if (Patterns.IP_ADDRESS.matcher(address).matches()) {
 						int dot = address.lastIndexOf('.');
 						listResult.add(address.substring(0, dot) + ".*"
-								+ (semi >= 0 ? restriction.extra.substring(semi) : ""));
-						if (semi >= 0)
+								+ (colon >= 0 ? restriction.extra.substring(colon) : ""));
+						if (colon >= 0)
 							listResult.add(address.substring(0, dot) + ".*:*");
 					} else {
 						int dot = restriction.extra.indexOf('.');
 						if (dot > 0) {
 							listResult.add('*' + restriction.extra.substring(dot));
-							if (semi >= 0)
-								listResult.add('*' + restriction.extra.substring(dot, semi) + ":*");
+							if (colon >= 0)
+								listResult.add('*' + restriction.extra.substring(dot, colon) + ":*");
 						}
 					}
 				}
+
+				else if (hook.whitelist().equals(Meta.cTypeUrl)) {
+					// Top folders of file name
+					Uri uri = Uri.parse(restriction.extra);
+					if ("file".equals(uri.getScheme())) {
+						File file = new File(uri.getEncodedPath());
+						for (int i = 1; i <= 3 && file != null; i++) {
+							String parent = file.getParent();
+							if (!TextUtils.isEmpty(parent))
+								listResult.add(parent + File.separatorChar + "*");
+							file = file.getParentFile();
+						}
+					}
+				}
+
 			return listResult.toArray(new String[0]);
 		}
 

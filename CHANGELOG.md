@@ -30,6 +30,7 @@ Changelog
 * Some small performance optimizations
 * Require a pro license for batch operations (toggle restrictions for multiple applications)
 	* I have put about 2000 hours into developing and supporting XPrivacy so far. The reason for [accepting donations](http://www.xprivacy.eu/) is to keep myself motivated to keep doing this. Unfortunately the number of donations is quite low and thus not very motivating. So, don't start complaining about this change, but instead think about supporting this huge project. You can still fully protect your privacy with all the free features of XPrivacy. I have made a promise that you will always be able to do so and I intent to keep this promise.
+* Allow white listing of top folders of file name of *android.intent.action.VIEW*
 * Updated Dutch translation
 * Updated German translation
 
