@@ -195,6 +195,7 @@ public class XBinder extends XHook {
 		"com.android.internal.util.djl.SlimActions", // system
 		"com.android.internal.util.slim.SlimActions", // system
 		"com.android.systemui.slimrecent.RecentController", // system
+		"com.android.systemui.statusbar.phone.AsusPhoneStatusBar", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.htc.util.skin.HtcSkinUtil", // system
 		"com.lge.launcher2.util.LGWindow", // system
@@ -240,6 +241,7 @@ public class XBinder extends XHook {
 			"android.widget.TextView",
 			"android.os.Looper",
 			"android.os.StrictMode",
+			"android.os.UserManager", // system
 			"com.android.internal.app.AlertActivity",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.os.RuntimeInit",
@@ -259,8 +261,10 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
 			"com.android.systemui.statusbar.policy.DateView", // system
 			"com.android.systemui.statusbar.policy.activedisplay.ActiveDisplayView", // system
+			"com.android.systemui.statusbar.policy.QuickSettingsUserInfoController", // system
 			"com.android.systemui.quicksettings.UserTile", // system
 			"com.android.systemui.quicksettings.QuickSettingsTile", // system
+			"com.google.android.partnersetup.AppHider", // system
 			"com.google.android.partnersetup.MccFallback", // system
 			"com.google.android.partnersetup.MccOverride", // system
 		},
@@ -311,6 +315,7 @@ public class XBinder extends XHook {
 			"android.app.KeyguardManager",
 			"android.hardware.LegacySensorManager",
 			"android.hardware.SensorManager",
+			"android.webkit.WebView", // system
 			"android.widget.PopupWindow",
 			"android.os.StrictMode",
 			// "android.service.wallpaper.WallpaperService", // user
