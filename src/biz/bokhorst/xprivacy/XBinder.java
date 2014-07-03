@@ -134,6 +134,7 @@ public class XBinder extends XHook {
 		},
 		new String[] { // IPhoneSubInfo
 			"android.telephony.TelephonyManager",
+			"com.mediatek.telephony.TelephonyManagerEx",
 		},
 		new String[] { // IPhoneSubInfoMSim
 			"android.telephony.MSimTelephonyManager",
@@ -202,10 +203,10 @@ public class XBinder extends XHook {
 		"com.lge.lockscreen.KeyguardModel", // system
 		"com.lge.qslide.QSlide", // system
 		"com.lge.systemui.Utils", // system
-		"com.mediatek.telephony.TelephonyManagerEx", // system
 		"com.sec.android.app.FlashBarService", // system
 		"com.sec.android.app.videoplayer.feature.VPFeature", // system
 		"com.sec.android.band.nfc.NFCMessageCallback", // system
+		"com.sec.android.service.cm.ApplicationUpdateReceiver", // system
 		"com.sec.android.service.health.sensor.HealthService", // system
 		"com.sec.phone.Am", // system
 		"com.samsung.android.sconnect.periph.PeriphService", // system
