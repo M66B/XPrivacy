@@ -22,7 +22,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -33,7 +32,6 @@ import android.database.sqlite.SQLiteDoneException;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteStatement;
 import android.graphics.PixelFormat;
-import android.net.Uri;
 import android.os.Binder;
 import android.os.Build;
 import android.os.Environment;
@@ -555,22 +553,6 @@ public class PrivacyService {
 							mresult.asked = true;
 						}
 					}
-					if (usage && hook != null && Intent.ACTION_VIEW.equals(hook.getName()) && restriction.extra != null)
-						try {
-							Uri uri = Uri.parse(restriction.extra);
-							if ("file".equals(uri.getScheme())) {
-								String fileName = uri.getLastPathSegment();
-								String value = getSetting(new PSetting(restriction.uid, Meta.cTypeFilename, fileName,
-										null)).value;
-								if (value != null) {
-									// true means allow, false means block
-									mresult.restricted = !Boolean.parseBoolean(value);
-									mresult.asked = true;
-								}
-							}
-						} catch (Throwable ex) {
-							Util.bug(null, ex);
-						}
 
 					// Fallback
 					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
@@ -1647,17 +1629,6 @@ public class PrivacyService {
 					cbWhitelistExtra3.setVisibility(View.VISIBLE);
 				}
 			}
-			if (hook != null && Intent.ACTION_VIEW.equals(hook.getName()) && restriction.extra != null)
-				try {
-					Uri uri = Uri.parse(restriction.extra);
-					if ("file".equals(uri.getScheme())) {
-						String fileName = uri.getLastPathSegment();
-						cbWhitelist.setText(resources.getString(R.string.title_whitelist, fileName));
-						cbWhitelist.setVisibility(View.VISIBLE);
-					}
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
 
 			// Category, once and whitelist exclude each other
 			cbCategory.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -1835,18 +1806,11 @@ public class PrivacyService {
 		private void onDemandWhitelist(final PRestriction restriction, String xextra, final PRestriction result,
 				Hook hook) {
 			try {
-
 				// Set the whitelist
 				Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction
 						+ " xextra=" + xextra);
-				if (Intent.ACTION_VIEW.equals(hook.getName())) {
-					Uri uri = Uri.parse(restriction.extra);
-					String fileName = uri.getLastPathSegment();
-					setSettingInternal(new PSetting(restriction.uid, Meta.cTypeFilename, fileName,
-							Boolean.toString(!result.restricted)));
-				} else
-					setSettingInternal(new PSetting(restriction.uid, hook.whitelist(),
-							(xextra == null ? restriction.extra : xextra), Boolean.toString(!result.restricted)));
+				setSettingInternal(new PSetting(restriction.uid, hook.whitelist(), (xextra == null ? restriction.extra
+						: xextra), Boolean.toString(!result.restricted)));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
