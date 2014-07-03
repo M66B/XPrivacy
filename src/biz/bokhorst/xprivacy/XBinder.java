@@ -196,6 +196,8 @@ public class XBinder extends XHook {
 		"com.android.systemui.slimrecent.RecentController", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.htc.util.skin.HtcSkinUtil", // system
+		"com.lge.launcher2.util.LGWindow", // system
+		"com.lge.lockscreen.KeyguardModel", // system
 		"com.lge.systemui.Utils", // system
 		"com.mediatek.telephony.TelephonyManagerEx", // system
 		"com.sec.android.app.FlashBarService", // system
