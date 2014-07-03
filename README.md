@@ -1009,19 +1009,19 @@ since the export is meant as full backup.
 <a name="FAQ63"></a>
 **(63) How can I troubleshoot an issue believed to be caused by XPrivacy?**
 
-* Always make sure you have a backup (XPrivacy export/NANDROID).
-* Most issues are caused by "bad restrictions", try to reproduce the issue and check the main usage data.
+* Always make sure you have a backup (XPrivacy export or nandroid)
+* Most issues are caused by a "bad" restriction, so try to reproduce the issue and check the main usage data
 * Verify that the issue is actually caused by XPrivacy
 	* Turn on Airplane mode
 	* Disable XPrivacy in the XPosed installer (don't forget to reboot)
-	* Check if the issue is stlill present, if yes, XPrivacy is not causing the issue
-* Finding the culprit: 
-	* Clear all XPrivacy restrictions (don't forget to reboot).
-	* Check if the issue is still present.
-	* Import half of your restrictions, check if the issue is still present.
-	* If yes, clear again and import only half of these restrictions.
-	* Continue this process until you have found the culprit(s).
-* If following these steps fails to find the issue, please follow the [Support](#support) instructions. 
+	* Check if the issue is still present, if yes, XPrivacy is not causing the issue
+* Finding the culprit:
+	* Clear all XPrivacy restrictions (don't forget to reboot)
+	* Check if the issue is still present
+	* Import half of your restrictions, check if the issue is still present
+	* If yes, clear again and import only half of these restrictions
+	* Continue this process until you have found the "bad" restriction
+* If following these steps fails to find the issue, please follow the [Support](#support) instructions
 
 Support
 -------
