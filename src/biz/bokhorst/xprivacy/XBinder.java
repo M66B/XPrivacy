@@ -204,8 +204,10 @@ public class XBinder extends XHook {
 		"com.mediatek.telephony.TelephonyManagerEx", // system
 		"com.sec.android.app.FlashBarService", // system
 		"com.sec.android.app.videoplayer.feature.VPFeature", // system
+		"com.sec.android.band.nfc.NFCMessageCallback", // system
 		"com.sec.android.service.health.sensor.HealthService", // system
 		"com.sec.phone.Am", // system
+		"com.samsung.android.sconnect.periph.PeriphService", // system
 		"com.samsung.android.sdk.look.SlookImpl", // system
 		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
 		"com.sonymobile.systemui.statusbar.tools.ToolsMain", // system
@@ -252,10 +254,11 @@ public class XBinder extends XHook {
 			"com.android.systemui.SearchPanelView", // system
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.pie.PieMenu", // system
-			"com.android.systemui.statusbar.policy.DateView", // system
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
+			"com.android.systemui.statusbar.policy.DateView", // system
+			"com.android.systemui.statusbar.policy.activedisplay.ActiveDisplayView", // system
 			"com.android.systemui.quicksettings.UserTile", // system
 			"com.android.systemui.quicksettings.QuickSettingsTile", // system
 			"com.google.android.partnersetup.MccFallback", // system
@@ -310,12 +313,15 @@ public class XBinder extends XHook {
 			"android.hardware.SensorManager",
 			"android.widget.PopupWindow",
 			"android.os.StrictMode",
+			// "android.service.wallpaper.WallpaperService", // user
 			"com.android.internal.policy.impl.PhoneWindow",
 			"com.android.internal.view.RotationPolicy", // system
 			"com.android.internal.widget.LockPatternUtils", // system
+			"com.android.systemui.cooldown.OverheatReceiver", // system
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 			"com.android.systemui.statusbar.policy.NetworkControllerGemini", // system
+			"com.android.systemui.statusbar.policy.quicksetting.AutoRotateQuickSettingButton", // system
 			"com.android.systemui.SystemUIService", // system
 		},
 		new String[] { // IWifiManager
