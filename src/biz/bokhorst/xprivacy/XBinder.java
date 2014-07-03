@@ -199,6 +199,7 @@ public class XBinder extends XHook {
 		"com.htc.util.skin.HtcSkinUtil", // system
 		"com.lge.launcher2.util.LGWindow", // system
 		"com.lge.lockscreen.KeyguardModel", // system
+		"com.lge.qslide.QSlide", // system
 		"com.lge.systemui.Utils", // system
 		"com.mediatek.telephony.TelephonyManagerEx", // system
 		"com.sec.android.app.FlashBarService", // system
