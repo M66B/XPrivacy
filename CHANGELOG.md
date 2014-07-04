@@ -24,6 +24,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.20 BETA**
+
 * Fixed all problems reported through the support info
 	* Thanks for sending all the support info!
 * Added option to sort by state ([issue](/../../issues/1772))
@@ -36,8 +40,6 @@ Changelog
 * Updated Dutch translation
 * Updated German translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.19 BETA**
 
