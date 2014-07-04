@@ -277,6 +277,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.policy.Clock", // system
 			"com.android.systemui.statusbar.policy.DateView", // system
 			"com.android.systemui.statusbar.policy.activedisplay.ActiveDisplayView", // system
+			"com.android.systemui.statusbar.policy.quicksetting.QuickSettingButton", // system
 			"com.android.systemui.statusbar.policy.QuickSettingsUserInfoController", // system
 			"com.android.systemui.quicksettings.UserTile", // system
 			"com.android.systemui.quicksettings.QuickSettingsTile", // system
