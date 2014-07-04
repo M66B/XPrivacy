@@ -558,6 +558,14 @@ You can automate backups by sending an intent:
 adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT
 ```
 
+If you want to specify a file name:
+
+```
+adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT -e FileName /sdcard/test.xml
+```
+
+You can also specify a file name to the IMPORT intent.
+
 You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm), for example:
 
 * New task: Any name you like
