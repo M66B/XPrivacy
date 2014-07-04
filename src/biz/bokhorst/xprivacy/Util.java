@@ -43,8 +43,7 @@ public class Util {
 	private static boolean mPro = false;
 	private static boolean mLog = true;
 	private static boolean mLogDetermined = false;
-	private static boolean mHasLBE = false;
-	private static boolean mHasLBEDetermined = false;
+	private static Boolean mHasLBE = null;
 
 	private static Version MIN_PRO_VERSION = new Version("1.12");
 	private static String LICENSE_FILE_NAME = "XPrivacy_license.txt";
@@ -369,15 +368,17 @@ public class Util {
 	}
 
 	public static boolean hasLBE() {
-		if (!mHasLBEDetermined) {
-			mHasLBEDetermined = true;
+		if (mHasLBE == null) {
+			mHasLBE = false;
 			try {
 				File apps = new File(Environment.getDataDirectory() + File.separator + "app");
 				File[] files = (apps == null ? null : apps.listFiles());
 				if (files != null)
 					for (File file : files)
-						if (file.getName().startsWith("com.lbe.security"))
+						if (file.getName().startsWith("com.lbe.security")) {
 							mHasLBE = true;
+							break;
+						}
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}

@@ -32,10 +32,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	// Cache
 	private Drawable mIcon = null;
-	private boolean mInternet = false;
-	private boolean mInternetDetermined = false;
-	private boolean mFrozen = false;
-	private boolean mFrozenDetermined = false;
+	private Boolean mInternet = null;
+	private Boolean mFrozen = null;
 	private long mInstallTime = -1;
 	private long mUpdateTime = -1;
 
@@ -159,20 +157,20 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public boolean hasInternet(Context context) {
-		if (!mInternetDetermined) {
+		if (mInternet == null) {
+			mInternet = false;
 			PackageManager pm = context.getPackageManager();
 			for (ApplicationInfo appInfo : mMapAppInfo.values())
 				if (pm.checkPermission("android.permission.INTERNET", appInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
 					mInternet = true;
 					break;
 				}
-			mInternetDetermined = true;
 		}
 		return mInternet;
 	}
 
 	public boolean isFrozen(Context context) {
-		if (!mFrozenDetermined) {
+		if (mFrozen == null) {
 			PackageManager pm = context.getPackageManager();
 			boolean enabled = false;
 			for (ApplicationInfo appInfo : mMapAppInfo.values())
@@ -185,7 +183,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 				} catch (IllegalArgumentException ignored) {
 				}
 			mFrozen = !enabled;
-			mFrozenDetermined = true;
 		}
 		return mFrozen;
 	}
