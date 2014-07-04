@@ -341,6 +341,7 @@ public class XBinder extends XHook {
 		new String[] { // ISipService
 		},
 		new String[] { // ISms
+			"android.telephony.CallISmsApp", // system
 		},
 		new String[] { // INfcAdapter
 		},
