@@ -196,6 +196,7 @@ public class XBinder extends XHook {
 		"com.android.internal.util.djl.SlimActions", // system
 		"com.android.internal.util.slim.SlimActions", // system
 		"com.android.systemui.slimrecent.RecentController", // system
+		"com.android.systemui.statusbar.halo.Halo", // system
 		"com.android.systemui.statusbar.phone.AsusPhoneStatusBar", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.htc.util.skin.HtcSkinUtil", // system
@@ -209,6 +210,7 @@ public class XBinder extends XHook {
 		"com.sec.android.service.cm.ApplicationUpdateReceiver", // system
 		"com.sec.android.service.health.sensor.HealthService", // system
 		"com.sec.phone.Am", // system
+		"com.samsung.android.app.galaxyfinder.util.Utils", // system
 		"com.samsung.android.sconnect.periph.PeriphService", // system
 		"com.samsung.android.sdk.look.SlookImpl", // system
 		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
@@ -243,6 +245,7 @@ public class XBinder extends XHook {
 			"android.os.Looper",
 			"android.os.StrictMode",
 			"android.os.UserManager", // system
+			"android.provider.Settings", // system
 			"com.android.internal.app.AlertActivity",
 			"com.android.internal.app.ResolverActivity",
 			"com.android.internal.os.RuntimeInit",
@@ -260,6 +263,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
+			"com.android.systemui.statusbar.policy.Clock", // system
 			"com.android.systemui.statusbar.policy.DateView", // system
 			"com.android.systemui.statusbar.policy.activedisplay.ActiveDisplayView", // system
 			"com.android.systemui.statusbar.policy.QuickSettingsUserInfoController", // system
@@ -275,6 +279,7 @@ public class XBinder extends XHook {
 			"android.app.ActivityThread",
 			"android.net.VpnService",
 			"com.android.systemui.statusbar.BaseStatusBar", // system
+			"com.android.vpndialogs.ConfirmDialog", // system
 		},
 		new String[] { // IContentService
 			"com.android.contacts.common.model.AccountTypeManagerImpl",
@@ -328,6 +333,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 			"com.android.systemui.statusbar.policy.NetworkControllerGemini", // system
 			"com.android.systemui.statusbar.policy.quicksetting.AutoRotateQuickSettingButton", // system
+			"com.android.systemui.statusbar.tablet.TabletStatusBar", // system
 			"com.android.systemui.SystemUIService", // system
 		},
 		new String[] { // IWifiManager
