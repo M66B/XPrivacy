@@ -222,6 +222,7 @@ public class XBinder extends XHook {
 		"com.samsung.android.sdk.look.SlookImpl", // system
 		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
 		"com.sonymobile.systemui.statusbar.tools.ToolsMain", // system
+		"android.telephony.gemini.GeminiSmsManager", // system
 		"com.zte.security.ZTEIPackageManager",
 		"java.lang.reflect.Method",
 	});
