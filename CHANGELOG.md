@@ -24,6 +24,8 @@ Changelog
 
 **Next release**
 
+* Added option to specify file name to import/export intent ([issue](/../../issues/1784))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.20 BETA**
