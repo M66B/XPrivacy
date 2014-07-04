@@ -188,6 +188,7 @@ public class XBinder extends XHook {
 	// @formatter:off
 	// Forbidden classes, no exceptions for vendor specific changes
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
+		"com.android.htccontacts.model.AccountTypeManagerImpl", // system
 		"com.android.internal.util.aokp.AwesomeAction", // system
 		"com.android.internal.util.djl.SlimActions", // system
 		"com.android.internal.util.slim.SlimActions", // system
@@ -197,6 +198,7 @@ public class XBinder extends XHook {
 		"com.google.android.partnersetup.AppHider", // system
 		"com.google.android.partnersetup.MccFallback", // system
 		"com.google.android.partnersetup.MccOverride", // system
+		"com.htc.android.htcime.HTCIMEService", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.htc.util.skin.HtcSkinUtil", // system
 		"com.lbe.security.LBEApplication",
@@ -206,7 +208,9 @@ public class XBinder extends XHook {
 		"com.lge.qslide.QSlide", // system
 		"com.lge.systemui.Utils", // system
 		"com.mediatek.telephony.TelephonyManagerEx",
-		"com.sec.android.app.FlashBarService", // system
+		"com.sec.android.app.FlashBarService.AppListController", // system
+		"com.sec.android.app.FlashBarService.CenterBarWindow", // system
+		"com.sec.android.app.GlanceView.GlanceViewService", // system
 		"com.sec.android.app.videoplayer.feature.VPFeature", // system
 		"com.sec.android.band.nfc.NFCMessageCallback", // system
 		"com.sec.android.service.cm.ApplicationUpdateReceiver", // system
