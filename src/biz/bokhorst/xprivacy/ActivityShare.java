@@ -108,6 +108,7 @@ public class ActivityShare extends ActivityBase {
 	public static final String cRestriction = "Restriction";
 	public static final String cInteractive = "Interactive";
 	public static final String cChoice = "Choice";
+	public static final String cFileName = "FileName";
 	public static final String HTTP_BASE_URL = "http://crowd.xprivacy.eu/";
 	public static final String HTTPS_BASE_URL = "https://crowd.xprivacy.eu/";
 
@@ -152,6 +153,7 @@ public class ActivityShare extends ActivityBase {
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 		final String restrictionName = (extras != null ? extras.getString(cRestriction) : null);
 		int choice = (extras != null && extras.containsKey(cChoice) ? extras.getInt(cChoice) : -1);
+		mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName) : null);
 
 		// License check
 		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)
@@ -257,18 +259,19 @@ public class ActivityShare extends ActivityBase {
 			boolean hasIntent = Util.isIntentAvailable(ActivityShare.this, file);
 
 			// Get file name
-			if (action.equals(ACTION_EXPORT)) {
-				String packageName = null;
-				if (uids.length == 1)
-					try {
-						ApplicationInfoEx appInfo = new ApplicationInfoEx(this, uids[0]);
-						packageName = appInfo.getPackageName().get(0);
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					}
-				mFileName = getFileName(this, hasIntent, packageName);
-			} else
-				mFileName = (hasIntent ? null : getFileName(this, false, null));
+			if (mFileName == null)
+				if (action.equals(ACTION_EXPORT)) {
+					String packageName = null;
+					if (uids.length == 1)
+						try {
+							ApplicationInfoEx appInfo = new ApplicationInfoEx(this, uids[0]);
+							packageName = appInfo.getPackageName().get(0);
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+					mFileName = getFileName(this, hasIntent, packageName);
+				} else
+					mFileName = (hasIntent ? null : getFileName(this, false, null));
 
 			if (mFileName == null)
 				fileChooser();
