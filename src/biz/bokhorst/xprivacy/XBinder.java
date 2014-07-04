@@ -271,6 +271,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.pie.PieMenu", // system
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
+			"com.android.systemui.statusbar.phone.ShortcutsWidget", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
 			"com.android.systemui.statusbar.policy.Clock", // system
 			"com.android.systemui.statusbar.policy.DateView", // system
@@ -331,6 +332,8 @@ public class XBinder extends XHook {
 			"android.widget.PopupWindow",
 			"android.os.StrictMode",
 			"android.service.wallpaper.WallpaperService", // user
+			"com.android.calendar.alerts.AlertService", // system
+			"com.android.calendar.alerts.PopUpActivity", // system
 			"com.android.internal.policy.impl.PhoneWindow",
 			"com.android.internal.view.RotationPolicy", // system
 			"com.android.internal.widget.LockPatternUtils", // system
