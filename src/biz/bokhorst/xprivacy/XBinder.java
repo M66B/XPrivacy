@@ -101,8 +101,6 @@ public class XBinder extends XHook {
 		},
 		new String[] { // IActivityManager
 			"android.app.ActivityManager",
-			// "com.lbe.security.LBEApplication",
-			// "com.lbe.security.service.SecurityService",
 		},
 		new String[] { // IClipboard
 			"android.content.ClipboardManager",
@@ -130,11 +128,9 @@ public class XBinder extends XHook {
 		},
 		new String[] { // IPackageManager
 			"android.app.ApplicationPackageManager",
-			"com.zte.security.ZTEIPackageManager", // ZTE
 		},
 		new String[] { // IPhoneSubInfo
 			"android.telephony.TelephonyManager",
-			"com.mediatek.telephony.TelephonyManagerEx",
 		},
 		new String[] { // IPhoneSubInfoMSim
 			"android.telephony.MSimTelephonyManager",
@@ -198,12 +194,18 @@ public class XBinder extends XHook {
 		"com.android.systemui.slimrecent.RecentController", // system
 		"com.android.systemui.statusbar.halo.Halo", // system
 		"com.android.systemui.statusbar.phone.AsusPhoneStatusBar", // system
+		"com.google.android.partnersetup.AppHider", // system
+		"com.google.android.partnersetup.MccFallback", // system
+		"com.google.android.partnersetup.MccOverride", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.htc.util.skin.HtcSkinUtil", // system
+		"com.lbe.security.LBEApplication",
+		"com.lbe.security.service.SecurityService",
 		"com.lge.launcher2.util.LGWindow", // system
 		"com.lge.lockscreen.KeyguardModel", // system
 		"com.lge.qslide.QSlide", // system
 		"com.lge.systemui.Utils", // system
+		"com.mediatek.telephony.TelephonyManagerEx",
 		"com.sec.android.app.FlashBarService", // system
 		"com.sec.android.app.videoplayer.feature.VPFeature", // system
 		"com.sec.android.band.nfc.NFCMessageCallback", // system
@@ -215,6 +217,7 @@ public class XBinder extends XHook {
 		"com.samsung.android.sdk.look.SlookImpl", // system
 		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
 		"com.sonymobile.systemui.statusbar.tools.ToolsMain", // system
+		"com.zte.security.ZTEIPackageManager",
 		"java.lang.reflect.Method",
 	});
 	// @formatter:on
@@ -269,9 +272,6 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.policy.QuickSettingsUserInfoController", // system
 			"com.android.systemui.quicksettings.UserTile", // system
 			"com.android.systemui.quicksettings.QuickSettingsTile", // system
-			"com.google.android.partnersetup.AppHider", // system
-			"com.google.android.partnersetup.MccFallback", // system
-			"com.google.android.partnersetup.MccOverride", // system
 		},
 		new String[] { // IClipboard
 		},
@@ -324,7 +324,7 @@ public class XBinder extends XHook {
 			"android.webkit.WebView", // system
 			"android.widget.PopupWindow",
 			"android.os.StrictMode",
-			// "android.service.wallpaper.WallpaperService", // user
+			"android.service.wallpaper.WallpaperService", // user
 			"com.android.internal.policy.impl.PhoneWindow",
 			"com.android.internal.view.RotationPolicy", // system
 			"com.android.internal.widget.LockPatternUtils", // system
