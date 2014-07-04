@@ -13,6 +13,7 @@ import android.util.Log;
 
 public class XBinder extends XHook {
 	private Methods mMethod;
+	private static Boolean mStable = null;
 
 	private static long mToken = 0;
 	private static final int BITS_TOKEN = 16;
@@ -453,7 +454,12 @@ public class XBinder extends XHook {
 									.startsWith("com.android.server.content.IContentServiceEx$Stub$Proxy"))) {
 						found = true;
 
-						if (PrivacyManager.cStableRelease) {
+						if (mStable == null) {
+							int userId = Util.getUserId(uid);
+							mStable = !PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingExperimental,
+									!PrivacyManager.cStableRelease);
+						}
+						if (mStable) {
 							if (i + 1 < ste.length) {
 								String name = ste[i + 1].getClassName();
 								ok = (name.startsWith("android.") || name.startsWith("com.android."));

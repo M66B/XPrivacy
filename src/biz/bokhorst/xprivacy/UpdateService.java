@@ -201,6 +201,10 @@ public class UpdateService extends Service {
 						Util.log(null, Log.WARN, "Deleting " + setting);
 						PrivacyManager.setSetting(setting.uid, setting.type, setting.name, null);
 					}
+
+			// Reset experimental setting
+			if (storedVersion.compareTo(new Version("2.1.21")) < 0)
+				PrivacyManager.setSetting(userId, PrivacyManager.cSettingExperimental, null);
 		} else
 			Util.log(null, Log.WARN, "No upgrade from version " + storedVersion + " to " + currentVersion);
 
