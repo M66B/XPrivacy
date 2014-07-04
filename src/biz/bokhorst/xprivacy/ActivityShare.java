@@ -94,7 +94,7 @@ public class ActivityShare extends ActivityBase {
 	private boolean mAbort = false;
 	private int mProgressCurrent;
 	private int mProgressWidth = 0;
-	private String mFileName;
+	private String mFileName = null;
 	private boolean mInteractive = false;
 
 	private static final int STATE_WAITING = 0;
@@ -153,7 +153,8 @@ public class ActivityShare extends ActivityBase {
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 		final String restrictionName = (extras != null ? extras.getString(cRestriction) : null);
 		int choice = (extras != null && extras.containsKey(cChoice) ? extras.getInt(cChoice) : -1);
-		mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName) : null);
+		if (action.equals(ACTION_EXPORT))
+			mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName) : null);
 
 		// License check
 		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)
