@@ -572,6 +572,7 @@ You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.
 * Action Category: Misc/Send Intent
 * Action: biz.bokhorst.xprivacy.action.EXPORT
 * Target: Activity
+* Extra: FileName:/sdcard/test.xml (optional, to specify an export location and file name)
 
 <a name="FAQ6"></a>
 **(6) Precisely which functions does XPrivacy restrict?**
