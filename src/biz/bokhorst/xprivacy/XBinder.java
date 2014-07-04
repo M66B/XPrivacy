@@ -448,21 +448,29 @@ public class XBinder extends XHook {
 									.startsWith("com.android.server.content.IContentServiceEx$Stub$Proxy"))) {
 						found = true;
 
-						// Check exceptions
-						if (i + 1 < ste.length) {
-							String name = ste[i + 1].getClassName().split("\\$")[0];
-							black = cBlackClassName.contains(name);
-							white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
-							if (black || white)
-								break;
-						}
+						if (PrivacyManager.cStableRelease) {
+							if (i + 1 < ste.length) {
+								String name = ste[i + 1].getClassName();
+								ok = (name.startsWith("android.") || name.startsWith("com.android."));
+							}
 
-						// Check manager class name
-						for (int j = i + 1; j < ste.length; j++) {
-							String name = ste[j].getClassName().split("\\$")[0];
-							if (serviceName.contains(name)) {
-								ok = true;
-								break;
+						} else {
+							// Check exceptions
+							if (i + 1 < ste.length) {
+								String name = ste[i + 1].getClassName().split("\\$")[0];
+								black = cBlackClassName.contains(name);
+								white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
+								if (black || white)
+									break;
+							}
+
+							// Check manager class name
+							for (int j = i + 1; j < ste.length; j++) {
+								String name = ste[j].getClassName().split("\\$")[0];
+								if (serviceName.contains(name)) {
+									ok = true;
+									break;
+								}
 							}
 						}
 
