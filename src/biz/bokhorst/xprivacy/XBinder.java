@@ -270,6 +270,7 @@ public class XBinder extends XHook {
 			"com.android.systemui.statusbar.BaseStatusBar", // system
 			"com.android.systemui.statusbar.pie.PieMenu", // system
 			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
+			"com.android.systemui.statusbar.phone.PhoneStatusBarView", // system
 			"com.android.systemui.statusbar.phone.NavigationBarView", // system
 			"com.android.systemui.statusbar.phone.ShortcutsWidget", // system
 			"com.android.systemui.statusbar.phone.QuickSettings", // system
