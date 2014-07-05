@@ -29,7 +29,7 @@ Changelog
 * Added option to blacklist applications, accounts and contacts ([issue](/../../issues/1781))
 * Fixed order of applications to allow ([Pro license](http://www.xprivacy.eu/) only)
 * Faster and more secure IPC restriction implementation
-* Updated Dutch translation
+* Updated Dutch translationt
 * Updated Japanese translation
 * Updated Slovenian translation
 
