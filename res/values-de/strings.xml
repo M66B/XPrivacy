@@ -107,6 +107,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="whitelist_filename">Dateinamen</string>
     <string name="whitelist_command">Shell Kommandos</string>
     <string name="whitelist_url">URLs</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">Zum Beschränken markieren:</string>
     <string name="title_check_whitelist">Zum Freigeben markieren</string>
     <string name="title_fused">Datennutzung</string>

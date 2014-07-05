@@ -107,6 +107,7 @@
     <string name="whitelist_filename">File names</string>
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">Seiceáil chun srian a chur ar:</string>
     <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Scagaire ar úsáid sonraí</string>

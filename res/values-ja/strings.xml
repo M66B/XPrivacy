@@ -105,6 +105,7 @@
     <string name="whitelist_filename">ファイル名</string>
     <string name="whitelist_command">シェルコマンド</string>
     <string name="whitelist_url">URL</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">チェックして制限します :</string>
     <string name="title_check_whitelist">チェックして許可します :</string>
     <string name="title_fused">データの要求あり</string>

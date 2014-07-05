@@ -106,6 +106,7 @@
     <string name="whitelist_filename">Tên các tập tin</string>
     <string name="whitelist_command">Các câu lệnh</string>
     <string name="whitelist_url">Các URL</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">Đánh dấu để hạn chế:</string>
     <string name="title_check_whitelist">Đánh dấu để chấp nhận:</string>
     <string name="title_fused">Lọc theo sử dụng dữ liệu</string>

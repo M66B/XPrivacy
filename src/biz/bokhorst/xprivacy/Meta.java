@@ -22,12 +22,13 @@ public class Meta {
 	public final static String cTypeLibrary = "Library";
 	public final static String cTypeMethod = "Method";
 	public final static String cTypeProc = "Proc";
+	public final static String cTypeTransaction = "Transaction";
 	public final static String cTypeUrl = "Url";
 
 	public static boolean isWhitelist(String type) {
 		return (cTypeAddress.equals(type) || cTypeCommand.equals(type) || cTypeFilename.equals(type)
 				|| cTypeIPAddress.equals(type) || cTypeLibrary.equals(type) || cTypeMethod.equals(type)
-				|| cTypeProc.equals(type) || cTypeUrl.equals(type));
+				|| cTypeProc.equals(type) || cTypeTransaction.equals(type) || cTypeUrl.equals(type));
 	}
 
 	public static List<Hook> get() {
@@ -139,7 +140,7 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "LinkAddress.toString", null, 20, "2.1.17", null));
 
-		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).dangerous().whitelist(cTypeTransaction));
 		mListHook.add(new Hook("ipc", "Reflection", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 
 		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));

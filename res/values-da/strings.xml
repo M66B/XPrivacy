@@ -105,6 +105,7 @@
     <string name="whitelist_filename">Fil navne</string>
     <string name="whitelist_command">Shell kommandoer</string>
     <string name="whitelist_url">URLér</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">Markér for at blokere:</string>
     <string name="title_check_whitelist">Marker for at tillade:</string>
     <string name="title_fused">Filtrér ved data brug</string>

@@ -107,6 +107,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="whitelist_filename">Názvy súborov</string>
     <string name="whitelist_command">Konzolové príkazy</string>
     <string name="whitelist_url">Adresy URL</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">Zaškrtnite pre obmedzenie:</string>
     <string name="title_check_whitelist">Zaškrtnite pre povolenie:</string>
     <string name="title_fused">Filter na využitie dát</string>

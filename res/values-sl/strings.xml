@@ -107,6 +107,7 @@
     <string name="whitelist_filename">Imena datotek</string>
     <string name="whitelist_command">Ukazi lupine</string>
     <string name="whitelist_url">URLji</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">Označi za omejitev pravic:</string>
     <string name="title_check_whitelist">Izberi za dovoljevanje:</string>
     <string name="title_fused">Filtriraj po uporabi podatkov</string>

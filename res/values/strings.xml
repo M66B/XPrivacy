@@ -115,6 +115,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="whitelist_filename" tools:ignore="UnusedResources">File names</string>
     <string name="whitelist_command" tools:ignore="UnusedResources">Shell commands</string>
     <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>
+    <string name="whitelist_transaction" tools:ignore="UnusedResources">Transactions</string>
     <string name="whitelist_proc" translatable="false" tools:ignore="UnusedResources">/proc</string>
     <string name="title_restrict">Check to restrict:</string>
     <string name="title_check_whitelist">Check to allow:</string>

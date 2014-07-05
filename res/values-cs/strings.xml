@@ -107,6 +107,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="whitelist_filename">File names</string>
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">Zaškrtněte pro omezení:</string>
     <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filtrovat přístup k datům</string>

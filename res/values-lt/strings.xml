@@ -107,6 +107,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="whitelist_filename">failų vardai</string>
     <string name="whitelist_command">Vykdymo komandos</string>
     <string name="whitelist_url">URL adresai</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">Naudoti ribojimus:</string>
     <string name="title_check_whitelist">Žiurėti leidžiamus:</string>
     <string name="title_fused">Duomenų naudojimas</string>

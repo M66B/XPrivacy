@@ -107,6 +107,7 @@
     <string name="whitelist_filename">文件名称</string>
     <string name="whitelist_command">Shell 命令</string>
     <string name="whitelist_url">URLs</string>
+    <string name="whitelist_transaction">Transactions</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="title_check_whitelist">勾选表示允许:</string>
     <string name="title_fused">曾经使用</string>
