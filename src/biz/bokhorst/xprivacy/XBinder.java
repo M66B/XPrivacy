@@ -18,7 +18,6 @@ import android.util.SparseArray;
 public class XBinder extends XHook {
 	private Methods mMethod;
 	private static long mToken = 0;
-	private static Boolean mStable = null;
 	private static Map<String, SparseArray<String>> mMapCodeName = new HashMap<String, SparseArray<String>>();
 
 	private static final int BITS_TOKEN = 16;
@@ -100,307 +99,6 @@ public class XBinder extends XHook {
 	});
 	// @formatter:on
 
-	// @formatter:off
-	public static List<String[]> cServiceClassName = Arrays.asList(new String[][] {
-		new String[] { // IAccountManager
-			"android.accounts.AccountManager",
-		},
-		new String[] { // IActivityManager
-			"android.app.ActivityManager",
-		},
-		new String[] { // IClipboard
-			"android.content.ClipboardManager",
-		},
-		new String[] { // IConnectivityManager
-			"android.net.ConnectivityManager",
-			"android.net.MultiSimConnectivityManager",
-			"com.android.vpndialogs.ConfirmDialog",
-		},
-		new String[] { // IContentService
-			"android.content.ContentResolver",
-			"android.content.ContentProviderClient",
-			"com.android.providers.contacts.ContactsProvider2",
-			"com.android.providers.contacts.contact.ContactsProvider2",
-		},
-		new String[] { // ILocationManager
-			"android.location.LocationManager",
-		},
-		new String[] { // ITelephonyRegistry
-			"android.telephony.TelephonyManager",
-			"android.telephony.MultiSimTelephonyManager",
-		},
-		new String[] { // ITelephonyRegistryMSim
-			"android.telephony.MSimTelephonyManager",
-		},
-		new String[] { // IPackageManager
-			"android.app.ApplicationPackageManager",
-		},
-		new String[] { // IPhoneSubInfo
-			"android.telephony.TelephonyManager",
-		},
-		new String[] { // IPhoneSubInfoMSim
-			"android.telephony.MSimTelephonyManager",
-		},
-		new String[] { // IWindowManager
-			"android.view.InputDevice",
-			"android.view.WindowManagerImpl",
-			"android.view.WindowManagerGlobal",
-			"android.view.ViewRootImpl",
-			"android.view.View",
-			"android.view.ViewConfiguration",
-			"android.view.Display",
-		},
-		new String[] { // IWifiManager
-			"android.net.wifi.WifiManager",
-		},
-		new String[] { // ISipService
-			"android.net.sip.SipManager",
-		},
-		new String[] { // ISms
-			"android.telephony.SmsManager",
-		},
-		new String[] { // INfcAdapter
-			"android.nfc.NfcActivityManager",
-			"android.nfc.NfcAdapter",
-		},
-		new String[] { // IAppWidgetService
-			"android.appwidget.AppWidgetManager",
-			"android.appwidget.AppWidgetHost",
-		},
-		new String[] { // IBluetooth
-			"com.android.server.BluetoothManagerService",
-			"android.bluetooth.BluetoothAdapter",
-			"android.bluetooth.BluetoothDevice",
-			"android.bluetooth.BluetoothSocket",
-		},
-		new String[] { // IBluetoothManager
-			"android.bluetooth.BluetoothManager",
-			"android.bluetooth.BluetoothAdapter",
-			"android.bluetooth.BluetoothDevice",
-			"android.bluetooth.BluetoothPan",
-			"android.bluetooth.BluetoothA2dp",
-		},
-		new String[] { // IInputManager
-			"android.hardware.input.InputManager",
-		},
-		new String[] { // SensorServer
-			"android.hardware.SystemSensorManager",
-		},
-		new String[] { // IUsbManager
-			"android.hardware.usb.UsbManager"
-		}
-	});
-	// @formatter:on
-
-	// @formatter:off
-	// Forbidden classes, no exceptions for vendor specific changes
-	public static List<String> cBlackClassName = Arrays.asList(new String[] {
-		// "a2dp.connect.Bt_iadl", // user
-		"android.widget.HtcSkinUtil", // system
-		"com.android.htccontacts.model.AccountTypeManagerImpl", // system
-		"com.android.keyguard.sec.KeyguardUnlockView", // system
-		"com.android.internal.util.aokp.AwesomeAction", // system
-		"com.android.internal.util.djl.SlimActions", // system
-		"com.android.internal.util.slim.SlimActions", // system
-		"com.android.systemui.slimrecent.RecentController", // system
-		"com.android.systemui.statusbar.halo.Halo", // system
-		"com.android.systemui.statusbar.phone.AsusPhoneStatusBar", // system
-		"com.broadcom.bt.service.radiomanager.BluetoothRadioManager", // system
-		"com.asus.maxxaudio.MaxxAudioService", // system
-		"com.asus.splendid.TaskWatcherService", // system
-		"com.cyngn.keyguard.KeyguardUpdateMonitor", // system
-		"com.cyngn.keyguard.KeyguardViewMediator", // system
-		"com.google.android.partnersetup.AppHider", // system
-		"com.google.android.partnersetup.MccFallback", // system
-		"com.google.android.partnersetup.MccOverride", // system
-		"com.htc.android.htcime.HTCIMEService", // system
-		"com.htc.lockscreen.keyguard.KeyguardViewMediator", // system
-		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
-		"com.htc.util.skin.HtcSkinUtil", // system
-		"com.lbe.security.LBEApplication",
-		"com.lbe.security.service.SecurityService",
-		"com.lge.launcher2.util.LGWindow", // system
-		"com.lge.lockscreen.KeyguardModel", // system
-		"com.lge.lockscreen.widget.mdm.LgeMdmRecoveryPasswordButton", // system
-		"com.lge.qslide.QSlide", // system
-		"com.lge.systemui.Utils", // system
-		"com.cyngn.keyguard.KeyguardUpdateMonitor", // system
-		"com.cyngn.keyguard.KeyguardViewMediator", // system
-		"com.mediatek.telephony.TelephonyManagerEx",
-		"com.sec.android.app.clockpackage.alarm.AlarmAlert", // system
-		"com.sec.android.app.FlashBarService.AppListController", // system
-		"com.sec.android.app.FlashBarService.CenterBarWindow", // system
-		"com.sec.android.app.FlashBarService.FlashBarService", // system
-		"com.sec.android.app.FlashBarService.LegacyAppListWindow", // system
-		"com.sec.android.app.GlanceView.GlanceViewService", // system
-		"com.sec.android.app.videoplayer.feature.VPFeature", // system
-		"com.sec.android.app.samsungapps.AppsService", // system
-		"com.sec.android.band.nfc.NFCMessageCallback", // system
-		"com.sec.android.service.cm.ApplicationUpdateReceiver", // system
-		"com.sec.android.service.health.sensor.HealthService", // system
-		"com.sec.phone.Am", // system
-		"com.samsung.android.app.galaxyfinder.e.q", // system
-		"com.samsung.android.app.galaxyfinder.util.Utils", // system
-		"com.samsung.android.sconnect.periph.PeriphService", // system
-		"com.samsung.android.sdk.look.SlookImpl", // system
-		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
-		"com.smlds.AABSyncService", // system
-		"com.sonymobile.systemui.statusbar.tools.ToolsMain", // system
-		"android.telephony.gemini.GeminiSmsManager", // system
-		"com.zte.security.ZTEIPackageManager",
-		"java.lang.reflect.Method",
-	});
-	// @formatter:on
-
-	// @formatter:off
-	// Allow some common internal calls
-	public static List<String[]> cWhiteClassName = Arrays.asList(new String[][] {
-		new String[] { // IAccountManager
-		},
-		new String[] { // IActivityManager
-			"android.app.Activity",
-			"android.app.ActivityThread",
-			"android.app.admin.DevicePolicyManager",
-			"android.app.Application",
-			"android.app.ContextImpl",
-			"android.app.Instrumentation",
-			"android.app.LoadedApk",
-			"android.app.PendingIntent",
-			"android.app.Service",
-			"android.app.SearchManager", // system
-			"android.content.BroadcastReceiver",
-			"android.content.ContentResolver",
-			"android.hardware.Camera",
-			"android.hardware.SensorManager",
-			"android.media.MediaPlayer",
-			"android.media.RemoteControlClient",
-			"android.widget.TextView",
-			"android.os.Looper",
-			"android.os.StrictMode",
-			"android.os.UserManager", // system
-			"android.os.PowerManager", // system
-			"android.provider.Settings", // system
-			"com.android.internal.app.AlertActivity",
-			"com.android.internal.app.ResolverActivity",
-			"com.android.internal.os.RuntimeInit",
-			"com.android.internal.policy.impl.PhoneWindowManager",
-			"com.android.internal.widget.LockPatternUtils", // system
-			"com.android.keyguard.KeyguardActivityLauncher", // system
-			"com.android.keyguard.KeyguardMultiUserSelectorView", // system
-			"com.android.keyguard.KeyguardViewMediator", // system
-			"com.android.keyguard.KeyguardUpdateMonitor", // system
-			"com.android.packageinstaller.PackageInstallerActivity", // system
-			"com.android.systemui.recent.RecentsPanelView", // system
-			"com.android.systemui.SearchPanelView", // system
-			"com.android.systemui.statusbar.BaseStatusBar", // system
-			"com.android.systemui.statusbar.pie.PieMenu", // system
-			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
-			"com.android.systemui.statusbar.phone.PhoneStatusBarView", // system
-			"com.android.systemui.statusbar.phone.NavigationBarView", // system
-			"com.android.systemui.statusbar.phone.ShortcutsWidget", // system
-			"com.android.systemui.statusbar.phone.QuickSettings", // system
-			"com.android.systemui.statusbar.policy.Clock", // system
-			"com.android.systemui.statusbar.policy.DateView", // system
-			"com.android.systemui.statusbar.policy.activedisplay.ActiveDisplayView", // system
-			"com.android.systemui.statusbar.policy.quicksetting.QuickSettingButton", // system
-			"com.android.systemui.statusbar.policy.QuickSettingsUserInfoController", // system
-			"com.android.systemui.quicksettings.UserTile", // system
-			"com.android.systemui.quicksettings.QuickSettingsTile", // system
-		},
-		new String[] { // IClipboard
-		},
-		new String[] { // IConnectivityManager
-			"android.app.ActivityThread",
-			"android.net.VpnService",
-			"com.android.systemui.statusbar.BaseStatusBar", // system
-			"com.android.vpndialogs.ConfirmDialog", // system
-		},
-		new String[] { // IContentService
-			"com.android.contacts.common.model.AccountTypeManagerImpl",
-			"com.android.contacts.model.AccountTypeManagerImpl",
-		},
-		new String[] { // ILocationManager
-			"android.location.Geocoder",
-			"android.telephony.cdma.CdmaCellLocation",
-			"com.android.location.provider.LocationProvider", // system
-			"com.android.location.provider.LocationProviderBase", // system
-		},
-		new String[] { // ITelephonyRegistry
-			"com.android.systemui.statusbar.util.SIMHelper", //system
-		},
-		new String[] { // ITelephonyRegistryMSim
-		},
-		new String[] { // IPackageManager
-			"android.app.ActivityManager",
-			"android.app.ActivityThread",
-			"android.app.ContextImpl",
-			"android.app.LoadedApk",
-			"android.app.ResourcesManager",
-			"android.content.res.Resources",
-			"android.content.thm.ThemeIconManager",
-			"android.hardware.SensorManager",
-			"android.nfc.NfcAdapter",
-			"android.os.Environment",
-			"com.android.defcontainer.DefaultContainerService",
-			"com.android.internal.app.ResolverActivity",
-			"com.android.internal.telephony.SmsUsageMonitor",
-		},
-		new String[] { // IPhoneSubInfo
-		},
-		new String[] { // IPhoneSubInfoMSim
-		},
-		new String[] { // IWindowManager
-			"android.app.Activity",
-			"android.app.ActivityThread",
-			"android.app.Instrumentation", // system
-			"android.app.KeyguardManager",
-			"android.hardware.LegacySensorManager",
-			"android.hardware.SensorManager",
-			"android.webkit.WebView", // system
-			"android.widget.PopupWindow",
-			"android.os.StrictMode",
-			"android.service.wallpaper.WallpaperService", // user
-			"com.android.calendar.alerts.AlertService", // system
-			"com.android.calendar.alerts.PopUpActivity", // system
-			"com.android.internal.policy.impl.PhoneWindow",
-			"com.android.internal.view.RotationPolicy", // system
-			"com.android.internal.widget.LockPatternUtils", // system
-			"com.android.mms.ui.MessageUtils", // system
-			"com.android.systemui.cooldown.OverheatReceiver", // system
-			"com.android.systemui.statusbar.BaseStatusBar", // system
-			"com.android.systemui.statusbar.phone.PhoneStatusBar", // system
-			"com.android.systemui.statusbar.policy.NetworkControllerGemini", // system
-			"com.android.systemui.statusbar.policy.quicksetting.AutoRotateQuickSettingButton", // system
-			"com.android.systemui.statusbar.tablet.TabletStatusBar", // system
-			"com.android.systemui.SystemUIService", // system
-		},
-		new String[] { // IWifiManager
-		},
-		new String[] { // ISipService
-		},
-		new String[] { // ISms
-			"android.telephony.CallISmsApp", // system
-		},
-		new String[] { // INfcAdapter
-		},
-		new String[] { // IAppWidgetService
-		},
-		new String[] { // IBluetooth
-			"com.android.phone.BluetoothHeadsetService", // user
-		},
-		new String[] { // IBluetoothManager
-		},
-		new String[] { // IInputManager
-			"android.view.PointerIcon",
-		},
-		new String[] { // SensorServer
-		},
-		new String[] { // IUsbManager
-			"com.android.systemui.usb.UsbPermissionActivity", // system
-		},
-	});
-	// @formatter:on
-
 	private XBinder(Methods method, String restrictionName, int sdk) {
 		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
@@ -476,71 +174,29 @@ public class XBinder extends XHook {
 		// Check if listed descriptor
 		int idx = cServiceDescriptor.indexOf(descriptor);
 		if (idx >= 0) {
-			// Search class in call stack
+			// Search this object in call stack
 			boolean ok = false;
-			boolean black = false;
-			boolean white = false;
 			boolean found = false;
-			String proxy = descriptor.replace(".I", ".") + "Proxy";
-			List<String> serviceName = Arrays.asList(cServiceClassName.get(idx));
 			StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-			for (int i = 0; i < ste.length; i++) {
-				String className = ste[i].getClassName();
-				if (className.startsWith(descriptor)
-						|| className.startsWith(proxy)
-						|| (descriptor.equals("android.content.IContentService") && className
-								.startsWith("com.android.server.content.IContentServiceEx$Stub$Proxy"))) {
+			for (int i = 0; i < ste.length; i++)
+				if (ste[i].getClassName().equals(param.thisObject.getClass().getName())) {
 					found = true;
 
-					if (mStable == null) {
-						int userId = Util.getUserId(uid);
-						mStable = !PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingExperimental,
-								!PrivacyManager.cStableRelease);
-					}
-
-					if (mStable) {
-						if (i + 1 < ste.length) {
-							String name = ste[i + 1].getClassName();
-							ok = (name.startsWith("android.") || name.startsWith("com.android."));
-						}
-
-					} else {
-						// Check exceptions
-						if (i + 1 < ste.length) {
-							String name = ste[i + 1].getClassName().split("\\$")[0];
-							black = cBlackClassName.contains(name);
-							white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
-							if (black || white)
-								break;
-						}
-
-						// Check manager class name
-						for (int j = i + 1; j < ste.length; j++) {
-							String name = ste[j].getClassName().split("\\$")[0];
-							if (serviceName.contains(name)) {
+					// Check if caller class in user space
+					String callerClassName = ste[i + 2].getClassName();
+					if (i + 2 < ste.length && !callerClassName.startsWith("java.lang.reflect.")) {
+						try {
+							Class<?> clazz = Class.forName(callerClassName, false, Thread.currentThread()
+									.getContextClassLoader());
+							if (clazz.getClassLoader().toString().startsWith("java.lang.BootClassLoader"))
 								ok = true;
-								break;
-							}
+						} catch (ClassNotFoundException ignored) {
+							ok = true;
 						}
 					}
 
 					break;
 				}
-			}
-
-			// Internal checks
-			if (!found) {
-				Util.log(this, Log.ERROR,
-						"Missing descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
-				Util.logStack(this, Log.ERROR);
-			}
-			if (black || white)
-				if (ok) {
-					Util.log(this, Log.ERROR, "Black/whitelisted descriptor=" + descriptor + " code=" + code + " uid="
-							+ Binder.getCallingUid());
-					Util.logStack(this, Log.ERROR);
-				} else if (white)
-					ok = true;
 
 			// Conditionally mark
 			if (ok) {
@@ -550,12 +206,9 @@ public class XBinder extends XHook {
 							+ descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
 				flags |= (mToken << BITS_TOKEN);
 				param.args[3] = flags;
-			}
-
-			if (!(ok || black)) {
-				Util.log(this, Log.ERROR,
-						"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid()
-								+ " system=" + PrivacyService.getClient().isSystemApp(uid));
+			} else {
+				Util.log(this, Log.ERROR, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
+						+ " uid=" + Binder.getCallingUid() + " system=" + PrivacyService.getClient().isSystemApp(uid));
 				Util.logStack(this, Log.ERROR);
 			}
 		}
@@ -649,5 +302,37 @@ public class XBinder extends XHook {
 		return (code == PING_TRANSACTION || code == DUMP_TRANSACTION || code == INTERFACE_TRANSACTION
 				|| code == TWEET_TRANSACTION || code == LIKE_TRANSACTION || code == SYSPROPS_TRANSACTION);
 
+	}
+
+	private static List<String> mPreLoaded = null;
+
+	@SuppressWarnings("unused")
+	private void ensurePreLoaded() {
+		// @formatter:off
+		// https://android.googlesource.com/platform/frameworks/base.git/+/master/preloaded-classes
+		// https://android.googlesource.com/platform/frameworks/base.git/+/master/core/java/com/android/internal/os/ZygoteInit.java
+		// @formatter:on
+		if (mPreLoaded == null) {
+			mPreLoaded = new ArrayList<String>();
+			synchronized (mPreLoaded) {
+				java.io.InputStream is = null;
+				try {
+					is = ClassLoader.getSystemClassLoader().getResourceAsStream("preloaded-classes");
+					if (is != null) {
+						java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(is), 256);
+						String line;
+						while ((line = br.readLine()) != null) {
+							line = line.trim();
+							if (!line.startsWith("#") && !line.equals(""))
+								mPreLoaded.add(line);
+						}
+						br.close();
+						is.close();
+					}
+				} catch (Throwable ex) {
+					Util.bug(this, ex);
+				}
+			}
+		}
 	}
 }
