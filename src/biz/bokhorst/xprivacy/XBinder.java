@@ -292,7 +292,7 @@ public class XBinder extends XHook {
 				Util.log(this, Log.WARN, "can restrict transaction=" + methodName + ":" + codeName + " flags=" + flags
 						+ " uid=" + uid + " my=" + Process.myUid());
 
-				if (isRestrictedExtra(uid, PrivacyManager.cIPC, methodName, codeName)) {
+				if (isRestrictedExtra(uid, PrivacyManager.cIPC, methodName, methodName + ":" + codeName)) {
 					// Get reply parcel
 					Parcel reply = null;
 					try {
