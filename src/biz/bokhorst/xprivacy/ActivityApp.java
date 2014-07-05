@@ -1230,32 +1230,26 @@ public class ActivityApp extends ActivityBase {
 								false);
 
 					whitelist = false;
-					boolean blacklist = PrivacyManager.getSettingBool(-mAppInfo.getUid(),
-							PrivacyManager.cSettingBlacklist, false);
-					if (blacklist)
-						whitelist = true;
-					else {
-						String wName = null;
-						if (PrivacyManager.cAccounts.equals(restrictionName))
-							wName = Meta.cTypeAccount;
-						else if (PrivacyManager.cSystem.equals(restrictionName))
-							wName = Meta.cTypeApplication;
-						else if (PrivacyManager.cContacts.equals(restrictionName))
-							wName = Meta.cTypeContact;
-						if (wName != null)
-							for (PSetting setting : PrivacyManager.getSettingList(mAppInfo.getUid(), wName))
-								if (Boolean.parseBoolean(setting.value)) {
+					String wName = null;
+					if (PrivacyManager.cAccounts.equals(restrictionName))
+						wName = Meta.cTypeAccount;
+					else if (PrivacyManager.cSystem.equals(restrictionName))
+						wName = Meta.cTypeApplication;
+					else if (PrivacyManager.cContacts.equals(restrictionName))
+						wName = Meta.cTypeContact;
+					if (wName != null)
+						for (PSetting setting : PrivacyManager.getSettingList(mAppInfo.getUid(), wName))
+							if (Boolean.parseBoolean(setting.value)) {
+								whitelist = true;
+								break;
+							}
+					if (!whitelist)
+						for (Hook hook : PrivacyManager.getHooks(restrictionName))
+							if (hook.whitelist() != null)
+								if (PrivacyManager.getSettingList(mAppInfo.getUid(), hook.whitelist()).size() > 0) {
 									whitelist = true;
 									break;
 								}
-						if (!whitelist)
-							for (Hook hook : PrivacyManager.getHooks(restrictionName))
-								if (hook.whitelist() != null)
-									if (PrivacyManager.getSettingList(mAppInfo.getUid(), hook.whitelist()).size() > 0) {
-										whitelist = true;
-										break;
-									}
-					}
 
 					enabled = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
 					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null, true);
