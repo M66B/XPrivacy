@@ -464,97 +464,99 @@ public class XBinder extends XHook {
 		if (isManagementTransaction(code))
 			return;
 
+		// Only for applications
 		int uid = Binder.getCallingUid();
-		if (PrivacyManager.isApplication(uid)) {
-			// Get interface name
-			IBinder binder = (IBinder) param.thisObject;
-			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+		if (!PrivacyManager.isApplication(uid))
+			return;
 
-			// Check if listed descriptor
-			int idx = cServiceDescriptor.indexOf(descriptor);
-			if (idx >= 0) {
-				// Search class in call stack
-				boolean ok = false;
-				boolean black = false;
-				boolean white = false;
-				boolean found = false;
-				String proxy = descriptor.replace(".I", ".") + "Proxy";
-				List<String> serviceName = Arrays.asList(cServiceClassName.get(idx));
-				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-				for (int i = 0; i < ste.length; i++) {
-					String className = ste[i].getClassName();
-					if (className.startsWith(descriptor)
-							|| className.startsWith(proxy)
-							|| (descriptor.equals("android.content.IContentService") && className
-									.startsWith("com.android.server.content.IContentServiceEx$Stub$Proxy"))) {
-						found = true;
+		// Get interface name
+		IBinder binder = (IBinder) param.thisObject;
+		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 
-						if (mStable == null) {
-							int userId = Util.getUserId(uid);
-							mStable = !PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingExperimental,
-									!PrivacyManager.cStableRelease);
-						}
+		// Check if listed descriptor
+		int idx = cServiceDescriptor.indexOf(descriptor);
+		if (idx >= 0) {
+			// Search class in call stack
+			boolean ok = false;
+			boolean black = false;
+			boolean white = false;
+			boolean found = false;
+			String proxy = descriptor.replace(".I", ".") + "Proxy";
+			List<String> serviceName = Arrays.asList(cServiceClassName.get(idx));
+			StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+			for (int i = 0; i < ste.length; i++) {
+				String className = ste[i].getClassName();
+				if (className.startsWith(descriptor)
+						|| className.startsWith(proxy)
+						|| (descriptor.equals("android.content.IContentService") && className
+								.startsWith("com.android.server.content.IContentServiceEx$Stub$Proxy"))) {
+					found = true;
 
-						if (mStable) {
-							if (i + 1 < ste.length) {
-								String name = ste[i + 1].getClassName();
-								ok = (name.startsWith("android.") || name.startsWith("com.android."));
-							}
-
-						} else {
-							// Check exceptions
-							if (i + 1 < ste.length) {
-								String name = ste[i + 1].getClassName().split("\\$")[0];
-								black = cBlackClassName.contains(name);
-								white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
-								if (black || white)
-									break;
-							}
-
-							// Check manager class name
-							for (int j = i + 1; j < ste.length; j++) {
-								String name = ste[j].getClassName().split("\\$")[0];
-								if (serviceName.contains(name)) {
-									ok = true;
-									break;
-								}
-							}
-						}
-
-						break;
+					if (mStable == null) {
+						int userId = Util.getUserId(uid);
+						mStable = !PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingExperimental,
+								!PrivacyManager.cStableRelease);
 					}
-				}
 
-				// Internal checks
-				if (!found) {
-					Util.log(this, Log.ERROR,
-							"Missing descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
-					Util.logStack(this, Log.ERROR);
-				}
-				if (black || white)
-					if (ok) {
-						Util.log(this, Log.ERROR, "Black/whitelisted descriptor=" + descriptor + " code=" + code
-								+ " uid=" + Binder.getCallingUid());
-						Util.logStack(this, Log.ERROR);
-					} else if (white)
-						ok = true;
+					if (mStable) {
+						if (i + 1 < ste.length) {
+							String name = ste[i + 1].getClassName();
+							ok = (name.startsWith("android.") || name.startsWith("com.android."));
+						}
 
-				// Conditionally mark
+					} else {
+						// Check exceptions
+						if (i + 1 < ste.length) {
+							String name = ste[i + 1].getClassName().split("\\$")[0];
+							black = cBlackClassName.contains(name);
+							white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
+							if (black || white)
+								break;
+						}
+
+						// Check manager class name
+						for (int j = i + 1; j < ste.length; j++) {
+							String name = ste[j].getClassName().split("\\$")[0];
+							if (serviceName.contains(name)) {
+								ok = true;
+								break;
+							}
+						}
+					}
+
+					break;
+				}
+			}
+
+			// Internal checks
+			if (!found) {
+				Util.log(this, Log.ERROR,
+						"Missing descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
+				Util.logStack(this, Log.ERROR);
+			}
+			if (black || white)
 				if (ok) {
-					int flags = (Integer) param.args[3];
-					if ((flags & ~FLAG_ALL) != 0)
-						Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " descriptor="
-								+ descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
-					flags |= (mToken << BITS_TOKEN);
-					param.args[3] = flags;
-				}
-
-				if (!(ok || black)) {
-					Util.log(this, Log.ERROR,
-							"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid()
-									+ " system=" + PrivacyService.getClient().isSystemApp(uid));
+					Util.log(this, Log.ERROR, "Black/whitelisted descriptor=" + descriptor + " code=" + code + " uid="
+							+ Binder.getCallingUid());
 					Util.logStack(this, Log.ERROR);
-				}
+				} else if (white)
+					ok = true;
+
+			// Conditionally mark
+			if (ok) {
+				int flags = (Integer) param.args[3];
+				if ((flags & ~FLAG_ALL) != 0)
+					Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " descriptor="
+							+ descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
+				flags |= (mToken << BITS_TOKEN);
+				param.args[3] = flags;
+			}
+
+			if (!(ok || black)) {
+				Util.log(this, Log.ERROR,
+						"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid()
+								+ " system=" + PrivacyService.getClient().isSystemApp(uid));
+				Util.logStack(this, Log.ERROR);
 			}
 		}
 	}
@@ -640,8 +642,7 @@ public class XBinder extends XHook {
 					param.setResult(true);
 				}
 			}
-		} else if (token != 0)
-			Util.log(this, Log.ERROR, "Skipped descriptor=" + descriptor);
+		}
 	}
 
 	private static boolean isManagementTransaction(int code) {
