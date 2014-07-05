@@ -1,5 +1,8 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -18,6 +21,7 @@ import android.util.SparseArray;
 public class XBinder extends XHook {
 	private Methods mMethod;
 	private static long mToken = 0;
+	private static List<String> mPreLoaded = null;
 	private static Map<String, SparseArray<String>> mMapCodeName = new HashMap<String, SparseArray<String>>();
 
 	private static final int BITS_TOKEN = 16;
@@ -174,6 +178,9 @@ public class XBinder extends XHook {
 		// Check if listed descriptor
 		int idx = cServiceDescriptor.indexOf(descriptor);
 		if (idx >= 0) {
+			// Get pre loaded classes
+			ensurePreLoaded();
+
 			// Search this object in call stack
 			boolean ok = false;
 			boolean found = false;
@@ -186,10 +193,20 @@ public class XBinder extends XHook {
 					String callerClassName = ste[i + 2].getClassName();
 					if (i + 2 < ste.length && !callerClassName.startsWith("java.lang.reflect.")) {
 						try {
-							Class<?> clazz = Class.forName(callerClassName, false, Thread.currentThread()
-									.getContextClassLoader());
-							if (clazz.getClassLoader().toString().startsWith("java.lang.BootClassLoader"))
-								ok = true;
+							synchronized (mPreLoaded) {
+								if (mPreLoaded.contains(callerClassName))
+									ok = true;
+							}
+							if (!ok) {
+								Class<?> clazz = Class.forName(callerClassName, false, Thread.currentThread()
+										.getContextClassLoader());
+								if (clazz.getClassLoader().toString().startsWith("java.lang.BootClassLoader")) {
+									ok = true;
+									synchronized (mPreLoaded) {
+										mPreLoaded.add(callerClassName);
+									}
+								}
+							}
 						} catch (ClassNotFoundException ignored) {
 							ok = true;
 						}
@@ -207,9 +224,9 @@ public class XBinder extends XHook {
 				flags |= (mToken << BITS_TOKEN);
 				param.args[3] = flags;
 			} else {
-				Util.log(this, Log.ERROR, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
+				Util.log(this, Log.WARN, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
 						+ " uid=" + Binder.getCallingUid() + " system=" + PrivacyService.getClient().isSystemApp(uid));
-				Util.logStack(this, Log.ERROR);
+				Util.logStack(this, Log.WARN);
 			}
 		}
 	}
@@ -226,16 +243,17 @@ public class XBinder extends XHook {
 		if (!PrivacyManager.isApplication(uid))
 			return;
 
+		// Get interface name
+		IBinder binder = (IBinder) param.thisObject;
+		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+
 		// Get token
 		int flags = (Integer) param.args[3];
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
 		flags &= FLAG_ALL;
 		param.args[3] = flags;
 
-		// Get interface name
-		IBinder binder = (IBinder) param.thisObject;
-		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
-
+		// Check token
 		if (token != mToken) {
 			if (cServiceDescriptor.contains(descriptor)) {
 				String[] name = descriptor.split("\\.");
@@ -262,14 +280,16 @@ public class XBinder extends XHook {
 						} catch (Throwable ignored) {
 						}
 					}
+
 					codeName = mMapCodeName.get(descriptor).get(code);
-					if (codeName == null) {
-						Util.log(this, Log.WARN, "Unknown descriptor=" + descriptor + " code=" + code);
-						codeName = Integer.toString(code);
-					}
+				}
+				if (codeName == null) {
+					codeName = Integer.toString(code);
+					Util.log(this, Log.WARN,
+							"Unknown transaction=" + descriptor + ":" + code + " uid=" + Binder.getCallingUid());
 				}
 
-				Util.log(this, Log.INFO, "can restrict method=" + methodName + " code=" + codeName + " flags=" + flags
+				Util.log(this, Log.WARN, "can restrict transaction=" + methodName + ":" + codeName + " flags=" + flags
 						+ " uid=" + uid + " my=" + Process.myUid());
 
 				if (isRestrictedExtra(uid, PrivacyManager.cIPC, methodName, codeName)) {
@@ -304,35 +324,39 @@ public class XBinder extends XHook {
 
 	}
 
-	private static List<String> mPreLoaded = null;
-
-	@SuppressWarnings("unused")
 	private void ensurePreLoaded() {
 		// @formatter:off
 		// https://android.googlesource.com/platform/frameworks/base.git/+/master/preloaded-classes
 		// https://android.googlesource.com/platform/frameworks/base.git/+/master/core/java/com/android/internal/os/ZygoteInit.java
 		// @formatter:on
+
 		if (mPreLoaded == null) {
-			mPreLoaded = new ArrayList<String>();
-			synchronized (mPreLoaded) {
-				java.io.InputStream is = null;
-				try {
-					is = ClassLoader.getSystemClassLoader().getResourceAsStream("preloaded-classes");
-					if (is != null) {
-						java.io.BufferedReader br = new java.io.BufferedReader(new java.io.InputStreamReader(is), 256);
-						String line;
-						while ((line = br.readLine()) != null) {
-							line = line.trim();
-							if (!line.startsWith("#") && !line.equals(""))
-								mPreLoaded.add(line);
-						}
-						br.close();
-						is.close();
+			List<String> listPreLoaded = new ArrayList<String>();
+
+			InputStream is = null;
+			try {
+				is = ClassLoader.getSystemClassLoader().getResourceAsStream("preloaded-classes");
+				if (is != null) {
+					BufferedReader br = new BufferedReader(new InputStreamReader(is), 256);
+					String line;
+					while ((line = br.readLine()) != null) {
+						line = line.trim();
+						if (!line.startsWith("#") && !line.equals(""))
+							listPreLoaded.add(line);
 					}
-				} catch (Throwable ex) {
-					Util.bug(this, ex);
+					br.close();
 				}
+			} catch (Throwable ex) {
+				Util.bug(this, ex);
+			} finally {
+				if (is != null)
+					try {
+						is.close();
+					} catch (Throwable ignored) {
+					}
 			}
+
+			mPreLoaded = listPreLoaded;
 		}
 	}
 }
