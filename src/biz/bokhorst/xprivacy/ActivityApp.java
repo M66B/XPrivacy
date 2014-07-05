@@ -1,10 +1,13 @@
 package biz.bokhorst.xprivacy;
 
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
@@ -774,31 +777,33 @@ public class ActivityApp extends ActivityBase {
 		@Override
 		protected Object doInBackground(Object... params) {
 			// Get applications
-			List<ApplicationInfoEx> listInfo = ApplicationInfoEx.getXApplicationList(ActivityApp.this, null);
-
-			// Count packages
-			int packages = 0;
-			for (ApplicationInfoEx appInfo : listInfo)
-				packages += appInfo.getPackageName().size();
-
-			// Build selection list
-			int i = 0;
-			mApp = new CharSequence[packages];
-			mPackage = new String[packages];
-			mSelection = new boolean[packages];
-			for (ApplicationInfoEx appInfo : listInfo)
+			Map<String, String> mapApp = new HashMap<String, String>();
+			for (ApplicationInfoEx appInfo : ApplicationInfoEx.getXApplicationList(ActivityApp.this, null))
 				for (int p = 0; p < appInfo.getPackageName().size(); p++)
-					try {
-						String appName = appInfo.getApplicationName().get(p);
-						String pkgName = appInfo.getPackageName().get(p);
-						mApp[i] = String.format("%s (%s)", appName, pkgName);
-						mPackage[i] = pkgName;
-						mSelection[i] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeApplication,
-								pkgName, false);
-						i++;
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					}
+					mapApp.put(appInfo.getApplicationName().get(p), appInfo.getPackageName().get(p));
+
+			// Sort applications
+			List<String> listApp = new ArrayList<String>(mapApp.keySet());
+			Collator collator = Collator.getInstance(Locale.getDefault());
+			Collections.sort(listApp, collator);
+
+			// Build selection arrays
+			int i = 0;
+			mApp = new CharSequence[mapApp.size()];
+			mPackage = new String[mapApp.size()];
+			mSelection = new boolean[mapApp.size()];
+			for (String appName : listApp)
+				try {
+					String pkgName = mapApp.get(appName);
+					mApp[i] = (pkgName.equals(appName) ? appName : String.format("%s (%s)", appName, pkgName));
+					mPackage[i] = pkgName;
+					mSelection[i] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeApplication, pkgName,
+							false);
+					i++;
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+
 			return null;
 		}
 
