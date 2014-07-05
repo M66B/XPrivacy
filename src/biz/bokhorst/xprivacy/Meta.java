@@ -139,28 +139,28 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "LinkAddress.toString", null, 20, "2.1.17", null));
 
-		mListHook.add(new Hook("ipc", "IAccountManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IActivityManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IClipboard", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IConnectivityManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IContentService", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "ILocationManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "ITelephonyRegistry", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "ITelephonyRegistryMSim", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IPackageManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IPhoneSubInfo", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IPhoneSubInfoMSim", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IWindowManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IWifiManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "ISipService", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "ISms", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "INfcAdapter", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IAppWidgetService", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IBluetooth", "", 1, "2.1.9", null).dangerous());
-		mListHook.add(new Hook("ipc", "IBluetoothManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IInputManager", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "SensorServer", "", 1, "2.1.7", null).dangerous());
-		mListHook.add(new Hook("ipc", "IUsbManager", "", 1, "2.1.7", null).dangerous());
+		mListHook.add(new Hook("ipc", "IAccountManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IActivityManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IClipboard", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IConnectivityManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IContentService", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "ILocationManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "ITelephonyRegistry", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "ITelephonyRegistryMSim", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IPackageManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IPhoneSubInfo", "", 1, "2.t p1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IPhoneSubInfoMSim", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IWindowManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IWifiManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "ISipService", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "ISms", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "INfcAdapter", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IAppWidgetService", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IBluetooth", "", 1, "2.1.9", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IBluetoothManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IInputManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "SensorServer", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IUsbManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 
 		mListHook.add(new Hook("ipc", "Reflection", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 
