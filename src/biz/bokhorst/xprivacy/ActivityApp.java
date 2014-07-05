@@ -756,7 +756,6 @@ public class ActivityApp extends ActivityBase {
 									mPrivacyListAdapter.notifyDataSetChanged();
 							}
 						});
-				alertDialogBuilder.setCancelable(false);
 
 				// Show dialog
 				AlertDialog alertDialog = alertDialogBuilder.create();
@@ -831,7 +830,6 @@ public class ActivityApp extends ActivityBase {
 									mPrivacyListAdapter.notifyDataSetChanged();
 							}
 						});
-				alertDialogBuilder.setCancelable(false);
 
 				// Show dialog
 				AlertDialog alertDialog = alertDialogBuilder.create();
@@ -945,7 +943,6 @@ public class ActivityApp extends ActivityBase {
 									mPrivacyListAdapter.notifyDataSetChanged();
 							}
 						});
-				alertDialogBuilder.setCancelable(false);
 
 				// Show dialog
 				AlertDialog alertDialog = alertDialogBuilder.create();
