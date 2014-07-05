@@ -219,6 +219,8 @@ public class XBinder extends XHook {
 		"com.lge.lockscreen.widget.mdm.LgeMdmRecoveryPasswordButton", // system
 		"com.lge.qslide.QSlide", // system
 		"com.lge.systemui.Utils", // system
+		"com.cyngn.keyguard.KeyguardUpdateMonitor", // system
+		"com.cyngn.keyguard.KeyguardViewMediator", // system
 		"com.mediatek.telephony.TelephonyManagerEx",
 		"com.sec.android.app.clockpackage.alarm.AlarmAlert", // system
 		"com.sec.android.app.FlashBarService.AppListController", // system
