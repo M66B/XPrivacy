@@ -318,14 +318,14 @@ public class Requirements {
 
 		// Check context services
 		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager",
-				"com.intel.arkham.ExtendAccountManager" });
+				"com.intel.arkham.ExtendAccountManager" /* Asus */});
 		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager",
 				"android.app.ActivityManagerEx" });
 		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
 		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager",
 				"android.net.MultiSimConnectivityManager" });
 		checkService(context, Context.LOCATION_SERVICE, new String[] { "android.location.LocationManager",
-				"android.location.ZTEPrivacyLocationManager " });
+				"android.location.ZTEPrivacyLocationManager" });
 		Class<?> serviceClass = context.getPackageManager().getClass();
 		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
 			reportClass(serviceClass, context);
