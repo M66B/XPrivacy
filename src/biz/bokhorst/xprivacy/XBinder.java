@@ -191,18 +191,16 @@ public class XBinder extends XHook {
 
 					// Check if caller class in user space
 					String callerClassName = ste[i + 2].getClassName();
-					if (i + 2 < ste.length && !callerClassName.startsWith("java.lang.reflect.")) {
+					if (i + 2 < ste.length && !callerClassName.startsWith("java.lang.reflect."))
 						try {
 							synchronized (mPreLoaded) {
 								if (mPreLoaded.contains(callerClassName))
 									ok = true;
-							}
-							if (!ok) {
-								Class<?> clazz = Class.forName(callerClassName, false, Thread.currentThread()
-										.getContextClassLoader());
-								if (clazz.getClassLoader().toString().startsWith("java.lang.BootClassLoader")) {
-									ok = true;
-									synchronized (mPreLoaded) {
+								else {
+									ClassLoader loader = Thread.currentThread().getContextClassLoader();
+									Class<?> clazz = Class.forName(callerClassName, false, loader);
+									if ("java.lang.BootClassLoader".equals(clazz.getClassLoader().getClass().getName())) {
+										ok = true;
 										mPreLoaded.add(callerClassName);
 									}
 								}
@@ -210,7 +208,6 @@ public class XBinder extends XHook {
 						} catch (ClassNotFoundException ignored) {
 							ok = true;
 						}
-					}
 
 					break;
 				}
