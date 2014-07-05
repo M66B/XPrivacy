@@ -18,6 +18,7 @@ Changelog
 * If you install a version from 2.0.35 the main template will be reset to default (once)
 * If you install a version from 2.1.5 on demand restricting will be disabled until the update is completed (once)
 * If you install a version from 2.1.8 you will need to setup the IPC restrictions again (once)
+* If you install a version from 2.1.21 you will need to setup the IPC restrictions again (once), except for *Reflection*
 * Dangerous functions need to be restricted always manually (manually includes the template, if defined to do so)
 * Xposed version 2.6+ is required
 * **Please send the support info when XPrivacy asks for it**
