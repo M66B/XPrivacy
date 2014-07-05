@@ -270,6 +270,11 @@ public class XContentResolver extends XHook {
 						if (added)
 							listColumn.remove(listColumn.size() - 1);
 
+						// Get blacklist setting
+						int uid = Binder.getCallingUid();
+						boolean blacklist = PrivacyManager
+								.getSettingBool(-uid, PrivacyManager.cSettingBlacklist, false);
+
 						MatrixCursor result = new MatrixCursor(listColumn.toArray(new String[0]));
 
 						// Filter rows
@@ -279,8 +284,10 @@ public class XContentResolver extends XHook {
 							while (cursor.moveToNext()) {
 								// Check if allowed
 								long id = (urlid >= 0 ? urlid : cursor.getLong(iid));
-								boolean allowed = PrivacyManager.getSettingBool(-Binder.getCallingUid(),
-										Meta.cTypeContact, Long.toString(id), false);
+								boolean allowed = PrivacyManager.getSettingBool(-uid, Meta.cTypeContact,
+										Long.toString(id), false);
+								if (blacklist)
+									allowed = !allowed;
 								if (allowed)
 									copyColumns(cursor, result, listColumn.size());
 							}

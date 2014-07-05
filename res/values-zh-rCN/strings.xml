@@ -168,6 +168,7 @@
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_notify">通知栏提示</string>
     <string name="settings_ondemand">按需限制权限</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_confidence">最大采样置信区间</string>

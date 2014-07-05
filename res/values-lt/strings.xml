@@ -168,6 +168,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_fake_data">Netikri duomenys</string>
     <string name="settings_notify">Atnaujinimų Pranešimas</string>
     <string name="settings_ondemand">Riboti pagal reikalavimą</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">DEBUG žurnalas (perkrauti prietaisą)</string>
     <string name="settings_expert">Eksperto režimas</string>
     <string name="settings_confidence">Maks. pasitikėjimo gavimo intervalas</string>

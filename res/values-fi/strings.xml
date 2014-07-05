@@ -167,6 +167,7 @@
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_notify">Päivitä ilmoitukset</string>
     <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Debuggaus logi (vaatii uudelleenkäynnistyksen)</string>
     <string name="settings_expert">Expert tila</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>

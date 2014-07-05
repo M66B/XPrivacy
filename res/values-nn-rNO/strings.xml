@@ -166,6 +166,7 @@
     <string name="settings_fake_data">Forfalsket data</string>
     <string name="settings_notify">Oppdater varslinger</string>
     <string name="settings_ondemand">Blokkering på forespørsel</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>

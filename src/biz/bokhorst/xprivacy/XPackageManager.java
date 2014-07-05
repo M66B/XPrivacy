@@ -155,6 +155,10 @@ public class XPackageManager extends XHook {
 			return false;
 		}
 
-		return PrivacyManager.getSettingBool(-uid, Meta.cTypeApplication, packageName, false);
+		boolean allowed = PrivacyManager.getSettingBool(-uid, Meta.cTypeApplication, packageName, false);
+		boolean blacklist = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingBlacklist, false);
+		if (blacklist)
+			allowed = !allowed;
+		return allowed;
 	}
 }

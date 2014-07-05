@@ -168,6 +168,7 @@
     <string name="settings_fake_data">Фальшиві дані</string>
     <string name="settings_notify">Оновити сповіщення</string>
     <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Відлагоджувальний лог (потрібне перезавантаження)</string>
     <string name="settings_expert">Експертний режим</string>
     <string name="settings_confidence">Максимальний інтервал отримання конфіденційних даних</string>

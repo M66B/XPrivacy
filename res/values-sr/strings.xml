@@ -168,6 +168,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>

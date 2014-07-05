@@ -243,12 +243,16 @@ public class XAccountManager extends XHook {
 
 	private boolean isAccountAllowed(String accountName, String accountType, int uid) {
 		try {
-			if (PrivacyManager.getSettingBool(-uid, Meta.cTypeAccountHash, accountName + accountType, false))
-				return true;
+			boolean allowed = PrivacyManager.getSettingBool(-uid, Meta.cTypeAccountHash, accountName + accountType,
+					false);
+			boolean blacklist = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingBlacklist, false);
+			if (blacklist)
+				allowed = !allowed;
+			return allowed;
 		} catch (Throwable ex) {
 			Util.bug(this, ex);
+			return false;
 		}
-		return false;
 	}
 
 	private class XFutureAccount implements AccountManagerFuture<Account[]> {

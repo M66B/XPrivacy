@@ -168,6 +168,7 @@
     <string name="settings_fake_data">偽造資訊設定</string>
     <string name="settings_notify">APP更新時顯示通知</string>
     <string name="settings_ondemand">開啟互動式限制設定</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">偵錯日誌 (需重新啟動)</string>
     <string name="settings_expert">進階模式</string>
     <string name="settings_confidence">最大擷取信賴區間</string>

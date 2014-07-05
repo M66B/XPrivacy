@@ -166,6 +166,7 @@
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_notify">Updaterings notifikationer</string>
     <string name="settings_ondemand">Begræns on-demand</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Debug-log (kræver genstart)</string>
     <string name="settings_expert">Ekspert tilstand</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>

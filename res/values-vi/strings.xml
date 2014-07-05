@@ -167,6 +167,7 @@
     <string name="settings_fake_data">Dữ liệu giả</string>
     <string name="settings_notify">Cập nhật thông báo</string>
     <string name="settings_ondemand">Hạn chế theo yêu cầu truy cập dữ liệu</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại ứng dụng)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
     <string name="settings_confidence">Tối đa khoảng thời gian lấy về các thiết lập</string>

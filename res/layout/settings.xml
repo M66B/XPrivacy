@@ -59,6 +59,12 @@
                 android:text="@string/settings_ondemand" />
 
             <CheckBox
+                android:id="@+id/cbBlacklist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_blacklist" />
+
+            <CheckBox
                 android:id="@+id/cbUsage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

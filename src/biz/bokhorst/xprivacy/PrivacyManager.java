@@ -121,6 +121,7 @@ public class PrivacyManager {
 	public final static String cSettingMigrated = "Migrated";
 	public final static String cSettingCid = "Cid";
 	public final static String cSettingLac = "Lac";
+	public final static String cSettingBlacklist = "Blacklist";
 
 	// Special value names
 	public final static String cValueRandom = "#Random#";

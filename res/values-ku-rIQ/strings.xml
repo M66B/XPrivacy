@@ -167,6 +167,7 @@
     <string name="settings_fake_data">زانیاری هه له</string>
     <string name="settings_notify">نوی کردنه وهی ئاگه داریه کان</string>
     <string name="settings_ondemand">داوات لیبکریت بو سنوردار کردنیان</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">چه ند هه لبژاردنیکی مه ترسیدار که تایبه ته به که سانی شاره زا</string>
     <string name="settings_confidence">زورترین راده ی دلنیابوون له زانیاریه دابه زینراوه کان</string>

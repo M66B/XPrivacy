@@ -168,6 +168,7 @@
     <string name="settings_fake_data">Lažni podatki</string>
     <string name="settings_notify">Obvestila ob posodobitvi</string>
     <string name="settings_ondemand">Omeji na zahtevo</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Beleženje za razvijalce (zahtevan ponovni zagon)</string>
     <string name="settings_expert">Način za strokovnjake</string>
     <string name="settings_confidence">Največji interval prenašanja omejitev</string>

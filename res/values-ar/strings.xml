@@ -168,6 +168,7 @@
     <string name="settings_fake_data">بيانات وهمية</string>
     <string name="settings_notify">تحديث الإشعارات</string>
     <string name="settings_ondemand">تقييد عند الطلب</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log"> سِجِل تصحيح الأخطاء (يتطلب إعادة التشغيل) </string>
     <string name="settings_expert">وضع الخبراء</string>
     <string name="settings_confidence">الحد الأقصى لجلب فترة الثقة</string>

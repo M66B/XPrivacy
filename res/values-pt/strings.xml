@@ -168,6 +168,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Relatório de depuração (requer reinicialização)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>

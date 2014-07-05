@@ -168,6 +168,7 @@
     <string name="settings_fake_data">Fałszowanie danych</string>
     <string name="settings_notify">Aktualizuj powiadomienia</string>
     <string name="settings_ondemand">Ograniczanie na żądanie</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Log debugowania (wymaga restartu)</string>
     <string name="settings_expert">Tryb eksperta</string>
     <string name="settings_confidence">Maksymalna wartość wspołczynnika zaufania</string>

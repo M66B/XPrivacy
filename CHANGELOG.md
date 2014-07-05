@@ -27,6 +27,7 @@ Changelog
 **Next release**
 
 * Added option to specify file name to import/export intent ([issue](/../../issues/1784))
+* Added option to blacklist applications, accounts and contacts ([issue](/../../issues/1781))
 * Updated Japanese translation
 * Updated Slovenian translation
 

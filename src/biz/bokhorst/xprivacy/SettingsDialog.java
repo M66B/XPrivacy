@@ -41,6 +41,7 @@ public class SettingsDialog {
 
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
 		final CheckBox cbOnDemand = (CheckBox) dlgSettings.findViewById(R.id.cbOnDemand);
+		final CheckBox cbBlacklist = (CheckBox) dlgSettings.findViewById(R.id.cbBlacklist);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbParameters = (CheckBox) dlgSettings.findViewById(R.id.cbParameters);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
@@ -233,6 +234,7 @@ public class SettingsDialog {
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
 		boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == userId);
+		boolean blacklist = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingBlacklist, false);
 		boolean enabled = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRestricted, true);
 
 		// Common
@@ -299,6 +301,11 @@ public class SettingsDialog {
 			cbOnDemand.setEnabled(enabled);
 		} else
 			cbOnDemand.setVisibility(View.GONE);
+
+		if (uid == userId)
+			cbBlacklist.setVisibility(View.GONE);
+		else
+			cbBlacklist.setChecked(blacklist);
 
 		// Common
 		cbRandom.setChecked(random);
@@ -469,6 +476,10 @@ public class SettingsDialog {
 				if (uid == userId || PrivacyManager.isApplication(uid))
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand,
 							Boolean.toString(cbOnDemand.isChecked()));
+
+				if (uid != userId)
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingBlacklist,
+							Boolean.toString(cbBlacklist.isChecked()));
 
 				// Random at boot
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingRandom,

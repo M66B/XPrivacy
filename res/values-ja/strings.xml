@@ -166,6 +166,7 @@
     <string name="settings_fake_data">データ偽装</string>
     <string name="settings_notify">アプリ更新の際に通知する</string>
     <string name="settings_ondemand">制限をオンデマンドで設定する</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">デバッグログを出力する (要再起動)</string>
     <string name="settings_expert">上級者モード</string>
     <string name="settings_confidence">制限の設定を取得する際の信頼区間の最大値</string>

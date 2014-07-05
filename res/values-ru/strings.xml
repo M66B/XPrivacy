@@ -168,6 +168,7 @@
     <string name="settings_fake_data">Фальшивые данные</string>
     <string name="settings_notify">Обновить уведомления</string>
     <string name="settings_ondemand">Запрос разрешений</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Режим эксперта</string>
     <string name="settings_confidence">Макс. доверительный интервал выборки</string>

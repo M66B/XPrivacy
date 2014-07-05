@@ -168,6 +168,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="settings_fake_data">Data palsu</string>
     <string name="settings_notify">Pemberitahuan pengemaskinian</string>
     <string name="settings_ondemand">Sekatan di atas permintaan</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Log nyahsilap (perlu mula semula)</string>
     <string name="settings_expert">Mod pakar</string>
     <string name="settings_confidence">Selang keyakinan pengambilan maxima</string>

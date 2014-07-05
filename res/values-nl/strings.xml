@@ -168,6 +168,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_fake_data">Nepgegevens</string>
     <string name="settings_notify">Bijgewerkt notificaties</string>
     <string name="settings_ondemand">Beperken op verzoek</string>
+    <string name="settings_blacklist">Zwarte lijst voor accounts, applicaties en contacten</string>
     <string name="settings_log">Debug log (herstart vereist)</string>
     <string name="settings_expert">Expertmodus</string>
     <string name="settings_confidence">Maximum betrouwbaarheidsinterval voor ophalen</string>

@@ -168,6 +168,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="settings_fake_data">Daten manipulieren</string>
     <string name="settings_notify">Update-Benachrichtigungen</string>
     <string name="settings_ondemand">Beschränkungen nach Aufforderung festlegen</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
     <string name="settings_confidence">Maximales Abruf-Konfidenzintervall</string>
