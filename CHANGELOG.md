@@ -21,8 +21,6 @@ Changelog
 * Dangerous functions need to be restricted always manually (manually includes the template, if defined to do so)
 * Xposed version 2.6+ is required
 * **Please send the support info when XPrivacy asks for it**
-* The current experimental features are:
-	* Sending support info about unmarked IPC
 
 **Next release**
 
