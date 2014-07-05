@@ -148,7 +148,7 @@ public class Meta {
 		mListHook.add(new Hook("ipc", "ITelephonyRegistry", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 		mListHook.add(new Hook("ipc", "ITelephonyRegistryMSim", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 		mListHook.add(new Hook("ipc", "IPackageManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
-		mListHook.add(new Hook("ipc", "IPhoneSubInfo", "", 1, "2.t p1.7", null).dangerous().whitelist(cTypeMethod));
+		mListHook.add(new Hook("ipc", "IPhoneSubInfo", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 		mListHook.add(new Hook("ipc", "IPhoneSubInfoMSim", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 		mListHook.add(new Hook("ipc", "IWindowManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 		mListHook.add(new Hook("ipc", "IWifiManager", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
