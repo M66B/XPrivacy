@@ -1,21 +1,26 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
 import android.util.Log;
+import android.util.SparseArray;
 
 public class XBinder extends XHook {
 	private Methods mMethod;
-	private static Boolean mStable = null;
-
 	private static long mToken = 0;
+	private static Boolean mStable = null;
+	private static Map<String, SparseArray<String>> mMapCodeName = new HashMap<String, SparseArray<String>>();
+
 	private static final int BITS_TOKEN = 16;
 	private static final int FLAG_ALL = 0xFFFF;
 	private static final int MASK_TOKEN = 0xFFFF;
@@ -489,6 +494,7 @@ public class XBinder extends XHook {
 							mStable = !PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingExperimental,
 									!PrivacyManager.cStableRelease);
 						}
+
 						if (mStable) {
 							if (i + 1 < ste.length) {
 								String name = ste[i + 1].getClassName();
@@ -573,9 +579,39 @@ public class XBinder extends XHook {
 			if (cServiceDescriptor.contains(descriptor)) {
 				String[] name = descriptor.split("\\.");
 				String methodName = name[name.length - 1];
-				Util.log(this, Log.INFO, "can restrict method=" + methodName + " code=" + code + " flags=" + flags
+
+				// Get transaction code name
+				String codeName;
+				synchronized (mMapCodeName) {
+					if (!mMapCodeName.containsKey(descriptor)) {
+						SparseArray<String> sa = new SparseArray<String>();
+						mMapCodeName.put(descriptor, sa);
+						try {
+							Class<?> superClass = param.thisObject.getClass().getSuperclass();
+							if (superClass != null)
+								for (Field field : superClass.getDeclaredFields())
+									try {
+										if (field.getName().startsWith("TRANSACTION_")) {
+											Integer txCode = (Integer) field.get(param.thisObject);
+											String txName = field.getName().replace("TRANSACTION_", "");
+											sa.put(txCode, txName);
+										}
+									} catch (Throwable ignore) {
+									}
+						} catch (Throwable ignored) {
+						}
+					}
+					codeName = mMapCodeName.get(descriptor).get(code);
+					if (codeName == null) {
+						Util.log(this, Log.WARN, "Unknown descriptor=" + descriptor + " code=" + code);
+						codeName = Integer.toString(code);
+					}
+				}
+
+				Util.log(this, Log.INFO, "can restrict method=" + methodName + " code=" + codeName + " flags=" + flags
 						+ " uid=" + uid + " my=" + Process.myUid());
-				if (isRestrictedExtra(uid, PrivacyManager.cIPC, methodName, Integer.toString(code))) {
+
+				if (isRestrictedExtra(uid, PrivacyManager.cIPC, methodName, codeName)) {
 					// Get reply parcel
 					Parcel reply = null;
 					try {
