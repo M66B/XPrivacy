@@ -1059,15 +1059,15 @@ It is already enough work to support the official versions from the last stable 
 
 If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
-Include a [logcat](#FAQ14) when relevant (use [gist](https://gist.github.com/) or a similar service).
-Try to keep the logcat as brief as possible, searching in large logcats is no fun and not useful.
+Please describe the exact steps to reproduce the issue, including the wrong and expected result,
+and include information about your device type, Android and XPrivacy version.
 
 To increase the chance I can find and fix the bug, please read [this](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html).
 
-**Do not forget to enable XPrivacy logging using the settings menu!**
+Include a [logcat](#FAQ14) when relevant (use [gist](https://gist.github.com/) or a similar service).
+Try to keep the logcat as brief as possible, searching in large logcats is no fun and not useful.
 
-Please describe the exact steps to reproduce the issue, including the wrong and expected result,
-and include information about your device type, Android and XPrivacy version.
+**Do not forget to enable XPrivacy logging using the settings menu!**
 
 **Before submitting any issue please make sure you are running the latest version of XPrivacy.**
 
