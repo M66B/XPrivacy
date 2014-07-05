@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.security.InvalidParameterException;
 import java.util.List;
 
@@ -8,6 +9,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Environment;
 import android.os.Process;
 import android.text.TextUtils;
 import android.view.View;
@@ -302,7 +304,8 @@ public class SettingsDialog {
 		} else
 			cbOnDemand.setVisibility(View.GONE);
 
-		if (uid == userId)
+		String blFileName = Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/blacklist";
+		if (uid == userId || !new File(blFileName).exists())
 			cbBlacklist.setVisibility(View.GONE);
 		else
 			cbBlacklist.setChecked(blacklist);
