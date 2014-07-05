@@ -311,7 +311,10 @@ public class UpdateService extends Service {
 						if (hook.isDangerous()) {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + hook + " from=" + hook.getFrom()
 									+ " uid=" + uid);
-							listWork.add(new PRestriction(uid, hook.getRestrictionName(), hook.getName(), false));
+							PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(),
+									false);
+							restriction.asked = true;
+							listWork.add(restriction);
 						}
 
 						// Restrict replaced methods
@@ -322,7 +325,6 @@ public class UpdateService extends Service {
 								listWork.add(new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true));
 							}
 					}
-
 				}
 
 				// Restrict dangerous
