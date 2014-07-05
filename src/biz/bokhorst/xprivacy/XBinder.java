@@ -137,6 +137,7 @@ public class XBinder extends XHook {
 			"android.telephony.MSimTelephonyManager",
 		},
 		new String[] { // IWindowManager
+			"android.view.InputDevice",
 			"android.view.WindowManagerImpl",
 			"android.view.WindowManagerGlobal",
 			"android.view.ViewRootImpl",
@@ -189,38 +190,52 @@ public class XBinder extends XHook {
 	// @formatter:off
 	// Forbidden classes, no exceptions for vendor specific changes
 	public static List<String> cBlackClassName = Arrays.asList(new String[] {
+		// "a2dp.connect.Bt_iadl", // user
+		"android.widget.HtcSkinUtil", // system
 		"com.android.htccontacts.model.AccountTypeManagerImpl", // system
+		"com.android.keyguard.sec.KeyguardUnlockView", // system
 		"com.android.internal.util.aokp.AwesomeAction", // system
 		"com.android.internal.util.djl.SlimActions", // system
 		"com.android.internal.util.slim.SlimActions", // system
 		"com.android.systemui.slimrecent.RecentController", // system
 		"com.android.systemui.statusbar.halo.Halo", // system
 		"com.android.systemui.statusbar.phone.AsusPhoneStatusBar", // system
+		"com.broadcom.bt.service.radiomanager.BluetoothRadioManager", // system
+		"com.asus.maxxaudio.MaxxAudioService", // system
+		"com.asus.splendid.TaskWatcherService", // system
 		"com.google.android.partnersetup.AppHider", // system
 		"com.google.android.partnersetup.MccFallback", // system
 		"com.google.android.partnersetup.MccOverride", // system
 		"com.htc.android.htcime.HTCIMEService", // system
+		"com.htc.lockscreen.keyguard.KeyguardViewMediator", // system
 		"com.htc.lockscreen.keyguard.KeyguardUpdateMonitor", // system
 		"com.htc.util.skin.HtcSkinUtil", // system
 		"com.lbe.security.LBEApplication",
 		"com.lbe.security.service.SecurityService",
 		"com.lge.launcher2.util.LGWindow", // system
 		"com.lge.lockscreen.KeyguardModel", // system
+		"com.lge.lockscreen.widget.mdm.LgeMdmRecoveryPasswordButton", // system
 		"com.lge.qslide.QSlide", // system
 		"com.lge.systemui.Utils", // system
 		"com.mediatek.telephony.TelephonyManagerEx",
+		"com.sec.android.app.clockpackage.alarm.AlarmAlert", // system
 		"com.sec.android.app.FlashBarService.AppListController", // system
 		"com.sec.android.app.FlashBarService.CenterBarWindow", // system
+		"com.sec.android.app.FlashBarService.FlashBarService", // system
+		"com.sec.android.app.FlashBarService.LegacyAppListWindow", // system
 		"com.sec.android.app.GlanceView.GlanceViewService", // system
 		"com.sec.android.app.videoplayer.feature.VPFeature", // system
+		"com.sec.android.app.samsungapps.AppsService", // system
 		"com.sec.android.band.nfc.NFCMessageCallback", // system
 		"com.sec.android.service.cm.ApplicationUpdateReceiver", // system
 		"com.sec.android.service.health.sensor.HealthService", // system
 		"com.sec.phone.Am", // system
+		"com.samsung.android.app.galaxyfinder.e.q", // system
 		"com.samsung.android.app.galaxyfinder.util.Utils", // system
 		"com.samsung.android.sconnect.periph.PeriphService", // system
 		"com.samsung.android.sdk.look.SlookImpl", // system
 		"com.samsung.android.sdk.multiwindow.SMultiWindow", // system
+		"com.smlds.AABSyncService", // system
 		"com.sonymobile.systemui.statusbar.tools.ToolsMain", // system
 		"android.telephony.gemini.GeminiSmsManager", // system
 		"com.zte.security.ZTEIPackageManager",
@@ -254,6 +269,7 @@ public class XBinder extends XHook {
 			"android.os.Looper",
 			"android.os.StrictMode",
 			"android.os.UserManager", // system
+			"android.os.PowerManager", // system
 			"android.provider.Settings", // system
 			"com.android.internal.app.AlertActivity",
 			"com.android.internal.app.ResolverActivity",
@@ -327,6 +343,7 @@ public class XBinder extends XHook {
 		new String[] { // IWindowManager
 			"android.app.Activity",
 			"android.app.ActivityThread",
+			"android.app.Instrumentation", // system
 			"android.app.KeyguardManager",
 			"android.hardware.LegacySensorManager",
 			"android.hardware.SensorManager",
@@ -360,6 +377,7 @@ public class XBinder extends XHook {
 		new String[] { // IAppWidgetService
 		},
 		new String[] { // IBluetooth
+			"com.android.phone.BluetoothHeadsetService", // user
 		},
 		new String[] { // IBluetoothManager
 		},
@@ -369,6 +387,7 @@ public class XBinder extends XHook {
 		new String[] { // SensorServer
 		},
 		new String[] { // IUsbManager
+			"com.android.systemui.usb.UsbPermissionActivity", // system
 		},
 	});
 	// @formatter:on
