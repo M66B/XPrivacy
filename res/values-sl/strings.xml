@@ -3,7 +3,7 @@
     <string name="app_notxposed">Xposed framework različice %1$d+ ni nameščen</string>
     <string name="app_notenabled">XPrivacy ni omogočen v Xposed installer</string>
     <string name="app_wrongandroid">Samo za Android različice 4.0.3+</string>
-    <string name="app_incompatible">XPrivacy je nekompatibilen z %1$s</string>
+    <string name="app_incompatible">XPrivacy ni kompatibilen z %1$s</string>
     <string name="app_version">XPrivacy različica: %1$s (%2$d)</string>
     <string name="app_description">Odlični upravljalec pravic</string>
     <string name="app_xversion">Xposed framework različica: %1$d</string>
@@ -45,7 +45,7 @@
     <string name="menu_tutorial">Navodila</string>
     <string name="menu_exclude">Izključi</string>
     <string name="menu_close">Zapri</string>
-    <string name="menu_flush">Flush cache</string>
+    <string name="menu_flush">Počisti predpomnilnik</string>
     <string name="msg_abort">Preklicujem</string>
     <string name="msg_aborted">Preklicano</string>
     <string name="msg_new">Novo</string>
@@ -68,7 +68,7 @@
     <string name="msg_email">Prosimo, vnesite svoj e-mail naslov:</string>
     <string name="msg_registered">Za aktiviranje Vaše naprave, preverite e-pošto</string>
     <string name="msg_service">Storitev za posodobitve se zaganja</string>
-    <string name="msg_migrating">Selim %1$s</string>
+    <string name="msg_migrating">Migriram %1$s</string>
     <string name="msg_randomizing">Ustvarjam naključne podatke %1$s</string>
     <string name="msg_upgrading">Nadgrajujem %1$s</string>
     <string name="msg_support_info">Napaka pri notranjem preverjanju, želite poslati podatke podpori?</string>
@@ -100,10 +100,10 @@
     <string name="restrict_shell">Lupina (ukazi, superuser)</string>
     <string name="restrict_system">Sistem (nameščeni programi)</string>
     <string name="restrict_view">Pogled (brskalnik)</string>
-    <string name="whitelist_address">Addresses</string>
+    <string name="whitelist_address">Naslovi</string>
     <string name="whitelist_ipaddress">IP naslovi</string>
     <string name="whitelist_library">Nativne knjižice</string>
-    <string name="whitelist_method">Method names</string>
+    <string name="whitelist_method">Imena metod</string>
     <string name="whitelist_filename">Imena datotek</string>
     <string name="whitelist_command">Ukazi lupine</string>
     <string name="whitelist_url">URLji</string>
@@ -122,7 +122,7 @@
     <string name="title_sinstalled">Po datumu namestitve</string>
     <string name="title_supdated">Po datumu posodobitve</string>
     <string name="title_smodified">Po datumu spremembe (XPrivacy)</string>
-    <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_sstate">Po stanju (XPrivacy)</string>
     <string name="title_sinvert">Obrni zaporedje razvrščanja</string>
     <string name="title_attempt">Poskus uporabe:</string>
     <string name="title_category">Kategorija:</string>
@@ -133,24 +133,24 @@
     <string name="title_whitelist">Dodaj \'%1$s\' na belo listo</string>
     <string name="title_allow">Dovoli</string>
     <string name="title_deny">Zavrni</string>
-    <string name="title_dontknow">Don\'t know</string>
+    <string name="title_dontknow">Ne vem</string>
     <string name="title_pleasesubmit">Prosimo, pošljite Vaše omejitve za pomoč drugim</string>
     <string name="title_permissions">Pravice</string>
     <string name="title_set_restrict">Omeji</string>
     <string name="title_template_category">Uveljavi predlogo (kategorije)</string>
     <string name="title_template_full">Uveljavi predlogo (kategorije+funkcije)</string>
-    <string name="title_template_merge">Apply template (merge)</string>
+    <string name="title_template_merge">Uveljeavi predlogo (združevanje)</string>
     <string name="title_enable_ondemand">Omogoči omejevanje na zahtevo</string>
     <string name="title_disable_ondemand">Onemogoči omejevanje na zahtevo</string>
-    <string name="title_default">Default</string>
-    <string name="title_alternate">Alternate</string>
-    <string name="title_usage_header">Usage</string>
-    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
-    <string name="title_usage_text_2">2. Tap on the application icon</string>
-    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
-    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
-    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
-    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
+    <string name="title_default">Privzeto</string>
+    <string name="title_alternate">Nadomestno</string>
+    <string name="title_usage_header">Uporaba</string>
+    <string name="title_usage_text_1">1. Na seznamu programov poiščite program, ki mu želite pravice omejiti</string>
+    <string name="title_usage_text_2">2. Dotaknite se njegove ikone</string>
+    <string name="title_usage_text_3">3. Izberite potrditveno polje ob kategoriji, ki jo želite omejiti</string>
+    <string name="title_usage_footer">Ko umejujete pravice, uporabite možgane; ne pričakujte, da bo aplikacija imela internetni dostop, če ji boste omejili internet.</string>
+    <string name="title_toggle_dangerous">Pridržite naslov, da preklopite nevarne funkcije</string>
+    <string name="title_ondemand_category">Uveljavljanje kategorij bo ponastavilo izjeme funkcij na privzete vrednosti</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>
@@ -176,7 +176,7 @@
     <string name="settings_syscomponents">Omeji sistemske komponente (Android) (zahtevan ponovni zagon)</string>
     <string name="settings_usagedata">Prikaži uporabo podatkov aplikacije (zahtevan ponovni zagon)</string>
     <string name="settings_parameters">Prikaži parametre za uporabo podatkov</string>
-    <string name="settings_cid">GSM Cell ID</string>
+    <string name="settings_cid">ID GSM telefona</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="help_longpress">Za izbiranje pridržite ime</string>
     <string name="help_ondemand">omejitve bodo vprašane</string>
@@ -198,6 +198,6 @@
     <string name="tutorial_detailsheader">Tapni ikono aplikacije za več možnosti</string>
     <string name="tutorial_detailslist">Tapni puščico navzdol za pregled izjem funkcij v omejeni kategoriji</string>
     <string name="permission_manage">Upravljaj programe, vključno z ubijanjem(programov)</string>
-    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
+    <string name="permission_restrictions">Uporavljaj XPrivacy omejitve in nastavitve</string>
 
 </resources>
