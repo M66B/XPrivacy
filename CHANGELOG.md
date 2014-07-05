@@ -28,6 +28,7 @@ Changelog
 
 * Added option to specify file name to import/export intent ([issue](/../../issues/1784))
 * Updated Japanese translation
+* Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
