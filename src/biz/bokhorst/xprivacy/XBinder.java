@@ -263,13 +263,19 @@ public class XBinder extends XHook {
 						SparseArray<String> sa = new SparseArray<String>();
 						mMapCodeName.put(descriptor, sa);
 						try {
-							Class<?> superClass = param.thisObject.getClass().getSuperclass();
+							Class<?> superClass;
+							if ("android.app.IActivityManager".equals(descriptor))
+								superClass = Class.forName("android.app.IActivityManager");
+							else
+								superClass = param.thisObject.getClass().getSuperclass();
 							if (superClass != null)
 								for (Field field : superClass.getDeclaredFields())
 									try {
-										if (field.getName().startsWith("TRANSACTION_")) {
+										if (field.getName().startsWith("TRANSACTION_")
+												|| field.getName().endsWith("_TRANSACTION")) {
 											Integer txCode = (Integer) field.get(param.thisObject);
-											String txName = field.getName().replace("TRANSACTION_", "");
+											String txName = field.getName().replace("TRANSACTION_", "")
+													.replace("_TRANSACTION", "");
 											sa.put(txCode, txName);
 										}
 									} catch (Throwable ignore) {
@@ -284,6 +290,7 @@ public class XBinder extends XHook {
 					codeName = Integer.toString(code);
 					Util.log(this, Log.WARN,
 							"Unknown transaction=" + descriptor + ":" + code + " uid=" + Binder.getCallingUid());
+					Util.logStack(this, Log.WARN);
 				}
 
 				Util.log(this, Log.WARN, "can restrict transaction=" + methodName + ":" + codeName + " flags=" + flags
