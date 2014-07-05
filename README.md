@@ -1062,6 +1062,8 @@ If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy
 Include a [logcat](#FAQ14) when relevant (use [gist](https://gist.github.com/) or a similar service).
 Try to keep the logcat as brief as possible, searching in large logcats is no fun and not useful.
 
+To increase the chance I can find and fix the bug, please read [this](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html).
+
 **Do not forget to enable XPrivacy logging using the settings menu!**
 
 Please describe the exact steps to reproduce the issue, including the wrong and expected result,
