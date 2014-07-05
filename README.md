@@ -1067,13 +1067,13 @@ To increase the chance I can find and fix the bug, please read [this](http://www
 Include a [logcat](#FAQ14) when relevant (use [gist](https://gist.github.com/) or a similar service).
 Try to keep the logcat as brief as possible, searching in large logcats is no fun and not useful.
 
+**One bug report per issue please!**
+
 **Do not forget to enable XPrivacy logging using the settings menu!**
 
 **Before submitting any issue please make sure you are running the latest version of XPrivacy.**
 
 **Before submitting any issue please make sure XPrivacy is causing the problem by disabling XPrivacy.**
-
-**One bug report per issue please!**
 
 ### Feature requests
 
@@ -1090,6 +1090,10 @@ Please [read this](http://forum.xda-developers.com/showpost.php?p=52644313&postc
 ### Questions
 
 If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
+
+**Please do not ask questions using GitHub issues!**
+
+GitHub issues are for bug reports and feature requests.
 
 Changelog
 ---------
