@@ -559,23 +559,29 @@ public class XBinder extends XHook {
 		}
 	}
 
+	// Entry point from android_util_Binder.cpp's onTransact
 	private void checkIPC(XParam param) throws Throwable {
-		// Entry point from android_util_Binder.cpp's onTransact
+		// Allow management transaction
 		int code = (Integer) param.args[0];
+		if (isManagementTransaction(code))
+			return;
+
+		// Only for applications
+		int uid = Binder.getCallingUid();
+		if (!PrivacyManager.isApplication(uid))
+			return;
+
+		// Get token
 		int flags = (Integer) param.args[3];
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
 		flags &= FLAG_ALL;
 		param.args[3] = flags;
 
-		// Allow management transaction
-		if (isManagementTransaction(code))
-			return;
+		// Get interface name
+		IBinder binder = (IBinder) param.thisObject;
+		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 
-		int uid = Binder.getCallingUid();
-		if (token != mToken && PrivacyManager.isApplication(uid)) {
-			// Get interface name
-			IBinder binder = (IBinder) param.thisObject;
-			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+		if (token != mToken) {
 			if (cServiceDescriptor.contains(descriptor)) {
 				String[] name = descriptor.split("\\.");
 				String methodName = name[name.length - 1];
@@ -634,7 +640,8 @@ public class XBinder extends XHook {
 					param.setResult(true);
 				}
 			}
-		}
+		} else if (token != 0)
+			Util.log(this, Log.ERROR, "Skipped descriptor=" + descriptor);
 	}
 
 	private static boolean isManagementTransaction(int code) {
