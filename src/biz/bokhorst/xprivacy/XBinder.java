@@ -203,6 +203,8 @@ public class XBinder extends XHook {
 		"com.broadcom.bt.service.radiomanager.BluetoothRadioManager", // system
 		"com.asus.maxxaudio.MaxxAudioService", // system
 		"com.asus.splendid.TaskWatcherService", // system
+		"com.cyngn.keyguard.KeyguardUpdateMonitor", // system
+		"com.cyngn.keyguard.KeyguardViewMediator", // system
 		"com.google.android.partnersetup.AppHider", // system
 		"com.google.android.partnersetup.MccFallback", // system
 		"com.google.android.partnersetup.MccOverride", // system
