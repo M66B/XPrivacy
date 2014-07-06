@@ -1766,7 +1766,7 @@ public class PrivacyService {
 				@Override
 				public void onClick(View v) {
 					// Deny once
-					result.restricted = true;
+					result.restricted = !(hook != null && hook.isDangerous());
 					result.asked = true;
 					onDemandOnce(restriction, false, result, oResult);
 					latch.countDown();
