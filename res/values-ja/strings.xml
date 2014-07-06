@@ -75,7 +75,9 @@
     <string name="msg_restrictedby">XPrivacy により制限されました</string>
     <string name="msg_service_missing">Privacy service が見つかりません。XPrivacy を Xposed インストーラーで有効にして端末を再起動しましたか?</string>
     <string name="msg_service_version">Privacy service のバージョンが違います。XPrivacy を更新した後で端末を再起動しましたか?</string>
-    <string name="msg_first"><b>XPrivacy の開発およびテストには細心の注意を払いましたが、すべての端末のあらゆるアプリで完璧な動作を保証することは不可能です。\n\n完全に自己責任のうえでご利用ください。</b>\n\nライセンスについて :</string>
+    <string name="msg_first"><b>XPrivacy の開発およびテストには細心の注意を払いましたが、
+すべての端末のあらゆるアプリで完璧な動作を保証することは不可能です。
+\n\n完全に自己責任のうえでご利用ください。</b>\n\nライセンスについて :</string>
     <string name="restrict_accounts">アカウント (Google, Facebook など)</string>
     <string name="restrict_browser">ブラウザ (お気に入り, 履歴)</string>
     <string name="restrict_calendar">カレンダー</string>
@@ -105,7 +107,7 @@
     <string name="whitelist_filename">ファイル名</string>
     <string name="whitelist_command">シェルコマンド</string>
     <string name="whitelist_url">URL</string>
-    <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_transaction">トランザクション</string>
     <string name="title_restrict">チェックして制限します :</string>
     <string name="title_check_whitelist">チェックして許可します :</string>
     <string name="title_fused">データの要求あり</string>
@@ -127,13 +129,13 @@
     <string name="title_category">カテゴリ :</string>
     <string name="title_function">機能 :</string>
     <string name="title_parameters">パラメーター :</string>
-    <string name="title_applycat">カテゴリ全体に適用する</string>
-    <string name="title_once">%s秒間だけ適用する</string>
+    <string name="title_applycat">カテゴリ全体に設定する</string>
+    <string name="title_once">今回のみ%1$s秒間だけ設定する</string>
     <string name="title_whitelist">ホワイトリスト \'%1$s\'</string>
     <string name="title_allow">許可</string>
     <string name="title_deny">拒否</string>
     <string name="title_dontknow">わからない</string>
-    <string name="title_pleasesubmit">他の利用者の参考になるので是非あなたの制限の設定内容を投稿してください</string>
+    <string name="title_pleasesubmit">他の利用者の参考になるので是非あなたの設定を投稿してください</string>
     <string name="title_permissions">パーミッション</string>
     <string name="title_set_restrict">制限を設定する (カテゴリ)</string>
     <string name="title_template_category">テンプレートを適用する (カテゴリ)</string>
@@ -141,7 +143,7 @@
     <string name="title_template_merge">テンプレートを適用する (統合)</string>
     <string name="title_enable_ondemand">オンデマンド制限を有効にする</string>
     <string name="title_disable_ondemand">オンデマンド制限を無効にする</string>
-    <string name="title_ondemand_default">Timeout will:</string>
+    <string name="title_ondemand_default">タイムアウトすると :</string>
     <string name="title_default">既定</string>
     <string name="title_alternate">代替</string>
     <string name="title_usage_header">使い方</string>
@@ -150,8 +152,8 @@
     <string name="title_usage_text_3">3. 各カテゴリの一番上のチェックボックスをタップすると制限が設定されます</string>
     <string name="title_usage_footer">制限は常識的に判断して設定してください。インターネットアクセスを制限したらインターネットに接続できることを期待してはいけません。</string>
     <string name="title_toggle_dangerous">危険性のある機能はタイトル部分を長押しするとチェックできるようになります</string>
-    <string name="title_ondemand_category">カテゴリ全体に適用すると制限の適用除外項目の設定が初期値にリセットされます</string>
-    <string name="title_function_help">Function documentation</string>
+    <string name="title_ondemand_category">カテゴリ全体に設定すると除外機能の設定が初期値にリセットされます</string>
+    <string name="title_function_help">機能のドキュメント</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
@@ -186,17 +188,19 @@
     <string name="help_internet">インターネットアクセス権限があります</string>
     <string name="help_granted">アンドロイドの権限があります</string>
     <string name="help_used">データの要求がありました</string>
-    <string name="help_used_grayed">データの要求の検知はできません</string>
+    <string name="help_used_grayed">データの要求は検知できません</string>
     <string name="help_frozen">無効化されています</string>
     <string name="help_dangerous">危険 : 制限すると問題が発生するおそれがあります</string>
     <string name="help_half">部分的に制限しています</string>
     <string name="help_attention">制限するには注意が必要です</string>
-    <string name="help_restricted">制限の変更があります</string>
+    <string name="help_restricted">制限を設定できます</string>
     <string name="help_shared">制限の設定を投稿しました</string>
     <string name="tutorial_mainheader">制限を設定したいカテゴリを選択します</string>
-    <string name="tutorial_mainlist">アプリのチェックボックスをタップすると、選択したカテゴリに対して制限が設定されます\n\n制限が設定されたアプリは、そのカテゴリについて空データまたは偽装データを受け取るようになります\n\n制限を詳細に設定するにはアプリアイコンをタップしてください</string>
-    <string name="tutorial_detailsheader">アプリアイコンをタップするとその他の機能を実行することができます</string>
-    <string name="tutorial_detailslist">下向き矢印ボタンをタップすると制限の適用除外項目を確認できます</string>
+    <string name="tutorial_mainlist">アプリのチェックボックスをタップすると、選択したカテゴリに対して制限が設定されます\n
+\n制限が設定されたアプリは、そのカテゴリについて空データまたは偽装データを受け取るようになります\n
+\n制限を詳細に設定するにはアプリアイコンをタップしてください</string>
+    <string name="tutorial_detailsheader">アプリアイコンをタップすると様々な機能を実行することができます</string>
+    <string name="tutorial_detailslist">下向き矢印ボタンをタップするとカテゴリ内の除外機能を確認できます</string>
     <string name="permission_manage">アプリの強制終了を含むアプリ管理</string>
     <string name="permission_restrictions">XPrivacy の制限および設定の管理</string>
 
