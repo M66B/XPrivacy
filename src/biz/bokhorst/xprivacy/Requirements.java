@@ -422,7 +422,7 @@ public class Requirements {
 							Intent sendEmail = new Intent(Intent.ACTION_SEND);
 							sendEmail.setType("message/rfc822");
 							sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-							sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy " + ourVersion + " support info");
+							sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy " + ourVersion + " support data");
 							sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
 							try {
 								context.startActivity(sendEmail);
