@@ -1562,11 +1562,11 @@ public class PrivacyService {
 			ImageView ivAppIcon = (ImageView) view.findViewById(R.id.ivAppIcon);
 			TextView tvUid = (TextView) view.findViewById(R.id.tvUid);
 			TextView tvAppName = (TextView) view.findViewById(R.id.tvAppName);
-			TextView tvAttempt = (TextView) view.findViewById(R.id.tvAttempt);
 			TextView tvCategory = (TextView) view.findViewById(R.id.tvCategory);
 			TextView tvFunction = (TextView) view.findViewById(R.id.tvFunction);
 			TextView tvParameters = (TextView) view.findViewById(R.id.tvParameters);
 			TableRow rowParameters = (TableRow) view.findViewById(R.id.rowParameters);
+			TextView tvDefault = (TextView) view.findViewById(R.id.tvDefault);
 			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
@@ -1583,13 +1583,12 @@ public class PrivacyService {
 			else
 				view.setBackgroundResource(android.R.color.background_dark);
 
+			// Application information
 			ivAppIcon.setImageDrawable(appInfo.getIcon(context));
 			tvUid.setText(Integer.toString(appInfo.getUid()));
 			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
-			String defaultAction = resources.getString(result.restricted ? R.string.title_deny : R.string.title_allow);
-			tvAttempt.setText(resources.getString(R.string.title_attempt) + " (" + defaultAction + ")");
-
+			// Restriction information
 			int catId = resources.getIdentifier("restrict_" + restriction.restrictionName, "string", self);
 			tvCategory.setText(resources.getString(catId));
 			tvFunction.setText(restriction.methodName);
@@ -1597,6 +1596,8 @@ public class PrivacyService {
 				rowParameters.setVisibility(View.GONE);
 			else
 				tvParameters.setText(restriction.extra);
+			String defaultAction = resources.getString(result.restricted ? R.string.title_deny : R.string.title_allow);
+			tvDefault.setText(defaultAction);
 
 			cbCategory.setChecked(mSelectCategory);
 			cbOnce.setChecked(mSelectOnce);
