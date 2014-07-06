@@ -141,6 +141,7 @@
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">Aktiver blokkering på forespørsel</string>
     <string name="title_disable_ondemand">Deaktiver blokkering på forespørsel</string>
+    <string name="title_ondemand_default">Timeout will:</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Alternate</string>
     <string name="title_usage_header">Usage</string>

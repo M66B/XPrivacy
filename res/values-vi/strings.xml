@@ -142,6 +142,7 @@
     <string name="title_template_merge">Áp dụng mẫu (kết hợp)</string>
     <string name="title_enable_ondemand">Kích hoạt hạn chế theo yêu cầu truy cập</string>
     <string name="title_disable_ondemand">Tắt hạn chế theo yêu cầu truy cập</string>
+    <string name="title_ondemand_default">Timeout will:</string>
     <string name="title_default">Mặc định</string>
     <string name="title_alternate">Thay thế</string>
     <string name="title_usage_header">Sử dụng</string>

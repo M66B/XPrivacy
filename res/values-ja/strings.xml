@@ -141,6 +141,7 @@
     <string name="title_template_merge">テンプレートを適用する (統合)</string>
     <string name="title_enable_ondemand">オンデマンド制限を有効にする</string>
     <string name="title_disable_ondemand">オンデマンド制限を無効にする</string>
+    <string name="title_ondemand_default">Timeout will:</string>
     <string name="title_default">既定</string>
     <string name="title_alternate">代替</string>
     <string name="title_usage_header">使い方</string>

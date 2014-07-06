@@ -143,6 +143,7 @@
     <string name="title_template_merge">Uveljeavi predlogo (združevanje)</string>
     <string name="title_enable_ondemand">Omogoči omejevanje na zahtevo</string>
     <string name="title_disable_ondemand">Onemogoči omejevanje na zahtevo</string>
+    <string name="title_ondemand_default">Timeout will:</string>
     <string name="title_default">Privzeto</string>
     <string name="title_alternate">Nadomestno</string>
     <string name="title_usage_header">Uporaba</string>

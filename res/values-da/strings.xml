@@ -141,6 +141,7 @@
     <string name="title_template_merge">Anvend skabelon (flet)</string>
     <string name="title_enable_ondemand">Aktivér on demand begrænsning</string>
     <string name="title_disable_ondemand">Deaktivér on demand begrænsning</string>
+    <string name="title_ondemand_default">Timeout will:</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Alternativ</string>
     <string name="title_usage_header">Anvendelse</string>

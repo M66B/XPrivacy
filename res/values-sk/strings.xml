@@ -143,6 +143,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_template_merge">Použiť šablónu (zlúčiť)</string>
     <string name="title_enable_ondemand">Povoliť obmedzenie na požiadanie</string>
     <string name="title_disable_ondemand">Zakázať obmedzenie na požiadanie</string>
+    <string name="title_ondemand_default">Timeout will:</string>
     <string name="title_default">Predvolená</string>
     <string name="title_alternate">Alternatívna</string>
     <string name="title_usage_header">Použitie</string>

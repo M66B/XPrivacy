@@ -143,6 +143,7 @@
     <string name="title_template_merge">应用模板(合并)</string>
     <string name="title_enable_ondemand">开启按需权限限制</string>
     <string name="title_disable_ondemand">关闭按需权限限制</string>
+    <string name="title_ondemand_default">Timeout will:</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Alternate</string>
     <string name="title_usage_header">Usage</string>
