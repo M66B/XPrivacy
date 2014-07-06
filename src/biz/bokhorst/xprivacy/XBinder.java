@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import android.content.Context;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
@@ -199,7 +200,7 @@ public class XBinder extends XHook {
 								else {
 									ClassLoader loader = Thread.currentThread().getContextClassLoader();
 									Class<?> clazz = Class.forName(callerClassName, false, loader);
-									if ("java.lang.BootClassLoader".equals(clazz.getClassLoader().getClass().getName())) {
+									if (clazz.getClassLoader().equals(Context.class.getClassLoader())) {
 										ok = true;
 										mPreLoaded.add(callerClassName);
 									}
@@ -293,7 +294,7 @@ public class XBinder extends XHook {
 					Util.logStack(this, Log.WARN);
 				}
 
-				Util.log(this, Log.WARN, "can restrict transaction=" + methodName + ":" + codeName + " flags=" + flags
+				Util.log(this, Log.INFO, "can restrict transaction=" + methodName + ":" + codeName + " flags=" + flags
 						+ " uid=" + uid + " my=" + Process.myUid());
 
 				if (isRestrictedExtra(uid, PrivacyManager.cIPC, "Binder", methodName + ":" + codeName)) {
