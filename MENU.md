@@ -22,7 +22,7 @@
   * Fetch restrictions - this will fetch crowd restrictions for the selected apps *1
   * Report issue - this will open a broswer to submit a new issue on GitHub
   * Switch theme - this will switch the UI between the light and dark theme
-  * Tmeplate - this will allow you set restrictions for the default and alternate templates
+  * Template - this will allow you set restrictions for the default and alternate templates
     * Template selector drop down - here you can select which template you want to adjust
       * Note - functions marked as dangerous are indicated with a red background (predifined) or an orange background (user-defined). Longpressing on a function will change its dangerous status
   * Settings - here you can set global settings as well as global fake values
