@@ -302,7 +302,7 @@ public class ActivityApp extends ActivityBase {
 		}
 
 		// Annotate
-		Meta.annotate(this);
+		Meta.annotate(this.getResources());
 	}
 
 	@Override

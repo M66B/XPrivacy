@@ -26,7 +26,8 @@ Changelog
 **Next release**
 
 * Improved on demand dialog layout
-* Added help for function documentation
+* Added help for function documentation icon
+* Show function help in on demand dialog ([issue](/../../issues/1790))
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

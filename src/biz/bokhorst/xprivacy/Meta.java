@@ -3,7 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
+import android.content.res.Resources;
 
 public class Meta {
 	private static boolean mAnnotated = false;
@@ -328,7 +328,7 @@ public class Meta {
 		return mListHook;
 	}
 
-	public static void annotate(Context context) {
+	public static void annotate(Resources resources) {
 		if (mAnnotated)
 			return;
 
@@ -336,9 +336,9 @@ public class Meta {
 		for (Hook hook : get()) {
 			String name = hook.getRestrictionName() + "_" + hook.getName();
 			name = name.replace(".", "_").replace("/", "_").replace("%", "_").replace("-", "_");
-			int resId = context.getResources().getIdentifier(name, "string", self);
+			int resId = resources.getIdentifier(name, "string", self);
 			if (resId > 0)
-				hook.annotate(context.getString(resId));
+				hook.annotate(resources.getString(resId));
 		}
 
 		mAnnotated = true;

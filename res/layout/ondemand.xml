@@ -130,6 +130,27 @@
                 </TableRow>
 
                 <TableRow
+                    android:id="@+id/rowParameters"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/title_parameters"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/tvParameters"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dip"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
@@ -150,24 +171,16 @@
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/rowParameters"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" >
 
                     <TextView
+                        android:id="@+id/tvInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:singleLine="true"
-                        android:text="@string/title_parameters"
-                        android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                    <TextView
-                        android:id="@+id/tvParameters"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:paddingLeft="6dip"
+                        android:layout_span="2"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:textStyle="bold" />
+                        android:visibility="gone" />
                 </TableRow>
             </TableLayout>
 
