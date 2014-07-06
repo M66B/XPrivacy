@@ -117,6 +117,7 @@ public class Util {
 	}
 
 	public static void logStack(XHook hook, int priority) {
+		// TODO: use StackTraceElement
 		log(hook, priority, Log.getStackTraceString(new Exception("StackTrace")));
 	}
 
