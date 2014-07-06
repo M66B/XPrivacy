@@ -82,7 +82,7 @@
                 android:textIsSelectable="false" />
         </LinearLayout>
 
-        <!-- used, granted, internet, frozen -->
+        <!-- used, granted, internet, frozen, documentation, whitelist -->
 
         <TextView
             android:layout_width="wrap_content"
@@ -131,6 +131,16 @@
             android:drawablePadding="6dip"
             android:gravity="center_vertical"
             android:text="@string/help_frozen"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dip"
+            android:drawableLeft="?attr/icon_info_book"
+            android:drawablePadding="6dip"
+            android:gravity="center_vertical"
+            android:text="@string/title_function_help"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
 

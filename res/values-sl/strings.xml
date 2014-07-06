@@ -152,6 +152,7 @@
     <string name="title_usage_footer">Ko umejujete pravice, uporabite možgane; ne pričakujte, da bo aplikacija imela internetni dostop, če ji boste omejili internet.</string>
     <string name="title_toggle_dangerous">Pridržite naslov, da preklopite nevarne funkcije</string>
     <string name="title_ondemand_category">Uveljavljanje kategorij bo ponastavilo izjeme funkcij na privzete vrednosti</string>
+    <string name="title_function_help">Function documentation</string>
     <string name="settings_serial">Serijska št.</string>
     <string name="settings_lat">Geografska širina</string>
     <string name="settings_lon">Geografska dolžina</string>

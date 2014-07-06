@@ -25,6 +25,10 @@ Changelog
 
 **Next release**
 
+* Improved on demand dialog layout
+* Added help for function documentation
+* Updated Dutch translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.21 TEST**

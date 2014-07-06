@@ -150,6 +150,7 @@
     <string name="title_usage_footer">制限は常識的に判断して設定してください。インターネットアクセスを制限したらインターネットに接続できることを期待してはいけません。</string>
     <string name="title_toggle_dangerous">危険性のある機能はタイトル部分を長押しするとチェックできるようになります</string>
     <string name="title_ondemand_category">カテゴリ全体に適用すると制限の適用除外項目の設定が初期値にリセットされます</string>
+    <string name="title_function_help">Function documentation</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>

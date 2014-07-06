@@ -151,6 +151,7 @@
     <string name="title_usage_footer">Phán đoán các tình huống thông thường khi hạn chế một ứng dụng, ví dụ sẽ không truy cập internet được nếu bạn hạn chế danh mục internet .v.v.</string>
     <string name="title_toggle_dangerous">Chạm vào tên và giữ để hiện ra các hàm không nên bị hạn chế</string>
     <string name="title_ondemand_category">Áp dụng cho danh mục sẽ đưa các giá trị về giá trị mặc định</string>
+    <string name="title_function_help">Function documentation</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>

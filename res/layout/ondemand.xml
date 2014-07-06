@@ -70,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="3dip"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
             </LinearLayout>
 
             <TextView
@@ -98,13 +98,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
-                        android:text="@string/title_category" />
+                        android:text="@string/title_category"
+                        android:textAppearance="?android:attr/textAppearanceLarge" />
 
                     <TextView
                         android:id="@+id/tvCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="6dip"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -117,14 +119,14 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="@string/title_function"
-                        android:textSize="12sp" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
                         android:id="@+id/tvFunction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="6dip"
-                        android:textSize="12sp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="bold" />
                 </TableRow>
 
@@ -138,14 +140,14 @@
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="@string/title_parameters"
-                        android:textSize="12sp" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
                         android:id="@+id/tvParameters"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="6dip"
-                        android:textSize="12sp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="bold" />
                 </TableRow>
             </TableLayout>

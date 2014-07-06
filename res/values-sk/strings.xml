@@ -152,6 +152,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_usage_footer">Používajte zdravý rozum pri obmedzovaní. Nočakávajte prístup k internetu, ak ste obmedzili kategóriu Internet, atď.</string>
     <string name="title_toggle_dangerous">Dlho stlačte názov pre prepnutie nebezpečných funkcií</string>
     <string name="title_ondemand_category">Použitie kategórie obnoví výnimky funkcií na predvolené hodnoty</string>
+    <string name="title_function_help">Function documentation</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
