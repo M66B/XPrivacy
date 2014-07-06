@@ -25,6 +25,8 @@ Changelog
 
 **Next release**
 
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
 * Improved on demand dialog layout
 * Added help for function documentation icon
 * Show function help in on demand dialog ([issue](/../../issues/1790))

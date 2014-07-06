@@ -343,9 +343,7 @@ public class XBinder extends XHook {
 			InputStream is = null;
 			try {
 				is = ClassLoader.getSystemClassLoader().getResourceAsStream(PRELOADED_CLASSES);
-				if (is == null)
-					Util.log(this, Log.ERROR, PRELOADED_CLASSES + " not found");
-				else {
+				if (is != null) {
 					BufferedReader br = new BufferedReader(new InputStreamReader(is), 256);
 					String line;
 					while ((line = br.readLine()) != null) {
