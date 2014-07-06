@@ -1332,12 +1332,42 @@ public class PrivacyService {
 			}
 		}
 
-		// Helper methods
+		// Helper classes
 
-		class OnDemandResult {
+		final class OnDemandResult {
 			public boolean ondemand = false;
 			public boolean once = false;
 		}
+
+		final class AlertDialogHolder {
+			public View dialog = null;
+		}
+
+		final class Touchy extends LinkMovementMethod {
+			// @formatter:off
+			// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/android/text/method/LinkMovementMethod.java#LinkMovementMethod.onTouchEvent%28android.widget.TextView%2Candroid.text.Spannable%2Candroid.view.MotionEvent%29
+			// @formatter:on
+			public boolean onTouchEvent(TextView widget, Spannable buffer, android.view.MotionEvent event) {
+				if (!isAMLocked() && event.getAction() == MotionEvent.ACTION_UP) {
+					int x = (int) event.getX() - widget.getTotalPaddingLeft() + widget.getScrollX();
+					int y = (int) event.getY() - widget.getTotalPaddingTop() + widget.getScrollY();
+
+					Layout layout = widget.getLayout();
+					int line = layout.getLineForVertical(y);
+					int off = layout.getOffsetForHorizontal(line, x);
+
+					URLSpan[] link = buffer.getSpans(off, off, URLSpan.class);
+					if (link.length != 0) {
+						Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link[0].getURL()));
+						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+						getContext().startActivity(intent);
+					}
+				}
+				return true;
+			}
+		}
+
+		// Helper methods
 
 		private OnDemandResult onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
 			final OnDemandResult oResult = new OnDemandResult();
@@ -1569,34 +1599,6 @@ public class PrivacyService {
 			}
 
 			return oResult;
-		}
-
-		final class AlertDialogHolder {
-			public View dialog = null;
-		}
-
-		final class Touchy extends LinkMovementMethod {
-			// @formatter:off
-			// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/android/text/method/LinkMovementMethod.java#LinkMovementMethod.onTouchEvent%28android.widget.TextView%2Candroid.text.Spannable%2Candroid.view.MotionEvent%29
-			// @formatter:on
-			public boolean onTouchEvent(TextView widget, Spannable buffer, android.view.MotionEvent event) {
-				if (event.getAction() == MotionEvent.ACTION_UP) {
-					int x = (int) event.getX() - widget.getTotalPaddingLeft() + widget.getScrollX();
-					int y = (int) event.getY() - widget.getTotalPaddingTop() + widget.getScrollY();
-
-					Layout layout = widget.getLayout();
-					int line = layout.getLineForVertical(y);
-					int off = layout.getOffsetForHorizontal(line, x);
-
-					URLSpan[] link = buffer.getSpans(off, off, URLSpan.class);
-					if (link.length != 0) {
-						Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link[0].getURL()));
-						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						getContext().startActivity(intent);
-					}
-				}
-				return true;
-			}
 		}
 
 		@SuppressLint("InflateParams")
