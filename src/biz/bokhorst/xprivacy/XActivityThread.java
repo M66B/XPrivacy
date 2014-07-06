@@ -158,7 +158,7 @@ public class XActivityThread extends XHook {
 										|| action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE))
 									packageNames = intent.getStringArrayExtra(Intent.EXTRA_CHANGED_PACKAGE_LIST);
 								else
-									packageNames = new String[] { intent.getData().getEncodedSchemeSpecificPart() };
+									packageNames = new String[] { intent.getData().getSchemeSpecificPart() };
 								for (String packageName : packageNames)
 									if (!XPackageManager.isPackageAllowed(packageName)) {
 										finish(param);

@@ -170,7 +170,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Import license file
 		if (Intent.ACTION_VIEW.equals(getIntent().getAction()))
-			if (Util.importProLicense(new File(getIntent().getData().getEncodedPath())) != null)
+			if (Util.importProLicense(new File(getIntent().getData().getPath())) != null)
 				Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG).show();
 
 		// Set layout
@@ -308,7 +308,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			mAppAdapter.notifyDataSetChanged();
 
 		if (Intent.ACTION_VIEW.equals(intent.getAction()))
-			Util.importProLicense(new File(intent.getData().getEncodedPath()));
+			Util.importProLicense(new File(intent.getData().getPath()));
 	}
 
 	@Override

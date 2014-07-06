@@ -1808,7 +1808,7 @@ public class PrivacyService {
 					// Top folders of file name
 					Uri uri = Uri.parse(restriction.extra);
 					if ("file".equals(uri.getScheme())) {
-						File file = new File(uri.getEncodedPath());
+						File file = new File(uri.getPath());
 						for (int i = 1; i <= 3 && file != null; i++) {
 							String parent = file.getParent();
 							if (!TextUtils.isEmpty(parent))
