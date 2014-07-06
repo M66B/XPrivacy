@@ -25,16 +25,6 @@ Changelog
 
 **Next release**
 
-* Fixed all problems reported through the support info
-	* Thanks for sending all the support info!
-* Improved on demand dialog layout
-* Added help for function documentation icon
-* Show function help in on demand dialog ([issue](/../../issues/1790))
-* Allow dangerous functions for *I don't know*
-* Fixed on demand dialog freeze by not on demand restricting in some situations
-	* Create the file */data/system/xprivacy/noamlock* to show the on demand dialog always again
-* Updated Dutch translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.21 TEST**
@@ -44,6 +34,14 @@ Changelog
 * Fixed order of applications to allow ([Pro license](http://www.xprivacy.eu/) only)
 * Allowing cancel of accounts, applications and contacts to allow dialog
 * Faster and more secure IPC restriction implementation with transaction whitelisting
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Improved on demand dialog layout
+* Added help for function documentation icon
+* Show function help in on demand dialog ([issue](/../../issues/1790))
+* Allow dangerous functions for *I don't know*
+* Fixed on demand dialog freeze by not on demand restricting in some situations
+	* Create the file */data/system/xprivacy/noamlock* to show the on demand dialog always again
 * Updated Dutch translation
 * Updated Japanese translation
 * Updated Slovenian translation
