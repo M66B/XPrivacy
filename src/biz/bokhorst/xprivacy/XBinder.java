@@ -223,7 +223,7 @@ public class XBinder extends XHook {
 				param.args[3] = flags;
 			} else {
 				Util.log(this, Log.WARN, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
-						+ " uid=" + Binder.getCallingUid() + " system=" + PrivacyService.getClient().isSystemApp(uid));
+						+ " uid=" + Binder.getCallingUid() + " loader=" + Context.class.getClassLoader());
 				Util.logStack(this, Log.WARN);
 			}
 		}
