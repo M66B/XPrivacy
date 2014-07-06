@@ -201,7 +201,7 @@ public class XBinder extends XHook {
 								else {
 									ClassLoader loader = Thread.currentThread().getContextClassLoader();
 									Class<?> clazz = Class.forName(callerClassName, false, loader);
-									if (clazz.getClassLoader().equals(Context.class.getClassLoader())) {
+									if (Context.class.getClassLoader().equals(clazz.getClassLoader())) {
 										ok = true;
 										mPreLoaded.add(callerClassName);
 									}
