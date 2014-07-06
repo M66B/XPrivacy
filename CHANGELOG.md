@@ -31,7 +31,7 @@ Changelog
 * Added help for function documentation icon
 * Show function help in on demand dialog ([issue](/../../issues/1790))
 * Allow dangerous functions for *I don't know*
-* Attempt to fix on demand dialog freeze
+* Fixed on demand dialog freeze by not on demand restricting in some situations
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

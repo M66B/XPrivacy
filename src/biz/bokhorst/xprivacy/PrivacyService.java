@@ -2017,6 +2017,9 @@ public class PrivacyService {
 
 		private boolean isAMLocked() {
 			try {
+				File noamlock = new File("/data/system/xprivacy/noamlock");
+				if (noamlock.exists())
+					return false;
 				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
 				Object am = cam.getMethod("self").invoke(null);
 				return Thread.holdsLock(am);
