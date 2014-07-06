@@ -36,8 +36,9 @@ public class XBinder extends XHook {
 	private static final int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
 	private static final int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
 
+	private static final String PRELOADED_CLASSES = "preloaded-classes";
+
 	// Service name should one-to-one correspond to the other lists
-	// TODO: service list
 
 	// @formatter:off
 	public static List<String> cServiceName = Arrays.asList(new String[] {
@@ -340,8 +341,10 @@ public class XBinder extends XHook {
 
 			InputStream is = null;
 			try {
-				is = ClassLoader.getSystemClassLoader().getResourceAsStream("preloaded-classes");
-				if (is != null) {
+				is = ClassLoader.getSystemClassLoader().getResourceAsStream(PRELOADED_CLASSES);
+				if (is == null)
+					Util.log(this, Log.ERROR, PRELOADED_CLASSES + " not found");
+				else {
 					BufferedReader br = new BufferedReader(new InputStreamReader(is), 256);
 					String line;
 					while ((line = br.readLine()) != null) {
