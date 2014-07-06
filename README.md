@@ -410,6 +410,8 @@ If you want to uninstall XPrivacy, you have two options:
 
 Don't forget to reboot.
 
+To save space you can delete the folder */data/system/xprivacy* after uninstalling.
+
 Upgrading
 ---------
 
