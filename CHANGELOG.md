@@ -32,6 +32,7 @@ Changelog
 * Show function help in on demand dialog ([issue](/../../issues/1790))
 * Allow dangerous functions for *I don't know*
 * Fixed on demand dialog freeze by not on demand restricting in some situations
+	* Create the file */data/system/xprivacy/noamlock* to show the on demand dialog always again
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
