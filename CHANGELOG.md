@@ -25,6 +25,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.21 TEST**
+
 * Added option to specify file name to import/export intent ([issue](/../../issues/1784))
 * Added option to blacklist applications, accounts and contacts ([issue](/../../issues/1781))
 * Fixed order of applications to allow ([Pro license](http://www.xprivacy.eu/) only)
@@ -33,8 +37,6 @@ Changelog
 * Updated Dutch translationt
 * Updated Japanese translation
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.20 BETA**
 
