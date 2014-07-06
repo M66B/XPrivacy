@@ -336,15 +336,10 @@ Limitations
 * Because it is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data
 * Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
-* It is not possible to restrict external hardware MAC addresses or the external IP address
+* It is not possible to restrict external hardware MAC addresses or the external IP address, see also [FAQ 33](#FAQ33)
 * You cannot restrict *Configuration.MCC/MNC* on demand
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
 * Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/)
-* The on demand restricting dialog does sometimes not respond and is sometimes hidden
-	* A known situation is starting an application from a notification for the restrictions *inet*, *sdcard* and *media*
-	* Another known situation are some restrictions triggered by hardware buttons, like the volume buttons
-	* This cannot be fixed, because the on demand dialog is locking a system process
-	* The on demand dialog will timeout after 20 seconds, so this is not a major problem
 * You cannot restrict the serial number and the Android ID for XPrivacy, because it is used for submitting restrictions
 	* The Android ID is salted with the serial number and MD5 hashed before communicating with the crowd sourced restrictions server
 	* This means that the crowd sourced restrictions server never gets the serial number nor the Android ID
