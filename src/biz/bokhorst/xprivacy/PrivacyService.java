@@ -1366,7 +1366,7 @@ public class PrivacyService {
 				if (new Version(version).compareTo(new Version("2.1.5")) < 0)
 					return oResult;
 
-				// Get am context
+				// Get activity manager context
 				final Context context = getContext();
 				if (context == null)
 					return oResult;
@@ -1387,6 +1387,12 @@ public class PrivacyService {
 					if (!XActivityManagerService.canOnDemand())
 						return oResult;
 
+					// Check if activity manager locked
+					if (isAMLocked()) {
+						Util.log(null, Log.WARN, "On demand locked " + restriction);
+						return oResult;
+					}
+
 					// Go ask
 					Util.log(null, Log.WARN, "On demand " + restriction);
 					mOndemandSemaphore.acquireUninterruptibly();
@@ -1394,6 +1400,12 @@ public class PrivacyService {
 						// Check if activity manager still agrees
 						if (!XActivityManagerService.canOnDemand())
 							return oResult;
+
+						// Check if activity manager locked now
+						if (isAMLocked()) {
+							Util.log(null, Log.WARN, "On demand acquired locked " + restriction);
+							return oResult;
+						}
 
 						Util.log(null, Log.WARN, "On demanding " + restriction);
 
@@ -1500,6 +1512,13 @@ public class PrivacyService {
 												mProgress.incrementProgressBy(-1);
 												mHandler.postDelayed(this, 50);
 											}
+
+											// Check if activity manager locked
+											if (isAMLocked()) {
+												Util.log(null, Log.WARN, "On demand dialog locked " + restriction);
+												((Button) holder.dialog.findViewById(R.id.btnDontKnow)).callOnClick();
+											}
+
 										}
 									};
 									mHandler.postDelayed(rProgress, 50);
@@ -1992,6 +2011,17 @@ public class PrivacyService {
 			int callingUid = Util.getAppId(Binder.getCallingUid());
 			if (callingUid != getXUid() && callingUid != Process.SYSTEM_UID)
 				throw new SecurityException("xuid=" + mXUid + " calling=" + Binder.getCallingUid());
+		}
+
+		private boolean isAMLocked() {
+			try {
+				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
+				Object am = cam.getMethod("self").invoke(null);
+				return Thread.holdsLock(am);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return false;
+			}
 		}
 
 		private Context getContext() {
