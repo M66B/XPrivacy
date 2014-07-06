@@ -28,6 +28,7 @@ Changelog
 * Added option to specify file name to import/export intent ([issue](/../../issues/1784))
 * Added option to blacklist applications, accounts and contacts ([issue](/../../issues/1781))
 * Fixed order of applications to allow ([Pro license](http://www.xprivacy.eu/) only)
+* Allowing cancel of accounts, applications and contacts to allow dialog
 * Faster and more secure IPC restriction implementation with transaction whitelisting
 * Updated Dutch translationt
 * Updated Japanese translation
