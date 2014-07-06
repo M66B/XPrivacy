@@ -223,9 +223,10 @@ public class XBinder extends XHook {
 				flags |= (mToken << BITS_TOKEN);
 				param.args[3] = flags;
 			} else {
-				Util.log(this, Log.WARN, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
+				int level = (found ? Log.WARN : Log.ERROR);
+				Util.log(this, level, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
 						+ " uid=" + Binder.getCallingUid() + " loader=" + Context.class.getClassLoader());
-				Util.logStack(this, Log.WARN);
+				Util.logStack(this, level);
 			}
 		}
 	}
