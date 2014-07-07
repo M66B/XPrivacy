@@ -102,7 +102,7 @@
     <string name="internet_connect" translatable="false"><![CDATA[Will restrict access to the internet]]></string>
 
     <!-- ipc -->
-    <string name="ipc_Binder" translatable="false"><![CDATA[Will restrict direct inter-process calls. <a href="https://en.wikipedia.org/wiki/Name_binding">Wikipedia</a>]]></string>
+    <string name="ipc_Binder" translatable="false"><![CDATA[Will restrict direct inter-process calls (<a href="https://en.wikipedia.org/wiki/Inter-process_communication">Wikipedia</a>)]]></string>
     <string name="ipc_Reflection" translatable="false"><![CDATA[<a href="http://en.wikipedia.org/wiki/Reflection_(computer_programming)#Java">Wikipedia</a>]]></string>
 
     <!-- location -->
