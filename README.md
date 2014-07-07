@@ -1030,6 +1030,23 @@ since the export is meant as full backup.
 	* Continue this process until you have found the "bad" restriction
 * If following these steps fails to find the issue, please follow the [Support](#support) instructions
 
+<a name="FAQ64"></a>
+**(64) Is the on demand dialog always shown?**
+
+That depends on your ROM version.
+On stock ROM 4.4.4 (Nexus 5) the on demand dialog is always shown.
+On older or customized ROMs the on demand dialog is almost always shown,
+except sometimes for the functions *inet*, *sdcard* and *media*
+and sometimes for restrictions triggered by the hardware buttons, for example the volume buttons.
+This is to prevent the on demand dialog from freezing (locking up), caused by an internal Android lock.
+This freeze cannot be fixed by XPrivacy.
+
+If you want to have the on demand dialog always shown, then you can create this file:
+
+```
+/data/system/xprivacy/noamlock
+```
+
 Support
 -------
 
