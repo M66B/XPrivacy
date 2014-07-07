@@ -1500,101 +1500,87 @@ public class PrivacyService {
 							}
 						}
 
+						// Build dialog view
 						final OnDemandDialogHolder holder = new OnDemandDialogHolder();
+						holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, holder, oResult);
+
+						// Build dialog parameters
+						final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
+						params.type = WindowManager.LayoutParams.TYPE_PHONE;
+						params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+						params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
+						params.dimAmount = 0.85f;
+						params.width = WindowManager.LayoutParams.WRAP_CONTENT;
+						params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+						params.format = PixelFormat.TRANSLUCENT;
+						params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
+						params.gravity = Gravity.CENTER;
+
+						// Get window manager
 						final WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
-						// Run dialog in looper
+						// Show dialog
 						mHandler.post(new Runnable() {
 							@Override
-							@SuppressLint("InlinedApi")
 							public void run() {
-								try {
-									// Dialog view
-									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context,
-											holder, oResult);
-
-									// Dialog parameters
-									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
-									params.type = WindowManager.LayoutParams.TYPE_PHONE;
-									params.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-									params.systemUiVisibility = View.SYSTEM_UI_FLAG_LOW_PROFILE;
-									params.dimAmount = 0.85f;
-									params.width = WindowManager.LayoutParams.WRAP_CONTENT;
-									params.height = WindowManager.LayoutParams.WRAP_CONTENT;
-									params.format = PixelFormat.TRANSLUCENT;
-									params.softInputMode = WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN;
-									params.gravity = Gravity.CENTER;
-
-									// Show dialog
-									wm.addView(holder.dialog, params);
-
-									// Setup progress bar
-									final ProgressBar mProgress = (ProgressBar) holder.dialog
-											.findViewById(R.id.pbProgress);
-									mProgress.setMax(cMaxOnDemandDialog * 20);
-									mProgress.setProgress(cMaxOnDemandDialog * 20);
-
-									// Update progress
-									Runnable rProgress = new Runnable() {
-										@Override
-										public void run() {
-											View dialog = holder.dialog;
-											if (dialog != null && dialog.isShown() && mProgress.getProgress() > 0) {
-												mProgress.incrementProgressBy(-1);
-												mHandler.postDelayed(this, 50);
-											}
-
-											// Check if activity manager locked
-											if (isAMLocked()) {
-												Util.log(null, Log.WARN, "On demand dialog locked " + restriction);
-												((Button) holder.dialog.findViewById(R.id.btnDontKnow)).callOnClick();
-											}
-										}
-									};
-									mHandler.postDelayed(rProgress, 50);
-
-									// Enabled buttons after 1 second
-									boolean repeat = (SystemClock.elapsedRealtime() - mOnDemandLastAnswer < 1000);
-									mHandler.postDelayed(new Runnable() {
-										@Override
-										public void run() {
-											holder.dialog.findViewById(R.id.btnAllow).setEnabled(true);
-											holder.dialog.findViewById(R.id.btnDontKnow).setEnabled(true);
-											holder.dialog.findViewById(R.id.btnDeny).setEnabled(true);
-										}
-									}, repeat ? 0 : 1000);
-
-									// Handle reset
-									((Button) holder.dialog.findViewById(R.id.btnReset))
-											.setOnClickListener(new View.OnClickListener() {
-												@Override
-												public void onClick(View view) {
-													mProgress.setProgress(cMaxOnDemandDialog * 20);
-													holder.reset = true;
-													holder.latch.countDown();
-												}
-											});
-
-								} catch (NameNotFoundException ex) {
-									holder.latch.countDown();
-								} catch (Throwable ex) {
-									Util.bug(null, ex);
-									holder.latch.countDown();
-								}
+								wm.addView(holder.dialog, params);
 							}
 						});
 
-						// Wait for dialog to complete
+						// Update progress bar
+						Runnable runProgress = new Runnable() {
+							@Override
+							public void run() {
+								// Update progress bar
+								ProgressBar progressBar = (ProgressBar) holder.dialog.findViewById(R.id.pbProgress);
+								if (holder.dialog != null && holder.dialog.isShown() && progressBar.getProgress() > 0) {
+									progressBar.incrementProgressBy(-1);
+									mHandler.postDelayed(this, 50);
+								}
+
+								// Check if activity manager locked
+								if (isAMLocked()) {
+									Util.log(null, Log.WARN, "On demand dialog locked " + restriction);
+									((Button) holder.dialog.findViewById(R.id.btnDontKnow)).callOnClick();
+								}
+							}
+						};
+						mHandler.postDelayed(runProgress, 50);
+
+						// Enabled buttons after one second
+						boolean repeat = (SystemClock.elapsedRealtime() - mOnDemandLastAnswer < 1000);
+						mHandler.postDelayed(new Runnable() {
+							@Override
+							public void run() {
+								holder.dialog.findViewById(R.id.btnAllow).setEnabled(true);
+								holder.dialog.findViewById(R.id.btnDontKnow).setEnabled(true);
+								holder.dialog.findViewById(R.id.btnDeny).setEnabled(true);
+							}
+						}, repeat ? 0 : 1000);
+
+						// Handle reset button
+						((Button) holder.dialog.findViewById(R.id.btnReset))
+								.setOnClickListener(new View.OnClickListener() {
+									@Override
+									public void onClick(View view) {
+										((ProgressBar) holder.dialog.findViewById(R.id.pbProgress))
+												.setProgress(cMaxOnDemandDialog * 20);
+										holder.reset = true;
+										holder.latch.countDown();
+									}
+								});
+
+						// Wait for choice, reset or timeout
 						do {
 							holder.reset = false;
 							boolean choice = holder.latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS);
 							if (holder.reset) {
 								holder.latch = new CountDownLatch(1);
-								Util.log(null, Log.WARN, "On demand dialog reset " + restriction);
+								Util.log(null, Log.WARN, "On demand reset " + restriction);
 							} else if (choice)
 								oResult.ondemand = true;
 							else
-								Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
+								Util.log(null, Log.WARN, "On demand timeout " + restriction);
 						} while (holder.reset);
 						mOnDemandLastAnswer = SystemClock.elapsedRealtime();
 
@@ -1646,6 +1632,7 @@ public class PrivacyService {
 			final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
 			final CheckBox cbWhitelistExtra2 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra2);
 			final CheckBox cbWhitelistExtra3 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra3);
+			ProgressBar mProgress = (ProgressBar) view.findViewById(R.id.pbProgress);
 			Button btnDeny = (Button) view.findViewById(R.id.btnDeny);
 			Button btnDontKnow = (Button) view.findViewById(R.id.btnDontKnow);
 			Button btnAllow = (Button) view.findViewById(R.id.btnAllow);
@@ -1775,6 +1762,10 @@ public class PrivacyService {
 					}
 				}
 			});
+
+			// Setup progress bar
+			mProgress.setMax(cMaxOnDemandDialog * 20);
+			mProgress.setProgress(cMaxOnDemandDialog * 20);
 
 			btnAllow.setOnClickListener(new View.OnClickListener() {
 				@Override
