@@ -1,8 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
@@ -22,7 +19,7 @@ import android.util.SparseArray;
 public class XBinder extends XHook {
 	private Methods mMethod;
 	private static long mToken = 0;
-	private static List<String> mPreLoaded = null;
+	private static Map<String, Boolean> mMapClassSystem = new HashMap<String, Boolean>();
 	private static Map<String, SparseArray<String>> mMapCodeName = new HashMap<String, SparseArray<String>>();
 
 	private static final int BITS_TOKEN = 16;
@@ -35,8 +32,6 @@ public class XBinder extends XHook {
 	private static final int TWEET_TRANSACTION = ('_' << 24) | ('T' << 16) | ('W' << 8) | 'T';
 	private static final int LIKE_TRANSACTION = ('_' << 24) | ('L' << 16) | ('I' << 8) | 'K';
 	private static final int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
-
-	private static final String PRELOADED_CLASSES = "preloaded-classes";
 
 	// Service name should one-to-one correspond to the other lists
 
@@ -180,9 +175,6 @@ public class XBinder extends XHook {
 		// Check if listed descriptor
 		int idx = cServiceDescriptor.indexOf(descriptor);
 		if (idx >= 0) {
-			// Get pre loaded classes
-			ensurePreLoaded();
-
 			// Search this object in call stack
 			boolean ok = false;
 			boolean found = false;
@@ -193,22 +185,19 @@ public class XBinder extends XHook {
 
 					// Check if caller class in user space
 					String callerClassName = ste[i + 2].getClassName();
-					if (i + 2 < ste.length && !callerClassName.startsWith("java.lang.reflect."))
-						try {
-							synchronized (mPreLoaded) {
-								if (mPreLoaded.contains(callerClassName))
-									ok = true;
-								else {
-									ClassLoader loader = Thread.currentThread().getContextClassLoader();
+					ClassLoader loader = Thread.currentThread().getContextClassLoader();
+					if (i + 2 < ste.length && callerClassName != null
+							&& !callerClassName.startsWith("java.lang.reflect."))
+						synchronized (mMapClassSystem) {
+							if (!mMapClassSystem.containsKey(callerClassName))
+								try {
 									Class<?> clazz = Class.forName(callerClassName, false, loader);
-									if (Context.class.getClassLoader().equals(clazz.getClassLoader())) {
-										ok = true;
-										mPreLoaded.add(callerClassName);
-									}
+									boolean boot = Context.class.getClassLoader().equals(clazz.getClassLoader());
+									mMapClassSystem.put(callerClassName, boot);
+								} catch (ClassNotFoundException ignored) {
+									mMapClassSystem.put(callerClassName, true);
 								}
-							}
-						} catch (ClassNotFoundException ignored) {
-							ok = true;
+							ok = mMapClassSystem.get(callerClassName);
 						}
 
 					break;
@@ -225,7 +214,7 @@ public class XBinder extends XHook {
 			} else {
 				int level = (found ? Log.WARN : Log.ERROR);
 				Util.log(this, level, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
-						+ " uid=" + Binder.getCallingUid() + " loader=" + Context.class.getClassLoader());
+						+ " uid=" + Binder.getCallingUid());
 				Util.logStack(this, level);
 			}
 		}
@@ -329,41 +318,5 @@ public class XBinder extends XHook {
 		return (code == PING_TRANSACTION || code == DUMP_TRANSACTION || code == INTERFACE_TRANSACTION
 				|| code == TWEET_TRANSACTION || code == LIKE_TRANSACTION || code == SYSPROPS_TRANSACTION);
 
-	}
-
-	private void ensurePreLoaded() {
-		// @formatter:off
-		// https://android.googlesource.com/platform/frameworks/base.git/+/master/preloaded-classes
-		// https://android.googlesource.com/platform/frameworks/base.git/+/master/core/java/com/android/internal/os/ZygoteInit.java
-		// @formatter:on
-
-		if (mPreLoaded == null) {
-			List<String> listPreLoaded = new ArrayList<String>();
-
-			InputStream is = null;
-			try {
-				is = ClassLoader.getSystemClassLoader().getResourceAsStream(PRELOADED_CLASSES);
-				if (is != null) {
-					BufferedReader br = new BufferedReader(new InputStreamReader(is), 256);
-					String line;
-					while ((line = br.readLine()) != null) {
-						line = line.trim();
-						if (!line.startsWith("#") && !line.equals(""))
-							listPreLoaded.add(line);
-					}
-					br.close();
-				}
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
-			} finally {
-				if (is != null)
-					try {
-						is.close();
-					} catch (Throwable ignored) {
-					}
-			}
-
-			mPreLoaded = listPreLoaded;
-		}
 	}
 }
