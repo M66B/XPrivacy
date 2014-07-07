@@ -21,6 +21,7 @@ Changelog
 * If you install a version from 2.1.21 you will need to setup the IPC restrictions again (once), except for *Reflection*
 * Dangerous functions need to be restricted always manually (manually includes the template, if defined to do so)
 * Xposed version 2.6+ is required
+* *I don't know* will allow dangerous functions from version 2.1.21-5
 * **Please send the support info when XPrivacy asks for it**
 
 **Next release**
