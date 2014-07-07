@@ -144,6 +144,7 @@
     <string name="title_enable_ondemand">オンデマンド制限を有効にする</string>
     <string name="title_disable_ondemand">オンデマンド制限を無効にする</string>
     <string name="title_ondemand_default">タイムアウトすると :</string>
+    <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">既定</string>
     <string name="title_alternate">代替</string>
     <string name="title_usage_header">使い方</string>

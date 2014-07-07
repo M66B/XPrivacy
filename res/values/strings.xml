@@ -140,7 +140,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
-    <string name="title_whitelist">Whitelist \'%1$s\'</string>
+    <string name="title_whitelist">Whitelist &#8216;%1$s&#8217;</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_dontknow">Don\'t know</string>
@@ -153,6 +153,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="title_ondemand_default">Timeout will:</string>
+    <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Alternate</string>
     <string name="title_usage_header">Usage</string>

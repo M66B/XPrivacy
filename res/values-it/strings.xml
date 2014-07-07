@@ -144,6 +144,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
     <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
     <string name="title_ondemand_default">Timeout will:</string>
+    <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Opzione</string>
     <string name="title_usage_header">Utilizzo</string>

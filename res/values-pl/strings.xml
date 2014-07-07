@@ -144,6 +144,7 @@
     <string name="title_enable_ondemand">Włącz restrykcje na żądanie</string>
     <string name="title_disable_ondemand">Wyłącz restrykcje na żądanie</string>
     <string name="title_ondemand_default">Timeout will:</string>
+    <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Alternate</string>
     <string name="title_usage_header">Usage</string>

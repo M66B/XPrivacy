@@ -25,6 +25,7 @@ Changelog
 
 **Next release**
 
+* Added reset button to on demand dialog
 * Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

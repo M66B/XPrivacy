@@ -1339,8 +1339,10 @@ public class PrivacyService {
 			public boolean once = false;
 		}
 
-		final class AlertDialogHolder {
+		final class OnDemandDialogHolder {
 			public View dialog = null;
+			public CountDownLatch latch = new CountDownLatch(1);
+			public boolean reset = false;
 		}
 
 		final class Touchy extends LinkMovementMethod {
@@ -1498,8 +1500,7 @@ public class PrivacyService {
 							}
 						}
 
-						final AlertDialogHolder holder = new AlertDialogHolder();
-						final CountDownLatch latch = new CountDownLatch(1);
+						final OnDemandDialogHolder holder = new OnDemandDialogHolder();
 						final WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
 
 						// Run dialog in looper
@@ -1509,8 +1510,8 @@ public class PrivacyService {
 							public void run() {
 								try {
 									// Dialog view
-									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, latch,
-											oResult);
+									holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context,
+											holder, oResult);
 
 									// Dialog parameters
 									WindowManager.LayoutParams params = new WindowManager.LayoutParams();
@@ -1548,11 +1549,11 @@ public class PrivacyService {
 												Util.log(null, Log.WARN, "On demand dialog locked " + restriction);
 												((Button) holder.dialog.findViewById(R.id.btnDontKnow)).callOnClick();
 											}
-
 										}
 									};
 									mHandler.postDelayed(rProgress, 50);
 
+									// Enabled buttons after 1 second
 									boolean repeat = (SystemClock.elapsedRealtime() - mOnDemandLastAnswer < 1000);
 									mHandler.postDelayed(new Runnable() {
 										@Override
@@ -1563,22 +1564,41 @@ public class PrivacyService {
 										}
 									}, repeat ? 0 : 1000);
 
+									// Handle reset
+									((Button) holder.dialog.findViewById(R.id.btnReset))
+											.setOnClickListener(new View.OnClickListener() {
+												@Override
+												public void onClick(View view) {
+													mProgress.setProgress(cMaxOnDemandDialog * 20);
+													holder.reset = true;
+													holder.latch.countDown();
+												}
+											});
+
 								} catch (NameNotFoundException ex) {
-									latch.countDown();
+									holder.latch.countDown();
 								} catch (Throwable ex) {
 									Util.bug(null, ex);
-									latch.countDown();
+									holder.latch.countDown();
 								}
 							}
 						});
 
 						// Wait for dialog to complete
-						if (latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS))
-							oResult.ondemand = true;
-						else
-							Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
+						do {
+							holder.reset = false;
+							boolean choice = holder.latch.await(cMaxOnDemandDialog, TimeUnit.SECONDS);
+							if (holder.reset) {
+								holder.latch = new CountDownLatch(1);
+								Util.log(null, Log.WARN, "On demand dialog reset " + restriction);
+							} else if (choice)
+								oResult.ondemand = true;
+							else
+								Util.log(null, Log.WARN, "On demand dialog timeout " + restriction);
+						} while (holder.reset);
 						mOnDemandLastAnswer = SystemClock.elapsedRealtime();
 
+						// Dismiss dialog
 						mHandler.post(new Runnable() {
 							@Override
 							public void run() {
@@ -1603,8 +1623,8 @@ public class PrivacyService {
 
 		@SuppressLint("InflateParams")
 		private View getOnDemandView(final PRestriction restriction, final Hook hook, ApplicationInfoEx appInfo,
-				final PRestriction result, Context context, final CountDownLatch latch, final OnDemandResult oResult)
-				throws NameNotFoundException {
+				final PRestriction result, Context context, final OnDemandDialogHolder holder,
+				final OnDemandResult oResult) throws NameNotFoundException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1779,7 +1799,7 @@ public class PrivacyService {
 						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), false);
-					latch.countDown();
+					holder.latch.countDown();
 				}
 			});
 
@@ -1790,7 +1810,7 @@ public class PrivacyService {
 					result.restricted = !(hook != null && hook.isDangerous());
 					result.asked = true;
 					onDemandOnce(restriction, false, result, oResult);
-					latch.countDown();
+					holder.latch.countDown();
 				}
 			});
 
@@ -1817,7 +1837,7 @@ public class PrivacyService {
 						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), true);
-					latch.countDown();
+					holder.latch.countDown();
 				}
 			});
 
