@@ -102,7 +102,7 @@
     <string name="internet_connect" translatable="false"><![CDATA[Will restrict access to the internet]]></string>
 
     <!-- ipc -->
-    <string name="ipc_Binder" translatable="false"><![CDATA[Will restrict direct inter-process calls]]></string>
+    <string name="ipc_Binder" translatable="false"><![CDATA[Will restrict direct inter-process calls. <a href="https://en.wikipedia.org/wiki/Name_binding">Wikipedia</a>]]></string>
     <string name="ipc_Reflection" translatable="false"><![CDATA[<a href="http://en.wikipedia.org/wiki/Reflection_(computer_programming)#Java">Wikipedia</a>]]></string>
 
     <!-- location -->
@@ -285,7 +285,7 @@
     <string name="system_android_intent_action_EXTERNAL_APPLICATIONS_AVAILABLE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_EXTERNAL_APPLICATIONS_AVAILABLE">Google documentation</a>]]></string>
     <string name="system_android_intent_action_EXTERNAL_APPLICATIONS_UNAVAILABLE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE">Google documentation</a>]]></string>
     <string name="system_ApplicationsProvider" translatable="false"><![CDATA[Will restrict access to a list of applications installed on the phone to provide search suggestions]]></string>
-    <string name="system_getPackageForUid" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPackagesForUid(int)">Google documentation</a>]]></string>
+    <string name="system_getPackagesForUid" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPackagesForUid(int)">Google documentation</a>]]></string>
 
     <!-- view -->
     <string name="view_loadUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>
