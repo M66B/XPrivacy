@@ -117,8 +117,20 @@ public class Util {
 	}
 
 	public static void logStack(XHook hook, int priority) {
-		// TODO: use StackTraceElement
-		log(hook, priority, Log.getStackTraceString(new Exception("StackTrace")));
+		StringBuilder trace = new StringBuilder();
+		ClassLoader loader = Thread.currentThread().getContextClassLoader();
+		for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
+			trace.append(ste.toString());
+			try {
+				Class<?> clazz = Class.forName(ste.getClassName(), false, loader);
+				trace.append(" [");
+				trace.append(clazz.getClassLoader().toString());
+				trace.append("]");
+			} catch (ClassNotFoundException ignored) {
+			}
+			trace.append("\n");
+		}
+		log(hook, priority, trace.toString());
 	}
 
 	public static int getXposedAppProcessVersion() {
