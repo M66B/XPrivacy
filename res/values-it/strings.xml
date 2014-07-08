@@ -100,14 +100,14 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_shell">Shell (comandi, super utente)</string>
     <string name="restrict_system">Sistema (applicazioni installate)</string>
     <string name="restrict_view">Visualizza (browser)</string>
-    <string name="whitelist_address">Addresses</string>
+    <string name="whitelist_address">Indirizzi</string>
     <string name="whitelist_ipaddress">Indirizzi IP</string>
     <string name="whitelist_library">Librerie native</string>
     <string name="whitelist_method">Nomi metodi</string>
     <string name="whitelist_filename">Nomi file</string>
     <string name="whitelist_command">Comandi Shell</string>
     <string name="whitelist_url">URLs</string>
-    <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_transaction">Transazioni</string>
     <string name="title_restrict">Seleziona per restringere:</string>
     <string name="title_check_whitelist">Seleziona per consentire</string>
     <string name="title_fused">Filtra per dati di utilizzo</string>
@@ -123,7 +123,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_sinstalled">Per data di installazione</string>
     <string name="title_supdated">Per data di aggiornamento</string>
     <string name="title_smodified">Per data di modifica (XPrivacy)</string>
-    <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_sstate">Per stato (XPrivacy)</string>
     <string name="title_sinvert">Inverti</string>
     <string name="title_attempt">Tentativo d\'uso di:</string>
     <string name="title_category">Categoria:</string>
@@ -143,7 +143,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_template_merge">Applica modello (unisci)</string>
     <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
     <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
-    <string name="title_ondemand_default">Timeout will:</string>
+    <string name="title_ondemand_default">Allo scadere:</string>
     <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Opzione</string>
@@ -153,8 +153,8 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_usage_text_3">3. Tocca la prima casella di controllo di una categoria che desideri restringere</string>
     <string name="title_usage_footer">Usa il buon senso, non aspettarti che l\'accesso internet funzioni se hai ristretto la categoria Internet, ecc.</string>
     <string name="title_toggle_dangerous">Premi a lungo su una intestazione per gestire le funzioni pericolose</string>
-    <string name="title_ondemand_category">Applicando all\'intera categoria le funzioni verranno resettate ai valori di default</string>
-    <string name="title_function_help">Function documentation</string>
+    <string name="title_ondemand_category">Applicando all\'intera categoria le funzioni verranno riportate ai valori di default</string>
+    <string name="title_function_help">Documentazione funzione</string>
     <string name="settings_serial">Seriale#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
@@ -172,7 +172,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_fake_data">Dati alterati</string>
     <string name="settings_notify">Notifiche di aggiornamento</string>
     <string name="settings_ondemand">Restringi su richiesta</string>
-    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
+    <string name="settings_blacklist">Metti in Blacklist accounts, applicazioni e contatti</string>
     <string name="settings_log">Registro errori (richiede riavvio)</string>
     <string name="settings_expert">Modalità esperto</string>
     <string name="settings_confidence">Intervallo massimo di confidenza nella ricezione</string>
@@ -202,7 +202,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
 \nTocca l\'icona dell\'applicazione per le restrizioni e le impostazioni dettagliate</string>
     <string name="tutorial_detailsheader">Tocca l\'icona dell\'applicazione per ulteriori azioni</string>
     <string name="tutorial_detailslist">Tocca la freccia verso il basso per visualizzare le funzioni escluse di una categoria ristretta</string>
-    <string name="permission_manage">Gestisci le applicazioni, inclusa la chiusura</string>
-    <string name="permission_restrictions">Gestisci restrizioni e impostazioni di XPrivacy</string>
+    <string name="permission_manage">Gestisce le applicazioni, inclusa la chiusura</string>
+    <string name="permission_restrictions">Gestisce le restrizioni e le impostazioni di XPrivacy</string>
 
 </resources>
