@@ -26,11 +26,13 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.22 BETA**
+
 * Added reset button to on demand dialog
 * Optimized IPC restrictions performance
 * Updated Japanese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.21 TEST**
 
