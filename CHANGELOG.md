@@ -26,6 +26,8 @@ Changelog
 
 **Next release**
 
+* Updated Lithuanian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.22 BETA**
