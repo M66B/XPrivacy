@@ -1,13 +1,13 @@
 package biz.bokhorst.xprivacy;
 
-import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
+import android.os.Build;
 import android.util.Log;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -126,12 +126,20 @@ public class XPackageManager extends XHook {
 				String permName = (String) param.args[0];
 				String pkgName = (String) param.args[1];
 
-				Field fContext = param.thisObject.getClass().getDeclaredField("mContext");
-				Context context = (Context) fContext.get(param.thisObject);
-				PackageInfo pInfo = context.getPackageManager().getPackageInfo(pkgName, 0);
-				// TODO: check user ID
+				int uid;
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+					Method mGetPackageUid = param.thisObject.getClass()
+							.getDeclaredMethod("getPackageUid", String.class);
+					uid = (Integer) mGetPackageUid.invoke(param.thisObject, pkgName);
+				} else {
+					Method mGetPackageInfo = param.thisObject.getClass().getDeclaredMethod("getPackageUid",
+							String.class, int.class);
+					// TODO: check validity of user ID
+					int userId = Util.getUserId(Binder.getCallingUid());
+					uid = (Integer) mGetPackageInfo.invoke(param.thisObject, pkgName, userId);
+				}
 
-				if (isRestrictedExtra(pInfo.applicationInfo.uid, getRestrictionName(), getMethodName(), permName))
+				if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
 					param.setResult(PackageManager.PERMISSION_DENIED);
 			}
 
