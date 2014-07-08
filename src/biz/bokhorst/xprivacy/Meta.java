@@ -21,6 +21,7 @@ public class Meta {
 	public final static String cTypeIPAddress = "IPAddress";
 	public final static String cTypeLibrary = "Library";
 	public final static String cTypeMethod = "Method";
+	public final static String cTypePermission = "Permission";
 	public final static String cTypeProc = "Proc";
 	public final static String cTypeTransaction = "Transaction";
 	public final static String cTypeUrl = "Url";
@@ -28,7 +29,8 @@ public class Meta {
 	public static boolean isWhitelist(String type) {
 		return (cTypeAddress.equals(type) || cTypeCommand.equals(type) || cTypeFilename.equals(type)
 				|| cTypeIPAddress.equals(type) || cTypeLibrary.equals(type) || cTypeMethod.equals(type)
-				|| cTypeProc.equals(type) || cTypeTransaction.equals(type) || cTypeUrl.equals(type));
+				|| cTypePermission.equals(type) || cTypeProc.equals(type) || cTypeTransaction.equals(type) || cTypeUrl
+					.equals(type));
 	}
 
 	public static List<Hook> get() {
@@ -315,6 +317,9 @@ public class Meta {
 		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE", "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE", "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null));
+
+		mListHook.add(new Hook("system", "checkPermission", "", 1, "2.1.23", null).dangerous().whitelist(cTypePermission));
+		mListHook.add(new Hook("system", "checkUidPermission", "", 1, "2.1.23", null).dangerous().whitelist(cTypePermission));
 
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null));

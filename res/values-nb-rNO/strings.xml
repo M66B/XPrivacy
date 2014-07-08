@@ -106,6 +106,7 @@
     <string name="whitelist_command">Shell kommandoer</string>
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_permission">Permissions</string>
     <string name="title_restrict">Marker for å blokkere:</string>
     <string name="title_check_whitelist">Marker for å tillate:</string>
     <string name="title_fused">Filtrer etter databruk</string>

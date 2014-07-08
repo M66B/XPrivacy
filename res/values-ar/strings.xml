@@ -108,6 +108,7 @@
     <string name="whitelist_command">أوامر شل</string>
     <string name="whitelist_url">عناوين URL</string>
     <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_permission">Permissions</string>
     <string name="title_restrict">إختر للتقيد:</string>
     <string name="title_check_whitelist">إختر للتمكين:</string>
     <string name="title_fused">التصفية حسب استخدام البيانات</string>

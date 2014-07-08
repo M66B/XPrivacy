@@ -1,14 +1,17 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
 import android.util.Log;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 
@@ -43,7 +46,10 @@ public class XPackageManager extends XHook {
 	// public List<ResolveInfo> queryIntentServices(Intent intent, int flags)
 	// frameworks/base/core/java/android/app/ApplicationPackageManager.java
 	// http://developer.android.com/reference/android/content/pm/PackageManager.html
-	
+
+	// public int checkPermission(String permName, String pkgName)
+	// public int checkUidPermission(String permName, int uid)
+
 	// @formatter:on
 
 	// @formatter:off
@@ -54,7 +60,9 @@ public class XPackageManager extends XHook {
 		getPreferredActivities, getPreferredPackages,
 		queryBroadcastReceivers, queryContentProviders,
 		queryIntentActivities, queryIntentActivityOptions,
-		queryIntentContentProviders, queryIntentServices
+		queryIntentContentProviders, queryIntentServices,
+
+		checkPermission, checkUidPermission
 	};
 	// @formatter:on
 
@@ -65,7 +73,11 @@ public class XPackageManager extends XHook {
 				className = cClassName;
 
 			for (Methods am : Methods.values())
-				listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
+				if (am == Methods.checkPermission || am == Methods.checkUidPermission)
+					listHook.add(new XPackageManager(am, PrivacyManager.cSystem,
+							"com.android.server.pm.PackageManagerService"));
+				else
+					listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
 		}
 		return listHook;
 	}
@@ -108,6 +120,28 @@ public class XPackageManager extends XHook {
 			if (param.args.length > 0 && param.args[0] instanceof String)
 				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0]))
 					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+
+		} else if (mMethod == Methods.checkPermission) {
+			if (param.args.length == 2 && param.args[0] instanceof String && param.args[1] instanceof String) {
+				String permName = (String) param.args[0];
+				String pkgName = (String) param.args[1];
+
+				Field fContext = param.thisObject.getClass().getDeclaredField("mContext");
+				Context context = (Context) fContext.get(param.thisObject);
+				PackageInfo pInfo = context.getPackageManager().getPackageInfo(pkgName, 0);
+				// TODO: check user ID
+
+				if (isRestrictedExtra(pInfo.applicationInfo.uid, getRestrictionName(), getMethodName(), permName))
+					param.setResult(PackageManager.PERMISSION_DENIED);
+			}
+
+		} else if (mMethod == Methods.checkUidPermission) {
+			if (param.args.length == 2 && param.args[0] instanceof String && param.args[1] instanceof Integer) {
+				String permName = (String) param.args[0];
+				int uid = (Integer) param.args[1];
+				if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
+					param.setResult(PackageManager.PERMISSION_DENIED);
+			}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());

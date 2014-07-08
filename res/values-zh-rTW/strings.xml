@@ -108,6 +108,7 @@
     <string name="whitelist_command">Shell 指令</string>
     <string name="whitelist_url">網址</string>
     <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_permission">Permissions</string>
     <string name="title_restrict">限制項目:</string>
     <string name="title_check_whitelist">允許：</string>
     <string name="title_fused">程式曾取得過資訊</string>

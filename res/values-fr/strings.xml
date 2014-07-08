@@ -108,6 +108,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="whitelist_command">Commandes shell</string>
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_permission">Permissions</string>
     <string name="title_restrict">Cocher pour restreindre :</string>
     <string name="title_check_whitelist">Cocher pour permettre</string>
     <string name="title_fused">Filtrer utilisation des données</string>

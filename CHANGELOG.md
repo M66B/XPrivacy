@@ -28,6 +28,8 @@ Changelog
 
 **Next release**
 
+* Added restriction to revoke permissions, including white/blacklist
+* Updated Dutch translation
 * Updated Italian translation
 * Updated Lithuanian translation
 

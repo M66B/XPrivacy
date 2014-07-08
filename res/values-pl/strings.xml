@@ -108,6 +108,7 @@
     <string name="whitelist_command">Polecenia powłoki</string>
     <string name="whitelist_url">URLe</string>
     <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_permission">Permissions</string>
     <string name="title_restrict">Zaznacz aby zablokować:</string>
     <string name="title_check_whitelist">Zaznacz aby pozwolić</string>
     <string name="title_fused">Filtruj wg odczytu danych</string>
