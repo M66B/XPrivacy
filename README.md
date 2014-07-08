@@ -845,10 +845,10 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 	* Setting any category to restricted will not restrict any of its dangerous functions
 * The default after dialog timeout is taken from the current restriction settings
 * There are four possibilities for the restriction / on demand checkboxes:
-	* \[&#8194;\] [&#8194;] You will not receive an on demand popup, the permission will always be allowed
-	* \[&#8194;\] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will be allowed once
-	* [V] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will be denied once
-	* [V] [&#8194;] You will not receive an on demand popup, the permission will always be denied
+	* a. [&#8194;] [&#8194;] You will not receive an on demand popup, the permission will always be allowed
+	* b. [&#8194;] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will be allowed once
+	* c. [V] [?] You will receive an on demand popup, if this times out or the screen is locked the permission will be denied once
+	* d. [V] [&#8194;] You will not receive an on demand popup, the permission will always be denied
 * Be aware that the on demand popups are globally, which could be an issue if your device has multiple users. Unfortunately this cannot be change.
 
 <a name="FAQ35"></a>
