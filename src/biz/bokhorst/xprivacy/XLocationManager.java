@@ -194,7 +194,7 @@ public class XLocationManager extends XHook {
 					synchronized (mListener) {
 						xListener = mListener.get(listener);
 						if (xListener == null) {
-							xListener = new XLocationListener(listener);
+							xListener = new XLocationListener(Binder.getCallingUid(), listener);
 							mListener.put(listener, xListener);
 							Util.log(this, Log.WARN,
 									"Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
@@ -225,16 +225,18 @@ public class XLocationManager extends XHook {
 	}
 
 	private class XLocationListener implements LocationListener {
+		private int mUid;
 		private LocationListener mLocationListener;
 
-		public XLocationListener(LocationListener locationListener) {
+		public XLocationListener(int uid, LocationListener locationListener) {
+			mUid = uid;
 			mLocationListener = locationListener;
 		}
 
 		@Override
 		public void onLocationChanged(Location location) {
-			mLocationListener.onLocationChanged(location == null ? location : PrivacyManager.getDefacedLocation(
-					Binder.getCallingUid(), location));
+			mLocationListener.onLocationChanged(location == null ? location : PrivacyManager.getDefacedLocation(mUid,
+					location));
 		}
 
 		@Override
