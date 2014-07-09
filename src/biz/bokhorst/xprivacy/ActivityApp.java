@@ -1415,7 +1415,7 @@ public class ActivityApp extends ActivityBase {
 				public void onClick(View view) {
 					int stringId = getResources().getIdentifier("restrict_help_" + restrictionName, "string",
 							getPackageName());
-					Toast.makeText(ActivityApp.this, stringId, Toast.LENGTH_LONG).show();
+					Toast.makeText(ActivityApp.this, stringId, Toast.LENGTH_SHORT).show();
 				}
 			});
 
