@@ -1600,6 +1600,8 @@ public class PrivacyService {
 				} finally {
 					Binder.restoreCallingIdentity(token);
 				}
+			} catch (NameNotFoundException ex) {
+				Util.log(null, Log.WARN, ex.toString());
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
