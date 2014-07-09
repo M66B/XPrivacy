@@ -428,12 +428,17 @@ public class PrivacyService {
 				if (restriction.methodName != null) {
 					hook = PrivacyManager.getHook(restriction.restrictionName, restriction.methodName);
 					if (hook == null)
-						// Can happen after replacing apk
+						// Can happen after updating
 						Util.log(null, Log.WARN, "Hook not found in service: " + restriction);
 					else if (hook.getFrom() != null) {
 						String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
 						if (new Version(version).compareTo(hook.getFrom()) < 0)
-							return mresult;
+							if (hook.getReplacedRestriction() == null)
+								return mresult;
+							else {
+								restriction.restrictionName = hook.getReplacedRestriction();
+								restriction.methodName = hook.getReplacedMethod();
+							}
 					}
 				}
 
