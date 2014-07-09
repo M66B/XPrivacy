@@ -2028,12 +2028,25 @@ public class PrivacyService {
 
 		private boolean isAMLocked() {
 			try {
-				File noamlock = new File("/data/system/xprivacy/noamlock");
-				if (noamlock.exists())
-					return false;
 				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
 				Object am = cam.getMethod("self").invoke(null);
-				return Thread.holdsLock(am);
+				boolean locked = Thread.holdsLock(am);
+				if (locked) {
+					Util.log(null, Log.WARN, "AM locked, yielding");
+					Thread.yield();
+					Thread.sleep(500);
+					locked = Thread.holdsLock(am);
+					if (locked)
+						Util.log(null, Log.WARN, "AM still locked");
+				}
+				if (locked) {
+					File noamlock = new File("/data/system/xprivacy/noamlock");
+					if (noamlock.exists()) {
+						Util.log(null, Log.WARN, "AM locked, but noamlock exists");
+						return false;
+					}
+				}
+				return locked;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 				return false;
