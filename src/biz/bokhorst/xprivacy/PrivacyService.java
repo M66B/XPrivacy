@@ -554,7 +554,7 @@ public class PrivacyService {
 
 					// Fallback
 					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
-							&& !getSettingBool(userId, PrivacyManager.cSettingMigrated, false)) {
+							&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
 						if (hook != null && !hook.isDangerous()) {
 							mresult.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
 									restriction.restrictionName, restriction.methodName);
@@ -1054,8 +1054,6 @@ public class PrivacyService {
 
 		@Override
 		public PSetting getSetting(PSetting setting) throws RemoteException {
-			int userId = Util.getUserId(setting.uid);
-
 			// Special case
 			if (Meta.cTypeAccountHash.equals(setting.type))
 				try {
@@ -1089,7 +1087,7 @@ public class PrivacyService {
 
 				// Fallback
 				if (!PrivacyManager.cSettingMigrated.equals(setting.name)
-						&& !getSettingBool(userId, PrivacyManager.cSettingMigrated, false)) {
+						&& !getSettingBool(0, PrivacyManager.cSettingMigrated, false)) {
 					if (setting.uid == 0)
 						result.value = PrivacyProvider.getSettingFallback(setting.name, null, false);
 					if (result.value == null) {

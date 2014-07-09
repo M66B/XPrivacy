@@ -145,9 +145,8 @@ public class UpdateService extends Service {
 			Util.log(null, Log.WARN, "Nothing to migrate");
 
 		// Complete migration
-		int userId = Util.getUserId(Process.myUid());
 		PrivacyService.getClient().setSetting(
-				new PSetting(userId, "", PrivacyManager.cSettingMigrated, Boolean.toString(true)));
+				new PSetting(0, "", PrivacyManager.cSettingMigrated, Boolean.toString(true)));
 	}
 
 	private static void upgrade(Context context) throws NameNotFoundException {
