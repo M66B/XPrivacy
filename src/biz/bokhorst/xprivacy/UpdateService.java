@@ -312,8 +312,7 @@ public class UpdateService extends Service {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + hook + " from=" + hook.getFrom()
 									+ " uid=" + uid);
 							PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(),
-									false);
-							restriction.asked = true;
+									false, true);
 							listWork.add(restriction);
 						}
 
@@ -331,8 +330,8 @@ public class UpdateService extends Service {
 
 				// Restrict dangerous
 				if (dangerous && restricted && hook.isDangerous()) {
-					PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true);
-					restriction.asked = (hook.whitelist() == null);
+					PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true,
+							hook.whitelist() == null);
 					if (PrivacyManager.isRestrictionSet(restriction))
 						Util.log(null, Log.WARN, "Restrict dangerous set restriction=" + restriction);
 					else {
