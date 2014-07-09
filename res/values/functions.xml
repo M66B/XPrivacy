@@ -30,6 +30,9 @@
     <string name="calling_sendTextMessage" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/gsm/SmsManager.html#sendTextMessage(java.lang.String,%20java.lang.String,%20java.lang.String,%20android.app.PendingIntent,%20android.app.PendingIntent)">Google documentation</a>]]></string>
     <string name="calling_android_intent_action_RESPOND_VIA_MESSAGE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_RESPOND_VIA_MESSAGE">Google documentation</a>]]></string>
     <string name="calling_android_intent_action_CALL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_CALL">Google documentation</a>]]></string>
+    <string name="calling_android_intent_action_NEW_OUTGOING_CALL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_NEW_OUTGOING_CALL">Google documentation</a>]]></string>
+    <string name="calling_CallLogProvider" translatable="false"><![CDATA[Will restrict access to the call log]]></string>
+
     <string name="calling_SIP_isApiSupported" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isApiSupported(android.content.Context)">Google documentation</a>]]></string>
     <string name="calling_SIP_isSipWifiOnly" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isSipWifiOnly(android.content.Context)">Google documentation</a>]]></string>
     <string name="calling_SIP_isVoipSupported" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isVoipSupported(android.content.Context)">Google documentation</a>]]></string>
@@ -203,10 +206,8 @@
     <string name="phone_getSimOperator" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimOperator()">Google documentation</a>]]></string>
     <string name="phone_getSimOperatorName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimOperatorName()">Google documentation</a>]]></string>
     <string name="phone_getGroupIdLevel1" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getGroupIdLevel1()">Google documentation</a>]]></string>
-    <string name="phone_android_intent_action_NEW_OUTGOING_CALL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_NEW_OUTGOING_CALL">Google documentation</a>]]></string>
     <string name="phone_android_intent_action_PHONE_STATE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#ACTION_PHONE_STATE_CHANGED">Google documentation</a>]]></string>
     <string name="phone_TelephonyProvider" translatable="false"><![CDATA[Will restrict access to carrier and <a href="https://en.wikipedia.org/wiki/Access_Point_Name">APN</a> information]]></string>
-    <string name="phone_CallLogProvider" translatable="false"><![CDATA[Will restrict access to the call log]]></string>
     <string name="phone_gsm_operator_iso_country" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkCountryIso()">Google documentation</a>]]></string>
     <string name="phone_gsm_operator_numeric" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperator()">Google documentation</a>]]></string>
     <string name="phone_gsm_operator_alpha" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getNetworkOperatorName()">Google documentation</a>]]></string>
@@ -286,6 +287,8 @@
     <string name="system_android_intent_action_EXTERNAL_APPLICATIONS_UNAVAILABLE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE">Google documentation</a>]]></string>
     <string name="system_ApplicationsProvider" translatable="false"><![CDATA[Will restrict access to a list of applications installed on the phone to provide search suggestions]]></string>
     <string name="system_getPackagesForUid" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPackagesForUid(int)">Google documentation</a>]]></string>
+    <string name="system_checkPermission" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
+    <string name="system_checkUidPermission" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
 
     <!-- view -->
     <string name="view_loadUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>
