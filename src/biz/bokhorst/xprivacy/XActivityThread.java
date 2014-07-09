@@ -51,7 +51,8 @@ public class XActivityThread extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 
 		// Intent receive: calling
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cPhone, Intent.ACTION_NEW_OUTGOING_CALL));
+		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cCalling,
+				Intent.ACTION_NEW_OUTGOING_CALL));
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cPhone,
 				TelephonyManager.ACTION_PHONE_STATE_CHANGED));
 

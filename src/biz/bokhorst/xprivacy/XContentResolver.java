@@ -333,7 +333,7 @@ public class XContentResolver extends XHook {
 				}
 
 				else if (uri.startsWith("content://call_log")) {
-					restrictionName = PrivacyManager.cPhone;
+					restrictionName = PrivacyManager.cCalling;
 					methodName = "CallLogProvider";
 				}
 
