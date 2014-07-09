@@ -227,8 +227,7 @@ public class SettingsDialog {
 		boolean parameters = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingParameters, false);
 		boolean log = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingLog, false);
 		boolean components = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSystem, false);
-		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental,
-				!PrivacyManager.cStableRelease);
+		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false);
 		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true);
 		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
 		final boolean expert = (components || experimental || !https || !"".equals(confidence));

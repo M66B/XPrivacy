@@ -2051,6 +2051,9 @@ public class PrivacyService {
 						Util.log(null, Log.WARN, "AM still locked");
 				}
 				if (locked) {
+					boolean experimental = getSettingBool(0, PrivacyManager.cSettingExperimental, false);
+					if (experimental)
+						return false;
 					File noamlock = new File("/data/system/xprivacy/noamlock");
 					if (noamlock.exists()) {
 						Util.log(null, Log.WARN, "AM locked, but noamlock exists");

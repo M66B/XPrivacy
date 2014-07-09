@@ -129,7 +129,6 @@ public class PrivacyManager {
 
 	// Constants
 	public final static int cXposedAppProcessMinVersion = 46;
-	public final static boolean cStableRelease = false;
 
 	private final static int cMaxExtra = 128;
 	private final static String cDeface = "DEFACE";

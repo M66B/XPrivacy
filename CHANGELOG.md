@@ -26,6 +26,10 @@ Changelog
 * From version 2.1.21-5 *I don't know* will allow dangerous functions once (other functions are still denied once)
 * **Please send the support info when XPrivacy asks for it**
 
+**Experimental functions**
+
+* Display the on demand dialog even when there is a risk it will freeze (lock up)
+
 **Next release**
 
 * Added category help
