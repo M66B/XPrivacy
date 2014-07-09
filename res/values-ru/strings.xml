@@ -107,12 +107,12 @@
     <string name="restrict_help_sensors">Will restrict access to the sensors, like the motion sensor</string>
     <string name="restrict_help_phone">Will restrict access to phone information, like your phone number</string>
     <string name="restrict_help_overlay">Will restrict overlay windows to prevent phishing</string>
-    <string name="restrict_help_notifications">Will restrict access to system/application notifications and Google cloud messaging</string>
+    <string name="restrict_help_notifications">Will restrict access to system and application notifications and Google cloud messaging</string>
     <string name="restrict_help_nfc">Will restrict access to near field communication</string>
     <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
     <string name="restrict_help_messages">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
-    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and microphone</string>
-    <string name="restrict_help_location">Will restrict access to your location</string>
+    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
+    <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
     <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
     <string name="restrict_help_internet">Will restrict access to the internet</string>
     <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
@@ -121,7 +121,7 @@
     <string name="restrict_help_contacts">Will restrict access to information about your contacts</string>
     <string name="restrict_help_clipboard">Will restrict access to information on the clipboard</string>
     <string name="restrict_help_calling">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
-    <string name="restrict_help_calendar">Will restrict access to calendar information, like your appointments</string>
+    <string name="restrict_help_calendar">Will restrict access to your calendar information, like your appointments</string>
     <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
     <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
     <string name="whitelist_address">Адреса</string>

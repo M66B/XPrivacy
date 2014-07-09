@@ -84,30 +84,30 @@
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
-    <string name="restrict_accounts" tools:ignore="UnusedResources">Accounts (Google, Facebook, etc)</string>
-    <string name="restrict_browser" tools:ignore="UnusedResources">Browser (bookmarks/history)</string>
+    <string name="restrict_accounts" tools:ignore="UnusedResources">Accounts</string>
+    <string name="restrict_browser" tools:ignore="UnusedResources">Browser</string>
     <string name="restrict_calendar" tools:ignore="UnusedResources">Calendar</string>
-    <string name="restrict_calling" tools:ignore="UnusedResources">Calling (phone, SMS, MMS)</string>
+    <string name="restrict_calling" tools:ignore="UnusedResources">Calling</string>
     <string name="restrict_clipboard" tools:ignore="UnusedResources">Clipboard</string>
     <string name="restrict_contacts" tools:ignore="UnusedResources">Contacts</string>
-    <string name="restrict_dictionary" tools:ignore="UnusedResources">Dictionary (user)</string>
+    <string name="restrict_dictionary" tools:ignore="UnusedResources">Dictionary</string>
     <string name="restrict_email" tools:ignore="UnusedResources">E-mail</string>
-    <string name="restrict_identification" tools:ignore="UnusedResources">Identification (device)</string>
+    <string name="restrict_identification" tools:ignore="UnusedResources">Identification</string>
     <string name="restrict_internet" tools:ignore="UnusedResources">Internet</string>
     <string name="restrict_ipc" translatable="false" tools:ignore="UnusedResources">IPC</string>
-    <string name="restrict_location" tools:ignore="UnusedResources">Location (fine/coarse)</string>
-    <string name="restrict_media" tools:ignore="UnusedResources">Media (audio, photo, video)</string>
-    <string name="restrict_messages" tools:ignore="UnusedResources">Messages (SMS, MMS)</string>
-    <string name="restrict_network" tools:ignore="UnusedResources">Network (addresses)</string>
+    <string name="restrict_location" tools:ignore="UnusedResources">Location</string>
+    <string name="restrict_media" tools:ignore="UnusedResources">Media</string>
+    <string name="restrict_messages" tools:ignore="UnusedResources">Messages</string>
+    <string name="restrict_network" tools:ignore="UnusedResources">Network</string>
     <string name="restrict_nfc" translatable="false" tools:ignore="UnusedResources">NFC</string>
     <string name="restrict_notifications" tools:ignore="UnusedResources">Notifications</string>
     <string name="restrict_overlay" tools:ignore="UnusedResources">Overlay</string>
-    <string name="restrict_phone" tools:ignore="UnusedResources">Phone (ID, numbers, calls)</string>
+    <string name="restrict_phone" tools:ignore="UnusedResources">Phone</string>
     <string name="restrict_sensors" tools:ignore="UnusedResources">Sensors</string>
-    <string name="restrict_storage" tools:ignore="UnusedResources">Storage (media, SD card)</string>
-    <string name="restrict_shell" tools:ignore="UnusedResources">Shell (commands, superuser)</string>
-    <string name="restrict_system" tools:ignore="UnusedResources">System (installed apps)</string>
-    <string name="restrict_view" tools:ignore="UnusedResources">View (browser)</string>
+    <string name="restrict_storage" tools:ignore="UnusedResources">Storage</string>
+    <string name="restrict_shell" tools:ignore="UnusedResources">Shell</string>
+    <string name="restrict_system" tools:ignore="UnusedResources">System</string>
+    <string name="restrict_view" tools:ignore="UnusedResources">View</string>
     <string name="restrict_help_view">Will restrict access to view actions and information</string>
     <string name="restrict_help_system">Will restrict access to system information, like installed applications</string>
     <string name="restrict_help_shell">Will restrict access to shell commands, including superuser commands</string>
@@ -115,12 +115,12 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="restrict_help_sensors">Will restrict access to the sensors, like the motion sensor</string>
     <string name="restrict_help_phone">Will restrict access to phone information, like your phone number</string>
     <string name="restrict_help_overlay">Will restrict overlay windows to prevent phishing</string>
-    <string name="restrict_help_notifications">Will restrict access to system/application notifications and Google cloud messaging</string>
+    <string name="restrict_help_notifications">Will restrict access to system and application notifications and Google cloud messaging</string>
     <string name="restrict_help_nfc">Will restrict access to near field communication</string>
     <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
     <string name="restrict_help_messages">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
-    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and microphone</string>
-    <string name="restrict_help_location">Will restrict access to your location</string>
+    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
+    <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
     <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
     <string name="restrict_help_internet">Will restrict access to the internet</string>
     <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
@@ -129,7 +129,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="restrict_help_contacts">Will restrict access to information about your contacts</string>
     <string name="restrict_help_clipboard">Will restrict access to information on the clipboard</string>
     <string name="restrict_help_calling">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
-    <string name="restrict_help_calendar">Will restrict access to calendar information, like your appointments</string>
+    <string name="restrict_help_calendar">Will restrict access to your calendar information, like your appointments</string>
     <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
     <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
     <string name="whitelist_address" tools:ignore="UnusedResources">Addresses</string>
