@@ -115,7 +115,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="restrict_help_location">Will restrict </string>
     <string name="restrict_help_ipc">Will restrict </string>
     <string name="restrict_help_internet">Will restrict </string>
-    <string name="restrict_help_identification">Will restrict </string>
+    <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
     <string name="restrict_help_email">Will restrict </string>
     <string name="restrict_help_dictionary">Will restrict </string>
     <string name="restrict_help_contacts">Will restrict </string>
