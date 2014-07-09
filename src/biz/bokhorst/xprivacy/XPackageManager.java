@@ -139,6 +139,7 @@ public class XPackageManager extends XHook {
 					uid = (Integer) mGetPackageInfo.invoke(param.thisObject, pkgName, userId);
 				}
 
+				permName = permName.replace("android.permission.", "");
 				if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
 					param.setResult(PackageManager.PERMISSION_DENIED);
 			}
@@ -147,6 +148,8 @@ public class XPackageManager extends XHook {
 			if (param.args.length == 2 && param.args[0] instanceof String && param.args[1] instanceof Integer) {
 				String permName = (String) param.args[0];
 				int uid = (Integer) param.args[1];
+
+				permName = permName.replace("android.permission.", "");
 				if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
 					param.setResult(PackageManager.PERMISSION_DENIED);
 			}
