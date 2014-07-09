@@ -28,6 +28,7 @@ Changelog
 
 **Next release**
 
+* Added category help
 * Added restriction to revoke permissions, including white/blacklist
 * Updated Dutch translation
 * Updated Italian translation

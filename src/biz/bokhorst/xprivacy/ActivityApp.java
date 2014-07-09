@@ -1413,7 +1413,9 @@ public class ActivityApp extends ActivityBase {
 			holder.imgInfo.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					Util.viewUri(ActivityApp.this, Uri.parse(ActivityMain.cXUrl + "#" + restrictionName));
+					int stringId = getResources().getIdentifier("restrict_help_" + restrictionName, "string",
+							getPackageName());
+					Toast.makeText(ActivityApp.this, stringId, Toast.LENGTH_LONG).show();
 				}
 			});
 

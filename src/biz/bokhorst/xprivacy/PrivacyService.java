@@ -1658,15 +1658,18 @@ public class PrivacyService {
 				tvParameters.setText(restriction.extra);
 			String defaultAction = resources.getString(result.restricted ? R.string.title_deny : R.string.title_allow);
 			tvDefault.setText(defaultAction);
+
+			// Help
+			int helpId = resources.getIdentifier("restrict_help_" + restriction.restrictionName, "string", self);
+			String help = resources.getString(helpId);
 			if (hook != null) {
 				Meta.annotate(resources);
 				String info = hook.getAnnotation();
-				if (info != null) {
-					tvInfo.setVisibility(View.VISIBLE);
-					tvInfo.setText(Html.fromHtml(hook.getAnnotation()));
-					tvInfo.setMovementMethod(new Touchy());
-				}
+				if (info != null)
+					help += "<br />" + info;
 			}
+			tvInfo.setText(Html.fromHtml(help));
+			tvInfo.setMovementMethod(new Touchy());
 
 			cbCategory.setChecked(mSelectCategory);
 			cbOnce.setChecked(mSelectOnce);

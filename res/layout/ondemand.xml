@@ -176,8 +176,7 @@
                 android:id="@+id/tvInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:visibility="gone" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <CheckBox
                 android:id="@+id/cbCategory"

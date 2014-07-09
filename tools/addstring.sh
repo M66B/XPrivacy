@@ -1,7 +1,30 @@
 #!/bin/bash
-grep -RIl "\<string name=\"whitelist_permission" res | xargs sed -i -e '/whitelist_permission/d'
-grep -RIl "\<string name=\"whitelist_transaction" res | xargs sed -i -e "/whitelist_transaction/a \
-\ \ \ \ <string name=\"whitelist_permission\">Permissions</string>"
+grep -RIl "\<string name=\"restrict_help" res | xargs sed -i -e '/restrict_help/d'
+grep -RIl "\<string name=\"restrict_view" res | xargs sed -i -e '/restrict_view/a \
+\ \ \ \ <string name=\"restrict_help_view\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_system\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_shell\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_storage\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_sensors\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_phone\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_overlay\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_notifications\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_nfc\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_network\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_messages\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_media\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_location\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_ipc\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_internet\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_identification\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_email\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_dictionary\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_contacts\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_clipboard\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_calling\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_calendar\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_browser\">Will restrict </string>\
+\ \ \ \ <string name=\"restrict_help_accounts\">Will restrict </string>'
 
 #grep -RIl "\<string name=\"settings_dangerous" res | xargs sed -i -e '/settings_dangerous/d'
 #grep -RIl "\<string name=\"title_check_whitelist" res | xargs sed -i -e 's/Check to allow/Check to allow:/g'
