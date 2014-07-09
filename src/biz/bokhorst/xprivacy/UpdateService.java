@@ -314,12 +314,15 @@ public class UpdateService extends Service {
 						}
 
 						// Restrict replaced methods
-						if (hook.getReplaces() != null)
-							if (PrivacyManager.getRestrictionEx(uid, hook.getRestrictionName(), hook.getReplaces()).restricted) {
-								Util.log(null, Log.WARN, "Replaced " + hook.getReplaces() + " by " + hook + " from="
-										+ hook.getFrom() + " uid=" + uid);
+						if (hook.getReplacedMethod() != null) {
+							if (PrivacyManager.getRestrictionEx(uid, hook.getReplacedRestriction(),
+									hook.getReplacedMethod()).restricted) {
+								Util.log(null, Log.WARN,
+										"Replaced " + hook.getReplacedRestriction() + "/" + hook.getReplacedMethod()
+												+ " by " + hook + " from=" + hook.getFrom() + " uid=" + uid);
 								listWork.add(new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true));
 							}
+						}
 					}
 				}
 

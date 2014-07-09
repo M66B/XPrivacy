@@ -12,7 +12,8 @@ public class Hook implements Comparable<Hook> {
 	private String[] mPermissions;
 	private int mSdk;
 	private Version mFrom;
-	private String mReplaces;
+	private String mReplacedRestriction;
+	private String mReplacedMethod = null;
 	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
@@ -32,7 +33,16 @@ public class Hook implements Comparable<Hook> {
 		mPermissions = (permissions == null ? null : permissions.split(","));
 		mSdk = sdk;
 		mFrom = (from == null ? null : new Version(from));
-		mReplaces = replaces;
+		if (replaces != null) {
+			int slash = replaces.indexOf('/');
+			if (slash > 0) {
+				mReplacedRestriction = replaces.substring(0, slash);
+				mReplacedMethod = replaces.substring(slash + 1);
+			} else {
+				mReplacedRestriction = mRestrictionName;
+				mReplacedMethod = replaces;
+			}
+		}
 	}
 
 	public Hook dangerous() {
@@ -129,8 +139,12 @@ public class Hook implements Comparable<Hook> {
 		return mFrom;
 	}
 
-	public String getReplaces() {
-		return mReplaces;
+	public String getReplacedRestriction() {
+		return mReplacedRestriction;
+	}
+
+	public String getReplacedMethod() {
+		return mReplacedMethod;
 	}
 
 	public String getAnnotation() {
