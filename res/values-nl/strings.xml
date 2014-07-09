@@ -102,7 +102,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_view">Tonen</string>
     <string name="restrict_help_view">Zal de toegang tot vertoningsacties en -informatie beperken</string>
     <string name="restrict_help_system">Zal de toegang tot systeeminformatie, zoals geinstalleerde applicaties, beperken</string>
-    <string name="restrict_help_shell">Zal de toegang tot shell commando's, inclusief superuser commando's, beperken</string>
+    <string name="restrict_help_shell">Zal de toegang tot shell commando\'s, inclusief superuser commando\'s, beperken</string>
     <string name="restrict_help_storage">Zal de toegang tot de opslag, zoals bestanden op uw SD-kaart en de interne opslag, beperken</string>
     <string name="restrict_help_sensors">Zal de toegang tot de sensoren, zoals de bewegingssensor, beperken</string>
     <string name="restrict_help_phone">Zal de toegang tot telefooninformatie, zoals uw telefoonnummer, beperken</string>
@@ -111,7 +111,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_help_nfc">Zal de toegang tot near field communication beperken</string>
     <string name="restrict_help_network">Zal de toegang tot netwerkinformatie, zoals IP- en MAC-addressen and Wi-Fi netwerkinformatie, beperken</string>
     <string name="restrict_help_messages">Zal de toegang tot opgeslagen en ontvangen berichten (SMS/MMS) en voicemail beperken</string>
-    <string name="restrict_help_media">Zal de toegang tot de camera (foto's en video's) en de microfoon beperken</string>
+    <string name="restrict_help_media">Zal de toegang tot de camera (foto\'s en video\'s) en de microfoon beperken</string>
     <string name="restrict_help_location">Zal de toegang tot uw grove en fijne locatie beperken</string>
     <string name="restrict_help_ipc">Zal inter-process communication beperken, wanneer gebruikt om andere beperkingen te omzeilen</string>
     <string name="restrict_help_internet">Zal de toegang tot het internet beperken</string>

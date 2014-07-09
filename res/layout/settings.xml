@@ -101,8 +101,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dip"
-                android:text="@string/settings_experimental"
-                android:visibility="gone" />
+                android:text="@string/settings_experimental" />
 
             <CheckBox
                 android:id="@+id/cbHttps"
