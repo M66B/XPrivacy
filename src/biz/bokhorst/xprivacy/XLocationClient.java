@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
 import android.util.Log;
@@ -103,41 +104,41 @@ public class XLocationClient extends XHook {
 	}
 
 	private void replaceLocationListener(XParam param) throws Throwable {
-		if (param.args.length >= 2 && param.args[1] != null
-				&& LocationListener.class.isAssignableFrom(param.args[1].getClass())) {
-			if (!(param.args[1] instanceof XLocationListener)) {
-				LocationListener listener = (LocationListener) param.args[1];
-				if (listener != null) {
-					XLocationListener xListener;
-					synchronized (mListener) {
-						xListener = mListener.get(listener);
-						if (xListener == null) {
-							xListener = new XLocationListener(listener);
-							mListener.put(listener, xListener);
-							Util.log(this, Log.WARN,
-									"Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+		if (param.args.length >= 2 && param.args[1] != null)
+			if (LocationListener.class.isAssignableFrom(param.args[1].getClass())) {
+				if (!(param.args[1] instanceof XLocationListener)) {
+					LocationListener listener = (LocationListener) param.args[1];
+					if (listener != null) {
+						XLocationListener xListener;
+						synchronized (mListener) {
+							xListener = mListener.get(listener);
+							if (xListener == null) {
+								xListener = new XLocationListener(listener);
+								mListener.put(listener, xListener);
+								Util.log(this, Log.WARN,
+										"Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+							}
 						}
+						param.args[1] = xListener;
 					}
-					param.args[1] = xListener;
 				}
-			}
-		} else
-			param.setResult(null);
+			} else if (PendingIntent.class.isAssignableFrom(param.args[0].getClass()))
+				param.setResult(null);
 	}
 
 	private void removeLocationListener(XParam param) {
-		if (param.args.length >= 1 && param.args[0] != null
-				&& LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
-			LocationListener listener = (LocationListener) param.args[0];
-			synchronized (mListener) {
-				XLocationListener xlistener = mListener.get(listener);
-				if (xlistener != null) {
-					param.args[0] = xlistener;
-					Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+		if (param.args.length >= 1 && param.args[0] != null)
+			if (LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
+				LocationListener listener = (LocationListener) param.args[0];
+				synchronized (mListener) {
+					XLocationListener xlistener = mListener.get(listener);
+					if (xlistener != null) {
+						param.args[0] = xlistener;
+						Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+					}
 				}
-			}
-		} else
-			param.setResult(null);
+			} else if (PendingIntent.class.isAssignableFrom(param.args[0].getClass()))
+				param.setResult(null);
 	}
 
 	private class XLocationListener implements LocationListener {
