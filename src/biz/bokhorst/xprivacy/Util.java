@@ -19,6 +19,8 @@ import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -37,6 +39,8 @@ import android.os.RemoteException;
 import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Toast;
 
 public class Util {
@@ -558,5 +562,19 @@ public class Util {
 			return false;
 		}
 		return src.delete();
+	}
+
+	public static List<View> getViewsByTag(ViewGroup root, String tag) {
+		List<View> views = new ArrayList<View>();
+		for (int i = 0; i < root.getChildCount(); i++) {
+			View child = root.getChildAt(i);
+
+			if (child instanceof ViewGroup)
+				views.addAll(getViewsByTag((ViewGroup) child, tag));
+
+			if (tag.equals(child.getTag()))
+				views.add(child);
+		}
+		return views;
 	}
 }

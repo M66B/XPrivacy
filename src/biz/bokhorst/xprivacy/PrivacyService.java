@@ -57,6 +57,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -228,6 +229,7 @@ public class PrivacyService {
 
 		private AtomicLong mCount = new AtomicLong(0);
 		private AtomicLong mRestricted = new AtomicLong(0);
+		private boolean mSelectExpert = false;
 		private boolean mSelectCategory = true;
 		private boolean mSelectOnce = false;
 
@@ -1624,7 +1626,8 @@ public class PrivacyService {
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
 
 			// Reference views
-			View view = LayoutInflater.from(context.createPackageContext(self, 0)).inflate(R.layout.ondemand, null);
+			final View view = LayoutInflater.from(context.createPackageContext(self, 0)).inflate(R.layout.ondemand,
+					null);
 			ImageView ivAppIcon = (ImageView) view.findViewById(R.id.ivAppIcon);
 			TextView tvUid = (TextView) view.findViewById(R.id.tvUid);
 			TextView tvAppName = (TextView) view.findViewById(R.id.tvAppName);
@@ -1633,7 +1636,9 @@ public class PrivacyService {
 			TextView tvParameters = (TextView) view.findViewById(R.id.tvParameters);
 			TableRow rowParameters = (TableRow) view.findViewById(R.id.rowParameters);
 			TextView tvDefault = (TextView) view.findViewById(R.id.tvDefault);
-			TextView tvInfo = (TextView) view.findViewById(R.id.tvInfo);
+			TextView tvInfoCategory = (TextView) view.findViewById(R.id.tvInfoCategory);
+			TextView tvInfoMethod = (TextView) view.findViewById(R.id.tvInfoMethod);
+			final CheckBox cbExpert = (CheckBox) view.findViewById(R.id.cbExpert);
 			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
@@ -1644,6 +1649,8 @@ public class PrivacyService {
 			Button btnDeny = (Button) view.findViewById(R.id.btnDeny);
 			Button btnDontKnow = (Button) view.findViewById(R.id.btnDontKnow);
 			Button btnAllow = (Button) view.findViewById(R.id.btnAllow);
+
+			boolean expert = (mSelectExpert || !mSelectCategory || mSelectOnce);
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
@@ -1669,15 +1676,21 @@ public class PrivacyService {
 
 			// Help
 			int helpId = resources.getIdentifier("restrict_help_" + restriction.restrictionName, "string", self);
-			String help = resources.getString(helpId);
+			tvInfoCategory.setText(resources.getString(helpId));
 			if (hook != null) {
 				Meta.annotate(resources);
 				String info = hook.getAnnotation();
-				if (info != null)
-					help += "<br />" + info;
+				if (info != null) {
+					tvInfoMethod.setText(Html.fromHtml(info));
+					if (expert)
+						tvInfoMethod.setVisibility(View.VISIBLE);
+				}
 			}
-			tvInfo.setText(Html.fromHtml(help));
-			tvInfo.setMovementMethod(new Touchy());
+
+			cbExpert.setChecked(expert);
+			if (expert)
+				for (View child : Util.getViewsByTag((ViewGroup) view, "details"))
+					child.setVisibility(View.VISIBLE);
 
 			cbCategory.setChecked(mSelectCategory);
 			cbOnce.setChecked(mSelectOnce);
@@ -1701,6 +1714,25 @@ public class PrivacyService {
 					cbWhitelistExtra3.setVisibility(View.VISIBLE);
 				}
 			}
+
+			cbExpert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					mSelectExpert = isChecked;
+					if (!isChecked) {
+						mSelectCategory = true;
+						mSelectOnce = false;
+						cbCategory.setChecked(true);
+						cbOnce.setChecked(false);
+						cbWhitelist.setChecked(false);
+						cbWhitelistExtra1.setChecked(false);
+						cbWhitelistExtra2.setChecked(false);
+						cbWhitelistExtra3.setChecked(false);
+					}
+					for (View child : Util.getViewsByTag((ViewGroup) view, "details"))
+						child.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+				}
+			});
 
 			// Category, once and whitelist exclude each other
 			cbCategory.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

@@ -35,6 +35,7 @@ Changelog
 * Added category help
 * Added restriction to revoke permissions, including white/blacklist
 * Moved *android.intent.action.NEW_OUTGOING_CALL* and *CallLogProvider* from *Phone* to *Calling* category
+* Moved on demand restricting details to expert mode
 * Updated Dutch translation
 * Updated Italian translation
 * Updated Lithuanian translation

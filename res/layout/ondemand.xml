@@ -112,7 +112,9 @@
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:tag="details"
+                    android:visibility="gone" >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -133,7 +135,9 @@
                 <TableRow
                     android:id="@+id/rowParameters"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:tag="details"
+                    android:visibility="gone" >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -153,7 +157,9 @@
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:tag="details"
+                    android:visibility="gone" >
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -173,64 +179,94 @@
             </TableLayout>
 
             <TextView
-                android:id="@+id/tvInfo"
+                android:id="@+id/tvInfoCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall" />
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvInfoMethod"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:tag="details"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:visibility="gone" />
+
+            <CheckBox
+                android:id="@+id/cbExpert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_expert" >
+            </CheckBox>
 
             <CheckBox
                 android:id="@+id/cbCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="6dip"
-                android:text="@string/title_applycat" >
+                android:tag="details"
+                android:text="@string/title_applycat"
+                android:visibility="gone" >
             </CheckBox>
 
             <CheckBox
                 android:id="@+id/cbOnce"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </CheckBox>
-
-            <CheckBox
-                android:id="@+id/cbWhitelist"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:tag="details"
                 android:visibility="gone" >
             </CheckBox>
 
-            <CheckBox
-                android:id="@+id/cbWhitelistExtra1"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:orientation="vertical"
+                android:tag="details"
                 android:visibility="gone" >
-            </CheckBox>
 
-            <CheckBox
-                android:id="@+id/cbWhitelistExtra2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:visibility="gone" >
-            </CheckBox>
+                <CheckBox
+                    android:id="@+id/cbWhitelist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" >
+                </CheckBox>
 
-            <CheckBox
-                android:id="@+id/cbWhitelistExtra3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:visibility="gone" >
-            </CheckBox>
+                <CheckBox
+                    android:id="@+id/cbWhitelistExtra1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/cbWhitelistExtra2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/cbWhitelistExtra3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" >
+                </CheckBox>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="6dip"
+                android:tag="details"
                 android:text="@string/title_ondemand_category"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:layout_width="match_parent"
