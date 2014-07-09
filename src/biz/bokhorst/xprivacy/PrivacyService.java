@@ -438,6 +438,7 @@ public class PrivacyService {
 							else {
 								restriction.restrictionName = hook.getReplacedRestriction();
 								restriction.methodName = hook.getReplacedMethod();
+								Util.log(null, Log.WARN, "Checking " + restriction + " instead of " + hook);
 							}
 					}
 				}
