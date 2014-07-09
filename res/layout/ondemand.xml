@@ -219,10 +219,10 @@
             </CheckBox>
 
             <LinearLayout
+                android:id="@+id/llWhiteList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:tag="details"
                 android:visibility="gone" >
 
                 <CheckBox

@@ -63,6 +63,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -1641,6 +1642,7 @@ public class PrivacyService {
 			final CheckBox cbExpert = (CheckBox) view.findViewById(R.id.cbExpert);
 			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
+			final LinearLayout llWhiteList = (LinearLayout) view.findViewById(R.id.llWhiteList);
 			final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
 			final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
 			final CheckBox cbWhitelistExtra2 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra2);
@@ -1651,6 +1653,7 @@ public class PrivacyService {
 			Button btnAllow = (Button) view.findViewById(R.id.btnAllow);
 
 			boolean expert = (mSelectExpert || !mSelectCategory || mSelectOnce);
+			final boolean whitelistDangerous = (hook != null && hook.isDangerous() && hook.whitelist() != null);
 
 			// Set values
 			if ((hook != null && hook.isDangerous()) || appInfo.isSystem())
@@ -1688,16 +1691,23 @@ public class PrivacyService {
 				}
 			}
 
+			// Expert mode
 			cbExpert.setChecked(expert);
 			if (expert)
 				for (View child : Util.getViewsByTag((ViewGroup) view, "details"))
 					child.setVisibility(View.VISIBLE);
+			if (expert || whitelistDangerous)
+				llWhiteList.setVisibility(View.VISIBLE);
 
+			// Category
 			cbCategory.setChecked(mSelectCategory);
+
+			// Once
 			cbOnce.setChecked(mSelectOnce);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
 					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
 
+			// Whitelisting
 			if (hook != null && hook.whitelist() != null && restriction.extra != null) {
 				cbWhitelist.setText(resources.getString(R.string.title_whitelist, restriction.extra));
 				cbWhitelist.setVisibility(View.VISIBLE);
@@ -1730,8 +1740,12 @@ public class PrivacyService {
 						cbWhitelistExtra2.setChecked(false);
 						cbWhitelistExtra3.setChecked(false);
 					}
+
 					for (View child : Util.getViewsByTag((ViewGroup) view, "details"))
 						child.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+
+					if (!whitelistDangerous)
+						llWhiteList.setVisibility(isChecked ? View.VISIBLE : View.GONE);
 				}
 			});
 
