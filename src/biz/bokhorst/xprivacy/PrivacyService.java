@@ -1682,6 +1682,7 @@ public class PrivacyService {
 				String info = hook.getAnnotation();
 				if (info != null) {
 					tvInfoMethod.setText(Html.fromHtml(info));
+					tvInfoMethod.setMovementMethod(new Touchy());
 					if (expert)
 						tvInfoMethod.setVisibility(View.VISIBLE);
 				}
