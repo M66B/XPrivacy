@@ -8,6 +8,8 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.location.Location;
+import android.location.LocationManager;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Bundle;
@@ -19,6 +21,8 @@ import android.util.Log;
 public class XActivityThread extends XHook {
 	private Methods mMethod;
 	private String mActionName;
+
+	private static final String GMS_LOCATION_CHANGED = "com.google.android.location.LOCATION";
 
 	private XActivityThread(Methods method, String restrictionName, String actionName) {
 		super(restrictionName, method.name(), actionName);
@@ -170,6 +174,24 @@ public class XActivityThread extends XHook {
 						} else if (isRestrictedExtra(param, mActionName, intent.getDataString())) {
 							finish(param);
 							param.setResult(null);
+						}
+					} else {
+						if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
+							int uid = Binder.getCallingUid();
+							Util.log(null, Log.WARN, LocationManager.KEY_LOCATION_CHANGED + " uid=" + uid);
+							Location location = (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
+							Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
+							if (getRestricted(uid, PrivacyManager.cLocation, "requestLocationUpdates"))
+								intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, fakeLocation);
+						}
+
+						else if (intent.hasExtra(GMS_LOCATION_CHANGED)) {
+							int uid = Binder.getCallingUid();
+							Util.log(null, Log.WARN, GMS_LOCATION_CHANGED + " uid=" + uid);
+							Location location = (Location) intent.getExtras().get(GMS_LOCATION_CHANGED);
+							Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
+							if (getRestricted(uid, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
+								intent.putExtra(GMS_LOCATION_CHANGED, fakeLocation);
 						}
 					}
 				}

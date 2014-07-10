@@ -203,9 +203,7 @@ public class XLocationManager extends XHook {
 					param.args[arg] = xListener;
 				}
 			}
-		} else
-			// Intent
-			param.setResult(null);
+		}
 	}
 
 	private void removeLocationListener(XParam param) {
@@ -219,9 +217,7 @@ public class XLocationManager extends XHook {
 					Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 				}
 			}
-		} else
-			// Intent
-			param.setResult(null);
+		}
 	}
 
 	private class XLocationListener implements LocationListener {
