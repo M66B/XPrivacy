@@ -113,7 +113,7 @@ public class XActivityThread extends XHook {
 				fieldIntent.setAccessible(true);
 				Intent intent = (Intent) fieldIntent.get(param.args[0]);
 				if (intent != null) {
-					if (checkIntentAction(Binder.getCallingUid(), intent)) {
+					if (checkIntent(Binder.getCallingUid(), intent)) {
 						finish(param);
 						param.setResult(null);
 					}
@@ -132,7 +132,10 @@ public class XActivityThread extends XHook {
 				if (msg.obj instanceof Intent) {
 					Intent intent = (Intent) msg.obj;
 					if (intent != null)
-						checkIntentExtras(intent);
+						if (checkIntent(Binder.getCallingUid(), intent)) {
+							param.setResult(null);
+							Util.log(this, Log.WARN, "Intercepted action=" + intent.getAction());
+						}
 				}
 			}
 
@@ -143,7 +146,7 @@ public class XActivityThread extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	private boolean checkIntentAction(int uid, Intent intent) throws Throwable {
+	private boolean checkIntent(int uid, Intent intent) throws Throwable {
 		String action = intent.getAction();
 		if (mapActionRestriction.containsKey(action)) {
 			// Get restriction category
@@ -189,28 +192,25 @@ public class XActivityThread extends XHook {
 			} else if (isRestrictedExtra(uid, restrictionName, action, intent.getDataString()))
 				return true;
 
-		} else
-			checkIntentExtras(intent);
+		} else {
+			// Check location extras
+
+			if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
+				Location location = (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
+				Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
+				if (getRestricted(uid, PrivacyManager.cLocation, "requestLocationUpdates"))
+					intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, fakeLocation);
+			}
+
+			else if (intent.hasExtra(GMS_LOCATION_CHANGED)) {
+				Location location = (Location) intent.getExtras().get(GMS_LOCATION_CHANGED);
+				Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
+				if (getRestricted(uid, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
+					intent.putExtra(GMS_LOCATION_CHANGED, fakeLocation);
+			}
+		}
 
 		return false;
-	}
-
-	private void checkIntentExtras(Intent intent) throws Throwable {
-		if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
-			int uid = Binder.getCallingUid();
-			Location location = (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
-			Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
-			if (getRestricted(uid, PrivacyManager.cLocation, "requestLocationUpdates"))
-				intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, fakeLocation);
-		}
-
-		else if (intent.hasExtra(GMS_LOCATION_CHANGED)) {
-			int uid = Binder.getCallingUid();
-			Location location = (Location) intent.getExtras().get(GMS_LOCATION_CHANGED);
-			Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
-			if (getRestricted(uid, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
-				intent.putExtra(GMS_LOCATION_CHANGED, fakeLocation);
-		}
 	}
 
 	private void finish(XParam param) {
