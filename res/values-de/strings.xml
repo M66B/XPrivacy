@@ -100,7 +100,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
-    <string name="restrict_help_view">Beschränkt Zugriff auf 'View' Aktionen und Informationen</string>
+    <string name="restrict_help_view">Beschränkt Zugriff auf &#8216;View&#8217; Aktionen und Informationen</string>
     <string name="restrict_help_system">Beschränkt Zugriff auf System Informationen, wie z.B. installierte Apps</string>
     <string name="restrict_help_shell">Beschränkt Zugriff auf Shell Befehle, inklusive SuperUser-Befehle</string>
     <string name="restrict_help_storage">Beschränkt Zugriff das Dateisystem, z.B. Dateinen auf der SD-Karte oder dem Internen Speicher</string>

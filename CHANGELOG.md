@@ -39,6 +39,7 @@ Changelog
 * Fixed fake location for Play services
 * Fixed fake location from different application in some cases
 * Updated Dutch translation
+* Updated German translation
 * Updated Italian translation
 * Updated Lithuanian translation
 
