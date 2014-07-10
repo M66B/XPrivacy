@@ -5,13 +5,17 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.WeakHashMap;
 
+import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
 import android.util.Log;
 
 public class XLocationClient extends XHook {
 	private Methods mMethod;
+	private static final Map<Object, Object> mMapProxy = new WeakHashMap<Object, Object>();
 
 	private XLocationClient(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), String.format("GMS.%s", method.name()));
@@ -33,6 +37,8 @@ public class XLocationClient extends XHook {
 	// Location getLastLocation()
 	// void removeGeofences(List<String> geofenceRequestIds, LocationClient.OnRemoveGeofencesResultListener listener)
 	// void removeGeofences(PendingIntent pendingIntent, LocationClient.OnRemoveGeofencesResultListener listener)
+	// void removeLocationUpdates(LocationListener listener)
+	// void removeLocationUpdates(PendingIntent callbackIntent)
 	// void requestLocationUpdates(LocationRequest request, PendingIntent callbackIntent)
 	// void requestLocationUpdates(LocationRequest request, LocationListener listener)
 	// void requestLocationUpdates(LocationRequest request, LocationListener listener, Looper looper)
@@ -41,7 +47,7 @@ public class XLocationClient extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		addGeofences, getLastLocation, removeGeofences, requestLocationUpdates
+		addGeofences, getLastLocation, removeGeofences, removeLocationUpdates, requestLocationUpdates
 	};
 
 	public static List<XHook> getInstances() {
@@ -49,6 +55,7 @@ public class XLocationClient extends XHook {
 		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation).optional());
 		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation).optional());
 		listHook.add(new XLocationClient(Methods.removeGeofences, null, 1).optional());
+		listHook.add(new XLocationClient(Methods.removeLocationUpdates, null, 1).optional());
 		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation).optional());
 		return listHook;
 	}
@@ -59,21 +66,35 @@ public class XLocationClient extends XHook {
 			if (isRestricted(param))
 				param.setResult(null);
 
+		} else if (mMethod == Methods.getLastLocation) {
+			// Do nothing
+
 		} else if (mMethod == Methods.removeGeofences) {
 			if (isRestricted(param, PrivacyManager.cLocation, "GMS.addGeofences"))
 				param.setResult(null);
 
-		} else if (mMethod == Methods.getLastLocation) {
-			// Do nothing
+		} else if (mMethod == Methods.removeLocationUpdates) {
+			if (param.thisObject != null && param.args.length > 0 && !(param.args[0] instanceof PendingIntent))
+				synchronized (mMapProxy) {
+					if (mMapProxy.containsKey(param.args[0]))
+						param.args[0] = mMapProxy.get(param.args[0]);
+				}
 
 		} else if (mMethod == Methods.requestLocationUpdates) {
-			if (isRestricted(param)) {
-				ClassLoader cl = param.thisObject.getClass().getClassLoader();
-				Class<?> ll = Class.forName("com.google.android.gms.location.LocationListener", false, cl);
-				InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[1]);
-				Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { ll }, ih);
-				param.args[1] = proxy;
-			}
+			if (param.thisObject != null && param.args.length > 1 && !(param.args[1] instanceof PendingIntent))
+				if (isRestricted(param)) {
+					// Create proxy
+					ClassLoader cl = param.thisObject.getClass().getClassLoader();
+					Class<?> ll = Class.forName("com.google.android.gms.location.LocationListener", false, cl);
+					InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[1]);
+					Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { ll }, ih);
+
+					// Use proxy
+					synchronized (mMapProxy) {
+						mMapProxy.put(param.args[1], proxy);
+					}
+					param.args[1] = proxy;
+				}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
@@ -88,6 +109,9 @@ public class XLocationClient extends XHook {
 			Location location = (Location) param.getResult();
 			if (location != null && isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+
+		} else if (mMethod == Methods.removeLocationUpdates) {
+			// Do nothing
 
 		} else if (mMethod == Methods.requestLocationUpdates) {
 			// Do nothing
