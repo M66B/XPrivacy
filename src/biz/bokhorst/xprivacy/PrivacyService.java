@@ -2090,14 +2090,6 @@ public class PrivacyService {
 				Object am = cam.getMethod("self").invoke(null);
 				boolean locked = Thread.holdsLock(am);
 				if (locked) {
-					Util.log(null, Log.WARN, "AM locked, yielding");
-					Thread.yield();
-					Thread.sleep(500);
-					locked = Thread.holdsLock(am);
-					if (locked)
-						Util.log(null, Log.WARN, "AM still locked");
-				}
-				if (locked) {
 					boolean experimental = getSettingBool(0, PrivacyManager.cSettingExperimental, false);
 					if (experimental)
 						return false;
