@@ -13,6 +13,7 @@ import android.location.LocationManager;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Bundle;
+import android.os.Message;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
@@ -30,8 +31,14 @@ public class XActivityThread extends XHook {
 		mActionName = actionName;
 	}
 
+	private XActivityThread(Methods method, int sdk) {
+		super(null, method.name(), null, sdk);
+		mMethod = method;
+		mActionName = null;
+	}
+
 	public String getClassName() {
-		return "android.app.ActivityThread";
+		return (mMethod == Methods.handleReceiver ? "android.app.ActivityThread" : "android.os.MessageQueue");
 	}
 
 	@Override
@@ -40,7 +47,7 @@ public class XActivityThread extends XHook {
 	}
 
 	private enum Methods {
-		handleReceiver
+		next, handleReceiver
 	};
 
 	// @formatter:off
@@ -48,11 +55,16 @@ public class XActivityThread extends XHook {
 	// private void handleReceiver(ReceiverData data)
 	// frameworks/base/core/java/android/app/ActivityThread.java
 
+	// final Message next()
+	// frameworks/base/core/java/android/android/os/MessageQueue.java
+
 	// @formatter:on
 
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
+
+		listHook.add(new XActivityThread(Methods.next, 1));
 
 		// Intent receive: calling
 		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cCalling,
@@ -116,8 +128,10 @@ public class XActivityThread extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (mMethod == Methods.handleReceiver) {
+		if (mMethod == Methods.next) {
+			// Do nothing
+
+		} else if (mMethod == Methods.handleReceiver) {
 			if (param.args.length > 0 && param.args[0] != null) {
 				// Get intent
 				Intent intent = null;
@@ -175,35 +189,43 @@ public class XActivityThread extends XHook {
 							finish(param);
 							param.setResult(null);
 						}
-					} else {
-						// Check extras
-						if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
-							int uid = Binder.getCallingUid();
-							Util.log(null, Log.WARN, LocationManager.KEY_LOCATION_CHANGED + " uid=" + uid);
-							Location location = (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
-							Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
-							if (getRestricted(uid, PrivacyManager.cLocation, "requestLocationUpdates"))
-								intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, fakeLocation);
-						}
-
-						else if (intent.hasExtra(GMS_LOCATION_CHANGED)) {
-							int uid = Binder.getCallingUid();
-							Location location = (Location) intent.getExtras().get(GMS_LOCATION_CHANGED);
-							Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
-							if (getRestricted(uid, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
-								intent.putExtra(GMS_LOCATION_CHANGED, fakeLocation);
-						}
-					}
+					} else
+						checkIntentExtras(intent);
 				}
 			}
 
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		// Do nothing
+		if (mMethod == Methods.next) {
+			Message msg = (Message) param.getResult();
+			if (msg != null && msg.obj instanceof Intent) {
+				Intent intent = (Intent) msg.obj;
+				checkIntentExtras(intent);
+			}
+		}
+	}
+
+	private void checkIntentExtras(Intent intent) throws Throwable {
+		// Check extras
+		if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
+			int uid = Binder.getCallingUid();
+			Location location = (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
+			Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
+			if (getRestricted(uid, PrivacyManager.cLocation, "requestLocationUpdates"))
+				intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, fakeLocation);
+		}
+
+		else if (intent.hasExtra(GMS_LOCATION_CHANGED)) {
+			int uid = Binder.getCallingUid();
+			Location location = (Location) intent.getExtras().get(GMS_LOCATION_CHANGED);
+			Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
+			if (getRestricted(uid, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
+				intent.putExtra(GMS_LOCATION_CHANGED, fakeLocation);
+		}
 	}
 
 	private void finish(XParam param) {
