@@ -65,7 +65,7 @@ public class XIoBridge extends XHook {
 	@SuppressLint("SdCardPath")
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.connect) {
-			if (param.args.length > 2 && param.args[1] instanceof InetAddress) {
+			if (param.args.length > 2 && param.args[1] instanceof InetAddress && param.args[2] instanceof Integer) {
 				InetAddress address = (InetAddress) param.args[1];
 				int port = (Integer) param.args[2];
 				String hostName;
