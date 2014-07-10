@@ -108,7 +108,8 @@ public class XLocationManager extends XHook {
 				param.setResult(null);
 
 		} else if (mMethod == Methods.removeUpdates) {
-			removeLocationListener(param);
+			if (isRestricted(param, PrivacyManager.cLocation, "requestLocationUpdates"))
+				removeLocationListener(param);
 
 		} else if (mMethod == Methods.requestLocationUpdates) {
 			if (param.args.length > 0 && param.args[0] instanceof String) {
@@ -188,26 +189,32 @@ public class XLocationManager extends XHook {
 	}
 
 	private void replaceLocationListener(XParam param, int arg) throws Throwable {
-		if (param.thisObject != null && param.args.length > arg && !(param.args[arg] instanceof PendingIntent)) {
-			// Create proxy
-			ClassLoader cl = param.thisObject.getClass().getClassLoader();
-			InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[arg]);
-			Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { LocationListener.class }, ih);
+		if (param.args.length > arg)
+			if (param.args[arg] instanceof PendingIntent)
+				param.setResult(null);
+			else if (param.thisObject != null) {
+				// Create proxy
+				ClassLoader cl = param.thisObject.getClass().getClassLoader();
+				InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[arg]);
+				Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { LocationListener.class }, ih);
 
-			// Use proxy
-			synchronized (mMapProxy) {
-				mMapProxy.put(param.args[arg], proxy);
+				// Use proxy
+				synchronized (mMapProxy) {
+					mMapProxy.put(param.args[arg], proxy);
+				}
+				param.args[arg] = proxy;
 			}
-			param.args[arg] = proxy;
-		}
 	}
 
 	private void removeLocationListener(XParam param) {
-		if (param.args.length > 0 && !(param.args[0] instanceof PendingIntent))
-			synchronized (mMapProxy) {
-				if (mMapProxy.containsKey(param.args[0]))
-					param.args[0] = mMapProxy.get(param.args[0]);
-			}
+		if (param.args.length > 0)
+			if (param.args[0] instanceof PendingIntent)
+				param.setResult(null);
+			else
+				synchronized (mMapProxy) {
+					if (mMapProxy.containsKey(param.args[0]))
+						param.args[0] = mMapProxy.get(param.args[0]);
+				}
 	}
 
 	private class OnLocationChangedHandler implements InvocationHandler {

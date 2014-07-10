@@ -10,11 +10,8 @@ import java.util.Map;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.location.Location;
-import android.location.LocationManager;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
-import android.os.Bundle;
 import android.os.Message;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
@@ -25,7 +22,6 @@ import android.util.Log;
 public class XActivityThread extends XHook {
 	private Methods mMethod;
 	private static Map<String, String> mapActionRestriction = new HashMap<String, String>();
-	private static final String GMS_LOCATION_CHANGED = "com.google.android.location.LOCATION";
 
 	static {
 		// Intent receive: calling
@@ -154,9 +150,8 @@ public class XActivityThread extends XHook {
 
 			if (Intent.ACTION_NEW_OUTGOING_CALL.equals(action)) {
 				// Outgoing call
-				Bundle bundle = intent.getExtras();
-				if (bundle != null) {
-					String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
+				if (intent.hasExtra(Intent.EXTRA_PHONE_NUMBER)) {
+					String phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
 					if (phoneNumber != null)
 						if (isRestrictedExtra(uid, restrictionName, action, phoneNumber))
 							intent.putExtra(Intent.EXTRA_PHONE_NUMBER,
@@ -165,9 +160,8 @@ public class XActivityThread extends XHook {
 
 			} else if (TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(action)) {
 				// Incoming call
-				Bundle bundle = intent.getExtras();
-				if (bundle != null) {
-					String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
+				if (intent.hasExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)) {
+					String phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
 					if (phoneNumber != null) {
 						if (isRestrictedExtra(uid, restrictionName, action, phoneNumber))
 							intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER,
@@ -192,22 +186,6 @@ public class XActivityThread extends XHook {
 			} else if (isRestrictedExtra(uid, restrictionName, action, intent.getDataString()))
 				return true;
 
-		} else {
-			// Check location extras
-
-			if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
-				Location location = (Location) intent.getExtras().get(LocationManager.KEY_LOCATION_CHANGED);
-				Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
-				if (getRestricted(uid, PrivacyManager.cLocation, "requestLocationUpdates"))
-					intent.putExtra(LocationManager.KEY_LOCATION_CHANGED, fakeLocation);
-			}
-
-			else if (intent.hasExtra(GMS_LOCATION_CHANGED)) {
-				Location location = (Location) intent.getExtras().get(GMS_LOCATION_CHANGED);
-				Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
-				if (getRestricted(uid, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
-					intent.putExtra(GMS_LOCATION_CHANGED, fakeLocation);
-			}
 		}
 
 		return false;

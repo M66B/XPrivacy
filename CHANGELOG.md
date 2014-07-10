@@ -37,7 +37,6 @@ Changelog
 * Moved *android.intent.action.NEW_OUTGOING_CALL* and *CallLogProvider* from *Phone* to *Calling* category
 * Moved on demand restricting details to expert mode
 * Fixed fake location for Play services locations
-* Providing fake locations to (rarely used) location intents (formerly intents were suppressed)
 * Updated Dutch translation
 * Updated German translation
 * Updated Italian translation

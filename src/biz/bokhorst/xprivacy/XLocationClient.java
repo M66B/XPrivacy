@@ -74,27 +74,34 @@ public class XLocationClient extends XHook {
 				param.setResult(null);
 
 		} else if (mMethod == Methods.removeLocationUpdates) {
-			if (param.args.length > 0 && !(param.args[0] instanceof PendingIntent))
-				synchronized (mMapProxy) {
-					if (mMapProxy.containsKey(param.args[0]))
-						param.args[0] = mMapProxy.get(param.args[0]);
-				}
+			if (param.args.length > 0)
+				if (param.args[0] instanceof PendingIntent) {
+					if (isRestricted(param, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
+						param.setResult(null);
+				} else
+					synchronized (mMapProxy) {
+						if (mMapProxy.containsKey(param.args[0]))
+							param.args[0] = mMapProxy.get(param.args[0]);
+					}
 
 		} else if (mMethod == Methods.requestLocationUpdates) {
-			if (param.thisObject != null && param.args.length > 1 && !(param.args[1] instanceof PendingIntent))
-				if (isRestricted(param)) {
-					// Create proxy
-					ClassLoader cl = param.thisObject.getClass().getClassLoader();
-					Class<?> ll = Class.forName("com.google.android.gms.location.LocationListener", false, cl);
-					InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[1]);
-					Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { ll }, ih);
+			if (param.args.length > 1)
+				if (isRestricted(param))
+					if (param.args[1] instanceof PendingIntent)
+						param.setResult(null);
+					else if (param.thisObject != null) {
+						// Create proxy
+						ClassLoader cl = param.thisObject.getClass().getClassLoader();
+						Class<?> ll = Class.forName("com.google.android.gms.location.LocationListener", false, cl);
+						InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[1]);
+						Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { ll }, ih);
 
-					// Use proxy
-					synchronized (mMapProxy) {
-						mMapProxy.put(param.args[1], proxy);
+						// Use proxy
+						synchronized (mMapProxy) {
+							mMapProxy.put(param.args[1], proxy);
+						}
+						param.args[1] = proxy;
 					}
-					param.args[1] = proxy;
-				}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
