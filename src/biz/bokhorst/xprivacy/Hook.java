@@ -13,7 +13,8 @@ public class Hook implements Comparable<Hook> {
 	private int mSdk;
 	private Version mFrom;
 	private String mReplacedRestriction;
-	private String mReplacedMethod = null;
+	private String mReplacedMethod;
+	private boolean mExperimental;
 	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
@@ -43,6 +44,7 @@ public class Hook implements Comparable<Hook> {
 				mReplacedMethod = replaces;
 			}
 		}
+		mExperimental = false;
 	}
 
 	public Hook dangerous() {
@@ -69,6 +71,11 @@ public class Hook implements Comparable<Hook> {
 
 	public Hook whitelist(String whitelist) {
 		mWhitelist = whitelist;
+		return this;
+	}
+
+	public Hook experimental() {
+		mExperimental = true;
 		return this;
 	}
 
@@ -149,6 +156,10 @@ public class Hook implements Comparable<Hook> {
 
 	public String getAnnotation() {
 		return mAnnotation;
+	}
+
+	public boolean isExperimental() {
+		return mExperimental;
 	}
 
 	@Override

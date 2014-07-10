@@ -458,6 +458,13 @@ public class PrivacyService {
 					return mresult;
 				}
 
+				// Experimental restrictions
+				if (hook != null && hook.isExperimental())
+					if (!getSettingBool(0, PrivacyManager.cSettingExperimental, false)) {
+						mresult.asked = true;
+						return mresult;
+					}
+
 				// Check if restrictions enabled
 				if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
 					return mresult;
