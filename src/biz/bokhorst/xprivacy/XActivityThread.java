@@ -176,6 +176,7 @@ public class XActivityThread extends XHook {
 							param.setResult(null);
 						}
 					} else {
+						// Check extras
 						if (intent.hasExtra(LocationManager.KEY_LOCATION_CHANGED)) {
 							int uid = Binder.getCallingUid();
 							Util.log(null, Log.WARN, LocationManager.KEY_LOCATION_CHANGED + " uid=" + uid);
@@ -187,7 +188,6 @@ public class XActivityThread extends XHook {
 
 						else if (intent.hasExtra(GMS_LOCATION_CHANGED)) {
 							int uid = Binder.getCallingUid();
-							Util.log(null, Log.WARN, GMS_LOCATION_CHANGED + " uid=" + uid);
 							Location location = (Location) intent.getExtras().get(GMS_LOCATION_CHANGED);
 							Location fakeLocation = PrivacyManager.getDefacedLocation(uid, location);
 							if (getRestricted(uid, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))

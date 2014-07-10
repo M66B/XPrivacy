@@ -74,7 +74,7 @@ public class XLocationClient extends XHook {
 				param.setResult(null);
 
 		} else if (mMethod == Methods.removeLocationUpdates) {
-			if (param.thisObject != null && param.args.length > 0 && !(param.args[0] instanceof PendingIntent))
+			if (param.args.length > 0 && !(param.args[0] instanceof PendingIntent))
 				synchronized (mMapProxy) {
 					if (mMapProxy.containsKey(param.args[0]))
 						param.args[0] = mMapProxy.get(param.args[0]);
