@@ -134,7 +134,7 @@ public class Requirements {
 
 		// Check activity thread
 		try {
-			Class<?> clazz = Class.forName("android.app.ActivityThread");
+			Class<?> clazz = Class.forName("android.app.ActivityThread", false, null);
 			try {
 				clazz.getDeclaredMethod("unscheduleGcIdler");
 			} catch (NoSuchMethodException ex) {
@@ -146,12 +146,12 @@ public class Requirements {
 
 		// Check activity thread receiver data
 		try {
-			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");
+			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData", false, null);
 			if (!checkField(clazz, "intent"))
 				reportClass(clazz, context);
 		} catch (ClassNotFoundException ex) {
 			try {
-				reportClass(Class.forName("android.app.ActivityThread"), context);
+				reportClass(Class.forName("android.app.ActivityThread", false, null), context);
 			} catch (ClassNotFoundException exex) {
 				sendSupportInfo(exex.toString(), context);
 			}
@@ -159,7 +159,7 @@ public class Requirements {
 
 		// Check file utils
 		try {
-			Class<?> clazz = Class.forName("android.os.FileUtils");
+			Class<?> clazz = Class.forName("android.os.FileUtils", false, null);
 			try {
 				clazz.getDeclaredMethod("setPermissions", String.class, int.class, int.class, int.class);
 			} catch (NoSuchMethodException ex) {
@@ -176,7 +176,7 @@ public class Requirements {
 
 		// Check package manager service
 		try {
-			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService");
+			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService", false, null);
 			try {
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
 					clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
@@ -191,7 +191,7 @@ public class Requirements {
 
 		// Check service manager
 		try {
-			Class<?> clazz = Class.forName("android.os.ServiceManager");
+			Class<?> clazz = Class.forName("android.os.ServiceManager", false, null);
 			try {
 				// @formatter:off
 				// public static void addService(String name, IBinder service)
@@ -295,7 +295,7 @@ public class Requirements {
 		// Check mWifiSsid.octets
 		if (checkField(WifiInfo.class, "mWifiSsid"))
 			try {
-				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
+				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid", false, null);
 				try {
 					clazz.getDeclaredMethod("createFromAsciiEncoded", String.class);
 				} catch (NoSuchMethodException ex) {
