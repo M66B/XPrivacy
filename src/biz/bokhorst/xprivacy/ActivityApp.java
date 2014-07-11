@@ -1441,17 +1441,15 @@ public class ActivityApp extends ActivityBase {
 				int userId = Util.getUserId(Process.myUid());
 				boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false);
 				boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, false);
-				boolean experimental = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingExperimental, false);
 				List<Hook> listMethod = new ArrayList<Hook>();
 				String restrictionName = mListRestriction.get(groupPosition);
-				for (Hook hook : PrivacyManager.getHooks((String) getGroup(groupPosition)))
-					if (!hook.isExperimental() || experimental) {
-						boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, hook.getName()) > 0);
-						boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, hook);
-						if (mSelectedMethodName != null
-								|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
-							listMethod.add(hook);
-					}
+				for (Hook hook : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
+					boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, hook.getName()) > 0);
+					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, hook);
+					if (mSelectedMethodName != null
+							|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
+						listMethod.add(hook);
+				}
 				mHook.put(groupPosition, listMethod);
 			}
 			return mHook.get(groupPosition);
