@@ -28,16 +28,20 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.24 TEST**
+
 * Added category help
-* Moved *android.intent.action.NEW_OUTGOING_CALL* and *CallLogProvider* from *Phone* to *Calling* category
 * Moved on demand restricting details to expert mode
+* Rewrote location restrictions
 * Fixed fake location for Play services locations
+* Moved *android.intent.action.NEW_OUTGOING_CALL* and *CallLogProvider* from *Phone* to *Calling* category
+* Added *quirks* settings
 * Updated Dutch translation
 * Updated German translation
 * Updated Italian translation
 * Updated Lithuanian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.22 BETA**
 
