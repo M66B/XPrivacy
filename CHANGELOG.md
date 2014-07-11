@@ -29,12 +29,10 @@ Changelog
 **Experimental functions**
 
 * Display the on demand dialog even when there is a risk it will freeze (lock up)
-* Permissions management
 
 **Next release**
 
 * Added category help
-* Added permissions management, (special restriction with white/blacklist) (experimental)
 * Moved *android.intent.action.NEW_OUTGOING_CALL* and *CallLogProvider* from *Phone* to *Calling* category
 * Moved on demand restricting details to expert mode
 * Fixed fake location for Play services locations
