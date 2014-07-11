@@ -354,8 +354,8 @@ and is reported to work with most Android variants, including stock ROMs.
 XPrivacy seems to be incompatible with [OLYMPUS Image Share](https://play.google.com/store/apps/details?id=jp.olympusimaging.oishare)
 for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1607)).
 
-XPrivacy seems to be incompatible with [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
-for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1751)).
+You probably need to use the *quirk* "noresolve" for [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
+([issue](https://github.com/M66B/XPrivacy/issues/1751)).
 
 XPrivacy seems to cause camera lag on a Samsung Galaxy Note II ([issue](https://github.com/M66B/XPrivacy/issues/715))
 
