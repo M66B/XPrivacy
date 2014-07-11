@@ -28,6 +28,8 @@ Changelog
 
 **Next release**
 
+* Updated some texts
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.24 TEST**
