@@ -157,7 +157,7 @@
                     android:id="@+id/etQuirks"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:hint="freeze,resolve"
+                    android:hint="freeze,noresolve"
                     android:inputType="text"
                     android:maxLength="16"
                     tools:ignore="HardcodedText" />
