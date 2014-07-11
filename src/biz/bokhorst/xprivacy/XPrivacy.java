@@ -136,6 +136,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				hookAll(XLocationClient.getInstances(), clazz.getClassLoader(), mSecret);
 			}
 		});
+
+		// Google Map
+		MS.hookClassLoad("com.google.android.gms.maps.GoogleMap", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XGoogleMap.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
 	}
 
 	// Common
@@ -341,6 +349,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		try {
 			Class.forName("com.google.android.gms.location.LocationClient", false, classLoader);
 			hookAll(XLocationClient.getInstances(), classLoader, secret);
+		} catch (Throwable ignored) {
+		}
+
+		// Google Map
+		try {
+			Class.forName("com.google.android.gms.maps.GoogleMap", false, classLoader);
+			hookAll(XGoogleMap.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}
 	}
