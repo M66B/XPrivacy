@@ -208,6 +208,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="settings_parameters">Parameter der Nutzungsdaten zeigen</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Für Auswahl App-Name drücken und kurz halten</string>
     <string name="help_ondemand">Beschränkungen nach Aufforderung festlegen</string>
     <string name="help_application">App</string>

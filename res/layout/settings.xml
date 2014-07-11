@@ -136,6 +136,32 @@
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/llQuirks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/settings_quirks"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etQuirks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="freeze,resolve"
+                    android:inputType="text"
+                    android:maxLength="16"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

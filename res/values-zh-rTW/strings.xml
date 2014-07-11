@@ -208,6 +208,7 @@
     <string name="settings_parameters">顯示細部操作紀錄參數</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">長按程式名稱可選取</string>
     <string name="help_ondemand">存取該權限時詢問</string>
     <string name="help_application">程式名稱</string>

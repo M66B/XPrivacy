@@ -208,6 +208,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Tekan lama pada nama untuk pilih</string>
     <string name="help_ondemand">sekatan akan diminta</string>
     <string name="help_application">Aplikasi</string>

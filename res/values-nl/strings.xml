@@ -208,6 +208,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_parameters">Toon parameters bij gebruiksgegevens</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Druk lang om te selecteren</string>
     <string name="help_ondemand">beperkingen worden gevraagd</string>
     <string name="help_application">Applicatie</string>

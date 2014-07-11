@@ -208,6 +208,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_parameters">Zobraziť parametre využitia dát</string>
     <string name="settings_cid">Identifikátor bunky GSM</string>
     <string name="settings_lac">Kód lokality GSM</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Vyberte dlhým stlačením názvu</string>
     <string name="help_ondemand">obmedzenia budú požadované</string>
     <string name="help_application">Aplikácia</string>

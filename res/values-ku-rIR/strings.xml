@@ -207,6 +207,7 @@
     <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">په نجه ت دابگره له سه ر ئه و ناوه ى كه ده ته ویت هه لی بژیریت</string>
     <string name="help_ondemand">داوات لیده کریت بو سنوردار کردن</string>
     <string name="help_application">به رنامه کان</string>

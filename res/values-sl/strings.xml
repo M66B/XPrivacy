@@ -208,6 +208,7 @@
     <string name="settings_parameters">Prikaži parametre za uporabo podatkov</string>
     <string name="settings_cid">ID GSM telefona</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Za izbiranje pridržite ime</string>
     <string name="help_ondemand">omejitve bodo vprašane</string>
     <string name="help_application">Program</string>

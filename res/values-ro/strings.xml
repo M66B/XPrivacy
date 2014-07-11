@@ -208,6 +208,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Long press name to select</string>
     <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">Aplicatie</string>

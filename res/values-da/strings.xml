@@ -206,6 +206,7 @@
     <string name="settings_parameters">Vis parametre for brugs data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Lang tryk på navn for at vælge</string>
     <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">App</string>

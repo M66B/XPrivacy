@@ -2,6 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import java.io.File;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -54,6 +56,8 @@ public class SettingsDialog {
 		final CheckBox cbHttps = (CheckBox) dlgSettings.findViewById(R.id.cbHttps);
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
 		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
+		final LinearLayout llQuirks = (LinearLayout) dlgSettings.findViewById(R.id.llQuirks);
+		final EditText etQuirks = (EditText) dlgSettings.findViewById(R.id.etQuirks);
 
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
@@ -115,11 +119,13 @@ public class SettingsDialog {
 				cbExperimental.setEnabled(isChecked);
 				cbHttps.setEnabled(isChecked);
 				etConfidence.setEnabled(isChecked);
+				etQuirks.setEnabled(isChecked);
 				if (!isChecked) {
 					cbSystem.setChecked(false);
 					cbExperimental.setChecked(false);
 					cbHttps.setChecked(true);
 					etConfidence.setText("");
+					etQuirks.setText("");
 				}
 			}
 		});
@@ -230,7 +236,15 @@ public class SettingsDialog {
 		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false);
 		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true);
 		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
-		final boolean expert = (components || experimental || !https || !"".equals(confidence));
+		boolean freeze = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
+		boolean resolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingResolve, false);
+		List<String> listQuirks = new ArrayList<String>();
+		if (freeze)
+			listQuirks.add("freeze");
+		if (resolve)
+			listQuirks.add("resolve");
+		String quirks = TextUtils.join(",", listQuirks.toArray());
+		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
 
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
@@ -271,12 +285,14 @@ public class SettingsDialog {
 				cbExperimental.setChecked(experimental);
 				cbHttps.setChecked(https);
 				etConfidence.setText(confidence);
+				etQuirks.setText(quirks);
 			} else {
 				cbSystem.setEnabled(false);
 				cbExperimental.setEnabled(false);
 				cbHttps.setEnabled(false);
 				cbHttps.setChecked(true);
 				etConfidence.setEnabled(false);
+				etQuirks.setEnabled(false);
 			}
 		} else {
 			// Disable global settings
@@ -288,6 +304,7 @@ public class SettingsDialog {
 			cbExperimental.setVisibility(View.GONE);
 			cbHttps.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
+			llQuirks.setVisibility(View.GONE);
 		}
 
 		boolean gnotify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);
@@ -469,6 +486,11 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHttps, Boolean.toString(cbHttps.isChecked()));
 					PrivacyManager
 							.setSetting(uid, PrivacyManager.cSettingConfidence, etConfidence.getText().toString());
+					List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().split(","));
+					PrivacyManager.setSetting(0, PrivacyManager.cSettingFreeze,
+							Boolean.toString(listQuirks.contains("freeze")));
+					PrivacyManager.setSetting(0, PrivacyManager.cSettingResolve,
+							Boolean.toString(listQuirks.contains("resolve")));
 				}
 
 				// Notifications

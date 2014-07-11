@@ -208,6 +208,7 @@
     <string name="settings_parameters">Показывать параметры данных об использовании</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Длинное нажатие на имени для выбора</string>
     <string name="help_ondemand">разрешения будут запрошены</string>
     <string name="help_application">Приложение</string>

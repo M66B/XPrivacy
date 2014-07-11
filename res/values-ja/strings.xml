@@ -208,6 +208,7 @@
     <string name="settings_parameters">要求されたデータのパラメーターを表示する</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">アプリ名の長押しでアプリが選択されます</string>
     <string name="help_ondemand">制限するか尋ねます</string>
     <string name="help_application">アプリ</string>

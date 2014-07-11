@@ -208,6 +208,7 @@
     <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">ضغطة طويلة في الإسم لتحديده</string>
     <string name="help_ondemand">سوف يتم السؤال عن القيود</string>
     <string name="help_application">التطبيق</string>

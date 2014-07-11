@@ -208,6 +208,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_parameters">Rodyti duomenų naudojimo parametrus</string>
     <string name="settings_cid">GSM stoties ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>
     <string name="help_ondemand">apribojimai bus paprašyti</string>
     <string name="help_application">Programa</string>

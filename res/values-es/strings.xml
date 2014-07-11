@@ -208,6 +208,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Click largo sobre un nombre selecciona la aplicación</string>
     <string name="help_ondemand">Se le preguntará por las restricciones</string>
     <string name="help_application">Aplicación</string>
