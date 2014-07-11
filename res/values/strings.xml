@@ -68,7 +68,7 @@
     <string name="msg_random_now">Randomize now</string>
     <string name="msg_random_access">Randomize on access</string>
     <string name="msg_random_boot">Randomize on boot</string>
-    <string name="msg_restart">Restart required</string>
+    <string name="msg_restart">Application restart required</string>
     <string name="msg_register">Please register your device</string>
     <string name="msg_email">Please enter your e-mail address:</string>
     <string name="msg_registered">Check your e-mail to activate your device</string>
