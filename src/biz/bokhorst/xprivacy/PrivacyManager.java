@@ -123,6 +123,7 @@ public class PrivacyManager {
 	public final static String cSettingLac = "Lac";
 	public final static String cSettingBlacklist = "Blacklist";
 	public final static String cSettingNameResolve = "NameResolve";
+	public final static String cSettingFreeze = "Freeze";
 
 	// Special value names
 	public final static String cValueRandom = "#Random#";

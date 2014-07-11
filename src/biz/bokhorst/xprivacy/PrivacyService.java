@@ -2097,14 +2097,9 @@ public class PrivacyService {
 				Object am = cam.getMethod("self").invoke(null);
 				boolean locked = Thread.holdsLock(am);
 				if (locked) {
-					boolean experimental = getSettingBool(0, PrivacyManager.cSettingExperimental, false);
-					if (experimental)
+					boolean freeze = getSettingBool(0, PrivacyManager.cSettingFreeze, false);
+					if (freeze)
 						return false;
-					File noamlock = new File("/data/system/xprivacy/noamlock");
-					if (noamlock.exists()) {
-						Util.log(null, Log.WARN, "AM locked, but noamlock exists");
-						return false;
-					}
 				}
 				return locked;
 			} catch (Throwable ex) {
