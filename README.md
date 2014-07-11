@@ -145,9 +145,11 @@ For easy usage, data is restricted by category:
 <a name="calling"></a>
 * Calling
 	* prevent calls from being placed
+	* prevent SIP calls from being placed
 	* prevent SMS messages from being sent
 	* prevent MMS messages from being sent
 	* prevent data messages from being sent
+	* return an empty call log
 <a name="clipboard"></a>
 * Clipboard
 	* prevent paste from clipboard (both manual and from an application)
@@ -159,13 +161,14 @@ For easy usage, data is restricted by category:
 		* content://com.android.contacts/data
 		* content://com.android.contacts/phone_lookup
 		* content://com.android.contacts/profile
+		* SIM card
 <a name="dictionary"></a>
 * Dictionary
 	* return an empty user dictionary
 <a name="email"></a>
 * E-mail
-	* return an empty list of accounts, e-mails, etc (provider)
-	* return an empty list of accounts, e-mails, etc (Gmail)
+	* return an empty list of accounts, e-mails, etc (standard)
+	* return an empty list of accounts, e-mails, etc (G-mail)
 <a name="identification"></a>
 * Identification
 	* return a fake Android ID
@@ -177,7 +180,8 @@ For easy usage, data is restricted by category:
 	* return a fake system property CID (Card Identification Register = SD card serial number)
 	* return file not found for /sys/block/.../cid
 	* return file not found for /sys/class/.../cid
-	* return fake input device descriptor
+	* return a fake input device descriptor
+	* return a fake USB id/name/number
 <a name="internet"></a>
 * Internet
 	* revoke permission to internet access
@@ -190,20 +194,8 @@ For easy usage, data is restricted by category:
 	* return fake supplicant disconnected state
 <a name="IPC"></a>
 * IPC
-	* Direct inter process calls
-		* android.accounts.IAccountManager
-		* android.app.IActivityManager
-		* android.content.IClipboard
-		* android.net.IConnectivityManager
-		* android.content.IContentService
-		* android.location.ILocationManager
-		* com.android.internal.telephony.ITelephonyRegistry
-		* com.android.internal.telephony.ITelephonyRegistryMSim
-		* android.content.pm.IPackageManager
-		* com.android.internal.telephony.IPhoneSubInfo
-		* com.android.internal.telephony.msim.IPhoneSubInfoMSim
-		* android.view.IWindowManager
-		* android.net.wifi.IWifiManager
+	* Binder
+	* Reflection
 <a name="location"></a>
 * Location
 	* return a random or set location (also for Google Play services)
@@ -271,7 +263,6 @@ For easy usage, data is restricted by category:
 		* Serial number (ICCID): fake
 	* return empty [APN](http://en.wikipedia.org/wiki/Access_Point_Name) list
 	* return no currently used APN
-	* return an empty call log
 	* prevent phone state from being sent to an application
 		* Call forwarding indication
 		* Call state changed (ringing, off-hook)
@@ -284,9 +275,10 @@ For easy usage, data is restricted by category:
 * Sensors
 	* return an empty default sensor
 	* return an empty list of sensors
-	* restrict indiviual sensors:
+	* restrict individual sensors:
 		* acceleration
 		* gravity
+		* heartrate
 		* humidity
 		* light
 		* magnetic
@@ -308,6 +300,7 @@ For easy usage, data is restricted by category:
 	* revoke permission to the external storage (SD card)
 	* revoke permission to [MTP](http://en.wikipedia.org/wiki/Media_Transfer_Protocol)
 	* return fake unmounted state
+	* prevent access to provided assets (media, etc)
 <a name="system"></a>
 * System
 	* return an empty list of installed applications
