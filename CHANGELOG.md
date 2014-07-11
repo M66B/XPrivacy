@@ -36,6 +36,7 @@ Changelog
 * Moved on demand restricting details to expert mode
 * Rewrote location restrictions
 * Fixed fake location for Play services locations
+* Optimized *intent* restricting for performance
 * Moved *android.intent.action.NEW_OUTGOING_CALL* and *CallLogProvider* from *Phone* to *Calling* category
 * Added *quirks* settings
 * Updated Dutch translation
