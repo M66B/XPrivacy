@@ -70,7 +70,7 @@ public class XIoBridge extends XHook {
 				int port = (Integer) param.args[2];
 
 				String hostName;
-				boolean resolve = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingResolve, true);
+				boolean resolve = !PrivacyManager.getSettingBool(0, PrivacyManager.cSettingNoResolve, false);
 				if (resolve)
 					try {
 						hostName = address.getHostName();

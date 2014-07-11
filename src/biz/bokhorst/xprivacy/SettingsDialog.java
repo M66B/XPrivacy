@@ -237,12 +237,12 @@ public class SettingsDialog {
 		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true);
 		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
 		boolean freeze = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
-		boolean resolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingResolve, false);
+		boolean noresolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNoResolve, false);
 		List<String> listQuirks = new ArrayList<String>();
 		if (freeze)
 			listQuirks.add("freeze");
-		if (resolve)
-			listQuirks.add("resolve");
+		if (noresolve)
+			listQuirks.add("noresolve");
 		String quirks = TextUtils.join(",", listQuirks.toArray());
 		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
 
@@ -489,8 +489,8 @@ public class SettingsDialog {
 					List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().split(","));
 					PrivacyManager.setSetting(0, PrivacyManager.cSettingFreeze,
 							Boolean.toString(listQuirks.contains("freeze")));
-					PrivacyManager.setSetting(0, PrivacyManager.cSettingResolve,
-							Boolean.toString(listQuirks.contains("resolve")));
+					PrivacyManager.setSetting(0, PrivacyManager.cSettingNoResolve,
+							Boolean.toString(listQuirks.contains("noresolve")));
 				}
 
 				// Notifications
