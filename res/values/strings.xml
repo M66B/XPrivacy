@@ -165,7 +165,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %1$s seconds</string>
-    <string name="title_whitelist">Whitelist &#8216;%1$s&#8217;</string>
+    <string name="title_whitelist">White/blacklist &#8216;%1$s&#8217;</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_dontknow">Don\'t know</string>
