@@ -28,10 +28,12 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.24-1 TEST**
+
 * Updated some texts
 * Added restrictions for [Google Maps API v2](http://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html) ([issue](/../../issues/1807))
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.24 TEST**
 
