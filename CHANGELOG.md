@@ -28,6 +28,8 @@ Changelog
 
 **Next release**
 
+* Fixed crash while deleting white/black list entries
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.25 TEST**

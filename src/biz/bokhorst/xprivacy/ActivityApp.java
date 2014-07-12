@@ -1083,7 +1083,7 @@ public class ActivityApp extends ActivityBase {
 
 		@Override
 		@SuppressLint("InflateParams")
-		public View getView(final int position, View convertView, ViewGroup parent) {
+		public View getView(int position, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
 				convertView = mInflater.inflate(R.layout.whitelistentry, null);
@@ -1093,29 +1093,27 @@ public class ActivityApp extends ActivityBase {
 				holder = (ViewHolder) convertView.getTag();
 
 			// Set data
-			String name = this.getItem(position);
+			final String name = this.getItem(position);
 			holder.ctvName.setText(name);
 			holder.ctvName.setChecked(mMapWhitelists.get(mSelectedType).get(name));
 
 			holder.ctvName.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					// Black/whitelist it
-					boolean isChecked = holder.ctvName.isChecked();
+					// Toggle white/black list entry
 					holder.ctvName.toggle();
-					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType,
-							WhitelistAdapter.this.getItem(position), Boolean.toString(!isChecked));
+					boolean isChecked = holder.ctvName.isChecked();
+					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, Boolean.toString(!isChecked));
 				}
 			});
+
 			holder.imgDelete.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					// delete/disable it
-					String name = WhitelistAdapter.this.getItem(position);
-					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, null);
-					// Remove from list
+					// Delete white/black list entry
 					WhitelistAdapter.this.remove(name);
 					mMapWhitelists.get(mSelectedType).remove(name);
+					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, null);
 				}
 			});
 
