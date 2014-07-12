@@ -223,6 +223,8 @@ public class XBinder extends XHook {
 		}
 	}
 
+	private static final int TRANSACTION_getLastLocation = (android.os.IBinder.FIRST_CALL_TRANSACTION + 4);
+
 	// Entry point from android_util_Binder.cpp's onTransact
 	private void checkIPC(XParam param) throws Throwable {
 		// Allow management transaction
@@ -244,6 +246,28 @@ public class XBinder extends XHook {
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
 		flags &= FLAG_ALL;
 		param.args[3] = flags;
+
+		// Proof of concept
+		if ("android.location.ILocationManager".equals(descriptor) && code == TRANSACTION_getLastLocation) {
+			Util.log(this, Log.WARN, "ILocationManager:getLastLocation uid=" + Binder.getCallingUid());
+			if (getRestricted(Binder.getCallingUid(), PrivacyManager.cLocation, "getLastKnownLocation")) {
+				Util.log(this, Log.WARN, "Faking location uid=" + Binder.getCallingUid());
+
+				Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
+				methodObtain.setAccessible(true);
+				Parcel reply = (Parcel) methodObtain.invoke(null, param.args[2]);
+
+				reply.setDataPosition(0);
+				reply.writeNoException();
+				reply.writeInt(1);
+				android.location.Location _result = new android.location.Location("XPrivacy");
+				_result.setLatitude(105);
+				_result.setLongitude(-10);
+				_result.writeToParcel(reply, android.os.Parcelable.PARCELABLE_WRITE_RETURN_VALUE);
+
+				param.setResult(true);
+			}
+		}
 
 		// Check token
 		if (token != mToken) {
