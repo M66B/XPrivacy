@@ -42,7 +42,6 @@ public class XGoogleMapV1 extends XHook {
 	};
 
 	public static List<XHook> getInstances() {
-		Util.log(null, Log.WARN, "Google Maps V1 uid=" + Binder.getCallingUid());
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods method : Methods.values())
 			listHook.add(new XGoogleMapV1(method, PrivacyManager.cLocation).optional());
