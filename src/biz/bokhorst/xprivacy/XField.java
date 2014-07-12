@@ -108,7 +108,11 @@ public class XField extends XHook {
 		"android.webkit.WebView",
 		"android.net.wifi.WifiManager",
 		"android.view.WindowManagerImpl",
-		"android.view.Window$LocalWindowManager"
+		"android.view.Window$LocalWindowManager",
+
+		"com.google.android.maps.GeoPoint",
+		"com.google.android.gms.maps.model.Marker",
+		"com.google.android.gms.maps.GoogleMap"
 	});
 	// @formatter:on
 
