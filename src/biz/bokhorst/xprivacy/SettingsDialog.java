@@ -238,11 +238,14 @@ public class SettingsDialog {
 		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
 		boolean freeze = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
 		boolean noresolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNoResolve, false);
+		boolean permman = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingPermMan, false);
 		List<String> listQuirks = new ArrayList<String>();
 		if (freeze)
 			listQuirks.add("freeze");
 		if (noresolve)
 			listQuirks.add("noresolve");
+		if (permman)
+			listQuirks.add("permman");
 		String quirks = TextUtils.join(",", listQuirks.toArray());
 		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
 
@@ -486,11 +489,14 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHttps, Boolean.toString(cbHttps.isChecked()));
 					PrivacyManager
 							.setSetting(uid, PrivacyManager.cSettingConfidence, etConfidence.getText().toString());
+
 					List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().split(","));
-					PrivacyManager.setSetting(0, PrivacyManager.cSettingFreeze,
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingFreeze,
 							Boolean.toString(listQuirks.contains("freeze")));
-					PrivacyManager.setSetting(0, PrivacyManager.cSettingNoResolve,
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingNoResolve,
 							Boolean.toString(listQuirks.contains("noresolve")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingPermMan,
+							Boolean.toString(listQuirks.contains("permman")));
 				}
 
 				// Notifications

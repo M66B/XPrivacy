@@ -458,6 +458,11 @@ public class PrivacyService {
 					return mresult;
 				}
 
+				// Check permission management
+				if (hook.isPermissionManagement())
+					if (!getSettingBool(0, PrivacyManager.cSettingPermMan, false))
+						return mresult;
+
 				// Check if restrictions enabled
 				if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
 					return mresult;

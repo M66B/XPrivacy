@@ -151,6 +151,10 @@ public class Hook implements Comparable<Hook> {
 		return mAnnotation;
 	}
 
+	public boolean isPermissionManagement() {
+		return "checkUidPermission".equals(mMethodName);
+	}
+
 	@Override
 	public int hashCode() {
 		return (mRestrictionName.hashCode() ^ mMethodName.hashCode());

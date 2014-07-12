@@ -124,6 +124,7 @@ public class PrivacyManager {
 	public final static String cSettingBlacklist = "Blacklist";
 	public final static String cSettingNoResolve = "NoResolve";
 	public final static String cSettingFreeze = "Freeze";
+	public final static String cSettingPermMan = "PermMan";
 
 	// Special value names
 	public final static String cValueRandom = "#Random#";
