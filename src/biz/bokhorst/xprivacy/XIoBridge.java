@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.os.Binder;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
@@ -70,7 +71,8 @@ public class XIoBridge extends XHook {
 				int port = (Integer) param.args[2];
 
 				String hostName;
-				boolean resolve = !PrivacyManager.getSettingBool(0, PrivacyManager.cSettingNoResolve, false);
+				boolean resolve = !PrivacyManager.getSettingBool(Binder.getCallingUid(),
+						PrivacyManager.cSettingNoResolve, false);
 				if (resolve)
 					try {
 						hostName = address.getHostName();
