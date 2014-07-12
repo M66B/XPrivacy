@@ -30,6 +30,8 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+* Added restrictions for [Google Maps API v1](https://developers.google.com/maps/documentation/android/v1/reference/index) ([issue](/../../issues/1807))
+
 **Version 2.1.24-2 TEST**
 
 * Added IPC restriction *ICameraService*

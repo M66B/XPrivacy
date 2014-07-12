@@ -8,15 +8,15 @@ import android.location.Location;
 import android.os.Binder;
 import android.util.Log;
 
-public class XGoogleMap extends XHook {
+public class XGoogleMapV2 extends XHook {
 	private Methods mMethod;
 
-	private XGoogleMap(Methods method, String restrictionName) {
+	private XGoogleMapV2(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), String.format("MapV2.%s", method.name()));
 		mMethod = method;
 	}
 
-	private XGoogleMap(Methods method, String restrictionName, int sdk) {
+	private XGoogleMapV2(Methods method, String restrictionName, int sdk) {
 		super(restrictionName, method.name(), String.format("MapV2.%s", method.name()), sdk);
 		mMethod = method;
 	}
@@ -50,7 +50,7 @@ public class XGoogleMap extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods method : Methods.values())
-			listHook.add(new XGoogleMap(method, PrivacyManager.cLocation).optional());
+			listHook.add(new XGoogleMapV2(method, PrivacyManager.cLocation).optional());
 		return listHook;
 	}
 
