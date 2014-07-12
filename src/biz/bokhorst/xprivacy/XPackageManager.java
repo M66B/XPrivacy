@@ -130,7 +130,8 @@ public class XPackageManager extends XHook {
 				Method mGetPackageUid = param.thisObject.getClass().getDeclaredMethod("getPackageUid", String.class,
 						int.class);
 				mGetPackageUid.setAccessible(true);
-				int uid = (Integer) mGetPackageUid.invoke(param.thisObject, pkgName, 0);
+				int userId = Util.getUserId(Binder.getCallingUid());
+				int uid = (Integer) mGetPackageUid.invoke(param.thisObject, pkgName, userId);
 
 				if (resultOfCheck == PackageManager.PERMISSION_GRANTED) {
 					permName = permName.replace("android.permission.", "");
