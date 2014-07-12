@@ -1034,11 +1034,14 @@ and sometimes for restrictions triggered by the hardware buttons, for example th
 This is to prevent the on demand dialog from freezing (locking up), caused by an internal Android lock.
 This freeze cannot be fixed by XPrivacy.
 
-If you want to have the on demand dialog always shown, then you can create this file:
+If you want to have the on demand dialog always shown, then you can add the *quirk* "freeze".
 
-```
-/data/system/xprivacy/noamlock
-```
+<a name="FAQ65"></a>
+**(65) My data is still visible!**
+
+The data might be cached by the application, so you might have to wait a while until the cache is updated.
+
+The Google Maps view can look like a part of an application, but is in fact not.
 
 Support
 -------
