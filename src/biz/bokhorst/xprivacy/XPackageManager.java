@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class XPackageManager extends XHook {
 	// frameworks/base/core/java/android/app/ApplicationPackageManager.java
 	// http://developer.android.com/reference/android/content/pm/PackageManager.html
 
+	// public int checkPermission(String permName, String pkgName)
 	// public int checkUidPermission(String permName, int uid)
 
 	// @formatter:on
@@ -59,7 +61,7 @@ public class XPackageManager extends XHook {
 		queryIntentActivities, queryIntentActivityOptions,
 		queryIntentContentProviders, queryIntentServices,
 
-		checkUidPermission
+		checkPermission, checkUidPermission
 	};
 	// @formatter:on
 
@@ -70,7 +72,7 @@ public class XPackageManager extends XHook {
 				className = cClassName;
 
 			for (Methods am : Methods.values())
-				if (am == Methods.checkUidPermission)
+				if (am == Methods.checkPermission || am == Methods.checkUidPermission)
 					listHook.add(new XPackageManager(am, PrivacyManager.cSystem,
 							"com.android.server.pm.PackageManagerService"));
 				else
@@ -117,6 +119,25 @@ public class XPackageManager extends XHook {
 			if (param.args.length > 0 && param.args[0] instanceof String)
 				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0]))
 					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+
+		} else if (mMethod == Methods.checkPermission) {
+			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof String) {
+				String permName = (String) param.args[0];
+				String pkgName = (String) param.args[1];
+				int resultOfCheck = (Integer) param.getResult();
+
+				// public int getPackageUid(String packageName, int userId)
+				Method mGetPackageUid = param.thisObject.getClass().getDeclaredMethod("getPackageUid", String.class,
+						int.class);
+				mGetPackageUid.setAccessible(true);
+				int uid = (Integer) mGetPackageUid.invoke(param.thisObject, pkgName, 0);
+
+				if (resultOfCheck == PackageManager.PERMISSION_GRANTED) {
+					permName = permName.replace("android.permission.", "");
+					if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
+						param.setResult(PackageManager.PERMISSION_DENIED);
+				}
+			}
 
 		} else if (mMethod == Methods.checkUidPermission) {
 			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof Integer) {

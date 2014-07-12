@@ -152,7 +152,7 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public boolean isPermissionManagement() {
-		return ("checkUidPermission".equals(mMethodName) || "enforce".equals(mMethodName));
+		return ("checkPermission".equals(mMethodName) || "checkUidPermission".equals(mMethodName));
 	}
 
 	@Override

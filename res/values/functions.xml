@@ -287,7 +287,7 @@
     <string name="system_android_intent_action_EXTERNAL_APPLICATIONS_UNAVAILABLE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE">Google documentation</a>]]></string>
     <string name="system_ApplicationsProvider" translatable="false"><![CDATA[Will restrict access to a list of applications installed on the phone to provide search suggestions]]></string>
     <string name="system_getPackagesForUid" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPackagesForUid(int)">Google documentation</a>]]></string>
-    <string name="system_enforce" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
+    <string name="system_checkPermission" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
     <string name="system_checkUidPermission" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
 
     <!-- view -->
