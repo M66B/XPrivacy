@@ -218,7 +218,7 @@ public class XBinder extends XHook {
 				int level = (found ? Log.WARN : Log.ERROR);
 				Util.log(this, level, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
 						+ " uid=" + Binder.getCallingUid());
-				Util.logStack(this, level);
+				Util.logStack(this, level, true);
 			}
 		}
 	}

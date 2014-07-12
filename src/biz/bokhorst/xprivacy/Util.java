@@ -121,17 +121,22 @@ public class Util {
 	}
 
 	public static void logStack(XHook hook, int priority) {
+		logStack(hook, priority, false);
+	}
+
+	public static void logStack(XHook hook, int priority, boolean cl) {
 		StringBuilder trace = new StringBuilder();
 		ClassLoader loader = Thread.currentThread().getContextClassLoader();
 		for (StackTraceElement ste : Thread.currentThread().getStackTrace()) {
 			trace.append(ste.toString());
-			try {
-				Class<?> clazz = Class.forName(ste.getClassName(), false, loader);
-				trace.append(" [");
-				trace.append(clazz.getClassLoader().toString());
-				trace.append("]");
-			} catch (ClassNotFoundException ignored) {
-			}
+			if (cl)
+				try {
+					Class<?> clazz = Class.forName(ste.getClassName(), false, loader);
+					trace.append(" [");
+					trace.append(clazz.getClassLoader().toString());
+					trace.append("]");
+				} catch (ClassNotFoundException ignored) {
+				}
 			trace.append("\n");
 		}
 		log(hook, priority, trace.toString());
