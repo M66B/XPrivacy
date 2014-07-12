@@ -58,7 +58,8 @@ public class XBinder extends XHook {
 		"bluetooth_manager",
 		"input",
 		"sensorservice",
-		"usb"
+		"usb",
+		"media.camera"
 	});
 	// @formatter:on
 
@@ -97,7 +98,8 @@ public class XBinder extends XHook {
 		"android.bluetooth.IBluetoothManager",
 		"android.hardware.input.IInputManager",
 		"android.gui.SensorServer",
-		"android.hardware.usb.IUsbManager"
+		"android.hardware.usb.IUsbManager",
+		"android.hardware.ICameraService"
 	});
 	// @formatter:on
 
