@@ -119,7 +119,7 @@ public class XPackageManager extends XHook {
 					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
 
 		} else if (mMethod == Methods.checkUidPermission) {
-			if (param.args.length == 2 && param.args[0] instanceof String && param.args[1] instanceof Integer) {
+			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof Integer) {
 				String permName = (String) param.args[0];
 				int uid = (Integer) param.args[1];
 				int resultOfCheck = (Integer) param.getResult();
