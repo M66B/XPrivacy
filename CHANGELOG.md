@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Fixed crash while deleting white/black list entries
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
