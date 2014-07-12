@@ -238,6 +238,8 @@ public class XBinder extends XHook {
 		// Get interface name
 		IBinder binder = (IBinder) param.thisObject;
 		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+		if (!cServiceDescriptor.contains(descriptor))
+			return;
 
 		// Get token
 		int flags = (Integer) param.args[3];
@@ -245,74 +247,74 @@ public class XBinder extends XHook {
 		flags &= FLAG_ALL;
 		param.args[3] = flags;
 
+		boolean binderall = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingBinderAll, false);
+
 		// Check token
-		if (token != mToken) {
-			if (cServiceDescriptor.contains(descriptor)) {
-				String[] name = descriptor.split("\\.");
-				String methodName = name[name.length - 1];
+		if (token != mToken || binderall) {
+			String[] name = descriptor.split("\\.");
+			String methodName = name[name.length - 1];
 
-				// Get transaction code name
-				String codeName;
-				synchronized (mMapCodeName) {
-					if (!mMapCodeName.containsKey(descriptor)) {
-						SparseArray<String> sa = new SparseArray<String>();
-						mMapCodeName.put(descriptor, sa);
-						try {
-							Class<?> superClass;
-							if ("android.app.IActivityManager".equals(descriptor))
-								superClass = Class.forName("android.app.IActivityManager");
-							else
-								superClass = param.thisObject.getClass().getSuperclass();
-							if (superClass != null)
-								for (Field field : superClass.getDeclaredFields())
-									try {
-										if (field.getName().startsWith("TRANSACTION_")
-												|| field.getName().endsWith("_TRANSACTION")) {
-											Integer txCode = (Integer) field.get(param.thisObject);
-											String txName = field.getName().replace("TRANSACTION_", "")
-													.replace("_TRANSACTION", "");
-											sa.put(txCode, txName);
-										}
-									} catch (Throwable ignore) {
-									}
-						} catch (Throwable ignored) {
-						}
-					}
-
-					codeName = mMapCodeName.get(descriptor).get(code);
-				}
-				if (codeName == null) {
-					codeName = Integer.toString(code);
-					Util.log(this, Log.INFO,
-							"Unknown transaction=" + descriptor + ":" + code + " uid=" + Binder.getCallingUid());
-					Util.logStack(this, Log.INFO);
-				}
-
-				Util.log(this, Log.INFO, "can restrict transaction=" + methodName + ":" + codeName + " flags=" + flags
-						+ " uid=" + uid + " my=" + Process.myUid());
-
-				if (isRestrictedExtra(uid, PrivacyManager.cIPC, "Binder", methodName + ":" + codeName)) {
-					// Get reply parcel
-					Parcel reply = null;
+			// Get transaction code name
+			String codeName;
+			synchronized (mMapCodeName) {
+				if (!mMapCodeName.containsKey(descriptor)) {
+					SparseArray<String> sa = new SparseArray<String>();
+					mMapCodeName.put(descriptor, sa);
 					try {
-						// static protected final Parcel obtain(int obj)
-						// frameworks/base/core/java/android/os/Parcel.java
-						Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
-						methodObtain.setAccessible(true);
-						reply = (Parcel) methodObtain.invoke(null, param.args[2]);
-					} catch (NoSuchMethodException ex) {
-						Util.bug(this, ex);
+						Class<?> superClass;
+						if ("android.app.IActivityManager".equals(descriptor))
+							superClass = Class.forName("android.app.IActivityManager");
+						else
+							superClass = param.thisObject.getClass().getSuperclass();
+						if (superClass != null)
+							for (Field field : superClass.getDeclaredFields())
+								try {
+									if (field.getName().startsWith("TRANSACTION_")
+											|| field.getName().endsWith("_TRANSACTION")) {
+										Integer txCode = (Integer) field.get(param.thisObject);
+										String txName = field.getName().replace("TRANSACTION_", "")
+												.replace("_TRANSACTION", "");
+										sa.put(txCode, txName);
+									}
+								} catch (Throwable ignore) {
+								}
+					} catch (Throwable ignored) {
 					}
-
-					// Block IPC
-					if (reply == null)
-						Util.log(this, Log.ERROR, "reply is null uid=" + uid);
-					else {
-						reply.setDataPosition(0);
-						reply.writeException(new SecurityException("XPrivacy"));
-					}
-					param.setResult(true);
 				}
+
+				codeName = mMapCodeName.get(descriptor).get(code);
+			}
+			if (codeName == null) {
+				codeName = Integer.toString(code);
+				Util.log(this, Log.INFO,
+						"Unknown transaction=" + descriptor + ":" + code + " uid=" + Binder.getCallingUid());
+				Util.logStack(this, Log.INFO);
+			}
+
+			Util.log(this, Log.INFO, "can restrict transaction=" + methodName + ":" + codeName + " flags=" + flags
+					+ " uid=" + uid + " my=" + Process.myUid());
+
+			if (isRestrictedExtra(uid, PrivacyManager.cIPC, "Binder", methodName + ":" + codeName)) {
+				// Get reply parcel
+				Parcel reply = null;
+				try {
+					// static protected final Parcel obtain(int obj)
+					// frameworks/base/core/java/android/os/Parcel.java
+					Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
+					methodObtain.setAccessible(true);
+					reply = (Parcel) methodObtain.invoke(null, param.args[2]);
+				} catch (NoSuchMethodException ex) {
+					Util.bug(this, ex);
+				}
+
+				// Block IPC
+				if (reply == null)
+					Util.log(this, Log.ERROR, "reply is null uid=" + uid);
+				else {
+					reply.setDataPosition(0);
+					reply.writeException(new SecurityException("XPrivacy"));
+				}
+				param.setResult(true);
 			}
 		}
 	}
