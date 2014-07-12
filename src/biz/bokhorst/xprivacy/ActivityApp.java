@@ -1103,7 +1103,7 @@ public class ActivityApp extends ActivityBase {
 					// Toggle white/black list entry
 					holder.ctvName.toggle();
 					boolean isChecked = holder.ctvName.isChecked();
-					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, Boolean.toString(!isChecked));
+					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, Boolean.toString(isChecked));
 				}
 			});
 
