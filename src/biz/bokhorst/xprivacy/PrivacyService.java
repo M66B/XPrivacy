@@ -459,7 +459,7 @@ public class PrivacyService {
 				}
 
 				// Check permission management
-				if (hook.isPermissionManagement())
+				if (hook != null && hook.isPermissionManagement())
 					if (!getSettingBool(0, PrivacyManager.cSettingPermMan, false))
 						return mresult;
 
