@@ -93,6 +93,10 @@ public class XGoogleMap extends XHook {
 					fLon.set(param.getResult(), fakeLocation.getLongitude());
 				}
 
+		} else if (mMethod == Methods.setLocationSource || mMethod == Methods.setOnMapClickListener
+				|| mMethod == Methods.setOnMapLongClickListener || mMethod == Methods.setOnMyLocationChangeListener) {
+			// Do nothing
+
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
