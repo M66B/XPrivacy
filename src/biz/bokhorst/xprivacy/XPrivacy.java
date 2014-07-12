@@ -137,7 +137,15 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		});
 
-		// Google Map
+		// Google Map V1
+		MS.hookClassLoad("com.google.android.maps.GeoPoint", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XGoogleMapV1.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
+
+		// Google Map V2
 		MS.hookClassLoad("com.google.android.gms.maps.GoogleMap", new MS.ClassLoadHook() {
 			@Override
 			public void classLoaded(Class<?> clazz) {
