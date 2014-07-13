@@ -28,10 +28,13 @@ Changelog
 
 **Next release**
 
-* Fixed crash while deleting white/black list entries
-* Updated Slovak translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.1.26 BETA**
+
+* Fixed crash while deleting white/black list entries
+* Fixed all problems reported through the support info
+* Updated Slovak translation
 
 **Version 2.1.25 TEST**
 
