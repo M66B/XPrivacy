@@ -351,14 +351,6 @@ and is reported to work with most Android variants, including stock ROMs.
 
 **XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231))
 
-XPrivacy seems to be incompatible with [OLYMPUS Image Share](https://play.google.com/store/apps/details?id=jp.olympusimaging.oishare)
-for unknown reasons ([issue](https://github.com/M66B/XPrivacy/issues/1607)).
-
-You probably need to use the *quirk* "noresolve" for [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
-([issue](https://github.com/M66B/XPrivacy/issues/1751)).
-
-XPrivacy seems to cause camera lag on a Samsung Galaxy Note II ([issue](https://github.com/M66B/XPrivacy/issues/715))
-
 Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
 
 Installation
