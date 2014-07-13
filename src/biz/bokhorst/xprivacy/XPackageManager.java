@@ -122,6 +122,9 @@ public class XPackageManager extends XHook {
 					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
 
 		} else if (mMethod == Methods.checkPermission) {
+			if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
+				return;
+
 			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof String) {
 				String permName = (String) param.args[0];
 				String pkgName = (String) param.args[1];
@@ -153,6 +156,9 @@ public class XPackageManager extends XHook {
 			}
 
 		} else if (mMethod == Methods.checkUidPermission) {
+			if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
+				return;
+
 			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof Integer) {
 				String permName = (String) param.args[0];
 				int uid = (Integer) param.args[1];
