@@ -239,8 +239,7 @@ public class XBinder extends XHook {
 		IBinder binder = (IBinder) param.thisObject;
 		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 		if (!cServiceDescriptor.contains(descriptor))
-			if (!PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingBinderAll + ":" + descriptor, false))
-				return;
+			return;
 
 		// Get token
 		int flags = (Integer) param.args[3];
@@ -248,10 +247,8 @@ public class XBinder extends XHook {
 		flags &= FLAG_ALL;
 		param.args[3] = flags;
 
-		boolean binderall = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingBinderAll, false);
-
 		// Check token
-		if (token != mToken || binderall) {
+		if (token != mToken) {
 			String[] name = descriptor.split("\\.");
 			String methodName = name[name.length - 1];
 
