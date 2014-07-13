@@ -1442,11 +1442,6 @@ public class ActivityApp extends ActivityBase {
 				List<Hook> listMethod = new ArrayList<Hook>();
 				String restrictionName = mListRestriction.get(groupPosition);
 				for (Hook hook : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
-					// Check permission management
-					if (hook.isPermissionManagement())
-						if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
-							continue;
-
 					// Filter
 					boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, hook.getName()) > 0);
 					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, hook);
