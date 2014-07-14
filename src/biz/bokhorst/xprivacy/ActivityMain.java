@@ -20,7 +20,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -775,9 +774,19 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Show version
 		try {
-			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			int userId = Util.getUserId(Process.myUid());
+			Version currentVersion = new Version(Util.getSelfVersionName(this));
+			Version storedVersion = new Version(
+					PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0"));
+			boolean migrated = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingMigrated, false);
+			String versionName = currentVersion.toString();
+			if (currentVersion.compareTo(storedVersion) != 0)
+				versionName += "/" + storedVersion.toString();
+			if (!migrated)
+				versionName += "!";
+			int versionCode = Util.getSelfVersionCode(this);
 			TextView tvVersion = (TextView) dlgAbout.findViewById(R.id.tvVersion);
-			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
+			tvVersion.setText(String.format(getString(R.string.app_version), versionName, versionCode));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}

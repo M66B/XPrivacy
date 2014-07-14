@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Updated Japanese translation
+* Showing stored version in *About* when different from current version
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
