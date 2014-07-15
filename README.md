@@ -400,6 +400,7 @@ Upgrading
 * Download the new version
 * Install the new version over the previous version
 * Start the new version once (else Android will not send the boot completed event)
+* Wait until the Xposed installer recognizes the update (else XPrivacy might not be enabled)
 * Reboot your device
 * Wait until the XPrivacy update service has been completed (showing 100%)
 
