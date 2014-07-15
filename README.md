@@ -1059,7 +1059,7 @@ It is already enough work to support the official versions from the last stable 
 
 ### Bugs
 
-If you encounter a bug please [create an issue](https://github.com/M66B/XPrivacy/issues).
+If you encounter a bug, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
 Please describe the exact steps to reproduce the issue, including the wrong and expected result,
 and include information about your device type, Android and XPrivacy version.
@@ -1091,7 +1091,9 @@ Please [read this](http://forum.xda-developers.com/showpost.php?p=52644313&postc
 
 ### Questions
 
-If you have any question, you can leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
+If you have any question, please leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
+More people are following the support forum than the GitHub issue tracker, which increases you chance for a helpful answer.
+Moreover, the answers given might be beneficial to more people than you alone.
 
 **Please do not ask questions using GitHub issues!**
 
