@@ -182,6 +182,7 @@
                 android:id="@+id/tvInfoCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:tag="nodetails"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textStyle="bold" />
 

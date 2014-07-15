@@ -1652,9 +1652,12 @@ public class PrivacyService {
 
 			// Expert mode
 			cbExpert.setChecked(expert);
-			if (expert)
+			if (expert) {
 				for (View child : Util.getViewsByTag((ViewGroup) view, "details"))
 					child.setVisibility(View.VISIBLE);
+				for (View child : Util.getViewsByTag((ViewGroup) view, "nodetails"))
+					child.setVisibility(View.GONE);
+			}
 			if (expert || whitelistDangerous)
 				llWhiteList.setVisibility(View.VISIBLE);
 
@@ -1702,6 +1705,8 @@ public class PrivacyService {
 
 					for (View child : Util.getViewsByTag((ViewGroup) view, "details"))
 						child.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+					for (View child : Util.getViewsByTag((ViewGroup) view, "nodetails"))
+						child.setVisibility(isChecked ? View.GONE : View.VISIBLE);
 
 					if (!whitelistDangerous)
 						llWhiteList.setVisibility(isChecked ? View.VISIBLE : View.GONE);
