@@ -1092,7 +1092,7 @@ Please [read this](http://forum.xda-developers.com/showpost.php?p=52644313&postc
 ### Questions
 
 If you have any question, please leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
-More people are following the support forum than the GitHub issue tracker, which increases you chance for a helpful answer.
+More people are following the support forum than the GitHub issue tracker, which increases your chance to get a helpful answer.
 Moreover, the answers given might be beneficial to more people than you alone.
 
 **Please do not ask questions using GitHub issues!**
