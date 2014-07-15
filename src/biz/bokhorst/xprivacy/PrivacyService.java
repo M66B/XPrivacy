@@ -22,7 +22,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -45,17 +44,11 @@ import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.StrictMode.ThreadPolicy;
-import android.text.Html;
-import android.text.Layout;
-import android.text.Spannable;
 import android.text.TextUtils;
-import android.text.method.LinkMovementMethod;
-import android.text.style.URLSpan;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -1351,30 +1344,6 @@ public class PrivacyService {
 			public boolean reset = false;
 		}
 
-		final class Touchy extends LinkMovementMethod {
-			// @formatter:off
-			// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/android/text/method/LinkMovementMethod.java#LinkMovementMethod.onTouchEvent%28android.widget.TextView%2Candroid.text.Spannable%2Candroid.view.MotionEvent%29
-			// @formatter:on
-			public boolean onTouchEvent(TextView widget, Spannable buffer, android.view.MotionEvent event) {
-				if (!isAMLocked() && event.getAction() == MotionEvent.ACTION_UP) {
-					int x = (int) event.getX() - widget.getTotalPaddingLeft() + widget.getScrollX();
-					int y = (int) event.getY() - widget.getTotalPaddingTop() + widget.getScrollY();
-
-					Layout layout = widget.getLayout();
-					int line = layout.getLineForVertical(y);
-					int off = layout.getOffsetForHorizontal(line, x);
-
-					URLSpan[] link = buffer.getSpans(off, off, URLSpan.class);
-					if (link.length != 0) {
-						Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(link[0].getURL()));
-						intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						getContext().startActivity(intent);
-					}
-				}
-				return true;
-			}
-		}
-
 		// Helper methods
 
 		private OnDemandResult onDemandDialog(final Hook hook, final PRestriction restriction, final PRestriction result) {
@@ -1635,7 +1604,6 @@ public class PrivacyService {
 			TableRow rowParameters = (TableRow) view.findViewById(R.id.rowParameters);
 			TextView tvDefault = (TextView) view.findViewById(R.id.tvDefault);
 			TextView tvInfoCategory = (TextView) view.findViewById(R.id.tvInfoCategory);
-			TextView tvInfoMethod = (TextView) view.findViewById(R.id.tvInfoMethod);
 			final CheckBox cbExpert = (CheckBox) view.findViewById(R.id.cbExpert);
 			final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 			final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
@@ -1681,16 +1649,6 @@ public class PrivacyService {
 			// Help
 			int helpId = resources.getIdentifier("restrict_help_" + restriction.restrictionName, "string", self);
 			tvInfoCategory.setText(resources.getString(helpId));
-			if (hook != null) {
-				Meta.annotate(resources);
-				String info = hook.getAnnotation();
-				if (info != null) {
-					tvInfoMethod.setText(Html.fromHtml(info));
-					tvInfoMethod.setMovementMethod(new Touchy());
-					if (expert)
-						tvInfoMethod.setVisibility(View.VISIBLE);
-				}
-			}
 
 			// Expert mode
 			cbExpert.setChecked(expert);
