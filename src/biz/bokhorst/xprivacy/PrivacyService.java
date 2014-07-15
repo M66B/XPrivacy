@@ -230,9 +230,6 @@ public class PrivacyService {
 
 		private AtomicLong mCount = new AtomicLong(0);
 		private AtomicLong mRestricted = new AtomicLong(0);
-		private boolean mSelectExpert = false;
-		private boolean mSelectCategory = true;
-		private boolean mSelectOnce = false;
 
 		private Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
 		private Map<CRestriction, CRestriction> mAskedOnceCache = new HashMap<CRestriction, CRestriction>();
@@ -1621,7 +1618,7 @@ public class PrivacyService {
 		@SuppressLint("InflateParams")
 		private View getOnDemandView(final PRestriction restriction, final Hook hook, ApplicationInfoEx appInfo,
 				final PRestriction result, Context context, final OnDemandDialogHolder holder,
-				final OnDemandResult oResult) throws NameNotFoundException {
+				final OnDemandResult oResult) throws NameNotFoundException, RemoteException {
 			// Get resources
 			String self = PrivacyService.class.getPackage().getName();
 			Resources resources = context.getPackageManager().getResourcesForApplication(self);
@@ -1652,7 +1649,11 @@ public class PrivacyService {
 			Button btnDontKnow = (Button) view.findViewById(R.id.btnDontKnow);
 			Button btnAllow = (Button) view.findViewById(R.id.btnAllow);
 
-			boolean expert = (mSelectExpert || !mSelectCategory || mSelectOnce);
+			final int userId = Util.getUserId(Process.myUid());
+			boolean expert = getSettingBool(userId, PrivacyManager.cSettingODExpert, false);
+			boolean category = getSettingBool(userId, PrivacyManager.cSettingODCategory, true);
+			boolean once = getSettingBool(userId, PrivacyManager.cSettingODOnce, false);
+			expert = expert || !category || once;
 			final boolean whitelistDangerous = (hook != null && hook.isDangerous() && hook.whitelist() != null);
 
 			// Set values
@@ -1700,10 +1701,10 @@ public class PrivacyService {
 				llWhiteList.setVisibility(View.VISIBLE);
 
 			// Category
-			cbCategory.setChecked(mSelectCategory);
+			cbCategory.setChecked(category);
 
 			// Once
-			cbOnce.setChecked(mSelectOnce);
+			cbOnce.setChecked(once);
 			cbOnce.setText(String.format(resources.getString(R.string.title_once),
 					PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
 
@@ -1729,10 +1730,10 @@ public class PrivacyService {
 			cbExpert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-					mSelectExpert = isChecked;
+					setSettingBool(userId, "", PrivacyManager.cSettingODExpert, isChecked);
 					if (!isChecked) {
-						mSelectCategory = true;
-						mSelectOnce = false;
+						setSettingBool(userId, "", PrivacyManager.cSettingODCategory, true);
+						setSettingBool(userId, "", PrivacyManager.cSettingODOnce, false);
 						cbCategory.setChecked(true);
 						cbOnce.setChecked(false);
 						cbWhitelist.setChecked(false);
@@ -1833,8 +1834,8 @@ public class PrivacyService {
 					result.asked = true;
 					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()
 							&& !cbWhitelistExtra3.isChecked()) {
-						mSelectCategory = cbCategory.isChecked();
-						mSelectOnce = cbOnce.isChecked();
+						setSettingBool(userId, "", PrivacyManager.cSettingODCategory, cbCategory.isChecked());
+						setSettingBool(userId, "", PrivacyManager.cSettingODOnce, cbOnce.isChecked());
 					}
 					if (cbWhitelist.isChecked())
 						onDemandWhitelist(restriction, null, result, hook);
@@ -1871,8 +1872,8 @@ public class PrivacyService {
 					result.asked = true;
 					if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()
 							&& !cbWhitelistExtra3.isChecked()) {
-						mSelectCategory = cbCategory.isChecked();
-						mSelectOnce = cbOnce.isChecked();
+						setSettingBool(userId, "", PrivacyManager.cSettingODCategory, cbCategory.isChecked());
+						setSettingBool(userId, "", PrivacyManager.cSettingODOnce, cbOnce.isChecked());
 					}
 					if (cbWhitelist.isChecked())
 						onDemandWhitelist(restriction, null, result, hook);
@@ -2072,6 +2073,14 @@ public class PrivacyService {
 		private boolean getSettingBool(int uid, String type, String name, boolean defaultValue) throws RemoteException {
 			String value = getSetting(new PSetting(uid, type, name, Boolean.toString(defaultValue))).value;
 			return Boolean.parseBoolean(value);
+		}
+
+		private void setSettingBool(int uid, String type, String name, boolean value) {
+			try {
+				setSettingInternal(new PSetting(uid, type, name, Boolean.toString(value)));
+			} catch (RemoteException ex) {
+				Util.bug(null, ex);
+			}
 		}
 
 		private void enforcePermission(int uid) {

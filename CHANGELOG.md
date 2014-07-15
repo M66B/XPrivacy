@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Updated Japanese translation
+* Remember on demand dialog settings across reboots ([issue](/../../issues/1812))
 * Showing stored version in *About* when different from current version
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
