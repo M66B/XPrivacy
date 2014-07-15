@@ -28,6 +28,7 @@ Changelog
 
 **Next release**
 
+* Updated Italian translation
 * Updated Japanese translation
 * Remember on demand dialog settings across reboots ([issue](/../../issues/1812))
 * Showing stored version in *About* when different from current version
