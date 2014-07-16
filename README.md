@@ -1051,14 +1051,14 @@ am start -a biz.bokhorst.xprivacy.action.APPLICATION --ei Uid 10123 -e Restricti
 am start -a biz.bokhorst.xprivacy.action.APPLICATION --ei Uid 10123 -e RestrictionName location -e MethodName GMS.addGeofences
 ```
 
+Action 1 means clear; action 2 means settings.
+
 * Usage data
 
 ```
 am start -a biz.bokhorst.xprivacy.action.USAGE
 am start -a biz.bokhorst.xprivacy.action.USAGE --ei Uid 10123
 ```
-
-Action 1 means clear; action 2 means settings.
 
 * Export, import, submit, fetch, toggle
 
