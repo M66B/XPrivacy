@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedBridge;
+
 import android.content.Context;
 import android.os.Binder;
 import android.os.IBinder;
@@ -19,6 +22,7 @@ import android.util.SparseArray;
 public class XBinder extends XHook {
 	private Methods mMethod;
 	private static long mToken = 0;
+	private static List<String> listInterfaceHooked = new ArrayList<String>();
 	private static Map<String, Boolean> mMapClassSystem = new HashMap<String, Boolean>();
 	private static Map<String, SparseArray<String>> mMapCodeName = new HashMap<String, SparseArray<String>>();
 
@@ -145,13 +149,53 @@ public class XBinder extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.execTransact)
+		if (mMethod == Methods.execTransact) {
 			checkIPC(param);
+			// execTransact calls the overridden onTransact
 
-		else if (mMethod == Methods.transact)
+			// Dynamically hook interface methods
+			String descriptor = ((IBinder) param.thisObject).getInterfaceDescriptor();
+			if (cServiceDescriptor.contains(descriptor))
+				synchronized (listInterfaceHooked) {
+					if (listInterfaceHooked.contains(descriptor))
+						return;
+					listInterfaceHooked.add(descriptor);
+
+					final int uid = Binder.getCallingUid();
+					Class<?> stub = param.thisObject.getClass().getSuperclass();
+					if (stub != null && stub.getInterfaces().length > 0) {
+						for (Method method : param.thisObject.getClass().getDeclaredMethods()) {
+							boolean found = false;
+							for (Method i : stub.getInterfaces()[0].getDeclaredMethods())
+								if (i.getName().equals(method.getName())) {
+									found = true;
+									break;
+								}
+
+							if (found) {
+								Util.log(this, Log.WARN,
+										"Hooking service=" + descriptor + " method=" + method.getName() + " uid=" + uid);
+								XposedBridge.hookMethod(method, new XC_MethodHook() {
+									@Override
+									protected void beforeHookedMethod(MethodHookParam mparam) throws Throwable {
+									}
+
+									@Override
+									protected void afterHookedMethod(MethodHookParam mparam) throws Throwable {
+									}
+								});
+							}
+						}
+					} else {
+						Util.log(this, Log.WARN, "No stub or interfaces service=" + descriptor + " uid=" + uid);
+						Util.logStack(this, Log.WARN);
+					}
+				}
+
+		} else if (mMethod == Methods.transact) {
 			markIPC(param);
 
-		else
+		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
