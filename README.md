@@ -736,7 +736,8 @@ The [calendar](http://developer.android.com/guide/topics/providers/calendar-prov
 and [contacts](http://developer.android.com/guide/topics/providers/contacts-provider.html) API are quite complicated.
 There is also a better way to accomplish this.
 You can use different users on your device with different accounts.
-To enable multiple users for a phone you can follow [these instructions](http://www.pocketables.com/2013/03/how-to-enable-multiple-user-mode-on-cyanogenmod-10-1-and-some-other-android-4-2-2-roms.html).
+To enable multiple users for a phone you can follow [these instructions](http://www.pocketables.com/2013/03/how-to-enable-multiple-user-mode-on-cyanogenmod-10-1-and-some-other-android-4-2-2-roms.html)
+or install [this Xposed mod](http://forum.xda-developers.com/xposed/modules/xposed-multiple-users-phone-t2676516).
 Note that the user selector on the lockscreen works in landscape only.
 
 <a name="FAQ26"></a>
@@ -1088,6 +1089,12 @@ This probably means your IP address has been black listed.
 Mostly this is because of spamming or other kind of abuses.
 TOR exit nodes and VPS servers are often black listed.
 Maybe your PC is infected and sending spam without your knowledge.
+
+You can check if your IP address is black listed by checking if it is mentioned on one of these lists:
+
+* [Spamhaus DROP List](http://www.spamhaus.org/drop/drop.lasso)
+* [Spamhaus EDROP List](http://www.spamhaus.org/drop/edrop.lasso)
+* [Stop Forum Spam](http://www.stopforumspam.com/search) (30 days or younger)
 
 Support
 -------
