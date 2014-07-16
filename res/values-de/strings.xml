@@ -131,8 +131,8 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="whitelist_filename">Dateinamen</string>
     <string name="whitelist_command">Shell Kommandos</string>
     <string name="whitelist_url">URLs</string>
-    <string name="whitelist_transaction">Transactions</string>
-    <string name="whitelist_permission">Permissions</string>
+    <string name="whitelist_transaction">Transaktionen</string>
+    <string name="whitelist_permission">Berechtigungen</string>
     <string name="title_restrict">Zum Beschränken markieren:</string>
     <string name="title_check_whitelist">Zum Freigeben markieren</string>
     <string name="title_fused">Datennutzung</string>
@@ -168,8 +168,8 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_template_merge">Template übernehmen (zusammenfügen)</string>
     <string name="title_enable_ondemand">\"Beschränken nach Aufforderung\" aktivieren</string>
     <string name="title_disable_ondemand">\"Beschränken nach Aufforderung\" deaktivieren</string>
-    <string name="title_ondemand_default">Timeout will:</string>
-    <string name="title_ondemand_reset">Reset</string>
+    <string name="title_ondemand_default">Bei Timeout:</string>
+    <string name="title_ondemand_reset">Zurücksetzen</string>
     <string name="title_default">Standard</string>
     <string name="title_alternate">Alternativ</string>
     <string name="title_usage_header">Benutzung</string>
@@ -179,7 +179,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_usage_footer">Benutzen Sie gesunden Menschenverstand beim Einschränken. Wenn Sie die Internet Kategorie einschränken, sollten Sie keinen Internetzugriff erwarten.</string>
     <string name="title_toggle_dangerous">Auf einen Title lange drücken um bedenkliche Beschränkungen umzuschalten</string>
     <string name="title_ondemand_category">Auf die gesamte Kategorie anwenden wird die Ausnahmen der Funktionen auf die Standardwerte zurücksetzen</string>
-    <string name="title_function_help">Function documentation</string>
+    <string name="title_function_help">Dokumentation der Funktion</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
