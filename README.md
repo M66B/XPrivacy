@@ -1081,6 +1081,14 @@ With Tasker, you can create shortcuts on your homescreen:
 * Task Shortcut Icon: tap the *Image Select* button (lower right) and choose an icon (for example the XPrivacy icon) (Tasker)
 * Create icon: tap the back button to finish creating the shortcut (Tasker)
 
+<a name="FAQ67"></a>
+**(67) I get 'refused' while submitting/fetching/navigating to the crowd sourced restrictions?**
+
+This probably means your IP address has been black listed.
+Mostly this is because of spamming or other kind of abuses.
+TOR exit nodes and VPS servers are often black listed.
+Maybe your PC is infected and sending spam without your knowledge.
+
 Support
 -------
 
