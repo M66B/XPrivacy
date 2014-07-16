@@ -30,11 +30,12 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 2.2 STABLE**
+**Version 2.2 STABLE** (not released yet)
 
 * Updated German translation
 * Updated Italian translation
 * Updated Japanese translation
+* Updated Norwegian translation
 * Remember on demand dialog settings across reboots ([issue](/../../issues/1812))
 * Showing stored version in *About* when different from current version
 * Removed function help from on demand dialog
