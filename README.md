@@ -1069,7 +1069,7 @@ am start -a biz.bokhorst.xprivacy.action.IMPORT
 am start -a biz.bokhorst.xprivacy.action.IMPORT --eia UidList 10123,10124 --ez Interactive true
 am start -a biz.bokhorst.xprivacy.action.SUBMIT --eia UidList 10123,10124 --ez Interactive true
 am start -a biz.bokhorst.xprivacy.action.FETCH --eia UidList 10123,10124 --ez Interactive true
-adb shell am start -a biz.bokhorst.xprivacy.action.TOGGLE --eia UidList 10123,10124 --ez Interactive true
+am start -a biz.bokhorst.xprivacy.action.TOGGLE --eia UidList 10123,10124 --ez Interactive true
 ```
 
 With Tasker, you can create shortcuts on your homescreen:
