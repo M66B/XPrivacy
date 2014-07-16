@@ -28,6 +28,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.2 STABLE**
+
 * Updated German translation
 * Updated Italian translation
 * Updated Japanese translation
@@ -35,8 +39,6 @@ Changelog
 * Showing stored version in *About* when different from current version
 * Removed function help from on demand dialog
 * Displaying less details in on demand dialog in expert mode
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.1.26 BETA**
 

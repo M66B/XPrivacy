@@ -1083,14 +1083,14 @@ With Tasker, you can create shortcuts on your homescreen:
 * Create icon: tap the back button to finish creating the shortcut (Tasker)
 
 <a name="FAQ67"></a>
-**(67) I get 'refused' while submitting/fetching/navigating to the crowd sourced restrictions?**
+**(67) I get 'refused' or 'forbidden' while submitting/fetching/navigating to the crowd sourced restrictions!**
 
 This probably means your IP address has been black listed.
 Mostly this is because of spamming or other kind of abuses.
 TOR exit nodes and VPS servers are often black listed.
 Maybe your PC is infected and sending spam without your knowledge.
 
-You can check if your IP address is black listed by checking if it is mentioned on one of these lists:
+You can check if [your IP address](http://www.whatismyip.com/) is black listed by checking if it is mentioned on one of these lists:
 
 * [Spamhaus DROP List](http://www.spamhaus.org/drop/drop.lasso)
 * [Spamhaus EDROP List](http://www.spamhaus.org/drop/edrop.lasso)
