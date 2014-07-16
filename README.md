@@ -547,8 +547,6 @@ If you want to specify a file name:
 adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT -e FileName /sdcard/test.xml
 ```
 
-You can also specify a file name to the IMPORT intent.
-
 You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.dinglisch.android.taskerm), for example:
 
 * New task: Any name you like
@@ -1035,6 +1033,53 @@ If you want to have the on demand dialog always shown, then you can add the *qui
 The data might be cached by the application, so you might have to wait a while until the cache is updated.
 
 The Google Maps view can look like a part of an application, but is in fact not.
+
+<a name="FAQ66"></a>
+**(66) How can I directly start ... ?**
+
+See [question #5](#FAQ5) for how to start an export and for details on Tasker.
+
+Similarly you can start other activities:
+
+* Application settings
+
+```
+am start -a biz.bokhorst.xprivacy.action.APPLICATION --ei Uid 10123
+am start -a biz.bokhorst.xprivacy.action.APPLICATION --ei Uid 10123 --ei Action 1
+am start -a biz.bokhorst.xprivacy.action.APPLICATION --ei Uid 10123 --ei Action 2
+am start -a biz.bokhorst.xprivacy.action.APPLICATION --ei Uid 10123 -e RestrictionName location
+am start -a biz.bokhorst.xprivacy.action.APPLICATION --ei Uid 10123 -e RestrictionName location -e MethodName GMS.addGeofences
+```
+
+* Usage data
+
+```
+am start -a biz.bokhorst.xprivacy.action.USAGE
+am start -a biz.bokhorst.xprivacy.action.USAGE --ei Uid 10123
+```
+
+Action 1 means clear; action 2 means settings.
+
+* Export, import, submit, fetch, toggle
+
+```
+am start -a biz.bokhorst.xprivacy.action.EXPORT
+am start -a biz.bokhorst.xprivacy.action.EXPORT --eia UidList 10123,10124 --ez Interactive true
+am start -a biz.bokhorst.xprivacy.action.IMPORT
+am start -a biz.bokhorst.xprivacy.action.IMPORT --eia UidList 10123,10124 --ez Interactive true
+am start -a biz.bokhorst.xprivacy.action.SUBMIT --eia UidList 10123,10124 --ez Interactive true
+am start -a biz.bokhorst.xprivacy.action.FETCH --eia UidList 10123,10124 --ez Interactive true
+adb shell am start -a biz.bokhorst.xprivacy.action.TOGGLE --eia UidList 10123,10124 --ez Interactive true
+```
+
+With Tasker, you can create shortcuts on your homescreen:
+
+* Create a task and give it a name (Tasker)
+* Create a shortcut on your homescreen (launcher)
+* Choose shortcut: "Task Shortcut" (launcher)
+* Task Selection: "your_usage_data_task" (Tasker)
+* Task Shortcut Icon: tap the *Image Select* button (lower right) and choose an icon (for example the XPrivacy icon) (Tasker)
+* Create icon: tap the back button to finish creating the shortcut (Tasker)
 
 Support
 -------
