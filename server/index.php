@@ -562,8 +562,8 @@
 <?php
 						} else {
 ?>
-							<th style="text-align: center;">All votes <sup>*</sup><br />deny/allow</th>
-							<th style="text-align: center;">Version <br /><?php echo htmlentities($package_version, ENT_COMPAT, 'UTF-8'); ?></th>
+							<th style="text-align: center;">All versions<br />deny/allow <sup>*</sup></th>
+							<th style="text-align: center;">Version <?php echo htmlentities($package_version, ENT_COMPAT, 'UTF-8'); ?><br />deny/allow</th>
 							<th style="text-align: center;">Exceptions<br />(yes/no)</th>
 							<th style="text-align: center;">CI95 &plusmn;% <sup>**</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
