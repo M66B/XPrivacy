@@ -32,6 +32,16 @@ Changelog
 
 **Version 2.2 STABLE** (not released yet)
 
+Changes since last stable version:
+
+* Added a series of new restrictions and improved/extended existing restrictions
+* Redesigned on demand restricting dialog
+* Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
+* Several improvements and bug fixes
+* See for all details the changes since version 2.1.5
+
+Changes since previous version:
+
 * Updated German translation
 * Updated Italian translation
 * Updated Japanese translation
