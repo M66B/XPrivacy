@@ -1032,8 +1032,10 @@ If you want to have the on demand dialog always shown, then you can add the *qui
 **(65) My data is still visible!**
 
 The data might be cached by the application, so you might have to wait a while until the cache is updated.
+It may even be necessary to restart the application or reboot your device to clear the cache.
 
 The Google Maps view can look like a part of an application, but is in fact not.
+Even if your current position is shown on the map, it doesn't mean the application knows your current position.
 
 <a name="FAQ66"></a>
 **(66) How can I directly start ... ?**
