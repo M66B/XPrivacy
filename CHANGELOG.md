@@ -30,7 +30,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 2.2 STABLE** (not released yet)
+**Version 2.2 STABLE**
 
 Changes since last stable version:
 
