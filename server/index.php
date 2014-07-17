@@ -528,7 +528,7 @@
 
 				if (!empty($package_name)) {
 					$last_version = '';
-					$sql = "SELECT distinct package_version";
+					$sql = "SELECT DISTINCT package_version";
 					$sql .= " FROM xprivacy";
 					$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
 					$sql .= " ORDER BY package_version";
@@ -538,8 +538,9 @@
 						while (($row = $result->fetch_object())) {
 							echo '<a href="?package_name=' . urlencode($package_name);
 							echo '&amp;package_version=' . urlencode($row->package_version) . '"">';
-							echo $row->package_version . '</a>&ensp;';
-							$last_version = $row->package_version;
+							echo $row->package_version . '</a> ';
+							if (version_compare($row->package_version, $last_version, '>'))
+								$last_version = $row->package_version;
 						}
 						echo '</p>';
 						$result->close();
