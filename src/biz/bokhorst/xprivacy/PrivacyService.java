@@ -601,7 +601,7 @@ public class PrivacyService {
 			}
 
 			long ms = System.currentTimeMillis() - start;
-			Util.log(null, Log.INFO,
+			Util.log(null, ms < 10 ? Log.INFO : Log.WARN,
 					String.format("get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
 
 			if (mresult.debug)
@@ -1053,6 +1053,7 @@ public class PrivacyService {
 
 		@Override
 		public PSetting getSetting(PSetting setting) throws RemoteException {
+			long start = System.currentTimeMillis();
 			int userId = Util.getUserId(setting.uid);
 
 			// Special case
@@ -1144,6 +1145,10 @@ public class PrivacyService {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+
+			long ms = System.currentTimeMillis() - start;
+			Util.log(null, ms < 10 ? Log.INFO : Log.WARN, String.format("get service %s %d ms", setting, ms));
+
 			return result;
 		}
 

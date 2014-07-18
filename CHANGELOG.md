@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Fixed all problems reported through the support info
+* Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
