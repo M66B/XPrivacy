@@ -29,7 +29,7 @@ Changelog
 **Next release**
 
 * Fixed all problems reported through the support info
-* Removed restriction *IPC.Reflection*, since it is not needed anymore with the revised binder restrictions
+* Removed restriction *IPC.Reflection* to fix delays/freezes ([issue](/../../issues/1820))
 * Better handling of [StrictMode](http://developer.android.com/reference/android/os/StrictMode.html)
 * Updated Polish translation
 
