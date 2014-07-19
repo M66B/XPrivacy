@@ -169,7 +169,7 @@ public class XBinder extends XHook {
 	}
 
 	private void markIPC(XParam param) throws Throwable {
-		// Allow management transaction
+		// Allow management transactions
 		int code = (Integer) param.args[0];
 		if (isManagementTransaction(code))
 			return;
@@ -179,60 +179,58 @@ public class XBinder extends XHook {
 		if (!PrivacyManager.isApplication(uid))
 			return;
 
-		// Get interface name
+		// Check interface name
 		IBinder binder = (IBinder) param.thisObject;
 		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+		if (!cServiceDescriptor.contains(descriptor))
+			return;
 
-		// Check if listed descriptor
-		int idx = cServiceDescriptor.indexOf(descriptor);
-		if (idx >= 0) {
-			// Search this object in call stack
-			boolean ok = false;
-			boolean found = false;
-			StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-			for (int i = 0; i < ste.length; i++)
-				if (ste[i].getClassName().equals(param.thisObject.getClass().getName())) {
-					found = true;
+		// Search this object in call stack
+		boolean ok = false;
+		boolean found = false;
+		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+		for (int i = 0; i < ste.length; i++)
+			if (ste[i].getClassName().equals(param.thisObject.getClass().getName())) {
+				found = true;
 
-					// Check if caller class in user space
-					String callerClassName = (i + 2 < ste.length ? ste[i + 2].getClassName() : null);
-					if (callerClassName != null && !callerClassName.startsWith("java.lang.reflect."))
-						synchronized (mMapClassSystem) {
-							if (!mMapClassSystem.containsKey(callerClassName))
-								try {
-									ClassLoader loader = Thread.currentThread().getContextClassLoader();
-									Class<?> clazz = Class.forName(callerClassName, false, loader);
-									boolean boot = Context.class.getClassLoader().equals(clazz.getClassLoader());
-									mMapClassSystem.put(callerClassName, boot);
-								} catch (ClassNotFoundException ignored) {
-									mMapClassSystem.put(callerClassName, true);
-								}
-							ok = mMapClassSystem.get(callerClassName);
-						}
+				// Check if caller class in user space
+				String callerClassName = (i + 2 < ste.length ? ste[i + 2].getClassName() : null);
+				if (callerClassName != null && !callerClassName.startsWith("java.lang.reflect."))
+					synchronized (mMapClassSystem) {
+						if (!mMapClassSystem.containsKey(callerClassName))
+							try {
+								ClassLoader loader = Thread.currentThread().getContextClassLoader();
+								Class<?> clazz = Class.forName(callerClassName, false, loader);
+								boolean boot = Context.class.getClassLoader().equals(clazz.getClassLoader());
+								mMapClassSystem.put(callerClassName, boot);
+							} catch (ClassNotFoundException ignored) {
+								mMapClassSystem.put(callerClassName, true);
+							}
+						ok = mMapClassSystem.get(callerClassName);
+					}
 
-					break;
-				}
-
-			// Conditionally mark
-			if (ok) {
-				int flags = (Integer) param.args[3];
-				if ((flags & ~FLAG_ALL) != 0)
-					Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " descriptor="
-							+ descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
-				flags |= (mToken << BITS_TOKEN);
-				param.args[3] = flags;
-			} else {
-				int level = (found ? Log.WARN : Log.ERROR);
-				Util.log(this, level, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code
-						+ " uid=" + Binder.getCallingUid());
-				Util.logStack(this, level, true);
+				break;
 			}
+
+		// Conditionally mark
+		if (ok) {
+			int flags = (Integer) param.args[3];
+			if ((flags & ~FLAG_ALL) != 0)
+				Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " descriptor=" + descriptor
+						+ " code=" + code + " uid=" + Binder.getCallingUid());
+			flags |= (mToken << BITS_TOKEN);
+			param.args[3] = flags;
+		} else {
+			int level = (found ? Log.WARN : Log.ERROR);
+			Util.log(this, level, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code + " uid="
+					+ Binder.getCallingUid());
+			Util.logStack(this, level, true);
 		}
 	}
 
 	// Entry point from android_util_Binder.cpp's onTransact
 	private void checkIPC(XParam param) throws Throwable {
-		// Allow management transaction
+		// Allow management transactions
 		int code = (Integer) param.args[0];
 		if (isManagementTransaction(code))
 			return;
@@ -242,7 +240,7 @@ public class XBinder extends XHook {
 		if (!PrivacyManager.isApplication(uid))
 			return;
 
-		// Get interface name
+		// Check interface name
 		IBinder binder = (IBinder) param.thisObject;
 		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
 		if (!cServiceDescriptor.contains(descriptor))
