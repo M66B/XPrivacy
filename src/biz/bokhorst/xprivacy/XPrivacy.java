@@ -458,8 +458,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					try {
 						if (Process.myUid() <= 0)
 							return;
+
+						// Pre processing
 						XParam xparam = XParam.fromXposed(param);
+
+						long start = System.currentTimeMillis();
+
+						// Execute hook
 						hook.before(xparam);
+
+						long ms = System.currentTimeMillis() - start;
+						if (ms > PrivacyManager.cWarnHookDelayMs)
+							Util.log(hook, Log.WARN, String.format("%s %d ms", param.method.getName(), ms));
+
+						// Post processing
 						if (xparam.hasResult())
 							param.setResult(xparam.getResult());
 						if (xparam.hasThrowable())
@@ -476,9 +488,21 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						try {
 							if (Process.myUid() <= 0)
 								return;
+
+							// Pre processing
 							XParam xparam = XParam.fromXposed(param);
 							xparam.setExtras(param.getObjectExtra("xextra"));
+
+							long start = System.currentTimeMillis();
+
+							// Execute hook
 							hook.after(xparam);
+
+							long ms = System.currentTimeMillis() - start;
+							if (ms > PrivacyManager.cWarnHookDelayMs)
+								Util.log(hook, Log.WARN, String.format("%s %d ms", param.method.getName(), ms));
+
+							// Post processing
 							if (xparam.hasResult())
 								param.setResult(xparam.getResult());
 							if (xparam.hasThrowable())
