@@ -329,7 +329,8 @@ public class Requirements {
 				"android.hardware.SystemSensorManager" });
 		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager",
 				"android.telephony.MSimTelephonyManager", "android.telephony.MultiSimTelephonyManager",
-				"android.telephony.ZTEPrivacyTelephonyManager", "com.motorola.android.telephony.MotoTelephonyManager" });
+				"android.telephony.ZTEPrivacyTelephonyManager", "com.motorola.android.telephony.MotoTelephonyManager",
+				"android.privacy.surrogate.PrivacyTelephonyManager" /* PDroid */});
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
 				"android.view.Window$LocalWindowManager" });
 		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager" });
