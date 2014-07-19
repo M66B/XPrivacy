@@ -11,7 +11,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -276,7 +278,7 @@ public class ActivityUsage extends ActivityBase {
 					holder.imgIcon.setImageDrawable(icon);
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
-					View.OnClickListener listener = new View.OnClickListener() {
+					View.OnClickListener clickListener = new View.OnClickListener() {
 						@Override
 						public void onClick(View view) {
 							PRestriction usageData = mUsageAdapter.getItem(position);
@@ -288,8 +290,49 @@ public class ActivityUsage extends ActivityBase {
 						}
 					};
 
-					holder.llUsage.setOnClickListener(listener);
-					holder.tvRestriction.setOnClickListener(listener);
+					View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
+						@Override
+						public boolean onLongClick(View view) {
+							final PRestriction usageData = mUsageAdapter.getItem(position);
+							final Hook hook = PrivacyManager.getHook(usageData.restrictionName, usageData.methodName);
+							if (hook != null && hook.whitelist() != null && usageData.extra != null) {
+								if (Util.hasProLicense(ActivityUsage.this) == null)
+									Util.viewUri(ActivityUsage.this, ActivityMain.cProUri);
+								else {
+									AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityUsage.this);
+									alertDialogBuilder.setTitle(R.string.menu_whitelists);
+									alertDialogBuilder.setMessage(usageData.restrictionName + "/"
+											+ usageData.methodName + "(" + usageData.extra + ")");
+									alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+									alertDialogBuilder.setPositiveButton(getString(R.string.title_deny),
+											new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(DialogInterface dialog, int which) {
+													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
+															usageData.extra, Boolean.toString(true));
+												}
+											});
+									alertDialogBuilder.setNeutralButton(getString(R.string.title_allow),
+											new DialogInterface.OnClickListener() {
+												@Override
+												public void onClick(DialogInterface dialog, int which) {
+													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
+															usageData.extra, Boolean.toString(false));
+												}
+											});
+									AlertDialog alertDialog = alertDialogBuilder.create();
+									alertDialog.show();
+								}
+								return true;
+							} else
+								return false;
+						}
+					};
+
+					holder.llUsage.setOnClickListener(clickListener);
+					holder.tvRestriction.setOnClickListener(clickListener);
+					holder.llUsage.setOnLongClickListener(longClickListener);
+					holder.tvRestriction.setOnLongClickListener(longClickListener);
 				}
 			}
 		}

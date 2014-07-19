@@ -28,6 +28,8 @@ Changelog
 
 **Next release**
 
+* Option to white/black list from usage data (long press entry) ([issue](/../../issues/1821)) (only [Pro license](http://www.xprivacy.eu/))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.2.1 BETA**
