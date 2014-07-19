@@ -333,22 +333,25 @@ public class XBinder extends XHook {
 			final String descriptor = ((IBinder) param.thisObject).getInterfaceDescriptor();
 			if (cServiceDescriptor.contains(descriptor))
 				synchronized (listInterfaceHooked) {
+					// CHeck if already hooked
 					if (listInterfaceHooked.contains(descriptor))
 						return;
 					listInterfaceHooked.add(descriptor);
 
-					String[] name = descriptor.split("\\.");
-					final String interfaceName = name[name.length - 1];
-
+					// Get/check stub
 					Class<?> stub = param.thisObject.getClass().getSuperclass();
 					if (stub != null && stub.getInterfaces().length > 0) {
 						Util.log(this, Log.WARN, "Hooking service=" + descriptor + " class="
 								+ param.thisObject.getClass().getName());
+
+						// Find interface methods
 						List<XHook> listHook = new ArrayList<XHook>();
 						for (Method method : param.thisObject.getClass().getDeclaredMethods())
 							for (Method i : stub.getInterfaces()[0].getDeclaredMethods())
 								if (i.getName().equals(method.getName()))
-									listHook.add(new XIPC(method, interfaceName));
+									listHook.add(new XIPC(method, descriptor));
+
+						// Hook interface methods
 						XPrivacy.hookAll(listHook, param.thisObject.getClass().getClassLoader(), getSecret());
 					} else {
 						Util.log(this, Log.WARN, "No stub or interfaces service=" + descriptor);
