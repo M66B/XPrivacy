@@ -28,12 +28,14 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.2.1 BETA**
+
 * Fixed all problems reported through the support info
 * Removed restriction *IPC.Reflection* to fix delays/freezes ([issue](/../../issues/1820))
 * Better handling of [StrictMode](http://developer.android.com/reference/android/os/StrictMode.html)
 * Updated Polish translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.2 STABLE**
 
