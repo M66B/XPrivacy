@@ -190,29 +190,33 @@ public class XBinder extends XHook {
 			// Search this object in call stack
 			boolean ok = false;
 			boolean found = false;
-			StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-			for (int i = 0; i < ste.length; i++)
-				if (ste[i].getClassName().equals(param.thisObject.getClass().getName())) {
-					found = true;
+			if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingNoJavaIPC, false))
+				ok = true;
+			else {
+				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+				for (int i = 0; i < ste.length; i++)
+					if (ste[i].getClassName().equals(param.thisObject.getClass().getName())) {
+						found = true;
 
-					// Check if caller class in user space
-					String callerClassName = (i + 2 < ste.length ? ste[i + 2].getClassName() : null);
-					if (callerClassName != null && !callerClassName.startsWith("java.lang.reflect."))
-						synchronized (mMapClassSystem) {
-							if (!mMapClassSystem.containsKey(callerClassName))
-								try {
-									ClassLoader loader = Thread.currentThread().getContextClassLoader();
-									Class<?> clazz = Class.forName(callerClassName, false, loader);
-									boolean boot = Context.class.getClassLoader().equals(clazz.getClassLoader());
-									mMapClassSystem.put(callerClassName, boot);
-								} catch (ClassNotFoundException ignored) {
-									mMapClassSystem.put(callerClassName, true);
-								}
-							ok = mMapClassSystem.get(callerClassName);
-						}
+						// Check if caller class in user space
+						String callerClassName = (i + 2 < ste.length ? ste[i + 2].getClassName() : null);
+						if (callerClassName != null && !callerClassName.startsWith("java.lang.reflect."))
+							synchronized (mMapClassSystem) {
+								if (!mMapClassSystem.containsKey(callerClassName))
+									try {
+										ClassLoader loader = Thread.currentThread().getContextClassLoader();
+										Class<?> clazz = Class.forName(callerClassName, false, loader);
+										boolean boot = Context.class.getClassLoader().equals(clazz.getClassLoader());
+										mMapClassSystem.put(callerClassName, boot);
+									} catch (ClassNotFoundException ignored) {
+										mMapClassSystem.put(callerClassName, true);
+									}
+								ok = mMapClassSystem.get(callerClassName);
+							}
 
-					break;
-				}
+						break;
+					}
+			}
 
 			// Conditionally mark
 			if (ok) {
