@@ -136,6 +136,7 @@ public class PrivacyManager {
 
 	// Constants
 	public final static int cXposedAppProcessMinVersion = 46;
+	public final static int cWarnServiceDelayMs = 100;
 
 	private final static int cMaxExtra = 128;
 	private final static String cDeface = "DEFACE";
@@ -363,7 +364,7 @@ public class PrivacyManager {
 
 		// Result
 		long ms = System.currentTimeMillis() - start;
-		Util.log(hook, ms < 10 ? Log.INFO : Log.WARN,
+		Util.log(hook, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN,
 				String.format("get client %s%s %d ms", result, (cached ? " (cached)" : ""), ms));
 
 		return result.restricted;
@@ -756,8 +757,8 @@ public class PrivacyManager {
 
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
-			Util.log(null, ms < 10 ? Log.INFO : Log.WARN, String.format("get setting uid=%d %s/%s=%s%s %d ms", uid,
-					type, name, value, (cached ? " (cached)" : ""), ms));
+			Util.log(null, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN, String.format(
+					"get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value, (cached ? " (cached)" : ""), ms));
 
 		return value;
 	}

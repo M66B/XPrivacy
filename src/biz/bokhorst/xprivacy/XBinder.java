@@ -145,8 +145,6 @@ public class XBinder extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		long start = System.currentTimeMillis();
-
 		if (mMethod == Methods.execTransact)
 			checkIPC(param);
 
@@ -155,13 +153,6 @@ public class XBinder extends XHook {
 
 		else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
-
-		long ms = System.currentTimeMillis() - start;
-		if (ms > 10) {
-			IBinder binder = (IBinder) param.thisObject;
-			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
-			Util.log(this, Log.WARN, String.format("%s %s %d ms", param.method.getName(), descriptor, ms));
-		}
 	}
 
 	@Override
