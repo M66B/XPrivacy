@@ -309,7 +309,7 @@ public class ActivityUsage extends ActivityBase {
 												@Override
 												public void onClick(DialogInterface dialog, int which) {
 													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
-															usageData.extra, Boolean.toString(true));
+															usageData.extra, Boolean.toString(false));
 												}
 											});
 									alertDialogBuilder.setNeutralButton(getString(R.string.title_allow),
@@ -317,7 +317,7 @@ public class ActivityUsage extends ActivityBase {
 												@Override
 												public void onClick(DialogInterface dialog, int which) {
 													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
-															usageData.extra, Boolean.toString(false));
+															usageData.extra, Boolean.toString(true));
 												}
 											});
 									AlertDialog alertDialog = alertDialogBuilder.create();
