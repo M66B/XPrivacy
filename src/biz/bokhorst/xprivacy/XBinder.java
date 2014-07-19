@@ -66,18 +66,6 @@ public class XBinder extends XHook {
 	// @formatter:on
 
 	// @formatter:off
-	public static List<String> cServiceOptional = Arrays.asList(new String[] {
-		"iphonesubinfo",
-		"iphonesubinfo_msim",
-		"sip",
-		"isms",
-		"nfc",
-		"bluetooth",
-		"bluetooth_manager"
-	});
-	// @formatter:on
-
-	// @formatter:off
 	public static List<String> cServiceDescriptor = Arrays.asList(new String[] {
 		"android.accounts.IAccountManager",
 		"android.app.IActivityManager",
@@ -102,6 +90,22 @@ public class XBinder extends XHook {
 		"android.gui.SensorServer",
 		"android.hardware.usb.IUsbManager",
 		"android.hardware.ICameraService"
+	});
+	// @formatter:on
+
+	// TODO: audio/media record
+	// TODO: content services
+	// TODO: intents, configuration
+
+	// @formatter:off
+	public static List<String> cServiceOptional = Arrays.asList(new String[] {
+		"iphonesubinfo",
+		"iphonesubinfo_msim",
+		"sip",
+		"isms",
+		"nfc",
+		"bluetooth",
+		"bluetooth_manager"
 	});
 	// @formatter:on
 
