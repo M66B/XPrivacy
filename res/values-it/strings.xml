@@ -114,7 +114,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_help_media">Restringe l\'accesso alla fotocamera (foto e video) e al microfono</string>
     <string name="restrict_help_location">Restringe l\'accesso alla tua località precisa e approssimata</string>
     <string name="restrict_help_ipc">Restringe le comunicazioni tra processi, quando utilizzate per eludere altre restrizioni</string>
-    <string name="restrict_help_internet">Restringe l\'accesso ad internet</string>
+    <string name="restrict_help_internet">Restringe l\'accesso ad Internet</string>
     <string name="restrict_help_identification">Restringe informazioni che possono identificarti, come il numero di serie del dispositivo</string>
     <string name="restrict_help_email">Restringe l\'accesso alle informazioni e-mail, come indirizzi e messaggi (solo applicazione standard e G-mail)</string>
     <string name="restrict_help_dictionary">Restringe l\'accesso al dizionario utente</string>
@@ -136,7 +136,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_restrict">Seleziona per restringere:</string>
     <string name="title_check_whitelist">Seleziona per consentire</string>
     <string name="title_fused">Filtra per dati di utilizzo</string>
-    <string name="title_finternet">Filtra per accesso internet</string>
+    <string name="title_finternet">Filtra per accesso Internet</string>
     <string name="title_fpermission">Filtra per permessi</string>
     <string name="title_frestricted">Filtra per restrizioni</string>
     <string name="title_fuser">Filtra per applicazioni utente</string>
@@ -212,7 +212,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="help_longpress">Premi a lungo sul nome per selezionare</string>
     <string name="help_ondemand">le restrizioni verranno richieste</string>
     <string name="help_application">Applicazione</string>
-    <string name="help_internet">ha il permesso internet</string>
+    <string name="help_internet">ha il permesso Internet</string>
     <string name="help_granted">ha il permesso Android</string>
     <string name="help_used">ha utilizzato questo dato</string>
     <string name="help_used_grayed">dati di utilizzo non disponibili</string>

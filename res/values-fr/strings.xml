@@ -114,7 +114,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
     <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
     <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
-    <string name="restrict_help_internet">Will restrict access to the internet</string>
+    <string name="restrict_help_internet">Will restrict access to the Internet</string>
     <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
     <string name="restrict_help_email">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
     <string name="restrict_help_dictionary">Will restrict access to the user dictionary</string>
@@ -136,7 +136,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_restrict">Cocher pour restreindre :</string>
     <string name="title_check_whitelist">Cocher pour permettre</string>
     <string name="title_fused">Filtrer utilisation des données</string>
-    <string name="title_finternet">Filtrer ayant accès à internet</string>
+    <string name="title_finternet">Filtrer ayant accès à Internet</string>
     <string name="title_fpermission">Filtrer par permissions</string>
     <string name="title_frestricted">Filtrer restreintes</string>
     <string name="title_fuser">Filtrer les applis utilisateur</string>

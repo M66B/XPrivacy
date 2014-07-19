@@ -114,7 +114,7 @@
     <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
     <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
     <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
-    <string name="restrict_help_internet">Will restrict access to the internet</string>
+    <string name="restrict_help_internet">Will restrict access to the Internet</string>
     <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
     <string name="restrict_help_email">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
     <string name="restrict_help_dictionary">Will restrict access to the user dictionary</string>

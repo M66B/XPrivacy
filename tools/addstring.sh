@@ -30,4 +30,4 @@ grep -RIl "\<string name=\"settings_lac" res | xargs sed -i -e '/settings_lac/a 
 #\ \ \ \ <string name=\"restrict_help_accounts\">Will restrict access to account information, like your Google account, which includes your G-mail address</string>'
 
 #grep -RIl "\<string name=\"settings_dangerous" res | xargs sed -i -e '/settings_dangerous/d'
-#grep -RIl "\<string name=\"title_check_whitelist" res | xargs sed -i -e 's/Check to allow/Check to allow:/g'
+#grep -RIl "\<string name=\"restrict_help_internet" res | xargs sed -i -e 's/internet</Internet</g'
