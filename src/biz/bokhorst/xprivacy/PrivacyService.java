@@ -160,17 +160,6 @@ public class PrivacyService {
 				Util.bug(null, ex);
 			}
 
-		// Disable disk/network strict mode
-		// TODO: hook setThreadPolicy
-		try {
-			ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
-			ThreadPolicy newpolicy = new ThreadPolicy.Builder(oldPolicy).permitDiskReads().permitDiskWrites()
-					.permitNetwork().build();
-			StrictMode.setThreadPolicy(newpolicy);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-
 		return mClient;
 	}
 
@@ -403,6 +392,11 @@ public class PrivacyService {
 			int userId = Util.getUserId(restriction.uid);
 			final PRestriction mresult = new PRestriction(restriction);
 
+			// Disable strict mode
+			ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
+			ThreadPolicy newPolicy = new ThreadPolicy.Builder(oldPolicy).permitDiskReads().permitDiskWrites().build();
+			StrictMode.setThreadPolicy(newPolicy);
+
 			try {
 				// No permissions enforced, but usage data requires a secret
 
@@ -598,6 +592,8 @@ public class PrivacyService {
 
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+			} finally {
+				StrictMode.setThreadPolicy(oldPolicy);
 			}
 
 			long ms = System.currentTimeMillis() - start;
@@ -1068,6 +1064,11 @@ public class PrivacyService {
 			// Default result
 			PSetting result = new PSetting(setting.uid, setting.type, setting.name, setting.value);
 
+			// Disable strict mode
+			ThreadPolicy oldPolicy = StrictMode.getThreadPolicy();
+			ThreadPolicy newPolicy = new ThreadPolicy.Builder(oldPolicy).permitDiskReads().permitDiskWrites().build();
+			StrictMode.setThreadPolicy(newPolicy);
+
 			try {
 				// No permissions enforced
 
@@ -1144,6 +1145,8 @@ public class PrivacyService {
 					result.value = setting.value;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+			} finally {
+				StrictMode.setThreadPolicy(oldPolicy);
 			}
 
 			long ms = System.currentTimeMillis() - start;
