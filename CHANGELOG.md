@@ -28,9 +28,23 @@ Changelog
 
 **Next release**
 
+* Fixed all problems reported through the support info
+* Removed restriction *IPC.Reflection*, since it is not needed anymore with the revised binder restrictions
+* Updated Polish translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 2.2 STABLE** (not released yet)
+**Version 2.2 STABLE**
+
+Changes since last stable version:
+
+* Added a series of new restrictions and improved/extended existing restrictions
+* Redesigned on demand restricting dialog
+* Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
+* Several improvements and bug fixes
+* See for all details the changes since version 2.1.5
+
+Changes since previous version:
 
 * Updated German translation
 * Updated Italian translation

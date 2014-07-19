@@ -351,6 +351,9 @@ and is reported to work with most Android variants, including stock ROMs.
 
 **XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231))
 
+You need to use the quirk "noresolve" when using [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
+([issue](https://github.com/M66B/XPrivacy/issues/1751)).
+
 Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
 
 Installation
@@ -399,8 +402,8 @@ Upgrading
 * **Do not remove the previous version** (or else your settings will get lost)
 * Download the new version
 * Install the new version over the previous version
-* Start the new version once (else Android will not send the boot completed event)
 * Wait until the Xposed installer recognizes the update (else XPrivacy might not be enabled)
+* Start the new version once (else Android will not send the boot completed event)
 * Reboot your device
 * Wait until the XPrivacy update service has been completed (showing 100%)
 
@@ -1032,8 +1035,10 @@ If you want to have the on demand dialog always shown, then you can add the *qui
 **(65) My data is still visible!**
 
 The data might be cached by the application, so you might have to wait a while until the cache is updated.
+It may even be necessary to restart the application or reboot your device to clear the cache.
 
 The Google Maps view can look like a part of an application, but is in fact not.
+Even if your current position is shown on the map, it doesn't mean the application knows your current position.
 
 <a name="FAQ66"></a>
 **(66) How can I directly start ... ?**

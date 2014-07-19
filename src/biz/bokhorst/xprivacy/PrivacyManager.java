@@ -125,6 +125,7 @@ public class PrivacyManager {
 	public final static String cSettingNoResolve = "NoResolve";
 	public final static String cSettingFreeze = "Freeze";
 	public final static String cSettingPermMan = "PermMan";
+	public final static String cSettingNoJavaIPC = "NoJavaIPC";
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";
@@ -135,6 +136,8 @@ public class PrivacyManager {
 
 	// Constants
 	public final static int cXposedAppProcessMinVersion = 46;
+	public final static int cWarnServiceDelayMs = 100;
+	public final static int cWarnHookDelayMs = 100;
 
 	private final static int cMaxExtra = 128;
 	private final static String cDeface = "DEFACE";
@@ -362,7 +365,8 @@ public class PrivacyManager {
 
 		// Result
 		long ms = System.currentTimeMillis() - start;
-		Util.log(hook, Log.INFO, String.format("get client %s%s %d ms", result, (cached ? " (cached)" : ""), ms));
+		Util.log(hook, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN,
+				String.format("get client %s%s %d ms", result, (cached ? " (cached)" : ""), ms));
 
 		return result.restricted;
 	}
@@ -754,8 +758,8 @@ public class PrivacyManager {
 
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
-			Util.log(null, Log.INFO, String.format("get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value,
-					(cached ? " (cached)" : ""), ms));
+			Util.log(null, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN, String.format(
+					"get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value, (cached ? " (cached)" : ""), ms));
 
 		return value;
 	}

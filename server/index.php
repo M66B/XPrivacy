@@ -525,6 +525,30 @@
 					<strong>bold text</strong> means data was used</p>
 <?php
 				}
+
+				if (!empty($package_name)) {
+					$last_version = '';
+					$sql = "SELECT DISTINCT package_version";
+					$sql .= " FROM xprivacy";
+					$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
+					$sql .= " ORDER BY package_version";
+					$result = $db->query($sql);
+					if ($result) {
+						echo '<p>';
+						while (($row = $result->fetch_object())) {
+							echo '<a href="?package_name=' . urlencode($package_name);
+							echo '&amp;package_version=' . urlencode($row->package_version) . '"">';
+							echo $row->package_version . '</a> ';
+							if (version_compare($row->package_version, $last_version, '>'))
+								$last_version = $row->package_version;
+						}
+						echo '</p>';
+						$result->close();
+					}
+
+					if (empty($package_version))
+						$package_version = $last_version;
+				}
 ?>
 				<table class="table table-hover table-condensed">
 					<thead>
@@ -538,7 +562,8 @@
 <?php
 						} else {
 ?>
-							<th style="text-align: center;">Votes <sup>*</sup><br />deny/allow</th>
+							<th style="text-align: center;">All versions<br />deny/allow <sup>*</sup></th>
+							<th style="text-align: center;">Version <?php echo htmlentities($package_version, ENT_COMPAT, 'UTF-8'); ?><br />deny/allow</th>
 							<th style="text-align: center;">Exceptions<br />(yes/no)</th>
 							<th style="text-align: center;">CI95 &plusmn;% <sup>**</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
@@ -589,6 +614,10 @@
 						$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
 						$sql .= ", SUM(CASE WHEN allowed > 0 THEN 1 ELSE 0 END) AS allowed";
 						$sql .= ", SUM(CASE WHEN allowed <= 0 THEN 1 ELSE 0 END) AS not_allowed";
+						$sql .= ", SUM(CASE WHEN restricted = 1 AND package_version = '" . $db->real_escape_string($package_version) . "' THEN 1 ELSE 0 END) AS restricted_package";
+						$sql .= ", SUM(CASE WHEN restricted != 1 AND package_version = '" . $db->real_escape_string($package_version) . "' THEN 1 ELSE 0 END) AS not_restricted_package";
+						$sql .= ", SUM(CASE WHEN allowed > 0 AND package_version = '" . $db->real_escape_string($package_version) . "' THEN 1 ELSE 0 END) AS allowed_package";
+						$sql .= ", SUM(CASE WHEN allowed <= 0 AND package_version = '" . $db->real_escape_string($package_version) . "' THEN 1 ELSE 0 END) AS not_allowed_package";
 						$sql .= ", MAX(used) AS used";
 						$sql .= ", MAX(modified) AS modified";
 						$sql .= ", SUM(updates) AS updates";
@@ -623,6 +652,10 @@
 								echo ' / ';
 								echo ($row->restricted > $row->not_restricted) ? '<span class="text-muted">' . $row->not_restricted . '</span>' : $row->not_restricted;
 								echo ' <span style="font-size: smaller;">' . number_format($diff * 100, 0) . '%</span>';
+								echo '</td>';
+
+								echo '<td style="text-align: center; font-size: smaller;">';
+								echo $row->restricted_package . ' / ' . $row->not_restricted_package;
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';

@@ -36,6 +36,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.os.RemoteException;
+import android.os.TransactionTooLargeException;
 import android.os.UserHandle;
 import android.util.Base64;
 import android.util.Log;
@@ -104,6 +105,8 @@ public class Util {
 		else if (ex instanceof NoClassDefFoundError)
 			priority = Log.WARN;
 		else if (ex instanceof SecurityException)
+			priority = Log.WARN;
+		else if (ex instanceof TransactionTooLargeException)
 			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
