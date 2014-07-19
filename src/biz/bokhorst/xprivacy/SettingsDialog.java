@@ -239,7 +239,6 @@ public class SettingsDialog {
 		boolean freeze = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
 		boolean noresolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNoResolve, false);
 		boolean permman = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingPermMan, false);
-		boolean nojavaipc = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNoJavaIPC, false);
 		boolean hookipc = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHookIPC, false);
 		List<String> listQuirks = new ArrayList<String>();
 		if (freeze)
@@ -248,8 +247,6 @@ public class SettingsDialog {
 			listQuirks.add("noresolve");
 		if (permman)
 			listQuirks.add("permman");
-		if (nojavaipc)
-			listQuirks.add("nojavaipc");
 		if (hookipc)
 			listQuirks.add("hookipc");
 		String quirks = TextUtils.join(",", listQuirks.toArray());
@@ -503,8 +500,6 @@ public class SettingsDialog {
 							Boolean.toString(listQuirks.contains("noresolve")));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingPermMan,
 							Boolean.toString(listQuirks.contains("permman")));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingNoJavaIPC,
-							Boolean.toString(listQuirks.contains("nojavaipc")));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHookIPC,
 							Boolean.toString(listQuirks.contains("hookipc")));
 				}

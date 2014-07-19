@@ -125,7 +125,6 @@ public class PrivacyManager {
 	public final static String cSettingNoResolve = "NoResolve";
 	public final static String cSettingFreeze = "Freeze";
 	public final static String cSettingPermMan = "PermMan";
-	public final static String cSettingNoJavaIPC = "NoJavaIPC";
 	public final static String cSettingHookIPC = "HookIPC";
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
