@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Fixed all problems reported through the support info
+* Removed restriction *IPC.Reflection*, since it is not needed anymore with the revised binder restrictions
 * Updated Polish translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

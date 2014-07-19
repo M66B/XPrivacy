@@ -145,7 +145,6 @@ public class Meta {
 		mListHook.add(new Hook("internet", "LinkAddress.toString", null, 20, "2.1.17", null));
 
 		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).dangerous().whitelist(cTypeTransaction));
-		mListHook.add(new Hook("ipc", "Reflection", "", 1, "2.1.7", null).dangerous().whitelist(cTypeMethod));
 
 		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
 		mListHook.add(new Hook("location", "addGpsStatusListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "2.1.17", null));
