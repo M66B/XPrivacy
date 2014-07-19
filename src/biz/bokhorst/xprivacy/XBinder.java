@@ -8,14 +8,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import de.robv.android.xposed.XC_MethodHook;
-import de.robv.android.xposed.XposedBridge;
-
 import android.content.Context;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
+import android.os.RemoteException;
 import android.util.Log;
 import android.util.SparseArray;
 
@@ -150,47 +148,13 @@ public class XBinder extends XHook {
 	@Override
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.execTransact) {
-			checkIPC(param);
 			// execTransact calls the overridden onTransact
 
+			// Check for direct IPC
+			checkIPC(param);
+
 			// Dynamically hook interface methods
-			String descriptor = ((IBinder) param.thisObject).getInterfaceDescriptor();
-			if (cServiceDescriptor.contains(descriptor))
-				synchronized (listInterfaceHooked) {
-					if (listInterfaceHooked.contains(descriptor))
-						return;
-					listInterfaceHooked.add(descriptor);
-
-					final int uid = Binder.getCallingUid();
-					Class<?> stub = param.thisObject.getClass().getSuperclass();
-					if (stub != null && stub.getInterfaces().length > 0) {
-						for (Method method : param.thisObject.getClass().getDeclaredMethods()) {
-							boolean found = false;
-							for (Method i : stub.getInterfaces()[0].getDeclaredMethods())
-								if (i.getName().equals(method.getName())) {
-									found = true;
-									break;
-								}
-
-							if (found) {
-								Util.log(this, Log.WARN,
-										"Hooking service=" + descriptor + " method=" + method.getName() + " uid=" + uid);
-								XposedBridge.hookMethod(method, new XC_MethodHook() {
-									@Override
-									protected void beforeHookedMethod(MethodHookParam mparam) throws Throwable {
-									}
-
-									@Override
-									protected void afterHookedMethod(MethodHookParam mparam) throws Throwable {
-									}
-								});
-							}
-						}
-					} else {
-						Util.log(this, Log.WARN, "No stub or interfaces service=" + descriptor + " uid=" + uid);
-						Util.logStack(this, Log.WARN);
-					}
-				}
+			hookIPC(param);
 
 		} else if (mMethod == Methods.transact) {
 			markIPC(param);
@@ -297,7 +261,7 @@ public class XBinder extends XHook {
 		// Check token
 		if (token != mToken) {
 			String[] name = descriptor.split("\\.");
-			String methodName = name[name.length - 1];
+			String interfaceName = name[name.length - 1];
 
 			// Get transaction code name
 			String codeName;
@@ -336,10 +300,10 @@ public class XBinder extends XHook {
 				Util.logStack(this, Log.INFO);
 			}
 
-			Util.log(this, Log.INFO, "can restrict transaction=" + methodName + ":" + codeName + " flags=" + flags
+			Util.log(this, Log.INFO, "can restrict transaction=" + interfaceName + ":" + codeName + " flags=" + flags
 					+ " uid=" + uid + " my=" + Process.myUid());
 
-			if (isRestrictedExtra(uid, PrivacyManager.cIPC, "Binder", methodName + ":" + codeName)) {
+			if (isRestrictedExtra(uid, PrivacyManager.cIPC, "Binder", interfaceName + ":" + codeName)) {
 				// Get reply parcel
 				Parcel reply = null;
 				try {
@@ -361,6 +325,36 @@ public class XBinder extends XHook {
 				}
 				param.setResult(true);
 			}
+		}
+	}
+
+	private void hookIPC(XParam param) throws RemoteException {
+		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingHookIPC, false)) {
+			final String descriptor = ((IBinder) param.thisObject).getInterfaceDescriptor();
+			if (cServiceDescriptor.contains(descriptor))
+				synchronized (listInterfaceHooked) {
+					if (listInterfaceHooked.contains(descriptor))
+						return;
+					listInterfaceHooked.add(descriptor);
+
+					String[] name = descriptor.split("\\.");
+					final String interfaceName = name[name.length - 1];
+
+					Class<?> stub = param.thisObject.getClass().getSuperclass();
+					if (stub != null && stub.getInterfaces().length > 0) {
+						Util.log(this, Log.WARN, "Hooking service=" + descriptor + " class="
+								+ param.thisObject.getClass().getName());
+						List<XHook> listHook = new ArrayList<XHook>();
+						for (Method method : param.thisObject.getClass().getDeclaredMethods())
+							for (Method i : stub.getInterfaces()[0].getDeclaredMethods())
+								if (i.getName().equals(method.getName()))
+									listHook.add(new XIPC(method, interfaceName));
+						XPrivacy.hookAll(listHook, param.thisObject.getClass().getClassLoader(), getSecret());
+					} else {
+						Util.log(this, Log.WARN, "No stub or interfaces service=" + descriptor);
+						Util.logStack(this, Log.WARN);
+					}
+				}
 		}
 	}
 
