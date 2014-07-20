@@ -274,10 +274,11 @@ public class XBinder extends XHook {
 					mMapCodeName.put(descriptor, sa);
 					try {
 						Class<?> superClass;
-						if ("android.app.IActivityManager".equals(descriptor))
-							superClass = Class.forName("android.app.IActivityManager");
-						else
+						try {
+							superClass = Class.forName(descriptor);
+						} catch (ClassNotFoundException ignored) {
 							superClass = param.thisObject.getClass().getSuperclass();
+						}
 						if (superClass != null)
 							for (Field field : superClass.getDeclaredFields())
 								try {
@@ -298,8 +299,8 @@ public class XBinder extends XHook {
 			}
 			if (codeName == null) {
 				codeName = Integer.toString(code);
-				Util.log(this, Log.WARN,
-						"Unknown transaction=" + descriptor + ":" + code + " uid=" + Binder.getCallingUid());
+				Util.log(this, Log.WARN, "Unknown transaction=" + descriptor + ":" + code + " class="
+						+ param.thisObject.getClass() + " uid=" + Binder.getCallingUid());
 				Util.logStack(this, Log.INFO);
 			}
 

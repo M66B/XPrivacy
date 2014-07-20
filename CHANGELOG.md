@@ -31,6 +31,7 @@ Changelog
 * Option to white/black list from usage data (long press entry) ([issue](/../../issues/1821)) (only [Pro license](http://www.xprivacy.eu/))
 * Added IPC restrictions for *IApplicationThread*, *IContentProvider* and *IWindowSession* (on demand restricting only)
 * Added wildcards for IPC transaction names
+* Fixed translating transaction codes into transaction names in most cases
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
