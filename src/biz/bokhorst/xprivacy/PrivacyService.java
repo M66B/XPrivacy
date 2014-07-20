@@ -1897,9 +1897,8 @@ public class PrivacyService {
 								listResult.add('*' + restriction.extra.substring(dot, colon) + ":*");
 						}
 					}
-				}
 
-				else if (hook.whitelist().equals(Meta.cTypeUrl)) {
+				} else if (hook.whitelist().equals(Meta.cTypeUrl)) {
 					// Top folders of file name
 					Uri uri = Uri.parse(restriction.extra);
 					if ("file".equals(uri.getScheme())) {
@@ -1911,6 +1910,11 @@ public class PrivacyService {
 							file = file.getParentFile();
 						}
 					}
+
+				} else if (hook.whitelist().equals(Meta.cTypeMethod) || hook.whitelist().equals(Meta.cTypeTransaction)) {
+					String[] component = restriction.extra.split(":");
+					if (component.length == 2)
+						listResult.add(component[0] + ":*");
 				}
 
 			return listResult.toArray(new String[0]);
