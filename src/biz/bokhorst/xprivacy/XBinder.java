@@ -103,6 +103,7 @@ public class XBinder extends XHook {
 
 	// @formatter:off
 	public static List<String> cServiceOptional = Arrays.asList(new String[] {
+		"<noname>",
 		"iphonesubinfo",
 		"iphonesubinfo_msim",
 		"sip",
