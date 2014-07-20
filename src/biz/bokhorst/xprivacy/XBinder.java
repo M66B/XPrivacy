@@ -297,7 +297,7 @@ public class XBinder extends XHook {
 			}
 			if (codeName == null) {
 				codeName = Integer.toString(code);
-				Util.log(this, Log.INFO,
+				Util.log(this, Log.WARN,
 						"Unknown transaction=" + descriptor + ":" + code + " uid=" + Binder.getCallingUid());
 				Util.logStack(this, Log.INFO);
 			}
