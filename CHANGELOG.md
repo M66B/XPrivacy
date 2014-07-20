@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Option to white/black list from usage data (long press entry) ([issue](/../../issues/1821)) (only [Pro license](http://www.xprivacy.eu/))
+* Added IPC restrictions for *IApplicationThread*, *IContentProvider* and *IWindowSession* (on demand restricting only)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

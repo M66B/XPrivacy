@@ -61,7 +61,10 @@ public class XBinder extends XHook {
 		"input",
 		"sensorservice",
 		"usb",
-		"media.camera"
+		"media.camera",
+		"<noname>",
+		"<noname>",
+		"<noname>"
 	});
 	// @formatter:on
 
@@ -89,13 +92,14 @@ public class XBinder extends XHook {
 		"android.hardware.input.IInputManager",
 		"android.gui.SensorServer",
 		"android.hardware.usb.IUsbManager",
-		"android.hardware.ICameraService"
+		"android.hardware.ICameraService",
+		"android.app.IApplicationThread",
+		"android.content.IContentProvider",
+		"android.view.IWindowSession"
 	});
 	// @formatter:on
 
 	// TODO: audio/media record
-	// TODO: content services
-	// TODO: intents, configuration
 
 	// @formatter:off
 	public static List<String> cServiceOptional = Arrays.asList(new String[] {
