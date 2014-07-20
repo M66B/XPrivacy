@@ -1121,6 +1121,8 @@ It is already enough work to support the official versions from the last stable 
 
 **I will not look into issues of applications that have to be paid for.**
 
+**I will not look into issues of applications that have root access.**
+
 **There is no support for anything other than privacy, so not for game cheating, root cloaking, etc.**
 
 ### Bugs
