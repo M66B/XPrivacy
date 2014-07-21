@@ -1316,6 +1316,10 @@ The goal of the project is to provide a decent, free and open source privacy sol
 To keep XPrivacy maintainable hooking into private/internal classes and methods is undesirable,
 since these vary considerably in different Android versions and are often customized/modified by manufacturers and custom ROM builders.
 
+To prevent applications from crashing fake data should be returned whenever possible.
+There is no need to apply restrictions in situations where the user is presented a dialog first (for example to pick an account).
+Setting data should never be restricted, this is outside the goal of XPrivacy.
+
 Please note that you agree to the license below by contributing, including the copyrights.
 
 License
