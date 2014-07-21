@@ -333,7 +333,8 @@ public class Requirements {
 				"android.privacy.surrogate.PrivacyTelephonyManager" /* PDroid */});
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
 				"android.view.Window$LocalWindowManager" });
-		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager" });
+		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager",
+				"android.privacy.surrogate.PrivacyWifiManager"/* PDroid */});
 	}
 
 	public static void checkService(ActivityBase context, String name, String[] className) {
