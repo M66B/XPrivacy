@@ -1314,7 +1314,7 @@ New translations are considered as a serious contribution, but translating a few
 The goal of the project is to provide a decent, free and open source privacy solution for Android to as many as possible people.
 
 To keep XPrivacy maintainable hooking into private/internal classes and methods is undesirable,
-since these differ considerably over Android versions and are often customized/modified by manufacturers and custom ROM builders.
+since these vary considerably in different Android versions and are often customized/modified by manufacturers and custom ROM builders.
 
 Please note that you agree to the license below by contributing, including the copyrights.
 
