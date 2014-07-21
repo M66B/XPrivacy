@@ -96,6 +96,7 @@ public class XAccountManager extends XHook {
 	// public boolean addSharedAccountAsUser(android.accounts.Account account, int userId) throws android.os.RemoteException;
 	// public android.accounts.Account[] getSharedAccountsAsUser(int userId) throws android.os.RemoteException;
 	// public boolean removeSharedAccountAsUser(android.accounts.Account account, int userId) throws android.os.RemoteException;
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/accounts/AccountManagerService.java
 
 	// @formatter:on
 
@@ -108,7 +109,10 @@ public class XAccountManager extends XHook {
 		hasFeatures,
 		removeOnAccountsUpdatedListener,
 
+		Srv_getAuthenticatorTypes,
 		Srv_getAccounts, Srv_getAccountsForPackage, Srv_getAccountsByTypeForPackage, Srv_getAccountsAsUser,
+		Srv_getAccountsByFeatures,
+		Srv_peekAuthToken, Srv_getAuthToken, Srv_getAuthTokenLabel,
 		Srv_getSharedAccountsAsUser
 	};
 	// @formatter:on
@@ -120,10 +124,15 @@ public class XAccountManager extends XHook {
 				className = cClassName;
 
 			if (isAOSPKitKat()) {
+				listHook.add(new XAccountManager(Methods.Srv_getAuthenticatorTypes, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccounts, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsForPackage, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsByTypeForPackage, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsAsUser, PrivacyManager.cAccounts));
+				listHook.add(new XAccountManager(Methods.Srv_getAccountsByFeatures, PrivacyManager.cAccounts));
+				listHook.add(new XAccountManager(Methods.Srv_peekAuthToken, PrivacyManager.cAccounts));
+				listHook.add(new XAccountManager(Methods.Srv_getAuthToken, PrivacyManager.cAccounts));
+				listHook.add(new XAccountManager(Methods.Srv_getAuthTokenLabel, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getSharedAccountsAsUser, PrivacyManager.cAccounts));
 			}
 
@@ -219,13 +228,26 @@ public class XAccountManager extends XHook {
 		if (mMethod != Methods.addOnAccountsUpdatedListener && mMethod != Methods.removeOnAccountsUpdatedListener) {
 			int uid = Binder.getCallingUid();
 
-			if (mMethod == Methods.Srv_getAccounts || mMethod == Methods.Srv_getAccountsForPackage
+			if (mMethod == Methods.Srv_getAuthenticatorTypes) {
+				// TODO: Srv_getAuthenticatorTypes
+
+			} else if (mMethod == Methods.Srv_getAccounts || mMethod == Methods.Srv_getAccountsForPackage
 					|| mMethod == Methods.Srv_getAccountsByTypeForPackage || mMethod == Methods.Srv_getAccountsAsUser
 					|| mMethod == Methods.Srv_getSharedAccountsAsUser) {
 				if (param.getResult() != null && isRestricted(param)) {
 					Account[] accounts = (Account[]) param.getResult();
 					param.setResult(filterAccounts(accounts, uid));
 				}
+
+			} else if (mMethod == Methods.Srv_getAccountsByFeatures) {
+				// TODO: Srv_getAccountsByFeatures
+
+			} else if (mMethod == Methods.Srv_peekAuthToken) {
+				// TODO: Srv_peekAuthToken
+
+			} else if (mMethod == Methods.Srv_getAuthToken || mMethod == Methods.Srv_getAuthTokenLabel) {
+				// TODO: Srv_getAuthToken
+				// TODO: Srv_getAuthTokenLabel
 
 			} else if (mMethod == Methods.blockingGetAuthToken) {
 				if (param.args.length > 0 && param.args[0] != null) {
