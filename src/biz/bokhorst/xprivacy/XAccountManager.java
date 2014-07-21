@@ -193,7 +193,7 @@ public class XAccountManager extends XHook {
 		case getAuthToken:
 			if (param.args.length > 0) {
 				Account account = (Account) param.args[0];
-				for (int i = 0; i < param.args.length; i++)
+				for (int i = 1; i < param.args.length; i++)
 					if (param.args[i] instanceof AccountManagerCallback<?>)
 						if (isRestrictedExtra(param, account == null ? null : account.name)) {
 							AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
@@ -204,7 +204,7 @@ public class XAccountManager extends XHook {
 
 		case getAuthTokenByFeatures:
 			if (param.args.length > 0)
-				for (int i = 0; i < param.args.length; i++)
+				for (int i = 1; i < param.args.length; i++)
 					if (param.args[i] instanceof AccountManagerCallback<?>)
 						if (isRestrictedExtra(param, (String) param.args[0])) {
 							AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
@@ -215,7 +215,7 @@ public class XAccountManager extends XHook {
 		case hasFeatures:
 			if (param.args.length > 0) {
 				Account account = (Account) param.args[0];
-				for (int i = 0; i < param.args.length; i++)
+				for (int i = 1; i < param.args.length; i++)
 					if (param.args[i] instanceof AccountManagerCallback<?>)
 						if (isRestrictedExtra(param, account == null ? null : account.name)) {
 							AccountManagerCallback<Boolean> callback = (AccountManagerCallback<Boolean>) param.args[i];
@@ -260,9 +260,9 @@ public class XAccountManager extends XHook {
 			break;
 
 		case blockingGetAuthToken:
-			if (param.args.length > 0 && param.args[0] != null) {
+			if (param.getResult() != null && param.args.length > 0 && param.args[0] != null) {
 				Account account = (Account) param.args[0];
-				if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name))
+				if (isRestrictedExtra(param, account == null ? null : account.name))
 					if (!isAccountAllowed(account, uid))
 						param.setResult(null);
 			}
@@ -277,16 +277,16 @@ public class XAccountManager extends XHook {
 
 		case getAccountsByType:
 		case getAccountsByTypeForPackage:
-			if (param.args.length > 0)
-				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
+			if (param.getResult() != null && param.args.length > 0)
+				if (isRestrictedExtra(param, (String) param.args[0])) {
 					Account[] accounts = (Account[]) param.getResult();
 					param.setResult(filterAccounts(accounts, uid));
 				}
 			break;
 
 		case getAccountsByTypeAndFeatures:
-			if (param.args.length > 0)
-				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
+			if (param.getResult() != null && param.args.length > 0)
+				if (isRestrictedExtra(param, (String) param.args[0])) {
 					AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
 					param.setResult(new XFutureAccount(future, uid));
 				}
@@ -298,9 +298,9 @@ public class XAccountManager extends XHook {
 			break;
 
 		case getAuthToken:
-			if (param.args.length > 0) {
+			if (param.getResult() != null && param.args.length > 0) {
 				Account account = (Account) param.args[0];
-				if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name)) {
+				if (isRestrictedExtra(param, account == null ? null : account.name)) {
 					AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
 					param.setResult(new XFutureBundle(future, uid));
 				}
@@ -308,16 +308,17 @@ public class XAccountManager extends XHook {
 			break;
 
 		case getAuthTokenByFeatures:
-			if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
-				AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
-				param.setResult(new XFutureBundle(future, uid));
-			}
+			if (param.getResult() != null)
+				if (isRestrictedExtra(param, (String) param.args[0])) {
+					AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
+					param.setResult(new XFutureBundle(future, uid));
+				}
 			break;
 
 		case hasFeatures:
-			if (param.args.length > 0 && param.args[0] != null) {
+			if (param.getResult() != null && param.args.length > 0 && param.args[0] != null) {
 				Account account = (Account) param.args[0];
-				if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name))
+				if (isRestrictedExtra(param, account == null ? null : account.name))
 					if (!isAccountAllowed(account, uid))
 						param.setResult(new XFutureBoolean());
 			}
@@ -335,10 +336,11 @@ public class XAccountManager extends XHook {
 		case Srv_getAccountsByTypeForPackage:
 		case Srv_getAccountsAsUser:
 		case Srv_getSharedAccountsAsUser:
-			if (param.getResult() != null && isRestricted(param)) {
-				Account[] accounts = (Account[]) param.getResult();
-				param.setResult(filterAccounts(accounts, uid));
-			}
+			if (param.getResult() != null)
+				if (isRestricted(param)) {
+					Account[] accounts = (Account[]) param.getResult();
+					param.setResult(filterAccounts(accounts, uid));
+				}
 			break;
 
 		case Srv_getAccountsByFeatures:
