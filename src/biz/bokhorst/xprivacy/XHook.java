@@ -25,8 +25,11 @@ public abstract class XHook {
 		mSdk = sdk;
 	}
 
-	protected static boolean isAOSPKitKat() {
-		return (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && "KTU84P".equals(Build.ID));
+	public static boolean isAOSP(int sdk) {
+		if (sdk == Build.VERSION_CODES.KITKAT)
+			return (Build.VERSION.SDK_INT == sdk && "KTU84P".equals(Build.ID));
+		else
+			return false;
 	}
 
 	protected XHook optional() {
