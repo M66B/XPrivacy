@@ -154,7 +154,8 @@ public class XAccountManager extends XHook {
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.addOnAccountsUpdatedListener) {
+		switch (mMethod) {
+		case addOnAccountsUpdatedListener:
 			if (param.args.length > 0 && param.args[0] != null)
 				if (isRestricted(param)) {
 					int uid = Binder.getCallingUid();
@@ -170,8 +171,9 @@ public class XAccountManager extends XHook {
 					}
 					param.args[0] = xListener;
 				}
+			break;
 
-		} else if (mMethod == Methods.removeOnAccountsUpdatedListener) {
+		case removeOnAccountsUpdatedListener:
 			if (param.args.length > 0 && param.args[0] != null)
 				synchronized (mListener) {
 					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
@@ -181,15 +183,17 @@ public class XAccountManager extends XHook {
 						Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 					}
 				}
+			break;
 
-		} else if (mMethod == Methods.getAccountsByTypeAndFeatures) {
+		case getAccountsByTypeAndFeatures:
 			if (param.args.length > 2 && param.args[2] != null)
 				if (isRestrictedExtra(param, (String) param.args[0])) {
 					AccountManagerCallback<Account[]> callback = (AccountManagerCallback<Account[]>) param.args[2];
 					param.args[2] = new XAccountManagerCallbackAccount(callback, Binder.getCallingUid());
 				}
+			break;
 
-		} else if (mMethod == Methods.getAuthToken) {
+		case getAuthToken:
 			if (param.args.length > 0) {
 				Account account = (Account) param.args[0];
 				for (int i = 0; i < param.args.length; i++)
@@ -199,8 +203,9 @@ public class XAccountManager extends XHook {
 							param.args[i] = new XAccountManagerCallbackBundle(callback, Binder.getCallingUid());
 						}
 			}
+			break;
 
-		} else if (mMethod == Methods.getAuthTokenByFeatures) {
+		case getAuthTokenByFeatures:
 			if (param.args.length > 0)
 				for (int i = 0; i < param.args.length; i++)
 					if (param.args[i] instanceof AccountManagerCallback<?>)
@@ -208,8 +213,9 @@ public class XAccountManager extends XHook {
 							AccountManagerCallback<Bundle> callback = (AccountManagerCallback<Bundle>) param.args[i];
 							param.args[i] = new XAccountManagerCallbackBundle(callback, Binder.getCallingUid());
 						}
+			break;
 
-		} else if (mMethod == Methods.hasFeatures) {
+		case hasFeatures:
 			if (param.args.length > 0) {
 				Account account = (Account) param.args[0];
 				for (int i = 0; i < param.args.length; i++)
@@ -219,6 +225,10 @@ public class XAccountManager extends XHook {
 							param.args[i] = new XAccountManagerCallbackBoolean(callback);
 						}
 			}
+			break;
+
+		default:
+			break;
 		}
 	}
 
