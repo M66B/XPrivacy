@@ -48,7 +48,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					BufferedReader br = new BufferedReader(ir);
 					String line;
 					while ((line = br.readLine()) != null) {
-						String[] name = line.split("\\.");
+						String[] name = line.split("/");
 						if (name.length > 0) {
 							String methodName = (name.length > 1 ? name[1] : null);
 							CRestriction restriction = new CRestriction(0, name[0], methodName, null);
