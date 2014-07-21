@@ -173,16 +173,10 @@ public class XAccountManager extends XHook {
 				}
 			break;
 
-		case removeOnAccountsUpdatedListener:
-			if (param.args.length > 0 && param.args[0] != null)
-				synchronized (mListener) {
-					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
-					XOnAccountsUpdateListener xListener = mListener.get(listener);
-					if (xListener != null) {
-						param.args[0] = xListener;
-						Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-					}
-				}
+		case blockingGetAuthToken:
+		case getAccounts:
+		case getAccountsByType:
+		case getAccountsByTypeForPackage:
 			break;
 
 		case getAccountsByTypeAndFeatures:
@@ -191,6 +185,9 @@ public class XAccountManager extends XHook {
 					AccountManagerCallback<Account[]> callback = (AccountManagerCallback<Account[]>) param.args[2];
 					param.args[2] = new XAccountManagerCallbackAccount(callback, Binder.getCallingUid());
 				}
+			break;
+
+		case getAuthenticatorTypes:
 			break;
 
 		case getAuthToken:
@@ -227,7 +224,28 @@ public class XAccountManager extends XHook {
 			}
 			break;
 
-		default:
+		case removeOnAccountsUpdatedListener:
+			if (param.args.length > 0 && param.args[0] != null)
+				synchronized (mListener) {
+					OnAccountsUpdateListener listener = (OnAccountsUpdateListener) param.args[0];
+					XOnAccountsUpdateListener xListener = mListener.get(listener);
+					if (xListener != null) {
+						param.args[0] = xListener;
+						Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+					}
+				}
+			break;
+
+		case Srv_getAuthenticatorTypes:
+		case Srv_getAccounts:
+		case Srv_getAccountsForPackage:
+		case Srv_getAccountsByTypeForPackage:
+		case Srv_getAccountsAsUser:
+		case Srv_getAccountsByFeatures:
+		case Srv_peekAuthToken:
+		case Srv_getAuthToken:
+		case Srv_getAuthTokenLabel:
+		case Srv_getSharedAccountsAsUser:
 			break;
 		}
 	}
@@ -235,87 +253,109 @@ public class XAccountManager extends XHook {
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void after(XParam param) throws Throwable {
-		if (mMethod != Methods.addOnAccountsUpdatedListener && mMethod != Methods.removeOnAccountsUpdatedListener) {
-			int uid = Binder.getCallingUid();
+		int uid = Binder.getCallingUid();
 
-			if (mMethod == Methods.Srv_getAuthenticatorTypes) {
-				// TODO: Srv_getAuthenticatorTypes
+		switch (mMethod) {
+		case addOnAccountsUpdatedListener:
+			break;
 
-			} else if (mMethod == Methods.Srv_getAccounts || mMethod == Methods.Srv_getAccountsForPackage
-					|| mMethod == Methods.Srv_getAccountsByTypeForPackage || mMethod == Methods.Srv_getAccountsAsUser
-					|| mMethod == Methods.Srv_getSharedAccountsAsUser) {
-				if (param.getResult() != null && isRestricted(param)) {
-					Account[] accounts = (Account[]) param.getResult();
-					param.setResult(filterAccounts(accounts, uid));
-				}
+		case blockingGetAuthToken:
+			if (param.args.length > 0 && param.args[0] != null) {
+				Account account = (Account) param.args[0];
+				if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name))
+					if (!isAccountAllowed(account, uid))
+						param.setResult(null);
+			}
+			break;
 
-			} else if (mMethod == Methods.Srv_getAccountsByFeatures) {
-				// TODO: Srv_getAccountsByFeatures
+		case getAccounts:
+			if (param.getResult() != null && isRestricted(param)) {
+				Account[] accounts = (Account[]) param.getResult();
+				param.setResult(filterAccounts(accounts, uid));
+			}
+			break;
 
-			} else if (mMethod == Methods.Srv_peekAuthToken) {
-				// TODO: Srv_peekAuthToken
-
-			} else if (mMethod == Methods.Srv_getAuthToken || mMethod == Methods.Srv_getAuthTokenLabel) {
-				// TODO: Srv_getAuthToken
-				// TODO: Srv_getAuthTokenLabel
-
-			} else if (mMethod == Methods.blockingGetAuthToken) {
-				if (param.args.length > 0 && param.args[0] != null) {
-					Account account = (Account) param.args[0];
-					if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name))
-						if (!isAccountAllowed(account, uid))
-							param.setResult(null);
-				}
-
-			} else if (mMethod == Methods.getAccounts) {
-				if (param.getResult() != null && isRestricted(param)) {
-					Account[] accounts = (Account[]) param.getResult();
-					param.setResult(filterAccounts(accounts, uid));
-				}
-
-			} else if (mMethod == Methods.getAccountsByType || mMethod == Methods.getAccountsByTypeForPackage) {
-				if (param.args.length > 0)
-					if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
-						Account[] accounts = (Account[]) param.getResult();
-						param.setResult(filterAccounts(accounts, uid));
-					}
-
-			} else if (mMethod == Methods.getAccountsByTypeAndFeatures) {
-				if (param.args.length > 0)
-					if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
-						AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
-						param.setResult(new XFutureAccount(future, uid));
-					}
-
-			} else if (mMethod == Methods.getAuthenticatorTypes) {
-				if (param.getResult() != null && isRestricted(param))
-					param.setResult(new AuthenticatorDescription[0]);
-
-			} else if (mMethod == Methods.getAuthToken) {
-				if (param.args.length > 0) {
-					Account account = (Account) param.args[0];
-					if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name)) {
-						AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
-						param.setResult(new XFutureBundle(future, uid));
-					}
-				}
-
-			} else if (mMethod == Methods.getAuthTokenByFeatures) {
+		case getAccountsByType:
+		case getAccountsByTypeForPackage:
+			if (param.args.length > 0)
 				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
+					Account[] accounts = (Account[]) param.getResult();
+					param.setResult(filterAccounts(accounts, uid));
+				}
+			break;
+
+		case getAccountsByTypeAndFeatures:
+			if (param.args.length > 0)
+				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
+					AccountManagerFuture<Account[]> future = (AccountManagerFuture<Account[]>) param.getResult();
+					param.setResult(new XFutureAccount(future, uid));
+				}
+			break;
+
+		case getAuthenticatorTypes:
+			if (param.getResult() != null && isRestricted(param))
+				param.setResult(new AuthenticatorDescription[0]);
+			break;
+
+		case getAuthToken:
+			if (param.args.length > 0) {
+				Account account = (Account) param.args[0];
+				if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name)) {
 					AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
 					param.setResult(new XFutureBundle(future, uid));
 				}
+			}
+			break;
 
-			} else if (mMethod == Methods.hasFeatures) {
-				if (param.args.length > 0 && param.args[0] != null) {
-					Account account = (Account) param.args[0];
-					if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name))
-						if (!isAccountAllowed(account, uid))
-							param.setResult(new XFutureBoolean());
-				}
+		case getAuthTokenByFeatures:
+			if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0])) {
+				AccountManagerFuture<Bundle> future = (AccountManagerFuture<Bundle>) param.getResult();
+				param.setResult(new XFutureBundle(future, uid));
+			}
+			break;
 
-			} else
-				Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		case hasFeatures:
+			if (param.args.length > 0 && param.args[0] != null) {
+				Account account = (Account) param.args[0];
+				if (param.getResult() != null && isRestrictedExtra(param, account == null ? null : account.name))
+					if (!isAccountAllowed(account, uid))
+						param.setResult(new XFutureBoolean());
+			}
+			break;
+
+		case removeOnAccountsUpdatedListener:
+			break;
+
+		case Srv_getAuthenticatorTypes:
+			// TODO: Srv_getAuthenticatorTypes
+			break;
+
+		case Srv_getAccounts:
+		case Srv_getAccountsForPackage:
+		case Srv_getAccountsByTypeForPackage:
+		case Srv_getAccountsAsUser:
+		case Srv_getSharedAccountsAsUser:
+			if (param.getResult() != null && isRestricted(param)) {
+				Account[] accounts = (Account[]) param.getResult();
+				param.setResult(filterAccounts(accounts, uid));
+			}
+			break;
+
+		case Srv_getAccountsByFeatures:
+			// TODO: Srv_getAccountsByFeatures
+			break;
+
+		case Srv_peekAuthToken:
+			// TODO: Srv_peekAuthToken
+			break;
+
+		case Srv_getAuthToken:
+			// TODO: Srv_getAuthToken
+			break;
+
+		case Srv_getAuthTokenLabel:
+			// TODO: Srv_getAuthTokenLabel
+			break;
 		}
 	}
 
