@@ -151,6 +151,7 @@ public class XAccountManager extends XHook {
 		case getAccounts:
 		case getAccountsByType:
 		case getAccountsByTypeForPackage:
+			// Do nothing
 			break;
 
 		case getAccountsByTypeAndFeatures:
@@ -162,6 +163,7 @@ public class XAccountManager extends XHook {
 			break;
 
 		case getAuthenticatorTypes:
+			// Do nothing
 			break;
 
 		case getAuthToken:
@@ -214,6 +216,7 @@ public class XAccountManager extends XHook {
 		case Srv_getAccountsForPackage:
 		case Srv_getAccountsByTypeForPackage:
 		case Srv_getAccountsAsUser:
+			// Do nothing
 			break;
 
 		case Srv_getAccountsByFeatures:
@@ -227,6 +230,7 @@ public class XAccountManager extends XHook {
 			break;
 
 		case Srv_getSharedAccountsAsUser:
+			// Do nothing
 			break;
 		}
 	}
@@ -238,6 +242,7 @@ public class XAccountManager extends XHook {
 
 		switch (mMethod) {
 		case addOnAccountsUpdatedListener:
+			// Do nothing
 			break;
 
 		case blockingGetAuthToken:
@@ -306,6 +311,7 @@ public class XAccountManager extends XHook {
 			break;
 
 		case removeOnAccountsUpdatedListener:
+			// Do nothing
 			break;
 
 		case Srv_getAccounts:
@@ -322,6 +328,7 @@ public class XAccountManager extends XHook {
 			break;
 
 		case Srv_getAccountsByFeatures:
+			// Do nothing
 			break;
 		}
 	}
