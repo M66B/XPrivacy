@@ -308,6 +308,7 @@ public class XBinder extends XHook {
 					+ " uid=" + uid + " my=" + Process.myUid());
 
 			if (isRestrictedExtra(uid, PrivacyManager.cIPC, "Binder", interfaceName + ":" + codeName)) {
+				Util.log(this, Log.WARN, "Restricting " + interfaceName + ":" + codeName + " code=" + code);
 				// Get reply parcel
 				Parcel reply = null;
 				try {
