@@ -34,6 +34,7 @@ Changelog
 * Added wildcards for IPC transaction names
 * Fixed translating transaction codes into transaction names in most cases
 * Updated in application documentation
+* Added service side account restrictions
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
