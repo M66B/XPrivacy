@@ -32,7 +32,6 @@
     <string name="calling_android_intent_action_CALL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_CALL">Google documentation</a>]]></string>
     <string name="calling_android_intent_action_NEW_OUTGOING_CALL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_NEW_OUTGOING_CALL">Google documentation</a>]]></string>
     <string name="calling_CallLogProvider" translatable="false"><![CDATA[Will restrict access to the call log]]></string>
-
     <string name="calling_SIP_isApiSupported" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isApiSupported(android.content.Context)">Google documentation</a>]]></string>
     <string name="calling_SIP_isSipWifiOnly" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isSipWifiOnly(android.content.Context)">Google documentation</a>]]></string>
     <string name="calling_SIP_isVoipSupported" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/sip/SipManager.html#isVoipSupported(android.content.Context)">Google documentation</a>]]></string>
@@ -106,7 +105,7 @@
 
     <!-- ipc -->
     <string name="ipc_Binder" translatable="false"><![CDATA[Will restrict direct inter-process calls (<a href="https://en.wikipedia.org/wiki/Inter-process_communication">Wikipedia</a>)]]></string>
-    <string name="ipc_Reflection" translatable="false"><![CDATA[<a href="http://en.wikipedia.org/wiki/Reflection_(computer_programming)#Java">Wikipedia</a>]]></string>
+    <string name="ipc_Service" translatable="false"><![CDATA[Will restrict direct inter-process calls (<a href="https://en.wikipedia.org/wiki/Inter-process_communication">Wikipedia</a>)]]></string>
 
     <!-- location -->
     <string name="location_addGeofence" translatable="false"><![CDATA[Will restrict adding <a href="https://en.wikipedia.org/wiki/Geo-fence">geofences</a>]]></string>
@@ -132,6 +131,15 @@
     <string name="location_addGpsStatusListener" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/location/LocationManager.html#addGpsStatusListener(android.location.GpsStatus.Listener)">Google documentation</a>]]></string>
     <string name="location_getAllProviders" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/location/LocationManager.html#getAllProviders()">Google documentation</a>]]></string>
     <string name="location_getBestProvider" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/location/LocationManager.html#getBestProvider(android.location.Criteria,%20boolean)">Google documentation</a>]]></string>
+    <string name="location_MapV1_getLatitudeE6" translatable="false"><![CDATA[<a href="https://developers.google.com/maps/documentation/android/v1/reference/index">Google documentation</a>]]></string>
+    <string name="location_MapV1_getLongitudeE6" translatable="false"><![CDATA[<a href="https://developers.google.com/maps/documentation/android/v1/reference/index">Google documentation</a>]]></string>
+    <string name="location_MapV1_enableMyLocation" translatable="false"><![CDATA[<a href="https://developers.google.com/maps/documentation/android/v1/reference/index">Google documentation</a>]]></string>
+    <string name="location_MapV2_getMyLocation" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html">Google documentation</a>]]></string>
+    <string name="location_MapV2_getPosition" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/maps/model/Marker.html">Google documentation</a>]]></string>
+    <string name="location_MapV2_setLocationSource" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html">Google documentation</a>]]></string>
+    <string name="location_MapV2_setOnMapClickListener" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html">Google documentation</a>]]></string>
+    <string name="location_MapV2_setOnMapLongClickListener" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html">Google documentation</a>]]></string>
+    <string name="location_MapV2_setOnMyLocationChangeListener" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html">Google documentation</a>]]></string>
 
     <!-- media -->
     <string name="media_startRecording" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/media/AudioRecord.html#startRecording()">Google documentation</a>]]></string>
