@@ -57,6 +57,12 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "getCurrentSyncs", "GET_ACCOUNTS", 11, "1.99.24", null).dangerous());
 		mListHook.add(new Hook("accounts", "getSyncAdapterTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
 
+		mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 17, null, null));
+		mListHook.add(new Hook("accounts", "Srv_getAccountsForPackage", "GET_ACCOUNTS", 17, null, null));
+		mListHook.add(new Hook("accounts", "Srv_getAccountsByTypeForPackage", "GET_ACCOUNTS", 17, null, null));
+		mListHook.add(new Hook("accounts", "Srv_getAccountsAsUser", "GET_ACCOUNTS", 17, null, null));
+		mListHook.add(new Hook("accounts", "Srv_getSharedAccountsAsUser", "GET_ACCOUNTS", 17, null, null));
+
 		mListHook.add(new Hook("browser", "BrowserProvider2", "com.android.browser.permission.READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
 		mListHook.add(new Hook("browser", "Downloads", "ACCESS_DOWNLOAD_MANAGER,ACCESS_DOWNLOAD_MANAGER_ADVANCED,ACCESS_ALL_DOWNLOADS", 1, "1.99.43", null).dangerous());
 

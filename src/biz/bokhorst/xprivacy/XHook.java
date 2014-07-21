@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import android.os.Binder;
+import android.os.Build;
 
 public abstract class XHook {
 	private String mRestrictionName;
@@ -22,6 +23,10 @@ public abstract class XHook {
 		mMethodName = methodName;
 		mSpecifier = specifier;
 		mSdk = sdk;
+	}
+
+	protected static boolean isAOSPKitKat() {
+		return (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT && "KTU84P".equals(Build.ID));
 	}
 
 	protected XHook optional() {
