@@ -333,6 +333,8 @@ Limitations
 * You cannot restrict *Configuration.MCC/MNC* on demand
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
 * Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/)
+* It is possible to unhook methods in user space using native libraries, see [here](https://github.com/cernekee/WinXP) for a proof of concept
+
 * You cannot restrict the serial number and the Android ID for XPrivacy, because it is used for submitting restrictions
 	* The Android ID is salted with the serial number and MD5 hashed before communicating with the crowd sourced restrictions server
 	* This means that the crowd sourced restrictions server never gets the serial number nor the Android ID
