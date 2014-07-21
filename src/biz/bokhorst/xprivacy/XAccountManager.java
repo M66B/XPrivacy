@@ -70,33 +70,12 @@ public class XAccountManager extends XHook {
 
 	// @formatter:off
 
-	// public java.lang.String getPassword(android.accounts.Account account) throws android.os.RemoteException;
-	// public java.lang.String getUserData(android.accounts.Account account, java.lang.String key) throws android.os.RemoteException;
-	// public android.accounts.AuthenticatorDescription[] getAuthenticatorTypes() throws android.os.RemoteException;
 	// public android.accounts.Account[] getAccounts(java.lang.String accountType) throws android.os.RemoteException;
 	// public android.accounts.Account[] getAccountsForPackage(java.lang.String packageName, int uid) throws android.os.RemoteException;
 	// public android.accounts.Account[] getAccountsByTypeForPackage(java.lang.String type, java.lang.String packageName) throws android.os.RemoteException;
 	// public android.accounts.Account[] getAccountsAsUser(java.lang.String accountType, int userId) throws android.os.RemoteException;
-	// public void hasFeatures(android.accounts.IAccountManagerResponse response, android.accounts.Account account, java.lang.String[] features) throws android.os.RemoteException;
 	// public void getAccountsByFeatures(android.accounts.IAccountManagerResponse response, java.lang.String accountType, java.lang.String[] features) throws android.os.RemoteException;
-	// public boolean addAccountExplicitly(android.accounts.Account account, java.lang.String password, android.os.Bundle extras) throws android.os.RemoteException;
-	// public void removeAccount(android.accounts.IAccountManagerResponse response, android.accounts.Account account) throws android.os.RemoteException;
-	// public void invalidateAuthToken(java.lang.String accountType, java.lang.String authToken) throws android.os.RemoteException;
-	// public java.lang.String peekAuthToken(android.accounts.Account account, java.lang.String authTokenType) throws android.os.RemoteException;
-	// public void setAuthToken(android.accounts.Account account, java.lang.String authTokenType, java.lang.String authToken) throws android.os.RemoteException;
-	// public void setPassword(android.accounts.Account account, java.lang.String password) throws android.os.RemoteException;
-	// public void clearPassword(android.accounts.Account account) throws android.os.RemoteException;
-	// public void setUserData(android.accounts.Account account, java.lang.String key, java.lang.String value) throws android.os.RemoteException;
-	// public void updateAppPermission(android.accounts.Account account, java.lang.String authTokenType, int uid, boolean value) throws android.os.RemoteException;
-	// public void getAuthToken(android.accounts.IAccountManagerResponse response, android.accounts.Account account, java.lang.String authTokenType, boolean notifyOnAuthFailure, boolean expectActivityLaunch, android.os.Bundle options) throws android.os.RemoteException;
-	// public void addAccount(android.accounts.IAccountManagerResponse response, java.lang.String accountType, java.lang.String authTokenType, java.lang.String[] requiredFeatures, boolean expectActivityLaunch, android.os.Bundle options) throws android.os.RemoteException;
-	// public void updateCredentials(android.accounts.IAccountManagerResponse response, android.accounts.Account account, java.lang.String authTokenType, boolean expectActivityLaunch, android.os.Bundle options) throws android.os.RemoteException;
-	// public void editProperties(android.accounts.IAccountManagerResponse response, java.lang.String accountType, boolean expectActivityLaunch) throws android.os.RemoteException;
-	// public void confirmCredentialsAsUser(android.accounts.IAccountManagerResponse response, android.accounts.Account account, android.os.Bundle options, boolean expectActivityLaunch, int userId) throws android.os.RemoteException;
-	// public void getAuthTokenLabel(android.accounts.IAccountManagerResponse response, java.lang.String accountType, java.lang.String authTokenType) throws android.os.RemoteException;
-	// public boolean addSharedAccountAsUser(android.accounts.Account account, int userId) throws android.os.RemoteException;
 	// public android.accounts.Account[] getSharedAccountsAsUser(int userId) throws android.os.RemoteException;
-	// public boolean removeSharedAccountAsUser(android.accounts.Account account, int userId) throws android.os.RemoteException;
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/accounts/AccountManagerService.java
 
 	// @formatter:on
@@ -110,10 +89,8 @@ public class XAccountManager extends XHook {
 		hasFeatures,
 		removeOnAccountsUpdatedListener,
 
-		Srv_getAuthenticatorTypes,
 		Srv_getAccounts, Srv_getAccountsForPackage, Srv_getAccountsByTypeForPackage, Srv_getAccountsAsUser,
 		Srv_getAccountsByFeatures,
-		Srv_peekAuthToken, Srv_getAuthToken, Srv_getAuthTokenLabel,
 		Srv_getSharedAccountsAsUser
 	};
 	// @formatter:on
@@ -125,15 +102,11 @@ public class XAccountManager extends XHook {
 				className = cClassName;
 
 			if (isAOSP(Build.VERSION_CODES.KITKAT)) {
-				listHook.add(new XAccountManager(Methods.Srv_getAuthenticatorTypes, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccounts, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsForPackage, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsByTypeForPackage, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsAsUser, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsByFeatures, PrivacyManager.cAccounts));
-				listHook.add(new XAccountManager(Methods.Srv_peekAuthToken, PrivacyManager.cAccounts));
-				listHook.add(new XAccountManager(Methods.Srv_getAuthToken, PrivacyManager.cAccounts));
-				listHook.add(new XAccountManager(Methods.Srv_getAuthTokenLabel, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getSharedAccountsAsUser, PrivacyManager.cAccounts));
 			}
 
@@ -237,15 +210,18 @@ public class XAccountManager extends XHook {
 				}
 			break;
 
-		case Srv_getAuthenticatorTypes:
 		case Srv_getAccounts:
 		case Srv_getAccountsForPackage:
 		case Srv_getAccountsByTypeForPackage:
 		case Srv_getAccountsAsUser:
+			break;
+
 		case Srv_getAccountsByFeatures:
-		case Srv_peekAuthToken:
-		case Srv_getAuthToken:
-		case Srv_getAuthTokenLabel:
+			if (param.args.length > 1 && param.args[1] instanceof String)
+				if (isRestrictedExtra(param, (String) param.args[1]))
+					param.setResult(null);
+			break;
+
 		case Srv_getSharedAccountsAsUser:
 			break;
 		}
@@ -328,16 +304,13 @@ public class XAccountManager extends XHook {
 		case removeOnAccountsUpdatedListener:
 			break;
 
-		case Srv_getAuthenticatorTypes:
-			// TODO: Srv_getAuthenticatorTypes
-			break;
-
 		case Srv_getAccounts:
 		case Srv_getAccountsForPackage:
 		case Srv_getAccountsByTypeForPackage:
 		case Srv_getAccountsAsUser:
 		case Srv_getSharedAccountsAsUser:
-			if (param.getResult() != null)
+			// Filter account list
+			if (param.getResult() != null && param.getResult() instanceof Account[])
 				if (isRestricted(param)) {
 					Account[] accounts = (Account[]) param.getResult();
 					param.setResult(filterAccounts(accounts, uid));
@@ -345,19 +318,6 @@ public class XAccountManager extends XHook {
 			break;
 
 		case Srv_getAccountsByFeatures:
-			// TODO: Srv_getAccountsByFeatures
-			break;
-
-		case Srv_peekAuthToken:
-			// TODO: Srv_peekAuthToken
-			break;
-
-		case Srv_getAuthToken:
-			// TODO: Srv_getAuthToken
-			break;
-
-		case Srv_getAuthTokenLabel:
-			// TODO: Srv_getAuthTokenLabel
 			break;
 		}
 	}
