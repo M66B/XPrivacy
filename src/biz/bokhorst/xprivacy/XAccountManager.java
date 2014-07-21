@@ -217,9 +217,13 @@ public class XAccountManager extends XHook {
 			break;
 
 		case Srv_getAccountsByFeatures:
-			if (param.args.length > 1 && param.args[1] instanceof String)
+			if (param.args.length > 1 && param.args[1] instanceof String) {
 				if (isRestrictedExtra(param, (String) param.args[1]))
 					param.setResult(null);
+			} else {
+				if (isRestricted(param))
+					param.setResult(null);
+			}
 			break;
 
 		case Srv_getSharedAccountsAsUser:
@@ -310,7 +314,7 @@ public class XAccountManager extends XHook {
 		case Srv_getAccountsAsUser:
 		case Srv_getSharedAccountsAsUser:
 			// Filter account list
-			if (param.getResult() != null && param.getResult() instanceof Account[])
+			if (param.getResult() instanceof Account[])
 				if (isRestricted(param)) {
 					Account[] accounts = (Account[]) param.getResult();
 					param.setResult(filterAccounts(accounts, uid));
