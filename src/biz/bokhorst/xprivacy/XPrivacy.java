@@ -156,6 +156,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// Common
 	public static void init() {
+		Util.log(null, Log.WARN, "isAOSP=" + XHook.isAOSP(Build.VERSION_CODES.KITKAT) + " host=" + Build.HOST
+				+ " display=" + Build.DISPLAY);
+
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 

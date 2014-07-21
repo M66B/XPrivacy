@@ -26,9 +26,11 @@ public abstract class XHook {
 	}
 
 	public static boolean isAOSP(int sdk) {
-		if (sdk == Build.VERSION_CODES.KITKAT)
-			return (Build.VERSION.SDK_INT == sdk && "KTU84P".equals(Build.ID));
-		else
+		if (sdk == Build.VERSION_CODES.KITKAT && sdk == Build.VERSION.SDK_INT) {
+			if (Build.DISPLAY == null || Build.HOST == null)
+				return false;
+			return (Build.HOST.endsWith(".google.com") || Build.DISPLAY.startsWith("omni"));
+		} else
 			return false;
 	}
 
