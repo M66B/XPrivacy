@@ -3,9 +3,13 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Build;
+import android.provider.MediaStore;
 
+@SuppressLint("InlinedApi")
 public class Meta {
 	private static boolean mAnnotated = false;
 	private static List<Hook> mListHook = new ArrayList<Hook>();
@@ -76,9 +80,12 @@ public class Meta {
 		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "android.intent.action.RESPOND_VIA_MESSAGE", "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
-		mListHook.add(new Hook("calling", "android.intent.action.CALL", "CALL_PHONE", 10, null, null).doNotify());
+		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).doNotify());
 		mListHook.add(new Hook("calling", "android.intent.action.NEW_OUTGOING_CALL", "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
+
+		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT))
+			mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).doNotify());
 
 		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).doNotify());
 		mListHook.add(new Hook("calling", "SIP.isSipWifiOnly", "USE_SIP", 9, null, null).doNotify());
@@ -200,13 +207,19 @@ public class Meta {
 		mListHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "takePicture", "CAMERA", 1, null, null).doNotify());
 		mListHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 1, null, null).doNotify());
-		mListHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE", "CAMERA", 3, null, null).doNotify());
-		mListHook.add(new Hook("media", "android.media.action.IMAGE_CAPTURE_SECURE", "CAMERA", 17, null, null).doNotify());
-		mListHook.add(new Hook("media", "android.media.action.VIDEO_CAPTURE", "CAMERA", 3, null, null).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "CAMERA", 3, null, null).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "CAMERA", 17, null, null).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "CAMERA", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.capture", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.captureBurst", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).doNotify());
+
+		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT)) {
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE, "CAMERA", 3, null, null).doNotify());
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "CAMERA", 17, null, null).doNotify());
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_VIDEO_CAPTURE, "CAMERA", 3, null, null).doNotify());
+		}
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
 		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 1, null, null));
@@ -350,7 +363,11 @@ public class Meta {
 		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null));
 		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null));
 		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null));
-		mListHook.add(new Hook("view", "android.intent.action.VIEW", "", 1, null, null).doNotify().whitelist(cTypeUrl));
+		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).doNotify().whitelist(cTypeUrl));
+
+		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT))
+			mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 1, null, null).doNotify().whitelist(cTypeUrl));
+
 		// @formatter:on
 		return mListHook;
 	}
