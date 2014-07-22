@@ -125,6 +125,7 @@
     <string name="restrict_help_browser">Zablokuje to dostęp do twojej przeglądarki, np. zakładek oraz historii pobierania plików</string>
     <string name="restrict_help_accounts">Zablokuje to dostęp do informacji o twoim koncie, np. konice Google, które zawiera również twój adres e-mail</string>
     <string name="whitelist_address">Adresy</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">Adresy IP</string>
     <string name="whitelist_library">Biblioteki natywne</string>
     <string name="whitelist_method">Nazwy metod</string>

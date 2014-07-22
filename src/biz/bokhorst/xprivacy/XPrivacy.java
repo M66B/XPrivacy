@@ -234,11 +234,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Environment
 		hookAll(XEnvironment.getInstances(), null, mSecret);
 
-		// InetAddress
+		// Inet address
 		hookAll(XInetAddress.getInstances(), null, mSecret);
 
-		// InputDevice
+		// Input device
 		hookAll(XInputDevice.getInstances(), null, mSecret);
+
+		// Intent firewall
+		hookAll(XIntentFirewall.getInstances(), null, mSecret);
 
 		// IO bridge
 		hookAll(XIoBridge.getInstances(), null, mSecret);

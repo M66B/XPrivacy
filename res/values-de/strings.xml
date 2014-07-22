@@ -125,6 +125,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="restrict_help_browser">Beschränkt Zufriff auf Browser-Informatinoen, wie die Favoriten und Download-Verlauf</string>
     <string name="restrict_help_accounts">Beschränkt Zugriff auf Kontoinformationen, wie Ihr Google Konto, welches Ihre G-Mail Adresse enthält</string>
     <string name="whitelist_address">Adressen</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP Adressen</string>
     <string name="whitelist_library">Native Bibliotheken</string>
     <string name="whitelist_method">Methodennamen</string>

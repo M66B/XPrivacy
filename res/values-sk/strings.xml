@@ -125,6 +125,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="restrict_help_browser">Obmedzí prístup k informáciám prehliadača, akými sú napríklad vaše záložky a história sťahovaní</string>
     <string name="restrict_help_accounts">Obmedzí prístup k informáciám o účtoch, akým je napríklad váš účet Google, ktorý obsahuje vašu G-mailovú adresu</string>
     <string name="whitelist_address">Adresy</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">Adresy IP</string>
     <string name="whitelist_library">Natívne knižnice</string>
     <string name="whitelist_method">Názvy metód</string>

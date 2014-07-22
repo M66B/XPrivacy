@@ -124,6 +124,7 @@
     <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
     <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
     <string name="whitelist_address">Addresses</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">Các địa chỉ IP</string>
     <string name="whitelist_library">Các thư viện gốc của máy</string>
     <string name="whitelist_method">Tên các cách thức</string>

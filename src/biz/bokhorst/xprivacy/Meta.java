@@ -21,6 +21,7 @@ public class Meta {
 	public final static String cTypeTemplate = "Template";
 
 	public final static String cTypeAddress = "Address";
+	public final static String cTypeAction = "Action";
 	public final static String cTypeCommand = "Command";
 	public final static String cTypeFilename = "Filename";
 	public final static String cTypeIPAddress = "IPAddress";
@@ -32,10 +33,10 @@ public class Meta {
 	public final static String cTypeUrl = "Url";
 
 	public static boolean isWhitelist(String type) {
-		return (cTypeAddress.equals(type) || cTypeCommand.equals(type) || cTypeFilename.equals(type)
-				|| cTypeIPAddress.equals(type) || cTypeLibrary.equals(type) || cTypeMethod.equals(type)
-				|| cTypePermission.equals(type) || cTypeProc.equals(type) || cTypeTransaction.equals(type) || cTypeUrl
-					.equals(type));
+		return (cTypeAddress.equals(type) || cTypeAction.equals(type) || cTypeCommand.equals(type)
+				|| cTypeFilename.equals(type) || cTypeIPAddress.equals(type) || cTypeLibrary.equals(type)
+				|| cTypeMethod.equals(type) || cTypePermission.equals(type) || cTypeProc.equals(type)
+				|| cTypeTransaction.equals(type) || cTypeUrl.equals(type));
 	}
 
 	public static List<Hook> get() {
@@ -369,6 +370,8 @@ public class Meta {
 			mListHook.add(new Hook("system", "Srv_queryIntentContentProviders", "", 1, null, null).dangerous());
 			mListHook.add(new Hook("system", "Srv_queryIntentReceivers", "", 1, null, null).dangerous());
 			mListHook.add(new Hook("system", "Srv_queryIntentServices", "", 1, null, null).dangerous());
+
+			mListHook.add(new Hook("system", "IntentFirewall", "", 1, null, null).dangerous().whitelist(cTypeAction));
 		}
 
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cTypeUrl));

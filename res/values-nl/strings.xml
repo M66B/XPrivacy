@@ -125,6 +125,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="restrict_help_browser">Zal de toegang tot browser informatie, zoals uw favorieten en download geschiedenis, beperken</string>
     <string name="restrict_help_accounts">Zal de toegang tot uw account informatie, zoals uw Google account, inclusief uw G-mail adres, beperken</string>
     <string name="whitelist_address">Adressen</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP adressen</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Methode namen</string>

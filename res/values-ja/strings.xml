@@ -125,6 +125,7 @@
     <string name="restrict_help_browser">ブラウザー情報へのアクセスを制限します (ブックマークやダウンロード履歴など)</string>
     <string name="restrict_help_accounts">アカウント情報へのアクセスを制限します (G-mail アドレスを含む Google アカウントなど)</string>
     <string name="whitelist_address">アドレス</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP アドレス</string>
     <string name="whitelist_library">ネイティブライブラリ</string>
     <string name="whitelist_method">メソッド名</string>

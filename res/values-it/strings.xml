@@ -125,6 +125,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_help_browser">Restringe l\'accesso alle informazioni del browser, come i segnalibri e lo storico dei file scaricati</string>
     <string name="restrict_help_accounts">Restringe l\'accesso alle informazioni dell\'account, come il tuo account Google che include l\'indirizzo G-mail</string>
     <string name="whitelist_address">Indirizzi</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">Indirizzi IP</string>
     <string name="whitelist_library">Librerie native</string>
     <string name="whitelist_method">Nomi metodi</string>

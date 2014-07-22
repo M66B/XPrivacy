@@ -123,6 +123,7 @@
     <string name="restrict_help_browser">Blokkerer tilgang til informasjon fra nettleseren, som bokmerkene dine og historikken</string>
     <string name="restrict_help_accounts">Blokkerer tilgang til informasjon fra kontoer, som Google-kontoen din (inneholder blant annet G-mail adressen din)</string>
     <string name="whitelist_address">Adresser</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP adresser</string>
     <string name="whitelist_library">Lokale biblioteker</string>
     <string name="whitelist_method">Metodenavner</string>
