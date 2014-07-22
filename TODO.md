@@ -11,3 +11,10 @@ For interested developers:
 
 https://android.googlesource.com/?format=HTML
 git clone https://android.googlesource.com/platform/frameworks/base -b l-preview
+
+Services
+--------
+
+* Individual account methods
+* Individual package methods
+* Starting services?

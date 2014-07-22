@@ -356,6 +356,21 @@ public class Meta {
 		mListHook.add(new Hook("system", "checkPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 		mListHook.add(new Hook("system", "checkUidPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 
+		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT)) {
+			mListHook.add(new Hook("system", "Srv_getInstalledApplications", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getInstalledPackages", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getPackagesForUid", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getPackagesHoldingPermissions", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getPersistentApplications", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getPreferredPackages", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryContentProviders", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentActivities", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentActivityOptions", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentContentProviders", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentReceivers", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentServices", "", 1, null, null).dangerous());
+		}
+
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null));
 		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null));
