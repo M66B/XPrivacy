@@ -138,7 +138,13 @@ public class XPackageManager extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		// Do nothing
+		if (mMethod == Methods.getPreferredActivities)
+			if (param.args.length > 1)
+				if (isRestricted(param)) {
+					param.args[0] = new ArrayList<IntentFilter>();
+					param.args[1] = new ArrayList<ComponentName>();
+					param.setResult(0);
+				}
 	}
 
 	@Override
@@ -146,22 +152,67 @@ public class XPackageManager extends XHook {
 	protected void after(XParam param) throws Throwable {
 		switch (mMethod) {
 		case Srv_getInstalledApplications:
+			if (param.getResult() != null)
+				if (isRestricted(param)) {
+					Method mGetList = param.getResult().getClass().getDeclaredMethod("getList");
+					List<ApplicationInfo> listAppInfo = (List<ApplicationInfo>) mGetList.invoke(param.getResult());
+					for (ApplicationInfo appInfo : new ArrayList<ApplicationInfo>(listAppInfo))
+						if (!isPackageAllowed(appInfo.packageName))
+							listAppInfo.remove(appInfo);
+				}
+			break;
+
 		case Srv_getInstalledPackages:
-		case Srv_getPackagesForUid:
 		case Srv_getPackagesHoldingPermissions:
+			if (param.getResult() != null)
+				if (isRestricted(param)) {
+					Method mGetList = param.getResult().getClass().getDeclaredMethod("getList");
+					List<PackageInfo> listPkgInfo = (List<PackageInfo>) mGetList.invoke(param.getResult());
+					for (PackageInfo pkgInfo : new ArrayList<PackageInfo>(listPkgInfo))
+						if (!isPackageAllowed(pkgInfo.packageName))
+							listPkgInfo.remove(pkgInfo);
+				}
+			break;
+
+		case Srv_getPackagesForUid:
+			if (isRestricted(param))
+				param.setResult(null);
+			break;
+
 		case Srv_getPersistentApplications:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
+			break;
+
 		case Srv_getPreferredPackages:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
+			break;
+
 		case Srv_queryContentProviders:
+			if (param.args.length > 0 && param.args[0] instanceof String && param.getResult() != null) {
+				String processName = (String) param.args[0];
+				if (isRestrictedExtra(param, processName))
+					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+			}
+			break;
+
 		case Srv_queryIntentActivities:
 		case Srv_queryIntentActivityOptions:
 		case Srv_queryIntentContentProviders:
 		case Srv_queryIntentReceivers:
 		case Srv_queryIntentServices:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
 			break;
 
 		case getInstalledApplications:
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
 			break;
 
 		case getPackagesForUid:
@@ -170,18 +221,14 @@ public class XPackageManager extends XHook {
 			break;
 
 		case getPreferredActivities:
-			if (param.args.length > 1 && isRestricted(param)) {
-				param.args[0] = new ArrayList<IntentFilter>();
-				param.args[1] = new ArrayList<ComponentName>();
-				param.setResult(0);
-			}
 			break;
 
 		case getInstalledPackages:
 		case getPackagesHoldingPermissions:
 		case getPreferredPackages:
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
 			break;
 
 		case queryBroadcastReceivers:
@@ -189,14 +236,17 @@ public class XPackageManager extends XHook {
 		case queryIntentActivityOptions:
 		case queryIntentContentProviders:
 		case queryIntentServices:
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
 			break;
 
 		case queryContentProviders:
-			if (param.args.length > 0 && param.args[0] instanceof String)
-				if (param.getResult() != null && isRestrictedExtra(param, (String) param.args[0]))
+			if (param.args.length > 0 && param.args[0] instanceof String && param.getResult() != null) {
+				String processName = (String) param.args[0];
+				if (isRestrictedExtra(param, processName))
 					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+			}
 			break;
 
 		case checkPermission:
