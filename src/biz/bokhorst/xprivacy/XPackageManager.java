@@ -191,11 +191,8 @@ public class XPackageManager extends XHook {
 			break;
 
 		case Srv_queryContentProviders:
-			if (param.args.length > 0 && param.args[0] instanceof String && param.getResult() != null) {
-				String processName = (String) param.args[0];
-				if (isRestrictedExtra(param, processName))
-					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
-			}
+			if (isRestricted(param))
+				param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
 			break;
 
 		case Srv_queryIntentActivities:
