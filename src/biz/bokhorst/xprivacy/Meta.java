@@ -64,12 +64,12 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "getSyncAdapterTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT)) {
-			mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 17, null, null));
-			mListHook.add(new Hook("accounts", "Srv_getAccountsForPackage", "GET_ACCOUNTS", 17, null, null));
-			mListHook.add(new Hook("accounts", "Srv_getAccountsByTypeForPackage", "GET_ACCOUNTS", 17, null, null));
-			mListHook.add(new Hook("accounts", "Srv_getAccountsAsUser", "GET_ACCOUNTS", 17, null, null));
-			mListHook.add(new Hook("accounts", "Srv_getAccountsByFeatures", "GET_ACCOUNTS", 17, null, null));
-			mListHook.add(new Hook("accounts", "Srv_getSharedAccountsAsUser", "GET_ACCOUNTS", 17, null, null));
+			mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 1, "2.2.2", null));
+			mListHook.add(new Hook("accounts", "Srv_getAccountsForPackage", "GET_ACCOUNTS", 1, "2.2.2", null));
+			mListHook.add(new Hook("accounts", "Srv_getAccountsByTypeForPackage", "GET_ACCOUNTS", 1, "2.2.2", null));
+			mListHook.add(new Hook("accounts", "Srv_getAccountsAsUser", "GET_ACCOUNTS", 1, "2.2.2", null));
+			mListHook.add(new Hook("accounts", "Srv_getAccountsByFeatures", "GET_ACCOUNTS", 1, "2.2.2", null));
+			mListHook.add(new Hook("accounts", "Srv_getSharedAccountsAsUser", "GET_ACCOUNTS", 1, "2.2.2", null));
 		}
 
 		mListHook.add(new Hook("browser", "BrowserProvider2", "com.android.browser.permission.READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
@@ -86,7 +86,7 @@ public class Meta {
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT))
-			mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).doNotify());
+			mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_CALL, "CALL_PHONE", 10, "2.2.2", null).doNotify());
 
 		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).doNotify());
 		mListHook.add(new Hook("calling", "SIP.isSipWifiOnly", "USE_SIP", 9, null, null).doNotify());
@@ -217,9 +217,9 @@ public class Meta {
 		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).doNotify());
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT)) {
-			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE, "CAMERA", 3, null, null).doNotify());
-			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "CAMERA", 17, null, null).doNotify());
-			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_VIDEO_CAPTURE, "CAMERA", 3, null, null).doNotify());
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE, "CAMERA", 3, "2.2.2", null).doNotify());
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "CAMERA", 17, "2.2.2", null).doNotify());
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_VIDEO_CAPTURE, "CAMERA", 3, "2.2.2", null).doNotify());
 		}
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
@@ -358,20 +358,20 @@ public class Meta {
 		mListHook.add(new Hook("system", "checkUidPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT)) {
-			mListHook.add(new Hook("system", "Srv_getInstalledApplications", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_getInstalledPackages", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_getPackagesForUid", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_getPackagesHoldingPermissions", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_getPersistentApplications", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_getPreferredPackages", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_queryContentProviders", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_queryIntentActivities", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_queryIntentActivityOptions", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_queryIntentContentProviders", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_queryIntentReceivers", "", 1, null, null).dangerous());
-			mListHook.add(new Hook("system", "Srv_queryIntentServices", "", 1, null, null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getInstalledApplications", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getInstalledPackages", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getPackagesForUid", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getPackagesHoldingPermissions", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getPersistentApplications", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_getPreferredPackages", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryContentProviders", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentActivities", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentActivityOptions", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentContentProviders", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentReceivers", "", 1, "2.2.2", null).dangerous());
+			mListHook.add(new Hook("system", "Srv_queryIntentServices", "", 1, "2.2.2", null).dangerous());
 
-			mListHook.add(new Hook("system", "IntentFirewall", "", 1, null, null).dangerous().whitelist(cTypeAction));
+			mListHook.add(new Hook("system", "IntentFirewall", "", 1, "2.2.2", null).dangerous().whitelist(cTypeAction));
 		}
 
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cTypeUrl));
@@ -384,7 +384,7 @@ public class Meta {
 		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).doNotify().whitelist(cTypeUrl));
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT))
-			mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 1, null, null).doNotify().whitelist(cTypeUrl));
+			mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 1, "2.2.2", null).doNotify().whitelist(cTypeUrl));
 
 		// @formatter:on
 		return mListHook;
