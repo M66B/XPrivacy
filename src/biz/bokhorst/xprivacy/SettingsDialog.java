@@ -4,6 +4,7 @@ import java.io.File;
 import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -240,6 +241,7 @@ public class SettingsDialog {
 		boolean noresolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNoResolve, false);
 		boolean permman = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingPermMan, false);
 		boolean hookipc = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHookIPC, false);
+		boolean iwall = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingIntentWall, false);
 		List<String> listQuirks = new ArrayList<String>();
 		if (freeze)
 			listQuirks.add("freeze");
@@ -249,6 +251,9 @@ public class SettingsDialog {
 			listQuirks.add("permman");
 		if (hookipc)
 			listQuirks.add("hookipc");
+		if (iwall)
+			listQuirks.add("iwall");
+		Collections.sort(listQuirks);
 		String quirks = TextUtils.join(",", listQuirks.toArray());
 		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
 
@@ -502,6 +507,8 @@ public class SettingsDialog {
 							Boolean.toString(listQuirks.contains("permman")));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHookIPC,
 							Boolean.toString(listQuirks.contains("hookipc")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingIntentWall,
+							Boolean.toString(listQuirks.contains("iwall")));
 				}
 
 				// Notifications
