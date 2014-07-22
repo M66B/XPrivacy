@@ -128,10 +128,8 @@ public class XActivityThread extends XHook {
 				if (msg.obj instanceof Intent) {
 					Intent intent = (Intent) msg.obj;
 					if (intent != null)
-						if (checkIntent(Binder.getCallingUid(), intent)) {
+						if (checkIntent(Binder.getCallingUid(), intent))
 							param.setResult(null);
-							Util.log(this, Log.WARN, "Intercepted action=" + intent.getAction());
-						}
 				}
 			}
 
