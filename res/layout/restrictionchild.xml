@@ -37,7 +37,7 @@
         android:contentDescription="@string/help_application"
         android:paddingLeft="3dip"
         android:src="?attr/icon_info_book"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/llMethodName"
