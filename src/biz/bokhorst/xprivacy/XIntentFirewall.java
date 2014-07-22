@@ -106,7 +106,7 @@ public class XIntentFirewall extends XHook {
 	private boolean isIntentRestricted(int uid, Intent intent) throws Throwable {
 		String action = intent.getAction();
 		String data = intent.getDataString();
-		String actionData = (action == null ? "" : action) + ":" + (data == null ? "" : data);
+		String actionData = (action == null ? "" : action) + (data == null ? "" : ":" + data);
 
 		if (isRestrictedExtra(uid, "system", "IntentFirewall", actionData))
 			return true;
