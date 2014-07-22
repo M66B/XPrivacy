@@ -1,22 +1,22 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_notxposed" formatted="false">Xposed 框架版本 %d+ 未安装</string>
+    <string name="app_notxposed">Xposed 框架版本 %1$d+ 未安装</string>
     <string name="app_notenabled">XPrivacy 没有在 Xposed 框架中启用</string>
-    <string name="app_wrongandroid">仅支持 Android 4.0 以上的版本</string>
-    <string name="app_incompatible" formatted="false">XPrivacy 与 %s 不兼容</string>
-    <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
+    <string name="app_wrongandroid">仅支持 Android 4.0.3 以上的版本</string>
+    <string name="app_incompatible">XPrivacy 与 %1$s 不兼容</string>
+    <string name="app_version">XPrivacy 版本: %1$s (%2$d)</string>
     <string name="app_description">终级隐私管理器</string>
-    <string name="app_xversion" formatted="false">Xposed 框架版本: %d</string>
+    <string name="app_xversion">Xposed 框架版本: %1$d</string>
     <string name="app_copyright">版权所有 \u00A9 2013–2014 M. Bokhorst (M66B)</string>
     <string name="app_licensed">已授权, 感谢您的支持!</string>
     <string name="menu_usage">权限使用记录</string>
     <string name="menu_refresh">刷新应用列表</string>
-    <string name="menu_settings">用于被限制应用的模拟信息</string>
+    <string name="menu_settings">设置</string>
     <string name="menu_template">新装应用默认权限模板</string>
     <string name="menu_report">报告问题</string>
     <string name="menu_export">导出全局配置</string>
     <string name="menu_import">导入全局配置</string>
-    <string name="menu_submit">分享权限限制规则</string>
+    <string name="menu_submit">提交权限限制规则</string>
     <string name="menu_fetch">下载权限限制规则</string>
     <string name="menu_theme">切换明/暗主题</string>
     <string name="menu_pro">专业版</string>
@@ -53,7 +53,7 @@
     <string name="msg_loading">加载中…</string>
     <string name="msg_applying">正在应用过滤器…</string>
     <string name="msg_applied">已应用模版</string>
-    <string name="msg_saved_to" formatted="false">保存到%s</string>
+    <string name="msg_saved_to">保存到%1$s</string>
     <string name="msg_no_restrictions">没有找到权限限制规则</string>
     <string name="msg_sure">是否确定？</string>
     <string name="msg_select">请选择一些应用程序</string>
@@ -68,9 +68,9 @@
     <string name="msg_email">请输入你的电子邮件地址:</string>
     <string name="msg_registered">查看激活邮件来激活你的设备</string>
     <string name="msg_service">更新服务正在运行</string>
-    <string name="msg_migrating" formatted="false">正在移动 %s</string>
-    <string name="msg_randomizing" formatted="false">正在随机化 %s</string>
-    <string name="msg_upgrading" formatted="false">正在升级 %s</string>
+    <string name="msg_migrating">正在移动 %1$s</string>
+    <string name="msg_randomizing">正在随机化 %1$s</string>
+    <string name="msg_upgrading">正在升级 %1$s</string>
     <string name="msg_support_info">内部检查出现错误, 要发送支持信息吗?</string>
     <string name="msg_restrictedby">由 XPrivacy 限制</string>
     <string name="msg_service_missing">没有找到Privacy服务，您是否在Xposed Installer中启用XPrivacy并重启设备？</string>
@@ -100,40 +100,39 @@
     <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
     <string name="restrict_system">系统（查看已安装的应用）</string>
     <string name="restrict_view">显示网页（内置浏览器）</string>
-    <string name="restrict_help_view">Will restrict access to view actions and information</string>
-    <string name="restrict_help_system">Will restrict access to system information, like installed applications</string>
-    <string name="restrict_help_shell">Will restrict access to shell commands, including superuser commands</string>
-    <string name="restrict_help_storage">Will restrict access to the storage, like files on your SD card or the internal storage</string>
-    <string name="restrict_help_sensors">Will restrict access to the sensors, like the motion sensor</string>
-    <string name="restrict_help_phone">Will restrict access to phone information, like your phone number</string>
-    <string name="restrict_help_overlay">Will restrict overlay windows to prevent phishing</string>
-    <string name="restrict_help_notifications">Will restrict access to system and application notifications and Google cloud messaging</string>
-    <string name="restrict_help_nfc">Will restrict access to near field communication</string>
-    <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
-    <string name="restrict_help_messages">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
-    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
-    <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
-    <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
-    <string name="restrict_help_internet">Will restrict access to the Internet</string>
-    <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
-    <string name="restrict_help_email">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
-    <string name="restrict_help_dictionary">Will restrict access to the user dictionary</string>
-    <string name="restrict_help_contacts">Will restrict access to information about your contacts</string>
-    <string name="restrict_help_clipboard">Will restrict access to information on the clipboard</string>
-    <string name="restrict_help_calling">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
-    <string name="restrict_help_calendar">Will restrict access to your calendar information, like your appointments</string>
-    <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
-    <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
-    <string name="whitelist_address">Addresses</string>
-    <string name="whitelist_action">Action</string>
+    <string name="restrict_help_view">将访问视图操作和信息限制</string>
+    <string name="restrict_help_system">将系统信息限制，比如安装的应用程序</string>
+    <string name="restrict_help_shell">将访问shell命令限制，包括超级用户命令</string>
+    <string name="restrict_help_storage">将访问存储限制，比如SD卡或内部存储文件</string>
+    <string name="restrict_help_sensors">将访问传感器限制，比如运动传感器</string>
+    <string name="restrict_help_phone">将访问手机信息限制，比如您的电话号码</string>
+    <string name="restrict_help_overlay">将叠加窗口限制，以防止网络钓鱼</string>
+    <string name="restrict_help_notifications">将访问系统和应用程序通知和谷歌云消息限制</string>
+    <string name="restrict_help_nfc">将访问近场通信(NFC)限制</string>
+    <string name="restrict_help_network">将访问网络信息限制，比如IP地址和MAC地址和Wi-Fi网络信息</string>
+    <string name="restrict_help_messages">将访问存储和接收的短信/彩信和语音邮件限制</string>
+    <string name="restrict_help_media">将访问相机（照片和视频）和麦克风限制</string>
+    <string name="restrict_help_location">将访问你的粗略位置限制</string>
+    <string name="restrict_help_ipc">将进程间通信限制，使用时要规避其他限制</string>
+    <string name="restrict_help_internet">将访问互联网限制</string>
+    <string name="restrict_help_identification">将识别您的身份信息限制，如您的设备序列号</string>
+    <string name="restrict_help_email">将访问电子邮件信息限制，如地址和邮件（仅限标准应用和Gmail）</string>
+    <string name="restrict_help_dictionary">将访问用户词典限制</string>
+    <string name="restrict_help_contacts">将访问有关您的联系人限制</string>
+    <string name="restrict_help_clipboard">将剪贴板上获取的信息限制</string>
+    <string name="restrict_help_calling">将主叫电话号码，发送短信/彩信，并访问您的通话记录等限制</string>
+    <string name="restrict_help_calendar">将访问您的日历信息限制，比如您的约会</string>
+    <string name="restrict_help_browser">将访问浏览器信息限制，比如你的书签和下载历史记录</string>
+    <string name="restrict_help_accounts">将访问帐户信息限制，比如您的谷歌帐户，其中包括您的G-mail地址</string>
+    <string name="whitelist_address">地址</string>
     <string name="whitelist_ipaddress">IP 地址</string>
     <string name="whitelist_library">本地库文件</string>
-    <string name="whitelist_method">Method names</string>
+    <string name="whitelist_method">特殊方法名字</string>
     <string name="whitelist_filename">文件名称</string>
     <string name="whitelist_command">Shell 命令</string>
     <string name="whitelist_url">URLs</string>
-    <string name="whitelist_transaction">Transactions</string>
-    <string name="whitelist_permission">Permissions</string>
+    <string name="whitelist_transaction">交易</string>
+    <string name="whitelist_permission">权限</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="title_check_whitelist">勾选表示允许:</string>
     <string name="title_fused">曾经使用</string>
@@ -144,43 +143,43 @@
     <string name="title_fondemand">按需过滤</string>
     <string name="title_fsystem">系统应用</string>
     <string name="title_fnot">反选</string>
-    <string name="title_sname">按 名称</string>
-    <string name="title_suid">按 UID</string>
-    <string name="title_sinstalled">按 安装日期</string>
-    <string name="title_supdated">按 更新日期</string>
-    <string name="title_smodified">按 修改日期 (XPrivacy)</string>
-    <string name="title_sstate">By state (XPrivacy)</string>
+    <string name="title_sname">按名称</string>
+    <string name="title_suid">按UID</string>
+    <string name="title_sinstalled">按安装日期</string>
+    <string name="title_supdated">按更新日期</string>
+    <string name="title_smodified">按修改日期 (XPrivacy)</string>
+    <string name="title_sstate">按状态 (XPrivacy)</string>
     <string name="title_sinvert">反转分类次序</string>
     <string name="title_attempt">权限使用尝试:</string>
     <string name="title_category">权限类别:</string>
     <string name="title_function">功能:</string>
     <string name="title_parameters">参数:</string>
     <string name="title_applycat">应用到整个权限类别</string>
-    <string name="title_once">一次操作生效 %s 秒</string>
-    <string name="title_whitelist">白名单 \'%s\'</string>
+    <string name="title_once">一次操作生效%1$s秒</string>
+    <string name="title_whitelist">白名单/黑名单&#8216;%1$s&#8217;</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>
-    <string name="title_dontknow">Don\'t know</string>
+    <string name="title_dontknow">不知道</string>
     <string name="title_pleasesubmit">请发送你的应用限制信息来帮助其他人</string>
     <string name="title_permissions">权限</string>
-    <string name="title_set_restrict">限制</string>
+    <string name="title_set_restrict">限制(分类)</string>
     <string name="title_template_category">应用模板(分类)</string>
     <string name="title_template_full">应用模板(分类和功能)</string>
     <string name="title_template_merge">应用模板(合并)</string>
     <string name="title_enable_ondemand">开启按需权限限制</string>
     <string name="title_disable_ondemand">关闭按需权限限制</string>
-    <string name="title_ondemand_default">Timeout will:</string>
-    <string name="title_ondemand_reset">Reset</string>
-    <string name="title_default">Default</string>
-    <string name="title_alternate">Alternate</string>
-    <string name="title_usage_header">Usage</string>
-    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
-    <string name="title_usage_text_2">2. Tap on the application icon</string>
-    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
-    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
-    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
-    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
-    <string name="title_function_help">Function documentation</string>
+    <string name="title_ondemand_default">超时将：</string>
+    <string name="title_ondemand_reset">复位</string>
+    <string name="title_default">默认</string>
+    <string name="title_alternate">备用</string>
+    <string name="title_usage_header">用户指南</string>
+    <string name="title_usage_text_1">1. 找到应用程序的主应用程序列表中以限制</string>
+    <string name="title_usage_text_2">2. 点击应用程序图标</string>
+    <string name="title_usage_text_3">3. 点击任何分类中您要限制的第一个复选框</string>
+    <string name="title_usage_footer">使用常识限制，如果您不希望互联网接入那么请限制它。</string>
+    <string name="title_toggle_dangerous">长按标题切换到危险函数</string>
+    <string name="title_ondemand_category">应用异常可在类别功能中重置为默认值</string>
+    <string name="title_function_help">函数文档</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
@@ -198,7 +197,7 @@
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_notify">通知栏提示</string>
     <string name="settings_ondemand">按需限制权限</string>
-    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
+    <string name="settings_blacklist">黑名单帐户，应用程序和联系人</string>
     <string name="settings_log">调试日志（需要重启）</string>
     <string name="settings_expert">专家模式</string>
     <string name="settings_confidence">最大采样置信区间</string>
@@ -233,4 +232,3 @@
     <string name="permission_restrictions">管理XPrivacy限制和设置</string>
 
 </resources>
-
