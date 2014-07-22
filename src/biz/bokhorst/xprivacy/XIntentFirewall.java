@@ -13,7 +13,6 @@ import android.os.Build;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 @SuppressLint("InlinedApi")
 public class XIntentFirewall extends XHook {
@@ -97,10 +96,8 @@ public class XIntentFirewall extends XHook {
 			if (param.args.length > 7 && param.args[3] instanceof Intent && param.args[7] instanceof Integer) {
 				Intent intent = (Intent) param.args[3];
 				int receivingUid = (Integer) param.args[7];
-				if (isIntentRestricted(receivingUid, intent)) {
+				if (isIntentRestricted(receivingUid, intent))
 					param.setResult(false);
-					Util.log(this, Log.WARN, "Intercepted action=" + intent.getAction() + " uid=" + receivingUid);
-				}
 			}
 			break;
 		}
@@ -108,8 +105,10 @@ public class XIntentFirewall extends XHook {
 
 	private boolean isIntentRestricted(int uid, Intent intent) throws Throwable {
 		String action = intent.getAction();
+		String data = intent.getDataString();
+		String actionData = (action == null ? "" : action) + ":" + (data == null ? "" : data);
 
-		if (isRestrictedExtra(uid, "system", "IntentFirewall", action))
+		if (isRestrictedExtra(uid, "system", "IntentFirewall", actionData))
 			return true;
 
 		if (mapIntentRestriction.containsKey(action)) {
