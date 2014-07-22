@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -156,9 +157,8 @@ public class XPackageManager extends XHook {
 				if (isRestricted(param)) {
 					Method mGetList = param.getResult().getClass().getDeclaredMethod("getList");
 					List<ApplicationInfo> listAppInfo = (List<ApplicationInfo>) mGetList.invoke(param.getResult());
-					for (ApplicationInfo appInfo : new ArrayList<ApplicationInfo>(listAppInfo))
-						if (!isPackageAllowed(appInfo.packageName))
-							listAppInfo.remove(appInfo);
+					Constructor<?> constructor = param.getResult().getClass().getConstructor(List.class);
+					param.setResult(constructor.newInstance(filterApplicationInfo(listAppInfo)));
 				}
 			break;
 
@@ -168,9 +168,8 @@ public class XPackageManager extends XHook {
 				if (isRestricted(param)) {
 					Method mGetList = param.getResult().getClass().getDeclaredMethod("getList");
 					List<PackageInfo> listPkgInfo = (List<PackageInfo>) mGetList.invoke(param.getResult());
-					for (PackageInfo pkgInfo : new ArrayList<PackageInfo>(listPkgInfo))
-						if (!isPackageAllowed(pkgInfo.packageName))
-							listPkgInfo.remove(pkgInfo);
+					Constructor<?> constructor = param.getResult().getClass().getConstructor(List.class);
+					param.setResult(constructor.newInstance(filterPackageInfo(listPkgInfo)));
 				}
 			break;
 
