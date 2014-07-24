@@ -159,7 +159,7 @@
     <string name="title_whitelist">白名单/黑名单&#8216;%1$s&#8217;</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>
-    <string name="title_dontknow">不知道</string>
+    <string name="title_dontknow">不确定</string>
     <string name="title_pleasesubmit">请发送你的应用限制信息来帮助其他人</string>
     <string name="title_permissions">权限</string>
     <string name="title_set_restrict">限制(分类)</string>
