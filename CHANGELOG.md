@@ -34,6 +34,7 @@ Changelog
 * Added wildcards for IPC transaction names
 * Fixed translating transaction codes into transaction names in most cases
 * Handling *ACTION_PACKAGE_VERIFIED* as intended
+* *DATA_SMS_RECEIVED*, *SMS_RECEIVED* and *WAP_PUSH_RECEIVED* were always part of Android, but only documented since KitKat
 * Updated in application documentation
 * Updated Simplified Chinese translation
 

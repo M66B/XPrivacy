@@ -230,9 +230,9 @@ public class Meta {
 		mListHook.add(new Hook("messages", "MmsProvider", "READ_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "VoicemailContentProvider", "com.android.voicemail.permission.READ_WRITE_ALL_VOICEMAIL", 1, null, null));
-		mListHook.add(new Hook("messages", Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, "RECEIVE_SMS", 19, null, null));
-		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 19, null, null));
-		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, "RECEIVE_WAP_PUSH", 19, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, "RECEIVE_WAP_PUSH", 1, null, null));
 
 		mListHook.add(new Hook("network", "getAddress", "android.permission.BLUETOOTH", 5, null, null));
 		mListHook.add(new Hook("network", "getBondedDevices", "android.permission.BLUETOOTH", 5, null, null));
