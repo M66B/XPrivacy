@@ -86,7 +86,7 @@ public class Meta {
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT))
-			mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_CALL, "CALL_PHONE", 10, "2.2.2", null).doNotify());
+			mListHook.add(new Hook("calling", "Srv_" + Intent.ACTION_CALL, "CALL_PHONE", 10, "2.2.2", null).doNotify());
 
 		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).doNotify());
 		mListHook.add(new Hook("calling", "SIP.isSipWifiOnly", "USE_SIP", 9, null, null).doNotify());
