@@ -38,6 +38,7 @@ Changelog
 * Translating isolated uids into originating application uids
 * Updated in application documentation
 * Updated Simplified Chinese translation
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
