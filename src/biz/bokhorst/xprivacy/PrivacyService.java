@@ -529,8 +529,10 @@ public class PrivacyService {
 					// Default dangerous
 					if (!methodFound && hook != null && hook.isDangerous())
 						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
-							mresult.restricted = false;
-							mresult.asked = (hook.whitelist() == null);
+							if (mresult.restricted)
+								mresult.restricted = false;
+							if (!mresult.asked)
+								mresult.asked = (hook.whitelist() == null);
 						}
 
 					// Check whitelist
