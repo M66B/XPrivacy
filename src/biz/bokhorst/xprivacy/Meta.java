@@ -6,8 +6,11 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.nfc.NfcAdapter;
 import android.os.Build;
 import android.provider.MediaStore;
+import android.provider.Telephony;
+import android.telephony.TelephonyManager;
 
 @SuppressLint("InlinedApi")
 public class Meta {
@@ -80,9 +83,9 @@ public class Meta {
 		mListHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
-		mListHook.add(new Hook("calling", "android.intent.action.RESPOND_VIA_MESSAGE", "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
+		mListHook.add(new Hook("calling", TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).doNotify());
-		mListHook.add(new Hook("calling", "android.intent.action.NEW_OUTGOING_CALL", "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
+		mListHook.add(new Hook("calling", Intent.ACTION_NEW_OUTGOING_CALL, "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT))
@@ -227,9 +230,9 @@ public class Meta {
 		mListHook.add(new Hook("messages", "MmsProvider", "READ_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "VoicemailContentProvider", "com.android.voicemail.permission.READ_WRITE_ALL_VOICEMAIL", 1, null, null));
-		mListHook.add(new Hook("messages", "android.intent.action.DATA_SMS_RECEIVED", "RECEIVE_SMS", 19, null, null));
-		mListHook.add(new Hook("messages", "android.provider.Telephony.SMS_RECEIVED", "RECEIVE_SMS", 19, null, null));
-		mListHook.add(new Hook("messages", "android.provider.Telephony.WAP_PUSH_RECEIVED", "RECEIVE_WAP_PUSH", 19, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, "RECEIVE_SMS", 19, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 19, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, "RECEIVE_WAP_PUSH", 19, null, null));
 
 		mListHook.add(new Hook("network", "getAddress", "android.permission.BLUETOOTH", 5, null, null));
 		mListHook.add(new Hook("network", "getBondedDevices", "android.permission.BLUETOOTH", 5, null, null));
@@ -246,10 +249,10 @@ public class Meta {
 
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
 		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null));
-		mListHook.add(new Hook("nfc", "android.nfc.action.ADAPTER_STATE_CHANGED", "android.permission.NFC", 18, null, null));
-		mListHook.add(new Hook("nfc", "android.nfc.action.NDEF_DISCOVERED", "android.permission.NFC", 10, null, null));
-		mListHook.add(new Hook("nfc", "android.nfc.action.TAG_DISCOVERED", "android.permission.NFC", 10, null, null));
-		mListHook.add(new Hook("nfc", "android.nfc.action.TECH_DISCOVERED", "android.permission.NFC", 10, null, null));
+		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, "android.permission.NFC", 18, null, null));
+		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_NDEF_DISCOVERED, "android.permission.NFC", 10, null, null));
+		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TAG_DISCOVERED, "android.permission.NFC", 10, null, null));
+		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TECH_DISCOVERED, "android.permission.NFC", 10, null, null));
 
 		mListHook.add(new Hook("notifications", "android.service.notification.NotificationListenerService", "BIND_NOTIFICATION_LISTENER_SERVICE", 18, null, null));
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.REGISTRATION", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
@@ -278,7 +281,7 @@ public class Meta {
 		mListHook.add(new Hook("phone", "getSimOperator", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getSimOperatorName", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getGroupIdLevel1", "READ_PHONE_STATE", 18, null, null));
-		mListHook.add(new Hook("phone", "android.intent.action.PHONE_STATE", "READ_PHONE_STATE", 10, null, null));
+		mListHook.add(new Hook("phone", TelephonyManager.ACTION_PHONE_STATE_CHANGED, "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 1, null, null));
 		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData().noOnDemand());
 		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData().noOnDemand());
@@ -340,18 +343,18 @@ public class Meta {
 		mListHook.add(new Hook("system", "getRunningServices", "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getRunningTasks", "GET_TASKS", 1, null, null).dangerous());
 
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_ADDED", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_REPLACED", "", 3, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_RESTARTED", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_REMOVED", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_CHANGED", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_DATA_CLEARED", "", 3, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_FIRST_LAUNCH", "", 12, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_FULLY_REMOVED", "", 14, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_NEEDS_VERIFICATION", "", 14, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.PACKAGE_VERIFIED", "", 17, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_AVAILABLE", "", 8, null, null).dangerous());
-		mListHook.add(new Hook("system", "android.intent.action.EXTERNAL_APPLICATIONS_UNAVAILABLE", "", 8, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_ADDED, "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_REPLACED, "", 3, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_RESTARTED, "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_REMOVED, "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_CHANGED, "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_DATA_CLEARED, "", 3, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_FIRST_LAUNCH, "", 12, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_FULLY_REMOVED, "", 14, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_NEEDS_VERIFICATION, "", 14, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_VERIFIED, "", 17, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE, "", 8, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null));
 
 		mListHook.add(new Hook("system", "checkPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));

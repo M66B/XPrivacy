@@ -57,6 +57,7 @@ public class XActivityThread extends XHook {
 		mapActionRestriction.put(Intent.ACTION_PACKAGE_FIRST_LAUNCH, PrivacyManager.cSystem);
 		mapActionRestriction.put(Intent.ACTION_PACKAGE_FULLY_REMOVED, PrivacyManager.cSystem);
 		mapActionRestriction.put(Intent.ACTION_PACKAGE_NEEDS_VERIFICATION, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_VERIFIED, PrivacyManager.cSystem);
 		mapActionRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE, PrivacyManager.cSystem);
 		mapActionRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, PrivacyManager.cSystem);
 	}

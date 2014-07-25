@@ -53,6 +53,7 @@ public class XIntentFirewall extends XHook {
 		mapIntentRestriction.put(Intent.ACTION_PACKAGE_FIRST_LAUNCH, PrivacyManager.cSystem);
 		mapIntentRestriction.put(Intent.ACTION_PACKAGE_FULLY_REMOVED, PrivacyManager.cSystem);
 		mapIntentRestriction.put(Intent.ACTION_PACKAGE_NEEDS_VERIFICATION, PrivacyManager.cSystem);
+		mapIntentRestriction.put(Intent.ACTION_PACKAGE_VERIFIED, PrivacyManager.cSystem);
 		mapIntentRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE, PrivacyManager.cSystem);
 		mapIntentRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, PrivacyManager.cSystem);
 	}

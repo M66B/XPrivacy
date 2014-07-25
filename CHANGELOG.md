@@ -33,6 +33,7 @@ Changelog
 * Added IPC restrictions for *IApplicationThread*, *IContentProvider* and *IWindowSession* (on demand restricting only)
 * Added wildcards for IPC transaction names
 * Fixed translating transaction codes into transaction names in most cases
+* Handling *ACTION_PACKAGE_VERIFIED* as intended
 * Updated in application documentation
 * Updated Simplified Chinese translation
 
