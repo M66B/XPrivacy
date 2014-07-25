@@ -1922,7 +1922,8 @@ public class PrivacyService {
 						}
 					}
 
-				} else if (hook.whitelist().equals(Meta.cTypeMethod) || hook.whitelist().equals(Meta.cTypeTransaction)) {
+				} else if (hook.whitelist().equals(Meta.cTypeMethod) || hook.whitelist().equals(Meta.cTypeTransaction)
+						|| hook.whitelist().equals(Meta.cTypeAction)) {
 					String[] component = restriction.extra.split(":");
 					if (component.length == 2)
 						listResult.add(component[0] + ":*");
