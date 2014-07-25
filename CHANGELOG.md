@@ -33,8 +33,9 @@ Changelog
 * Added IPC restrictions for *IApplicationThread*, *IContentProvider* and *IWindowSession* (on demand restricting only)
 * Added wildcards for IPC transaction names
 * Fixed translating transaction codes into transaction names in most cases
-* Handling *ACTION_PACKAGE_VERIFIED* as intended
+* Restricting *ACTION_PACKAGE_VERIFIED* as intended
 * *DATA_SMS_RECEIVED*, *SMS_RECEIVED* and *WAP_PUSH_RECEIVED* were always part of Android, but only documented since KitKat
+* Translating isolated uids into originating application uids
 * Updated in application documentation
 * Updated Simplified Chinese translation
 

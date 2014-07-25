@@ -47,6 +47,8 @@ import android.os.StrictMode.ThreadPolicy;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
+import android.util.SparseArray;
+import android.util.SparseIntArray;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -388,6 +390,10 @@ public class PrivacyService {
 		public PRestriction getRestriction(final PRestriction restriction, boolean usage, String secret)
 				throws RemoteException {
 			long start = System.currentTimeMillis();
+
+			// Translate isolated uid
+			restriction.uid = getIsolatedUid(restriction.uid);
+
 			boolean cached = false;
 			int userId = Util.getUserId(restriction.uid);
 			final PRestriction mresult = new PRestriction(restriction);
@@ -1050,6 +1056,10 @@ public class PrivacyService {
 		@Override
 		public PSetting getSetting(PSetting setting) throws RemoteException {
 			long start = System.currentTimeMillis();
+
+			// Translate isolated uid
+			setting.uid = getIsolatedUid(setting.uid);
+
 			int userId = Util.getUserId(setting.uid);
 
 			// Special case
@@ -2101,6 +2111,37 @@ public class PrivacyService {
 				Util.bug(null, ex);
 				return null;
 			}
+		}
+
+		private SparseIntArray mIsolatedUid = new SparseIntArray();
+
+		private int getIsolatedUid(int uid) {
+			if (PrivacyManager.isIsolated(uid))
+				try {
+					synchronized (mIsolatedUid) {
+						int isolatedUid = mIsolatedUid.get(uid, -1);
+						if (isolatedUid >= 0)
+							return isolatedUid;
+
+						Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
+						Object am = cam.getMethod("self").invoke(null);
+						Field fmIsolatedProcesses = cam.getDeclaredField("mIsolatedProcesses");
+						fmIsolatedProcesses.setAccessible(true);
+						SparseArray<?> mIsolatedProcesses = (SparseArray<?>) fmIsolatedProcesses.get(am);
+						Object processRecord = mIsolatedProcesses.get(uid);
+						Field fInfo = processRecord.getClass().getDeclaredField("info");
+						fInfo.setAccessible(true);
+						ApplicationInfo info = (ApplicationInfo) fInfo.get(processRecord);
+
+						Util.log(null, Log.WARN, "Translated isolated uid=" + uid + " into uid=" + info.uid + " pkg="
+								+ info.packageName);
+						mIsolatedUid.put(uid, info.uid);
+						return info.uid;
+					}
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+			return uid;
 		}
 
 		private int getXUid() {
