@@ -272,27 +272,28 @@ public class XBinder extends XHook {
 				if (!mMapCodeName.containsKey(descriptor)) {
 					SparseArray<String> sa = new SparseArray<String>();
 					mMapCodeName.put(descriptor, sa);
+
+					List<Class<?>> listClass = new ArrayList<Class<?>>();
+					if (param.thisObject.getClass().getSuperclass() != null)
+						listClass.add(param.thisObject.getClass().getSuperclass());
 					try {
-						Class<?> superClass;
-						try {
-							superClass = Class.forName(descriptor);
-						} catch (ClassNotFoundException ignored) {
-							superClass = param.thisObject.getClass().getSuperclass();
-						}
-						if (superClass != null)
-							for (Field field : superClass.getDeclaredFields())
-								try {
-									if (field.getName().startsWith("TRANSACTION_")
-											|| field.getName().endsWith("_TRANSACTION")) {
-										Integer txCode = (Integer) field.get(param.thisObject);
-										String txName = field.getName().replace("TRANSACTION_", "")
-												.replace("_TRANSACTION", "");
-										sa.put(txCode, txName);
-									}
-								} catch (Throwable ignore) {
-								}
-					} catch (Throwable ignored) {
+						listClass.add(Class.forName(descriptor));
+					} catch (ClassNotFoundException ignored) {
 					}
+
+					for (Class<?> clazz : listClass)
+						for (Field field : clazz.getDeclaredFields())
+							try {
+								if (field.getName().startsWith("TRANSACTION_")
+										|| field.getName().endsWith("_TRANSACTION")) {
+									field.setAccessible(true);
+									Integer txCode = (Integer) field.get(null);
+									String txName = field.getName().replace("TRANSACTION_", "")
+											.replace("_TRANSACTION", "");
+									sa.put(txCode, txName);
+								}
+							} catch (Throwable ignore) {
+							}
 				}
 
 				codeName = mMapCodeName.get(descriptor).get(code);
