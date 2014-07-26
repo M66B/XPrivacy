@@ -16,6 +16,11 @@
     <string name="accounts_getCurrentSync" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#getCurrentSync()">Google documentation</a>]]></string>
     <string name="accounts_getCurrentSyncs" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#getCurrentSyncs()">Google documentation</a>]]></string>
     <string name="accounts_getSyncAdapterTypes" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#getSyncAdapterTypes()">Google documentation</a>]]></string>
+    <string name="accounts_Srv_getAccounts" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccounts()">Google documentation</a>]]></string>
+    <string name="accounts_Srv_getAccountsAsUser" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccounts()">Google documentation</a>]]></string>
+    <string name="accounts_Srv_getAccountsByFeatures" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccountsByTypeAndFeatures(java.lang.String,%20java.lang.String[],%20android.accounts.AccountManagerCallback&lt;android.accounts.Account[]&gt;,%20android.os.Handler)">Google documentation</a>]]></string>
+    <string name="accounts_Srv_getSharedAccountsAsUser" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccounts()">Google documentation</a>]]></string>
+    <string name="accounts_Srv_getCurrentSyncs" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#getCurrentSyncs()">Google documentation</a>]]></string>
 
     <!-- browser -->
     <string name="browser_BrowserProvider2" translatable="false"><![CDATA[Will restrict access to the browser bookmarks and browser history]]></string>
@@ -297,6 +302,17 @@
     <string name="system_getPackagesForUid" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPackagesForUid(int)">Google documentation</a>]]></string>
     <string name="system_checkPermission" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
     <string name="system_checkUidPermission" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
+    <string name="system_Srv_getInstalledApplications" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getInstalledApplications(int)">Google documentation</a>]]></string>
+    <string name="system_Srv_getInstalledPackages" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getInstalledPackages(int)">Google documentation</a>]]></string>
+    <string name="system_Srv_getPackagesForUid" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPackagesForUid(int)">Google documentation</a>]]></string>
+    <string name="system_Srv_getPackagesHoldingPermissions" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPackagesHoldingPermissions(java.lang.String[],%20int)">Google documentation</a>]]></string>
+    <string name="system_Srv_getPreferredPackages" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#getPreferredPackages(int)">Google documentation</a>]]></string>
+    <string name="system_Srv_queryContentProviders" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryContentProviders(java.lang.String,%20int,%20int)">Google documentation</a>]]></string>
+    <string name="system_Srv_queryIntentActivities" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryIntentActivities(android.content.Intent,%20int)">Google documentation</a>]]></string>
+    <string name="system_Srv_queryIntentActivityOptions" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryIntentActivityOptions(android.content.ComponentName,%20android.content.Intent[],%20android.content.Intent,%20int)">Google documentation</a>]]></string>
+    <string name="system_Srv_queryIntentContentProviders" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryIntentContentProviders(android.content.Intent,%20int)">Google documentation</a>]]></string>
+    <string name="system_Srv_queryIntentReceivers" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryBroadcastReceivers(android.content.Intent,%20int)">Google documentation</a>]]></string>
+    <string name="system_Srv_queryIntentServices" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryIntentServices(android.content.Intent,%20int)">Google documentation</a>]]></string>
 
     <!-- view -->
     <string name="view_loadUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>
@@ -307,5 +323,6 @@
     <string name="view_setUserAgent" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebSettings.html#setUserAgentString(java.lang.String)">Google documentation</a>]]></string>
     <string name="view_setUserAgentString" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebSettings.html#setUserAgentString(java.lang.String)">Google documentation</a>]]></string>
     <string name="view_android_intent_action_VIEW" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_VIEW">Google documentation</a>]]></string>
+    <string name="view_Srv_android_intent_action_VIEW" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/Intent.html#ACTION_VIEW">Google documentation</a>]]></string>
 
 </resources>
