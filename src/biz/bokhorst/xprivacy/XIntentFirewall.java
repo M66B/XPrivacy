@@ -80,8 +80,7 @@ public class XIntentFirewall extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		if (isAOSP(Build.VERSION_CODES.KITKAT))
-			listHook.add(new XIntentFirewall(Methods.checkIntent, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XIntentFirewall(Methods.checkIntent, Build.VERSION_CODES.KITKAT));
 		return listHook;
 	}
 

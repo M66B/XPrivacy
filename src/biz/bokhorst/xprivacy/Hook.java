@@ -3,17 +3,19 @@ package biz.bokhorst.xprivacy;
 public class Hook implements Comparable<Hook> {
 	private String mRestrictionName;
 	private String mMethodName;
+	private String[] mPermissions;
+	private int mSdk;
+	private Version mFrom;
+	private String mReplacedRestriction;
+	private String mReplacedMethod;
+
 	private boolean mDangerous;
 	private boolean mRestart;
 	private boolean mNoUsageData;
 	private boolean mNoOnDemand;
 	private String mWhitelist;
 	private boolean mNotify;
-	private String[] mPermissions;
-	private int mSdk;
-	private Version mFrom;
-	private String mReplacedRestriction;
-	private String mReplacedMethod;
+	private boolean mAOSP;
 	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
@@ -30,6 +32,7 @@ public class Hook implements Comparable<Hook> {
 		mNoOnDemand = false;
 		mWhitelist = null;
 		mNotify = false;
+		mAOSP = false;
 		mPermissions = (permissions == null ? null : permissions.split(","));
 		mSdk = sdk;
 		mFrom = (from == null ? null : new Version(from));
@@ -45,12 +48,18 @@ public class Hook implements Comparable<Hook> {
 		}
 	}
 
+	// Definitions
+
 	public Hook dangerous() {
 		mDangerous = true;
 		return this;
 	}
 
-	// Setters
+	public void toggleDangerous() {
+		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
+				this.getName());
+		PrivacyManager.setSetting(0, name, Boolean.toString(!isDangerous()));
+	}
 
 	public Hook restart() {
 		mRestart = true;
@@ -77,28 +86,9 @@ public class Hook implements Comparable<Hook> {
 		return this;
 	}
 
-	public String getRestrictionName() {
-		return mRestrictionName;
-	}
-
-	public String getName() {
-		return mMethodName;
-	}
-
-	public boolean isDangerous() {
-		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
-				this.getName());
-		return PrivacyManager.getSettingBool(0, name, mDangerous);
-	}
-
-	public void toggleDangerous() {
-		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
-				this.getName());
-		PrivacyManager.setSetting(0, name, Boolean.toString(!isDangerous()));
-	}
-
-	public boolean isDangerousDefined() {
-		return mDangerous;
+	public Hook AOSP() {
+		mAOSP = true;
+		return this;
 	}
 
 	public void annotate(String text) {
@@ -107,24 +97,12 @@ public class Hook implements Comparable<Hook> {
 
 	// Getters
 
-	public boolean isRestartRequired() {
-		return mRestart;
+	public String getRestrictionName() {
+		return mRestrictionName;
 	}
 
-	public boolean hasUsageData() {
-		return !mNoUsageData;
-	}
-
-	public boolean canOnDemand() {
-		return !mNoOnDemand;
-	}
-
-	public String whitelist() {
-		return mWhitelist;
-	}
-
-	public boolean shouldNotify() {
-		return mNotify;
+	public String getName() {
+		return mMethodName;
 	}
 
 	public String[] getPermissions() {
@@ -147,9 +125,45 @@ public class Hook implements Comparable<Hook> {
 		return mReplacedMethod;
 	}
 
+	public boolean isDangerous() {
+		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
+				this.getName());
+		return PrivacyManager.getSettingBool(0, name, mDangerous);
+	}
+
+	public boolean isDangerousDefined() {
+		return mDangerous;
+	}
+
+	public boolean isRestartRequired() {
+		return mRestart;
+	}
+
+	public boolean hasUsageData() {
+		return !mNoUsageData;
+	}
+
+	public boolean canOnDemand() {
+		return !mNoOnDemand;
+	}
+
+	public String whitelist() {
+		return mWhitelist;
+	}
+
+	public boolean shouldNotify() {
+		return mNotify;
+	}
+
+	public boolean isAOSP() {
+		return mAOSP;
+	}
+
 	public String getAnnotation() {
 		return mAnnotation;
 	}
+
+	// Comparison
 
 	@Override
 	public int hashCode() {

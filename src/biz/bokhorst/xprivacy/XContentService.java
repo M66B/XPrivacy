@@ -5,7 +5,6 @@ import java.util.List;
 
 import android.content.SyncInfo;
 import android.os.Binder;
-import android.os.Build;
 
 public class XContentService extends XHook {
 	private Methods mMethod;
@@ -34,8 +33,7 @@ public class XContentService extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		if (isAOSP(Build.VERSION_CODES.KITKAT))
-			listHook.add(new XContentService(Methods.getCurrentSyncs, PrivacyManager.cAccounts));
+		listHook.add(new XContentService(Methods.getCurrentSyncs, PrivacyManager.cAccounts));
 		return listHook;
 	}
 

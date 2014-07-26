@@ -156,7 +156,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// Common
 	public static void init() {
-		Util.log(null, Log.WARN, "isAOSP=" + XHook.isAOSP(Build.VERSION_CODES.KITKAT) + " host=" + Build.HOST
+		Util.log(null, Log.WARN, "isAOSP=" + PrivacyManager.isAOSP(Build.VERSION_CODES.KITKAT) + " host=" + Build.HOST
 				+ " display=" + Build.DISPLAY);
 
 		// Generate secret
@@ -455,6 +455,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		if (Build.VERSION.SDK_INT < sdk)
 			return;
+		if (md != null && md.isAOSP() && !PrivacyManager.isAOSP(md.getSdk()))
+			return;
 
 		// Provide secret
 		hook.setSecret(secret);
@@ -586,6 +588,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			Util.bug(hook, ex);
 		}
 	}
+
+	// Helper classes
 
 	private static class MethodAlterationEx extends MS.MethodAlteration<Object, Object> {
 		private XHook mHook;

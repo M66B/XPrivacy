@@ -81,13 +81,11 @@ public class XActivityManagerService extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 
-		if (isAOSP(Build.VERSION_CODES.KITKAT)) {
-			listHook.add(new XActivityManagerService(Methods.startActivities, Build.VERSION_CODES.KITKAT));
-			listHook.add(new XActivityManagerService(Methods.startActivity, Build.VERSION_CODES.KITKAT));
-			listHook.add(new XActivityManagerService(Methods.startActivityAsUser, Build.VERSION_CODES.KITKAT));
-			listHook.add(new XActivityManagerService(Methods.startActivityAndWait, Build.VERSION_CODES.KITKAT));
-			listHook.add(new XActivityManagerService(Methods.startActivityWithConfig, Build.VERSION_CODES.KITKAT));
-		}
+		listHook.add(new XActivityManagerService(Methods.startActivities, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XActivityManagerService(Methods.startActivity, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XActivityManagerService(Methods.startActivityAsUser, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XActivityManagerService(Methods.startActivityAndWait, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XActivityManagerService(Methods.startActivityWithConfig, Build.VERSION_CODES.KITKAT));
 
 		listHook.add(new XActivityManagerService(Methods.inputDispatchingTimedOut, Build.VERSION_CODES.JELLY_BEAN_MR1));
 		listHook.add(new XActivityManagerService(Methods.appNotResponding, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));

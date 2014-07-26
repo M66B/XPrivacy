@@ -1,7 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import android.os.Binder;
-import android.os.Build;
 
 public abstract class XHook {
 	private String mRestrictionName;
@@ -25,29 +24,11 @@ public abstract class XHook {
 		mSdk = sdk;
 	}
 
-	public static boolean isAOSP(int sdk) {
-		if (sdk == Build.VERSION_CODES.KITKAT && sdk == Build.VERSION.SDK_INT) {
-			if (Build.DISPLAY == null || Build.HOST == null)
-				return false;
-			return (Build.HOST.endsWith(".google.com") || Build.DISPLAY.startsWith("omni"));
-		} else
-			return false;
-	}
-
-	protected XHook optional() {
-		mOptional = true;
-		return this;
-	}
+	abstract public String getClassName();
 
 	public boolean isVisible() {
 		return true;
 	}
-
-	public boolean isOptional() {
-		return mOptional;
-	}
-
-	abstract public String getClassName();
 
 	public String getRestrictionName() {
 		return mRestrictionName;
@@ -71,6 +52,15 @@ public abstract class XHook {
 
 	protected String getSecret() {
 		return mSecret;
+	}
+
+	protected XHook optional() {
+		mOptional = true;
+		return this;
+	}
+
+	public boolean isOptional() {
+		return mOptional;
 	}
 
 	abstract protected void before(XParam param) throws Throwable;
