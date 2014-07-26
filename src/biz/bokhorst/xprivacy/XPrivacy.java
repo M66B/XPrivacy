@@ -455,8 +455,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		if (Build.VERSION.SDK_INT < sdk)
 			return;
-		if (md != null && md.isAOSP() && !PrivacyManager.isAOSP(md.getSdk()))
-			return;
+		if (md != null) {
+			if (md.isAOSP() && !PrivacyManager.isAOSP(md.getSdk()))
+				return;
+			if (md.isNotAOSP() && PrivacyManager.isAOSP(md.getAOSPSdk()))
+				return;
+		}
 
 		// Provide secret
 		hook.setSecret(secret);

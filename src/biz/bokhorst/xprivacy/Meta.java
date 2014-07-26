@@ -47,22 +47,22 @@ public class Meta {
 			return mListHook;
 
 		// @formatter:off
-		mListHook.add(new Hook("accounts", "addOnAccountsUpdatedListener", "GET_ACCOUNTS", 5, null, null));
+		mListHook.add(new Hook("accounts", "addOnAccountsUpdatedListener", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
 		mListHook.add(new Hook("accounts", "blockingGetAuthToken", "USE_CREDENTIALS", 5, null, null));
-		mListHook.add(new Hook("accounts", "getAccounts", "GET_ACCOUNTS", 5, null, null));
-		mListHook.add(new Hook("accounts", "getAccountsByType", "GET_ACCOUNTS", 5, null, null));
-		mListHook.add(new Hook("accounts", "getAccountsByTypeAndFeatures", "GET_ACCOUNTS", 5, null, null));
+		mListHook.add(new Hook("accounts", "getAccounts", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
+		mListHook.add(new Hook("accounts", "getAccountsByType", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
+		mListHook.add(new Hook("accounts", "getAccountsByTypeAndFeatures", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
 		mListHook.add(new Hook("accounts", "getAuthToken", "USE_CREDENTIALS", 5, "0.0", null).dangerous());
 		mListHook.add(new Hook("accounts", "getAuthTokenByFeatures", "MANAGE_ACCOUNTS", 5, "0.0", null).dangerous());
 		mListHook.add(new Hook("accounts", "hasFeatures", "GET_ACCOUNTS", 8, null, null));
-		mListHook.add(new Hook("accounts", "getAccountsByTypeForPackage", "GET_ACCOUNTS", 18, null, null));
+		mListHook.add(new Hook("accounts", "getAccountsByTypeForPackage", "GET_ACCOUNTS", 18, null, null).notAOSP(19));
 
 		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 1, "0.0", null).dangerous());
 		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 1, "0.0", null).dangerous());
 
 		mListHook.add(new Hook("accounts", "getAuthenticatorTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
-		mListHook.add(new Hook("accounts", "getCurrentSync", "READ_SYNC_SETTINGS", 8, "1.99.24", null).dangerous());
-		mListHook.add(new Hook("accounts", "getCurrentSyncs", "READ_SYNC_SETTINGS", 11, "1.99.24", null).dangerous());
+		mListHook.add(new Hook("accounts", "getCurrentSync", "READ_SYNC_SETTINGS", 8, "1.99.24", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("accounts", "getCurrentSyncs", "READ_SYNC_SETTINGS", 11, "1.99.24", null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("accounts", "getSyncAdapterTypes", "", 5, "1.99.24", null).dangerous());
 
 		mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
@@ -80,8 +80,8 @@ public class Meta {
 		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
-		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).doNotify());
-		mListHook.add(new Hook("calling", Intent.ACTION_DIAL, "", 10, "2.2.2", null).doNotify());
+		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).notAOSP(19).doNotify());
+		mListHook.add(new Hook("calling", Intent.ACTION_DIAL, "", 10, "2.2.2", null).notAOSP(19).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_NEW_OUTGOING_CALL, "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
@@ -116,10 +116,10 @@ public class Meta {
 		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null));
 		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null));
 		mListHook.add(new Hook("identification", "%cid", "", 1, null, null));
-		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).dangerous().whitelist(cTypeProc));
-		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).dangerous());
-		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).dangerous());
-		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).dangerous());
+		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).notAOSP(19).dangerous().whitelist(cTypeProc));
+		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getString", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getDescriptor", "", 16, null, null));
@@ -155,11 +155,11 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
 
-		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
 
 		mListHook.add(new Hook("internet", "LinkAddress.toString", null, 20, "2.1.17", null));
 
-		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).dangerous().whitelist(cTypeTransaction));
+		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).notAOSP(19).dangerous().whitelist(cTypeTransaction));
 		mListHook.add(new Hook("ipc", "Service", "", 1, "2.2.1", null).dangerous().whitelist(cTypeMethod));
 
 		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
@@ -205,9 +205,9 @@ public class Meta {
 		mListHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "takePicture", "CAMERA", 1, null, null).doNotify());
 		mListHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 1, null, null).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "", 3, null, null).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "", 3, null, null).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "", 3, null, null).notAOSP(19).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).notAOSP(19).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "", 3, null, null).notAOSP(19).doNotify());
 		mListHook.add(new Hook("media", "Camera2.capture", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.captureBurst", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).doNotify());
@@ -301,7 +301,7 @@ public class Meta {
 		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_ALL_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "mtp", "ACCESS_MTP", 10, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null));
-		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).notAOSP(19).dangerous().whitelist(cTypeFilename));
 
 		mListHook.add(new Hook("storage", "openAssetFileDescriptor", null, 3, "2.1.17", null).dangerous().whitelist(cTypeFilename));
 		mListHook.add(new Hook("storage", "openFileDescriptor", null, 1, "2.1.17", null).dangerous().whitelist(cTypeFilename));
@@ -311,18 +311,18 @@ public class Meta {
 		mListHook.add(new Hook("storage", "openAssetFile", null, 5, "2.1.17", null).dangerous().whitelist(cTypeFilename));
 		mListHook.add(new Hook("storage", "openFile", null, 5, "2.1.17", null).dangerous().whitelist(cTypeFilename));
 
-		mListHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "getPackagesForUid", "", 1, "2.1.17", null).dangerous());
-		mListHook.add(new Hook("system", "getPackagesHoldingPermissions", "", 18, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("system", "getPreferredActivities", "", 1, "1.99.44", null).dangerous());
-		mListHook.add(new Hook("system", "getPreferredPackages", "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "getInstalledApplications", "", 1, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "getInstalledPackages", "", 1, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "getPackagesForUid", "", 1, "2.1.17", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "getPackagesHoldingPermissions", "", 18, "1.99.1", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "getPreferredActivities", "", 1, "1.99.44", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "getPreferredPackages", "", 1, null, null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("system", "queryBroadcastReceivers", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "queryContentProviders", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "queryIntentActivities", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "queryIntentActivityOptions", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "queryIntentContentProviders", "", 19, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("system", "queryIntentServices", "", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "queryContentProviders", "", 1, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "queryIntentActivities", "", 1, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "queryIntentActivityOptions", "", 1, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "queryIntentContentProviders", "", 19, "1.99.1", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "queryIntentServices", "", 1, null, null).notAOSP(19).dangerous());
 
 		mListHook.add(new Hook("system", "getInstalledProviders", "", 3, null, null).dangerous());
 
@@ -370,7 +370,7 @@ public class Meta {
 		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null));
 		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null));
 		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null));
-		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).doNotify().whitelist(cTypeUrl));
+		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 
 		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", null).AOSP().doNotify().whitelist(cTypeUrl));
 

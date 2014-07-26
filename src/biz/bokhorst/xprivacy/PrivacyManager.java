@@ -220,9 +220,13 @@ public class PrivacyManager {
 		List<Hook> listMethod = new ArrayList<Hook>();
 		for (String methodName : mMethod.get(restrictionName).keySet()) {
 			Hook hook = mMethod.get(restrictionName).get(methodName);
-			if (Build.VERSION.SDK_INT >= hook.getSdk())
-				if (!hook.isAOSP() || isAOSP(hook.getSdk()))
-					listMethod.add(mMethod.get(restrictionName).get(methodName));
+			if (Build.VERSION.SDK_INT < hook.getSdk())
+				continue;
+			if (hook.isAOSP() && !isAOSP(hook.getSdk()))
+				continue;
+			if (hook.isNotAOSP() && isAOSP(hook.getAOSPSdk()))
+				continue;
+			listMethod.add(mMethod.get(restrictionName).get(methodName));
 		}
 		Collections.sort(listMethod);
 		return listMethod;

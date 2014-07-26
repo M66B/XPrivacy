@@ -9,13 +9,14 @@ public class Hook implements Comparable<Hook> {
 	private String mReplacedRestriction;
 	private String mReplacedMethod;
 
-	private boolean mDangerous;
-	private boolean mRestart;
-	private boolean mNoUsageData;
-	private boolean mNoOnDemand;
-	private String mWhitelist;
-	private boolean mNotify;
-	private boolean mAOSP;
+	private boolean mDangerous = false;
+	private boolean mRestart = false;
+	private boolean mNoUsageData = false;
+	private boolean mNoOnDemand = false;
+	private String mWhitelist = null;
+	private boolean mNotify = false;
+	private boolean mAOSP = false;
+	private int mNotAOSP = -1;
 	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
@@ -26,13 +27,6 @@ public class Hook implements Comparable<Hook> {
 	public Hook(String restrictionName, String methodName, String permissions, int sdk, String from, String replaces) {
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
-		mDangerous = false;
-		mRestart = false;
-		mNoUsageData = false;
-		mNoOnDemand = false;
-		mWhitelist = null;
-		mNotify = false;
-		mAOSP = false;
 		mPermissions = (permissions == null ? null : permissions.split(","));
 		mSdk = sdk;
 		mFrom = (from == null ? null : new Version(from));
@@ -91,6 +85,11 @@ public class Hook implements Comparable<Hook> {
 		return this;
 	}
 
+	public Hook notAOSP(int sdk) {
+		mNotAOSP = sdk;
+		return this;
+	}
+
 	public void annotate(String text) {
 		mAnnotation = text;
 	}
@@ -111,6 +110,10 @@ public class Hook implements Comparable<Hook> {
 
 	public int getSdk() {
 		return mSdk;
+	}
+
+	public int getAOSPSdk() {
+		return mNotAOSP;
 	}
 
 	public Version getFrom() {
@@ -157,6 +160,10 @@ public class Hook implements Comparable<Hook> {
 
 	public boolean isAOSP() {
 		return mAOSP;
+	}
+
+	public boolean isNotAOSP() {
+		return (mNotAOSP != -1);
 	}
 
 	public String getAnnotation() {
