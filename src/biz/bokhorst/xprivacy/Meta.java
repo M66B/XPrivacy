@@ -65,11 +65,11 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "getCurrentSyncs", "READ_SYNC_SETTINGS", 11, "1.99.24", null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("accounts", "getSyncAdapterTypes", "", 5, "1.99.24", null).dangerous());
 
-		mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
+		mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 19, "2.99", "getAccounts").AOSP());
 		mListHook.add(new Hook("accounts", "Srv_getAccountsAsUser", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
-		mListHook.add(new Hook("accounts", "Srv_getAccountsByFeatures", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
+		mListHook.add(new Hook("accounts", "Srv_getAccountsByFeatures", "GET_ACCOUNTS", 19, "2.99", "getAccountsByTypeAndFeatures").AOSP());
 		mListHook.add(new Hook("accounts", "Srv_getSharedAccountsAsUser", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
-		mListHook.add(new Hook("accounts", "Srv_getCurrentSyncs", "READ_SYNC_SETTINGS", 19, "2.99", null).AOSP());
+		mListHook.add(new Hook("accounts", "Srv_getCurrentSyncs", "READ_SYNC_SETTINGS", 19, "2.99", "getCurrentSyncs").AOSP());
 
 		mListHook.add(new Hook("browser", "BrowserProvider2", "com.android.browser.permission.READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
 		mListHook.add(new Hook("browser", "Downloads", "ACCESS_DOWNLOAD_MANAGER,ACCESS_DOWNLOAD_MANAGER_ADVANCED,ACCESS_ALL_DOWNLOADS", 1, "1.99.43", null).dangerous());
@@ -348,18 +348,18 @@ public class Meta {
 		mListHook.add(new Hook("system", "checkPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 		mListHook.add(new Hook("system", "checkUidPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 
-		mListHook.add(new Hook("system", "Srv_getInstalledApplications", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_getInstalledPackages", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_getPackagesForUid", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_getPackagesHoldingPermissions", "", 19, "2.99", null).AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_getInstalledApplications", "", 19, "2.99", "getInstalledApplications").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_getInstalledPackages", "", 19, "2.99", "getInstalledPackages").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_getPackagesForUid", "", 19, "2.99", "getPackagesForUid").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_getPackagesHoldingPermissions", "", 19, "2.99", "getPackagesHoldingPermissions").AOSP().dangerous());
 		mListHook.add(new Hook("system", "Srv_getPersistentApplications", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_getPreferredPackages", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_queryContentProviders", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_queryIntentActivities", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_queryIntentActivityOptions", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_queryIntentContentProviders", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_queryIntentReceivers", "", 19, "2.99", null).AOSP().dangerous());
-		mListHook.add(new Hook("system", "Srv_queryIntentServices", "", 19, "2.99", null).AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_getPreferredPackages", "", 19, "2.99", "getPreferredPackages").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_queryContentProviders", "", 19, "2.99", "queryContentProviders").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_queryIntentActivities", "", 19, "2.99", "queryIntentActivities").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_queryIntentActivityOptions", "", 19, "2.99", "queryIntentActivityOptions").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_queryIntentContentProviders", "", 19, "2.99", "queryIntentContentProviders").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_queryIntentReceivers", "", 19, "2.99", "queryBroadcastReceivers").AOSP().dangerous());
+		mListHook.add(new Hook("system", "Srv_queryIntentServices", "", 19, "2.99", "queryIntentServices").AOSP().dangerous());
 
 		mListHook.add(new Hook("system", "IntentFirewall", "", 19, "2.99", null).AOSP().dangerous().whitelist(cTypeAction));
 
@@ -372,7 +372,7 @@ public class Meta {
 		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null));
 		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 
-		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", null).AOSP().doNotify().whitelist(cTypeUrl));
+		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", Intent.ACTION_VIEW).AOSP().doNotify().whitelist(cTypeUrl));
 
 		// @formatter:on
 		return mListHook;
