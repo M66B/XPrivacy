@@ -87,9 +87,6 @@ public class Meta {
 		mListHook.add(new Hook("calling", Intent.ACTION_NEW_OUTGOING_CALL, "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
-		mListHook.add(new Hook("calling", "Srv_" + Intent.ACTION_CALL, "CALL_PHONE", 19, "2.99", null).AOSP().doNotify());
-		mListHook.add(new Hook("calling", "Srv_" + Intent.ACTION_DIAL, "", 19, "2.99", null).AOSP().doNotify());
-
 		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).doNotify());
 		mListHook.add(new Hook("calling", "SIP.isSipWifiOnly", "USE_SIP", 9, null, null).doNotify());
 		mListHook.add(new Hook("calling", "SIP.isVoipSupported", "USE_SIP", 9, null, null).doNotify());
@@ -217,10 +214,6 @@ public class Meta {
 		mListHook.add(new Hook("media", "Camera2.captureBurst", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).doNotify());
-
-		mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE, "", 19, "2.99", null).AOSP().doNotify());
-		mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 19, "2.99", null).AOSP().doNotify());
-		mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_VIDEO_CAPTURE, "", 19, "2.99", null).AOSP().doNotify());
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
 		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 1, null, null));
