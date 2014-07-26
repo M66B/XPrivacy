@@ -29,6 +29,7 @@ public class XActivityManagerService extends XHook {
 	static {
 		mapIntentRestriction.put(Intent.ACTION_VIEW, PrivacyManager.cView);
 		mapIntentRestriction.put(Intent.ACTION_CALL, PrivacyManager.cCalling);
+		mapIntentRestriction.put(Intent.ACTION_DIAL, PrivacyManager.cCalling);
 		mapIntentRestriction.put(MediaStore.ACTION_IMAGE_CAPTURE, PrivacyManager.cMedia);
 		mapIntentRestriction.put(MediaStore.ACTION_IMAGE_CAPTURE_SECURE, PrivacyManager.cMedia);
 		mapIntentRestriction.put(MediaStore.ACTION_VIDEO_CAPTURE, PrivacyManager.cMedia);

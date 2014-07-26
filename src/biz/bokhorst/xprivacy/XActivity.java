@@ -68,9 +68,11 @@ public class XActivity extends XHook {
 		for (Methods activity : startMethods)
 			listHook.add(new XActivity(activity, PrivacyManager.cView, Intent.ACTION_VIEW));
 
-		// Intent send: call
-		for (Methods activity : startMethods)
+		// Intent send: call/dial
+		for (Methods activity : startMethods) {
 			listHook.add(new XActivity(activity, PrivacyManager.cCalling, Intent.ACTION_CALL));
+			listHook.add(new XActivity(activity, PrivacyManager.cCalling, Intent.ACTION_DIAL));
+		}
 
 		// Intent send: media
 		for (Methods activity : startMethods) {
