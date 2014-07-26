@@ -70,8 +70,6 @@ public class XAccountManager extends XHook {
 	// @formatter:off
 
 	// public android.accounts.Account[] getAccounts(java.lang.String accountType) throws android.os.RemoteException;
-	// public android.accounts.Account[] getAccountsForPackage(java.lang.String packageName, int uid) throws android.os.RemoteException;
-	// public android.accounts.Account[] getAccountsByTypeForPackage(java.lang.String type, java.lang.String packageName) throws android.os.RemoteException;
 	// public android.accounts.Account[] getAccountsAsUser(java.lang.String accountType, int userId) throws android.os.RemoteException;
 	// public void getAccountsByFeatures(android.accounts.IAccountManagerResponse response, java.lang.String accountType, java.lang.String[] features) throws android.os.RemoteException;
 	// public android.accounts.Account[] getSharedAccountsAsUser(int userId) throws android.os.RemoteException;
@@ -88,7 +86,8 @@ public class XAccountManager extends XHook {
 		hasFeatures,
 		removeOnAccountsUpdatedListener,
 
-		Srv_getAccounts, Srv_getAccountsForPackage, Srv_getAccountsByTypeForPackage, Srv_getAccountsAsUser,
+		Srv_getAccounts,
+		Srv_getAccountsAsUser,
 		Srv_getAccountsByFeatures,
 		Srv_getSharedAccountsAsUser
 	};
@@ -101,8 +100,6 @@ public class XAccountManager extends XHook {
 				className = cClassName;
 
 			listHook.add(new XAccountManager(Methods.Srv_getAccounts, PrivacyManager.cAccounts));
-			listHook.add(new XAccountManager(Methods.Srv_getAccountsForPackage, PrivacyManager.cAccounts));
-			listHook.add(new XAccountManager(Methods.Srv_getAccountsByTypeForPackage, PrivacyManager.cAccounts));
 			listHook.add(new XAccountManager(Methods.Srv_getAccountsAsUser, PrivacyManager.cAccounts));
 			listHook.add(new XAccountManager(Methods.Srv_getAccountsByFeatures, PrivacyManager.cAccounts));
 			listHook.add(new XAccountManager(Methods.Srv_getSharedAccountsAsUser, PrivacyManager.cAccounts));
@@ -210,8 +207,6 @@ public class XAccountManager extends XHook {
 			break;
 
 		case Srv_getAccounts:
-		case Srv_getAccountsForPackage:
-		case Srv_getAccountsByTypeForPackage:
 		case Srv_getAccountsAsUser:
 			// Do nothing
 			break;
@@ -312,8 +307,6 @@ public class XAccountManager extends XHook {
 			break;
 
 		case Srv_getAccounts:
-		case Srv_getAccountsForPackage:
-		case Srv_getAccountsByTypeForPackage:
 		case Srv_getAccountsAsUser:
 		case Srv_getSharedAccountsAsUser:
 			// Filter account list

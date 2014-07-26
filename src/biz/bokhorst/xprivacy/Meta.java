@@ -66,8 +66,6 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "getSyncAdapterTypes", "", 5, "1.99.24", null).dangerous());
 
 		mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
-		mListHook.add(new Hook("accounts", "Srv_getAccountsForPackage", "INTERACT_ACROSS_USERS", 19, "2.99", null).AOSP());
-		mListHook.add(new Hook("accounts", "Srv_getAccountsByTypeForPackage", "INTERACT_ACROSS_USERS", 19, "2.99", null).AOSP());
 		mListHook.add(new Hook("accounts", "Srv_getAccountsAsUser", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
 		mListHook.add(new Hook("accounts", "Srv_getAccountsByFeatures", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
 		mListHook.add(new Hook("accounts", "Srv_getSharedAccountsAsUser", "GET_ACCOUNTS", 19, "2.99", null).AOSP());
