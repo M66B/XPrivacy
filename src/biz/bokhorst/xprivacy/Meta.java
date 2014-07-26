@@ -62,18 +62,18 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 1, "0.0", null).dangerous());
 
 		mListHook.add(new Hook("accounts", "getAuthenticatorTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
-		mListHook.add(new Hook("accounts", "getCurrentSync", "GET_ACCOUNTS", 8, "1.99.24", null).dangerous());
-		mListHook.add(new Hook("accounts", "getCurrentSyncs", "GET_ACCOUNTS", 11, "1.99.24", null).dangerous());
-		mListHook.add(new Hook("accounts", "getSyncAdapterTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
+		mListHook.add(new Hook("accounts", "getCurrentSync", "READ_SYNC_SETTINGS", 8, "1.99.24", null).dangerous());
+		mListHook.add(new Hook("accounts", "getCurrentSyncs", "READ_SYNC_SETTINGS", 11, "1.99.24", null).dangerous());
+		mListHook.add(new Hook("accounts", "getSyncAdapterTypes", "", 5, "1.99.24", null).dangerous());
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT)) {
 			mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 1, "2.99", null));
-			mListHook.add(new Hook("accounts", "Srv_getAccountsForPackage", "GET_ACCOUNTS", 1, "2.99", null));
-			mListHook.add(new Hook("accounts", "Srv_getAccountsByTypeForPackage", "GET_ACCOUNTS", 1, "2.99", null));
+			mListHook.add(new Hook("accounts", "Srv_getAccountsForPackage", "INTERACT_ACROSS_USERS", 1, "2.99", null));
+			mListHook.add(new Hook("accounts", "Srv_getAccountsByTypeForPackage", "INTERACT_ACROSS_USERS", 1, "2.99", null));
 			mListHook.add(new Hook("accounts", "Srv_getAccountsAsUser", "GET_ACCOUNTS", 1, "2.99", null));
 			mListHook.add(new Hook("accounts", "Srv_getAccountsByFeatures", "GET_ACCOUNTS", 1, "2.99", null));
 			mListHook.add(new Hook("accounts", "Srv_getSharedAccountsAsUser", "GET_ACCOUNTS", 1, "2.99", null));
-			mListHook.add(new Hook("accounts", "Srv_getCurrentSyncs", "GET_ACCOUNTS", 11, "2.99", null));
+			mListHook.add(new Hook("accounts", "Srv_getCurrentSyncs", "READ_SYNC_SETTINGS", 11, "2.99", null));
 		}
 
 		mListHook.add(new Hook("browser", "BrowserProvider2", "com.android.browser.permission.READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
