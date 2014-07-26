@@ -85,14 +85,14 @@ public class Meta {
 		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
-		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).doNotify());
-		mListHook.add(new Hook("calling", Intent.ACTION_DIAL, "CALL_PHONE", 10, "2.2.2", null).doNotify());
+		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "", 10, null, null).doNotify());
+		mListHook.add(new Hook("calling", Intent.ACTION_DIAL, "", 10, "2.2.2", null).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_NEW_OUTGOING_CALL, "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT)) {
-			mListHook.add(new Hook("calling", "Srv_" + Intent.ACTION_CALL, "CALL_PHONE", 10, "2.99", null).doNotify());
-			mListHook.add(new Hook("calling", "Srv_" + Intent.ACTION_DIAL, "CALL_PHONE", 10, "2.99", null).doNotify());
+			mListHook.add(new Hook("calling", "Srv_" + Intent.ACTION_CALL, "", 10, "2.99", null).doNotify());
+			mListHook.add(new Hook("calling", "Srv_" + Intent.ACTION_DIAL, "", 10, "2.99", null).doNotify());
 		}
 
 		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).doNotify());
@@ -215,18 +215,18 @@ public class Meta {
 		mListHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "takePicture", "CAMERA", 1, null, null).doNotify());
 		mListHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 1, null, null).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "CAMERA", 3, null, null).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "CAMERA", 17, null, null).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "CAMERA", 3, null, null).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "", 3, null, null).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.capture", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.captureBurst", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).doNotify());
 
 		if (XHook.isAOSP(Build.VERSION_CODES.KITKAT)) {
-			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE, "CAMERA", 3, "2.99", null).doNotify());
-			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "CAMERA", 17, "2.99", null).doNotify());
-			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_VIDEO_CAPTURE, "CAMERA", 3, "2.99", null).doNotify());
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE, "", 3, "2.99", null).doNotify());
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, "2.99", null).doNotify());
+			mListHook.add(new Hook("media", "Srv_" + MediaStore.ACTION_VIDEO_CAPTURE, "", 3, "2.99", null).doNotify());
 		}
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
