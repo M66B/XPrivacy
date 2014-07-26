@@ -341,11 +341,11 @@ public class XAccountManager extends XHook {
 		return listAccount.toArray(new Account[0]);
 	}
 
-	private boolean isAccountAllowed(Account account, int uid) {
+	public static boolean isAccountAllowed(Account account, int uid) {
 		return isAccountAllowed(account.name, account.type, uid);
 	}
 
-	private boolean isAccountAllowed(String accountName, String accountType, int uid) {
+	public static boolean isAccountAllowed(String accountName, String accountType, int uid) {
 		try {
 			boolean allowed = PrivacyManager.getSettingBool(-uid, Meta.cTypeAccountHash, accountName + accountType,
 					false);
@@ -354,7 +354,7 @@ public class XAccountManager extends XHook {
 				allowed = !allowed;
 			return allowed;
 		} catch (Throwable ex) {
-			Util.bug(this, ex);
+			Util.bug(null, ex);
 			return false;
 		}
 	}
@@ -446,7 +446,7 @@ public class XAccountManager extends XHook {
 			Bundle bundle = mFuture.getResult();
 			String accountName = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
 			String accountType = bundle.getString(AccountManager.KEY_ACCOUNT_TYPE);
-			if (XAccountManager.this.isAccountAllowed(accountName, accountType, mUid))
+			if (isAccountAllowed(accountName, accountType, mUid))
 				return bundle;
 			else
 				throw new OperationCanceledException("XPrivacy");
@@ -458,7 +458,7 @@ public class XAccountManager extends XHook {
 			Bundle bundle = mFuture.getResult(timeout, unit);
 			String accountName = bundle.getString(AccountManager.KEY_ACCOUNT_NAME);
 			String accountType = bundle.getString(AccountManager.KEY_ACCOUNT_TYPE);
-			if (XAccountManager.this.isAccountAllowed(accountName, accountType, mUid))
+			if (isAccountAllowed(accountName, accountType, mUid))
 				return bundle;
 			else
 				throw new OperationCanceledException("XPrivacy");

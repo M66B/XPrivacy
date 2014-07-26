@@ -73,6 +73,7 @@ public class Meta {
 			mListHook.add(new Hook("accounts", "Srv_getAccountsAsUser", "GET_ACCOUNTS", 1, "2.2.2", null));
 			mListHook.add(new Hook("accounts", "Srv_getAccountsByFeatures", "GET_ACCOUNTS", 1, "2.2.2", null));
 			mListHook.add(new Hook("accounts", "Srv_getSharedAccountsAsUser", "GET_ACCOUNTS", 1, "2.2.2", null));
+			mListHook.add(new Hook("accounts", "Srv_getCurrentSyncs", "GET_ACCOUNTS", 11, "2.2.2", null));
 		}
 
 		mListHook.add(new Hook("browser", "BrowserProvider2", "com.android.browser.permission.READ_HISTORY_BOOKMARKS,GLOBAL_SEARCH", 1, null, null));
