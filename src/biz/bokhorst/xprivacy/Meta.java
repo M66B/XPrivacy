@@ -120,7 +120,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).notAOSP(19).dangerous());
-		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null));
+		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook("identification", "getString", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getDescriptor", "", 16, null, null));
 		mListHook.add(new Hook("identification", "InputDevice.getName", "", 9, null, null));
