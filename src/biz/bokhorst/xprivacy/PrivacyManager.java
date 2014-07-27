@@ -126,7 +126,7 @@ public class PrivacyManager {
 	public final static String cSettingFreeze = "Freeze";
 	public final static String cSettingPermMan = "PermMan";
 	public final static String cSettingIntentWall = "IntentWall";
-	public final static String cSettingUnsafe = "Unsafe";
+	public final static String cSettingSafeMode = "SafeMode";
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";
@@ -449,7 +449,7 @@ public class PrivacyManager {
 
 		Hook hook = getHook(restrictionName, methodName);
 		if (hook != null && hook.isUnsafe())
-			if (!getSettingBool(0, PrivacyManager.cSettingUnsafe, false))
+			if (getSettingBool(0, PrivacyManager.cSettingSafeMode, false))
 				return false;
 
 		return true;

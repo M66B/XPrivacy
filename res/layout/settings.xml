@@ -156,7 +156,7 @@
                     android:id="@+id/etQuirks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="freeze,noresolve,unsafe"
+                    android:hint="freeze,noresolve,safemode"
                     android:inputType="text"
                     tools:ignore="HardcodedText" />
             </LinearLayout>

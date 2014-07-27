@@ -241,7 +241,7 @@ public class SettingsDialog {
 		boolean noresolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNoResolve, false);
 		boolean permman = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingPermMan, false);
 		boolean iwall = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingIntentWall, false);
-		boolean unsafe = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingUnsafe, false);
+		boolean safemode = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSafeMode, false);
 		List<String> listQuirks = new ArrayList<String>();
 		if (freeze)
 			listQuirks.add("freeze");
@@ -251,8 +251,8 @@ public class SettingsDialog {
 			listQuirks.add("permman");
 		if (iwall)
 			listQuirks.add("iwall");
-		if (unsafe)
-			listQuirks.add("unsafe");
+		if (safemode)
+			listQuirks.add("safemode");
 		Collections.sort(listQuirks);
 		String quirks = TextUtils.join(",", listQuirks.toArray());
 		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
@@ -507,8 +507,8 @@ public class SettingsDialog {
 							Boolean.toString(listQuirks.contains("permman")));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingIntentWall,
 							Boolean.toString(listQuirks.contains("iwall")));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingUnsafe,
-							Boolean.toString(listQuirks.contains("unsafe")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingSafeMode,
+							Boolean.toString(listQuirks.contains("safemode")));
 				}
 
 				// Notifications
