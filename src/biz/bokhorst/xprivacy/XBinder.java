@@ -13,14 +13,12 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
-import android.os.RemoteException;
 import android.util.Log;
 import android.util.SparseArray;
 
 public class XBinder extends XHook {
 	private Methods mMethod;
 	private static long mToken = 0;
-	private static List<String> listInterfaceHooked = new ArrayList<String>();
 	private static Map<String, Boolean> mMapClassSystem = new HashMap<String, Boolean>();
 	private static Map<String, SparseArray<String>> mMapCodeName = new HashMap<String, SparseArray<String>>();
 
@@ -162,9 +160,6 @@ public class XBinder extends XHook {
 			// Check for direct IPC
 			if (!PrivacyManager.isAOSP(19))
 				checkIPC(param);
-
-			// Dynamically hook interface methods
-			hookIPC(param);
 
 		} else if (mMethod == Methods.transact) {
 			if (!PrivacyManager.isAOSP(19))
@@ -333,39 +328,6 @@ public class XBinder extends XHook {
 				}
 				param.setResult(true);
 			}
-		}
-	}
-
-	private void hookIPC(XParam param) throws RemoteException {
-		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingHookIPC, false)) {
-			final String descriptor = ((IBinder) param.thisObject).getInterfaceDescriptor();
-			if (cServiceDescriptor.contains(descriptor))
-				synchronized (listInterfaceHooked) {
-					// CHeck if already hooked
-					if (listInterfaceHooked.contains(descriptor))
-						return;
-					listInterfaceHooked.add(descriptor);
-
-					// Get/check stub
-					Class<?> stub = param.thisObject.getClass().getSuperclass();
-					if (stub != null && stub.getInterfaces().length > 0) {
-						Util.log(this, Log.WARN, "Hooking service=" + descriptor + " class="
-								+ param.thisObject.getClass().getName());
-
-						// Find interface methods
-						List<XHook> listHook = new ArrayList<XHook>();
-						for (Method method : param.thisObject.getClass().getDeclaredMethods())
-							for (Method i : stub.getInterfaces()[0].getDeclaredMethods())
-								if (i.getName().equals(method.getName()))
-									listHook.add(new XIPC(method, descriptor));
-
-						// Hook interface methods
-						XPrivacy.hookAll(listHook, param.thisObject.getClass().getClassLoader(), getSecret());
-					} else {
-						Util.log(this, Log.WARN, "No stub or interfaces service=" + descriptor);
-						Util.logStack(this, Log.WARN);
-					}
-				}
 		}
 	}
 
