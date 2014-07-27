@@ -83,7 +83,7 @@ public class Meta {
 		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).notAOSP(19).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_DIAL, "", 10, "2.2.2", null).notAOSP(19).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_NEW_OUTGOING_CALL, "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
-		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
+		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG,WRITE_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
 		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).doNotify());
 		mListHook.add(new Hook("calling", "SIP.isSipWifiOnly", "USE_SIP", 9, null, null).doNotify());
@@ -214,9 +214,9 @@ public class Meta {
 		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).doNotify());
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
-		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS", 1, null, null));
-		mListHook.add(new Hook("messages", "MmsProvider", "READ_SMS", 1, null, null));
-		mListHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS", 1, null, null));
+		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
+		mListHook.add(new Hook("messages", "MmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
+		mListHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "VoicemailContentProvider", "com.android.voicemail.permission.READ_WRITE_ALL_VOICEMAIL", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
