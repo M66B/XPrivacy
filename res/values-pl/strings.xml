@@ -181,7 +181,7 @@
     <string name="title_toggle_dangerous">Przytrzymaj dużej na tytule aby przełączyć niebezpieczne funkcje</string>
     <string name="title_ondemand_category">Zastosowanie kategorii zresetuje wyjątki funkcji do wartości domyślnych</string>
     <string name="title_function_help">Dokumentacja funkcji</string>
-    <string name="title_unsafe">is not safe, can be unhooked</string>
+    <string name="title_unsafe">is unsafe, can be circumvented</string>
     <string name="settings_serial">Numer seryjny</string>
     <string name="settings_lat">Szerokość geograficzna</string>
     <string name="settings_lon">Długość geograficzna</string>

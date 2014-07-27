@@ -181,7 +181,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_toggle_dangerous">Druk lang op een titel om gevaarlijke functies te schakelen</string>
     <string name="title_ondemand_category">Toepassen op de categorie zal de functie-uitzondering herstellen naar standaard waarden</string>
     <string name="title_function_help">Functie documentatie</string>
-    <string name="title_unsafe">is niet veilig, kan worden &#8216;unhooked&#8217;</string>
+    <string name="title_unsafe">is onveilig, kan worden omzeild</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
