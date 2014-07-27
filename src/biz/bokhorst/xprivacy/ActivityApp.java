@@ -1734,8 +1734,6 @@ public class ActivityApp extends ActivityBase {
 							else
 								text += TextUtils.join("<br />", permissions);
 						}
-						if (hook.getFrom() != null)
-							text += "<br /><br />XPrivacy " + hook.getFrom();
 
 						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
 						tvInfo.setText(Html.fromHtml(text));
