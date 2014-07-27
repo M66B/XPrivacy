@@ -137,8 +137,8 @@ public class PrivacyManager {
 
 	// Constants
 	public final static int cXposedAppProcessMinVersion = 46;
-	public final static int cWarnServiceDelayMs = 100;
-	public final static int cWarnHookDelayMs = 100;
+	public final static int cWarnServiceDelayMs = 200;
+	public final static int cWarnHookDelayMs = 200;
 
 	private final static int cMaxExtra = 128;
 	private final static String cDeface = "DEFACE";
