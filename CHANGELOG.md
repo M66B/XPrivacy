@@ -33,13 +33,13 @@ Changelog
 * Added IPC restrictions for *IApplicationThread*, *IContentProvider* and *IWindowSession* (on demand restricting only)
 * Added wildcards for IPC transaction names
 * Fixed translating transaction codes into transaction names in most cases
-* Restricting *ACTION_PACKAGE_VERIFIED* as intended
-* *DATA_SMS_RECEIVED*, *SMS_RECEIVED* and *WAP_PUSH_RECEIVED* were always part of Android, but only documented since KitKat
+* Restricting [ACTION_PACKAGE_VERIFIED](http://developer.android.com/reference/android/content/Intent.html#ACTION_PACKAGE_VERIFIED) as intended
+* *DATA_SMS_RECEIVED*, *SMS_RECEIVED* and *WAP_PUSH_RECEIVED* were always part of Android, but only [documented since KitKat](https://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html)
 * Translating isolated uids into originating application uids
 * Fixed default on demand restricting for dangerous functions with a whitelist while no on demand restricting for category
-* Added restriction for [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL) for Android versions before KitKat
-* Removed restriction for [ACTION_CALL](http://developer.android.com/reference/android/content/Intent.html#ACTION_CALL) for KitKat, since user interaction is required
-* Removed restrictions for [MediaStore](http://developer.android.com/reference/android/provider/MediaStore.html) *ACTION_IMAGE_CAPTURE*, *ACTION_IMAGE_CAPTURE_SECURE* and *ACTION_VIDEO_CAPTURE* only for KitKat, since user interaction is required
+* Added restriction [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL) for Android versions before KitKat
+* Removed restriction [ACTION_CALL](http://developer.android.com/reference/android/content/Intent.html#ACTION_CALL) for KitKat, since user interaction is required
+* Removed restrictions [MediaStore](http://developer.android.com/reference/android/provider/MediaStore.html) *ACTION_IMAGE_CAPTURE*, *ACTION_IMAGE_CAPTURE_SECURE* and *ACTION_VIDEO_CAPTURE* only for KitKat, since user interaction is required
 * Removed restriction *ApplicationsProvider* for KitKat, since the provider doesn't exist anymore
 * Corrected some restriction permissions
 * Updated in application documentation
