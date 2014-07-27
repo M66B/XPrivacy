@@ -164,7 +164,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	// Common
-	public static void init() {
+	private static void init() {
 		Util.log(null, Log.WARN, "isAOSP=" + PrivacyManager.isAOSP(Build.VERSION_CODES.KITKAT) + " host=" + Build.HOST
 				+ " display=" + Build.DISPLAY);
 
