@@ -38,6 +38,7 @@ Changelog
 * Translating isolated uids into originating application uids
 * Fixed default on demand restricting for dangerous functions with a whitelist while no on demand restricting for category
 * Added restriction for [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL)
+* Corrected some restriction permissions
 * Updated in application documentation
 * Updated Dutch translation
 * Updated Simplified Chinese translation
