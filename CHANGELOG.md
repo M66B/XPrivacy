@@ -41,6 +41,7 @@ Changelog
 * Corrected some restriction permissions
 * Updated in application documentation
 * Updated Dutch translation
+* Updated German translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 
