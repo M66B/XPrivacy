@@ -157,16 +157,9 @@ public class PrivacyManager {
 	// Meta data
 
 	static {
-		int count = 0;
 		List<Hook> listHook = Meta.get();
 		List<String> listRestriction = getRestrictions();
 		for (Hook hook : listHook) {
-			if (hook.isAOSP() && !isAOSP(hook.getSdk()))
-				continue;
-			if (hook.isNotAOSP() && isAOSP(hook.getAOSPSdk()))
-				continue;
-
-			count++;
 			String restrictionName = hook.getRestrictionName();
 
 			// Check restriction
@@ -197,7 +190,7 @@ public class PrivacyManager {
 							mPermission.get(aPermission).add(hook);
 					}
 		}
-		Util.log(null, Log.WARN, count + " restrictions");
+		Util.log(null, Log.WARN, listHook.size() + " restrictions");
 	}
 
 	public static List<String> getRestrictions() {
