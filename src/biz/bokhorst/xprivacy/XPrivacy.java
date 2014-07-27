@@ -516,14 +516,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Hook members
 			for (Member member : listMember)
 				try {
-					if (mCydia)
+					if (mCydia) {
+						XMethodAlteration alteration = new XMethodAlteration(hook, member);
 						if (member instanceof Method)
-							MS.hookMethod(member.getDeclaringClass(), (Method) member, new XMethodAlteration(hook,
-									member));
+							MS.hookMethod(member.getDeclaringClass(), (Method) member, alteration);
 						else
-							MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member, new XMethodAlteration(
-									hook, member));
-					else
+							MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member, alteration);
+					} else
 						XposedBridge.hookMethod(member, new XMethodHook(hook));
 				} catch (NoSuchFieldError ex) {
 					Util.log(hook, Log.WARN, ex.toString());
