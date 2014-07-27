@@ -37,7 +37,10 @@ Changelog
 * *DATA_SMS_RECEIVED*, *SMS_RECEIVED* and *WAP_PUSH_RECEIVED* were always part of Android, but only documented since KitKat
 * Translating isolated uids into originating application uids
 * Fixed default on demand restricting for dangerous functions with a whitelist while no on demand restricting for category
-* Added restriction for [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL)
+* Added restriction for [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL) for Android versions before KitKat
+* Removed restriction for [ACTION_CALL](http://developer.android.com/reference/android/content/Intent.html#ACTION_CALL) for KitKat, since user interaction is required
+* Removed restrictions for [MediaStore](http://developer.android.com/reference/android/provider/MediaStore.html) *ACTION_IMAGE_CAPTURE*, *ACTION_IMAGE_CAPTURE_SECURE* and *ACTION_VIDEO_CAPTURE* only for KitKat, since user interaction is required
+* Removed restriction *ApplicationsProvider* for KitKat, since the provider doesn't exist anymore
 * Corrected some restriction permissions
 * Updated in application documentation
 * Updated Dutch translation

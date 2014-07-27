@@ -80,8 +80,8 @@ public class Meta {
 		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
-		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).notAOSP(19).doNotify());
-		mListHook.add(new Hook("calling", Intent.ACTION_DIAL, "", 10, "2.2.2", null).notAOSP(19).doNotify());
+		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).to(18).doNotify());
+		mListHook.add(new Hook("calling", Intent.ACTION_DIAL, "", 10, "2.2.2", null).to(18).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_NEW_OUTGOING_CALL, "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG,WRITE_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
@@ -210,9 +210,9 @@ public class Meta {
 		mListHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "takePicture", "CAMERA", 1, null, null).doNotify());
 		mListHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 1, null, null).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "", 3, null, null).notAOSP(19).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).notAOSP(19).doNotify());
-		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "", 3, null, null).notAOSP(19).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "", 3, null, null).to(18).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).to(18).doNotify());
+		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "", 3, null, null).to(18).doNotify());
 		mListHook.add(new Hook("media", "Camera2.capture", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.captureBurst", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).doNotify());
@@ -222,7 +222,7 @@ public class Meta {
 		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
-		mListHook.add(new Hook("messages", "VoicemailContentProvider", "com.android.voicemail.permission.READ_WRITE_ALL_VOICEMAIL", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("messages", "VoicemailContentProvider", "com.android.voicemail.permission.READ_WRITE_ALL_VOICEMAIL", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, "RECEIVE_WAP_PUSH", 1, null, null));
@@ -351,7 +351,7 @@ public class Meta {
 		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_VERIFIED, "", 17, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE, "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, "", 8, null, null).dangerous());
-		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null).to(18));
 
 		mListHook.add(new Hook("system", "checkPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 		mListHook.add(new Hook("system", "checkUidPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
