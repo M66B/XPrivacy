@@ -37,7 +37,6 @@ Changelog
 * *DATA_SMS_RECEIVED*, *SMS_RECEIVED* and *WAP_PUSH_RECEIVED* were always part of Android, but only documented since KitKat
 * Translating isolated uids into originating application uids
 * Fixed default on demand restricting for dangerous functions with a whitelist while no on demand restricting for category
-* Fixed resolving transaction code names
 * Added restriction for [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL)
 * Updated in application documentation
 * Updated Dutch translation
