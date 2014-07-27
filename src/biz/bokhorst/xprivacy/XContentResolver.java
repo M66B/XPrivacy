@@ -150,49 +150,71 @@ public class XContentResolver extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.query)
+		switch (mMethod) {
+		case getCurrentSync:
+		case getCurrentSyncs:
+		case getSyncAdapterTypes:
+		case openAssetFile:
+		case openFile:
+		case openAssetFileDescriptor:
+		case openFileDescriptor:
+		case openInputStream:
+		case openOutputStream:
+		case openTypedAssetFileDescriptor:
+			break;
+
+		case query:
 			try {
 				handleUriBefore(param);
 			} catch (DeadObjectException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
+			break;
+		}
 	}
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.getCurrentSync) {
+		switch (mMethod) {
+		case getCurrentSync:
 			if (isRestricted(param))
 				param.setResult(null);
+			break;
 
-		} else if (mMethod == Methods.getCurrentSyncs) {
+		case getCurrentSyncs:
 			if (isRestricted(param))
 				param.setResult(new ArrayList<SyncInfo>());
+			break;
 
-		} else if (mMethod == Methods.getSyncAdapterTypes) {
+		case getSyncAdapterTypes:
 			if (isRestricted(param))
 				param.setResult(new SyncAdapterType[0]);
+			break;
 
-		} else if (mMethod == Methods.openAssetFileDescriptor || mMethod == Methods.openFileDescriptor
-				|| mMethod == Methods.openInputStream || mMethod == Methods.openOutputStream
-				|| mMethod == Methods.openTypedAssetFileDescriptor || mMethod == Methods.openAssetFile
-				|| mMethod == Methods.openFile) {
+		case openAssetFileDescriptor:
+		case openFileDescriptor:
+		case openInputStream:
+		case openOutputStream:
+		case openTypedAssetFileDescriptor:
+		case openAssetFile:
+		case openFile:
 			if (param.args.length > 0 && param.args[0] instanceof Uri) {
 				String uri = ((Uri) param.args[0]).toString();
 				if (isRestrictedExtra(param, uri))
 					param.setThrowable(new FileNotFoundException("XPrivacy"));
 			}
+			break;
 
-		} else if (mMethod == Methods.query) {
+		case query:
 			try {
 				handleUriAfter(param);
 			} catch (DeadObjectException ignored) {
 			} catch (Throwable ex) {
 				Util.bug(this, ex);
 			}
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	@SuppressLint("DefaultLocale")
