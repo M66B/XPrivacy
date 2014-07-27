@@ -290,12 +290,12 @@ public class Meta {
 		mListHook.add(new Hook("sensors", "step", "", 3, null, null));
 		mListHook.add(new Hook("sensors", "heartrate", "", 20, null, null));
 
-		mListHook.add(new Hook("shell", "sh", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "su", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "exec", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "load", "", 10, "0.0", null).dangerous().restart().whitelist(cTypeLibrary));
-		mListHook.add(new Hook("shell", "loadLibrary", "", 10, "0.0", null).dangerous().restart().whitelist(cTypeLibrary));
-		mListHook.add(new Hook("shell", "start", "", 10, "0.0", null).dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "sh", "", 10, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "su", "", 10, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "exec", "", 10, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "load", "", 10, "0.0", null).notAOSP(19).dangerous().restart().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "loadLibrary", "", 10, "0.0", null).notAOSP(19).dangerous().restart().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "start", "", 10, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeCommand));
 
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_ALL_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
