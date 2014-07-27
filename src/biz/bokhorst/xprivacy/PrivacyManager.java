@@ -275,7 +275,7 @@ public class PrivacyManager {
 
 			if (!cached) {
 				// Get restriction
-				result = PrivacyService.getRestriction(query, false, "");
+				result = PrivacyService.getRestrictionProxy(query, false, "");
 				if (result.debug)
 					Util.logStack(null, Log.WARN);
 
@@ -357,7 +357,7 @@ public class PrivacyManager {
 			try {
 				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 				query.extra = extra;
-				PRestriction restriction = PrivacyService.getRestriction(query, true, secret);
+				PRestriction restriction = PrivacyService.getRestrictionProxy(query, true, secret);
 				result.restricted = restriction.restricted;
 				if (restriction.debug)
 					Util.logStack(null, Log.WARN);
@@ -753,11 +753,11 @@ public class PrivacyManager {
 		// Get settings
 		if (!cached)
 			try {
-				value = PrivacyService.getSetting(new PSetting(Math.abs(uid), type, name, null)).value;
+				value = PrivacyService.getSettingProxy(new PSetting(Math.abs(uid), type, name, null)).value;
 				if (value == null)
 					if (uid > 99) {
 						int userId = Util.getUserId(uid);
-						value = PrivacyService.getSetting(new PSetting(userId, type, name, null)).value;
+						value = PrivacyService.getSettingProxy(new PSetting(userId, type, name, null)).value;
 					}
 
 				// Add to cache
