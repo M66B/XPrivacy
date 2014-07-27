@@ -57,8 +57,8 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "hasFeatures", "GET_ACCOUNTS", 8, null, null));
 		mListHook.add(new Hook("accounts", "getAccountsByTypeForPackage", "GET_ACCOUNTS", 18, null, null).notAOSP(19));
 
-		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 1, "0.0", null).notAOSP(19).dangerous());
-		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 1, "0.0", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 1, "0.0", null).unsafe().dangerous());
+		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 1, "0.0", null).unsafe().dangerous());
 
 		mListHook.add(new Hook("accounts", "getAuthenticatorTypes", "GET_ACCOUNTS", 5, "1.99.24", null).dangerous());
 		mListHook.add(new Hook("accounts", "getCurrentSync", "READ_SYNC_SETTINGS", 8, "1.99.24", null).notAOSP(19).dangerous());
