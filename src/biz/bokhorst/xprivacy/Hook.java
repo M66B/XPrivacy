@@ -1,7 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import android.os.Build;
-import android.util.Log;
 
 public class Hook implements Comparable<Hook> {
 	private String mRestrictionName;
@@ -136,9 +135,7 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public static boolean isAOSP(int sdk) {
-		if (sdk != Build.VERSION_CODES.KITKAT)
-			Util.logStack(null, Log.WARN);
-		if (sdk == Build.VERSION.SDK_INT) {
+		if (Build.VERSION.SDK_INT >= sdk) {
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
 			return (Build.HOST.endsWith(".google.com") || Build.DISPLAY.startsWith("omni"));
