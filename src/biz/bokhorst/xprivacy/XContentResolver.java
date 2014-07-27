@@ -97,7 +97,6 @@ public class XContentResolver extends XHook {
 
 	// @formatter:off
 	public static List<String> cProviderClassName = Arrays.asList(new String[] {
-		"com.android.providers.applications.ApplicationsProvider",
 		"com.android.browser.provider.BrowserProvider2",
 		"com.android.browser.provider.BrowserProviderProxy",
 		"com.android.providers.downloads.DownloadProvider",

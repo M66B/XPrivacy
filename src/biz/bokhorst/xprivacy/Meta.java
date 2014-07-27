@@ -343,7 +343,7 @@ public class Meta {
 		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_VERIFIED, "", 17, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE, "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, "", 8, null, null).dangerous());
-		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null));
+		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null).notAOSP(19));
 
 		mListHook.add(new Hook("system", "checkPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 		mListHook.add(new Hook("system", "checkUidPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
