@@ -111,11 +111,11 @@ public class Meta {
 		mListHook.add(new Hook("email", "EMailProvider", "com.android.email.permission.ACCESS_PROVIDER", 1, null, null));
 		mListHook.add(new Hook("email", "GMailProvider", "com.google.android.gm.permission.READ_CONTENT_PROVIDER", 8, "1.99.20", null));
 
-		mListHook.add(new Hook("identification", "%hostname", "", 1, null, null));
-		mListHook.add(new Hook("identification", "%imei", "", 1, null, null));
-		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null));
-		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null));
-		mListHook.add(new Hook("identification", "%cid", "", 1, null, null));
+		mListHook.add(new Hook("identification", "%hostname", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("identification", "%imei", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("identification", "%cid", "", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).notAOSP(19).dangerous().whitelist(cTypeProc));
 		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).notAOSP(19).dangerous());
