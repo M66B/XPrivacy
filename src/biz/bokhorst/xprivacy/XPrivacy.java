@@ -165,7 +165,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// Common
 	private static void init() {
-		Util.log(null, Log.WARN, "isAOSP=" + PrivacyManager.isAOSP(Build.VERSION_CODES.KITKAT) + " host=" + Build.HOST
+		Util.log(null, Log.WARN, "isAOSP=" + Hook.isAOSP(Build.VERSION_CODES.KITKAT) + " host=" + Build.HOST
 				+ " display=" + Build.DISPLAY);
 
 		// Generate secret
@@ -461,20 +461,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (secret == null)
 			Util.log(hook, Log.ERROR, "Secret missing for " + hook);
 
-		int sdk = 0;
+		// Check if available on this platform
 		if (hook.getRestrictionName() == null)
-			sdk = hook.getSdk();
-		else if (md != null)
-			sdk = md.getSdk();
-
-		if (Build.VERSION.SDK_INT < sdk)
+			if (Build.VERSION.SDK_INT < hook.getSdk())
+				return;
+		if (md != null && !md.isAvailable())
 			return;
-		if (md != null) {
-			if (md.isAOSP() && !PrivacyManager.isAOSP(md.getSdk()))
-				return;
-			if (md.isNotAOSP() && PrivacyManager.isAOSP(md.getAOSPSdk()))
-				return;
-		}
 
 		// Provide secret
 		hook.setSecret(secret);

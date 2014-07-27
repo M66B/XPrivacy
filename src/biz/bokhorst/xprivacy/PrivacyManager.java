@@ -220,27 +220,11 @@ public class PrivacyManager {
 		List<Hook> listMethod = new ArrayList<Hook>();
 		for (String methodName : mMethod.get(restrictionName).keySet()) {
 			Hook hook = mMethod.get(restrictionName).get(methodName);
-			if (Build.VERSION.SDK_INT < hook.getSdk())
-				continue;
-			if (hook.isAOSP() && !isAOSP(hook.getSdk()))
-				continue;
-			if (hook.isNotAOSP() && isAOSP(hook.getAOSPSdk()))
-				continue;
-			listMethod.add(mMethod.get(restrictionName).get(methodName));
+			if (hook.isAvailable())
+				listMethod.add(mMethod.get(restrictionName).get(methodName));
 		}
 		Collections.sort(listMethod);
 		return listMethod;
-	}
-
-	public static boolean isAOSP(int sdk) {
-		if (sdk != Build.VERSION_CODES.KITKAT)
-			Util.logStack(null, Log.WARN);
-		if (sdk == Build.VERSION.SDK_INT) {
-			if (Build.DISPLAY == null || Build.HOST == null)
-				return false;
-			return (Build.HOST.endsWith(".google.com") || Build.DISPLAY.startsWith("omni"));
-		} else
-			return false;
 	}
 
 	public static List<String> getPermissions(String restrictionName) {

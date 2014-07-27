@@ -132,7 +132,7 @@ public class XContentResolver extends XHook {
 			listHook.add(new XContentResolver(Methods.openFile, PrivacyManager.cStorage, true));
 			listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, true));
 
-			if (PrivacyManager.isAOSP(19))
+			if (Hook.isAOSP(19))
 				listHook.add(new XContentResolver(Methods.query, null, 1, "com.android.internal.telephony.IccProvider"));
 			else {
 				listHook.add(new XContentResolver(Methods.query, null, 1, false));

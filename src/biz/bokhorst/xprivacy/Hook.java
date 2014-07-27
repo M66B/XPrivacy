@@ -1,10 +1,14 @@
 package biz.bokhorst.xprivacy;
 
+import android.os.Build;
+import android.util.Log;
+
 public class Hook implements Comparable<Hook> {
 	private String mRestrictionName;
 	private String mMethodName;
 	private String[] mPermissions;
-	private int mSdk;
+	private int mSdkFrom;
+	private int mSdkTo = Integer.MAX_VALUE;
 	private Version mFrom;
 	private String mReplacedRestriction;
 	private String mReplacedMethod;
@@ -29,7 +33,7 @@ public class Hook implements Comparable<Hook> {
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
 		mPermissions = (permissions == null ? null : permissions.split(","));
-		mSdk = sdk;
+		mSdkFrom = sdk;
 		mFrom = (from == null ? null : new Version(from));
 		if (replaces != null) {
 			int slash = replaces.indexOf('/');
@@ -44,6 +48,11 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	// Definitions
+
+	public Hook to(int sdk) {
+		mSdkTo = sdk;
+		return this;
+	}
 
 	public Hook dangerous() {
 		mDangerous = true;
@@ -114,12 +123,27 @@ public class Hook implements Comparable<Hook> {
 		return mPermissions;
 	}
 
-	public int getSdk() {
-		return mSdk;
+	public boolean isAvailable() {
+		if (Build.VERSION.SDK_INT < mSdkFrom)
+			return false;
+		if (Build.VERSION.SDK_INT > mSdkTo)
+			return false;
+		if (isAOSP() && !isAOSP(mSdkFrom))
+			return false;
+		if (isNotAOSP() && isAOSP(mNotAOSP))
+			return false;
+		return true;
 	}
 
-	public int getAOSPSdk() {
-		return mNotAOSP;
+	public static boolean isAOSP(int sdk) {
+		if (sdk != Build.VERSION_CODES.KITKAT)
+			Util.logStack(null, Log.WARN);
+		if (sdk == Build.VERSION.SDK_INT) {
+			if (Build.DISPLAY == null || Build.HOST == null)
+				return false;
+			return (Build.HOST.endsWith(".google.com") || Build.DISPLAY.startsWith("omni"));
+		} else
+			return false;
 	}
 
 	public Version getFrom() {

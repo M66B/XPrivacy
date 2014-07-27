@@ -1723,7 +1723,7 @@ public class ActivityApp extends ActivityBase {
 						View layout = inflator.inflate(R.layout.popup, null);
 
 						TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
-						tvTitle.setText(hook.getName() + " (SDK " + hook.getSdk() + ")");
+						tvTitle.setText(hook.getName());
 
 						String text = hook.getAnnotation();
 						String[] permissions = hook.getPermissions();

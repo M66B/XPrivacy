@@ -158,11 +158,11 @@ public class XBinder extends XHook {
 			// execTransact calls the overridden onTransact
 
 			// Check for direct IPC
-			if (!PrivacyManager.isAOSP(19))
+			if (!Hook.isAOSP(19))
 				checkIPC(param);
 
 		} else if (mMethod == Methods.transact) {
-			if (!PrivacyManager.isAOSP(19))
+			if (!Hook.isAOSP(19))
 				markIPC(param);
 
 		} else
