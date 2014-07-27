@@ -18,6 +18,7 @@
     <attr name="icon_clear" format="reference" />
     <attr name="icon_clear_grayed" format="reference" />
     <attr name="icon_frozen" format="reference" />
+    <attr name="icon_unsafe" format="reference" />
     <attr name="drawable_background" format="reference" />
     <attr name="drawable_card" format="reference" />
     <attr name="color_dangerous" format="reference" />

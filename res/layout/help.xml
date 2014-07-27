@@ -154,6 +154,8 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
 
+        <!-- unsafe -->
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -169,7 +171,7 @@
                     android:layout_width="32dip"
                     android:layout_height="32dip"
                     android:contentDescription="@string/title_unsafe"
-                    android:src="@android:drawable/ic_partial_secure" />
+                    android:src="?attr/icon_unsafe" />
             </LinearLayout>
 
             <TextView

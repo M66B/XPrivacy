@@ -66,7 +66,7 @@
             android:layout_gravity="center_vertical"
             android:contentDescription="@string/help_application"
             android:paddingLeft="3dip"
-            android:src="@android:drawable/ic_partial_secure"
+            android:src="?attr/icon_unsafe"
             android:visibility="gone" />
 
         <ImageView
