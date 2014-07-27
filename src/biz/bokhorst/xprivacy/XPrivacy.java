@@ -349,10 +349,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Providers
 		for (String className : XContentResolver.cProviderClassName)
-			if (className.startsWith(packageName)) {
-				Util.log(null, Log.WARN, "Hooking class=" + className + " package=" + packageName);
+			if (className.startsWith(packageName))
 				hookAll(XContentResolver.getInstances(className), classLoader, secret);
-			}
 
 		// Advertising Id
 		try {
@@ -560,7 +558,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Get members
 			List<Member> listMember = new ArrayList<Member>();
 			Class<?> clazz = hookClass;
-			while (clazz != null) {
+			while (clazz != null && !"android.content.ContentProvider".equals(clazz.getName())) {
 				if (hook.getMethodName() == null) {
 					for (Constructor<?> constructor : clazz.getDeclaredConstructors())
 						if (!Modifier.isAbstract(constructor.getModifiers())

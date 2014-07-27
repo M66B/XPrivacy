@@ -19,18 +19,20 @@ import android.util.Log;
 public class XContentResolver extends XHook {
 	private Methods mMethod;
 	private boolean mClient;
-	private String mClassName = null;
+	private String mClassName;
 
 	private XContentResolver(Methods method, String restrictionName, boolean client) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
 		mClient = client;
+		mClassName = null;
 	}
 
 	private XContentResolver(Methods method, String restrictionName, int sdk, boolean client) {
 		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
 		mClient = client;
+		mClassName = null;
 	}
 
 	private XContentResolver(Methods method, String restrictionName, int sdk, String className) {
@@ -143,6 +145,7 @@ public class XContentResolver extends XHook {
 			if (className.startsWith("com.android.browser.provider."))
 				hook = hook.optional();
 			listHook.add(hook);
+			Util.log(null, Log.WARN, "hook=" + hook);
 		}
 
 		return listHook;
