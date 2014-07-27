@@ -110,8 +110,7 @@ public class XContentResolver extends XHook {
 		"com.android.providers.telephony.MmsSmsProvider",
 		"com.android.providers.telephony.SmsProvider",
 		"com.android.providers.telephony.TelephonyProvider",
-		"com.android.providers.userdictionary.UserDictionaryProvider",
-		"com.android.providers.contacts.VoicemailContentProvider",
+		"com.android.providers.userdictionary.UserDictionaryProvider"
 	});
 	// @formatter:on
 
