@@ -372,13 +372,13 @@ public class Meta {
 
 		mListHook.add(new Hook("system", "IntentFirewall", "", 19, "2.99", null).AOSP().dangerous().whitelist(cTypeAction));
 
-		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).whitelist(cTypeUrl));
-		mListHook.add(new Hook("view", "WebView", "", 1, null, null));
-		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null));
-		mListHook.add(new Hook("view", "getUserAgent", "", 3, null, null));
-		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null));
-		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null));
-		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null));
+		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).notAOSP(19).whitelist(cTypeUrl));
+		mListHook.add(new Hook("view", "WebView", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null).notAOSP(19));
+		mListHook.add(new Hook("view", "getUserAgent", "", 3, null, null).notAOSP(19));
+		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null).notAOSP(19));
+		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null).notAOSP(19));
+		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null).notAOSP(19));
 		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 
 		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", Intent.ACTION_VIEW).AOSP().doNotify().whitelist(cTypeUrl));
