@@ -157,15 +157,21 @@ public class PrivacyManager {
 	// Meta data
 
 	static {
-		List<String> listRestriction = getRestrictions();
-
+		int count = 0;
 		List<Hook> listHook = Meta.get();
+		List<String> listRestriction = getRestrictions();
 		for (Hook hook : listHook) {
+			if (hook.isAOSP() && !isAOSP(hook.getSdk()))
+				continue;
+			if (hook.isNotAOSP() && isAOSP(hook.getAOSPSdk()))
+				continue;
+
+			count++;
 			String restrictionName = hook.getRestrictionName();
 
 			// Check restriction
 			if (!listRestriction.contains(restrictionName))
-				Util.log(null, Log.WARN, "Not found restriction=" + restrictionName);
+				Util.log(null, Log.WARN, "Not found restriction=" + restrictionName + " hook=" + hook);
 
 			// Enlist method
 			if (!mMethod.containsKey(restrictionName))
@@ -191,11 +197,12 @@ public class PrivacyManager {
 							mPermission.get(aPermission).add(hook);
 					}
 		}
-		Util.log(null, Log.WARN, listHook.size() + " restrictions");
+		Util.log(null, Log.WARN, count + " restrictions");
 	}
 
 	public static List<String> getRestrictions() {
-		return new ArrayList<String>(Arrays.asList(cRestrictionNames));
+		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
+		return listRestriction;
 	}
 
 	public static TreeMap<String, String> getRestrictions(Context context) {
