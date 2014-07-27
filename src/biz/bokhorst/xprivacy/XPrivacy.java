@@ -480,68 +480,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hook.setSecret(secret);
 
 		try {
-			// Create hook method
-			XC_MethodHook methodHook = new XC_MethodHook() {
-				@Override
-				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-					try {
-						if (Process.myUid() <= 0)
-							return;
-
-						// Pre processing
-						XParam xparam = XParam.fromXposed(param);
-
-						long start = System.currentTimeMillis();
-
-						// Execute hook
-						hook.before(xparam);
-
-						long ms = System.currentTimeMillis() - start;
-						if (ms > PrivacyManager.cWarnHookDelayMs)
-							Util.log(hook, Log.WARN, String.format("%s %d ms", param.method.getName(), ms));
-
-						// Post processing
-						if (xparam.hasResult())
-							param.setResult(xparam.getResult());
-						if (xparam.hasThrowable())
-							param.setThrowable(xparam.getThrowable());
-						param.setObjectExtra("xextra", xparam.getExtras());
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					}
-				}
-
-				@Override
-				protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-					if (!param.hasThrowable())
-						try {
-							if (Process.myUid() <= 0)
-								return;
-
-							// Pre processing
-							XParam xparam = XParam.fromXposed(param);
-							xparam.setExtras(param.getObjectExtra("xextra"));
-
-							long start = System.currentTimeMillis();
-
-							// Execute hook
-							hook.after(xparam);
-
-							long ms = System.currentTimeMillis() - start;
-							if (ms > PrivacyManager.cWarnHookDelayMs)
-								Util.log(hook, Log.WARN, String.format("%s %d ms", param.method.getName(), ms));
-
-							// Post processing
-							if (xparam.hasResult())
-								param.setResult(xparam.getResult());
-							if (xparam.hasThrowable())
-								param.setThrowable(xparam.getThrowable());
-						} catch (Throwable ex) {
-							Util.bug(null, ex);
-						}
-				}
-			};
-
 			// Find class
 			Class<?> hookClass = null;
 			try {
@@ -580,13 +518,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				try {
 					if (mCydia)
 						if (member instanceof Method)
-							MS.hookMethod(member.getDeclaringClass(), (Method) member, new MethodAlterationEx(hook,
+							MS.hookMethod(member.getDeclaringClass(), (Method) member, new XMethodAlteration(hook,
 									member));
 						else
-							MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member, new MethodAlterationEx(
+							MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member, new XMethodAlteration(
 									hook, member));
 					else
-						XposedBridge.hookMethod(member, methodHook);
+						XposedBridge.hookMethod(member, new XMethodHook(hook));
 				} catch (NoSuchFieldError ex) {
 					Util.log(hook, Log.WARN, ex.toString());
 				} catch (Throwable ex) {
@@ -609,11 +547,80 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// Helper classes
 
-	private static class MethodAlterationEx extends MS.MethodAlteration<Object, Object> {
+	private static class XMethodHook extends XC_MethodHook {
+		private XHook mHook;
+
+		public XMethodHook(XHook hook) {
+			mHook = hook;
+		}
+
+		@Override
+		protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+			try {
+				// Do not restrict Zygote
+				if (Process.myUid() <= 0)
+					return;
+
+				// Pre processing
+				XParam xparam = XParam.fromXposed(param);
+
+				long start = System.currentTimeMillis();
+
+				// Execute hook
+				mHook.before(xparam);
+
+				long ms = System.currentTimeMillis() - start;
+				if (ms > PrivacyManager.cWarnHookDelayMs)
+					Util.log(mHook, Log.WARN, String.format("%s %d ms", param.method.getName(), ms));
+
+				// Post processing
+				if (xparam.hasResult())
+					param.setResult(xparam.getResult());
+				if (xparam.hasThrowable())
+					param.setThrowable(xparam.getThrowable());
+				param.setObjectExtra("xextra", xparam.getExtras());
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+
+		@Override
+		protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+			if (!param.hasThrowable())
+				try {
+					// Do not restrict Zygote
+					if (Process.myUid() <= 0)
+						return;
+
+					// Pre processing
+					XParam xparam = XParam.fromXposed(param);
+					xparam.setExtras(param.getObjectExtra("xextra"));
+
+					long start = System.currentTimeMillis();
+
+					// Execute hook
+					mHook.after(xparam);
+
+					long ms = System.currentTimeMillis() - start;
+					if (ms > PrivacyManager.cWarnHookDelayMs)
+						Util.log(mHook, Log.WARN, String.format("%s %d ms", param.method.getName(), ms));
+
+					// Post processing
+					if (xparam.hasResult())
+						param.setResult(xparam.getResult());
+					if (xparam.hasThrowable())
+						param.setThrowable(xparam.getThrowable());
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+		}
+	};
+
+	private static class XMethodAlteration extends MS.MethodAlteration<Object, Object> {
 		private XHook mHook;
 		private Member mMember;
 
-		public MethodAlterationEx(XHook hook, Member member) {
+		public XMethodAlteration(XHook hook, Member member) {
 			mHook = hook;
 			mMember = member;
 		}
