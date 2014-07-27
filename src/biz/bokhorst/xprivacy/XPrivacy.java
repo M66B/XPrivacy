@@ -255,6 +255,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Intent firewall
 		hookAll(XIntentFirewall.getInstances(), null, mSecret);
 
+		// ICC/SMS manager
+		hookAll(XIccSmsInterfaceManager.getInstances(), null, mSecret);
+
 		// IO bridge
 		hookAll(XIoBridge.getInstances(), null, mSecret);
 

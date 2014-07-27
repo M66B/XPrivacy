@@ -76,9 +76,14 @@ public class Meta {
 
 		mListHook.add(new Hook("calendar", "CalendarProvider2", "READ_CALENDAR,WRITE_CALENDAR", 1, null, null));
 
-		mListHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
-		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
-		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "sendDataMessage", "SEND_SMS", 4, null, null).notAOSP(19).whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).notAOSP(19).whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).notAOSP(19).whitelist(cTypeAddress).doNotify());
+
+		mListHook.add(new Hook("calling", "Srv_sendData", "SEND_SMS", 4, null, "sendDataMessage").AOSP().whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "Srv_sendMultipartText", "SEND_SMS", 4, null, "sendMultipartTextMessage").AOSP().whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "Srv_sendText", "SEND_SMS", 4, null, "sendTextMessage").AOSP().whitelist(cTypeAddress).doNotify());
+
 		mListHook.add(new Hook("calling", TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_DIAL, "", 10, "2.2.2", null).doNotify());
@@ -218,7 +223,8 @@ public class Meta {
 		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).doNotify());
 
-		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null));
+		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("messages", "Srv_getAllMessagesFromIccEf", "RECEIVE_SMS", 10, null, "getAllMessagesFromIcc").AOSP());
 		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
