@@ -143,7 +143,6 @@ public class XContentResolver extends XHook {
 			if (className.startsWith("com.android.browser.provider."))
 				hook = hook.optional();
 			listHook.add(hook);
-			Util.log(null, Log.WARN, "hook=" + hook);
 		}
 
 		return listHook;
