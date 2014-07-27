@@ -18,8 +18,8 @@ public class Hook implements Comparable<Hook> {
 	private boolean mNoOnDemand = false;
 	private String mWhitelist = null;
 	private boolean mNotify = false;
-	private boolean mAOSP = false;
-	private int mNotAOSP = -1;
+	private int mAOSPSdk = 0;
+	private int mNotAOSPSdk = 0;
 	private boolean mUnsafe = false;
 	private String mAnnotation = null;
 
@@ -89,13 +89,13 @@ public class Hook implements Comparable<Hook> {
 		return this;
 	}
 
-	public Hook AOSP() {
-		mAOSP = true;
+	public Hook AOSP(int sdk) {
+		mAOSPSdk = sdk;
 		return this;
 	}
 
 	public Hook notAOSP(int sdk) {
-		mNotAOSP = sdk;
+		mNotAOSPSdk = sdk;
 		return this;
 	}
 
@@ -127,9 +127,9 @@ public class Hook implements Comparable<Hook> {
 			return false;
 		if (Build.VERSION.SDK_INT > mSdkTo)
 			return false;
-		if (isAOSP() && !isAOSP(mSdkFrom))
+		if (mAOSPSdk > 0 && !isAOSP(mAOSPSdk))
 			return false;
-		if (isNotAOSP() && isAOSP(mNotAOSP))
+		if (mNotAOSPSdk > 0 && isAOSP(mNotAOSPSdk))
 			return false;
 		return true;
 	}
@@ -183,14 +183,6 @@ public class Hook implements Comparable<Hook> {
 
 	public boolean shouldNotify() {
 		return mNotify;
-	}
-
-	public boolean isAOSP() {
-		return mAOSP;
-	}
-
-	public boolean isNotAOSP() {
-		return (mNotAOSP != -1);
 	}
 
 	public boolean isUnsafe() {
