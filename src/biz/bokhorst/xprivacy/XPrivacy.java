@@ -105,6 +105,15 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// TODO: Cydia: Build.SERIAL
 		// TODO: Cydia: android.provider.Settings.Secure
 
+		// Providers
+		for (final String className : XContentResolver.cProviderClassName)
+			MS.hookClassLoad(className, new MS.ClassLoadHook() {
+				@Override
+				public void classLoaded(Class<?> clazz) {
+					hookAll(XContentResolver.getInstances(className), clazz.getClassLoader(), mSecret);
+				}
+			});
+
 		// Advertising Id
 		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", new MS.ClassLoadHook() {
 			@Override
@@ -226,7 +235,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XConnectivityManager.getInstances(null), null, mSecret);
 
 		// Content resolver
-		hookAll(XContentResolver.getInstances(), null, mSecret);
+		hookAll(XContentResolver.getInstances(null), null, mSecret);
 
 		// Content service
 		hookAll(XContentService.getInstances(), null, mSecret);
@@ -336,6 +345,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				serial.set(null, PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
+			}
+
+		// Providers
+		for (String className : XContentResolver.cProviderClassName)
+			if (className.startsWith(packageName)) {
+				Util.log(null, Log.WARN, "Hooking class=" + className + " package=" + packageName);
+				hookAll(XContentResolver.getInstances(className), classLoader, secret);
 			}
 
 		// Advertising Id

@@ -19,6 +19,7 @@ import android.util.Log;
 public class XContentResolver extends XHook {
 	private Methods mMethod;
 	private boolean mClient;
+	private String mClassName = null;
 
 	private XContentResolver(Methods method, String restrictionName, boolean client) {
 		super(restrictionName, method.name(), null);
@@ -32,8 +33,17 @@ public class XContentResolver extends XHook {
 		mClient = client;
 	}
 
+	private XContentResolver(Methods method, String restrictionName, int sdk, String className) {
+		super(restrictionName, method.name(), null, sdk);
+		mMethod = method;
+		mClassName = className;
+	}
+
 	public String getClassName() {
-		return (mClient ? "android.content.ContentProviderClient" : "android.content.ContentResolver");
+		if (mClassName == null)
+			return (mClient ? "android.content.ContentProviderClient" : "android.content.ContentResolver");
+		else
+			return mClassName;
 	}
 
 	// @formatter:off
@@ -83,24 +93,58 @@ public class XContentResolver extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances() {
+	// @formatter:off
+	public static List<String> cProviderClassName = Arrays.asList(new String[] {
+		"com.android.providers.applications.ApplicationsProvider",
+		"com.android.browser.provider.BrowserProvider2",
+		"com.android.browser.provider.BrowserProviderProxy",
+		"com.android.providers.downloads.DownloadProvider",
+		"com.android.providers.calendar.CalendarProvider2",
+		"com.android.providers.contacts.CallLogProvider",
+		"com.android.providers.contacts.ContactsProvider2",
+		"com.android.email.provider.EmailProvider",
+		"com.google.android.gm.provider.MailProvider",
+		"com.google.android.gsf.gservices.GservicesProvider",
+		"com.android.providers.telephony.MmsProvider",
+		"com.android.providers.telephony.MmsSmsProvider",
+		"com.android.providers.telephony.SmsProvider",
+		"com.android.providers.telephony.TelephonyProvider",
+		"com.android.providers.userdictionary.UserDictionaryProvider",
+		"com.android.providers.contacts.VoicemailContentProvider",
+	});
+	// @formatter:on
+
+	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XContentResolver(Methods.getCurrentSync, PrivacyManager.cAccounts, false));
-		listHook.add(new XContentResolver(Methods.getCurrentSyncs, PrivacyManager.cAccounts, false));
-		listHook.add(new XContentResolver(Methods.getSyncAdapterTypes, PrivacyManager.cAccounts, false));
 
-		listHook.add(new XContentResolver(Methods.openAssetFileDescriptor, PrivacyManager.cStorage, false));
-		listHook.add(new XContentResolver(Methods.openFileDescriptor, PrivacyManager.cStorage, false));
-		listHook.add(new XContentResolver(Methods.openInputStream, PrivacyManager.cStorage, false));
-		listHook.add(new XContentResolver(Methods.openOutputStream, PrivacyManager.cStorage, false));
-		listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, false));
+		if (className == null) {
+			listHook.add(new XContentResolver(Methods.getCurrentSync, PrivacyManager.cAccounts, false));
+			listHook.add(new XContentResolver(Methods.getCurrentSyncs, PrivacyManager.cAccounts, false));
+			listHook.add(new XContentResolver(Methods.getSyncAdapterTypes, PrivacyManager.cAccounts, false));
 
-		listHook.add(new XContentResolver(Methods.openAssetFile, PrivacyManager.cStorage, true));
-		listHook.add(new XContentResolver(Methods.openFile, PrivacyManager.cStorage, true));
-		listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, true));
+			listHook.add(new XContentResolver(Methods.openAssetFileDescriptor, PrivacyManager.cStorage, false));
+			listHook.add(new XContentResolver(Methods.openFileDescriptor, PrivacyManager.cStorage, false));
+			listHook.add(new XContentResolver(Methods.openInputStream, PrivacyManager.cStorage, false));
+			listHook.add(new XContentResolver(Methods.openOutputStream, PrivacyManager.cStorage, false));
+			listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, false));
 
-		listHook.add(new XContentResolver(Methods.query, null, 1, false));
-		listHook.add(new XContentResolver(Methods.query, null, 1, true));
+			listHook.add(new XContentResolver(Methods.openAssetFile, PrivacyManager.cStorage, true));
+			listHook.add(new XContentResolver(Methods.openFile, PrivacyManager.cStorage, true));
+			listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, true));
+
+			if (PrivacyManager.isAOSP(19))
+				listHook.add(new XContentResolver(Methods.query, null, 1, "com.android.internal.telephony.IccProvider"));
+			else {
+				listHook.add(new XContentResolver(Methods.query, null, 1, false));
+				listHook.add(new XContentResolver(Methods.query, null, 1, true));
+			}
+		} else {
+			XHook hook = new XContentResolver(Methods.query, null, 1, className);
+			if (className.startsWith("com.android.browser.provider."))
+				hook = hook.optional();
+			listHook.add(hook);
+		}
+
 		return listHook;
 	}
 
