@@ -181,6 +181,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
     <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
     <string name="title_function_help">Function documentation</string>
+    <string name="title_unsafe">is not safe, can be unhooked</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
     <string name="settings_lon">Longitude</string>

@@ -181,6 +181,7 @@
     <string name="title_toggle_dangerous">危険性のある機能はタイトル部分を長押しするとチェックできるようになります</string>
     <string name="title_ondemand_category">カテゴリ全体に設定すると除外機能の設定が初期値にリセットされます</string>
     <string name="title_function_help">機能のドキュメント</string>
+    <string name="title_unsafe">is not safe, can be unhooked</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>

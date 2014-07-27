@@ -242,6 +242,7 @@ public class SettingsDialog {
 		boolean permman = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingPermMan, false);
 		boolean hookipc = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHookIPC, false);
 		boolean iwall = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingIntentWall, false);
+		boolean unsafe = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingUnsafe, false);
 		List<String> listQuirks = new ArrayList<String>();
 		if (freeze)
 			listQuirks.add("freeze");
@@ -253,6 +254,8 @@ public class SettingsDialog {
 			listQuirks.add("hookipc");
 		if (iwall)
 			listQuirks.add("iwall");
+		if (unsafe)
+			listQuirks.add("unsafe");
 		Collections.sort(listQuirks);
 		String quirks = TextUtils.join(",", listQuirks.toArray());
 		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
@@ -509,6 +512,8 @@ public class SettingsDialog {
 							Boolean.toString(listQuirks.contains("hookipc")));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingIntentWall,
 							Boolean.toString(listQuirks.contains("iwall")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingUnsafe,
+							Boolean.toString(listQuirks.contains("unsafe")));
 				}
 
 				// Notifications

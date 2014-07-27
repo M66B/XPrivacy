@@ -1,7 +1,7 @@
 #!/bin/bash
-grep -RIl "\<string name=\"whitelist_action" res | xargs sed -i -e '/whitelist_action/d'
-grep -RIl "\<string name=\"whitelist_address" res | xargs sed -i -e '/whitelist_address/a \
-\ \ \ \ <string name=\"whitelist_action\">Action</string>
+grep -RIl "\<string name=\"title_unsafe" res | xargs sed -i -e '/title_unsafe/d'
+grep -RIl "\<string name=\"title_function_help" res | xargs sed -i -e '/title_function_help/a \
+\ \ \ \ <string name=\"title_unsafe\">is not safe, can be unhooked</string>
 
 #grep -RIl "\<string name=\"restrict_view" res | xargs sed -i -e '/restrict_view/a \
 #\ \ \ \ <string name=\"restrict_help_view\">Will restrict access to view actions and information</string>\

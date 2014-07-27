@@ -111,16 +111,16 @@ public class Meta {
 		mListHook.add(new Hook("email", "EMailProvider", "com.android.email.permission.ACCESS_PROVIDER", 1, null, null));
 		mListHook.add(new Hook("email", "GMailProvider", "com.google.android.gm.permission.READ_CONTENT_PROVIDER", 8, "1.99.20", null));
 
-		mListHook.add(new Hook("identification", "%hostname", "", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("identification", "%imei", "", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("identification", "%cid", "", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).notAOSP(19).dangerous().whitelist(cTypeProc));
-		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).notAOSP(19).dangerous());
-		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).notAOSP(19).dangerous());
-		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).notAOSP(19).dangerous());
-		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("identification", "%hostname", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("identification", "%imei", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("identification", "%macaddr", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("identification", "%serialno", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("identification", "%cid", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("identification", "/proc", "", 1, "1.7", null).unsafe().dangerous().whitelist(cTypeProc));
+		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).unsafe().dangerous());
+		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).unsafe().dangerous());
+		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).unsafe().dangerous());
+		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null).unsafe());
 		mListHook.add(new Hook("identification", "getString", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getDescriptor", "", 16, null, null));
 		mListHook.add(new Hook("identification", "InputDevice.getName", "", 9, null, null));
@@ -132,13 +132,13 @@ public class Meta {
 		mListHook.add(new Hook("identification", "USB.getSerialNumber", "", 20, "2.1.17", null));
 
 		// java.net.InetAddress
-		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		// java.net.NetworkInterface
-		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null).unsafe());
+		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null).unsafe());
 
 		mListHook.add(new Hook("internet", "inet", "INTERNET", 1, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "inet_admin", "NET_ADMIN", 1, "2.1.1", null).dangerous().restart().noUsageData());
@@ -161,7 +161,7 @@ public class Meta {
 		// android.net.wifi.WifiManager
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
 
-		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		mListHook.add(new Hook("internet", "LinkAddress.toString", null, 20, "2.1.17", null));
 
@@ -189,21 +189,21 @@ public class Meta {
 		mListHook.add(new Hook("location", "getScanResults", "ACCESS_WIFI_STATE", 1, null, null).dangerous());
 		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 1, null, null));
 
-		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("location", "GMS.requestActivityUpdates", "com.google.android.gms.permission.ACTIVITY_RECOGNITION", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
+		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
+		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
+		mListHook.add(new Hook("location", "GMS.requestActivityUpdates", "com.google.android.gms.permission.ACTIVITY_RECOGNITION", 1, null, null).unsafe());
 
-		mListHook.add(new Hook("location", "MapV1.getLatitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
-		mListHook.add(new Hook("location", "MapV1.getLongitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
-		mListHook.add(new Hook("location", "MapV1.enableMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
+		mListHook.add(new Hook("location", "MapV1.getLatitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV1.getLongitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV1.enableMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
 
-		mListHook.add(new Hook("location", "MapV2.getMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
-		mListHook.add(new Hook("location", "MapV2.getPosition", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
-		mListHook.add(new Hook("location", "MapV2.setLocationSource", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
-		mListHook.add(new Hook("location", "MapV2.setOnMapClickListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
-		mListHook.add(new Hook("location", "MapV2.setOnMapLongClickListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
-		mListHook.add(new Hook("location", "MapV2.setOnMyLocationChangeListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).notAOSP(19));
+		mListHook.add(new Hook("location", "MapV2.getMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV2.getPosition", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV2.setLocationSource", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV2.setOnMapClickListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV2.setOnMapLongClickListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV2.setOnMyLocationChangeListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
 
 		mListHook.add(new Hook("media", "startRecording", "RECORD_AUDIO", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "setPreviewCallback", "CAMERA", 1, null, null).doNotify());
@@ -233,9 +233,9 @@ public class Meta {
 		mListHook.add(new Hook("network", "getBondedDevices", "android.permission.BLUETOOTH", 5, null, null));
 
 		// java.net.NetworkInterface
-		mListHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 9, null, null).notAOSP(19));
-		mListHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 9, null, null).notAOSP(19));
-		mListHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, null, null).notAOSP(19));
+		mListHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 9, null, null).unsafe());
+		mListHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 9, null, null).unsafe());
+		mListHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, null, null).unsafe());
 
 		// android.net.wifi.WifiManager
 		mListHook.add(new Hook("network", "getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, null, null));
@@ -299,18 +299,18 @@ public class Meta {
 		mListHook.add(new Hook("sensors", "step", "", 3, null, null));
 		mListHook.add(new Hook("sensors", "heartrate", "", 20, null, null));
 
-		mListHook.add(new Hook("shell", "sh", "", 10, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "su", "", 10, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "exec", "", 10, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeCommand));
-		mListHook.add(new Hook("shell", "load", "", 10, "0.0", null).notAOSP(19).dangerous().restart().whitelist(cTypeLibrary));
-		mListHook.add(new Hook("shell", "loadLibrary", "", 10, "0.0", null).notAOSP(19).dangerous().restart().whitelist(cTypeLibrary));
-		mListHook.add(new Hook("shell", "start", "", 10, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "sh", "", 10, "0.0", null).unsafe().dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "su", "", 10, "0.0", null).unsafe().dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "exec", "", 10, "0.0", null).unsafe().dangerous().whitelist(cTypeCommand));
+		mListHook.add(new Hook("shell", "load", "", 10, "0.0", null).unsafe().dangerous().restart().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "loadLibrary", "", 10, "0.0", null).unsafe().dangerous().restart().whitelist(cTypeLibrary));
+		mListHook.add(new Hook("shell", "start", "", 10, "0.0", null).unsafe().dangerous().whitelist(cTypeCommand));
 
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_ALL_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "mtp", "ACCESS_MTP", 10, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null));
-		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).notAOSP(19).dangerous().whitelist(cTypeFilename));
+		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).unsafe().dangerous().whitelist(cTypeFilename));
 
 		mListHook.add(new Hook("storage", "openAssetFileDescriptor", null, 3, "2.1.17", null).dangerous().whitelist(cTypeFilename));
 		mListHook.add(new Hook("storage", "openFileDescriptor", null, 1, "2.1.17", null).dangerous().whitelist(cTypeFilename));
@@ -372,13 +372,13 @@ public class Meta {
 
 		mListHook.add(new Hook("system", "IntentFirewall", "", 19, "2.99", null).AOSP().dangerous().whitelist(cTypeAction));
 
-		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).notAOSP(19).whitelist(cTypeUrl));
-		mListHook.add(new Hook("view", "WebView", "", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null).notAOSP(19));
-		mListHook.add(new Hook("view", "getUserAgent", "", 3, null, null).notAOSP(19));
-		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null).notAOSP(19));
-		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null).notAOSP(19));
-		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null).notAOSP(19));
+		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).unsafe().whitelist(cTypeUrl));
+		mListHook.add(new Hook("view", "WebView", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null).unsafe());
+		mListHook.add(new Hook("view", "getUserAgent", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null).unsafe());
 		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 
 		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", Intent.ACTION_VIEW).AOSP().doNotify().whitelist(cTypeUrl));

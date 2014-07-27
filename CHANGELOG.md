@@ -40,6 +40,7 @@ Changelog
 * Fixed resolving transaction code names
 * Added restriction for [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL)
 * Updated in application documentation
+* Updated Dutch translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
 

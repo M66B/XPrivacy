@@ -60,6 +60,16 @@
             tools:ignore="NestedWeights" />
 
         <ImageView
+            android:id="@+id/imgUnsafe"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/help_application"
+            android:paddingLeft="3dip"
+            android:src="@android:drawable/ic_partial_secure"
+            android:visibility="gone" />
+
+        <ImageView
             android:id="@+id/imgMethodWhitelist"
             android:layout_width="32dip"
             android:layout_height="32dip"

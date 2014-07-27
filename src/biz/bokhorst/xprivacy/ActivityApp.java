@@ -1482,6 +1482,7 @@ public class ActivityApp extends ActivityBase {
 			public ImageView imgGranted;
 			public ImageView imgInfo;
 			public TextView tvMethodName;
+			public ImageView imgUnsafe;
 			public ImageView imgMethodWhitelist;
 			public ImageView imgCbMethodRestricted;
 			public ProgressBar pbRunning;
@@ -1496,6 +1497,7 @@ public class ActivityApp extends ActivityBase {
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvMethodName = (TextView) row.findViewById(R.id.tvMethodName);
+				imgUnsafe = (ImageView) row.findViewById(R.id.imgUnsafe);
 				imgMethodWhitelist = (ImageView) row.findViewById(R.id.imgMethodWhitelist);
 				imgCbMethodRestricted = (ImageView) row.findViewById(R.id.imgCbMethodRestricted);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
@@ -1707,7 +1709,7 @@ public class ActivityApp extends ActivityBase {
 			// Display if used
 			holder.imgUsed.setVisibility(View.INVISIBLE);
 
-			// Display if permissions
+			// Hide if permissions
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 
 			if (hook.getAnnotation() == null)
@@ -1759,10 +1761,17 @@ public class ActivityApp extends ActivityBase {
 				});
 			}
 
+			// Show if unsafe
+			holder.imgUnsafe.setVisibility(hook != null && hook.isUnsafe() ? View.VISIBLE : View.GONE);
+
+			// Hide whitelist icon
+			holder.imgMethodWhitelist.setVisibility(View.GONE);
+
 			// Display restriction
 			holder.llMethodName.setClickable(false);
 			holder.imgMethodWhitelist.setVisibility(View.GONE);
 			holder.imgCbMethodRestricted.setVisibility(View.INVISIBLE);
+			holder.imgCbMethodAsk.setVisibility(View.INVISIBLE);
 
 			// Async update
 			new ChildHolderTask(groupPosition, childPosition, holder, restrictionName).executeOnExecutor(mExecutor,
