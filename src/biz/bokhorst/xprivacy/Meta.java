@@ -131,28 +131,34 @@ public class Meta {
 		mListHook.add(new Hook("identification", "USB.getDeviceName", "", 12, "2.1.7", null));
 		mListHook.add(new Hook("identification", "USB.getSerialNumber", "", 20, "2.1.17", null));
 
-		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, "0.0", null).dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).dangerous().whitelist(cTypeIPAddress));
+		// java.net.InetAddress
+		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
 
-		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null));
-		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null));
+		// java.net.NetworkInterface
+		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null).notAOSP(19));
+
 		mListHook.add(new Hook("internet", "inet", "INTERNET", 1, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "inet_admin", "NET_ADMIN", 1, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "inet_bw", "READ_NETWORK_USAGE_HISTORY,MODIFY_NETWORK_ACCOUNTING", 1, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "inet_vpn", "NET_TUNNELING", 1, "2.1.1", null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "inet_mesh", "LOOP_RADIO", 1, "2.1.1", null).dangerous().restart().noUsageData());
 
+		// android.net.ConnectivityManager
 		mListHook.add(new Hook("internet", "getActiveNetworkInfo", null, 1, null, null).dangerous());
 		mListHook.add(new Hook("internet", "getAllNetworkInfo", null, 1, null, null));
 		mListHook.add(new Hook("internet", "getNetworkInfo", null, 1, null, null).dangerous());
 
+		// android.net.NetworkInfo
 		mListHook.add(new Hook("internet", "getDetailedState", null, 1, null, null));
 		mListHook.add(new Hook("internet", "getExtraInfo", null, 1, null, null));
 		mListHook.add(new Hook("internet", "getState", null, 1, null, null));
 		mListHook.add(new Hook("internet", "isConnected", null, 1, null, null));
 		mListHook.add(new Hook("internet", "isConnectedOrConnecting", null, 1, null, null));
 
+		// android.net.wifi.WifiManager
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).notAOSP(19).dangerous().whitelist(cTypeIPAddress));
@@ -222,13 +228,16 @@ public class Meta {
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, "RECEIVE_WAP_PUSH", 1, null, null));
 
+		// android.bluetooth.BluetoothAdapter/BluetoothDevice
 		mListHook.add(new Hook("network", "getAddress", "android.permission.BLUETOOTH", 5, null, null));
 		mListHook.add(new Hook("network", "getBondedDevices", "android.permission.BLUETOOTH", 5, null, null));
 
-		mListHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 9, null, null));
-		mListHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 9, null, null));
-		mListHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, null, null));
+		// java.net.NetworkInterface
+		mListHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 9, null, null).notAOSP(19));
+		mListHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 9, null, null).notAOSP(19));
+		mListHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, null, null).notAOSP(19));
 
+		// android.net.wifi.WifiManager
 		mListHook.add(new Hook("network", "getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getConnectionInfo", "ACCESS_WIFI_STATE", 10, null, null));
 		mListHook.add(new Hook("network", "getDhcpInfo", "ACCESS_WIFI_STATE", 10, null, null));
