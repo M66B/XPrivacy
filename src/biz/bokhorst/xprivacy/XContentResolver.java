@@ -12,7 +12,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
-import android.os.DeadObjectException;
 import android.text.TextUtils;
 import android.util.Log;
 
