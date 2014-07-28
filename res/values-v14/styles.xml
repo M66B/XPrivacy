@@ -17,7 +17,7 @@
         <item name="icon_clear">@drawable/cross_holo_dark</item>
         <item name="icon_clear_grayed">@drawable/cross_grayed_out_holo_dark</item>
         <item name="icon_frozen">@drawable/frozen_holo_dark</item>
-        <item name="icon_unsafe">@android:drawable/ic_partial_secure</item>
+        <item name="icon_unsafe">@drawable/padlock_question_dark</item>
         <item name="drawable_background">@android:color/black</item>
         <item name="drawable_card">@drawable/card_dark</item>
         <item name="color_dangerous">@color/color_dangerous_dark</item>
@@ -46,7 +46,7 @@
         <item name="icon_clear">@drawable/cross_holo_light</item>
         <item name="icon_clear_grayed">@drawable/cross_grayed_out_holo_light</item>
         <item name="icon_frozen">@drawable/frozen_holo_light</item>
-        <item name="icon_unsafe">@android:drawable/ic_partial_secure</item>
+        <item name="icon_unsafe">@drawable/padlock_question_light</item>
         <item name="drawable_background">@color/color_home_background_light</item>
         <item name="drawable_card">@drawable/card_light</item>
         <item name="color_dangerous">@color/color_dangerous_light</item>
