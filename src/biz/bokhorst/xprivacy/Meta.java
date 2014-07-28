@@ -80,9 +80,9 @@ public class Meta {
 		mListHook.add(new Hook("calling", "sendMultipartTextMessage", "SEND_SMS", 4, null, null).notAOSP(19).whitelist(cTypeAddress).doNotify());
 		mListHook.add(new Hook("calling", "sendTextMessage", "SEND_SMS", 4, null, null).notAOSP(19).whitelist(cTypeAddress).doNotify());
 
-		mListHook.add(new Hook("calling", "Srv_sendData", "SEND_SMS", 4, null, "sendDataMessage").AOSP(19).whitelist(cTypeAddress).doNotify());
-		mListHook.add(new Hook("calling", "Srv_sendMultipartText", "SEND_SMS", 4, null, "sendMultipartTextMessage").AOSP(19).whitelist(cTypeAddress).doNotify());
-		mListHook.add(new Hook("calling", "Srv_sendText", "SEND_SMS", 4, null, "sendTextMessage").AOSP(19).whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "Srv_sendData", "SEND_SMS", 19, "2.99", "sendDataMessage").AOSP(19).whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "Srv_sendMultipartText", "SEND_SMS", 19, "2.99", "sendMultipartTextMessage").AOSP(19).whitelist(cTypeAddress).doNotify());
+		mListHook.add(new Hook("calling", "Srv_sendText", "SEND_SMS", 19, "2.99", "sendTextMessage").AOSP(19).whitelist(cTypeAddress).doNotify());
 
 		mListHook.add(new Hook("calling", TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, "SEND_RESPOND_VIA_MESSAGE", 18, null, null).doNotify());
 		mListHook.add(new Hook("calling", Intent.ACTION_CALL, "CALL_PHONE", 10, null, null).doNotify());
@@ -102,11 +102,11 @@ public class Meta {
 		mListHook.add(new Hook("clipboard", "hasPrimaryClip", "", 11, null, null).notAOSP(19).doNotify());
 		mListHook.add(new Hook("clipboard", "hasText", "", 10, null, null).notAOSP(19).doNotify());
 
-		mListHook.add(new Hook("clipboard", "Srv_addPrimaryClipChangedListener", "", 11, null, "addPrimaryClipChangedListener").AOSP(19));
-		mListHook.add(new Hook("clipboard", "Srv_getPrimaryClip", "", 11, null, "getPrimaryClip").AOSP(19).doNotify());
-		mListHook.add(new Hook("clipboard", "Srv_getPrimaryClipDescription", "", 11, null, "getPrimaryClipDescription").AOSP(19).doNotify());
-		mListHook.add(new Hook("clipboard", "Srv_hasClipboardText", "", 10, null, "hasText").AOSP(19).doNotify());
-		mListHook.add(new Hook("clipboard", "Srv_hasPrimaryClip", "", 11, null, "hasPrimaryClip").AOSP(19).doNotify());
+		mListHook.add(new Hook("clipboard", "Srv_addPrimaryClipChangedListener", "", 19, "2.99", "addPrimaryClipChangedListener").AOSP(19));
+		mListHook.add(new Hook("clipboard", "Srv_getPrimaryClip", "", 19, "2.99", "getPrimaryClip").AOSP(19).doNotify());
+		mListHook.add(new Hook("clipboard", "Srv_getPrimaryClipDescription", "", 19, "2.99", "getPrimaryClipDescription").AOSP(19).doNotify());
+		mListHook.add(new Hook("clipboard", "Srv_hasClipboardText", "", 19, "2.99", "hasText").AOSP(19).doNotify());
+		mListHook.add(new Hook("clipboard", "Srv_hasPrimaryClip", "", 19, "2.99", "hasPrimaryClip").AOSP(19).doNotify());
 
 		mListHook.add(new Hook("contacts", "contacts/contacts", "READ_CONTACTS,WRITE_CONTACTS", 1, null, null));
 		mListHook.add(new Hook("contacts", "contacts/data", "READ_CONTACTS,WRITE_CONTACTS", 1, null, null));
@@ -143,7 +143,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "USB.getDeviceName", "", 12, "2.1.7", null));
 		mListHook.add(new Hook("identification", "USB.getSerialNumber", "", 20, "2.1.17", null));
 
-		mListHook.add(new Hook("identification", "Srv_Android_ID", "", 1, null, "getString").AOSP(19));
+		mListHook.add(new Hook("identification", "Srv_Android_ID", "", 19, "2.99", "getString").AOSP(19));
 
 		// java.net.InetAddress
 		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
@@ -233,7 +233,7 @@ public class Meta {
 		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).doNotify());
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null).notAOSP(19));
-		mListHook.add(new Hook("messages", "Srv_getAllMessagesFromIccEf", "RECEIVE_SMS", 10, null, "getAllMessagesFromIcc").AOSP(19));
+		mListHook.add(new Hook("messages", "Srv_getAllMessagesFromIccEf", "RECEIVE_SMS", 19, "2.99", "getAllMessagesFromIcc").AOSP(19));
 		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
@@ -241,8 +241,8 @@ public class Meta {
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, "RECEIVE_WAP_PUSH", 1, null, null));
-		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_DELIVER_ACTION, "BROADCAST_SMS", 19, null, null));
-		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION, "BROADCAST_WAP_PUSH", 19, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_DELIVER_ACTION, "BROADCAST_SMS", 19, "2.2.2", null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION, "BROADCAST_WAP_PUSH", 19, "2.2.2", null));
 
 		// android.bluetooth.BluetoothAdapter/BluetoothDevice
 		mListHook.add(new Hook("network", "getAddress", "android.permission.BLUETOOTH", 5, null, null));
@@ -365,7 +365,7 @@ public class Meta {
 		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_FIRST_LAUNCH, "", 12, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_FULLY_REMOVED, "", 14, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_NEEDS_VERIFICATION, "", 14, null, null).dangerous());
-		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_VERIFIED, "", 17, null, null).dangerous());
+		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_VERIFIED, "", 17, "2.2.2", null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE, "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null).to(18));
