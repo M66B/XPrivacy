@@ -133,7 +133,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).unsafe().dangerous());
 		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null).unsafe());
 
-		mListHook.add(new Hook("identification", "getString", "", 1, null, null));
+		mListHook.add(new Hook("identification", "getString", "", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook("identification", "getDescriptor", "", 16, null, null));
 		mListHook.add(new Hook("identification", "InputDevice.getName", "", 9, null, null));
 		mListHook.add(new Hook("identification", "GservicesProvider", "com.google.android.providers.gsf.permission.READ_GSERVICES,com.google.android.providers.gsf.permission.WRITE_GSERVICES", 1, null, null).dangerous());
@@ -142,6 +142,8 @@ public class Meta {
 		mListHook.add(new Hook("identification", "USB.getDeviceId", "", 12, "2.1.7", null));
 		mListHook.add(new Hook("identification", "USB.getDeviceName", "", 12, "2.1.7", null));
 		mListHook.add(new Hook("identification", "USB.getSerialNumber", "", 20, "2.1.17", null));
+
+		mListHook.add(new Hook("identification", "Srv_Android_ID", "", 1, null, "getString").AOSP(19));
 
 		// java.net.InetAddress
 		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));

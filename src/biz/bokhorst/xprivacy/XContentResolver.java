@@ -12,6 +12,7 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -95,6 +96,7 @@ public class XContentResolver extends XHook {
 	// public void unregisterContentObserver(android.database.IContentObserver observer)
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.2.2_r1/android/content/ContentService.java
 
+	// public Bundle call(String method, String request, Bundle args)
 	// http://developer.android.com/reference/android/provider/Settings.html
 	// http://developer.android.com/reference/android/provider/Settings.Global.html
 	// http://developer.android.com/reference/android/provider/Settings.Secure.html
@@ -107,7 +109,7 @@ public class XContentResolver extends XHook {
 	private enum Methods {
 		getCurrentSync, getCurrentSyncs, getSyncAdapterTypes,
 		openAssetFile, openFile, openAssetFileDescriptor, openFileDescriptor, openInputStream, openOutputStream, openTypedAssetFileDescriptor,
-		query,
+		query, call,
 		Srv_getCurrentSyncs
 	};
 	// @formatter:on
@@ -158,12 +160,11 @@ public class XContentResolver extends XHook {
 			}
 
 			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts));
-		} else if (Hook.isAOSP(19)) {
-			XHook hook = new XContentResolver(Methods.query, null, 1, className);
-			// if (className.startsWith("com.android.browser.provider."))
-			// hook = hook.optional();
-			listHook.add(hook);
-		}
+		} else if (Hook.isAOSP(19))
+			if ("com.android.providers.settings.SettingsProvider".equals(className))
+				listHook.add(new XContentResolver(Methods.call, null, 1, className));
+			else
+				listHook.add(new XContentResolver(Methods.query, null, 1, className));
 
 		return listHook;
 	}
@@ -182,6 +183,9 @@ public class XContentResolver extends XHook {
 		case openOutputStream:
 		case openTypedAssetFileDescriptor:
 			// Do nothing
+			break;
+
+		case call:
 			break;
 
 		case query:
@@ -226,6 +230,10 @@ public class XContentResolver extends XHook {
 			}
 			break;
 
+		case call:
+			handleCallAfter(param);
+			break;
+
 		case query:
 			handleUriAfter(param);
 			break;
@@ -243,6 +251,29 @@ public class XContentResolver extends XHook {
 					param.setResult(listFiltered);
 				}
 			break;
+		}
+	}
+
+	private void handleCallAfter(XParam param) throws Throwable {
+		if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof String) {
+			String method = (String) param.args[0];
+			String request = (String) param.args[1];
+
+			if ("GET_secure".equals(method)) {
+				if ("android_id".equals(request))
+					if (param.getResult() != null)
+						if (isRestricted(param, PrivacyManager.cIdentification, "Srv_Android_ID")) {
+							String value = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "ANDROID_ID");
+							Bundle bundle = new Bundle(1);
+							bundle.putString("value", value);
+							param.setResult(bundle);
+						}
+
+			} else if ("GET_system".equals(method)) {
+
+			} else if ("GET_global".equals(method)) {
+
+			}
 		}
 	}
 
