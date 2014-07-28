@@ -260,6 +260,9 @@ public class Meta {
 		mListHook.add(new Hook("network", "getScanResults", "ACCESS_WIFI_STATE", 10, "0.0", null).dangerous());
 		mListHook.add(new Hook("network", "getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, null, null));
 
+		mListHook.add(new Hook("network", "Srv_Default_DNS", "", 19, "2.99", "getString").AOSP(19));
+		mListHook.add(new Hook("network", "Srv_WiFi_Country", "", 19, "2.99", "getString").AOSP(19));
+
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
 		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null));
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, "android.permission.NFC", 18, null, null));

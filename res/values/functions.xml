@@ -192,6 +192,9 @@
     <string name="network_getScanResults" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getScanResults()">Google documentation</a>]]></string>
     <string name="network_getWifiApConfiguration" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://developer.android.com/reference/android/net/wifi/WifiConfiguration.html">WifiConfiguration</a>]]></string>
 
+    <string name="network_Srv_Default_DNS" translatable="false"><![CDATA[Will restrict access to the hidden system global property default DNS server]]></string>
+    <string name="network_Srv_WiFi_Country" translatable="false"><![CDATA[Will restrict access to the hidden system global property Wi-Fi country code]]></string>
+
     <!-- nfc -->
     <string name="nfc_getNfcAdapter" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html">NfcAdapter</a>]]></string>
     <string name="nfc_getDefaultAdapter" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html#getDefaultAdapter(android.content.Context)">Google documentation</a>]]></string>

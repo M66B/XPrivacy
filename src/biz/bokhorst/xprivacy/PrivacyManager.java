@@ -926,7 +926,7 @@ public class PrivacyManager {
 		if (name.equals("getIsimImpu"))
 			return null;
 
-		if (name.equals("getNetworkCountryIso")) {
+		if (name.equals("getNetworkCountryIso") || name.equals("CountryIso")) {
 			// ISO country code
 			String value = getSetting(uid, cSettingCountry, "XX");
 			return (cValueRandom.equals(value) ? getRandomProp("ISO3166") : value);

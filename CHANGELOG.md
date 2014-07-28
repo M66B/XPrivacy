@@ -50,6 +50,11 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3** (in development)
+
+* Added restriction *Srv_Default_DNS*, restricts hidden system global property default DNS server
+* Added restriction *Srv_WiFi_Country*, restricts hidden system global property Wi-Fi country code
+
 **Version 2.2.1 STABLE**
 
 * Fixed all problems reported through the support info

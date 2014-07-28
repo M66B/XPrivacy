@@ -1,9 +1,11 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.FileNotFoundException;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.SyncAdapterType;
@@ -13,6 +15,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.Binder;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -260,19 +263,42 @@ public class XContentResolver extends XHook {
 			String request = (String) param.args[1];
 
 			if ("GET_secure".equals(method)) {
-				if ("android_id".equals(request))
+				if (Settings.Secure.ANDROID_ID.equals(request)) {
 					if (param.getResult() != null)
 						if (isRestricted(param, PrivacyManager.cIdentification, "Srv_Android_ID")) {
-							String value = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "ANDROID_ID");
+							int uid = Binder.getCallingUid();
+							String value = (String) PrivacyManager.getDefacedProp(uid, "ANDROID_ID");
 							Bundle bundle = new Bundle(1);
 							bundle.putString("value", value);
 							param.setResult(bundle);
 						}
 
+				}
+
 			} else if ("GET_system".equals(method)) {
+				// Do nothing
 
 			} else if ("GET_global".equals(method)) {
+				if ("default_dns_server".equals(request)) {
+					if (param.getResult() != null)
+						if (isRestricted(param, PrivacyManager.cNetwork, "Srv_Default_DNS")) {
+							int uid = Binder.getCallingUid();
+							InetAddress value = (InetAddress) PrivacyManager.getDefacedProp(uid, "InetAddress");
+							Bundle bundle = new Bundle(1);
+							bundle.putString("value", value.getHostAddress());
+							param.setResult(bundle);
+						}
 
+				} else if ("wifi_country_code".equals(request)) {
+					if (param.getResult() != null)
+						if (isRestricted(param, PrivacyManager.cNetwork, "Srv_WiFi_Country")) {
+							int uid = Binder.getCallingUid();
+							String value = (String) PrivacyManager.getDefacedProp(uid, "CountryIso");
+							Bundle bundle = new Bundle(1);
+							bundle.putString("value", value == null ? null : value.toLowerCase(Locale.ROOT));
+							param.setResult(bundle);
+						}
+				}
 			}
 		}
 	}
