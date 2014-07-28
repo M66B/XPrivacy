@@ -126,7 +126,7 @@ public class XContentResolver extends XHook {
 		"com.android.providers.contacts.CallLogProvider",
 		"com.android.providers.contacts.ContactsProvider2",
 		"com.android.email.provider.EmailProvider",
-		"com.google.android.gm.provider.MailProvider",
+		"com.google.android.gm.provider.PublicContentProvider",
 		"com.google.android.gsf.gservices.GservicesProvider",
 		"com.android.providers.telephony.MmsProvider",
 		"com.android.providers.telephony.MmsSmsProvider",
