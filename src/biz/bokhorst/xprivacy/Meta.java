@@ -102,11 +102,11 @@ public class Meta {
 		mListHook.add(new Hook("clipboard", "hasPrimaryClip", "", 11, null, null).notAOSP(19).doNotify());
 		mListHook.add(new Hook("clipboard", "hasText", "", 10, null, null).notAOSP(19).doNotify());
 
-		mListHook.add(new Hook("clipboard", "Srv_addPrimaryClipChangedListener", "", 11, null, null).AOSP(19));
-		mListHook.add(new Hook("clipboard", "Srv_getPrimaryClip", "", 11, null, null).AOSP(19).doNotify());
-		mListHook.add(new Hook("clipboard", "Srv_getPrimaryClipDescription", "", 11, null, null).AOSP(19).doNotify());
-		mListHook.add(new Hook("clipboard", "Srv_hasClipboardText", "", 10, null, null).AOSP(19).doNotify());
-		mListHook.add(new Hook("clipboard", "Srv_hasPrimaryClip", "", 11, null, null).AOSP(19).doNotify());
+		mListHook.add(new Hook("clipboard", "Srv_addPrimaryClipChangedListener", "", 11, null, "addPrimaryClipChangedListener").AOSP(19));
+		mListHook.add(new Hook("clipboard", "Srv_getPrimaryClip", "", 11, null, "getPrimaryClip").AOSP(19).doNotify());
+		mListHook.add(new Hook("clipboard", "Srv_getPrimaryClipDescription", "", 11, null, "getPrimaryClipDescription").AOSP(19).doNotify());
+		mListHook.add(new Hook("clipboard", "Srv_hasClipboardText", "", 10, null, "hasText").AOSP(19).doNotify());
+		mListHook.add(new Hook("clipboard", "Srv_hasPrimaryClip", "", 11, null, "hasPrimaryClip").AOSP(19).doNotify());
 
 		mListHook.add(new Hook("contacts", "contacts/contacts", "READ_CONTACTS,WRITE_CONTACTS", 1, null, null));
 		mListHook.add(new Hook("contacts", "contacts/data", "READ_CONTACTS,WRITE_CONTACTS", 1, null, null));
