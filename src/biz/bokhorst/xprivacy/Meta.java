@@ -132,6 +132,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).unsafe().dangerous());
 		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).unsafe().dangerous());
 		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null).unsafe());
+
 		mListHook.add(new Hook("identification", "getString", "", 1, null, null));
 		mListHook.add(new Hook("identification", "getDescriptor", "", 16, null, null));
 		mListHook.add(new Hook("identification", "InputDevice.getName", "", 9, null, null));
