@@ -54,7 +54,7 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "getAccountsByTypeAndFeatures", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
 		mListHook.add(new Hook("accounts", "getAuthToken", "USE_CREDENTIALS", 5, "0.0", null).unsafe().dangerous());
 		mListHook.add(new Hook("accounts", "getAuthTokenByFeatures", "MANAGE_ACCOUNTS", 5, "0.0", null).unsafe().dangerous());
-		mListHook.add(new Hook("accounts", "hasFeatures", "GET_ACCOUNTS", 8, null, null).unsafe());
+		mListHook.add(new Hook("accounts", "hasFeatures", "GET_ACCOUNTS", 8, null, null).unsafe().dangerous());
 		mListHook.add(new Hook("accounts", "getAccountsByTypeForPackage", "GET_ACCOUNTS", 18, null, null).notAOSP(19));
 
 		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 1, "0.0", null).unsafe().dangerous());
@@ -232,6 +232,8 @@ public class Meta {
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, "RECEIVE_WAP_PUSH", 1, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_DELIVER_ACTION, "BROADCAST_SMS", 19, null, null));
+		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION, "BROADCAST_WAP_PUSH", 19, null, null));
 
 		// android.bluetooth.BluetoothAdapter/BluetoothDevice
 		mListHook.add(new Hook("network", "getAddress", "android.permission.BLUETOOTH", 5, null, null));

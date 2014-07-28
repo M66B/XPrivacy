@@ -39,6 +39,8 @@ public class XIntentFirewall extends XHook {
 		mapIntentRestriction.put(Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, PrivacyManager.cMessages);
 		mapIntentRestriction.put(Telephony.Sms.Intents.SMS_RECEIVED_ACTION, PrivacyManager.cMessages);
 		mapIntentRestriction.put(Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, PrivacyManager.cMessages);
+		mapIntentRestriction.put(Telephony.Sms.Intents.SMS_DELIVER_ACTION, PrivacyManager.cMessages);
+		mapIntentRestriction.put(Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION, PrivacyManager.cMessages);
 
 		// Intent receive: notifications
 		mapIntentRestriction.put(NotificationListenerService.SERVICE_INTERFACE, PrivacyManager.cNotifications);

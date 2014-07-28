@@ -39,6 +39,8 @@ Changelog
 * Fixed default on demand restricting for dangerous functions with a whitelist while no on demand restricting for category
 * Added restriction [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL)
 * Removed restriction *ApplicationsProvider* for KitKat, since the provider doesn't exist anymore
+* Maded *accounts/hasFeatures* dangerous
+* Added restrictions *SMS_DELIVER* and *WAP_PUSH_DELIVER*
 * Corrected some restriction permissions
 * Updated in application documentation
 * Updated Dutch translation
