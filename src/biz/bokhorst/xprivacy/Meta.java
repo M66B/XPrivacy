@@ -90,10 +90,10 @@ public class Meta {
 		mListHook.add(new Hook("calling", Intent.ACTION_NEW_OUTGOING_CALL, "PROCESS_OUTGOING_CALLS", 10, "2.1.23", "phone/android.intent.action.NEW_OUTGOING_CALL"));
 		mListHook.add(new Hook("calling", "CallLogProvider", "READ_CALL_LOG,WRITE_CALL_LOG", 1, "2.1.23", "phone/CallLogProvider"));
 
-		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).doNotify());
-		mListHook.add(new Hook("calling", "SIP.isSipWifiOnly", "USE_SIP", 9, null, null).doNotify());
-		mListHook.add(new Hook("calling", "SIP.isVoipSupported", "USE_SIP", 9, null, null).doNotify());
-		mListHook.add(new Hook("calling", "SIP.newInstance", "USE_SIP", 9, null, null).doNotify());
+		mListHook.add(new Hook("calling", "SIP.isApiSupported", "USE_SIP", 9, null, null).unsafe().doNotify());
+		mListHook.add(new Hook("calling", "SIP.isSipWifiOnly", "USE_SIP", 9, null, null).unsafe().doNotify());
+		mListHook.add(new Hook("calling", "SIP.isVoipSupported", "USE_SIP", 9, null, null).unsafe().doNotify());
+		mListHook.add(new Hook("calling", "SIP.newInstance", "USE_SIP", 9, null, null).unsafe().doNotify());
 
 		mListHook.add(new Hook("clipboard", "addPrimaryClipChangedListener", "", 11, null, null));
 		mListHook.add(new Hook("clipboard", "getPrimaryClip", "", 11, null, null).doNotify());
