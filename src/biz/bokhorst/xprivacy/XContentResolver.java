@@ -21,6 +21,12 @@ public class XContentResolver extends XHook {
 	private boolean mClient;
 	private String mClassName;
 
+	private XContentResolver(Methods method, String restrictionName) {
+		super(restrictionName, method.name().replace("Srv_", ""), method.name());
+		mMethod = method;
+		mClassName = "com.android.server.content.ContentService";
+	}
+
 	private XContentResolver(Methods method, String restrictionName, boolean client) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
@@ -85,19 +91,25 @@ public class XContentResolver extends XHook {
 
 	// frameworks/base/core/java/android/content/ContentResolver.java
 
+	// public List<SyncInfo> getCurrentSyncs()
+	// public void registerContentObserver(android.net.Uri uri, boolean notifyForDescendants, android.database.IContentObserver observer, int userHandle)
+	// public void unregisterContentObserver(android.database.IContentObserver observer)
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.2.2_r1/android/content/ContentService.java
+
 	// @formatter:on
 
 	// @formatter:off
 	private enum Methods {
 		getCurrentSync, getCurrentSyncs, getSyncAdapterTypes,
 		openAssetFile, openFile, openAssetFileDescriptor, openFileDescriptor, openInputStream, openOutputStream, openTypedAssetFileDescriptor,
-		query
+		query,
+		Srv_getCurrentSyncs
 	};
 	// @formatter:on
 
 	// @formatter:off
 	public static List<String> cProviderClassName = Arrays.asList(new String[] {
-		"com.android.browser.provider.BrowserProvider2",
+		//"com.android.browser.provider.BrowserProvider2",
 		"com.android.browser.provider.BrowserProviderProxy",
 		"com.android.providers.downloads.DownloadProvider",
 		"com.android.providers.calendar.CalendarProvider2",
@@ -138,10 +150,12 @@ public class XContentResolver extends XHook {
 				listHook.add(new XContentResolver(Methods.query, null, 1, false));
 				listHook.add(new XContentResolver(Methods.query, null, 1, true));
 			}
+
+			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts));
 		} else {
 			XHook hook = new XContentResolver(Methods.query, null, 1, className);
-			if (className.startsWith("com.android.browser.provider."))
-				hook = hook.optional();
+			// if (className.startsWith("com.android.browser.provider."))
+			// hook = hook.optional();
 			listHook.add(hook);
 		}
 
@@ -161,15 +175,15 @@ public class XContentResolver extends XHook {
 		case openInputStream:
 		case openOutputStream:
 		case openTypedAssetFileDescriptor:
+			// Do nothing
 			break;
 
 		case query:
-			try {
-				handleUriBefore(param);
-			} catch (DeadObjectException ignored) {
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
-			}
+			handleUriBefore(param);
+			break;
+
+		case Srv_getCurrentSyncs:
+			// Do nothing
 			break;
 		}
 	}
@@ -207,12 +221,21 @@ public class XContentResolver extends XHook {
 			break;
 
 		case query:
-			try {
-				handleUriAfter(param);
-			} catch (DeadObjectException ignored) {
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
-			}
+			handleUriAfter(param);
+			break;
+
+		case Srv_getCurrentSyncs:
+			if (param.getResult() != null)
+				if (isRestricted(param)) {
+					int uid = Binder.getCallingUid();
+					@SuppressWarnings("unchecked")
+					List<SyncInfo> listSync = (List<SyncInfo>) param.getResult();
+					List<SyncInfo> listFiltered = new ArrayList<SyncInfo>();
+					for (SyncInfo sync : listSync)
+						if (XAccountManager.isAccountAllowed(sync.account, uid))
+							listFiltered.add(sync);
+					param.setResult(listFiltered);
+				}
 			break;
 		}
 	}

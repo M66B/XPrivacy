@@ -237,9 +237,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Content resolver
 		hookAll(XContentResolver.getInstances(null), null, mSecret);
 
-		// Content service
-		hookAll(XContentService.getInstances(), null, mSecret);
-
 		// Context wrapper
 		hookAll(XContextImpl.getInstances(), null, mSecret);
 
