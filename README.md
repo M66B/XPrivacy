@@ -335,7 +335,7 @@ Limitations
 * You cannot restrict *Configuration.MCC/MNC* on demand
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
 * Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/)
-* It is possible to unhook methods in user space using native libraries, see [here](https://github.com/cernekee/WinXP) for a proof of concept
+* It is possible to unhook methods in user space using native libraries, see [here](https://github.com/cernekee/WinXP) for a proof of concept; XPrivacy 3 will indicate which restrictions are vulnerable to this
 
 *XPrivacy*
 
@@ -965,6 +965,13 @@ Expert mode has the following sub-options which can be toggled individually:
 	* Enabling this option will allow you to restrict applications which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc.). Note that restricting these core functions is quite dangerous, and can easily lead to boot loops. Always make a backup (export/nandroid) before changing these restrictions.
 * *Use secure connections*
 	* This will force communications with the crowd sourced restrictions server (submitting/fetching, device registration) to travel through a secure socket. Note that this is enabled by default and can only be disabled by enabling *Expert mode*.
+* *Maximum fetch confidence interval*
+	* Increasing this value will result in fetching less reliable crowd sourced restrictions
+* *Quirks*
+	* Used to fix some application compatibility issues or to enable special or expert features
+		* *freeze*: shows the on demand restriction dialog, even if there is the possibility it will freeze
+		* *noresolve*: disables resolving IP addresses to names for usage data / on demand restricting
+		* *safemode*: disables *unsafe* restrictions
 
 <a name="FAQ58"></a>
 **(58) Can I write a thesis about XPrivacy?**
@@ -988,11 +995,12 @@ This is by design, so you can see the upgrade has completed successfully.
 You can swipe away the notification after you have seen it.
 
 <a name="FAQ61"></a>
-**(61) Can the on demand restricting time-out be increased?**
+**(61) Can the default on demand restricting time-out be increased?**
 
 Unfortunately this is not possible.
 The on demand restricting dialog is holding up system processes
 and Android reboots automatically if there is too long no response.
+Recent version of XPrivacy have a reset button, use at your own risk.
 
 <a name="FAQ62"></a>
 **(62) How can I 'toggle' multiple applications?**
@@ -1116,8 +1124,7 @@ Support
 
 **Do not use my personal or XDA e-mail for bug reports, feature requests or questions.**
 
-It is okay to use my personal or XDA e-mail for things that cannot be shared in public,
-such as security reports.
+It is okay to use my personal or XDA e-mail for things that cannot be shared in public, such as security reports.
 
 **There is only support for official XPrivacy releases.**
 
@@ -1169,9 +1176,13 @@ If you have any question, please leave a message in the [XDA XPrivacy forum thre
 More people are following the support forum than the GitHub issue tracker, which increases your chance to get a helpful answer.
 Moreover, the answers given might be beneficial to more people than you alone.
 
-**Please do not ask questions using GitHub issues!**
+**Please do not ask questions on GitHub!**
 
 GitHub issues are for bug reports and feature requests.
+
+**Answering questions is left to the community.**
+
+You can read [here](http://forum.xda-developers.com/showpost.php?p=54391559&postcount=10814) why.
 
 Changelog
 ---------
@@ -1237,9 +1248,9 @@ Contributing
 Translations:
 
 * Translate the strings in [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
-* Omit lines with *translatable="false"*
-* If you know how to, please create a [pull request](https://help.github.com/articles/using-pull-requests)
-* Else send me the translated file [via XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
+* Omit lines with **translatable="false"**
+* Create a [pull request](https://help.github.com/articles/using-pull-requests) for the new/updated translation
+* If you really don't know how to create a pull request, you can send the translated file [via XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
 
 Current translations:
 
@@ -1295,11 +1306,12 @@ Using Eclipse:
 * Clone the GitHub project to a temporary location
 * Import the GitHub project into Eclipse, copy the files
 * Close Eclipse and copy the project from the temporary location over the imported project
-	* Make sure you copy all hidden files and folders
+	* Make sure you copy all hidden files and folders (especially the .git folders)
 	* This step might not be necessary anymore for recent Eclipse releases
 
 Testing:
 
+* [XPrivacy Tester](https://github.com/M66B/XPrivacyTester)
 * [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 * [SIM Card](https://play.google.com/store/apps/details?id=com.gsmdev.simcard)
@@ -1320,7 +1332,7 @@ To prevent applications from crashing fake data should be returned whenever poss
 There is no need to apply restrictions in situations where the user is presented a dialog first (for example to pick an account).
 Setting data should never be restricted, this is outside the goal of XPrivacy.
 
-Please note that you agree to the license below by contributing, including the copyrights.
+Please note that you agree to the license below by contributing, including the copyright.
 
 License
 -------
