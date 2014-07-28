@@ -10,7 +10,7 @@ public class XInputDevice extends XHook {
 	private Methods mMethod;
 
 	private XInputDevice(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), method == Methods.getDescriptor ? null : "InputDevice." + method.name());
+		super(restrictionName, method.name(), "InputDevice." + method.name());
 		mMethod = method;
 	}
 
