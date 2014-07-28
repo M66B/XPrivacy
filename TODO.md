@@ -15,5 +15,4 @@ Services
 
 * Individual account methods
 * Individual package methods
-* Disable/enabled traversing superclasses while hooking
 * Check internet/network restrictions

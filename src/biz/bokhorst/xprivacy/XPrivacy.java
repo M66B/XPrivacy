@@ -490,6 +490,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Get members
 			List<Member> listMember = new ArrayList<Member>();
+			// TODO: enable/disable superclass traversal
 			Class<?> clazz = hookClass;
 			while (clazz != null && !"android.content.ContentProvider".equals(clazz.getName())) {
 				if (hook.getMethodName() == null) {
