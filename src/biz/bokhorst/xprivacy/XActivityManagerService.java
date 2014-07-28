@@ -161,32 +161,30 @@ public class XActivityManagerService extends XHook {
 			break;
 
 		case startActivities:
-			if (param.args.length > 2 && param.args[2] instanceof Intent[] && param.getResult() instanceof Integer)
-				if ((Integer) param.getResult() == 0) {
-					List<Intent> listIntent = new ArrayList<Intent>();
-					for (Intent intent : (Intent[]) param.args[2])
-						if (!isRestricted(param, intent))
-							listIntent.add(intent);
-					if (listIntent.size() == 0)
-						param.setResult(0); // ActivityManager.START_SUCCESS
-					else
-						param.args[2] = listIntent.toArray();
-				}
+			if (param.args.length > 2 && param.args[2] instanceof Intent[]) {
+				List<Intent> listIntent = new ArrayList<Intent>();
+				for (Intent intent : (Intent[]) param.args[2])
+					if (!isRestricted(param, intent))
+						listIntent.add(intent);
+				if (listIntent.size() == 0)
+					param.setResult(0); // ActivityManager.START_SUCCESS
+				else
+					param.args[2] = listIntent.toArray();
+			}
 			break;
 
 		case startActivity:
 		case startActivityAsUser:
 		case startActivityWithConfig:
-			if (param.args.length > 2 && param.args[2] instanceof Intent && param.getResult() instanceof Integer)
-				if ((Integer) param.getResult() == 0) {
-					Intent intent = (Intent) param.args[2];
-					if (isRestricted(param, intent))
-						param.setResult(0); // ActivityManager.START_SUCCESS
-				}
+			if (param.args.length > 2 && param.args[2] instanceof Intent) {
+				Intent intent = (Intent) param.args[2];
+				if (isRestricted(param, intent))
+					param.setResult(0); // ActivityManager.START_SUCCESS
+			}
 			break;
 
 		case startActivityAndWait:
-			if (param.args.length > 2 && param.args[2] instanceof Intent && param.getResult() != null) {
+			if (param.args.length > 2 && param.args[2] instanceof Intent) {
 				Intent intent = (Intent) param.args[2];
 				if (isRestricted(param, intent)) {
 					Class<?> cWaitResult = Class.forName("android.app.IActivityManager.WaitResult");
