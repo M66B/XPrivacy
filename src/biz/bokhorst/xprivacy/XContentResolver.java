@@ -95,6 +95,12 @@ public class XContentResolver extends XHook {
 	// public void unregisterContentObserver(android.database.IContentObserver observer)
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.2.2_r1/android/content/ContentService.java
 
+	// http://developer.android.com/reference/android/provider/Settings.html
+	// http://developer.android.com/reference/android/provider/Settings.Global.html
+	// http://developer.android.com/reference/android/provider/Settings.Secure.html
+	// http://developer.android.com/reference/android/provider/Settings.System.html
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/providers/settings/SettingsProvider.java
+
 	// @formatter:on
 
 	// @formatter:off
@@ -121,7 +127,8 @@ public class XContentResolver extends XHook {
 		"com.android.providers.telephony.MmsSmsProvider",
 		"com.android.providers.telephony.SmsProvider",
 		"com.android.providers.telephony.TelephonyProvider",
-		"com.android.providers.userdictionary.UserDictionaryProvider"
+		"com.android.providers.userdictionary.UserDictionaryProvider",
+		"com.android.providers.settings.SettingsProvider",
 	});
 	// @formatter:on
 
@@ -151,7 +158,7 @@ public class XContentResolver extends XHook {
 			}
 
 			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts));
-		} else {
+		} else if (Hook.isAOSP(19)) {
 			XHook hook = new XContentResolver(Methods.query, null, 1, className);
 			// if (className.startsWith("com.android.browser.provider."))
 			// hook = hook.optional();

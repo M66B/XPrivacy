@@ -96,6 +96,7 @@ public class Hook implements Comparable<Hook> {
 
 	public Hook notAOSP(int sdk) {
 		mNotAOSPSdk = sdk;
+		mUnsafe = true;
 		return this;
 	}
 
@@ -135,6 +136,8 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public static boolean isAOSP(int sdk) {
+		if (!PrivacyManager.cVersion3)
+			return false;
 		if (Build.VERSION.SDK_INT >= sdk) {
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;

@@ -33,6 +33,8 @@ import android.util.Log;
 import android.util.SparseArray;
 
 public class PrivacyManager {
+	public static final boolean cVersion3 = false;
+
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
 	public static final String cBrowser = "browser";
