@@ -257,52 +257,6 @@ public class XContentResolver extends XHook {
 		}
 	}
 
-	private void handleCallAfter(XParam param) throws Throwable {
-		if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof String) {
-			String method = (String) param.args[0];
-			String request = (String) param.args[1];
-
-			if ("GET_secure".equals(method)) {
-				if (Settings.Secure.ANDROID_ID.equals(request)) {
-					if (param.getResult() != null)
-						if (isRestricted(param, PrivacyManager.cIdentification, "Srv_Android_ID")) {
-							int uid = Binder.getCallingUid();
-							String value = (String) PrivacyManager.getDefacedProp(uid, "ANDROID_ID");
-							Bundle bundle = new Bundle(1);
-							bundle.putString("value", value);
-							param.setResult(bundle);
-						}
-
-				}
-
-			} else if ("GET_system".equals(method)) {
-				// Do nothing
-
-			} else if ("GET_global".equals(method)) {
-				if ("default_dns_server".equals(request)) {
-					if (param.getResult() != null)
-						if (isRestricted(param, PrivacyManager.cNetwork, "Srv_Default_DNS")) {
-							int uid = Binder.getCallingUid();
-							InetAddress value = (InetAddress) PrivacyManager.getDefacedProp(uid, "InetAddress");
-							Bundle bundle = new Bundle(1);
-							bundle.putString("value", value.getHostAddress());
-							param.setResult(bundle);
-						}
-
-				} else if ("wifi_country_code".equals(request)) {
-					if (param.getResult() != null)
-						if (isRestricted(param, PrivacyManager.cNetwork, "Srv_WiFi_Country")) {
-							int uid = Binder.getCallingUid();
-							String value = (String) PrivacyManager.getDefacedProp(uid, "CountryIso");
-							Bundle bundle = new Bundle(1);
-							bundle.putString("value", value == null ? null : value.toLowerCase(Locale.ROOT));
-							param.setResult(bundle);
-						}
-				}
-			}
-		}
-	}
-
 	@SuppressLint("DefaultLocale")
 	private void handleUriBefore(XParam param) throws Throwable {
 		// Check URI
@@ -556,6 +510,63 @@ public class XContentResolver extends XHook {
 				}
 			}
 		}
+	}
+
+	private void handleCallAfter(XParam param) throws Throwable {
+		if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof String) {
+			String method = (String) param.args[0];
+			String request = (String) param.args[1];
+
+			if ("GET_secure".equals(method)) {
+				if (Settings.Secure.ANDROID_ID.equals(request)) {
+					if (!hasEmptyValue(param.getResult()))
+						if (isRestricted(param, PrivacyManager.cIdentification, "Srv_Android_ID")) {
+							int uid = Binder.getCallingUid();
+							String value = (String) PrivacyManager.getDefacedProp(uid, "ANDROID_ID");
+							Bundle bundle = new Bundle(1);
+							bundle.putString("value", value);
+							param.setResult(bundle);
+						}
+
+				}
+
+			} else if ("GET_system".equals(method)) {
+				// Do nothing
+
+			} else if ("GET_global".equals(method)) {
+				if ("default_dns_server".equals(request)) {
+					if (!hasEmptyValue(param.getResult()))
+						if (isRestricted(param, PrivacyManager.cNetwork, "Srv_Default_DNS")) {
+							int uid = Binder.getCallingUid();
+							InetAddress value = (InetAddress) PrivacyManager.getDefacedProp(uid, "InetAddress");
+							Bundle bundle = new Bundle(1);
+							bundle.putString("value", value.getHostAddress());
+							param.setResult(bundle);
+						}
+
+				} else if ("wifi_country_code".equals(request)) {
+					if (!hasEmptyValue(param.getResult()))
+						if (isRestricted(param, PrivacyManager.cNetwork, "Srv_WiFi_Country")) {
+							int uid = Binder.getCallingUid();
+							String value = (String) PrivacyManager.getDefacedProp(uid, "CountryIso");
+							Bundle bundle = new Bundle(1);
+							bundle.putString("value", value == null ? null : value.toLowerCase(Locale.ROOT));
+							param.setResult(bundle);
+						}
+				}
+			}
+		}
+	}
+
+	// Helper methods
+
+	private boolean hasEmptyValue(Object result) {
+		Bundle bundle = (Bundle) result;
+		if (bundle == null)
+			return true;
+		if (!bundle.containsKey("value"))
+			return true;
+		return (bundle.get("value") == null);
 	}
 
 	private String getIdForUri(String uri) {
