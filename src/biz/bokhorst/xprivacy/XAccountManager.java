@@ -212,7 +212,7 @@ public class XAccountManager extends XHook {
 			break;
 
 		case Srv_getAccountsByFeatures:
-			if (param.args.length > 1 && param.args[1] instanceof String) {
+			if (param.args.length > 1 && (param.args[1] == null || param.args[1] instanceof String)) {
 				if (isRestrictedExtra(param, (String) param.args[1]))
 					param.setResult(null);
 			} else {

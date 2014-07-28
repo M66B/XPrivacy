@@ -140,16 +140,18 @@ public class XClipboardManager extends XHook {
 		case getText:
 		case Srv_getPrimaryClip:
 		case Srv_getPrimaryClipDescription:
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(null);
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(null);
 			break;
 
 		case hasPrimaryClip:
 		case hasText:
 		case Srv_hasClipboardText:
 		case Srv_hasPrimaryClip:
-			if (isRestricted(param))
-				param.setResult(false);
+			if (param.getResult() instanceof Boolean)
+				if (isRestricted(param))
+					param.setResult(false);
 			break;
 		}
 	}

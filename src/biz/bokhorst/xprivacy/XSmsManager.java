@@ -80,7 +80,7 @@ public class XSmsManager extends XHook {
 		case Srv_sendData:
 		case Srv_sendText:
 		case Srv_sendMultipartText:
-			if (param.args.length > 1 && param.args[1] instanceof String)
+			if (param.args.length > 1 && (param.args[1] == null || param.args[1] instanceof String))
 				if (isRestrictedExtra(param, (String) param.args[1]))
 					param.setResult(null);
 			break;

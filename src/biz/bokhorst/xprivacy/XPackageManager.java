@@ -172,8 +172,9 @@ public class XPackageManager extends XHook {
 			break;
 
 		case Srv_getPackagesForUid:
-			if (isRestricted(param))
-				param.setResult(null);
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(null);
 			break;
 
 		case Srv_getPersistentApplications:

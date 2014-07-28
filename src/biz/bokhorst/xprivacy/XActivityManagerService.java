@@ -111,26 +111,18 @@ public class XActivityManagerService extends XHook {
 	protected void before(XParam param) throws Throwable {
 		switch (mMethod) {
 		case inputDispatchingTimedOut:
-			try {
-				// Delay foreground ANRs while on demand dialog open
-				boolean ondemanding = (mOndemandSemaphore != null && mOndemandSemaphore.availablePermits() < 1);
-				Util.log(this, Log.WARN, "Foreground ANR uid=" + getUidANR(param) + " ondemand=" + ondemanding);
-				if (ondemanding)
-					param.setResult(5 * 1000); // 5 seconds
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
+			// Delay foreground ANRs while on demand dialog open
+			if (mOndemandSemaphore != null && mOndemandSemaphore.availablePermits() < 1) {
+				Util.log(this, Log.WARN, "Foreground ANR uid=" + getUidANR(param));
+				param.setResult(5 * 1000); // 5 seconds
 			}
 			break;
 
 		case appNotResponding:
-			try {
-				// Ignore background ANRs while on demand dialog open
-				boolean ondemanding = (mOndemandSemaphore != null && mOndemandSemaphore.availablePermits() < 1);
-				Util.log(this, Log.WARN, "Background ANR uid=" + getUidANR(param) + " ondemand=" + ondemanding);
-				if (ondemanding)
-					param.setResult(null);
-			} catch (Throwable ex) {
-				Util.bug(this, ex);
+			// Ignore background ANRs while on demand dialog open
+			if (mOndemandSemaphore != null && mOndemandSemaphore.availablePermits() < 1) {
+				Util.log(this, Log.WARN, "Background ANR uid=" + getUidANR(param));
+				param.setResult(null);
 			}
 			break;
 
@@ -143,7 +135,7 @@ public class XActivityManagerService extends XHook {
 			break;
 
 		case setLockScreenShown:
-			if (param.args.length > 0)
+			if (param.args.length > 0 && param.args[0] instanceof Boolean)
 				try {
 					if ((Boolean) param.args[0]) {
 						mLockScreen = true;
@@ -169,30 +161,32 @@ public class XActivityManagerService extends XHook {
 			break;
 
 		case startActivities:
-			if (param.args.length > 2 && param.args[2] instanceof Intent[]) {
-				List<Intent> listIntent = new ArrayList<Intent>();
-				for (Intent intent : (Intent[]) param.args[2])
-					if (!isRestricted(param, intent))
-						listIntent.add(intent);
-				if (listIntent.size() == 0)
-					param.setResult(0); // ActivityManager.START_SUCCESS
-				else
-					param.args[2] = listIntent.toArray();
-			}
+			if (param.args.length > 2 && param.args[2] instanceof Intent[] && param.getResult() instanceof Integer)
+				if ((Integer) param.getResult() == 0) {
+					List<Intent> listIntent = new ArrayList<Intent>();
+					for (Intent intent : (Intent[]) param.args[2])
+						if (!isRestricted(param, intent))
+							listIntent.add(intent);
+					if (listIntent.size() == 0)
+						param.setResult(0); // ActivityManager.START_SUCCESS
+					else
+						param.args[2] = listIntent.toArray();
+				}
 			break;
 
 		case startActivity:
 		case startActivityAsUser:
 		case startActivityWithConfig:
-			if (param.args.length > 2 && param.args[2] instanceof Intent) {
-				Intent intent = (Intent) param.args[2];
-				if (isRestricted(param, intent))
-					param.setResult(0); // ActivityManager.START_SUCCESS
-			}
+			if (param.args.length > 2 && param.args[2] instanceof Intent && param.getResult() instanceof Integer)
+				if ((Integer) param.getResult() == 0) {
+					Intent intent = (Intent) param.args[2];
+					if (isRestricted(param, intent))
+						param.setResult(0); // ActivityManager.START_SUCCESS
+				}
 			break;
 
 		case startActivityAndWait:
-			if (param.args.length > 2 && param.args[2] instanceof Intent) {
+			if (param.args.length > 2 && param.args[2] instanceof Intent && param.getResult() != null) {
 				Intent intent = (Intent) param.args[2];
 				if (isRestricted(param, intent)) {
 					Class<?> cWaitResult = Class.forName("android.app.IActivityManager.WaitResult");
@@ -226,7 +220,7 @@ public class XActivityManagerService extends XHook {
 			break;
 
 		case setLockScreenShown:
-			if (param.args.length > 0)
+			if (param.args.length > 0 && param.args[0] instanceof Boolean)
 				if (!(Boolean) param.args[0]) {
 					mLockScreen = false;
 					Util.log(this, Log.WARN, "Lockscreen=" + mLockScreen);
