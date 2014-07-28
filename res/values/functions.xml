@@ -53,6 +53,11 @@
     <string name="clipboard_getText" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#getText()">Google documentation</a>]]></string>
     <string name="clipboard_hasPrimaryClip" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#hasPrimaryClip()">Google documentation</a>]]></string>
     <string name="clipboard_hasText" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#hasText()">Google documentation</a>]]></string>
+    <string name="clipboard_Srv_addPrimaryClipChangedListener" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#addPrimaryClipChangedListener(android.content.ClipboardManager.OnPrimaryClipChangedListener)">Google documentation</a>]]></string>
+    <string name="clipboard_Srv_getPrimaryClip" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#getPrimaryClip()">Google documentation</a>]]></string>
+    <string name="clipboard_Srv_getPrimaryClipDescription" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#getPrimaryClipDescription()">Google documentation</a>]]></string>
+    <string name="clipboard_Srv_hasPrimaryClip" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#hasPrimaryClip()">Google documentation</a>]]></string>
+    <string name="clipboard_Srv_hasClipboardText" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ClipboardManager.html#hasText()">Google documentation</a>]]></string>
 
     <!-- contacts -->
     <string name="contacts_contacts_contacts" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/provider/ContactsContract.Contacts.html">Google documentation</a>]]></string>
