@@ -1329,8 +1329,9 @@ To keep XPrivacy maintainable hooking into private/internal classes and methods 
 since these vary considerably in different Android versions and are often customized/modified by manufacturers and custom ROM builders.
 
 To prevent applications from crashing fake data should be returned whenever possible.
+Empty values (*null*) will not be replaced by fake values to prevent misuse.
 There is no need to apply restrictions in situations where the user is presented a dialog first (for example to pick an account).
-Setting data should never be restricted, this is outside the goal of XPrivacy.
+Setting data (in contrary to getting data) should never be restricted, this is outside the goal of XPrivacy.
 
 Please note that you agree to the license below by contributing, including the copyright.
 
