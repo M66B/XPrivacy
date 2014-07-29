@@ -98,7 +98,8 @@ public class Hook implements Comparable<Hook> {
 
 	public Hook notAOSP(int sdk) {
 		mNotAOSPSdk = sdk;
-		mUnsafe = true;
+		if (!PrivacyManager.cIPC.equals(mRestrictionName))
+			mUnsafe = true;
 		return this;
 	}
 
