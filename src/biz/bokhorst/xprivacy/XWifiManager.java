@@ -11,7 +11,6 @@ import android.net.wifi.SupplicantState;
 import android.net.wifi.WifiConfiguration;
 import android.net.wifi.WifiInfo;
 import android.os.Binder;
-import android.util.Log;
 
 public class XWifiManager extends XHook {
 	private Methods mMethod;
@@ -19,7 +18,7 @@ public class XWifiManager extends XHook {
 	private static final String cClassName = "android.net.wifi.WifiManager";
 
 	private XWifiManager(Methods method, String restrictionName, String className) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), "WiFi." + method.name());
 		mMethod = method;
 		mClassName = className;
 	}
@@ -67,11 +66,13 @@ public class XWifiManager extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.getConfiguredNetworks) {
+		switch (mMethod) {
+		case getConfiguredNetworks:
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<WifiConfiguration>());
+			break;
 
-		} else if (mMethod == Methods.getConnectionInfo) {
+		case getConnectionInfo:
 			if (param.getResult() != null && isRestricted(param)) {
 				WifiInfo wInfo = (WifiInfo) param.getResult();
 				if (getRestrictionName().equals(PrivacyManager.cInternet)) {
@@ -136,7 +137,9 @@ public class XWifiManager extends XHook {
 					}
 				}
 			}
-		} else if (mMethod == Methods.getDhcpInfo) {
+			break;
+
+		case getDhcpInfo:
 			if (param.getResult() != null && isRestricted(param)) {
 				DhcpInfo dInfo = (DhcpInfo) param.getResult();
 				dInfo.ipAddress = (Integer) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "IPInt");
@@ -145,16 +148,18 @@ public class XWifiManager extends XHook {
 				dInfo.dns2 = dInfo.ipAddress;
 				dInfo.serverAddress = dInfo.ipAddress;
 			}
+			break;
 
-		} else if (mMethod == Methods.getScanResults) {
+		case getScanResults:
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ScanResult>());
+			break;
 
-		} else if (mMethod == Methods.getWifiApConfiguration) {
+		case getWifiApConfiguration:
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(null);
+			break;
 
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		}
 	}
 }

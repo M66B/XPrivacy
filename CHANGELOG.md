@@ -50,6 +50,7 @@ Changelog
 * Prefixed *getDetailedState*, *getState*, *isConnected* and *isConnectedOrConnecting* with [NetworkInfo](http://developer.android.com/reference/android/net/NetworkInfo.html)
 * Moved *getExtraInfo* to *network*
 * Prefixed *getActiveNetworkInfo*, *getAllNetworkInfo* and *getNetworkInfo* with *Connectivity*
+* Prefixed *getConfiguredNetworks*, *getConnectionInfo*, *getDhcpInfo*, *getScanResults*, and *getWifiApConfiguration* with *WiFi*
 * Updated in application documentation
 * Updated Dutch translation
 * Updated German translation

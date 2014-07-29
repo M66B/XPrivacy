@@ -169,7 +169,7 @@ public class Meta {
 		mListHook.add(new Hook("internet", "NetworkInfo.isConnectedOrConnecting", null, 1, "2.2.2", "isConnectedOrConnecting"));
 
 		// android.net.wifi.WifiManager
-		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
+		mListHook.add(new Hook("internet", "WiFi.getConnectionInfo", null, 10, "2.2.2", "getConnectionInfo").unsafe());
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
@@ -195,7 +195,7 @@ public class Meta {
 		mListHook.add(new Hook("location", "getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
 		mListHook.add(new Hook("location", "getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, null, null));
 		mListHook.add(new Hook("location", "getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, null, null));
-		mListHook.add(new Hook("location", "getScanResults", "ACCESS_WIFI_STATE", 1, null, null).dangerous());
+		mListHook.add(new Hook("location", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 1, "2.2.2", "getScanResults").unsafe().dangerous());
 		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 1, null, null));
 
 		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
@@ -250,11 +250,11 @@ public class Meta {
 		mListHook.add(new Hook("network", "NetworkInterface.getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, "2.2.2", "getInterfaceAddresses").unsafe());
 
 		// android.net.wifi.WifiManager
-		mListHook.add(new Hook("network", "getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, null, null));
-		mListHook.add(new Hook("network", "getConnectionInfo", "ACCESS_WIFI_STATE", 10, null, null));
-		mListHook.add(new Hook("network", "getDhcpInfo", "ACCESS_WIFI_STATE", 10, null, null));
-		mListHook.add(new Hook("network", "getScanResults", "ACCESS_WIFI_STATE", 10, "0.0", null).dangerous());
-		mListHook.add(new Hook("network", "getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, null, null));
+		mListHook.add(new Hook("network", "WiFi.getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, "2.2.2", "getConfiguredNetworks").unsafe());
+		mListHook.add(new Hook("network", "WiFi.getConnectionInfo", "ACCESS_WIFI_STATE", 10, "2.2.2", "getConnectionInfo").unsafe());
+		mListHook.add(new Hook("network", "WiFi.getDhcpInfo", "ACCESS_WIFI_STATE", 10, "2.2.2", "getDhcpInfo").unsafe());
+		mListHook.add(new Hook("network", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 10, "2.2.2", "getScanResults").unsafe().dangerous());
+		mListHook.add(new Hook("network", "WiFi.getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, "2.2.2", "getWifiApConfiguration").unsafe());
 
 		mListHook.add(new Hook("network", "Srv_Default_DNS", "", 19, "2.99", "getString").AOSP(19));
 		mListHook.add(new Hook("network", "Srv_WiFi_Country", "", 19, "2.99", "getString").AOSP(19));
