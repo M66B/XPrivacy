@@ -17,4 +17,3 @@ Services
 
 * Individual account methods
 * Individual package methods
-* Check internet/network restrictions
