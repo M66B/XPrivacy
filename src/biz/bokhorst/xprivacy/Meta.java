@@ -394,7 +394,7 @@ public class Meta {
 		mListHook.add(new Hook("system", "Srv_queryIntentReceivers", "", 19, "2.99", "queryBroadcastReceivers").AOSP(19).dangerous());
 		mListHook.add(new Hook("system", "Srv_queryIntentServices", "", 19, "2.99", "queryIntentServices").AOSP(19).dangerous());
 
-		mListHook.add(new Hook("system", "IntentFirewall", "", 19, "2.99", null).AOSP(19).dangerous().whitelist(cTypeAction));
+		mListHook.add(new Hook("system", "IntentFirewall", "", 19, "2.2.2", null).AOSP(19).dangerous().whitelist(cTypeAction));
 
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).unsafe().whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null).unsafe());
