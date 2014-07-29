@@ -68,7 +68,7 @@ public class XNetworkInterface extends XHook {
 	protected void after(XParam param) throws Throwable {
 		if (getRestrictionName().equals(PrivacyManager.cInternet)) {
 			// Internet: fake offline state
-			if (mMethod == Methods.getByIndex && mMethod == Methods.getByInetAddress || mMethod == Methods.getByName
+			if (mMethod == Methods.getByIndex || mMethod == Methods.getByInetAddress || mMethod == Methods.getByName
 					|| mMethod == Methods.getNetworkInterfaces) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(null);
