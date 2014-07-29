@@ -39,6 +39,8 @@ public class Hook implements Comparable<Hook> {
 			if (slash > 0) {
 				mReplacedRestriction = replaces.substring(0, slash);
 				mReplacedMethod = replaces.substring(slash + 1);
+				if ("".equals(mReplacedMethod))
+					mReplacedMethod = methodName;
 			} else {
 				mReplacedRestriction = mRestrictionName;
 				mReplacedMethod = replaces;
