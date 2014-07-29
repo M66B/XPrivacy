@@ -88,9 +88,9 @@
     <string name="identification__sys_class_____cid" translatable="false"><![CDATA[Will restrict direct access to CID (Card Identification Register = SD card serial number)]]></string>
     <string name="identification_AdvertisingId" translatable="false"><![CDATA[<a href="https://developer.android.com/google/play-services/id.html">Google documentation</a>]]></string>
     <string name="identification_getString" translatable="false"><![CDATA[Will restrict access to the Android ID]]></string>
-    <string name="identification_getDescriptor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/view/InputDevice.html#getDescriptor()">Google documentation</a>]]></string>
     <string name="identification_GservicesProvider" translatable="false"><![CDATA[Will restrict direct access to android_id, acquired through the Google services provider]]></string>
     <string name="identification_SERIAL" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/os/Build.html#SERIAL">Google documentation</a>]]></string>
+    <string name="identification_InputDevice_getDescriptor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/view/InputDevice.html#getDescriptor()">Google documentation</a>]]></string>
     <string name="identification_InputDevice_getName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/view/InputDevice.html#getName()">Google documentation</a>]]></string>
     <string name="identification_USB_getDeviceId" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/usb/UsbDevice.html#getDeviceId(java.lang.String)">Google documentation</a>]]></string>
     <string name="identification_USB_getDeviceName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/usb/UsbDevice.html#getDeviceName()">Google documentation</a>]]></string>
@@ -191,7 +191,6 @@
     <string name="network_getDhcpInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getDhcpInfo()">Google documentation</a>]]></string>
     <string name="network_getScanResults" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getScanResults()">Google documentation</a>]]></string>
     <string name="network_getWifiApConfiguration" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://developer.android.com/reference/android/net/wifi/WifiConfiguration.html">WifiConfiguration</a>]]></string>
-
     <string name="network_Srv_Default_DNS" translatable="false"><![CDATA[Will restrict access to the hidden system global property default DNS server]]></string>
     <string name="network_Srv_WiFi_Country" translatable="false"><![CDATA[Will restrict access to the hidden system global property Wi-Fi country code]]></string>
 
@@ -329,6 +328,7 @@
     <string name="system_Srv_queryIntentContentProviders" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryIntentContentProviders(android.content.Intent,%20int)">Google documentation</a>]]></string>
     <string name="system_Srv_queryIntentReceivers" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryBroadcastReceivers(android.content.Intent,%20int)">Google documentation</a>]]></string>
     <string name="system_Srv_queryIntentServices" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryIntentServices(android.content.Intent,%20int)">Google documentation</a>]]></string>
+    <string name="system_Srv_getPersistentApplications" translatable="false"><![CDATA[<a href="http://developer.android.com/guide/topics/manifest/application-element.html#persistent">Google documentation</a>]]></string>
 
     <!-- view -->
     <string name="view_loadUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>
