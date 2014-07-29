@@ -257,8 +257,8 @@ public class Meta {
 		mListHook.add(new Hook("network", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 10, "2.2.2", "getScanResults").unsafe().dangerous());
 		mListHook.add(new Hook("network", "WiFi.getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, "2.2.2", "getWifiApConfiguration").unsafe());
 
-		mListHook.add(new Hook("network", "Srv_Default_DNS", "", 19, "2.99", "getString").AOSP(19));
-		mListHook.add(new Hook("network", "Srv_WiFi_Country", "", 19, "2.99", "getString").AOSP(19));
+		mListHook.add(new Hook("network", "Srv_Default_DNS", "", 19, "2.99", "getString").AOSP(19).dangerous());
+		mListHook.add(new Hook("network", "Srv_WiFi_Country", "", 19, "2.99", "getString").AOSP(19).dangerous());
 
 		// java.net.InetAddress
 		mListHook.add(new Hook("network", "InetAddress.getAllByName", "INTERNET", 1, "2.2.2", "internet/getAllByName").unsafe().dangerous().whitelist(cTypeIPAddress));
