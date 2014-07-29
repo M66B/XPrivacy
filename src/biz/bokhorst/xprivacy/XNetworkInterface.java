@@ -26,6 +26,7 @@ public class XNetworkInterface extends XHook {
 	}
 
 	// Internet:
+	// - public static NetworkInterface getByIndex(int index)
 	// - public static NetworkInterface getByInetAddress(InetAddress address)
 	// - public static NetworkInterface getByName(String interfaceName)
 	// - public static Enumeration<NetworkInterface> getNetworkInterfaces()
@@ -38,12 +39,16 @@ public class XNetworkInterface extends XHook {
 	// libcore/luni/src/main/java/java/net/NetworkInterface.java
 	// http://developer.android.com/reference/java/net/NetworkInterface.html
 
+	// @formatter:off
 	private enum Methods {
-		getByInetAddress, getByName, getNetworkInterfaces, getHardwareAddress, getInetAddresses, getInterfaceAddresses
+		getByIndex, getByInetAddress, getByName, getNetworkInterfaces,
+		getHardwareAddress, getInetAddresses, getInterfaceAddresses
 	};
+	// @formatter:on
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XNetworkInterface(Methods.getByIndex, PrivacyManager.cInternet));
 		listHook.add(new XNetworkInterface(Methods.getByInetAddress, PrivacyManager.cInternet));
 		listHook.add(new XNetworkInterface(Methods.getByName, PrivacyManager.cInternet));
 		listHook.add(new XNetworkInterface(Methods.getNetworkInterfaces, PrivacyManager.cInternet));
@@ -63,7 +68,7 @@ public class XNetworkInterface extends XHook {
 	protected void after(XParam param) throws Throwable {
 		if (getRestrictionName().equals(PrivacyManager.cInternet)) {
 			// Internet: fake offline state
-			if (mMethod == Methods.getByInetAddress || mMethod == Methods.getByName
+			if (mMethod == Methods.getByIndex && mMethod == Methods.getByInetAddress || mMethod == Methods.getByName
 					|| mMethod == Methods.getNetworkInterfaces) {
 				if (param.getResult() != null && isRestricted(param))
 					param.setResult(null);

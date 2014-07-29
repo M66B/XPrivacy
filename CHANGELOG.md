@@ -46,6 +46,7 @@ Changelog
 * Fixed restrictions *getByAddress* and *getByName*; to prevent problems these dangerous restrictions need to be set again
 * Prefixed *getHardwareAddress*, *getInetAddresses*, *getInterfaceAddresses* (network) with ([NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html))
 * Prefixed *getByInetAddress*, *getByName*, *getNetworkInterfaces* (internet) with ([NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html))
+* Added restriction [NetworkInterface.getByIndex](http://developer.android.com/reference/java/net/NetworkInterface.html#getByIndex(int))
 * Updated in application documentation
 * Updated Dutch translation
 * Updated German translation

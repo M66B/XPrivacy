@@ -146,6 +146,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "Srv_Android_ID", "", 19, "2.99", "getString").AOSP(19));
 
 		// java.net.NetworkInterface
+		mListHook.add(new Hook("internet", "NetworkInterface.getByIndex", "INTERNET", 19, "2.2.2", null).unsafe());
 		mListHook.add(new Hook("internet", "NetworkInterface.getByInetAddress", "INTERNET", 1, "2.2.2", "getByInetAddress").unsafe());
 		mListHook.add(new Hook("internet", "NetworkInterface.getByName", "INTERNET", 1, "2.2.2", "getByName").unsafe().dangerous().whitelist(cTypeIPAddress));
 		mListHook.add(new Hook("internet", "NetworkInterface.getNetworkInterfaces", "INTERNET", 1, "2.2.2", "getNetworkInterfaces").unsafe());

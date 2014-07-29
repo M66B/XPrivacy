@@ -97,6 +97,7 @@
     <string name="identification_Srv_Android_ID" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID">Google documentation</a>]]></string>
 
     <!-- internet -->
+    <string name="internet_NetworkInterface_getByIndex" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getByIndex(int)">Google documentation</a>]]></string>
     <string name="internet_NetworkInterface_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getByName(java.lang.String)">Google documentation</a>]]></string>
     <string name="internet_NetworkInterface_getByInetAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getByInetAddress(java.net.InetAddress)">Google documentation</a>]]></string>
     <string name="internet_NetworkInterface_getNetworkInterfaces" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getNetworkInterfaces()">Google documentation</a>]]></string>
@@ -329,7 +330,7 @@
     <string name="system_Srv_queryIntentContentProviders" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryIntentContentProviders(android.content.Intent,%20int)">Google documentation</a>]]></string>
     <string name="system_Srv_queryIntentReceivers" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryBroadcastReceivers(android.content.Intent,%20int)">Google documentation</a>]]></string>
     <string name="system_Srv_queryIntentServices" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#queryIntentServices(android.content.Intent,%20int)">Google documentation</a>]]></string>
-    <string name="system_Srv_getPersistentApplications" translatable="false"><![CDATA[<a href="http://developer.android.com/guide/topics/manifest/application-element.html#persistent">Google documentation</a>]]></string>
+    <string name="system_Srv_getPersistentApplications" translatable="false"><![CDATA[<a href="https://developer.android.com/guide/topics/manifest/application-element.html#persistent">Google documentation</a>]]></string>
 
     <!-- view -->
     <string name="view_loadUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>
