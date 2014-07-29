@@ -275,7 +275,7 @@ public class Meta {
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TAG_DISCOVERED, "android.permission.NFC", 10, null, null));
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TECH_DISCOVERED, "android.permission.NFC", 10, null, null));
 
-		mListHook.add(new Hook("notifications", "android.service.notification.NotificationListenerService", "BIND_NOTIFICATION_LISTENER_SERVICE", 18, null, null));
+		mListHook.add(new Hook("notifications", "android.service.notification.NotificationListenerService", "BIND_NOTIFICATION_LISTENER_SERVICE", 18, null, null).unsafe());
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.REGISTRATION", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.RECEIVE", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
 
