@@ -10,6 +10,7 @@ import android.nfc.NfcAdapter;
 import android.provider.MediaStore;
 import android.provider.Telephony;
 import android.telephony.TelephonyManager;
+import android.util.Log;
 
 @SuppressLint("InlinedApi")
 public class Meta {
@@ -421,6 +422,8 @@ public class Meta {
 			int resId = resources.getIdentifier(name, "string", self);
 			if (resId > 0)
 				hook.annotate(resources.getString(resId));
+			else
+				Util.log(null, Log.WARN, "Missing annotation hook=" + hook);
 		}
 
 		mAnnotated = true;
