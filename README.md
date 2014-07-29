@@ -1140,6 +1140,8 @@ It is already enough work to support the official versions from the last stable 
 
 ### Bugs
 
+**First ask if more people encountered the same bug!** (see questions below)
+
 If you encounter a bug, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
 Please describe the exact steps to reproduce the issue, including the wrong and expected result,
