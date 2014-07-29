@@ -47,9 +47,9 @@ public class XInetAddress extends XHook {
 		if (result != null) {
 			// Get addresses
 			InetAddress[] addresses;
-			if (result.getClass().equals(InetAddress.class))
+			if (result instanceof InetAddress)
 				addresses = new InetAddress[] { (InetAddress) result };
-			else if (result.getClass().equals(InetAddress[].class))
+			else if (result instanceof InetAddress[])
 				addresses = (InetAddress[]) result;
 			else
 				addresses = new InetAddress[0];

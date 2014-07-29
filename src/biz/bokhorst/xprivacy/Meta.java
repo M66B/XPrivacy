@@ -261,8 +261,8 @@ public class Meta {
 
 		// java.net.InetAddress
 		mListHook.add(new Hook("network", "InetAddress.getAllByName", "INTERNET", 1, "2.2.2", "internet/getAllByName").unsafe().dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("network", "InetAddress.getByAddress", "INTERNET", 1, "2.2.2", "internet/getByAddress").unsafe().dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("network", "InetAddress.getByName", "INTERNET", 1, "2.2.2", "internet/getByName").unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("network", "InetAddress.getByAddress", "INTERNET", 1, "2.2.2", null).unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("network", "InetAddress.getByName", "INTERNET", 1, "2.2.2", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
 		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null));
