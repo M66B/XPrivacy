@@ -163,11 +163,10 @@ public class Meta {
 		mListHook.add(new Hook("internet", "getNetworkInfo", null, 1, null, null).dangerous());
 
 		// android.net.NetworkInfo
-		mListHook.add(new Hook("internet", "getDetailedState", null, 1, null, null));
-		mListHook.add(new Hook("internet", "getExtraInfo", null, 1, null, null));
-		mListHook.add(new Hook("internet", "getState", null, 1, null, null));
-		mListHook.add(new Hook("internet", "isConnected", null, 1, null, null));
-		mListHook.add(new Hook("internet", "isConnectedOrConnecting", null, 1, null, null));
+		mListHook.add(new Hook("internet", "NetworkInfo.getDetailedState", null, 1, "2.2.2", "getDetailedState"));
+		mListHook.add(new Hook("internet", "NetworkInfo.getState", null, 1, "2.2.2", "getState"));
+		mListHook.add(new Hook("internet", "NetworkInfo.isConnected", null, 1, "2.2.2", "isConnected"));
+		mListHook.add(new Hook("internet", "NetworkInfo.isConnectedOrConnecting", null, 1, "2.2.2", "isConnectedOrConnecting"));
 
 		// android.net.wifi.WifiManager
 		mListHook.add(new Hook("internet", "getConnectionInfo", null, 10, null, null));
@@ -264,6 +263,9 @@ public class Meta {
 		mListHook.add(new Hook("network", "InetAddress.getAllByName", "INTERNET", 1, "2.2.2", "internet/getAllByName").unsafe().dangerous().whitelist(cTypeIPAddress));
 		mListHook.add(new Hook("network", "InetAddress.getByAddress", "INTERNET", 1, "2.2.2", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 		mListHook.add(new Hook("network", "InetAddress.getByName", "INTERNET", 1, "2.2.2", null).unsafe().dangerous().whitelist(cTypeIPAddress));
+
+		// android.net.NetworkInfo
+		mListHook.add(new Hook("network", "NetworkInfo.getExtraInfo", null, 1, "2.2.2", "internet/getExtraInfo"));
 
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
 		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null));

@@ -11,7 +11,7 @@ public class XNetworkInfo extends XHook {
 	private Methods mMethod;
 
 	private XNetworkInfo(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), "NetworkInfo." + method.name());
 		mMethod = method;
 	}
 
@@ -33,7 +33,10 @@ public class XNetworkInfo extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods ninfo : Methods.values())
-			listHook.add(new XNetworkInfo(ninfo, PrivacyManager.cInternet));
+			if (ninfo == Methods.getExtraInfo)
+				listHook.add(new XNetworkInfo(ninfo, PrivacyManager.cNetwork));
+			else
+				listHook.add(new XNetworkInfo(ninfo, PrivacyManager.cInternet));
 		return listHook;
 	}
 

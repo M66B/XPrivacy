@@ -109,11 +109,10 @@
     <string name="internet_getActiveNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getActiveNetworkInfo()">Google documentation</a>]]></string>
     <string name="internet_getAllNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getAllNetworkInfo()">Google documentation</a>]]></string>
     <string name="internet_getNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getNetworkInfo(int)">Google documentation</a>]]></string>
-    <string name="internet_getDetailedState" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getDetailedState()">Google documentation</a>]]></string>
-    <string name="internet_getExtraInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getExtraInfo()">Google documentation</a>]]></string>
-    <string name="internet_getState" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getState()">Google documentation</a>]]></string>
-    <string name="internet_isConnected" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#isConnected()">Google documentation</a>]]></string>
-    <string name="internet_isConnectedOrConnecting" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#isConnectedOrConnecting()">Google documentation</a>]]></string>
+    <string name="internet_NetworkInfo_getDetailedState" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getDetailedState()">Google documentation</a>]]></string>
+    <string name="internet_NetworkInfo_getState" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getState()">Google documentation</a>]]></string>
+    <string name="internet_NetworkInfo_isConnected" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#isConnected()">Google documentation</a>]]></string>
+    <string name="internet_NetworkInfo_isConnectedOrConnecting" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#isConnectedOrConnecting()">Google documentation</a>]]></string>
     <string name="internet_getConnectionInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
     <string name="internet_connect" translatable="false"><![CDATA[Will restrict access to the internet]]></string>
 
@@ -195,7 +194,8 @@
     <string name="network_InetAddress_getAllByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getAllByName(java.lang.String)">Google documentation</a>]]></string>
     <string name="network_InetAddress_getByAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByAddress(java.lang.String,%20byte[])">Google documentation</a>]]></string>
     <string name="network_InetAddress_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByName(java.lang.String)">Google documentation</a>]]></string>
-
+    <string name="network_NetworkInfo_getExtraInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getExtraInfo()">Google documentation</a>]]></string>
+ 
     <!-- nfc -->
     <string name="nfc_getNfcAdapter" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html">NfcAdapter</a>]]></string>
     <string name="nfc_getDefaultAdapter" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html#getDefaultAdapter(android.content.Context)">Google documentation</a>]]></string>
