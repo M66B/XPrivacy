@@ -44,11 +44,12 @@ Changelog
 * Corrected some restriction permissions
 * Moved restrictions *getAllByName*, *getByAddress* and *getByName* ([InetAddress](http://developer.android.com/reference/java/net/InetAddress.html)) from *internet* to *network*
 * Fixed restrictions *getByAddress* and *getByName*; to prevent problems these dangerous restrictions need to be set again
-* Prefixed *getHardwareAddress*, *getInetAddresses*, *getInterfaceAddresses* (network) with ([NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html))
-* Prefixed *getByInetAddress*, *getByName*, *getNetworkInterfaces* (internet) with ([NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html))
+* Prefixed *getHardwareAddress*, *getInetAddresses* and *getInterfaceAddresses* (network) with ([NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html))
+* Prefixed *getByInetAddress*, *getByName* and *getNetworkInterfaces* (internet) with ([NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html))
 * Added restriction [NetworkInterface.getByIndex](http://developer.android.com/reference/java/net/NetworkInterface.html#getByIndex(int))
-* Prefixed *getDetailedState*, *getState*, *isConnected*, *isConnectedOrConnecting* with [NetworkInfo](http://developer.android.com/reference/android/net/NetworkInfo.html)
+* Prefixed *getDetailedState*, *getState*, *isConnected* and *isConnectedOrConnecting* with [NetworkInfo](http://developer.android.com/reference/android/net/NetworkInfo.html)
 * Moved *getExtraInfo* to *network*
+* Prefixed *getActiveNetworkInfo*, *getAllNetworkInfo* and *getNetworkInfo* with *Connectivity*
 * Updated in application documentation
 * Updated Dutch translation
 * Updated German translation

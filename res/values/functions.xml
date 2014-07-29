@@ -106,9 +106,9 @@
     <string name="internet_inet_bw" translatable="false"><![CDATA[Will restrict access to bandwidth statistics and administration]]></string>
     <string name="internet_inet_vpn" translatable="false"><![CDATA[Will restrict access to <a href="https://en.wikipedia.org/wiki/Vpn">VPN</a> services]]></string>
     <string name="internet_inet_mesh" translatable="false"><![CDATA[Will restrict access to <a href="https://en.wikipedia.org/wiki/Mesh_networking">Mesh networking</a> services]]></string>
-    <string name="internet_getActiveNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getActiveNetworkInfo()">Google documentation</a>]]></string>
-    <string name="internet_getAllNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getAllNetworkInfo()">Google documentation</a>]]></string>
-    <string name="internet_getNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getNetworkInfo(int)">Google documentation</a>]]></string>
+    <string name="internet_Connectivity_getActiveNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getActiveNetworkInfo()">Google documentation</a>]]></string>
+    <string name="internet_Connectivity_getAllNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getAllNetworkInfo()">Google documentation</a>]]></string>
+    <string name="internet_Connectivity_getNetworkInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/ConnectivityManager.html#getNetworkInfo(int)">Google documentation</a>]]></string>
     <string name="internet_NetworkInfo_getDetailedState" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getDetailedState()">Google documentation</a>]]></string>
     <string name="internet_NetworkInfo_getState" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getState()">Google documentation</a>]]></string>
     <string name="internet_NetworkInfo_isConnected" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#isConnected()">Google documentation</a>]]></string>

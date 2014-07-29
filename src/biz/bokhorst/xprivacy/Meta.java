@@ -158,9 +158,9 @@ public class Meta {
 		mListHook.add(new Hook("internet", "inet_mesh", "LOOP_RADIO", 1, "2.1.1", null).dangerous().restart().noUsageData());
 
 		// android.net.ConnectivityManager
-		mListHook.add(new Hook("internet", "getActiveNetworkInfo", null, 1, null, null).dangerous());
-		mListHook.add(new Hook("internet", "getAllNetworkInfo", null, 1, null, null));
-		mListHook.add(new Hook("internet", "getNetworkInfo", null, 1, null, null).dangerous());
+		mListHook.add(new Hook("internet", "Connectivity.getActiveNetworkInfo", null, 1, "2.2.2", "getActiveNetworkInfo").unsafe().dangerous());
+		mListHook.add(new Hook("internet", "Connectivity.getAllNetworkInfo", null, 1, "2.2.2", "getAllNetworkInfo").unsafe());
+		mListHook.add(new Hook("internet", "Connectivity.getNetworkInfo", null, 1, "2.2.2", "getNetworkInfo").dangerous().unsafe());
 
 		// android.net.NetworkInfo
 		mListHook.add(new Hook("internet", "NetworkInfo.getDetailedState", null, 1, "2.2.2", "getDetailedState"));
