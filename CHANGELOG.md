@@ -42,6 +42,7 @@ Changelog
 * Made *accounts/hasFeatures* dangerous
 * Added restrictions [SMS_DELIVER](https://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html#SMS_DELIVER_ACTION) and [WAP_PUSH_DELIVER](https://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html#WAP_PUSH_DELIVER_ACTION)
 * Corrected some restriction permissions
+* Moved *getAllByName*, *getByAddress* and *getByName* ([InetAddress](http://developer.android.com/reference/java/net/InetAddress.html)) from *internet* to *network*
 * Updated in application documentation
 * Updated Dutch translation
 * Updated German translation

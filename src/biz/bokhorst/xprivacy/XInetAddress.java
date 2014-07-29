@@ -10,7 +10,7 @@ public class XInetAddress extends XHook {
 	private Methods mMethod;
 
 	private XInetAddress(Methods method, String restrictionName, String specifier) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), "InetAddress." + method.name());
 		mMethod = method;
 	}
 
@@ -32,7 +32,7 @@ public class XInetAddress extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods addr : Methods.values())
-			listHook.add(new XInetAddress(addr, PrivacyManager.cInternet, null));
+			listHook.add(new XInetAddress(addr, PrivacyManager.cNetwork, null));
 		return listHook;
 	}
 

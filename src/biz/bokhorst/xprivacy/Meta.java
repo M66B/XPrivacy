@@ -145,13 +145,9 @@ public class Meta {
 
 		mListHook.add(new Hook("identification", "Srv_Android_ID", "", 19, "2.99", "getString").AOSP(19));
 
-		// java.net.InetAddress
-		mListHook.add(new Hook("internet", "getAllByName", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("internet", "getByAddress", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
-
 		// java.net.NetworkInterface
 		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null).unsafe());
+		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null).unsafe());
 
 		mListHook.add(new Hook("internet", "inet", "INTERNET", 1, null, null).dangerous().restart().noUsageData());
@@ -262,6 +258,11 @@ public class Meta {
 
 		mListHook.add(new Hook("network", "Srv_Default_DNS", "", 19, "2.99", "getString").AOSP(19));
 		mListHook.add(new Hook("network", "Srv_WiFi_Country", "", 19, "2.99", "getString").AOSP(19));
+
+		// java.net.InetAddress
+		mListHook.add(new Hook("network", "InetAddress.getAllByName", "INTERNET", 1, "2.2.2", "internet/getAllByName").unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("network", "InetAddress.getByAddress", "INTERNET", 1, "2.2.2", "internet/getByAddress").unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("network", "InetAddress.getByName", "INTERNET", 1, "2.2.2", "internet/getByName").unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
 		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null));
