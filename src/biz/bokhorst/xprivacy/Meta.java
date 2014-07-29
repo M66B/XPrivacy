@@ -174,7 +174,7 @@ public class Meta {
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
-		mListHook.add(new Hook("internet", "LinkAddress.toString", null, 20, "2.1.17", null));
+		mListHook.add(new Hook("internet", "LinkAddress.toString", null, 15, "2.2.2", null));
 
 		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).notAOSP(19).dangerous().whitelist(cTypeTransaction));
 
