@@ -166,7 +166,8 @@ public class PrivacyManager {
 
 			// Check restriction
 			if (!listRestriction.contains(restrictionName))
-				Util.log(null, Log.WARN, "Not found restriction=" + restrictionName + " hook=" + hook);
+				if (hook.isAvailable())
+					Util.log(null, Log.WARN, "Not found restriction=" + restrictionName + " hook=" + hook);
 
 			// Enlist method
 			if (!mMethod.containsKey(restrictionName))
@@ -197,6 +198,8 @@ public class PrivacyManager {
 
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
+		if (Hook.isAOSP(19))
+			listRestriction.remove(cIPC);
 		return listRestriction;
 	}
 
