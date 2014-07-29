@@ -97,9 +97,9 @@
     <string name="identification_Srv_Android_ID" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID">Google documentation</a>]]></string>
 
     <!-- internet -->
-    <string name="internet_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByName(java.lang.String)">Google documentation</a>]]></string>
-    <string name="internet_getByInetAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getByInetAddress(java.net.InetAddress)">Google documentation</a>]]></string>
-    <string name="internet_getNetworkInterfaces" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getNetworkInterfaces()">Google documentation</a>]]></string>
+    <string name="internet_NetworkInterface_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getByName(java.lang.String)">Google documentation</a>]]></string>
+    <string name="internet_NetworkInterface_getByInetAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getByInetAddress(java.net.InetAddress)">Google documentation</a>]]></string>
+    <string name="internet_NetworkInterface_getNetworkInterfaces" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getNetworkInterfaces()">Google documentation</a>]]></string>
     <string name="internet_inet" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/Manifest.permission.html#INTERNET">Google documentation</a>]]></string>
     <string name="internet_inet_admin" translatable="false"><![CDATA[Will restrict access to administation of internet services]]></string>
     <string name="internet_inet_bw" translatable="false"><![CDATA[Will restrict access to bandwidth statistics and administration]]></string>
@@ -181,9 +181,9 @@
     <!-- network -->
     <string name="network_getAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#getAddress()">Google documentation</a><br /><a href="https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#getAddress()">Google documentation</a>]]></string>
     <string name="network_getBondedDevices" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#getBondedDevices()">Google documentation</a>]]></string>
-    <string name="network_getHardwareAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getHardwareAddress()">Google documentation</a>]]></string>
-    <string name="network_getInetAddresses" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getInetAddresses()">Google documentation</a>]]></string>
-    <string name="network_getInterfaceAddresses" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getInterfaceAddresses()">Google documentation</a>]]></string>
+    <string name="network_NetworkInterface_getHardwareAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getHardwareAddress()">Google documentation</a>]]></string>
+    <string name="network_NetworkInterface_getInetAddresses" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getInetAddresses()">Google documentation</a>]]></string>
+    <string name="network_NetworkInterface_getInterfaceAddresses" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getInterfaceAddresses()">Google documentation</a>]]></string>
     <string name="network_getConfiguredNetworks" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getConfiguredNetworks()">Google documentation</a>]]></string>
     <string name="network_getConnectionInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
     <string name="network_getDhcpInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getDhcpInfo()">Google documentation</a>]]></string>
@@ -194,7 +194,7 @@
     <string name="network_InetAddress_getAllByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getAllByName(java.lang.String)">Google documentation</a>]]></string>
     <string name="network_InetAddress_getByAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByAddress(java.lang.String,%20byte[])">Google documentation</a>]]></string>
     <string name="network_InetAddress_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByName(java.lang.String)">Google documentation</a>]]></string>
-    
+
     <!-- nfc -->
     <string name="nfc_getNfcAdapter" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html">NfcAdapter</a>]]></string>
     <string name="nfc_getDefaultAdapter" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/nfc/NfcAdapter.html#getDefaultAdapter(android.content.Context)">Google documentation</a>]]></string>

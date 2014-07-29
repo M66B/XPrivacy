@@ -17,7 +17,7 @@ public class XNetworkInterface extends XHook {
 	private Methods mMethod;
 
 	private XNetworkInterface(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), "NetworkInterface." + method.name());
 		mMethod = method;
 	}
 
@@ -38,10 +38,6 @@ public class XNetworkInterface extends XHook {
 	// libcore/luni/src/main/java/java/net/NetworkInterface.java
 	// http://developer.android.com/reference/java/net/NetworkInterface.html
 
-	// libcore/luni/src/main/java/java/net/InetAddress.java
-	// libcore/luni/src/main/java/java/net/Inet4Address.java
-	// libcore/luni/src/main/java/java/net/InterfaceAddress.java
-
 	private enum Methods {
 		getByInetAddress, getByName, getNetworkInterfaces, getHardwareAddress, getInetAddresses, getInterfaceAddresses
 	};
@@ -51,6 +47,7 @@ public class XNetworkInterface extends XHook {
 		listHook.add(new XNetworkInterface(Methods.getByInetAddress, PrivacyManager.cInternet));
 		listHook.add(new XNetworkInterface(Methods.getByName, PrivacyManager.cInternet));
 		listHook.add(new XNetworkInterface(Methods.getNetworkInterfaces, PrivacyManager.cInternet));
+
 		listHook.add(new XNetworkInterface(Methods.getHardwareAddress, PrivacyManager.cNetwork));
 		listHook.add(new XNetworkInterface(Methods.getInetAddresses, PrivacyManager.cNetwork));
 		listHook.add(new XNetworkInterface(Methods.getInterfaceAddresses, PrivacyManager.cNetwork));

@@ -44,6 +44,8 @@ Changelog
 * Corrected some restriction permissions
 * Moved restrictions *getAllByName*, *getByAddress* and *getByName* ([InetAddress](http://developer.android.com/reference/java/net/InetAddress.html)) from *internet* to *network*
 * Fixed restrictions *getByAddress* and *getByName*; to prevent problems these dangerous restrictions need to be set again
+* Prefixed *getHardwareAddress*, *getInetAddresses*, *getInterfaceAddresses* (network) with ([NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html))
+* Prefixed *getByInetAddress*, *getByName*, *getNetworkInterfaces* (internet) with ([NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html))
 * Updated in application documentation
 * Updated Dutch translation
 * Updated German translation

@@ -146,9 +146,9 @@ public class Meta {
 		mListHook.add(new Hook("identification", "Srv_Android_ID", "", 19, "2.99", "getString").AOSP(19));
 
 		// java.net.NetworkInterface
-		mListHook.add(new Hook("internet", "getByInetAddress", "INTERNET", 1, null, null).unsafe());
-		mListHook.add(new Hook("internet", "getByName", "INTERNET", 1, "0.0", null).unsafe().dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("internet", "getNetworkInterfaces", "INTERNET", 1, null, null).unsafe());
+		mListHook.add(new Hook("internet", "NetworkInterface.getByInetAddress", "INTERNET", 1, "2.2.2", "getByInetAddress").unsafe());
+		mListHook.add(new Hook("internet", "NetworkInterface.getByName", "INTERNET", 1, "2.2.2", "getByName").unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "NetworkInterface.getNetworkInterfaces", "INTERNET", 1, "2.2.2", "getNetworkInterfaces").unsafe());
 
 		mListHook.add(new Hook("internet", "inet", "INTERNET", 1, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("internet", "inet_admin", "NET_ADMIN", 1, "2.1.1", null).dangerous().restart().noUsageData());
@@ -245,9 +245,9 @@ public class Meta {
 		mListHook.add(new Hook("network", "getBondedDevices", "android.permission.BLUETOOTH", 5, null, null));
 
 		// java.net.NetworkInterface
-		mListHook.add(new Hook("network", "getHardwareAddress", "ACCESS_NETWORK_STATE", 9, null, null).unsafe());
-		mListHook.add(new Hook("network", "getInetAddresses", "ACCESS_NETWORK_STATE", 9, null, null).unsafe());
-		mListHook.add(new Hook("network", "getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, null, null).unsafe());
+		mListHook.add(new Hook("network", "NetworkInterface.getHardwareAddress", "ACCESS_NETWORK_STATE", 9, "2.2.2", "getHardwareAddress").unsafe());
+		mListHook.add(new Hook("network", "NetworkInterface.getInetAddresses", "ACCESS_NETWORK_STATE", 9, "2.2.2", "getInetAddresses").unsafe());
+		mListHook.add(new Hook("network", "NetworkInterface.getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, "2.2.2", "getInterfaceAddresses").unsafe());
 
 		// android.net.wifi.WifiManager
 		mListHook.add(new Hook("network", "getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, null, null));
