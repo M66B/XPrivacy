@@ -268,8 +268,8 @@ public class Meta {
 		// android.net.NetworkInfo
 		mListHook.add(new Hook("network", "NetworkInfo.getExtraInfo", null, 1, "2.2.2", "internet/getExtraInfo"));
 
-		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null));
-		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null));
+		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null).unsafe());
+		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null).unsafe());
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, "android.permission.NFC", 18, null, null));
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_NDEF_DISCOVERED, "android.permission.NFC", 10, null, null));
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TAG_DISCOVERED, "android.permission.NFC", 10, null, null));
