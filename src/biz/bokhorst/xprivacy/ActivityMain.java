@@ -838,6 +838,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
 		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());
+		((LinearLayout) dialog.findViewById(R.id.llUnsafe)).setVisibility(PrivacyManager.cVersion3 ? View.VISIBLE
+				: View.GONE);
 		dialog.setCancelable(true);
 		dialog.show();
 	}

@@ -192,7 +192,10 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public boolean isUnsafe() {
-		return mUnsafe;
+		if (PrivacyManager.cVersion3)
+			return mUnsafe;
+		else
+			return false;
 	}
 
 	public String getAnnotation() {
