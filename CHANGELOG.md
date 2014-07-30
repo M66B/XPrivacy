@@ -28,6 +28,10 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.2.2 TEST**
+
 * Fixed all problems reported through the support info
 * Option to white/black list from usage data (long press entry) ([issue](/../../issues/1821)) (only [Pro license](http://www.xprivacy.eu/))
 * Added IPC restrictions for *IApplicationThread*, *IContentProvider* and *IWindowSession* (on demand restricting only)
@@ -56,13 +60,6 @@ Changelog
 * Updated German translation
 * Updated Simplified Chinese translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
-
-**Version 3** (in development)
-
-* Added restriction *Srv_Default_DNS*, restricts hidden system global property default DNS server
-* Added restriction *Srv_WiFi_Country*, restricts hidden system global property Wi-Fi country code
 
 **Version 2.2.1 STABLE**
 
