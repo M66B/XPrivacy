@@ -32,6 +32,14 @@ Changelog
 
 **Version 2.2.2 TEST**
 
+The internet and network restrictions were reorganized.
+The internet restrictions are for restricting internet access,
+the network restrictions are for restricting network information, mainly IP addresses.
+Restrictions which were moved from one to the other category will be updated automatically,
+but a function can only be restricted if the category is restricted.
+This means that if a function was moved from internet to network,
+it will only be restricted if the network category was restricted.
+
 * Fixed all problems reported through the support info
 * Option to white/black list from usage data (long press entry) ([issue](/../../issues/1821)) (only [Pro license](http://www.xprivacy.eu/))
 * Added IPC restrictions for *IApplicationThread*, *IContentProvider* and *IWindowSession* (on demand restricting only)
