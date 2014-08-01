@@ -28,6 +28,7 @@ Changelog
 
 **Next release**
 
+* Removed restriction *LinkAddress*, since it is not needed
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
