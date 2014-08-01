@@ -26,7 +26,7 @@ public class XLinkAddress extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		//listHook.add(new XLinkAddress(Methods.toString, PrivacyManager.cInternet));
+		listHook.add(new XLinkAddress(Methods.toString, PrivacyManager.cInternet));
 		return listHook;
 	}
 
