@@ -1120,7 +1120,7 @@ public class PrivacyManager {
 			return sb.toString().toUpperCase();
 		}
 
-		// IMEI/MEID
+		// IMEI
 		if (name.equals("IMEI")) {
 			// http://en.wikipedia.org/wiki/Reporting_Body_Identifier
 			String[] rbi = new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "30", "33",

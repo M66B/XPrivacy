@@ -294,6 +294,8 @@ public class Meta {
 		mListHook.add(new Hook("phone", "getNetworkCountryIso", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getNetworkOperator", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getNetworkOperatorName", "", 10, null, null));
+		mListHook.add(new Hook("phone", "getNetworkType", "", 10, null, null));
+		mListHook.add(new Hook("phone", "getPhoneType", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getSimCountryIso", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getSimOperator", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getSimOperatorName", "", 10, null, null));
