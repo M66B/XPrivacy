@@ -295,7 +295,8 @@ public class ActivityUsage extends ActivityBase {
 						public boolean onLongClick(View view) {
 							final PRestriction usageData = mUsageAdapter.getItem(position);
 							final Hook hook = PrivacyManager.getHook(usageData.restrictionName, usageData.methodName);
-							if (hook != null && hook.whitelist() != null && usageData.extra != null) {
+							if (PrivacyManager.isApplication(usageData.uid) && hook != null && hook.whitelist() != null
+									&& usageData.extra != null) {
 								if (Util.hasProLicense(ActivityUsage.this) == null)
 									Util.viewUri(ActivityUsage.this, ActivityMain.cProUri);
 								else {
