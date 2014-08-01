@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Removed restriction *LinkAddress*, since it is not needed
+* Added support for [MEID](http://en.wikipedia.org/wiki/Mobile_equipment_identifier) and removed restrictions *getNetworkType* and *getPhoneType* ([issue](/../../issues/1843))
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
