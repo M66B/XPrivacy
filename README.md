@@ -1259,6 +1259,7 @@ Current translations:
 1. Bulgarian (bg)
 1. Catalan (ca)
 1. Czech (cs)
+1. Croatian (hr)
 1. Danish (da)
 1. Dutch/Flemish (nl)
 1. English
