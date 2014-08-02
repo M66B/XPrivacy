@@ -125,6 +125,7 @@
     <string name="restrict_help_browser">将访问浏览器信息限制，比如你的书签和下载历史记录</string>
     <string name="restrict_help_accounts">将访问帐户信息限制，比如您的谷歌帐户，其中包括您的G-mail地址</string>
     <string name="whitelist_address">地址</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP 地址</string>
     <string name="whitelist_library">本地库文件</string>
     <string name="whitelist_method">特殊方法名字</string>
