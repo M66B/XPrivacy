@@ -246,8 +246,8 @@ public class Meta {
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION, "BROADCAST_WAP_PUSH", 19, "2.2.2", null));
 
 		// android.bluetooth.BluetoothAdapter/BluetoothDevice
-		mListHook.add(new Hook("network", "Bluetooth.getAddress", "android.permission.BLUETOOTH", 5, "2.2.3", "getAddress"));
-		mListHook.add(new Hook("network", "Bluetooth.getBondedDevices", "android.permission.BLUETOOTH", 5, "2.2.3", "getBondedDevices"));
+		mListHook.add(new Hook("network", "Bluetooth.getAddress", "android.permission.BLUETOOTH", 5, "2.2.3", "getAddress").unsafe());
+		mListHook.add(new Hook("network", "Bluetooth.getBondedDevices", "android.permission.BLUETOOTH", 5, "2.2.3", "getBondedDevices").unsafe());
 		mListHook.add(new Hook("network", "Bluetooth.Srv_getAddress", "android.permission.BLUETOOTH", 5, "2.99", "getAddress").AOSP(19));
 		mListHook.add(new Hook("network", "Bluetooth.Srv_getName", "android.permission.BLUETOOTH", 5, "2.99", null).AOSP(19));
 
