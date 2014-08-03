@@ -277,7 +277,7 @@ public class Meta {
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.REGISTRATION", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.RECEIVE", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
 
-		mListHook.add(new Hook("overlay", "addView", "SYSTEM_ALERT_WINDOW", 1, null, null));
+		mListHook.add(new Hook("overlay", "addView", "SYSTEM_ALERT_WINDOW", 1, null, null).unsafe());
 
 		mListHook.add(new Hook("phone", "getDeviceId", "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "getIsimDomain", "READ_PRIVILEGED_PHONE_STATE", 14, null, null));
@@ -298,8 +298,10 @@ public class Meta {
 		mListHook.add(new Hook("phone", "getSimOperator", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getSimOperatorName", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getGroupIdLevel1", "READ_PHONE_STATE", 18, null, null));
+
 		mListHook.add(new Hook("phone", TelephonyManager.ACTION_PHONE_STATE_CHANGED, "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 1, null, null));
+
 		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData().noOnDemand());
 		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData().noOnDemand());
 
