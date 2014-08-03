@@ -33,7 +33,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 public class PrivacyManager {
-	public static final boolean cVersion3 = false;
+	public static final boolean cVersion3 = true;
 
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
@@ -908,7 +908,8 @@ public class PrivacyManager {
 
 		// Phone
 		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
-				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber")) {
+				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber")
+				|| name.equals("getCompleteVoiceMailNumber")) {
 			String value = getSetting(uid, cSettingPhone, cDeface);
 			return (cValueRandom.equals(value) ? getRandomProp("PHONE") : value);
 		}
@@ -951,7 +952,7 @@ public class PrivacyManager {
 		if (name.equals("getSimOperatorName"))
 			return getSetting(uid, cSettingOperator, cDeface);
 
-		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
+		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber") || name.equals("getIccSerialNumber"))
 			return getSetting(uid, cSettingIccId, null);
 
 		if (name.equals("getSubscriberId")) { // IMSI for a GSM phone

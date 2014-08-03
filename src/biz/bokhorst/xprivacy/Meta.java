@@ -279,17 +279,33 @@ public class Meta {
 
 		mListHook.add(new Hook("overlay", "addView", "SYSTEM_ALERT_WINDOW", 1, null, null).unsafe());
 
-		mListHook.add(new Hook("phone", "getDeviceId", "READ_PHONE_STATE", 10, null, null));
-		mListHook.add(new Hook("phone", "getIsimDomain", "READ_PRIVILEGED_PHONE_STATE", 14, null, null));
-		mListHook.add(new Hook("phone", "getIsimImpi", "READ_PRIVILEGED_PHONE_STATE", 14, null, null));
-		mListHook.add(new Hook("phone", "getIsimImpu", "READ_PRIVILEGED_PHONE_STATE", 14, null, null));
-		mListHook.add(new Hook("phone", "getLine1AlphaTag", "READ_PHONE_STATE", 10, null, null));
-		mListHook.add(new Hook("phone", "getLine1Number", "READ_PHONE_STATE", 10, null, null));
-		mListHook.add(new Hook("phone", "getMsisdn", "READ_PHONE_STATE", 14, null, null));
-		mListHook.add(new Hook("phone", "getSimSerialNumber", "READ_PHONE_STATE", 10, null, null));
-		mListHook.add(new Hook("phone", "getSubscriberId", "READ_PHONE_STATE", 10, null, null));
-		mListHook.add(new Hook("phone", "getVoiceMailAlphaTag", "READ_PHONE_STATE", 10, null, null));
-		mListHook.add(new Hook("phone", "getVoiceMailNumber", "READ_PHONE_STATE", 10, null, null));
+		mListHook.add(new Hook("phone", "getDeviceId", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getGroupIdLevel1", "READ_PHONE_STATE", 18, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getIsimDomain", "READ_PRIVILEGED_PHONE_STATE", 14, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getIsimImpi", "READ_PRIVILEGED_PHONE_STATE", 14, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getIsimImpu", "READ_PRIVILEGED_PHONE_STATE", 14, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getLine1AlphaTag", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getLine1Number", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getMsisdn", "READ_PHONE_STATE", 14, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getSimSerialNumber", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getSubscriberId", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getVoiceMailAlphaTag", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "getVoiceMailNumber", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
+
+		mListHook.add(new Hook("phone", "Srv_getDeviceId", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getGroupIdLevel1", "READ_PHONE_STATE", 18, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getIsimDomain", "READ_PRIVILEGED_PHONE_STATE", 14, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getIsimImpi", "READ_PRIVILEGED_PHONE_STATE", 14, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getIsimImpu", "READ_PRIVILEGED_PHONE_STATE", 14, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getLine1AlphaTag", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getLine1Number", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getMsisdn", "READ_PHONE_STATE", 14, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getIccSerialNumber", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getSubscriberId", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getVoiceMailAlphaTag", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getVoiceMailNumber", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getCompleteVoiceMailNumber", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+
 		mListHook.add(new Hook("phone", "listen", "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "getNetworkCountryIso", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getNetworkOperator", "", 10, null, null));
@@ -297,7 +313,6 @@ public class Meta {
 		mListHook.add(new Hook("phone", "getSimCountryIso", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getSimOperator", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getSimOperatorName", "", 10, null, null));
-		mListHook.add(new Hook("phone", "getGroupIdLevel1", "READ_PHONE_STATE", 18, null, null));
 
 		mListHook.add(new Hook("phone", TelephonyManager.ACTION_PHONE_STATE_CHANGED, "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 1, null, null));

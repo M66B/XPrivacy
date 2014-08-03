@@ -21,6 +21,13 @@ public class XTelephonyManager extends XHook {
 	private static final String cClassName = "android.telephony.TelephonyManager";
 	private static final Map<PhoneStateListener, XPhoneStateListener> mListener = new WeakHashMap<PhoneStateListener, XPhoneStateListener>();
 
+	private XTelephonyManager(Methods method, String restrictionName, boolean sub) {
+		super(restrictionName, method.name().replace("Srv_", ""), method.name());
+		mMethod = method;
+		if (sub)
+			mClassName = "com.android.internal.telephony.PhoneSubInfo";
+	}
+
 	private XTelephonyManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
@@ -36,6 +43,8 @@ public class XTelephonyManager extends XHook {
 	public String getClassName() {
 		return mClassName;
 	}
+
+	// @formatter:off
 
 	// public void disableLocationUpdates()
 	// public void enableLocationUpdates()
@@ -65,6 +74,24 @@ public class XTelephonyManager extends XHook {
 	// frameworks/base/telephony/java/android/telephony/TelephonyManager.java
 	// http://developer.android.com/reference/android/telephony/TelephonyManager.html
 
+	// public java.lang.String getDeviceId()
+	// public java.lang.String getDeviceSvn()
+	// public java.lang.String getSubscriberId()
+	// public java.lang.String getGroupIdLevel1()
+	// public java.lang.String getIccSerialNumber()
+	// public java.lang.String getLine1Number()
+	// public java.lang.String getLine1AlphaTag()
+	// public java.lang.String getMsisdn()
+	// public java.lang.String getVoiceMailNumber()
+	// public java.lang.String getCompleteVoiceMailNumber()
+	// public java.lang.String getVoiceMailAlphaTag()
+	// public java.lang.String getIsimImpi()
+	// public java.lang.String getIsimDomain()
+	// public java.lang.String[] getIsimImpu()
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/internal/telephony/PhoneSubInfo.java
+
+	// @formatter:on
+
 	// @formatter:off
 	private enum Methods {
 		disableLocationUpdates, enableLocationUpdates,
@@ -77,7 +104,15 @@ public class XTelephonyManager extends XHook {
 		getSimCountryIso, getSimOperator, getSimOperatorName, getSimSerialNumber,
 		getSubscriberId,
 		getVoiceMailAlphaTag, getVoiceMailNumber,
-		listen
+		listen,
+
+		Srv_getDeviceId, Srv_getGroupIdLevel1,
+		Srv_getIccSerialNumber,
+		Srv_getIsimDomain, Srv_getIsimImpi, Srv_getIsimImpu,
+		Srv_getLine1AlphaTag, Srv_getLine1Number,
+		Srv_getMsisdn,
+		Srv_getSubscriberId,
+		Srv_getCompleteVoiceMailNumber, Srv_getVoiceMailNumber, Srv_getVoiceMailAlphaTag
 	};
 	// @formatter:on
 
@@ -118,13 +153,62 @@ public class XTelephonyManager extends XHook {
 			listHook.add(new XTelephonyManager(Methods.getSimCountryIso, PrivacyManager.cPhone, className));
 			listHook.add(new XTelephonyManager(Methods.getSimOperator, PrivacyManager.cPhone, className));
 			listHook.add(new XTelephonyManager(Methods.getSimOperatorName, PrivacyManager.cPhone, className));
+
+			// PhoneSubInfo
+			listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpi, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpu, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTag, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getLine1Number, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getMsisdn, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getSubscriberId, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getCompleteVoiceMailNumber, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTag, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumber, PrivacyManager.cPhone, true));
 		}
 		return listHook;
 	}
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.listen) {
+		switch (mMethod) {
+		case disableLocationUpdates:
+			if (isRestricted(param, PrivacyManager.cLocation, "enableLocationUpdates"))
+				param.setResult(null);
+			break;
+
+		case enableLocationUpdates:
+			if (isRestricted(param))
+				param.setResult(null);
+			break;
+
+		case getAllCellInfo:
+		case getCellLocation:
+		case getDeviceId:
+		case getGroupIdLevel1:
+		case getIsimDomain:
+		case getIsimImpi:
+		case getIsimImpu:
+		case getLine1AlphaTag:
+		case getLine1Number:
+		case getMsisdn:
+		case getNeighboringCellInfo:
+		case getNetworkCountryIso:
+		case getNetworkOperator:
+		case getNetworkOperatorName:
+		case getSimCountryIso:
+		case getSimOperator:
+		case getSimOperatorName:
+		case getSimSerialNumber:
+		case getSubscriberId:
+		case getVoiceMailAlphaTag:
+		case getVoiceMailNumber:
+			break;
+
+		case listen:
 			if (param.args.length > 1) {
 				PhoneStateListener listener = (PhoneStateListener) param.args[0];
 				int event = (Integer) param.args[1];
@@ -159,39 +243,95 @@ public class XTelephonyManager extends XHook {
 							// and stock source code
 						}
 			}
-		} else if (mMethod == Methods.enableLocationUpdates) {
-			if (isRestricted(param))
-				param.setResult(null);
+			break;
 
-		} else if (mMethod == Methods.disableLocationUpdates)
-			if (isRestricted(param, PrivacyManager.cLocation, "enableLocationUpdates"))
-				param.setResult(null);
+		case Srv_getDeviceId:
+		case Srv_getGroupIdLevel1:
+		case Srv_getIccSerialNumber:
+		case Srv_getIsimDomain:
+		case Srv_getIsimImpi:
+		case Srv_getIsimImpu:
+		case Srv_getLine1AlphaTag:
+		case Srv_getLine1Number:
+		case Srv_getMsisdn:
+		case Srv_getSubscriberId:
+		case Srv_getCompleteVoiceMailNumber:
+		case Srv_getVoiceMailNumber:
+		case Srv_getVoiceMailAlphaTag:
+			break;
+		}
 	}
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod != Methods.listen && mMethod != Methods.disableLocationUpdates
-				&& mMethod != Methods.enableLocationUpdates)
-			if (mMethod == Methods.getAllCellInfo) {
-				if (param.getResult() != null && isRestricted(param))
+		int uid = Binder.getCallingUid();
+
+		switch (mMethod) {
+		case disableLocationUpdates:
+		case enableLocationUpdates:
+			break;
+
+		case getAllCellInfo:
+			if (param.getResult() != null)
+				if (isRestricted(param))
 					param.setResult(new ArrayList<CellInfo>());
+			break;
 
-			} else if (mMethod == Methods.getCellLocation) {
-				if (param.getResult() != null && isRestricted(param))
-					param.setResult(getDefacedCellLocation(Binder.getCallingUid()));
+		case getCellLocation:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(getDefacedCellLocation(uid));
+			break;
 
-			} else if (mMethod == Methods.getIsimImpu) {
-				if (param.getResult() != null && isRestricted(param))
-					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mMethod.name()));
+		case getNeighboringCellInfo:
+			if (param.getResult() != null && isRestricted(param))
+				param.setResult(new ArrayList<NeighboringCellInfo>());
+			break;
 
-			} else if (mMethod == Methods.getNeighboringCellInfo) {
-				if (param.getResult() != null && isRestricted(param))
-					param.setResult(new ArrayList<NeighboringCellInfo>());
+		case listen:
+			break;
 
-			} else {
-				if (param.getResult() != null && isRestricted(param))
-					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), mMethod.name()));
-			}
+		case getDeviceId:
+		case getGroupIdLevel1:
+		case getIsimDomain:
+		case getIsimImpi:
+		case getIsimImpu:
+		case getLine1AlphaTag:
+		case getLine1Number:
+		case getMsisdn:
+		case getNetworkCountryIso:
+		case getNetworkOperator:
+		case getNetworkOperatorName:
+		case getSimCountryIso:
+		case getSimOperator:
+		case getSimOperatorName:
+		case getSimSerialNumber:
+		case getSubscriberId:
+		case getVoiceMailAlphaTag:
+		case getVoiceMailNumber:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name()));
+			break;
+
+		case Srv_getDeviceId:
+		case Srv_getGroupIdLevel1:
+		case Srv_getIccSerialNumber:
+		case Srv_getIsimDomain:
+		case Srv_getIsimImpi:
+		case Srv_getIsimImpu:
+		case Srv_getLine1AlphaTag:
+		case Srv_getLine1Number:
+		case Srv_getMsisdn:
+		case Srv_getSubscriberId:
+		case Srv_getCompleteVoiceMailNumber:
+		case Srv_getVoiceMailNumber:
+		case Srv_getVoiceMailAlphaTag:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name().replace("Srv_", "")));
+			break;
+		}
 	}
 
 	private static CellLocation getDefacedCellLocation(int uid) {
