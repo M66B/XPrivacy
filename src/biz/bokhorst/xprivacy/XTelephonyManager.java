@@ -21,11 +21,19 @@ public class XTelephonyManager extends XHook {
 	private static final String cClassName = "android.telephony.TelephonyManager";
 	private static final Map<PhoneStateListener, XPhoneStateListener> mListener = new WeakHashMap<PhoneStateListener, XPhoneStateListener>();
 
-	private XTelephonyManager(Methods method, String restrictionName, boolean sub) {
+	private enum Srv {
+		SubInfo, Registry
+	};
+
+	private XTelephonyManager(Methods method, String restrictionName, Srv srv) {
 		super(restrictionName, method.name().replace("Srv_", ""), method.name());
 		mMethod = method;
-		if (sub)
+		if (srv == Srv.SubInfo)
 			mClassName = "com.android.internal.telephony.PhoneSubInfo";
+		else if (srv == Srv.Registry)
+			mClassName = "com.android.server.TelephonyRegistry";
+		else
+			Util.log(null, Log.ERROR, "Unknown srv=" + srv.name());
 	}
 
 	private XTelephonyManager(Methods method, String restrictionName, String className) {
@@ -90,6 +98,9 @@ public class XTelephonyManager extends XHook {
 	// public java.lang.String[] getIsimImpu()
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/internal/telephony/PhoneSubInfo.java
 
+	// public void listen(java.lang.String pkg, IPhoneStateListener callback, int events, boolean notifyNow)
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/server/TelephonyRegistry.java
+
 	// @formatter:on
 
 	// @formatter:off
@@ -112,7 +123,9 @@ public class XTelephonyManager extends XHook {
 		Srv_getLine1AlphaTag, Srv_getLine1Number,
 		Srv_getMsisdn,
 		Srv_getSubscriberId,
-		Srv_getCompleteVoiceMailNumber, Srv_getVoiceMailNumber, Srv_getVoiceMailAlphaTag
+		Srv_getCompleteVoiceMailNumber, Srv_getVoiceMailNumber, Srv_getVoiceMailAlphaTag,
+
+		Srv_listen
 	};
 	// @formatter:on
 
@@ -155,19 +168,23 @@ public class XTelephonyManager extends XHook {
 			listHook.add(new XTelephonyManager(Methods.getSimOperatorName, PrivacyManager.cPhone, className));
 
 			// PhoneSubInfo
-			listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpi, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpu, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTag, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getLine1Number, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getMsisdn, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getSubscriberId, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getCompleteVoiceMailNumber, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTag, PrivacyManager.cPhone, true));
-			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumber, PrivacyManager.cPhone, true));
+			listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpi, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpu, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getLine1Number, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getMsisdn, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getSubscriberId, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getCompleteVoiceMailNumber, PrivacyManager.cPhone,
+					Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumber, PrivacyManager.cPhone, Srv.SubInfo));
+
+			listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cLocation, Srv.Registry));
+			listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cPhone, Srv.Registry));
 		}
 		return listHook;
 	}
@@ -209,40 +226,45 @@ public class XTelephonyManager extends XHook {
 			break;
 
 		case listen:
-			if (param.args.length > 1) {
+			if (param.args.length > 1 && param.args[0] instanceof PhoneStateListener
+					&& param.args[1] instanceof Integer) {
 				PhoneStateListener listener = (PhoneStateListener) param.args[0];
 				int event = (Integer) param.args[1];
-				if (listener != null)
-					if (event == PhoneStateListener.LISTEN_NONE) {
-						// Remove
-						synchronized (mListener) {
-							XPhoneStateListener xListener = mListener.get(listener);
-							if (xListener != null) {
-								param.args[0] = xListener;
-								Util.log(this, Log.WARN,
-										"Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-							}
-						}
-					} else if (isRestricted(param))
-						try {
-							// Replace
-							XPhoneStateListener xListener;
-							synchronized (mListener) {
-								xListener = mListener.get(listener);
-								if (xListener == null) {
-									xListener = new XPhoneStateListener(listener);
-									mListener.put(listener, xListener);
-									Util.log(this, Log.WARN,
-											"Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-								}
-							}
+				if (event == PhoneStateListener.LISTEN_NONE) {
+					// Remove
+					synchronized (mListener) {
+						XPhoneStateListener xListener = mListener.get(listener);
+						if (xListener != null) {
 							param.args[0] = xListener;
-						} catch (Throwable ignored) {
-							// Some implementations require a looper
-							// which is not according to the documentation
-							// and stock source code
+							Util.log(this, Log.WARN,
+									"Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
 						}
+					}
+				} else if (isRestricted(param))
+					try {
+						// Replace
+						XPhoneStateListener xListener;
+						synchronized (mListener) {
+							xListener = mListener.get(listener);
+							if (xListener == null) {
+								xListener = new XPhoneStateListener(listener);
+								mListener.put(listener, xListener);
+								Util.log(this, Log.WARN,
+										"Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
+							}
+						}
+						param.args[0] = xListener;
+					} catch (Throwable ignored) {
+						// Some implementations require a looper
+						// which is not according to the documentation
+						// and stock source code
+					}
 			}
+			break;
+
+		case Srv_listen:
+			if (isRestricted(param))
+				param.setResult(null);
 			break;
 
 		case Srv_getDeviceId:
@@ -289,6 +311,7 @@ public class XTelephonyManager extends XHook {
 			break;
 
 		case listen:
+		case Srv_listen:
 			break;
 
 		case getDeviceId:

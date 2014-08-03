@@ -195,7 +195,9 @@ public class Meta {
 		mListHook.add(new Hook("location", "getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, null, null));
 		mListHook.add(new Hook("location", "getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, null, null));
 		mListHook.add(new Hook("location", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 1, "2.2.2", "getScanResults").unsafe().dangerous());
-		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 1, null, null));
+
+		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "Srv_listen", "ACCESS_COARSE_LOCATION", 1, null, null).AOSP(19));
 
 		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
 		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
@@ -306,7 +308,9 @@ public class Meta {
 		mListHook.add(new Hook("phone", "Srv_getVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailNumber").AOSP(19));
 		mListHook.add(new Hook("phone", "Srv_getCompleteVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", null).AOSP(19));
 
-		mListHook.add(new Hook("phone", "listen", "READ_PHONE_STATE", 10, null, null));
+		mListHook.add(new Hook("phone", "listen", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("phone", "Srv_listen", "READ_PHONE_STATE", 10, null, null).AOSP(19));
+
 		mListHook.add(new Hook("phone", "getNetworkCountryIso", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getNetworkOperator", "", 10, null, null));
 		mListHook.add(new Hook("phone", "getNetworkOperatorName", "", 10, null, null));
