@@ -244,6 +244,7 @@ public class Meta {
 		// android.bluetooth.BluetoothAdapter/BluetoothDevice
 		mListHook.add(new Hook("network", "Bluetooth.getAddress", "android.permission.BLUETOOTH", 5, "2.2.3", "getAddress"));
 		mListHook.add(new Hook("network", "Bluetooth.getBondedDevices", "android.permission.BLUETOOTH", 5, "2.2.3", "getBondedDevices"));
+		mListHook.add(new Hook("network", "Bluetooth.Srv_getAddress", "android.permission.BLUETOOTH", 5, "2.99", "getAddress").AOSP(19));
 
 		// java.net.NetworkInterface
 		mListHook.add(new Hook("network", "NetworkInterface.getHardwareAddress", "ACCESS_NETWORK_STATE", 9, "2.2.2", "getHardwareAddress").unsafe());
