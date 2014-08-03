@@ -1579,7 +1579,7 @@ public class ActivityApp extends ActivityBase {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Show whitelist icon
-					holder.imgMethodWhitelist.setVisibility(whitelist ? View.VISIBLE : View.GONE);
+					holder.imgMethodWhitelist.setVisibility(whitelist ? View.VISIBLE : View.INVISIBLE);
 					if (whitelist)
 						holder.imgMethodWhitelist.setOnClickListener(new View.OnClickListener() {
 							@Override
@@ -1762,14 +1762,13 @@ public class ActivityApp extends ActivityBase {
 			}
 
 			// Show if unsafe
-			holder.imgUnsafe.setVisibility(hook != null && hook.isUnsafe() ? View.VISIBLE : View.GONE);
+			holder.imgUnsafe.setVisibility(hook != null && hook.isUnsafe() ? View.VISIBLE : View.INVISIBLE);
 
 			// Hide whitelist icon
-			holder.imgMethodWhitelist.setVisibility(View.GONE);
+			holder.imgMethodWhitelist.setVisibility(View.INVISIBLE);
 
 			// Display restriction
 			holder.llMethodName.setClickable(false);
-			holder.imgMethodWhitelist.setVisibility(View.GONE);
 			holder.imgCbMethodRestricted.setVisibility(View.INVISIBLE);
 			holder.imgCbMethodAsk.setVisibility(View.INVISIBLE);
 
