@@ -161,13 +161,13 @@ public class Meta {
 		// android.net.ConnectivityManager
 		mListHook.add(new Hook("internet", "Connectivity.getActiveNetworkInfo", null, 1, "2.2.2", "getActiveNetworkInfo").unsafe().dangerous());
 		mListHook.add(new Hook("internet", "Connectivity.getAllNetworkInfo", null, 1, "2.2.2", "getAllNetworkInfo").unsafe());
-		mListHook.add(new Hook("internet", "Connectivity.getNetworkInfo", null, 1, "2.2.2", "getNetworkInfo").dangerous().unsafe());
+		mListHook.add(new Hook("internet", "Connectivity.getNetworkInfo", null, 1, "2.2.2", "getNetworkInfo").unsafe().dangerous());
 
 		// android.net.NetworkInfo
-		mListHook.add(new Hook("internet", "NetworkInfo.getDetailedState", null, 1, "2.2.2", "getDetailedState"));
-		mListHook.add(new Hook("internet", "NetworkInfo.getState", null, 1, "2.2.2", "getState"));
-		mListHook.add(new Hook("internet", "NetworkInfo.isConnected", null, 1, "2.2.2", "isConnected"));
-		mListHook.add(new Hook("internet", "NetworkInfo.isConnectedOrConnecting", null, 1, "2.2.2", "isConnectedOrConnecting"));
+		mListHook.add(new Hook("internet", "NetworkInfo.getDetailedState", null, 1, "2.2.2", "getDetailedState").unsafe());
+		mListHook.add(new Hook("internet", "NetworkInfo.getState", null, 1, "2.2.2", "getState").unsafe());
+		mListHook.add(new Hook("internet", "NetworkInfo.isConnected", null, 1, "2.2.2", "isConnected").unsafe());
+		mListHook.add(new Hook("internet", "NetworkInfo.isConnectedOrConnecting", null, 1, "2.2.2", "isConnectedOrConnecting").unsafe());
 
 		// android.net.wifi.WifiManager
 		mListHook.add(new Hook("internet", "WiFi.getConnectionInfo", null, 10, "2.2.2", "getConnectionInfo").unsafe());
@@ -272,7 +272,7 @@ public class Meta {
 		mListHook.add(new Hook("network", "InetAddress.getByName", "INTERNET", 1, "2.2.2", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		// android.net.NetworkInfo
-		mListHook.add(new Hook("network", "NetworkInfo.getExtraInfo", null, 1, "2.2.2", "internet/getExtraInfo"));
+		mListHook.add(new Hook("network", "NetworkInfo.getExtraInfo", null, 1, "2.2.2", "internet/getExtraInfo").unsafe());
 
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null).unsafe());
 		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null).unsafe());
