@@ -30,6 +30,7 @@ public class XBluetoothAdapter extends XHook {
 
 	// public String getAddress()
 	// public Set<BluetoothDevice> getBondedDevices()
+	// public String getName()
 	// frameworks/base/core/java/android/bluetooth/BluetoothAdapter.java
 	// http://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/server/BluetoothManagerService.java
@@ -37,7 +38,7 @@ public class XBluetoothAdapter extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		getAddress, getBondedDevices, Srv_getAddress
+		getAddress, getBondedDevices, Srv_getAddress, Srv_getName
 	};
 
 	public static List<XHook> getInstances() {
@@ -45,6 +46,7 @@ public class XBluetoothAdapter extends XHook {
 		listHook.add(new XBluetoothAdapter(Methods.getAddress, PrivacyManager.cNetwork));
 		listHook.add(new XBluetoothAdapter(Methods.getBondedDevices, PrivacyManager.cNetwork));
 		listHook.add(new XBluetoothAdapter(Methods.Srv_getAddress, PrivacyManager.cNetwork));
+		listHook.add(new XBluetoothAdapter(Methods.Srv_getName, PrivacyManager.cNetwork));
 		return listHook;
 	}
 
@@ -55,11 +57,19 @@ public class XBluetoothAdapter extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
+		int uid = Binder.getCallingUid();
 		switch (mMethod) {
 		case getAddress:
 		case Srv_getAddress:
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "MAC"));
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedProp(uid, "MAC"));
+			break;
+
+		case Srv_getName:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedProp(uid, "BTName"));
 			break;
 
 		case getBondedDevices:
