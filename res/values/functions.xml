@@ -180,8 +180,8 @@
     <string name="messages_android_provider_Telephony_WAP_PUSH_DELIVER" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html#WAP_PUSH_DELIVER_ACTION">Google documentation</a>]]></string>
 
     <!-- network -->
-    <string name="network_getAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#getAddress()">Google documentation</a><br /><a href="https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#getAddress()">Google documentation</a>]]></string>
-    <string name="network_getBondedDevices" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#getBondedDevices()">Google documentation</a>]]></string>
+    <string name="network_Bluetooth_getAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#getAddress()">Google documentation</a><br /><a href="https://developer.android.com/reference/android/bluetooth/BluetoothDevice.html#getAddress()">Google documentation</a>]]></string>
+    <string name="network_Bluetooth_getBondedDevices" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/bluetooth/BluetoothAdapter.html#getBondedDevices()">Google documentation</a>]]></string>
     <string name="network_NetworkInterface_getHardwareAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getHardwareAddress()">Google documentation</a>]]></string>
     <string name="network_NetworkInterface_getInetAddresses" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getInetAddresses()">Google documentation</a>]]></string>
     <string name="network_NetworkInterface_getInterfaceAddresses" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getInterfaceAddresses()">Google documentation</a>]]></string>

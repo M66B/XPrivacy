@@ -11,7 +11,7 @@ public class XBluetoothDevice extends XHook {
 	private Methods mMethod;
 
 	private XBluetoothDevice(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), "Bluetooth." + method.name());
 		mMethod = method;
 	}
 

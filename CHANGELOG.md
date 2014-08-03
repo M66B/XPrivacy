@@ -30,6 +30,7 @@ Changelog
 
 * Removed restriction *LinkAddress*, since it is not needed
 * Added support for [MEID](http://en.wikipedia.org/wiki/Mobile_equipment_identifier) and removed restrictions *getNetworkType* and *getPhoneType* ([issue](/../../issues/1843))
+* Prefixed *getAddress* and *getBondedDevices* with *Bluetooth*
 * Added Croatian translation
 * Updated Slovak translation
 
