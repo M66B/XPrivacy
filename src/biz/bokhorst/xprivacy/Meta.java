@@ -221,9 +221,11 @@ public class Meta {
 		mListHook.add(new Hook("media", "setOneShotPreviewCallback", "CAMERA", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", "takePicture", "CAMERA", 1, null, null).doNotify());
 		mListHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 1, null, null).doNotify());
+
 		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).doNotify());
 		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "", 3, null, null).doNotify());
+
 		mListHook.add(new Hook("media", "Camera2.capture", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.captureBurst", "CAMERA", 20, null, null).doNotify());
 		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).doNotify());
@@ -231,10 +233,12 @@ public class Meta {
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("messages", "Srv_getAllMessagesFromIccEf", "RECEIVE_SMS", 19, "2.99", "getAllMessagesFromIcc").AOSP(19));
+
 		mListHook.add(new Hook("messages", "SmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "MmsSmsProvider", "READ_SMS,WRITE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", "VoicemailContentProvider", "com.android.voicemail.permission.READ_WRITE_ALL_VOICEMAIL", 1, null, null));
+
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.SMS_RECEIVED_ACTION, "RECEIVE_SMS", 1, null, null));
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, "RECEIVE_WAP_PUSH", 1, null, null));
@@ -272,6 +276,7 @@ public class Meta {
 
 		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null).unsafe());
 		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null).unsafe());
+
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, "android.permission.NFC", 18, null, null));
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_NDEF_DISCOVERED, "android.permission.NFC", 10, null, null));
 		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TAG_DISCOVERED, "android.permission.NFC", 10, null, null));
@@ -395,6 +400,7 @@ public class Meta {
 		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_VERIFIED, "", 17, "2.2.2", null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE, "", 8, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, "", 8, null, null).dangerous());
+
 		mListHook.add(new Hook("system", "ApplicationsProvider", "", 1, null, null).to(18));
 
 		mListHook.add(new Hook("system", "checkPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
@@ -422,8 +428,8 @@ public class Meta {
 		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null).unsafe());
 		mListHook.add(new Hook("view", "setUserAgent", "", 3, null, null).unsafe());
 		mListHook.add(new Hook("view", "setUserAgentString", "", 3, null, null).unsafe());
-		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 
+		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", Intent.ACTION_VIEW).AOSP(19).doNotify().whitelist(cTypeUrl));
 
 		// @formatter:on
