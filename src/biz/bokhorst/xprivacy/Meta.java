@@ -311,12 +311,12 @@ public class Meta {
 		mListHook.add(new Hook("phone", "listen", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("phone", "Srv_listen", "READ_PHONE_STATE", 10, null, null).AOSP(19));
 
-		mListHook.add(new Hook("phone", "getNetworkCountryIso", "", 10, null, null));
-		mListHook.add(new Hook("phone", "getNetworkOperator", "", 10, null, null));
-		mListHook.add(new Hook("phone", "getNetworkOperatorName", "", 10, null, null));
-		mListHook.add(new Hook("phone", "getSimCountryIso", "", 10, null, null));
-		mListHook.add(new Hook("phone", "getSimOperator", "", 10, null, null));
-		mListHook.add(new Hook("phone", "getSimOperatorName", "", 10, null, null));
+		mListHook.add(new Hook("phone", "getNetworkCountryIso", "", 10, null, null).unsafe());
+		mListHook.add(new Hook("phone", "getNetworkOperator", "", 10, null, null).unsafe());
+		mListHook.add(new Hook("phone", "getNetworkOperatorName", "", 10, null, null).unsafe());
+		mListHook.add(new Hook("phone", "getSimCountryIso", "", 10, null, null).unsafe());
+		mListHook.add(new Hook("phone", "getSimOperator", "", 10, null, null).unsafe());
+		mListHook.add(new Hook("phone", "getSimOperatorName", "", 10, null, null).unsafe());
 
 		mListHook.add(new Hook("phone", TelephonyManager.ACTION_PHONE_STATE_CHANGED, "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 1, null, null));
