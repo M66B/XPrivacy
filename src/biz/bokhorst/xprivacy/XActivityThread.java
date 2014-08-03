@@ -10,17 +10,19 @@ import java.util.Map;
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.res.Configuration;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
 import android.os.Message;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 @SuppressLint("InlinedApi")
 public class XActivityThread extends XHook {
 	private Methods mMethod;
+	private String mClassName;
 	private static Map<String, String> mapActionRestriction = new HashMap<String, String>();
 
 	static {
@@ -64,28 +66,38 @@ public class XActivityThread extends XHook {
 		mapActionRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, PrivacyManager.cSystem);
 	}
 
-	private XActivityThread(Methods method, int sdk) {
+	private XActivityThread(Methods method, int sdk, String className) {
 		super(null, method.name(), null, sdk);
 		mMethod = method;
+		mClassName = className;
 	}
 
 	public String getClassName() {
-		return (mMethod == Methods.handleReceiver ? "android.app.ActivityThread" : "android.os.MessageQueue");
+		return mClassName;
 	}
 
 	@Override
 	public boolean isVisible() {
-		return false;
+		return (mMethod == Methods.bindApplication);
 	}
 
 	private enum Methods {
-		next, handleReceiver
+		bindApplication, next, handleReceiver
 	};
 
 	// @formatter:off
 
+	// public final void bindApplication(String processName, ApplicationInfo
+	// 		appInfo, List<ProviderInfo> providers, ComponentName instrumentationName,
+	// 		String profileFile, ParcelFileDescriptor profileFd, boolean
+	// 		autoStopProfiler, Bundle instrumentationArgs, IInstrumentationWatcher
+	// 		instrumentationWatcher, IUiAutomationConnection
+	// 		instrumentationUiConnection, int debugMode, boolean enableOpenGlTrace,
+	// 		boolean isRestrictedBackupMode, boolean persistent, Configuration config,
+	// 		CompatibilityInfo compatInfo, Map<String, IBinder> services, Bundle
+	// 		coreSettings)
 	// private void handleReceiver(ReceiverData data)
-	// frameworks/base/core/java/android/app/ActivityThread.java
+	// http://grepcode.com/file_/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/android/app/ActivityThread.java
 
 	// final Message next()
 	// frameworks/base/core/java/android/android/os/MessageQueue.java
@@ -95,9 +107,11 @@ public class XActivityThread extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 
-		if (!Hook.isAOSP(19)) {
-			listHook.add(new XActivityThread(Methods.next, 1));
-			listHook.add(new XActivityThread(Methods.handleReceiver, 1));
+		if (Hook.isAOSP(19))
+			listHook.add(new XActivityThread(Methods.bindApplication, 1, "android.app.ActivityThread$ApplicationThread"));
+		else {
+			listHook.add(new XActivityThread(Methods.next, 1, "android.os.MessageQueue"));
+			listHook.add(new XActivityThread(Methods.handleReceiver, 1, "android.app.ActivityThread"));
 		}
 
 		return listHook;
@@ -105,10 +119,48 @@ public class XActivityThread extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.next) {
-			// Do nothing
+		switch (mMethod) {
+		case bindApplication:
+			if (param.args.length > 1 && param.args[1] instanceof ApplicationInfo) {
+				ApplicationInfo appInfo = (ApplicationInfo) param.args[1];
+				for (int i = 0; i < param.args.length; i++)
+					if (param.args[i] instanceof Configuration) {
+						boolean restricted = false;
+						Configuration config = new Configuration((Configuration) param.args[i]);
 
-		} else if (mMethod == Methods.handleReceiver) {
+						if (getRestricted(appInfo.uid, PrivacyManager.cPhone, "Configuration.MCC")) {
+							restricted = true;
+							try {
+								config.mcc = Integer.parseInt((String) PrivacyManager
+										.getDefacedProp(appInfo.uid, "MCC"));
+							} catch (Throwable ignored) {
+								config.mcc = 1;
+							}
+						}
+
+						if (getRestricted(appInfo.uid, PrivacyManager.cPhone, "Configuration.MNC")) {
+							restricted = true;
+							try {
+								config.mnc = Integer.parseInt((String) PrivacyManager
+										.getDefacedProp(appInfo.uid, "MNC"));
+							} catch (Throwable ignored) {
+								config.mnc = 1;
+							}
+						}
+
+						if (restricted)
+							param.args[i] = config;
+
+						break;
+					}
+			}
+			break;
+
+		case next:
+			// Do nothing
+			break;
+
+		case handleReceiver:
 			if (param.args.length > 0 && param.args[0] != null) {
 				Field fieldIntent = param.args[0].getClass().getDeclaredField("intent");
 				fieldIntent.setAccessible(true);
@@ -120,14 +172,19 @@ public class XActivityThread extends XHook {
 					}
 				}
 			}
+			break;
 
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		}
 	}
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.next) {
+		switch (mMethod) {
+		case bindApplication:
+			// Do nothing
+			break;
+
+		case next:
 			Message msg = (Message) param.getResult();
 			if (msg != null) {
 				if (msg.obj instanceof Intent) {
@@ -137,12 +194,12 @@ public class XActivityThread extends XHook {
 							param.setResult(null);
 				}
 			}
+			break;
 
-		} else if (mMethod == Methods.handleReceiver) {
+		case handleReceiver:
 			// Do nothing
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	private boolean checkIntent(int uid, Intent intent) throws Throwable {

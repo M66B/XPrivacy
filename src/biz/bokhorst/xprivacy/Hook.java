@@ -192,9 +192,11 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public boolean isUnsafe() {
-		if (PrivacyManager.cVersion3)
+		if (PrivacyManager.cVersion3) {
+			if ("Configuration.MCC".equals(mMethodName) || "Configuration.MNC".equals(mMethodName))
+				return !isAOSP(19);
 			return mUnsafe;
-		else
+		} else
 			return false;
 	}
 
