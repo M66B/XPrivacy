@@ -870,9 +870,7 @@ public class PrivacyManager {
 
 	// TODO: change name to integer parameter
 	@SuppressLint("DefaultLocale")
-	public static Object getDefacedProp(int uid, String _name) {
-		String name = _name.replace("Srv_", "");
-
+	public static Object getDefacedProp(int uid, String name) {
 		// Serial number
 		if (name.equals("SERIAL") || name.equals("%serialno")) {
 			String value = getSetting(uid, cSettingSerial, cDeface);
