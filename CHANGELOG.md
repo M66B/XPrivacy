@@ -33,6 +33,7 @@ Changelog
 * Prefixed *getAddress* and *getBondedDevices* with *Bluetooth*
 * Prefixed *setPreviewCallback*, *setPreviewCallbackWithBuffer*, *setOneShotPreviewCallback* and *takePicture* with *Camera*
 * Prefixed *startRecording* with *Audio*
+* Renamed *setOutputFile* into *MediaRecorder.start*
 * Added Croatian translation
 * Updated Slovak translation
 

@@ -238,7 +238,7 @@ public class Meta {
 		mListHook.add(new Hook("media", "Camera.setPreviewCallbackWithBuffer", "CAMERA", 8, "2.2.3", "setPreviewCallbackWithBuffer").unsafe().doNotify());
 		mListHook.add(new Hook("media", "Camera.setOneShotPreviewCallback", "CAMERA", 3, "2.2.3", "setOneShotPreviewCallback").unsafe().doNotify());
 		mListHook.add(new Hook("media", "Camera.takePicture", "CAMERA", 1, "2.2.3", "takePicture").unsafe().doNotify());
-		mListHook.add(new Hook("media", "setOutputFile", "RECORD_AUDIO,RECORD_VIDEO", 1, null, null).doNotify());
+		mListHook.add(new Hook("media", "MediaRecorder.start", "RECORD_AUDIO,RECORD_VIDEO", 1, "2.2.3", "setOutputFile").unsafe().doNotify());
 
 		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).doNotify());
