@@ -51,7 +51,11 @@ public class XActivityManager extends XHook {
 				className = cClassName;
 
 			for (Methods act : Methods.values())
-				listHook.add(new XActivityManager(act, PrivacyManager.cSystem, className));
+				if (act.name().startsWith("Srv_"))
+					listHook.add(new XActivityManager(act, PrivacyManager.cSystem,
+							"com.android.server.am.ActivityManagerService"));
+				else
+					listHook.add(new XActivityManager(act, PrivacyManager.cSystem, className));
 		}
 		return listHook;
 	}
