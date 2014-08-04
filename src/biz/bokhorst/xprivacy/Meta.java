@@ -262,10 +262,10 @@ public class Meta {
 		mListHook.add(new Hook("messages", Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION, "BROADCAST_WAP_PUSH", 19, "2.2.2", null));
 
 		// android.bluetooth.BluetoothAdapter/BluetoothDevice
-		mListHook.add(new Hook("network", "Bluetooth.getAddress", "android.permission.BLUETOOTH", 5, "2.2.3", "getAddress").unsafe());
-		mListHook.add(new Hook("network", "Bluetooth.getBondedDevices", "android.permission.BLUETOOTH", 5, "2.2.3", "getBondedDevices").unsafe());
-		mListHook.add(new Hook("network", "Bluetooth.Srv_getAddress", "android.permission.BLUETOOTH", 5, "2.99", "getAddress").AOSP(19));
-		mListHook.add(new Hook("network", "Bluetooth.Srv_getName", "android.permission.BLUETOOTH", 5, "2.99", null).AOSP(19));
+		mListHook.add(new Hook("network", "Bluetooth.getAddress", "BLUETOOTH", 5, "2.2.3", "getAddress").unsafe());
+		mListHook.add(new Hook("network", "Bluetooth.getBondedDevices", "BLUETOOTH", 5, "2.2.3", "getBondedDevices").unsafe());
+		mListHook.add(new Hook("network", "Bluetooth.Srv_getAddress", "BLUETOOTH", 5, "2.99", "getAddress").AOSP(19));
+		mListHook.add(new Hook("network", "Bluetooth.Srv_getName", "BLUETOOTH", 5, "2.99", null).AOSP(19));
 
 		// java.net.NetworkInterface
 		mListHook.add(new Hook("network", "NetworkInterface.getHardwareAddress", "ACCESS_NETWORK_STATE", 9, "2.2.2", "getHardwareAddress").unsafe());
@@ -297,13 +297,13 @@ public class Meta {
 		// android.net.NetworkInfo
 		mListHook.add(new Hook("network", "NetworkInfo.getExtraInfo", null, 1, "2.2.2", "internet/getExtraInfo").unsafe());
 
-		mListHook.add(new Hook("nfc", "getNfcAdapter", "android.permission.NFC", 14, null, null).unsafe());
-		mListHook.add(new Hook("nfc", "getDefaultAdapter", "android.permission.NFC", 10, null, null).unsafe());
+		mListHook.add(new Hook("nfc", "getNfcAdapter", "NFC", 14, null, null).unsafe());
+		mListHook.add(new Hook("nfc", "getDefaultAdapter", "NFC", 10, null, null).unsafe());
 
-		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, "android.permission.NFC", 18, null, null));
-		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_NDEF_DISCOVERED, "android.permission.NFC", 10, null, null));
-		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TAG_DISCOVERED, "android.permission.NFC", 10, null, null));
-		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TECH_DISCOVERED, "android.permission.NFC", 10, null, null));
+		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, "NFC", 18, null, null));
+		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_NDEF_DISCOVERED, "NFC", 10, null, null));
+		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TAG_DISCOVERED, "NFC", 10, null, null));
+		mListHook.add(new Hook("nfc", NfcAdapter.ACTION_TECH_DISCOVERED, "NFC", 10, null, null));
 
 		mListHook.add(new Hook("notifications", "android.service.notification.NotificationListenerService", "BIND_NOTIFICATION_LISTENER_SERVICE", 18, null, null).unsafe());
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.REGISTRATION", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
