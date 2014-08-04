@@ -28,6 +28,12 @@ public class XActivityManager extends XHook {
 	// frameworks/base/core/java/android/app/ActivityManager.java
 	// http://developer.android.com/reference/android/app/ActivityManager.html
 
+	// public List<ActivityManager.RecentTaskInfo> getRecentTasks(int maxNum, int flags, int userId)
+	// public List<ActivityManager.RunningAppProcessInfo> getRunningAppProcesses()
+	// public List<ActivityManager.RunningServiceInfo> getServices(int maxNum, int flags)
+	// public List<RunningTaskInfo> getTasks(int maxNum, int flags, IThumbnailReceiver receiver)
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/am/ActivityManagerService.java
+
 	private enum Methods {
 		getRecentTasks, getRunningAppProcesses, getRunningServices, getRunningTasks
 	};
