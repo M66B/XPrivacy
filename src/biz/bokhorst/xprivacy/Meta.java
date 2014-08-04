@@ -200,10 +200,16 @@ public class Meta {
 		mListHook.add(new Hook("location", "Srv_requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "requestLocationUpdates").AOSP(19));
 		mListHook.add(new Hook("location", "Srv_sendExtraCommand", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "2.99", "sendExtraCommand").AOSP(19));
 
-		mListHook.add(new Hook("location", "enableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, null, null));
-		mListHook.add(new Hook("location", "getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
-		mListHook.add(new Hook("location", "getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, null, null));
-		mListHook.add(new Hook("location", "getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, null, null));
+		mListHook.add(new Hook("location", "enableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, null, null).notAOSP(19));
+
+		mListHook.add(new Hook("location", "Srv_enableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, "2.99", "enableLocationUpdates").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, "2.99", "getAllCellInfo").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "getCellLocation").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, "2.99", "getNeighboringCellInfo").AOSP(19));
+
 		mListHook.add(new Hook("location", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 1, "2.2.2", "getScanResults").unsafe().dangerous());
 
 		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 1, null, null).notAOSP(19));

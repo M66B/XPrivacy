@@ -372,7 +372,7 @@ public class PrivacyManager {
 		// Result
 		long ms = System.currentTimeMillis() - start;
 		Util.log(hook, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN,
-				String.format("get client %s%s %d ms", result, (cached ? " (cached)" : ""), ms));
+				String.format("Get client %s%s %d ms", result, (cached ? " (cached)" : ""), ms));
 
 		return result.restricted;
 	}
@@ -770,7 +770,7 @@ public class PrivacyManager {
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
 			Util.log(null, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN, String.format(
-					"get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value, (cached ? " (cached)" : ""), ms));
+					"Get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value, (cached ? " (cached)" : ""), ms));
 
 		return value;
 	}

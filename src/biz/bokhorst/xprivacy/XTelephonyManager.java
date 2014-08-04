@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import android.os.Binder;
+import android.os.Bundle;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
 import android.telephony.PhoneStateListener;
@@ -22,7 +23,7 @@ public class XTelephonyManager extends XHook {
 	private static final Map<PhoneStateListener, XPhoneStateListener> mListener = new WeakHashMap<PhoneStateListener, XPhoneStateListener>();
 
 	private enum Srv {
-		SubInfo, Registry
+		SubInfo, Registry, Phone
 	};
 
 	private XTelephonyManager(Methods method, String restrictionName, Srv srv) {
@@ -32,6 +33,21 @@ public class XTelephonyManager extends XHook {
 			mClassName = "com.android.internal.telephony.PhoneSubInfo";
 		else if (srv == Srv.Registry)
 			mClassName = "com.android.server.TelephonyRegistry";
+		else if (srv == Srv.Phone)
+			mClassName = "com.android.phone.PhoneInterfaceManager";
+		else
+			Util.log(null, Log.ERROR, "Unknown srv=" + srv.name());
+	}
+
+	private XTelephonyManager(Methods method, String restrictionName, Srv srv, int sdk) {
+		super(restrictionName, method.name().replace("Srv_", ""), method.name(), sdk);
+		mMethod = method;
+		if (srv == Srv.SubInfo)
+			mClassName = "com.android.internal.telephony.PhoneSubInfo";
+		else if (srv == Srv.Registry)
+			mClassName = "com.android.server.TelephonyRegistry";
+		else if (srv == Srv.Phone)
+			mClassName = "com.android.phone.PhoneInterfaceManager";
 		else
 			Util.log(null, Log.ERROR, "Unknown srv=" + srv.name());
 	}
@@ -101,6 +117,13 @@ public class XTelephonyManager extends XHook {
 	// public void listen(java.lang.String pkg, IPhoneStateListener callback, int events, boolean notifyNow)
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/server/TelephonyRegistry.java
 
+	// public void enableLocationUpdates()
+	// public void disableLocationUpdates()
+	// public java.util.List<android.telephony.CellInfo> getAllCellInfo()
+	// public android.os.Bundle getCellLocation()
+	// public java.util.List<android.telephony.NeighboringCellInfo> getNeighboringCellInfo()
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android-apps/4.4.4_r1/com/android/phone/PhoneInterfaceManager.java#PhoneInterfaceManager
+
 	// @formatter:on
 
 	// @formatter:off
@@ -125,7 +148,10 @@ public class XTelephonyManager extends XHook {
 		Srv_getSubscriberId,
 		Srv_getCompleteVoiceMailNumber, Srv_getVoiceMailNumber, Srv_getVoiceMailAlphaTag,
 
-		Srv_listen
+		Srv_listen,
+
+		Srv_enableLocationUpdates, Srv_disableLocationUpdates,
+		Srv_getAllCellInfo, Srv_getCellLocation, Srv_getNeighboringCellInfo
 	};
 	// @formatter:on
 
@@ -189,6 +215,16 @@ public class XTelephonyManager extends XHook {
 		return listHook;
 	}
 
+	public static List<XHook> getPhoneInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XTelephonyManager(Methods.Srv_enableLocationUpdates, PrivacyManager.cLocation, Srv.Phone));
+		listHook.add(new XTelephonyManager(Methods.Srv_disableLocationUpdates, null, Srv.Phone, 19));
+		listHook.add(new XTelephonyManager(Methods.Srv_getAllCellInfo, PrivacyManager.cLocation, Srv.Phone));
+		listHook.add(new XTelephonyManager(Methods.Srv_getCellLocation, PrivacyManager.cLocation, Srv.Phone));
+		listHook.add(new XTelephonyManager(Methods.Srv_getNeighboringCellInfo, PrivacyManager.cLocation, Srv.Phone));
+		return listHook;
+	}
+
 	@Override
 	protected void before(XParam param) throws Throwable {
 		switch (mMethod) {
@@ -197,7 +233,13 @@ public class XTelephonyManager extends XHook {
 				param.setResult(null);
 			break;
 
+		case Srv_disableLocationUpdates:
+			if (isRestricted(param, PrivacyManager.cLocation, "Srv_enableLocationUpdates"))
+				param.setResult(null);
+			break;
+
 		case enableLocationUpdates:
+		case Srv_enableLocationUpdates:
 			if (isRestricted(param))
 				param.setResult(null);
 			break;
@@ -223,6 +265,9 @@ public class XTelephonyManager extends XHook {
 		case getSubscriberId:
 		case getVoiceMailAlphaTag:
 		case getVoiceMailNumber:
+		case Srv_getAllCellInfo:
+		case Srv_getCellLocation:
+		case Srv_getNeighboringCellInfo:
 			break;
 
 		case listen:
@@ -291,9 +336,12 @@ public class XTelephonyManager extends XHook {
 		switch (mMethod) {
 		case disableLocationUpdates:
 		case enableLocationUpdates:
+		case Srv_disableLocationUpdates:
+		case Srv_enableLocationUpdates:
 			break;
 
 		case getAllCellInfo:
+		case Srv_getAllCellInfo:
 			if (param.getResult() != null)
 				if (isRestricted(param))
 					param.setResult(new ArrayList<CellInfo>());
@@ -305,7 +353,14 @@ public class XTelephonyManager extends XHook {
 					param.setResult(getDefacedCellLocation(uid));
 			break;
 
+		case Srv_getCellLocation:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(getDefacedCellBundle(uid));
+			break;
+
 		case getNeighboringCellInfo:
+		case Srv_getNeighboringCellInfo:
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<NeighboringCellInfo>());
 			break;
@@ -366,6 +421,17 @@ public class XTelephonyManager extends XHook {
 			return cellLocation;
 		} else
 			return CellLocation.getEmpty();
+	}
+
+	private static Bundle getDefacedCellBundle(int uid) {
+		Bundle result = new Bundle();
+		int cid = (Integer) PrivacyManager.getDefacedProp(uid, "CID");
+		int lac = (Integer) PrivacyManager.getDefacedProp(uid, "LAC");
+		if (cid > 0 && lac > 0) {
+			result.putInt("lac", lac);
+			result.putInt("cid", cid);
+		}
+		return result;
 	}
 
 	private class XPhoneStateListener extends PhoneStateListener {
