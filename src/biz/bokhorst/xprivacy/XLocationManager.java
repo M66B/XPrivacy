@@ -15,6 +15,7 @@ import android.os.Binder;
 import android.os.IInterface;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
+import android.location.LocationListener;
 
 public class XLocationManager extends XHook {
 	private Methods mMethod;
@@ -98,9 +99,6 @@ public class XLocationManager extends XHook {
 		Srv_addGpsStatusListener, Srv_removeGpsStatusListener,
 		Srv_getAllProviders, Srv_getProviders, Srv_getBestProvider, Srv_isProviderEnabled,
 		Srv_sendExtraCommand
-		// TODO: addNmeaListener
-		// TODO: addProximityAlert
-		// TODO: getGpsStatus
 	};
 	// @formatter:on
 
@@ -167,36 +165,36 @@ public class XLocationManager extends XHook {
 
 		case removeUpdates:
 			if (isRestricted(param, PrivacyManager.cLocation, "requestLocationUpdates"))
-				removeLocationListener(param, 0);
+				unproxyLocationListener(param, 0);
 			break;
 
 		case requestLocationUpdates:
 			if (param.args.length > 0 && param.args[0] instanceof String) {
 				if (isRestrictedExtra(param, (String) param.args[0]))
-					replaceLocationListener(param, 3);
+					proxyLocationListener(param, 3, LocationListener.class);
 			} else {
 				if (isRestricted(param))
-					replaceLocationListener(param, 3);
+					proxyLocationListener(param, 3, LocationListener.class);
 			}
 			break;
 
 		case Srv_removeUpdates:
 			if (isRestricted(param, PrivacyManager.cLocation, "Srv_requestLocationUpdates"))
-				removeLocationListener(param, 0);
+				unproxyLocationListener(param, 0);
 			break;
 
 		case Srv_requestLocationUpdates:
 			if (isRestricted(param))
-				replaceLocationListener(param, 1);
+				proxyLocationListener(param, 1, Class.forName("android.location.ILocationListener"));
 			break;
 
 		case requestSingleUpdate:
 			if (param.args.length > 0 && param.args[0] instanceof String) {
 				if (isRestrictedExtra(param, (String) param.args[0]))
-					replaceLocationListener(param, 1);
+					proxyLocationListener(param, 1, LocationListener.class);
 			} else {
 				if (isRestricted(param))
-					replaceLocationListener(param, 1);
+					proxyLocationListener(param, 1, LocationListener.class);
 			}
 			break;
 
@@ -296,7 +294,7 @@ public class XLocationManager extends XHook {
 		}
 	}
 
-	private void replaceLocationListener(XParam param, int arg) throws Throwable {
+	private void proxyLocationListener(XParam param, int arg, Class<?> interfaze) throws Throwable {
 		if (param.args.length > arg)
 			if (param.args[arg] instanceof PendingIntent)
 				param.setResult(null);
@@ -304,7 +302,7 @@ public class XLocationManager extends XHook {
 				// Create proxy
 				ClassLoader cl = param.thisObject.getClass().getClassLoader();
 				InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[arg]);
-				Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { param.args[arg].getClass() }, ih);
+				Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { interfaze }, ih);
 
 				Object key = param.args[arg];
 				if (key instanceof IInterface)
@@ -318,18 +316,20 @@ public class XLocationManager extends XHook {
 			}
 	}
 
-	private void removeLocationListener(XParam param, int arg) {
+	private void unproxyLocationListener(XParam param, int arg) {
 		if (param.args.length > arg)
 			if (param.args[arg] instanceof PendingIntent)
 				param.setResult(null);
-			else if (param.args[arg] != null)
+			else if (param.args[arg] != null) {
+				Object key = param.args[arg];
+				if (key instanceof IInterface)
+					key = ((IInterface) key).asBinder();
+
 				synchronized (mMapProxy) {
-					Object key = param.args[arg];
-					if (key instanceof IInterface)
-						key = ((IInterface) key).asBinder();
 					if (mMapProxy.containsKey(key))
 						param.args[arg] = mMapProxy.get(key);
 				}
+			}
 	}
 
 	private class OnLocationChangedHandler implements InvocationHandler {
