@@ -234,9 +234,7 @@ public class Meta {
 		mListHook.add(new Hook("location", "MapV2.setOnMyLocationChangeListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
 
 		mListHook.add(new Hook("media", "Audio.startRecording", "RECORD_AUDIO", 3, "2.2.3", "startRecording").unsafe().doNotify());
-		mListHook.add(new Hook("media", "Camera.setPreviewCallback", "CAMERA", 1, "2.2.3", "setPreviewCallback").unsafe().doNotify());
-		mListHook.add(new Hook("media", "Camera.setPreviewCallbackWithBuffer", "CAMERA", 8, "2.2.3", "setPreviewCallbackWithBuffer").unsafe().doNotify());
-		mListHook.add(new Hook("media", "Camera.setOneShotPreviewCallback", "CAMERA", 3, "2.2.3", "setOneShotPreviewCallback").unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera.startPreview", "CAMERA", 1, "2.2.3", "setPreviewCallback").unsafe().doNotify());
 		mListHook.add(new Hook("media", "Camera.takePicture", "CAMERA", 1, "2.2.3", "takePicture").unsafe().doNotify());
 		mListHook.add(new Hook("media", "MediaRecorder.start", "RECORD_AUDIO,RECORD_VIDEO", 1, "2.2.3", "setOutputFile").unsafe().doNotify());
 

@@ -3,8 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 public class XCamera extends XHook {
 	private Methods mMethod;
 
@@ -19,9 +17,7 @@ public class XCamera extends XHook {
 
 	// @formatter:off
 
-	// public final void setPreviewCallback(PreviewCallback cb)
-	// public final void setPreviewCallbackWithBuffer(PreviewCallback cb)
-	// public final void setOneShotPreviewCallback(PreviewCallback cb)
+	// public native final void startPreview()
 	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback jpeg)
 	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback postview, PictureCallback jpeg)
 	// frameworks/base/core/java/android/hardware/Camera.java
@@ -30,7 +26,7 @@ public class XCamera extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		setPreviewCallback, setPreviewCallbackWithBuffer, setOneShotPreviewCallback, takePicture
+		startPreview, takePicture
 	};
 
 	public static List<XHook> getInstances() {
@@ -42,13 +38,12 @@ public class XCamera extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.setPreviewCallback || mMethod == Methods.setPreviewCallbackWithBuffer
-				|| mMethod == Methods.setOneShotPreviewCallback || mMethod == Methods.takePicture) {
+		switch (mMethod) {
+		case startPreview:
+		case takePicture:
 			if (isRestricted(param))
 				param.setResult(null);
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		}
 	}
 
 	@Override
