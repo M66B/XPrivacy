@@ -30,8 +30,7 @@ public class XResources extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		if (!Hook.isAOSP(19))
-			listHook.add(new XResources(Methods.updateConfiguration, 1));
+		listHook.add(new XResources(Methods.updateConfiguration, 1));
 		return listHook;
 	}
 
