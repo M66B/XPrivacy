@@ -36,6 +36,13 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**XPrivacy 3**
+
+* Added icon for unsafe restrictions
+* Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
+* Added restriction *Bluetooth.Srv_getName*
+* Added restriction *Srv_getCompleteVoiceMailNumber*
+
 **Version 2.2.2 TEST**
 
 The internet and network restrictions were reorganized.
