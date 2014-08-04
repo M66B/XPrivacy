@@ -419,7 +419,8 @@ public class Meta {
 		mListHook.add(new Hook("system", "Srv_queryIntentReceivers", "", 19, "2.99", "queryBroadcastReceivers").AOSP(19).dangerous());
 		mListHook.add(new Hook("system", "Srv_queryIntentServices", "", 19, "2.99", "queryIntentServices").AOSP(19).dangerous());
 
-		mListHook.add(new Hook("system", "getInstalledProviders", "", 3, null, null).dangerous());
+		mListHook.add(new Hook("system", "getInstalledProviders", "", 3, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "Srv_getInstalledProviders", "", 3, "2.99", "getInstalledProviders").AOSP(19).dangerous());
 
 		mListHook.add(new Hook("system", "getRecentTasks", "GET_TASKS", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", "getRunningAppProcesses", "", 3, null, null).dangerous());
