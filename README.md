@@ -335,7 +335,7 @@ Limitations
 * You cannot restrict *Configuration.MCC/MNC* on demand
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
 * Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/)
-* It is possible to unhook methods in user space using native libraries, see [here](https://github.com/cernekee/WinXP) for a proof of concept; XPrivacy 3 will indicate which restrictions are vulnerable to this
+* It is possible to unhook methods in user space using native libraries, see for more details [FAQ 68](#FAQ68)
 
 *XPrivacy*
 
@@ -1114,6 +1114,18 @@ You can check if [your IP address](http://www.whatismyip.com/) is black listed b
 * [Spamhaus DROP List](http://www.spamhaus.org/drop/drop.lasso)
 * [Spamhaus EDROP List](http://www.spamhaus.org/drop/edrop.lasso)
 * [Stop Forum Spam](http://www.stopforumspam.com/search) (30 days or younger)
+
+<a name="FAQ68"></a>
+**(68) What are unsafe restrictions?**
+
+Unsafe restrictions can be disabled by removing the Xposed method hook using a native library.
+See [here](https://github.com/cernekee/WinXP) for a proof of concept.
+You can prevent this by not allowing native libaries to load, which will unfortunately often result in a crash.
+XPrivacy version 3 will partly address this problem for stock Android KitKat and [OmniROM](http://omnirom.org/).
+This is done by hooking into the Android counterparts of the user space functions.
+Unfortunately not all user space functions have an Android counterpart,
+meaning that this cannot be done for all restrictions.
+Nevertheless, the most sensitive data, like contacts and your location, can safely be protected by XPrivacy 3.
 
 Support
 -------
