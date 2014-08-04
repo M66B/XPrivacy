@@ -42,6 +42,7 @@ Changelog
 * Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
 * Added restriction *Bluetooth.Srv_getName*
 * Added restriction *Srv_getCompleteVoiceMailNumber*
+* Added restriction *WiFi.Srv_getBatchedScanResults*
 
 **Version 2.2.2 TEST**
 
