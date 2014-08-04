@@ -170,7 +170,8 @@ public class Meta {
 		mListHook.add(new Hook("internet", "NetworkInfo.isConnectedOrConnecting", null, 1, "2.2.2", "isConnectedOrConnecting").unsafe());
 
 		// android.net.wifi.WifiManager
-		mListHook.add(new Hook("internet", "WiFi.getConnectionInfo", null, 10, "2.2.2", "getConnectionInfo").unsafe());
+		mListHook.add(new Hook("internet", "WiFi.getConnectionInfo", null, 10, "2.2.2", "getConnectionInfo").notAOSP(19));
+		mListHook.add(new Hook("internet", "WiFi.Srv_getConnectionInfo", null, 10, "2.99", "WiFi.getConnectionInfo").AOSP(19));
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
@@ -210,7 +211,8 @@ public class Meta {
 		mListHook.add(new Hook("location", "Srv_getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "getCellLocation").AOSP(19));
 		mListHook.add(new Hook("location", "Srv_getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, "2.99", "getNeighboringCellInfo").AOSP(19));
 
-		mListHook.add(new Hook("location", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 1, "2.2.2", "getScanResults").unsafe().dangerous());
+		mListHook.add(new Hook("location", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 1, "2.2.2", "getScanResults").notAOSP(19).dangerous());
+		mListHook.add(new Hook("location", "WiFi.Srv_getScanResults", "ACCESS_WIFI_STATE", 1, "2.99", "WiFi.getScanResults").AOSP(19).dangerous());
 
 		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook("location", "Srv_listen", "ACCESS_COARSE_LOCATION", 1, null, null).AOSP(19));
@@ -273,11 +275,18 @@ public class Meta {
 		mListHook.add(new Hook("network", "NetworkInterface.getInterfaceAddresses", "ACCESS_NETWORK_STATE", 9, "2.2.2", "getInterfaceAddresses").unsafe());
 
 		// android.net.wifi.WifiManager
-		mListHook.add(new Hook("network", "WiFi.getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, "2.2.2", "getConfiguredNetworks").unsafe());
-		mListHook.add(new Hook("network", "WiFi.getConnectionInfo", "ACCESS_WIFI_STATE", 10, "2.2.2", "getConnectionInfo").unsafe());
-		mListHook.add(new Hook("network", "WiFi.getDhcpInfo", "ACCESS_WIFI_STATE", 10, "2.2.2", "getDhcpInfo").unsafe());
-		mListHook.add(new Hook("network", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 10, "2.2.2", "getScanResults").unsafe().dangerous());
-		mListHook.add(new Hook("network", "WiFi.getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, "2.2.2", "getWifiApConfiguration").unsafe());
+		mListHook.add(new Hook("network", "WiFi.getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, "2.2.2", "getConfiguredNetworks").notAOSP(19));
+		mListHook.add(new Hook("network", "WiFi.getConnectionInfo", "ACCESS_WIFI_STATE", 10, "2.2.2", "getConnectionInfo").notAOSP(19));
+		mListHook.add(new Hook("network", "WiFi.getDhcpInfo", "ACCESS_WIFI_STATE", 10, "2.2.2", "getDhcpInfo").notAOSP(19));
+		mListHook.add(new Hook("network", "WiFi.getScanResults", "ACCESS_WIFI_STATE", 10, "2.2.2", "getScanResults").notAOSP(19).dangerous());
+		mListHook.add(new Hook("network", "WiFi.getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, "2.2.2", "getWifiApConfiguration").notAOSP(19));
+
+		mListHook.add(new Hook("network", "WiFi.Srv_getBatchedScanResults", "ACCESS_WIFI_STATE", 10, "2.99", null).AOSP(19).dangerous());
+		mListHook.add(new Hook("network", "WiFi.Srv_getConfiguredNetworks", "ACCESS_WIFI_STATE", 10, "2.99", "WiFi.getConfiguredNetworks").AOSP(19));
+		mListHook.add(new Hook("network", "WiFi.Srv_getConnectionInfo", "ACCESS_WIFI_STATE", 10, "2.99", "WiFi.getConnectionInfo").AOSP(19));
+		mListHook.add(new Hook("network", "WiFi.Srv_getDhcpInfo", "ACCESS_WIFI_STATE", 10, "2.99", "WiFi.getDhcpInfo").AOSP(19));
+		mListHook.add(new Hook("network", "WiFi.Srv_getScanResults", "ACCESS_WIFI_STATE", 10, "2.99", "WiFi.getScanResults").AOSP(19).dangerous());
+		mListHook.add(new Hook("network", "WiFi.Srv_getWifiApConfiguration", "ACCESS_WIFI_STATE", 10, "2.99", "WiFi.getWifiApConfiguration").AOSP(19));
 
 		mListHook.add(new Hook("network", "Srv_Default_DNS", "", 19, "2.99", "getString").AOSP(19).dangerous());
 		mListHook.add(new Hook("network", "Srv_WiFi_Country", "", 19, "2.99", "getString").AOSP(19).dangerous());
