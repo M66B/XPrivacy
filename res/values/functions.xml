@@ -172,7 +172,7 @@
     <string name="location_MapV2_setOnMyLocationChangeListener" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html">Google documentation</a>]]></string>
 
     <!-- media -->
-    <string name="media_startRecording" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/media/AudioRecord.html#startRecording()">Google documentation</a>]]></string>
+    <string name="media_Audio_startRecording" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/media/AudioRecord.html#startRecording()">Google documentation</a>]]></string>
     <string name="media_setPreviewCallback" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/Camera.html#setPreviewCallback(android.hardware.Camera.PreviewCallback)">Google documentation</a>]]></string>
     <string name="media_setPreviewCallbackWithBuffer" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/Camera.html#setPreviewCallbackWithBuffer(android.hardware.Camera.PreviewCallback)">Google documentation</a>]]></string>
     <string name="media_setOneShotPreviewCallback" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/Camera.html#setOneShotPreviewCallback(android.hardware.Camera.PreviewCallback)">Google documentation</a>]]></string>

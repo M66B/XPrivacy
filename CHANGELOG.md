@@ -32,6 +32,7 @@ Changelog
 * Added support for [MEID](http://en.wikipedia.org/wiki/Mobile_equipment_identifier) and removed restrictions *getNetworkType* and *getPhoneType* ([issue](/../../issues/1843))
 * Prefixed *getAddress* and *getBondedDevices* with *Bluetooth*
 * Prefixed *setPreviewCallback*, *setPreviewCallbackWithBuffer*, *setOneShotPreviewCallback* and *takePicture* with *Camera*
+* Prefixed *startRecording* with *Audio*
 * Added Croatian translation
 * Updated Slovak translation
 
