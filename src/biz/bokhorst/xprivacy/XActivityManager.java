@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.ActivityManager;
-import android.util.Log;
 
 public class XActivityManager extends XHook {
 	private Methods mMethod;
@@ -12,7 +11,7 @@ public class XActivityManager extends XHook {
 	private static final String cClassName = "android.app.ActivityManager";
 
 	private XActivityManager(Methods method, String restrictionName, String className) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name().replace("Srv_", ""), method.name());
 		mMethod = method;
 		mClassName = className;
 	}
@@ -20,6 +19,8 @@ public class XActivityManager extends XHook {
 	public String getClassName() {
 		return mClassName;
 	}
+
+	// @formatter:off
 
 	// public List<RecentTaskInfo> getRecentTasks(int maxNum, int flags)
 	// public List<RunningAppProcessInfo> getRunningAppProcesses()
@@ -34,9 +35,14 @@ public class XActivityManager extends XHook {
 	// public List<RunningTaskInfo> getTasks(int maxNum, int flags, IThumbnailReceiver receiver)
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/am/ActivityManagerService.java
 
+	// @formatter:on
+
+	// @formatter:off
 	private enum Methods {
-		getRecentTasks, getRunningAppProcesses, getRunningServices, getRunningTasks
+		getRecentTasks, getRunningAppProcesses, getRunningServices, getRunningTasks,
+		Srv_getRecentTasks, Srv_getRunningAppProcesses, Srv_getServices, Srv_getTasks
 	};
+	// @formatter:on
 
 	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
@@ -57,23 +63,30 @@ public class XActivityManager extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.getRecentTasks) {
+		switch (mMethod) {
+		case getRecentTasks:
+		case Srv_getRecentTasks:
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RecentTaskInfo>());
+			break;
 
-		} else if (mMethod == Methods.getRunningAppProcesses) {
+		case getRunningAppProcesses:
+		case Srv_getRunningAppProcesses:
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RunningAppProcessInfo>());
+			break;
 
-		} else if (mMethod == Methods.getRunningServices) {
+		case getRunningServices:
+		case Srv_getServices:
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RunningServiceInfo>());
+			break;
 
-		} else if (mMethod == Methods.getRunningTasks) {
+		case getRunningTasks:
+		case Srv_getTasks:
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(new ArrayList<ActivityManager.RunningTaskInfo>());
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 }

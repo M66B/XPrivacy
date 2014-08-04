@@ -420,10 +420,15 @@ public class Meta {
 		mListHook.add(new Hook("system", "getInstalledProviders", "", 3, null, null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("system", "Srv_getInstalledProviders", "", 3, "2.99", "getInstalledProviders").AOSP(19).dangerous());
 
-		mListHook.add(new Hook("system", "getRecentTasks", "GET_TASKS", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "getRunningAppProcesses", "", 3, null, null).dangerous());
-		mListHook.add(new Hook("system", "getRunningServices", "", 1, null, null).dangerous());
-		mListHook.add(new Hook("system", "getRunningTasks", "GET_TASKS", 1, null, null).dangerous());
+		mListHook.add(new Hook("system", "getRecentTasks", "GET_TASKS", 1, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "getRunningAppProcesses", "", 3, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "getRunningServices", "", 1, null, null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("system", "getRunningTasks", "GET_TASKS", 1, null, null).notAOSP(19).dangerous());
+
+		mListHook.add(new Hook("system", "Srv_getRecentTasks", "GET_TASKS", 1, "2.99", "getRecentTasks").AOSP(19).dangerous());
+		mListHook.add(new Hook("system", "Srv_getRunningAppProcesses", "", 3, "2.99", "getRunningAppProcesses").AOSP(19).dangerous());
+		mListHook.add(new Hook("system", "Srv_getServices", "", 1, "2.99", "getRunningServices").AOSP(19).dangerous());
+		mListHook.add(new Hook("system", "Srv_getTasks", "GET_TASKS", 1, "2.99", "getRunningTasks").AOSP(19).dangerous());
 
 		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_ADDED, "", 1, null, null).dangerous());
 		mListHook.add(new Hook("system", Intent.ACTION_PACKAGE_REPLACED, "", 3, null, null).dangerous());
