@@ -244,10 +244,10 @@ public class Meta {
 		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).doNotify());
 		mListHook.add(new Hook("media", MediaStore.ACTION_VIDEO_CAPTURE, "", 3, null, null).doNotify());
 
-		mListHook.add(new Hook("media", "Camera2.capture", "CAMERA", 20, null, null).doNotify());
-		mListHook.add(new Hook("media", "Camera2.captureBurst", "CAMERA", 20, null, null).doNotify());
-		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).doNotify());
-		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).doNotify());
+		mListHook.add(new Hook("media", "Camera2.capture", "CAMERA", 20, null, null).unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera2.captureBurst", "CAMERA", 20, null, null).unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera2.setRepeatingRequest", "CAMERA", 20, null, null).unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera2.setRepeatingBurst", "CAMERA", 20, null, null).unsafe().doNotify());
 
 		mListHook.add(new Hook("messages", "getAllMessagesFromIcc", "RECEIVE_SMS", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("messages", "Srv_getAllMessagesFromIccEf", "RECEIVE_SMS", 19, "2.99", "getAllMessagesFromIcc").AOSP(19));
