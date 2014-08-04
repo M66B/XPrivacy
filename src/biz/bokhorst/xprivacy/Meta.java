@@ -328,8 +328,8 @@ public class Meta {
 		mListHook.add(new Hook("phone", TelephonyManager.ACTION_PHONE_STATE_CHANGED, "READ_PHONE_STATE", 10, null, null));
 		mListHook.add(new Hook("phone", "TelephonyProvider", "WRITE_APN_SETTINGS", 1, null, null));
 
-		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).noUsageData().noOnDemand());
-		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).noUsageData().noOnDemand());
+		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).unsafe().noUsageData().noOnDemand());
+		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).unsafe().noUsageData().noOnDemand());
 
 		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null).dangerous());
 		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null).dangerous());
