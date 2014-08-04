@@ -12,8 +12,8 @@ import java.util.WeakHashMap;
 import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
+import android.os.IInterface;
 import android.location.GpsSatellite;
-import android.location.LocationListener;
 import android.location.GpsStatus;
 
 public class XLocationManager extends XHook {
@@ -23,13 +23,13 @@ public class XLocationManager extends XHook {
 	private static final Map<Object, Object> mMapProxy = new WeakHashMap<Object, Object>();
 
 	private XLocationManager(Methods method, String restrictionName, String className) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name().replace("Srv_", ""), method.name());
 		mMethod = method;
 		mClassName = className;
 	}
 
 	private XLocationManager(Methods method, String restrictionName, String className, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
+		super(restrictionName, method.name().replace("Srv_", ""), method.name(), sdk);
 		mMethod = method;
 		mClassName = className;
 	}
@@ -73,7 +73,6 @@ public class XLocationManager extends XHook {
 	// public Location getLastLocation(LocationRequest request, java.lang.String packageName)
 	// public boolean addGpsStatusListener(IGpsStatusListener listener, java.lang.String packageName)
 	// public void removeGpsStatusListener(IGpsStatusListener listener)
-	// public boolean geocoderIsPresent()
 	// public java.util.List<java.lang.String> getAllProviders()
 	// public java.util.List<java.lang.String> getProviders(Criteria criteria, boolean enabledOnly)
 	// public java.lang.String getBestProvider(Criteria criteria, boolean enabledOnly)
@@ -86,10 +85,9 @@ public class XLocationManager extends XHook {
 	// @formatter:off
 	private enum Methods {
 		addGeofence, addGpsStatusListener, addNmeaListener, addProximityAlert,
-		getAllProviders, getBestProvider,
+		getAllProviders, getBestProvider, getProviders, isProviderEnabled,
 		getGpsStatus,
 		getLastKnownLocation,
-		getProviders, isProviderEnabled,
 		removeUpdates,
 		requestLocationUpdates, requestSingleUpdate,
 		sendExtraCommand,
@@ -98,10 +96,11 @@ public class XLocationManager extends XHook {
 		Srv_requestGeofence, Srv_removeGeofence,
 		Srv_getLastLocation,
 		Srv_addGpsStatusListener, Srv_removeGpsStatusListener,
-		Srv_geocoderIsPresent,
 		Srv_getAllProviders, Srv_getProviders, Srv_getBestProvider, Srv_isProviderEnabled,
 		Srv_sendExtraCommand
 		// TODO: addNmeaListener
+		// TODO: addProximityAlert
+		// TODO: getGpsStatus
 	};
 	// @formatter:on
 
@@ -130,14 +129,26 @@ public class XLocationManager extends XHook {
 		switch (mMethod) {
 		case addGeofence:
 		case addProximityAlert:
+		case Srv_requestGeofence:
 			if (isRestricted(param))
+				param.setResult(null);
+			break;
+
+		case Srv_removeGeofence:
+			if (isRestricted(param, PrivacyManager.cLocation, "Srv_requestGeofence"))
 				param.setResult(null);
 			break;
 
 		case addGpsStatusListener:
 		case addNmeaListener:
+		case Srv_addGpsStatusListener:
 			if (isRestricted(param))
 				param.setResult(false);
+			break;
+
+		case Srv_removeGpsStatusListener:
+			if (isRestricted(param, PrivacyManager.cLocation, "Srv_addGpsStatusListener"))
+				param.setResult(null);
 			break;
 
 		case getAllProviders:
@@ -146,12 +157,17 @@ public class XLocationManager extends XHook {
 		case getLastKnownLocation:
 		case getProviders:
 		case isProviderEnabled:
+		case Srv_getAllProviders:
+		case Srv_getProviders:
+		case Srv_getBestProvider:
+		case Srv_isProviderEnabled:
+		case Srv_getLastLocation:
 			// Do nothing
 			break;
 
 		case removeUpdates:
 			if (isRestricted(param, PrivacyManager.cLocation, "requestLocationUpdates"))
-				removeLocationListener(param);
+				removeLocationListener(param, 0);
 			break;
 
 		case requestLocationUpdates:
@@ -162,6 +178,16 @@ public class XLocationManager extends XHook {
 				if (isRestricted(param))
 					replaceLocationListener(param, 3);
 			}
+			break;
+
+		case Srv_removeUpdates:
+			if (isRestricted(param, PrivacyManager.cLocation, "Srv_requestLocationUpdates"))
+				removeLocationListener(param, 0);
+			break;
+
+		case Srv_requestLocationUpdates:
+			if (isRestricted(param))
+				replaceLocationListener(param, 1);
 			break;
 
 		case requestSingleUpdate:
@@ -175,6 +201,7 @@ public class XLocationManager extends XHook {
 			break;
 
 		case sendExtraCommand:
+		case Srv_sendExtraCommand:
 			// Do nothing
 			break;
 		}
@@ -187,10 +214,15 @@ public class XLocationManager extends XHook {
 		case addNmeaListener:
 		case addGpsStatusListener:
 		case addProximityAlert:
+		case Srv_requestGeofence:
+		case Srv_addGpsStatusListener:
+		case Srv_removeGeofence:
+		case Srv_removeGpsStatusListener:
 			// Do nothing
 			break;
 
 		case isProviderEnabled:
+		case Srv_isProviderEnabled:
 			if (param.args.length > 0) {
 				String provider = (String) param.args[0];
 				if (isRestrictedExtra(param, provider))
@@ -213,12 +245,16 @@ public class XLocationManager extends XHook {
 				}
 			break;
 
+		case getProviders:
 		case getAllProviders:
+		case Srv_getAllProviders:
+		case Srv_getProviders:
 			if (isRestricted(param))
 				param.setResult(new ArrayList<String>());
 			break;
 
 		case getBestProvider:
+		case Srv_getBestProvider:
 			if (param.getResult() != null)
 				if (isRestricted(param))
 					param.setResult(null);
@@ -233,19 +269,24 @@ public class XLocationManager extends XHook {
 			}
 			break;
 
-		case getProviders:
-			if (param.getResult() != null)
+		case Srv_getLastLocation:
+			if (param.getResult() instanceof Location) {
+				Location location = (Location) param.getResult();
 				if (isRestricted(param))
-					param.setResult(new ArrayList<String>());
+					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+			}
 			break;
 
 		case removeUpdates:
 		case requestLocationUpdates:
 		case requestSingleUpdate:
+		case Srv_removeUpdates:
+		case Srv_requestLocationUpdates:
 			// Do nothing
 			break;
 
 		case sendExtraCommand:
+		case Srv_sendExtraCommand:
 			if (param.args.length > 0) {
 				String provider = (String) param.args[0];
 				if (isRestrictedExtra(param, provider))
@@ -259,28 +300,35 @@ public class XLocationManager extends XHook {
 		if (param.args.length > arg)
 			if (param.args[arg] instanceof PendingIntent)
 				param.setResult(null);
-			else if (param.thisObject != null) {
+			else if (param.args[arg] != null && param.thisObject != null) {
 				// Create proxy
 				ClassLoader cl = param.thisObject.getClass().getClassLoader();
 				InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[arg]);
-				Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { LocationListener.class }, ih);
+				Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { param.args[arg].getClass() }, ih);
+
+				Object key = param.args[arg];
+				if (key instanceof IInterface)
+					key = ((IInterface) key).asBinder();
 
 				// Use proxy
 				synchronized (mMapProxy) {
-					mMapProxy.put(param.args[arg], proxy);
+					mMapProxy.put(key, proxy);
 				}
 				param.args[arg] = proxy;
 			}
 	}
 
-	private void removeLocationListener(XParam param) {
-		if (param.args.length > 0)
-			if (param.args[0] instanceof PendingIntent)
+	private void removeLocationListener(XParam param, int arg) {
+		if (param.args.length > arg)
+			if (param.args[arg] instanceof PendingIntent)
 				param.setResult(null);
-			else
+			else if (param.args[arg] != null)
 				synchronized (mMapProxy) {
-					if (mMapProxy.containsKey(param.args[0]))
-						param.args[0] = mMapProxy.get(param.args[0]);
+					Object key = param.args[arg];
+					if (key instanceof IInterface)
+						key = ((IInterface) key).asBinder();
+					if (mMapProxy.containsKey(key))
+						param.args[arg] = mMapProxy.get(key);
 				}
 	}
 

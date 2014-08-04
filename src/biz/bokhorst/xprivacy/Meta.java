@@ -176,19 +176,29 @@ public class Meta {
 
 		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).notAOSP(19).dangerous().whitelist(cTypeTransaction));
 
-		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null));
-		mListHook.add(new Hook("location", "addGpsStatusListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "2.1.17", null));
+		mListHook.add(new Hook("location", "addGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "addGpsStatusListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "2.1.17", null).notAOSP(19));
 		mListHook.add(new Hook("location", "addNmeaListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 5, null, null));
 		mListHook.add(new Hook("location", "addProximityAlert", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
-		mListHook.add(new Hook("location", "getAllProviders", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.20", null).dangerous());
-		mListHook.add(new Hook("location", "getBestProvider", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.20", null).dangerous());
+		mListHook.add(new Hook("location", "getAllProviders", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.20", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("location", "getBestProvider", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.20", null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("location", "getGpsStatus", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "1.99.29", null));
-		mListHook.add(new Hook("location", "getLastKnownLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
-		mListHook.add(new Hook("location", "getProviders", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("location", "isProviderEnabled", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "1.99.1", null).dangerous());
-		mListHook.add(new Hook("location", "requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
-		mListHook.add(new Hook("location", "requestSingleUpdate", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 9, null, null));
-		mListHook.add(new Hook("location", "sendExtraCommand", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, null, null));
+		mListHook.add(new Hook("location", "getLastKnownLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "getProviders", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "1.99.1", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("location", "isProviderEnabled", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "1.99.1", null).notAOSP(19).dangerous());
+		mListHook.add(new Hook("location", "requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "requestSingleUpdate", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 9, null, null).notAOSP(19));
+		mListHook.add(new Hook("location", "sendExtraCommand", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, null, null).notAOSP(19));
+
+		mListHook.add(new Hook("location", "Srv_requestGeofence", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 17, "2.99", "addGeofence").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_addGpsStatusListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "2.99", "addGpsStatusListener").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_getAllProviders", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "getAllProviders").AOSP(19).dangerous());
+		mListHook.add(new Hook("location", "Srv_getBestProvider", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "getBestProvider").AOSP(19).dangerous());
+		mListHook.add(new Hook("location", "Srv_getProviders", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "getProviders").AOSP(19).dangerous());
+		mListHook.add(new Hook("location", "Srv_isProviderEnabled", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "isProviderEnabled").AOSP(19).dangerous());
+		mListHook.add(new Hook("location", "Srv_getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "getLastKnownLocation").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "requestLocationUpdates").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_sendExtraCommand", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "2.99", "sendExtraCommand").AOSP(19));
 
 		mListHook.add(new Hook("location", "enableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, null, null));
 		mListHook.add(new Hook("location", "getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null));
