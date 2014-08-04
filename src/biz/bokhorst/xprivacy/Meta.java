@@ -356,21 +356,21 @@ public class Meta {
 		mListHook.add(new Hook("phone", "Configuration.MCC", "", 1, "2.0", null).unsafe().noUsageData().noOnDemand());
 		mListHook.add(new Hook("phone", "Configuration.MNC", "", 1, "2.0", null).unsafe().noUsageData().noOnDemand());
 
-		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null).dangerous());
-		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null).dangerous());
-		mListHook.add(new Hook("sensors", "acceleration", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "gravity", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "humidity", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "light", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "magnetic", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "motion", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "orientation", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "pressure", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "proximity", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "rotation", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "temperature", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "step", "", 3, null, null));
-		mListHook.add(new Hook("sensors", "heartrate", "", 20, null, null));
+		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null).unsafe().dangerous());
+		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null).unsafe().dangerous());
+		mListHook.add(new Hook("sensors", "acceleration", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "gravity", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "humidity", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "light", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "magnetic", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "motion", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "orientation", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "pressure", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "proximity", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "rotation", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "temperature", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "step", "", 3, null, null).unsafe());
+		mListHook.add(new Hook("sensors", "heartrate", "", 20, null, null).unsafe());
 
 		mListHook.add(new Hook("shell", "sh", "", 10, "0.0", null).unsafe().dangerous().whitelist(cTypeCommand));
 		mListHook.add(new Hook("shell", "su", "", 10, "0.0", null).unsafe().dangerous().whitelist(cTypeCommand));
