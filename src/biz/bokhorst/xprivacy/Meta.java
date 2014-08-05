@@ -467,12 +467,22 @@ public class Meta {
 		// AccountManager
 		mListHook.add(new Hook(null, "removeOnAccountsUpdatedListener", "", 5, null, null));
 
-		// ActivityManagerService
-		mListHook.add(new Hook(null, "startActivities", "", 19, null, null));
-		mListHook.add(new Hook(null, "startActivity", "", 19, null, null));
-		mListHook.add(new Hook(null, "startActivityAsUser", "", 19, null, null));
-		mListHook.add(new Hook(null, "startActivityAndWait", "", 19, null, null));
-		mListHook.add(new Hook(null, "startActivityWithConfig", "", 19, null, null));
+		// Activity
+		mListHook.add(new Hook(null, "startActivities", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook(null, "startActivity", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook(null, "startActivityForResult", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook(null, "startActivityFromChild", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook(null, "startActivityFromFragment", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook(null, "startActivityIfNeeded", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook(null, "startNextMatchingActivity", "", 1, null, null).notAOSP(19));
+
+		// ActivityManager // ActivityManagerService
+		mListHook.add(new Hook(null, "Srv_startActivities", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_startActivity", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_startActivityAsUser", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_startActivityAndWait", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_startActivityWithConfig", "", 19, null, null).AOSP(19));
+
 		mListHook.add(new Hook(null, "inputDispatchingTimedOut", "", 17, null, null));
 		mListHook.add(new Hook(null, "appNotResponding", "", 15, null, null));
 		mListHook.add(new Hook(null, "systemReady", "", 15, null, null));

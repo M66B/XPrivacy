@@ -46,9 +46,12 @@ public class XActivity extends XHook {
 
 	// @formatter:on
 
+	// @formatter:off
 	private enum Methods {
-		getSystemService, startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded, startNextMatchingActivity
+		getSystemService,
+		startActivities, startActivity, startActivityForResult, startActivityFromChild, startActivityFromFragment, startActivityIfNeeded, startNextMatchingActivity
 	};
+	// @formatter:on
 
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
