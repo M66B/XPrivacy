@@ -44,7 +44,7 @@ public class Requirements {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							Intent androidIntent = new Intent(Intent.ACTION_VIEW);
-							androidIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy?mobile=0#installation"));
+							androidIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
 							context.startActivity(androidIntent);
 						}
 					});

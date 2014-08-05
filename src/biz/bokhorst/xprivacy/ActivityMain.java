@@ -97,7 +97,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
 	public static final Uri cProUri = Uri.parse("http://www.xprivacy.eu/");
-	public static final String cXUrl = "https://github.com/M66B/XPrivacy?mobile=0";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -197,7 +196,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				if (position != AdapterView.INVALID_POSITION) {
 					String query = (position == 0 ? "restrictions" : (String) PrivacyManager
 							.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
-					Util.viewUri(ActivityMain.this, Uri.parse(cXUrl + "#" + query));
+					Util.viewUri(ActivityMain.this, Uri.parse("https://github.com/M66B/XPrivacy#" + query));
 				}
 			}
 		});
@@ -675,7 +674,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private void optionReportIssue() {
 		// Report issue
-		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy/issues?mobile=0"));
+		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy#support"));
 	}
 
 	private void optionExport() {

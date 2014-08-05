@@ -12,7 +12,7 @@
     <string name="app_xversion">Xposed framework version: %1$d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy?mobile=0#xprivacy</string>
+    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#xprivacy</string>
     <string name="app_support" translatable="false">http://forum.xda-developers.com/showthread.php?t=2320783</string>
     <string name="menu_usage">Usage data</string>
     <string name="menu_refresh">Refresh</string>
