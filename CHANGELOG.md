@@ -28,6 +28,8 @@ Changelog
 
 **Next release**
 
+* Update Simplified Chinese translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **XPrivacy 3**
