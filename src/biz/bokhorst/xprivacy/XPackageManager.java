@@ -245,14 +245,15 @@ public class XPackageManager extends XHook {
 			break;
 
 		case checkPermission:
-			if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
-				return;
-
 			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof String) {
 				String permName = (String) param.args[0];
 				String pkgName = (String) param.args[1];
 				int resultOfCheck = (Integer) param.getResult();
 
+				if (resultOfCheck != PackageManager.PERMISSION_GRANTED)
+					return;
+
+				// Get uid
 				int uid;
 				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
 					// PackageInfo getPackageInfo(String packageName, int flags)
@@ -271,31 +272,41 @@ public class XPackageManager extends XHook {
 					uid = (Integer) mGetPackageUid.invoke(param.thisObject, pkgName, userId);
 				}
 
-				if (resultOfCheck == PackageManager.PERMISSION_GRANTED) {
-					permName = permName.replace("android.permission.", "");
-					if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
-						param.setResult(PackageManager.PERMISSION_DENIED);
-				}
+				checkPermission(param, uid, permName);
 			}
 			break;
 
 		case checkUidPermission:
-			if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
-				return;
-
 			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof Integer) {
 				String permName = (String) param.args[0];
 				int uid = (Integer) param.args[1];
 				int resultOfCheck = (Integer) param.getResult();
 
-				if (resultOfCheck == PackageManager.PERMISSION_GRANTED) {
-					permName = permName.replace("android.permission.", "");
-					if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
-						param.setResult(PackageManager.PERMISSION_DENIED);
-				}
+				if (resultOfCheck == PackageManager.PERMISSION_GRANTED)
+					checkPermission(param, uid, permName);
 			}
 			break;
 
+		}
+	}
+
+	private void checkPermission(XParam param, int uid, String permName) throws Throwable {
+		if ("android.permission.CAMERA".endsWith(permName))
+			if (getRestricted(uid, PrivacyManager.cMedia, "Camera.permission"))
+				param.setResult(PackageManager.PERMISSION_DENIED);
+
+		if ("android.permission.RECORD_AUDIO".endsWith(permName))
+			if (getRestricted(uid, PrivacyManager.cMedia, "Record.Audio.permission"))
+				param.setResult(PackageManager.PERMISSION_DENIED);
+
+		if ("android.permission.RECORD_VIDEO".endsWith(permName))
+			if (getRestricted(uid, PrivacyManager.cMedia, "Record.Video.permission"))
+				param.setResult(PackageManager.PERMISSION_DENIED);
+
+		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false)) {
+			permName = permName.replace("android.permission.", "");
+			if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
+				param.setResult(PackageManager.PERMISSION_DENIED);
 		}
 	}
 

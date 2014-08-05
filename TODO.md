@@ -17,6 +17,5 @@ Services
 
 * Individual account methods
 * Individual package methods
-* Revoke CAMERA, RECORD_AUDIO, RECORD_VIDEO
 * Revoke BLUETOOTH, NFC, USE_SIP
 * Merge XActivityManager and XActivityManagerService

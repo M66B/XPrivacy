@@ -37,6 +37,7 @@ Changelog
 * Renamed *setOutputFile* into *MediaRecorder.start*
 * Restructured restriction meta data
 * Fixed displaying white list entry state after scrolling ([issue](/../../issues/1850))
+* Added restrictions *Camera.permission*, *Record.Audio.permission* and *Record.Video.permission*
 * Added Croatian translation
 * Updated Slovak translation
 

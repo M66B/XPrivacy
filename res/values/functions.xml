@@ -179,6 +179,9 @@
     <string name="media_android_media_action_IMAGE_CAPTURE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/provider/MediaStore.html#ACTION_IMAGE_CAPTURE">Google documentation</a>]]></string>
     <string name="media_android_media_action_IMAGE_CAPTURE_SECURE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/provider/MediaStore.html#ACTION_IMAGE_CAPTURE_SECURE">Google documentation</a>]]></string>
     <string name="media_android_media_action_VIDEO_CAPTURE" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/provider/MediaStore.html#ACTION_VIDEO_CAPTURE">Google documentation</a>]]></string>
+    <string name="media_Camera_permission" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/Manifest.permission.html#CAMERA">Google documentation</a>]]></string>
+    <string name="media_Record_Audio_permission" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/Manifest.permission.html#RECORD_AUDIO">Google documentation</a>]]></string>
+    <string name="media_Record_Video_permission" translatable="false"><![CDATA[Will restrict recording of video]]></string>
 
     <!-- messages -->
     <string name="messages_getAllMessagesFromIcc" translatable="false"><![CDATA[Will restrict access to messages stored on the SIM card]]></string>
