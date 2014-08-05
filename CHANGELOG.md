@@ -28,6 +28,7 @@ Changelog
 
 **Next release**
 
+* Fixed alignment of the check boxes in the details view
 * Update Simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
