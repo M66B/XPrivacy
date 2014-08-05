@@ -24,10 +24,13 @@ public class XContentResolver extends XHook {
 	private boolean mClient;
 	private String mClassName;
 
-	private XContentResolver(Methods method, String restrictionName) {
+	private XContentResolver(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name().replace("Srv_", ""), method.name());
 		mMethod = method;
-		mClassName = "com.android.server.content.ContentService";
+		if (className == null)
+			mClassName = "com.android.server.content.ContentService";
+		else
+			mClassName = className;
 	}
 
 	private XContentResolver(Methods method, String restrictionName, boolean client) {
@@ -35,12 +38,6 @@ public class XContentResolver extends XHook {
 		mMethod = method;
 		mClient = client;
 		mClassName = null;
-	}
-
-	private XContentResolver(Methods method, String restrictionName, String className) {
-		super(restrictionName, method.name(), null);
-		mMethod = method;
-		mClassName = className;
 	}
 
 	public String getClassName() {
@@ -151,7 +148,7 @@ public class XContentResolver extends XHook {
 			listHook.add(new XContentResolver(Methods.query, null, true));
 			listHook.add(new XContentResolver(Methods.Srv_query, null, "com.android.internal.telephony.IccProvider"));
 
-			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts));
+			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts, null));
 		} else {
 			if ("com.android.providers.settings.SettingsProvider".equals(className))
 				listHook.add(new XContentResolver(Methods.Srv_call, null, className));
