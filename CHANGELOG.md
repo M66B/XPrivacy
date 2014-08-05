@@ -28,6 +28,18 @@ Changelog
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**XPrivacy 3**
+
+* Added icon for unsafe restrictions
+* Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
+* Added restriction *Bluetooth.Srv_getName*
+* Added restriction *Srv_getCompleteVoiceMailNumber*
+* Added restriction *WiFi.Srv_getBatchedScanResults*
+
+**Version 2.2.3 TEST**
+
 * Removed restriction *LinkAddress*, since it is not needed
 * Added support for [MEID](http://en.wikipedia.org/wiki/Mobile_equipment_identifier) and removed restrictions *getNetworkType* and *getPhoneType* ([issue](/../../issues/1843))
 * Prefixed *getAddress* and *getBondedDevices* with *Bluetooth*
@@ -41,16 +53,6 @@ Changelog
 * Hiding on demand restricting check box for functions without on demand restricting
 * Added Croatian translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
-
-**XPrivacy 3**
-
-* Added icon for unsafe restrictions
-* Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
-* Added restriction *Bluetooth.Srv_getName*
-* Added restriction *Srv_getCompleteVoiceMailNumber*
-* Added restriction *WiFi.Srv_getBatchedScanResults*
 
 **Version 2.2.2 TEST**
 
