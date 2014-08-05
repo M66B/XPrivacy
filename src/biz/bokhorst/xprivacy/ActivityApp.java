@@ -1596,11 +1596,12 @@ public class ActivityApp extends ActivityBase {
 					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
 
 					// Show asked state
-					if (ondemand) {
-						holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
-						holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
-					} else
-						holder.imgCbMethodAsk.setVisibility(View.GONE);
+					if (md.canOnDemand())
+						if (ondemand) {
+							holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+							holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
+						} else
+							holder.imgCbMethodAsk.setVisibility(View.GONE);
 
 					holder.llMethodName.setEnabled(enabled && can);
 					holder.tvMethodName.setEnabled(enabled && can);

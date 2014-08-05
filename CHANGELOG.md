@@ -38,6 +38,7 @@ Changelog
 * Restructured restriction meta data
 * Fixed displaying white list entry state after scrolling ([issue](/../../issues/1850))
 * Added restrictions *Camera.permission*, *Record.Audio.permission* and *Record.Video.permission*
+* Removed on demand restricting check box for functions without on demand restricting
 * Added Croatian translation
 * Updated Slovak translation
 
