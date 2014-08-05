@@ -200,7 +200,6 @@ public class PrivacyManager {
 
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
-		listRestriction.remove("");
 		if (Hook.isAOSP(19))
 			listRestriction.remove(cIPC);
 		return listRestriction;
@@ -229,8 +228,16 @@ public class PrivacyManager {
 		List<Hook> listMethod = new ArrayList<Hook>();
 		for (String methodName : mMethod.get(restrictionName).keySet()) {
 			Hook hook = mMethod.get(restrictionName).get(methodName);
-			if (hook.isAvailable())
-				listMethod.add(mMethod.get(restrictionName).get(methodName));
+			if (!hook.isAvailable())
+				continue;
+			else if ("IntentFirewall".equals(hook.getName())) {
+				if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingIntentWall, false))
+					continue;
+			} else if ("checkPermission".equals(hook.getName()) || "checkUidPermission".equals(hook.getName())) {
+				if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
+					continue;
+			}
+			listMethod.add(mMethod.get(restrictionName).get(methodName));
 		}
 		Collections.sort(listMethod);
 		return listMethod;
