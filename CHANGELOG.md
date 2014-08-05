@@ -35,6 +35,7 @@ Changelog
 * Prefixed *startPreview* and *takePicture* with *Camera*
 * Prefixed *startRecording* with *Audio*
 * Renamed *setOutputFile* into *MediaRecorder.start*
+* Restructured restriction meta data
 * Added Croatian translation
 * Updated Slovak translation
 
