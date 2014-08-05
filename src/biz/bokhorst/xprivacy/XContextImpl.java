@@ -13,11 +13,6 @@ public class XContextImpl extends XHook {
 		mMethod = method;
 	}
 
-	private XContextImpl(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
-		mMethod = method;
-	}
-
 	public String getClassName() {
 		return "android.app.ContextImpl";
 	}
@@ -36,8 +31,8 @@ public class XContextImpl extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XContextImpl(Methods.getPackageManager, null, 1));
-		listHook.add(new XContextImpl(Methods.getSystemService, null, 1));
+		listHook.add(new XContextImpl(Methods.getPackageManager, null));
+		listHook.add(new XContextImpl(Methods.getSystemService, null));
 		return listHook;
 	}
 

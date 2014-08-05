@@ -6,22 +6,12 @@ public abstract class XHook {
 	private String mRestrictionName;
 	private String mMethodName;
 	private String mSpecifier;
-	private int mSdk;
-	private boolean mOptional = false;
 	private String mSecret;
 
 	protected XHook(String restrictionName, String methodName, String specifier) {
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
 		mSpecifier = specifier;
-		mSdk = 0;
-	}
-
-	protected XHook(String restrictionName, String methodName, String specifier, int sdk) {
-		mRestrictionName = restrictionName;
-		mMethodName = methodName;
-		mSpecifier = specifier;
-		mSdk = sdk;
 	}
 
 	abstract public String getClassName();
@@ -42,25 +32,12 @@ public abstract class XHook {
 		return (mSpecifier == null ? mMethodName : mSpecifier);
 	}
 
-	public int getSdk() {
-		return mSdk;
-	}
-
 	public void setSecret(String secret) {
 		mSecret = secret;
 	}
 
 	protected String getSecret() {
 		return mSecret;
-	}
-
-	protected XHook optional() {
-		mOptional = true;
-		return this;
-	}
-
-	public boolean isOptional() {
-		return mOptional;
 	}
 
 	abstract protected void before(XParam param) throws Throwable;

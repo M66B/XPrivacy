@@ -58,8 +58,8 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "hasFeatures", "GET_ACCOUNTS", 8, null, null).unsafe().dangerous());
 		mListHook.add(new Hook("accounts", "getAccountsByTypeForPackage", "GET_ACCOUNTS", 18, null, null).notAOSP(19));
 
-		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 1, "0.0", null).unsafe().dangerous());
-		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 1, "0.0", null).unsafe().dangerous());
+		mListHook.add(new Hook("accounts", "getTokenGoogle", "GET_ACCOUNTS", 1, "0.0", null).unsafe().dangerous().optional());
+		mListHook.add(new Hook("accounts", "getTokenWithNotificationGoogle", "GET_ACCOUNTS", 1, "0.0", null).unsafe().dangerous().optional());
 
 		mListHook.add(new Hook("accounts", "getAuthenticatorTypes", "GET_ACCOUNTS", 5, "1.99.24", null).unsafe().dangerous());
 		mListHook.add(new Hook("accounts", "getCurrentSync", "READ_SYNC_SETTINGS", 8, "1.99.24", null).notAOSP(19).dangerous());
@@ -132,7 +132,7 @@ public class Meta {
 		mListHook.add(new Hook("identification", "/system/build.prop", "", 1, "1.9.9", null).unsafe().dangerous());
 		mListHook.add(new Hook("identification", "/sys/block/.../cid", "", 1, "0.0", null).unsafe().dangerous());
 		mListHook.add(new Hook("identification", "/sys/class/.../cid", "", 1, "0.0", null).unsafe().dangerous());
-		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null).unsafe().optional());
 
 		mListHook.add(new Hook("identification", "getString", "", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook("identification", "InputDevice.getDescriptor", "", 16, "2.2.2", "getDescriptor"));
@@ -217,21 +217,21 @@ public class Meta {
 		mListHook.add(new Hook("location", "listen", "ACCESS_COARSE_LOCATION", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook("location", "Srv_listen", "ACCESS_COARSE_LOCATION", 1, null, null).AOSP(19));
 
-		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
-		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
-		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe());
+		mListHook.add(new Hook("location", "GMS.addGeofences", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe().optional());
+		mListHook.add(new Hook("location", "GMS.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe().optional());
+		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe().optional());
 		mListHook.add(new Hook("location", "GMS.requestActivityUpdates", "com.google.android.gms.permission.ACTIVITY_RECOGNITION", 1, null, null).unsafe());
 
-		mListHook.add(new Hook("location", "MapV1.getLatitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
-		mListHook.add(new Hook("location", "MapV1.getLongitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
-		mListHook.add(new Hook("location", "MapV1.enableMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV1.getLatitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
+		mListHook.add(new Hook("location", "MapV1.getLongitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
+		mListHook.add(new Hook("location", "MapV1.enableMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 
-		mListHook.add(new Hook("location", "MapV2.getMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
-		mListHook.add(new Hook("location", "MapV2.getPosition", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
-		mListHook.add(new Hook("location", "MapV2.setLocationSource", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
-		mListHook.add(new Hook("location", "MapV2.setOnMapClickListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
-		mListHook.add(new Hook("location", "MapV2.setOnMapLongClickListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
-		mListHook.add(new Hook("location", "MapV2.setOnMyLocationChangeListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe());
+		mListHook.add(new Hook("location", "MapV2.getMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
+		mListHook.add(new Hook("location", "MapV2.getPosition", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
+		mListHook.add(new Hook("location", "MapV2.setLocationSource", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
+		mListHook.add(new Hook("location", "MapV2.setOnMapClickListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
+		mListHook.add(new Hook("location", "MapV2.setOnMapLongClickListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
+		mListHook.add(new Hook("location", "MapV2.setOnMyLocationChangeListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 
 		mListHook.add(new Hook("media", "Audio.startRecording", "RECORD_AUDIO", 3, "2.2.3", "startRecording").unsafe().doNotify());
 		mListHook.add(new Hook("media", "Camera.startPreview", "CAMERA", 1, "2.2.3", "setPreviewCallback").unsafe().doNotify());
@@ -461,6 +461,83 @@ public class Meta {
 		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", Intent.ACTION_VIEW).AOSP(19).doNotify().whitelist(cTypeUrl));
 
+		// AccountManager
+		mListHook.add(new Hook(null, "removeOnAccountsUpdatedListener", "", 5, null, null));
+
+		// ActivityManagerService
+		mListHook.add(new Hook(null, "startActivities", "", 19, null, null));
+		mListHook.add(new Hook(null, "startActivity", "", 19, null, null));
+		mListHook.add(new Hook(null, "startActivityAsUser", "", 19, null, null));
+		mListHook.add(new Hook(null, "startActivityAndWait", "", 19, null, null));
+		mListHook.add(new Hook(null, "startActivityWithConfig", "", 19, null, null));
+		mListHook.add(new Hook(null, "inputDispatchingTimedOut", "", 17, null, null));
+		mListHook.add(new Hook(null, "appNotResponding", "", 15, null, null));
+		mListHook.add(new Hook(null, "systemReady", "", 15, null, null));
+		mListHook.add(new Hook(null, "finishBooting", "", 15, null, null));
+		mListHook.add(new Hook(null, "setLockScreenShown", "", 17, null, null).optional());
+		mListHook.add(new Hook(null, "goingToSleep", "", 16, null, null));
+		mListHook.add(new Hook(null, "wakingUp", "", 16, null, null));
+		mListHook.add(new Hook(null, "shutdown", "", 15, null, null));
+
+		// Application
+		mListHook.add(new Hook(null, "onCreate", "", 1, null, null));
+
+		// Binder
+		mListHook.add(new Hook(null, "execTransact", "", 1, null, null));
+		mListHook.add(new Hook(null, "transact", "", 1, null, null));
+
+		// ClipboardManager / ClipboardService
+		mListHook.add(new Hook(null, "removePrimaryClipChangedListener", "", 11, null, null));
+		mListHook.add(new Hook(null, "Srv_removePrimaryClipChangedListener", "", 11, null, null));
+
+		// Provider
+		mListHook.add(new Hook(null, "call", "", 1, null, null));
+		mListHook.add(new Hook(null, "query", "", 1, null, null));
+
+		// ContextImpl
+		mListHook.add(new Hook(null, "getPackageManager", "", 1, null, null));
+		mListHook.add(new Hook(null, "getSystemService", "", 1, null, null));
+
+		// IntentFirewall
+		mListHook.add(new Hook(null, "checkIntent", "", 19, null, null));
+
+		// LocationManager / LocationManagerService
+		mListHook.add(new Hook(null, "removeUpdates", "", 3, null, null));
+		mListHook.add(new Hook(null, "Srv_removeUpdates", "", 19, null, null));
+		mListHook.add(new Hook(null, "Srv_removeGeofence", "", 19, null, null));
+		mListHook.add(new Hook(null, "Srv_removeGpsStatusListener", "", 19, null, null));
+
+		// Resources
+		mListHook.add(new Hook(null, "updateConfiguration", "", 1, null, null));
+
+		// TelephonyManager
+		mListHook.add(new Hook(null, "disableLocationUpdates", "", 10, null, null));
+		mListHook.add(new Hook(null, "Srv_disableLocationUpdates", "", 19, null, null));
+
+		// WebView
+		mListHook.add(new Hook(null, "getSettings", "", 1, null, null));
+
+		// WindowManagerImpl
+		mListHook.add(new Hook(null, "removeView", "", 1, null, null));
+		mListHook.add(new Hook(null, "updateViewLayout", "", 1, null, null));
+
+		// Activity
+		mListHook.add(new Hook(null, "getSystemService", "", 1, null, null));
+
+		// ActivityRecognitionClient
+		mListHook.add(new Hook(null, "GMS.removeActivityUpdates", "", 1, null, null));
+
+		// LocationClient
+		mListHook.add(new Hook(null, "GMS.removeGeofences", "", 1, null, null).optional());
+		mListHook.add(new Hook(null, "GMS.removeLocationUpdates", "", 1, null, null).optional());
+
+		// ActivityThread / MessageQueue
+		mListHook.add(new Hook(null, "next", "", 1, null, null).optional());
+		mListHook.add(new Hook(null, "handleReceiver", "", 1, null, null).optional());
+
+		// UtilHook
+		mListHook.add(new Hook(null, "isXposedEnabled", "", 15, null, null));
+
 		// @formatter:on
 		return mListHook;
 	}
@@ -470,15 +547,16 @@ public class Meta {
 			return;
 
 		String self = Meta.class.getPackage().getName();
-		for (Hook hook : get()) {
-			String name = hook.getRestrictionName() + "_" + hook.getName();
-			name = name.replace(".", "_").replace("/", "_").replace("%", "_").replace("-", "_");
-			int resId = resources.getIdentifier(name, "string", self);
-			if (resId > 0)
-				hook.annotate(resources.getString(resId));
-			else
-				Util.log(null, Log.WARN, "Missing annotation hook=" + hook);
-		}
+		for (Hook hook : get())
+			if (hook.getRestrictionName() != null) {
+				String name = hook.getRestrictionName() + "_" + hook.getName();
+				name = name.replace(".", "_").replace("/", "_").replace("%", "_").replace("-", "_");
+				int resId = resources.getIdentifier(name, "string", self);
+				if (resId > 0)
+					hook.annotate(resources.getString(resId));
+				else
+					Util.log(null, Log.WARN, "Missing annotation hook=" + hook);
+			}
 
 		mAnnotated = true;
 	}

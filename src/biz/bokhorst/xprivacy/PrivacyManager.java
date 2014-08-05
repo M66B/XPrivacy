@@ -163,9 +163,11 @@ public class PrivacyManager {
 		List<String> listRestriction = getRestrictions();
 		for (Hook hook : listHook) {
 			String restrictionName = hook.getRestrictionName();
+			if (restrictionName == null)
+				restrictionName = "";
 
 			// Check restriction
-			if (!listRestriction.contains(restrictionName))
+			else if (!listRestriction.contains(restrictionName))
 				if (hook.isAvailable())
 					Util.log(null, Log.WARN, "Not found restriction=" + restrictionName + " hook=" + hook);
 
@@ -193,11 +195,12 @@ public class PrivacyManager {
 							mPermission.get(aPermission).add(hook);
 					}
 		}
-		Util.log(null, Log.WARN, listHook.size() + " restrictions");
+		Util.log(null, Log.WARN, listHook.size() + " hooks");
 	}
 
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
+		listRestriction.remove("");
 		if (Hook.isAOSP(19))
 			listRestriction.remove(cIPC);
 		return listRestriction;
@@ -214,7 +217,8 @@ public class PrivacyManager {
 		return tmRestriction;
 	}
 
-	public static Hook getHook(String restrictionName, String methodName) {
+	public static Hook getHook(String _restrictionName, String methodName) {
+		String restrictionName = (_restrictionName == null ? "" : _restrictionName);
 		if (mMethod.containsKey(restrictionName))
 			if (mMethod.get(restrictionName).containsKey(methodName))
 				return mMethod.get(restrictionName).get(methodName);

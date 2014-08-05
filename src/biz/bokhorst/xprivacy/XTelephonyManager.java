@@ -39,27 +39,8 @@ public class XTelephonyManager extends XHook {
 			Util.log(null, Log.ERROR, "Unknown srv=" + srv.name());
 	}
 
-	private XTelephonyManager(Methods method, String restrictionName, Srv srv, int sdk) {
-		super(restrictionName, method.name().replace("Srv_", ""), method.name(), sdk);
-		mMethod = method;
-		if (srv == Srv.SubInfo)
-			mClassName = "com.android.internal.telephony.PhoneSubInfo";
-		else if (srv == Srv.Registry)
-			mClassName = "com.android.server.TelephonyRegistry";
-		else if (srv == Srv.Phone)
-			mClassName = "com.android.phone.PhoneInterfaceManager";
-		else
-			Util.log(null, Log.ERROR, "Unknown srv=" + srv.name());
-	}
-
 	private XTelephonyManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
-		mMethod = method;
-		mClassName = className;
-	}
-
-	private XTelephonyManager(Methods method, String restrictionName, String className, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
 		mClassName = className;
 	}
@@ -161,7 +142,7 @@ public class XTelephonyManager extends XHook {
 			if (className == null)
 				className = cClassName;
 
-			listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, null, className, 10));
+			listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, null, className));
 			listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, PrivacyManager.cLocation, className));
 			listHook.add(new XTelephonyManager(Methods.getAllCellInfo, PrivacyManager.cLocation, className));
 			listHook.add(new XTelephonyManager(Methods.getCellLocation, PrivacyManager.cLocation, className));
@@ -218,7 +199,7 @@ public class XTelephonyManager extends XHook {
 	public static List<XHook> getPhoneInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XTelephonyManager(Methods.Srv_enableLocationUpdates, PrivacyManager.cLocation, Srv.Phone));
-		listHook.add(new XTelephonyManager(Methods.Srv_disableLocationUpdates, null, Srv.Phone, 19));
+		listHook.add(new XTelephonyManager(Methods.Srv_disableLocationUpdates, null, Srv.Phone));
 		listHook.add(new XTelephonyManager(Methods.Srv_getAllCellInfo, PrivacyManager.cLocation, Srv.Phone));
 		listHook.add(new XTelephonyManager(Methods.Srv_getCellLocation, PrivacyManager.cLocation, Srv.Phone));
 		listHook.add(new XTelephonyManager(Methods.Srv_getNeighboringCellInfo, PrivacyManager.cLocation, Srv.Phone));

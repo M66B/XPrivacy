@@ -64,8 +64,8 @@ public class XActivityThread extends XHook {
 		mapActionRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, PrivacyManager.cSystem);
 	}
 
-	private XActivityThread(Methods method, int sdk) {
-		super(null, method.name(), null, sdk);
+	private XActivityThread(Methods method) {
+		super(null, method.name(), null);
 		mMethod = method;
 	}
 
@@ -96,8 +96,8 @@ public class XActivityThread extends XHook {
 		List<XHook> listHook = new ArrayList<XHook>();
 
 		if (!Hook.isAOSP(19)) {
-			listHook.add(new XActivityThread(Methods.next, 1));
-			listHook.add(new XActivityThread(Methods.handleReceiver, 1));
+			listHook.add(new XActivityThread(Methods.next));
+			listHook.add(new XActivityThread(Methods.handleReceiver));
 		}
 
 		return listHook;

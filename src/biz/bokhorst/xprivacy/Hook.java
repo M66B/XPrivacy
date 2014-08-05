@@ -21,6 +21,7 @@ public class Hook implements Comparable<Hook> {
 	private int mAOSPSdk = 0;
 	private int mNotAOSPSdk = 0;
 	private boolean mUnsafe = false;
+	private boolean mOptional = false;
 	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
@@ -105,6 +106,11 @@ public class Hook implements Comparable<Hook> {
 
 	public Hook unsafe() {
 		mUnsafe = true;
+		return this;
+	}
+
+	protected Hook optional() {
+		mOptional = true;
 		return this;
 	}
 
@@ -196,6 +202,10 @@ public class Hook implements Comparable<Hook> {
 			return mUnsafe;
 		else
 			return false;
+	}
+
+	public boolean isOptional() {
+		return mOptional;
 	}
 
 	public String getAnnotation() {

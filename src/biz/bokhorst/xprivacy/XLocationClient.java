@@ -22,11 +22,6 @@ public class XLocationClient extends XHook {
 		mMethod = method;
 	}
 
-	private XLocationClient(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), String.format("GMS.%s", method.name()), sdk);
-		mMethod = method;
-	}
-
 	public String getClassName() {
 		return "com.google.android.gms.location.LocationClient";
 	}
@@ -52,11 +47,11 @@ public class XLocationClient extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation).optional());
-		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation).optional());
-		listHook.add(new XLocationClient(Methods.removeGeofences, null, 1).optional());
-		listHook.add(new XLocationClient(Methods.removeLocationUpdates, null, 1).optional());
-		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation).optional());
+		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation));
+		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation));
+		listHook.add(new XLocationClient(Methods.removeGeofences, null));
+		listHook.add(new XLocationClient(Methods.removeLocationUpdates, null));
+		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation));
 		return listHook;
 	}
 

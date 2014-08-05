@@ -20,12 +20,6 @@ public class XActivity extends XHook {
 		mActionName = actionName;
 	}
 
-	private XActivity(Methods method, String restrictionName, String actionName, int sdk) {
-		super(restrictionName, method.name(), actionName, sdk);
-		mMethod = method;
-		mActionName = actionName;
-	}
-
 	public String getClassName() {
 		return "android.app.Activity";
 	}
@@ -59,7 +53,7 @@ public class XActivity extends XHook {
 	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XActivity(Methods.getSystemService, null, null, 1));
+		listHook.add(new XActivity(Methods.getSystemService, null, null));
 
 		List<Methods> startMethods = new ArrayList<Methods>(Arrays.asList(Methods.values()));
 		startMethods.remove(Methods.getSystemService);

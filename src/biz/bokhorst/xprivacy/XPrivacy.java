@@ -443,35 +443,18 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
-		// Check SDK version
-		Hook md = null;
-		String message = null;
-		if (hook.getRestrictionName() == null) {
-			if (hook.getSdk() == 0)
-				message = "No SDK specified for " + hook;
-		} else {
-			md = PrivacyManager.getHook(hook.getRestrictionName(), hook.getSpecifier());
-			if (md == null)
-				message = "Hook not found " + hook;
-			else if (hook.getSdk() != 0)
-				message = "SDK not expected for " + hook;
-		}
-		if (message != null) {
+		// Get meta data
+		Hook md = PrivacyManager.getHook(hook.getRestrictionName(), hook.getSpecifier());
+		if (md == null) {
+			String message = "Not found hook=" + hook;
 			mListHookError.add(message);
 			Util.log(hook, Log.ERROR, message);
-		}
-
-		if (secret == null)
-			Util.log(hook, Log.ERROR, "Secret missing for " + hook);
-
-		// Check if available on this platform
-		if (hook.getRestrictionName() == null)
-			if (Build.VERSION.SDK_INT < hook.getSdk())
-				return;
-		if (md != null && !md.isAvailable())
+		} else if (!md.isAvailable())
 			return;
 
 		// Provide secret
+		if (secret == null)
+			Util.log(hook, Log.ERROR, "Secret missing hook=" + hook);
 		hook.setSecret(secret);
 
 		try {
@@ -483,9 +466,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				else
 					hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
-				message = String.format("Class not found for %s", hook);
+				String message = "Class not found hook=" + hook;
 				mListHookError.add(message);
-				int level = (hook.isOptional() ? Log.WARN : Log.ERROR);
+				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
 				Util.log(hook, level, message);
 				Util.logStack(hook, level);
 			}
@@ -531,10 +514,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Check if members found
 			if (listMember.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
-				message = String.format("Method not found for %s", hook);
-				if (!hook.isOptional())
+				String message = "Method not found hook=" + hook;
+				if (md == null || !md.isOptional())
 					mListHookError.add(message);
-				Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, message);
+				Util.log(hook, md != null && md.isOptional() ? Log.WARN : Log.ERROR, message);
 			}
 		} catch (Throwable ex) {
 			mListHookError.add(ex.toString());

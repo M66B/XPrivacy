@@ -13,11 +13,6 @@ public class XActivityRecognitionClient extends XHook {
 		mMethod = method;
 	}
 
-	private XActivityRecognitionClient(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), String.format("GMS.%s", method.name()), sdk);
-		mMethod = method;
-	}
-
 	public String getClassName() {
 		return "com.google.android.gms.location.ActivityRecognitionClient";
 	}
@@ -36,7 +31,7 @@ public class XActivityRecognitionClient extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XActivityRecognitionClient(Methods.removeActivityUpdates, null, 1));
+		listHook.add(new XActivityRecognitionClient(Methods.removeActivityUpdates, null));
 		listHook.add(new XActivityRecognitionClient(Methods.requestActivityUpdates, PrivacyManager.cLocation));
 		return listHook;
 	}

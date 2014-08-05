@@ -37,15 +37,8 @@ public class XContentResolver extends XHook {
 		mClassName = null;
 	}
 
-	private XContentResolver(Methods method, String restrictionName, int sdk, boolean client) {
-		super(restrictionName, method.name(), null, sdk);
-		mMethod = method;
-		mClient = client;
-		mClassName = null;
-	}
-
-	private XContentResolver(Methods method, String restrictionName, int sdk, String className) {
-		super(restrictionName, method.name(), null, sdk);
+	private XContentResolver(Methods method, String restrictionName, String className) {
+		super(restrictionName, method.name(), null);
 		mMethod = method;
 		mClassName = className;
 	}
@@ -156,18 +149,18 @@ public class XContentResolver extends XHook {
 			listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, true));
 
 			if (Hook.isAOSP(19))
-				listHook.add(new XContentResolver(Methods.query, null, 1, "com.android.internal.telephony.IccProvider"));
+				listHook.add(new XContentResolver(Methods.query, null, "com.android.internal.telephony.IccProvider"));
 			else {
-				listHook.add(new XContentResolver(Methods.query, null, 1, false));
-				listHook.add(new XContentResolver(Methods.query, null, 1, true));
+				listHook.add(new XContentResolver(Methods.query, null, false));
+				listHook.add(new XContentResolver(Methods.query, null, true));
 			}
 
 			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts));
 		} else if (Hook.isAOSP(19))
 			if ("com.android.providers.settings.SettingsProvider".equals(className))
-				listHook.add(new XContentResolver(Methods.call, null, 1, className));
+				listHook.add(new XContentResolver(Methods.call, null, className));
 			else
-				listHook.add(new XContentResolver(Methods.query, null, 1, className));
+				listHook.add(new XContentResolver(Methods.query, null, className));
 
 		return listHook;
 	}

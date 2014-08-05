@@ -29,12 +29,6 @@ public class XLocationManager extends XHook {
 		mClassName = className;
 	}
 
-	private XLocationManager(Methods method, String restrictionName, String className, int sdk) {
-		super(restrictionName, method.name().replace("Srv_", ""), method.name(), sdk);
-		mMethod = method;
-		mClassName = className;
-	}
-
 	public String getClassName() {
 		return mClassName;
 	}
@@ -110,9 +104,9 @@ public class XLocationManager extends XHook {
 
 			for (Methods loc : Methods.values())
 				if (loc == Methods.removeUpdates)
-					listHook.add(new XLocationManager(loc, null, className, 3));
+					listHook.add(new XLocationManager(loc, null, className));
 				else if (loc.name().startsWith("Srv_remove"))
-					listHook.add(new XLocationManager(loc, null, "com.android.server.LocationManagerService", 19));
+					listHook.add(new XLocationManager(loc, null, "com.android.server.LocationManagerService"));
 				else if (loc.name().startsWith("Srv_"))
 					listHook.add(new XLocationManager(loc, PrivacyManager.cLocation,
 							"com.android.server.LocationManagerService"));

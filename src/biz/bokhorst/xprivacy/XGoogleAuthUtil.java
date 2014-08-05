@@ -35,9 +35,9 @@ public class XGoogleAuthUtil extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XGoogleAuthUtil(Methods.getToken, PrivacyManager.cAccounts, "getTokenGoogle").optional());
+		listHook.add(new XGoogleAuthUtil(Methods.getToken, PrivacyManager.cAccounts, "getTokenGoogle"));
 		listHook.add(new XGoogleAuthUtil(Methods.getTokenWithNotification, PrivacyManager.cAccounts,
-				"getTokenWithNotificationGoogle").optional());
+				"getTokenWithNotificationGoogle"));
 		return listHook;
 	}
 

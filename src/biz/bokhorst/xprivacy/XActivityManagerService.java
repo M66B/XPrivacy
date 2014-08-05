@@ -11,7 +11,6 @@ import android.annotation.SuppressLint;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.net.Uri;
-import android.os.Build;
 import android.util.Log;
 
 @SuppressLint("InlinedApi")
@@ -29,8 +28,8 @@ public class XActivityManagerService extends XHook {
 		mapIntentRestriction.put(Intent.ACTION_VIEW, PrivacyManager.cView);
 	}
 
-	private XActivityManagerService(Methods method, int sdk) {
-		super(null, method.name(), null, sdk);
+	private XActivityManagerService(Methods method) {
+		super(null, method.name(), null);
 		mMethod = method;
 	}
 
@@ -75,21 +74,20 @@ public class XActivityManagerService extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 
-		listHook.add(new XActivityManagerService(Methods.startActivities, Build.VERSION_CODES.KITKAT));
-		listHook.add(new XActivityManagerService(Methods.startActivity, Build.VERSION_CODES.KITKAT));
-		listHook.add(new XActivityManagerService(Methods.startActivityAsUser, Build.VERSION_CODES.KITKAT));
-		listHook.add(new XActivityManagerService(Methods.startActivityAndWait, Build.VERSION_CODES.KITKAT));
-		listHook.add(new XActivityManagerService(Methods.startActivityWithConfig, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XActivityManagerService(Methods.startActivities));
+		listHook.add(new XActivityManagerService(Methods.startActivity));
+		listHook.add(new XActivityManagerService(Methods.startActivityAsUser));
+		listHook.add(new XActivityManagerService(Methods.startActivityAndWait));
+		listHook.add(new XActivityManagerService(Methods.startActivityWithConfig));
 
-		listHook.add(new XActivityManagerService(Methods.inputDispatchingTimedOut, Build.VERSION_CODES.JELLY_BEAN_MR1));
-		listHook.add(new XActivityManagerService(Methods.appNotResponding, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
-		listHook.add(new XActivityManagerService(Methods.systemReady, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
-		listHook.add(new XActivityManagerService(Methods.finishBooting, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
-		listHook.add(new XActivityManagerService(Methods.setLockScreenShown, Build.VERSION_CODES.JELLY_BEAN_MR1)
-				.optional());
-		listHook.add(new XActivityManagerService(Methods.goingToSleep, Build.VERSION_CODES.JELLY_BEAN));
-		listHook.add(new XActivityManagerService(Methods.wakingUp, Build.VERSION_CODES.JELLY_BEAN));
-		listHook.add(new XActivityManagerService(Methods.shutdown, Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1));
+		listHook.add(new XActivityManagerService(Methods.inputDispatchingTimedOut));
+		listHook.add(new XActivityManagerService(Methods.appNotResponding));
+		listHook.add(new XActivityManagerService(Methods.systemReady));
+		listHook.add(new XActivityManagerService(Methods.finishBooting));
+		listHook.add(new XActivityManagerService(Methods.setLockScreenShown));
+		listHook.add(new XActivityManagerService(Methods.goingToSleep));
+		listHook.add(new XActivityManagerService(Methods.wakingUp));
+		listHook.add(new XActivityManagerService(Methods.shutdown));
 		// setLockScreenShown appears not to be present in some 4.2.2 ROMs
 
 		return listHook;

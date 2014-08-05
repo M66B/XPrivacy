@@ -14,20 +14,8 @@ public class XClipboardManager extends XHook {
 		mClassName = "com.android.server.ClipboardService";
 	}
 
-	private XClipboardManager(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name().replace("Srv_", ""), method.name(), sdk);
-		mMethod = method;
-		mClassName = "com.android.server.ClipboardService";
-	}
-
 	private XClipboardManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
-		mMethod = method;
-		mClassName = className;
-	}
-
-	private XClipboardManager(Methods method, String restrictionName, String className, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
 		mMethod = method;
 		mClassName = className;
 	}
@@ -78,12 +66,12 @@ public class XClipboardManager extends XHook {
 			for (Methods clip : Methods.values())
 				if (clip.name().startsWith("Srv_")) {
 					if (clip == Methods.Srv_removePrimaryClipChangedListener)
-						listHook.add(new XClipboardManager(clip, null, 11));
+						listHook.add(new XClipboardManager(clip, null));
 					else
 						listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard));
 				} else {
 					if (clip == Methods.removePrimaryClipChangedListener)
-						listHook.add(new XClipboardManager(clip, null, className, 11));
+						listHook.add(new XClipboardManager(clip, null, className));
 					else
 						listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard, className));
 				}

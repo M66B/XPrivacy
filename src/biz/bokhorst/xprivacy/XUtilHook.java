@@ -7,8 +7,8 @@ import android.util.Log;
 
 public class XUtilHook extends XHook {
 
-	private XUtilHook(String methodName, String restrictionName, int sdk) {
-		super(restrictionName, methodName, null, sdk);
+	private XUtilHook(String methodName, String restrictionName) {
+		super(restrictionName, methodName, null);
 	}
 
 	public String getClassName() {
@@ -18,7 +18,7 @@ public class XUtilHook extends XHook {
 	// isXposedEnabled
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XUtilHook("isXposedEnabled", null, 1));
+		listHook.add(new XUtilHook("isXposedEnabled", null));
 		return listHook;
 	}
 

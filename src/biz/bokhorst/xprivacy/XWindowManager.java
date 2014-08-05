@@ -21,12 +21,6 @@ public class XWindowManager extends XHook {
 		mClassName = className;
 	}
 
-	private XWindowManager(Methods method, String restrictionName, String className, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
-		mMethod = method;
-		mClassName = className;
-	}
-
 	public String getClassName() {
 		return mClassName;
 	}
@@ -52,8 +46,8 @@ public class XWindowManager extends XHook {
 				className = cClassName;
 
 			listHook.add(new XWindowManager(Methods.addView, PrivacyManager.cOverlay, className));
-			listHook.add(new XWindowManager(Methods.removeView, null, className, 1));
-			listHook.add(new XWindowManager(Methods.updateViewLayout, null, className, 1));
+			listHook.add(new XWindowManager(Methods.removeView, null, className));
+			listHook.add(new XWindowManager(Methods.updateViewLayout, null, className));
 		}
 		return listHook;
 	}
