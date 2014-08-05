@@ -8,7 +8,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.provider.MediaStore;
-import android.util.Log;
 
 public class XActivity extends XHook {
 	private Methods mMethod;
@@ -41,7 +40,6 @@ public class XActivity extends XHook {
 	// public boolean startActivityIfNeeded(Intent intent, int requestCode, Bundle options)
 	// public boolean startNextMatchingActivity(Intent intent)
 	// public boolean startNextMatchingActivity(Intent intent, Bundle options)
-	// TODO: double check startIntentSender ...
 	// frameworks/base/core/java/android/app/Activity.java
 
 	// @formatter:on
@@ -86,20 +84,30 @@ public class XActivity extends XHook {
 	protected void before(XParam param) throws Throwable {
 		// Get intent(s)
 		Intent[] intents = null;
-		if (mMethod == Methods.getSystemService) {
+		switch (mMethod) {
+		case getSystemService:
 			// Do nothing
-		} else if (mMethod == Methods.startActivity || mMethod == Methods.startActivityForResult
-				|| mMethod == Methods.startActivityIfNeeded || mMethod == Methods.startNextMatchingActivity) {
-			if (param.args.length > 0 && param.args[0] != null)
+			break;
+
+		case startActivity:
+		case startActivityForResult:
+		case startActivityIfNeeded:
+		case startNextMatchingActivity:
+			if (param.args.length > 0 && param.args[0] instanceof Intent)
 				intents = new Intent[] { (Intent) param.args[0] };
-		} else if (mMethod == Methods.startActivityFromChild || mMethod == Methods.startActivityFromFragment) {
-			if (param.args.length > 1 && param.args[1] != null)
+			break;
+
+		case startActivityFromChild:
+		case startActivityFromFragment:
+			if (param.args.length > 1 && param.args[1] instanceof Intent)
 				intents = new Intent[] { (Intent) param.args[1] };
-		} else if (mMethod == Methods.startActivities) {
-			if (param.args.length > 0 && param.args[0] != null)
+			break;
+
+		case startActivities:
+			if (param.args.length > 0 && param.args[0] instanceof Intent[])
 				intents = (Intent[]) param.args[0];
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 
 		// Process intent(s)
 		if (intents != null)
@@ -126,13 +134,11 @@ public class XActivity extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.getSystemService) {
-			if (param.args.length > 0 && param.args[0] != null) {
+		if (mMethod == Methods.getSystemService)
+			if (param.args.length > 0 && param.args[0] instanceof String && param.getResult() != null) {
 				String name = (String) param.args[0];
 				Object instance = param.getResult();
-				if (name != null && instance != null)
-					XPrivacy.handleGetSystemService(name, instance.getClass().getName(), getSecret());
+				XPrivacy.handleGetSystemService(name, instance.getClass().getName(), getSecret());
 			}
-		}
 	}
 }

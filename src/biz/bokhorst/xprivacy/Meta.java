@@ -509,8 +509,10 @@ public class Meta {
 		mListHook.add(new Hook(null, "Srv_query", "", 1, null, null).AOSP(19));
 
 		// ContextImpl
-		mListHook.add(new Hook(null, "getPackageManager", "", 1, null, null));
-		mListHook.add(new Hook(null, "getSystemService", "", 1, null, null));
+		mListHook.add(new Hook(null, "getPackageManager", "", 1, null, null).notAOSP(19));
+
+		// ContextImpl / Activity
+		mListHook.add(new Hook(null, "getSystemService", "", 1, null, null).notAOSP(19));
 
 		// IntentFirewall
 		mListHook.add(new Hook(null, "checkIntent", "", 19, null, null));
@@ -534,9 +536,6 @@ public class Meta {
 		// WindowManagerImpl
 		mListHook.add(new Hook(null, "removeView", "", 1, null, null));
 		mListHook.add(new Hook(null, "updateViewLayout", "", 1, null, null));
-
-		// Activity
-		mListHook.add(new Hook(null, "getSystemService", "", 1, null, null));
 
 		// ActivityRecognitionClient
 		mListHook.add(new Hook(null, "GMS.removeActivityUpdates", "", 1, null, null));
