@@ -105,14 +105,13 @@ public class XContentResolver extends XHook {
 	private enum Methods {
 		getCurrentSync, getCurrentSyncs, getSyncAdapterTypes,
 		openAssetFile, openFile, openAssetFileDescriptor, openFileDescriptor, openInputStream, openOutputStream, openTypedAssetFileDescriptor,
-		query, call,
+		query, Srv_call, Srv_query,
 		Srv_getCurrentSyncs
 	};
 	// @formatter:on
 
 	// @formatter:off
 	public static List<String> cProviderClassName = Arrays.asList(new String[] {
-		//"com.android.browser.provider.BrowserProvider2",
 		"com.android.browser.provider.BrowserProviderProxy",
 		"com.android.providers.downloads.DownloadProvider",
 		"com.android.providers.calendar.CalendarProvider2",
@@ -148,19 +147,17 @@ public class XContentResolver extends XHook {
 			listHook.add(new XContentResolver(Methods.openFile, PrivacyManager.cStorage, true));
 			listHook.add(new XContentResolver(Methods.openTypedAssetFileDescriptor, PrivacyManager.cStorage, true));
 
-			if (Hook.isAOSP(19))
-				listHook.add(new XContentResolver(Methods.query, null, "com.android.internal.telephony.IccProvider"));
-			else {
-				listHook.add(new XContentResolver(Methods.query, null, false));
-				listHook.add(new XContentResolver(Methods.query, null, true));
-			}
+			listHook.add(new XContentResolver(Methods.query, null, false));
+			listHook.add(new XContentResolver(Methods.query, null, true));
+			listHook.add(new XContentResolver(Methods.Srv_query, null, "com.android.internal.telephony.IccProvider"));
 
 			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts));
-		} else if (Hook.isAOSP(19))
+		} else {
 			if ("com.android.providers.settings.SettingsProvider".equals(className))
-				listHook.add(new XContentResolver(Methods.call, null, className));
+				listHook.add(new XContentResolver(Methods.Srv_call, null, className));
 			else
-				listHook.add(new XContentResolver(Methods.query, null, className));
+				listHook.add(new XContentResolver(Methods.Srv_query, null, className));
+		}
 
 		return listHook;
 	}
@@ -181,10 +178,11 @@ public class XContentResolver extends XHook {
 			// Do nothing
 			break;
 
-		case call:
+		case Srv_call:
 			break;
 
 		case query:
+		case Srv_query:
 			handleUriBefore(param);
 			break;
 
@@ -226,11 +224,12 @@ public class XContentResolver extends XHook {
 			}
 			break;
 
-		case call:
+		case Srv_call:
 			handleCallAfter(param);
 			break;
 
 		case query:
+		case Srv_query:
 			handleUriAfter(param);
 			break;
 

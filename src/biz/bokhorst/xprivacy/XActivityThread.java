@@ -95,10 +95,8 @@ public class XActivityThread extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 
-		if (!Hook.isAOSP(19)) {
-			listHook.add(new XActivityThread(Methods.next));
-			listHook.add(new XActivityThread(Methods.handleReceiver));
-		}
+		listHook.add(new XActivityThread(Methods.next));
+		listHook.add(new XActivityThread(Methods.handleReceiver));
 
 		return listHook;
 	}

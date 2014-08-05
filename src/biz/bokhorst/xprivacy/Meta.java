@@ -483,16 +483,17 @@ public class Meta {
 		mListHook.add(new Hook(null, "onCreate", "", 1, null, null));
 
 		// Binder
-		mListHook.add(new Hook(null, "execTransact", "", 1, null, null));
-		mListHook.add(new Hook(null, "transact", "", 1, null, null));
+		mListHook.add(new Hook(null, "execTransact", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook(null, "transact", "", 1, null, null).notAOSP(19));
 
 		// ClipboardManager / ClipboardService
 		mListHook.add(new Hook(null, "removePrimaryClipChangedListener", "", 11, null, null));
 		mListHook.add(new Hook(null, "Srv_removePrimaryClipChangedListener", "", 11, null, null));
 
 		// Provider
-		mListHook.add(new Hook(null, "call", "", 1, null, null));
-		mListHook.add(new Hook(null, "query", "", 1, null, null));
+		mListHook.add(new Hook(null, "query", "", 1, null, null).notAOSP(19));
+		mListHook.add(new Hook(null, "Srv_call", "", 1, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_query", "", 1, null, null).AOSP(19));
 
 		// ContextImpl
 		mListHook.add(new Hook(null, "getPackageManager", "", 1, null, null));
@@ -532,8 +533,8 @@ public class Meta {
 		mListHook.add(new Hook(null, "GMS.removeLocationUpdates", "", 1, null, null).optional());
 
 		// ActivityThread / MessageQueue
-		mListHook.add(new Hook(null, "next", "", 1, null, null).optional());
-		mListHook.add(new Hook(null, "handleReceiver", "", 1, null, null).optional());
+		mListHook.add(new Hook(null, "next", "", 1, null, null).notAOSP(19).optional());
+		mListHook.add(new Hook(null, "handleReceiver", "", 1, null, null).notAOSP(19).optional());
 
 		// UtilHook
 		mListHook.add(new Hook(null, "isXposedEnabled", "", 15, null, null));
