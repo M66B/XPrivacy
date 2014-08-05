@@ -36,6 +36,7 @@ Changelog
 * Prefixed *startRecording* with *Audio*
 * Renamed *setOutputFile* into *MediaRecorder.start*
 * Restructured restriction meta data
+* Fixed displaying white list entry state after scrolling ([issue](/../../issues/1850))
 * Added Croatian translation
 * Updated Slovak translation
 
