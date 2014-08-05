@@ -35,10 +35,10 @@ Changelog
 * Prefixed *startPreview* and *takePicture* with *Camera*
 * Prefixed *startRecording* with *Audio*
 * Renamed *setOutputFile* into *MediaRecorder.start*
-* Restructured restriction meta data
+* Restructured restriction meta data (no visible changes)
 * Fixed displaying white list entry state after scrolling ([issue](/../../issues/1850))
 * Added restrictions *Camera.permission*, *Record.Audio.permission* and *Record.Video.permission*
-* Removed on demand restricting check box for functions without on demand restricting
+* Hiding on demand restricting check box for functions without on demand restricting
 * Added Croatian translation
 * Updated Slovak translation
 
