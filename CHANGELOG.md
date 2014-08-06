@@ -28,6 +28,8 @@ Changelog
 
 **Next release**
 
+* Enabled on demand restricting for *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **XPrivacy 3** (not released yet)

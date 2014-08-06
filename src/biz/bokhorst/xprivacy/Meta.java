@@ -49,7 +49,7 @@ public class Meta {
 
 		// @formatter:off
 		mListHook.add(new Hook("accounts", "addOnAccountsUpdatedListener", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
-		mListHook.add(new Hook("accounts", "blockingGetAuthToken", "USE_CREDENTIALS", 5, null, null).unsafe());
+		mListHook.add(new Hook("accounts", "blockingGetAuthToken", "USE_CREDENTIALS", 5, null, null).dangerous().unsafe());
 		mListHook.add(new Hook("accounts", "getAccounts", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
 		mListHook.add(new Hook("accounts", "getAccountsByType", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
 		mListHook.add(new Hook("accounts", "getAccountsByTypeAndFeatures", "GET_ACCOUNTS", 5, null, null).notAOSP(19));
@@ -135,14 +135,14 @@ public class Meta {
 		mListHook.add(new Hook("identification", "AdvertisingId", "", 1, null, null).unsafe().optional());
 
 		mListHook.add(new Hook("identification", "getString", "", 1, null, null).notAOSP(19));
-		mListHook.add(new Hook("identification", "InputDevice.getDescriptor", "", 16, "2.2.2", "getDescriptor"));
-		mListHook.add(new Hook("identification", "InputDevice.getName", "", 9, null, null));
+		mListHook.add(new Hook("identification", "InputDevice.getDescriptor", "", 16, "2.2.2", "getDescriptor").unsafe());
+		mListHook.add(new Hook("identification", "InputDevice.getName", "", 9, null, null).unsafe());
 		mListHook.add(new Hook("identification", "GservicesProvider", "com.google.android.providers.gsf.permission.READ_GSERVICES,com.google.android.providers.gsf.permission.WRITE_GSERVICES", 1, null, null).dangerous());
 		mListHook.add(new Hook("identification", "SERIAL", "", 1, null, null).restart().noUsageData());
 
-		mListHook.add(new Hook("identification", "USB.getDeviceId", "", 12, "2.1.7", null));
-		mListHook.add(new Hook("identification", "USB.getDeviceName", "", 12, "2.1.7", null));
-		mListHook.add(new Hook("identification", "USB.getSerialNumber", "", 20, "2.1.17", null));
+		mListHook.add(new Hook("identification", "USB.getDeviceId", "", 12, "2.1.7", null).unsafe());
+		mListHook.add(new Hook("identification", "USB.getDeviceName", "", 12, "2.1.7", null).unsafe());
+		mListHook.add(new Hook("identification", "USB.getSerialNumber", "", 20, "2.1.17", null).unsafe());
 
 		mListHook.add(new Hook("identification", "Srv_Android_ID", "", 19, "2.99", "getString").AOSP(19));
 
@@ -237,9 +237,9 @@ public class Meta {
 		mListHook.add(new Hook("media", "Camera.startPreview", "CAMERA", 1, "2.2.3", "setPreviewCallback").unsafe().doNotify());
 		mListHook.add(new Hook("media", "Camera.takePicture", "CAMERA", 1, "2.2.3", "takePicture").unsafe().doNotify());
 		mListHook.add(new Hook("media", "MediaRecorder.start", "RECORD_AUDIO,RECORD_VIDEO", 1, "2.2.3", "setOutputFile").unsafe().doNotify());
-		mListHook.add(new Hook("media", "Camera.permission", "CAMERA", 1, "2.2.3", null).noOnDemand().dangerous().doNotify());
-		mListHook.add(new Hook("media", "Record.Audio.permission", "RECORD_AUDIO", 3, "2.2.3", null).noOnDemand().dangerous().doNotify());
-		mListHook.add(new Hook("media", "Record.Video.permission", "RECORD_VIDEO", 3, "2.2.3", null).noOnDemand().dangerous().doNotify());
+		mListHook.add(new Hook("media", "Camera.permission", "CAMERA", 1, "2.2.3", null).dangerous().doNotify());
+		mListHook.add(new Hook("media", "Record.Audio.permission", "RECORD_AUDIO", 3, "2.2.3", null).dangerous().doNotify());
+		mListHook.add(new Hook("media", "Record.Video.permission", "RECORD_VIDEO", 3, "2.2.3", null).dangerous().doNotify());
 
 		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE, "", 3, null, null).doNotify());
 		mListHook.add(new Hook("media", MediaStore.ACTION_IMAGE_CAPTURE_SECURE, "", 17, null, null).doNotify());
