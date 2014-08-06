@@ -1,7 +1,9 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -811,21 +813,30 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						HttpResponse response = httpclient.execute(httpost);
 						StatusLine statusLine = response.getStatusLine();
 						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-							File folder = Environment
-									.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-							folder.mkdirs();
-							String fileName = response.getFirstHeader("Content-Disposition").getElements()[0]
-									.getParameterByName("filename").getValue();
-							File download = new File(folder, fileName);
-							FileOutputStream fos = null;
-							try {
-								fos = new FileOutputStream(download);
-								response.getEntity().writeTo(fos);
-							} finally {
-								if (fos != null)
-									fos.close();
-							}
-							return download;
+							String contentType = response.getFirstHeader("Content-Type").getValue();
+							if ("application/octet-stream".equals(contentType)) {
+								File folder = Environment
+										.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+								folder.mkdirs();
+								String fileName = response.getFirstHeader("Content-Disposition").getElements()[0]
+										.getParameterByName("filename").getValue();
+								File download = new File(folder, fileName);
+								FileOutputStream fos = null;
+								try {
+									fos = new FileOutputStream(download);
+									response.getEntity().writeTo(fos);
+								} finally {
+									if (fos != null)
+										fos.close();
+								}
+								return download;
+							} else if ("application/json".equals(contentType)) {
+								ByteArrayOutputStream out = new ByteArrayOutputStream();
+								response.getEntity().writeTo(out);
+								out.close();
+								throw new IOException(out.toString("UTF-8"));
+							} else
+								throw new IOException(contentType);
 						} else
 							return statusLine;
 					} catch (Throwable ex) {
