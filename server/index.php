@@ -37,21 +37,20 @@
 	// Check if JSON request
 	parse_str($_SERVER['QUERY_STRING']);
 	if (!empty($format) && $format == 'json') {
-		// Send header
-		header('Content-Type: application/json');
-
 		// Get data
 		$ok = true;
 		$body = file_get_contents('php://input');
 		$data = json_decode($body);
 		if (empty($body) || empty($data)) {
 			log_error('json: empty request', $my_email, $data);
+			header('Content-Type: application/json');
 			echo json_encode(array('ok' => false, 'errno' => 101, 'error' => 'Empty request'));
 			exit();
 		}
 
 		// Check XPrivacy version
 		if (empty($data->xprivacy_version) || (int)$data->xprivacy_version < 219) {
+			header('Content-Type: application/json');
 			echo json_encode(array('ok' => false, 'errno' => 102, 'error' => 'Please upgrade to at least XPrivacy version 1.11'));
 			exit();
 		}
@@ -60,6 +59,7 @@
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
 			log_error('json: database connect: ' . $db->connect_error, $my_email, $data);
+			header('Content-Type: application/json');
 			echo json_encode(array('ok' => false, 'errno' => 103, 'error' => 'Error connecting to database'));
 			exit();
 		}
@@ -69,6 +69,8 @@
 
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
+			header('Content-Type: application/json');
+
 			// Validate
 			if (empty($data->android_id)) {
 				log_error('submit: Android ID missing', $my_email, $data);
@@ -236,6 +238,8 @@
 
 		// Fetch settings
 		else if (!empty($action) && $action == 'fetch') {
+			header('Content-Type: application/json');
+
 			// Check credentials
 			$signature = '';
 			if (openssl_sign($data->email, $signature, $private_key, OPENSSL_ALGO_SHA1))
@@ -352,8 +356,8 @@
 			else {
 				// Send latest
 				$apk = $folder . '/XPrivacy_' . $latest . '.apk';
-				header('Content-Description: File Transfer');
 				header('Content-Type: application/octet-stream');
+				header('Content-Description: File Transfer');
 				header('Content-Disposition: attachment; filename=' . basename($apk));
 				header('Expires: 0');
 				header('Cache-Control: must-revalidate');
