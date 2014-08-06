@@ -113,10 +113,6 @@ public class XIntentFirewall extends XHook {
 			if (isRestrictedExtra(uid, "system", "IntentFirewall", actionData))
 				return true;
 
-		// TODO: remove in 2.99
-		if (!Hook.isAOSP(19))
-			return false;
-
 		if (mapIntentRestriction.containsKey(action)) {
 			// Get restriction category
 			String restrictionName = mapIntentRestriction.get(action);

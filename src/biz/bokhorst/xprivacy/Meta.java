@@ -451,7 +451,7 @@ public class Meta {
 		mListHook.add(new Hook("system", "checkPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 		mListHook.add(new Hook("system", "checkUidPermission", "", 1, "2.1.24", null).dangerous().whitelist(cTypePermission));
 
-		mListHook.add(new Hook("system", "IntentFirewall", "", 19, "2.2.2", null).dangerous().whitelist(cTypeAction));
+		mListHook.add(new Hook("system", "IntentFirewall", "", 19, "2.2.2", null).AOSP(19).dangerous().whitelist(cTypeAction));
 
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).unsafe().whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null).unsafe());
