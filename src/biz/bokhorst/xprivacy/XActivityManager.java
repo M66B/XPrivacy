@@ -106,7 +106,7 @@ public class XActivityManager extends XHook {
 				if (listIntent.size() == 0)
 					param.setResult(0); // ActivityManager.START_SUCCESS
 				else
-					param.args[2] = listIntent.toArray();
+					param.args[2] = listIntent.toArray(new Intent[0]);
 			}
 			break;
 

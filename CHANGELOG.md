@@ -30,6 +30,7 @@ Changelog
 
 * Fixed alignment of the check boxes in the details view
 * Added menu *Check for updates* (only [Pro license](http://www.xprivacy.eu/))
+* Fixed restriction *Srv_startActivities* ([issue](/../../issues/1853))
 * Updated Dutch translation
 * Updated Simplified Chinese translation
 
