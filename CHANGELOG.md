@@ -45,7 +45,7 @@ XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 * Added restriction *Bluetooth.Srv_getName*
 * Added restriction *Srv_getCompleteVoiceMailNumber*
 * Added restriction *WiFi.Srv_getBatchedScanResults*
-* Replaced all possible unsafe restrictions by safe restrictions
+* Replaced unsafe restrictions by safe restrictions where possible (not in legacy mode)
 
 **Version 2.2.4 TEST**
 
