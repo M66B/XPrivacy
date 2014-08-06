@@ -3,7 +3,7 @@ XPrivacy
 
 The ultimate, yet easy to use, privacy manager for Android
 
-![Open source Rookie of the year](http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png)
+![Open source Rookie of the year](http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png "Open source Rookie of the year")
 ([publication](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners))
 
 Index
