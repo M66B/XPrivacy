@@ -396,7 +396,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		menu.findItem(R.id.menu_export).setEnabled(mounted);
 		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
-		menu.findItem(R.id.menu_update).setVisible(mounted && PrivacyManager.cVersion3);
+		menu.findItem(R.id.menu_update).setVisible(mounted);
 
 		// Update filter count
 
