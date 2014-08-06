@@ -10,8 +10,8 @@ import android.util.Log;
 public class XResources extends XHook {
 	private Methods mMethod;
 
-	private XResources(Methods method, int sdk) {
-		super(null, method.name(), null, sdk);
+	private XResources(Methods method) {
+		super(null, method.name(), null);
 		mMethod = method;
 	}
 
@@ -30,7 +30,7 @@ public class XResources extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XResources(Methods.updateConfiguration, 1));
+		listHook.add(new XResources(Methods.updateConfiguration));
 		return listHook;
 	}
 

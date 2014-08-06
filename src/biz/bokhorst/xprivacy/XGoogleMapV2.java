@@ -16,11 +16,6 @@ public class XGoogleMapV2 extends XHook {
 		mMethod = method;
 	}
 
-	private XGoogleMapV2(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), String.format("MapV2.%s", method.name()), sdk);
-		mMethod = method;
-	}
-
 	public String getClassName() {
 		if (mMethod == Methods.getPosition)
 			return "com.google.android.gms.maps.model.Marker";
@@ -50,7 +45,7 @@ public class XGoogleMapV2 extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods method : Methods.values())
-			listHook.add(new XGoogleMapV2(method, PrivacyManager.cLocation).optional());
+			listHook.add(new XGoogleMapV2(method, PrivacyManager.cLocation));
 		return listHook;
 	}
 

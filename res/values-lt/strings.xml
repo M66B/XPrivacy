@@ -46,6 +46,7 @@
     <string name="menu_exclude">Išskirti</string>
     <string name="menu_close">Uždaryti</string>
     <string name="menu_flush">Išvalyti talpyklą</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Nutraukti</string>
     <string name="msg_aborted">Atmesti</string>
     <string name="msg_new">Naujas</string>

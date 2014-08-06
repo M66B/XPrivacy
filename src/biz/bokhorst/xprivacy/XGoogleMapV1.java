@@ -15,11 +15,6 @@ public class XGoogleMapV1 extends XHook {
 		mMethod = method;
 	}
 
-	private XGoogleMapV1(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), String.format("MapV1.%s", method.name()), sdk);
-		mMethod = method;
-	}
-
 	public String getClassName() {
 		if (mMethod == Methods.getLatitudeE6 || mMethod == Methods.getLongitudeE6)
 			return "com.google.android.maps.GeoPoint";
@@ -44,7 +39,7 @@ public class XGoogleMapV1 extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods method : Methods.values())
-			listHook.add(new XGoogleMapV1(method, PrivacyManager.cLocation).optional());
+			listHook.add(new XGoogleMapV1(method, PrivacyManager.cLocation));
 		return listHook;
 	}
 

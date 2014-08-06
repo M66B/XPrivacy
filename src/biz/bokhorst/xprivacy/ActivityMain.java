@@ -1,6 +1,7 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -10,6 +11,18 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
+
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
@@ -97,7 +110,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
 	public static final Uri cProUri = Uri.parse("http://www.xprivacy.eu/");
-	public static final String cXUrl = "https://github.com/M66B/XPrivacy?mobile=0";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -197,7 +209,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				if (position != AdapterView.INVALID_POSITION) {
 					String query = (position == 0 ? "restrictions" : (String) PrivacyManager
 							.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
-					Util.viewUri(ActivityMain.this, Uri.parse(cXUrl + "#" + query));
+					Util.viewUri(ActivityMain.this, Uri.parse("https://github.com/M66B/XPrivacy#" + query));
 				}
 			}
 		});
@@ -384,6 +396,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		menu.findItem(R.id.menu_export).setEnabled(mounted);
 		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
+		menu.findItem(R.id.menu_update).setVisible(mounted);
 
 		// Update filter count
 
@@ -480,6 +493,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				return true;
 			case R.id.menu_pro:
 				optionPro();
+				return true;
+			case R.id.menu_update:
+				optionUpdate();
 				return true;
 			case R.id.menu_report:
 				optionReportIssue();
@@ -675,7 +691,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private void optionReportIssue() {
 		// Report issue
-		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy/issues?mobile=0"));
+		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy#support"));
 	}
 
 	private void optionExport() {
@@ -762,6 +778,80 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private void optionPro() {
 		// Redirect to pro page
 		Util.viewUri(this, cProUri);
+	}
+
+	private void optionUpdate() {
+		if (Util.hasProLicense(this) == null)
+			Util.viewUri(this, ActivityMain.cProUri);
+		else {
+			new AsyncTask<Object, Object, Object>() {
+				@Override
+				protected Object doInBackground(Object... args) {
+					try {
+						// Encode package
+						String[] license = Util.getProLicenseUnchecked();
+						boolean test = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTestVersions, false);
+						JSONObject jRoot = new JSONObject();
+						jRoot.put("test_versions", test);
+						jRoot.put("xprivacy_version", Util.getSelfVersionCode(ActivityMain.this));
+						jRoot.put("xprivacy_version_name", Util.getSelfVersionName(ActivityMain.this));
+						jRoot.put("email", license[1]);
+						jRoot.put("signature", license[2]);
+
+						// Update
+						HttpParams httpParams = new BasicHttpParams();
+						HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+						HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+						HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+						HttpPost httpost = new HttpPost(ActivityShare.getBaseURL() + "?format=json&action=update");
+						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+						httpost.setHeader("Accept", "application/json");
+						httpost.setHeader("Content-type", "application/json");
+						HttpResponse response = httpclient.execute(httpost);
+						StatusLine statusLine = response.getStatusLine();
+						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+							File folder = Environment
+									.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+							folder.mkdirs();
+							String fileName = response.getFirstHeader("Content-Disposition").getElements()[0]
+									.getParameterByName("filename").getValue();
+							File download = new File(folder, fileName);
+							FileOutputStream fos = null;
+							try {
+								fos = new FileOutputStream(download);
+								response.getEntity().writeTo(fos);
+							} finally {
+								if (fos != null)
+									fos.close();
+							}
+							return download;
+						} else
+							return statusLine;
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+						return ex;
+					}
+				}
+
+				@Override
+				protected void onPostExecute(Object result) {
+					if (result instanceof StatusLine) {
+						StatusLine status = (StatusLine) result;
+						Toast.makeText(ActivityMain.this, status.getReasonPhrase(), Toast.LENGTH_LONG).show();
+					} else if (result instanceof Throwable) {
+						Throwable ex = (Throwable) result;
+						Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG).show();
+					} else {
+						File download = (File) result;
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setDataAndType(Uri.fromFile(download), "application/vnd.android.package-archive");
+						startActivity(intent);
+					}
+
+				}
+			}.executeOnExecutor(mExecutor);
+		}
 	}
 
 	private void optionAbout() {

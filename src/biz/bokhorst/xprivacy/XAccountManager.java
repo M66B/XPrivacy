@@ -37,12 +37,6 @@ public class XAccountManager extends XHook {
 		mClassName = className;
 	}
 
-	private XAccountManager(Methods method, String restrictionName, String className, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
-		mMethod = method;
-		mClassName = className;
-	}
-
 	public String getClassName() {
 		return mClassName;
 	}
@@ -114,7 +108,7 @@ public class XAccountManager extends XHook {
 			listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
 			listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
 			listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className, 5));
+			listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className));
 		}
 		return listHook;
 	}

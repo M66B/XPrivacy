@@ -33,7 +33,7 @@ import android.util.Log;
 import android.util.SparseArray;
 
 public class PrivacyManager {
-	public static final boolean cVersion3 = false;
+	public static final boolean cVersion3 = true;
 
 	// This should correspond with restrict_<name> in strings.xml
 	public static final String cAccounts = "accounts";
@@ -129,6 +129,7 @@ public class PrivacyManager {
 	public final static String cSettingPermMan = "PermMan";
 	public final static String cSettingIntentWall = "IntentWall";
 	public final static String cSettingSafeMode = "SafeMode";
+	public final static String cSettingTestVersions = "TestVersions";
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";
@@ -163,9 +164,11 @@ public class PrivacyManager {
 		List<String> listRestriction = getRestrictions();
 		for (Hook hook : listHook) {
 			String restrictionName = hook.getRestrictionName();
+			if (restrictionName == null)
+				restrictionName = "";
 
 			// Check restriction
-			if (!listRestriction.contains(restrictionName))
+			else if (!listRestriction.contains(restrictionName))
 				if (hook.isAvailable())
 					Util.log(null, Log.WARN, "Not found restriction=" + restrictionName + " hook=" + hook);
 
@@ -193,7 +196,7 @@ public class PrivacyManager {
 							mPermission.get(aPermission).add(hook);
 					}
 		}
-		Util.log(null, Log.WARN, listHook.size() + " restrictions");
+		Util.log(null, Log.WARN, listHook.size() + " hooks");
 	}
 
 	public static List<String> getRestrictions() {
@@ -214,7 +217,8 @@ public class PrivacyManager {
 		return tmRestriction;
 	}
 
-	public static Hook getHook(String restrictionName, String methodName) {
+	public static Hook getHook(String _restrictionName, String methodName) {
+		String restrictionName = (_restrictionName == null ? "" : _restrictionName);
 		if (mMethod.containsKey(restrictionName))
 			if (mMethod.get(restrictionName).containsKey(methodName))
 				return mMethod.get(restrictionName).get(methodName);
@@ -225,8 +229,16 @@ public class PrivacyManager {
 		List<Hook> listMethod = new ArrayList<Hook>();
 		for (String methodName : mMethod.get(restrictionName).keySet()) {
 			Hook hook = mMethod.get(restrictionName).get(methodName);
-			if (hook.isAvailable())
-				listMethod.add(mMethod.get(restrictionName).get(methodName));
+			if (!hook.isAvailable())
+				continue;
+			else if ("IntentFirewall".equals(hook.getName())) {
+				if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingIntentWall, false))
+					continue;
+			} else if ("checkPermission".equals(hook.getName()) || "checkUidPermission".equals(hook.getName())) {
+				if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
+					continue;
+			}
+			listMethod.add(mMethod.get(restrictionName).get(methodName));
 		}
 		Collections.sort(listMethod);
 		return listMethod;
@@ -372,7 +384,7 @@ public class PrivacyManager {
 		// Result
 		long ms = System.currentTimeMillis() - start;
 		Util.log(hook, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN,
-				String.format("get client %s%s %d ms", result, (cached ? " (cached)" : ""), ms));
+				String.format("Get client %s%s %d ms", result, (cached ? " (cached)" : ""), ms));
 
 		return result.restricted;
 	}
@@ -770,7 +782,7 @@ public class PrivacyManager {
 		long ms = System.currentTimeMillis() - start;
 		if (!willExpire && !cSettingLog.equals(name))
 			Util.log(null, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN, String.format(
-					"get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value, (cached ? " (cached)" : ""), ms));
+					"Get setting uid=%d %s/%s=%s%s %d ms", uid, type, name, value, (cached ? " (cached)" : ""), ms));
 
 		return value;
 	}
@@ -908,7 +920,8 @@ public class PrivacyManager {
 
 		// Phone
 		if (name.equals("PhoneNumber") || name.equals("getLine1AlphaTag") || name.equals("getLine1Number")
-				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber")) {
+				|| name.equals("getMsisdn") || name.equals("getVoiceMailAlphaTag") || name.equals("getVoiceMailNumber")
+				|| name.equals("getCompleteVoiceMailNumber")) {
 			String value = getSetting(uid, cSettingPhone, cDeface);
 			return (cValueRandom.equals(value) ? getRandomProp("PHONE") : value);
 		}
@@ -951,7 +964,7 @@ public class PrivacyManager {
 		if (name.equals("getSimOperatorName"))
 			return getSetting(uid, cSettingOperator, cDeface);
 
-		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber"))
+		if (name.equals("getSimSerialNumber") || name.equals("getIccSerialNumber") || name.equals("getIccSerialNumber"))
 			return getSetting(uid, cSettingIccId, null);
 
 		if (name.equals("getSubscriberId")) { // IMSI for a GSM phone
@@ -1062,6 +1075,9 @@ public class PrivacyManager {
 		if (name.equals("USB"))
 			return cDeface;
 
+		if (name.equals("BTName"))
+			return cDeface;
+
 		// Fallback
 		Util.log(null, Log.ERROR, "Fallback value name=" + name);
 		Util.logStack(null, Log.ERROR);
@@ -1120,7 +1136,7 @@ public class PrivacyManager {
 			return sb.toString().toUpperCase();
 		}
 
-		// IMEI
+		// IMEI/MEID
 		if (name.equals("IMEI")) {
 			// http://en.wikipedia.org/wiki/Reporting_Body_Identifier
 			String[] rbi = new String[] { "00", "01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "30", "33",

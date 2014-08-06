@@ -112,8 +112,8 @@ public class XBinder extends XHook {
 	});
 	// @formatter:on
 
-	private XBinder(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
+	private XBinder(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
 		mMethod = method;
 	}
 
@@ -147,8 +147,8 @@ public class XBinder extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XBinder(Methods.execTransact, null, 1)); // Binder
-		listHook.add(new XBinder(Methods.transact, null, 1)); // BinderProxy
+		listHook.add(new XBinder(Methods.execTransact, null)); // Binder
+		listHook.add(new XBinder(Methods.transact, null)); // BinderProxy
 		return listHook;
 	}
 
@@ -158,12 +158,10 @@ public class XBinder extends XHook {
 			// execTransact calls the overridden onTransact
 
 			// Check for direct IPC
-			if (!Hook.isAOSP(19))
-				checkIPC(param);
+			checkIPC(param);
 
 		} else if (mMethod == Methods.transact) {
-			if (!Hook.isAOSP(19))
-				markIPC(param);
+			markIPC(param);
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());

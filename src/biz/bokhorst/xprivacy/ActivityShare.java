@@ -283,7 +283,7 @@ public class ActivityShare extends ActivityBase {
 				cbClear.setVisibility(View.VISIBLE);
 
 		} else if (action.equals(ACTION_FETCH)) {
-			tvDescription.setText(getBaseURL(ActivityShare.this));
+			tvDescription.setText(getBaseURL());
 			cbClear.setVisibility(View.VISIBLE);
 
 		} else if (action.equals(ACTION_TOGGLE)) {
@@ -314,7 +314,7 @@ public class ActivityShare extends ActivityBase {
 				rbTemplateFull.setChecked(true);
 
 		} else
-			tvDescription.setText(getBaseURL(ActivityShare.this));
+			tvDescription.setText(getBaseURL());
 
 		if (mInteractive) {
 			// Enable ok
@@ -537,9 +537,8 @@ public class ActivityShare extends ActivityBase {
 				@Override
 				public void onClick(View view) {
 					// Packages can be selected on the web site
-					Util.viewUri(ActivityShare.this, Uri.parse(String.format(
-							ActivityShare.getBaseURL(ActivityShare.this) + "?package_name=%s", xApp.appInfo
-									.getPackageName().get(0))));
+					Util.viewUri(ActivityShare.this, Uri.parse(String.format(ActivityShare.getBaseURL()
+							+ "?package_name=%s", xApp.appInfo.getPackageName().get(0))));
 				}
 			});
 
@@ -1319,7 +1318,7 @@ public class ActivityShare extends ActivityBase {
 						HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-						HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=fetch");
+						HttpPost httpost = new HttpPost(getBaseURL() + "?format=json&action=fetch");
 						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 						httpost.setHeader("Accept", "application/json");
 						httpost.setHeader("Content-type", "application/json");
@@ -1591,7 +1590,7 @@ public class ActivityShare extends ActivityBase {
 						HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-						HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=submit");
+						HttpPost httpost = new HttpPost(getBaseURL() + "?format=json&action=submit");
 						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 						httpost.setHeader("Accept", "application/json");
 						httpost.setHeader("Content-type", "application/json");
@@ -1745,7 +1744,7 @@ public class ActivityShare extends ActivityBase {
 				HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-				HttpPost httpost = new HttpPost(getBaseURL(null) + "device?format=json&action=register");
+				HttpPost httpost = new HttpPost(getBaseURL() + "device?format=json&action=register");
 				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 				httpost.setHeader("Accept", "application/json");
 				httpost.setHeader("Content-type", "application/json");
@@ -1884,7 +1883,7 @@ public class ActivityShare extends ActivityBase {
 		btnOk.setEnabled(true);
 	}
 
-	public static String getBaseURL(Context context) {
+	public static String getBaseURL() {
 		int userId = Util.getUserId(Process.myUid());
 		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingHttps, true))
 			return HTTPS_BASE_URL;

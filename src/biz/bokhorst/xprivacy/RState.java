@@ -51,8 +51,11 @@ public class RState {
 				for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
 					allRestricted = (allRestricted && restriction.restricted);
 					someRestricted = (someRestricted || restriction.restricted);
-					allAsk = (allAsk && !restriction.asked);
-					someAsk = (someAsk || !restriction.asked);
+					Hook hook = PrivacyManager.getHook(restrictionName, restriction.methodName);
+					if (hook == null || hook.canOnDemand()) {
+						allAsk = (allAsk && !restriction.asked);
+						someAsk = (someAsk || !restriction.asked);
+					}
 				}
 				asked = query.asked;
 			}

@@ -158,8 +158,8 @@ public class ActivityApp extends ActivityBase {
 			@Override
 			public void onClick(View view) {
 				// Packages can be selected on the web site
-				Util.viewUri(ActivityApp.this, Uri.parse(String.format(ActivityShare.getBaseURL(ActivityApp.this)
-						+ "?package_name=%s", mAppInfo.getPackageName().get(0))));
+				Util.viewUri(ActivityApp.this, Uri.parse(String.format(ActivityShare.getBaseURL() + "?package_name=%s",
+						mAppInfo.getPackageName().get(0))));
 			}
 		});
 
@@ -1105,6 +1105,7 @@ public class ActivityApp extends ActivityBase {
 					// Toggle white/black list entry
 					holder.ctvName.toggle();
 					boolean isChecked = holder.ctvName.isChecked();
+					mMapWhitelists.get(mSelectedType).put(name, isChecked);
 					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, Boolean.toString(isChecked));
 				}
 			});
@@ -1579,7 +1580,7 @@ public class ActivityApp extends ActivityBase {
 					holder.imgGranted.setVisibility(permission ? View.VISIBLE : View.INVISIBLE);
 
 					// Show whitelist icon
-					holder.imgMethodWhitelist.setVisibility(whitelist ? View.VISIBLE : View.GONE);
+					holder.imgMethodWhitelist.setVisibility(whitelist ? View.VISIBLE : View.INVISIBLE);
 					if (whitelist)
 						holder.imgMethodWhitelist.setOnClickListener(new View.OnClickListener() {
 							@Override
@@ -1597,7 +1598,7 @@ public class ActivityApp extends ActivityBase {
 					// Show asked state
 					if (ondemand) {
 						holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
-						holder.imgCbMethodAsk.setVisibility(View.VISIBLE);
+						holder.imgCbMethodAsk.setVisibility(md.canOnDemand() ? View.VISIBLE : View.INVISIBLE);
 					} else
 						holder.imgCbMethodAsk.setVisibility(View.GONE);
 
@@ -1762,14 +1763,13 @@ public class ActivityApp extends ActivityBase {
 			}
 
 			// Show if unsafe
-			holder.imgUnsafe.setVisibility(hook != null && hook.isUnsafe() ? View.VISIBLE : View.GONE);
+			holder.imgUnsafe.setVisibility(hook != null && hook.isUnsafe() ? View.VISIBLE : View.INVISIBLE);
 
 			// Hide whitelist icon
-			holder.imgMethodWhitelist.setVisibility(View.GONE);
+			holder.imgMethodWhitelist.setVisibility(View.INVISIBLE);
 
 			// Display restriction
 			holder.llMethodName.setClickable(false);
-			holder.imgMethodWhitelist.setVisibility(View.GONE);
 			holder.imgCbMethodRestricted.setVisibility(View.INVISIBLE);
 			holder.imgCbMethodAsk.setVisibility(View.INVISIBLE);
 

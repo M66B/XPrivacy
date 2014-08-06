@@ -67,15 +67,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// Xposed
 	public void initZygote(StartupParam startupParam) throws Throwable {
-		Util.log(null, Log.WARN, String.format("Load %s", startupParam.modulePath));
-
 		// Check for LBE security master
 		if (Util.hasLBE()) {
 			Util.log(null, Log.ERROR, "LBE installed");
 			return;
 		}
 
-		init();
+		init(startupParam.modulePath);
 	}
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
@@ -83,16 +81,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (Util.hasLBE())
 			return;
 
-		// Log load
-		Util.log(null, Log.INFO, String.format("Load package=%s uid=%d", lpparam.packageName, Process.myUid()));
-
 		handleLoadPackage(lpparam.packageName, lpparam.classLoader, mSecret);
 	}
 
 	// Cydia
 	public static void initialize() {
 		mCydia = true;
-		init();
+		init(null);
 
 		// Self
 		MS.hookClassLoad(Util.class.getName(), new MS.ClassLoadHook() {
@@ -113,6 +108,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					hookAll(XContentResolver.getInstances(className), clazz.getClassLoader(), mSecret);
 				}
 			});
+
+		// Phone interface manager
+		MS.hookClassLoad("com.android.phone", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XTelephonyManager.getPhoneInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
 
 		// Advertising Id
 		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient", new MS.ClassLoadHook() {
@@ -164,9 +167,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	// Common
-	private static void init() {
-		Util.log(null, Log.WARN, "isAOSP=" + Hook.isAOSP(Build.VERSION_CODES.KITKAT) + " host=" + Build.HOST
-				+ " display=" + Build.DISPLAY);
+	private static void init(String path) {
+		Util.log(null, Log.WARN, "Init path=" + path + " AOSP=" + Hook.isAOSP(Build.VERSION_CODES.KITKAT) + " host="
+				+ Build.HOST + " display=" + Build.DISPLAY);
 
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
@@ -255,9 +258,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// IO bridge
 		hookAll(XIoBridge.getInstances(), null, mSecret);
 
-		// Link address
-		hookAll(XLinkAddress.getInstances(), null, mSecret);
-
 		// Location manager
 		hookAll(XLocationManager.getInstances(null), null, mSecret);
 
@@ -327,6 +327,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	private static void handleLoadPackage(String packageName, ClassLoader classLoader, String secret) {
+		Util.log(null, Log.INFO, "Load package=" + packageName + " uid=" + Process.myUid());
+
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
 		if (packageName.equals(self)) {
@@ -348,6 +350,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		for (String className : XContentResolver.cProviderClassName)
 			if (className.startsWith(packageName))
 				hookAll(XContentResolver.getInstances(className), classLoader, secret);
+
+		// Phone interface manager
+		if ("com.android.phone".equals(packageName))
+			hookAll(XTelephonyManager.getPhoneInstances(), classLoader, secret);
 
 		// Advertising Id
 		try {
@@ -437,35 +443,18 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
-		// Check SDK version
-		Hook md = null;
-		String message = null;
-		if (hook.getRestrictionName() == null) {
-			if (hook.getSdk() == 0)
-				message = "No SDK specified for " + hook;
-		} else {
-			md = PrivacyManager.getHook(hook.getRestrictionName(), hook.getSpecifier());
-			if (md == null)
-				message = "Hook not found " + hook;
-			else if (hook.getSdk() != 0)
-				message = "SDK not expected for " + hook;
-		}
-		if (message != null) {
+		// Get meta data
+		Hook md = PrivacyManager.getHook(hook.getRestrictionName(), hook.getSpecifier());
+		if (md == null) {
+			String message = "Not found hook=" + hook;
 			mListHookError.add(message);
 			Util.log(hook, Log.ERROR, message);
-		}
-
-		if (secret == null)
-			Util.log(hook, Log.ERROR, "Secret missing for " + hook);
-
-		// Check if available on this platform
-		if (hook.getRestrictionName() == null)
-			if (Build.VERSION.SDK_INT < hook.getSdk())
-				return;
-		if (md != null && !md.isAvailable())
+		} else if (!md.isAvailable())
 			return;
 
 		// Provide secret
+		if (secret == null)
+			Util.log(hook, Log.ERROR, "Secret missing hook=" + hook);
 		hook.setSecret(secret);
 
 		try {
@@ -477,9 +466,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				else
 					hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
-				message = String.format("Class not found for %s", hook);
+				String message = "Class not found hook=" + hook;
 				mListHookError.add(message);
-				Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, message);
+				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
+				Util.log(hook, level, message);
+				Util.logStack(hook, level);
 			}
 
 			// Get members
@@ -523,10 +514,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Check if members found
 			if (listMember.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
-				message = String.format("Method not found for %s", hook);
-				if (!hook.isOptional())
+				String message = "Method not found hook=" + hook;
+				if (md == null || !md.isOptional())
 					mListHookError.add(message);
-				Util.log(hook, hook.isOptional() ? Log.WARN : Log.ERROR, message);
+				Util.log(hook, md != null && md.isOptional() ? Log.WARN : Log.ERROR, message);
 			}
 		} catch (Throwable ex) {
 			mListHookError.add(ex.toString());

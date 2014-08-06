@@ -9,7 +9,6 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
-import android.os.Build;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
@@ -60,8 +59,8 @@ public class XIntentFirewall extends XHook {
 		mapIntentRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, PrivacyManager.cSystem);
 	}
 
-	private XIntentFirewall(Methods method, int sdk) {
-		super(null, method.name(), null, sdk);
+	private XIntentFirewall(Methods method) {
+		super(null, method.name(), null);
 		mMethod = method;
 	}
 
@@ -82,7 +81,7 @@ public class XIntentFirewall extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XIntentFirewall(Methods.checkIntent, Build.VERSION_CODES.KITKAT));
+		listHook.add(new XIntentFirewall(Methods.checkIntent));
 		return listHook;
 	}
 
@@ -113,9 +112,6 @@ public class XIntentFirewall extends XHook {
 		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingIntentWall, false))
 			if (isRestrictedExtra(uid, "system", "IntentFirewall", actionData))
 				return true;
-
-		if (!Hook.isAOSP(19))
-			return false;
 
 		if (mapIntentRestriction.containsKey(action)) {
 			// Get restriction category

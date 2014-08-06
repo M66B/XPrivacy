@@ -1,0 +1,234 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_notxposed">Xposed framework verzija %1$d+ nije instalirana</string>
+    <string name="app_notenabled">XPrivacy modul nije uključen u Xposed installeru</string>
+    <string name="app_wrongandroid">Samo za Android verziju 4.0.3+</string>
+    <string name="app_incompatible">XPrivacy nije kompatibilan s %1$s</string>
+    <string name="app_version">XPrivacy verzija: %1$s (%2$d)</string>
+    <string name="app_description">Ultimativni upravitelj privatnošću</string>
+    <string name="app_xversion">Xposed framework verzija: %1$d</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_licensed">Licenca odobrena, hvala vam na vašoj podršci!</string>
+    <string name="menu_usage">Podaci korištenja</string>
+    <string name="menu_refresh">Osvježi</string>
+    <string name="menu_settings">Podešenja</string>
+    <string name="menu_template">Predložak</string>
+    <string name="menu_report">Prijavi problem</string>
+    <string name="menu_export">Izvezi</string>
+    <string name="menu_import">Uvezi</string>
+    <string name="menu_submit">Predaj ograničenja</string>
+    <string name="menu_fetch">Dobavi ograničenja</string>
+    <string name="menu_theme">Promijeni temu</string>
+    <string name="menu_pro">Pro verzija</string>
+    <string name="menu_about">O aplikaciji</string>
+    <string name="menu_help">Pomoć</string>
+    <string name="menu_select_all">Označi sve</string>
+    <string name="menu_sort">Sortiraj</string>
+    <string name="menu_filter">Filtriraj</string>
+    <string name="menu_all">Sve</string>
+    <string name="menu_toggle">Uključi/Isključi ograničenja</string>
+    <string name="menu_clear_all">Izbriši sve</string>
+    <string name="menu_restrict_all">Ograniči sve</string>
+    <string name="menu_clear_usage">Izbriši</string>
+    <string name="menu_clear_db">Izbriši sve XPrivacy podatke</string>
+    <string name="menu_usage_all">Uključi/Isključi filter</string>
+    <string name="menu_apply">Primijeni predložak</string>
+    <string name="menu_clear">Izbriši</string>
+    <string name="menu_app_launch">Otvori</string>
+    <string name="menu_app_settings">Podešenja</string>
+    <string name="menu_app_store">Trgovina Play</string>
+    <string name="menu_app_kill">Zatvori</string>
+    <string name="menu_accounts">Odaberi dopuštene korisničke račune</string>
+    <string name="menu_applications">Odaberi dopuštene aplikacije</string>
+    <string name="menu_contacts">Odaberi dopuštene kontakte</string>
+    <string name="menu_whitelists">Odredi liste dopuštenih</string>
+    <string name="menu_tutorial">Vodič</string>
+    <string name="menu_exclude">Isključi iz odabira</string>
+    <string name="menu_close">Zatvori</string>
+    <string name="menu_flush">Izbriši cache memoriju</string>
+    <string name="menu_update">Check for updates</string>
+    <string name="msg_abort">Zaustavljam</string>
+    <string name="msg_aborted">Zaustavljeno</string>
+    <string name="msg_new">Novo</string>
+    <string name="msg_update">Ažuriranje</string>
+    <string name="msg_loading">Učitavam &#8230;</string>
+    <string name="msg_applying">Primijenjujem &#8230;</string>
+    <string name="msg_applied">Predložak primijenjen</string>
+    <string name="msg_saved_to">Spremljeno u %1$s</string>
+    <string name="msg_no_restrictions">Nisu nađene restrikcije</string>
+    <string name="msg_sure">Jeste li sigurni?</string>
+    <string name="msg_select">Molimo odaberite aplikacije</string>
+    <string name="msg_limit">Molimo odaberite manje od %1$d aplikacija</string>
+    <string name="msg_done">Gotovo</string>
+    <string name="msg_reboot">Uređaj zahtijeva ponovno pokretanje</string>
+    <string name="msg_random_now">Primijeni nasumični odabir sada</string>
+    <string name="msg_random_access">Primijeni nasumični odabir pri pristupu</string>
+    <string name="msg_random_boot">Primijeni nasumični odabir pri pokretanju</string>
+    <string name="msg_restart">Aplikacija zahtijeva ponovno pokretanje</string>
+    <string name="msg_register">Molimo registrirajte vaš uređaj</string>
+    <string name="msg_email">Molimo unesite vašu e-mail addresu:</string>
+    <string name="msg_registered">Provjerite svoj e-mail kako bi aktivirali vaš uređaj</string>
+    <string name="msg_service">Usluga ažuriranja u tijeku</string>
+    <string name="msg_migrating">Prebacujem %1$s</string>
+    <string name="msg_randomizing">Primijenjujem nasumični odabir %1$s</string>
+    <string name="msg_upgrading">Nadograđujem %1$s</string>
+    <string name="msg_support_info">Interna kontrola nije uspjela, želite li poslati informacije za podršku?</string>
+    <string name="msg_restrictedby">Ograničeno od strane Xprivacy-a</string>
+    <string name="msg_service_missing">Xprivacy usluga nije pronađena; jeste li uključili XPrivacy modul u Xposed Installer-u i ponovno pokrenuli svoj uređaj?</string>
+    <string name="msg_service_version">Verzija XPrivacy usluge ne odgovara; jeste li ponovno pokrenuli svoj uređaj nakon nadogradnje Xprivacy-a?</string>
+    <string name="msg_first"><b>Unatoč velikoj pažnji koja je bila potrebna da bi se razvio i testirao Xprivacy, nemoguće je garantirati da će raditi savršeno na svakom uređaju i/ili za svaku aplikaciju.
+\n\nKoristiti isključivo na vlastitu odgovornost.</b>\n\nTakođer pogledati licencu:</string>
+    <string name="restrict_accounts" tools:ignore="UnusedResources">Korisnički računi</string>
+    <string name="restrict_browser" tools:ignore="UnusedResources">Internet preglednik</string>
+    <string name="restrict_calendar" tools:ignore="UnusedResources">Kalendar</string>
+    <string name="restrict_calling" tools:ignore="UnusedResources">Pozivi</string>
+    <string name="restrict_clipboard" tools:ignore="UnusedResources">Međuspremnik</string>
+    <string name="restrict_contacts" tools:ignore="UnusedResources">Kontakti</string>
+    <string name="restrict_dictionary" tools:ignore="UnusedResources">Rječnik</string>
+    <string name="restrict_email" tools:ignore="UnusedResources">E-mail</string>
+    <string name="restrict_identification" tools:ignore="UnusedResources">Identifikacija</string>
+    <string name="restrict_internet" tools:ignore="UnusedResources">Internet</string>
+    <string name="restrict_location" tools:ignore="UnusedResources">Lokacija</string>
+    <string name="restrict_media" tools:ignore="UnusedResources">Mediji</string>
+    <string name="restrict_messages" tools:ignore="UnusedResources">Poruke</string>
+    <string name="restrict_network" tools:ignore="UnusedResources">Mreža</string>
+    <string name="restrict_notifications" tools:ignore="UnusedResources">Notifikacije</string>
+    <string name="restrict_overlay" tools:ignore="UnusedResources">Prekrivanje</string>
+    <string name="restrict_phone" tools:ignore="UnusedResources">Telefon</string>
+    <string name="restrict_sensors" tools:ignore="UnusedResources">Senzori</string>
+    <string name="restrict_storage" tools:ignore="UnusedResources">Memorija</string>
+    <string name="restrict_shell" tools:ignore="UnusedResources">Ljuska</string>
+    <string name="restrict_system" tools:ignore="UnusedResources">Sustav</string>
+    <string name="restrict_view" tools:ignore="UnusedResources">Pregled</string>
+    <string name="restrict_help_view">Ograničava pristup pregledu akcija i informacija</string>
+    <string name="restrict_help_system">Ograničava pristup informacijama sustava, poput liste instaliranih aplikacija</string>
+    <string name="restrict_help_shell">Ograničava pristup naredbama ljuske, poput superuser pristupa</string>
+    <string name="restrict_help_storage">Ograničava pristup memoriji, poput datoteka na SD kartici ili internoj memoriji</string>
+    <string name="restrict_help_sensors">Ograničava pristup senzorima, poput senzora za automatsku rotaciju</string>
+    <string name="restrict_help_phone">Ograničava pristup informacijama telefona, poput vašeg telefonskog broja</string>
+    <string name="restrict_help_overlay">Ograničava od prekrivanja i mrežne krađe identiteta</string>
+    <string name="restrict_help_notifications">Ograničava pristup notifikacijama korisnika i sustava i Google cloud poruka</string>
+    <string name="restrict_help_nfc">Ograničava pristup NFC-u</string>
+    <string name="restrict_help_network">Ograničava pristup mrežnim informacijama, poput IP i MAC adresa kao i stanja Wi-Fi mreže</string>
+    <string name="restrict_help_messages">Ograničava pristup porukama (SMS i MMS) kao i govornoj pošti</string>
+    <string name="restrict_help_media">Ograničava pristup kameri (foto i video) kao i mikrofonu</string>
+    <string name="restrict_help_location">Ograničava pristup gruboj i finoj lokaciji</string>
+    <string name="restrict_help_ipc">Ograničava komunikaciju između procesa, koja se koristi za zaobilaženje drugih ograničenja</string>
+    <string name="restrict_help_internet">Ograničava pristup internetu</string>
+    <string name="restrict_help_identification">Ograničava informacije koje vas mogu identificirati, poput serijskog broja vašeg uređaja</string>
+    <string name="restrict_help_email">Ograničava pristup e-mail informacijama, poput adresa i poruka (samo standardna i G-mail applikacija)</string>
+    <string name="restrict_help_dictionary">Ograničava pristup korisničkom rječniku</string>
+    <string name="restrict_help_contacts">Ograničava pristup vašim kontaktima i njihovim informacijama</string>
+    <string name="restrict_help_clipboard">Ograničava pristup informacijama u međuspremniku</string>
+    <string name="restrict_help_calling">Ograničava od uspostavljanja poziva, slanja poruka (SMS/MMS) i pristupa listi poziva</string>
+    <string name="restrict_help_calendar">Ograničava pristup informacijama kalendara, poput zakazanih događaja</string>
+    <string name="restrict_help_browser">Ograničava pristup informacijama internet preglednika, poput povijesti i skidanja</string>
+    <string name="restrict_help_accounts">Ograničava pristup korisničkim računima poput vašeg Google računa koji sadrži vašu Gmail adresu</string>
+    <string name="whitelist_address" tools:ignore="UnusedResources">Adrese</string>
+    <string name="whitelist_action">Akcija</string>
+    <string name="whitelist_ipaddress" tools:ignore="UnusedResources">IP adrese</string>
+    <string name="whitelist_library" tools:ignore="UnusedResources">Tvorničke baze podataka</string>
+    <string name="whitelist_method" tools:ignore="UnusedResources">Imena metoda</string>
+    <string name="whitelist_filename" tools:ignore="UnusedResources">Imena datoteka</string>
+    <string name="whitelist_command" tools:ignore="UnusedResources">Naredbe ljuske</string>
+    <string name="whitelist_url" tools:ignore="UnusedResources">URL-ovi</string>
+    <string name="whitelist_transaction" tools:ignore="UnusedResources">Transakcije</string>
+    <string name="whitelist_permission">Dozvole</string>
+    <string name="title_restrict">Odabrati za ograničenje:</string>
+    <string name="title_check_whitelist">Odabrati za dopuštenje:</string>
+    <string name="title_fused">Filter po korištenju podataka</string>
+    <string name="title_finternet">Filter po internet pristupu</string>
+    <string name="title_fpermission">Filter po dozvoli</string>
+    <string name="title_frestricted">Filter po ograničenom</string>
+    <string name="title_fuser">Filter po aplikacijama korisnika</string>
+    <string name="title_fondemand">Filter po odabranim na zahtjev</string>
+    <string name="title_fsystem">Filter po aplikacijama sustava</string>
+    <string name="title_fnot">Negiraj</string>
+    <string name="title_sname">Po imenu</string>
+    <string name="title_suid">Po uid-u</string>
+    <string name="title_sinstalled">Po datumu instalacije</string>
+    <string name="title_supdated">Po datumu ažuriranja</string>
+    <string name="title_smodified">Po datumu zadnje promjene (XPrivacy)</string>
+    <string name="title_sstate">Po stanju (XPrivacy)</string>
+    <string name="title_sinvert">Obrni red sortiranja</string>
+    <string name="title_attempt">Pokušaj korištenja:</string>
+    <string name="title_category">Kategorija:</string>
+    <string name="title_function">Funkcija:</string>
+    <string name="title_parameters">Parametri:</string>
+    <string name="title_applycat">Primijeni na cijelu kategoriju</string>
+    <string name="title_once">Jednom svakih %1$s sekundi</string>
+    <string name="title_whitelist">Dodaj na listu dopuštenih/ograničenih &#8216;%1$s&#8217;</string>
+    <string name="title_allow">Dopusti</string>
+    <string name="title_deny">Zabrani</string>
+    <string name="title_dontknow">Ne znam</string>
+    <string name="title_pleasesubmit">Molimo izvezite vaša ograničenja kako bi pomogli drugima</string>
+    <string name="title_permissions">Dozvole</string>
+    <string name="title_set_restrict">Ograniči (kategorije)</string>
+    <string name="title_template_category">Primijeni predložak (kategorije)</string>
+    <string name="title_template_full">Primijeni predložak (kategorije+funkcije)</string>
+    <string name="title_template_merge">Primijeni predložak (spajanje)</string>
+    <string name="title_enable_ondemand">Uključi ograničenje na zahtjev</string>
+    <string name="title_disable_ondemand">Isključi ograničenje na zahtjev</string>
+    <string name="title_ondemand_default">Odbrojavanje:</string>
+    <string name="title_ondemand_reset">Reset</string>
+    <string name="title_default">Početne vrijednosti</string>
+    <string name="title_alternate">Izmjeni</string>
+    <string name="title_usage_header">Korištenje</string>
+    <string name="title_usage_text_1">1. Nađite aplikaciju koju želite ograničiti u listi aplikacija</string>
+    <string name="title_usage_text_2">2. Dodirnite ikonu aplikacije</string>
+    <string name="title_usage_text_3">3. Dodirnite prvu kućicu kategorije koju želite ograničiti</string>
+    <string name="title_usage_footer">Koristite zdrav razum kada ograničavate, nemojte očekivati pristup internetu ukoliko ste ograničili ketgoriju interneta, itd.</string>
+    <string name="title_toggle_dangerous">Dodirnite i zadržite na naslov za uključenje/isključenje opasnih funckija</string>
+    <string name="title_ondemand_category">Primjena na kategoriji će resetirati iznimke u funkciji na početne vrijednosti</string>
+    <string name="title_function_help">Dokumenacija funkcija</string>
+    <string name="title_unsafe">je nesigurno, moguće zaobići</string>
+    <string name="settings_serial">Serijski broj#</string>
+    <string name="settings_lat">Geografska širina</string>
+    <string name="settings_lon">Geografska dužina</string>
+    <string name="settings_alt">Geografska visina</string>
+    <string name="settings_mac">MAC adresa</string>
+    <string name="settings_ip">IP adresa</string>
+    <string name="settings_phone">Broj mobitela</string>
+    <string name="settings_id">Android ID</string>
+    <string name="settings_adid">ID oglašavanja</string>
+    <string name="settings_country">Država</string>
+    <string name="settings_operator">Mrežni operater</string>
+    <string name="settings_subscriber">ID pretplatnika</string>
+    <string name="settings_ua">Korisnički posrednik</string>
+    <string name="settings_general">Općenito</string>
+    <string name="settings_fake_data">Lažni podaci</string>
+    <string name="settings_notify">Ažuriranje notifikacija</string>
+    <string name="settings_ondemand">Ograniči na zahtjev</string>
+    <string name="settings_blacklist">Dodavanje korisničkih računa, aplikacija i kontakata na listu ograničenih</string>
+    <string name="settings_log">Debug zapisnik (zahtijeva ponovno pokretanje)</string>
+    <string name="settings_expert">Način rada za eksperte</string>
+    <string name="settings_confidence">Maksimalni interval dohvata</string>
+    <string name="settings_experimental">Eksperimentalne funkcije (zahtijeva ponovno pokretanje)</string>
+    <string name="settings_https">Koristi sigurna povezivanja</string>
+    <string name="settings_syscomponents">Ograniči komponente sustava (Android)</string>
+    <string name="settings_usagedata">Prikaži parametre o korištenju podataka od strane aplikacija</string>
+    <string name="settings_parameters">Prikaži parametre o korištenju podataka</string>
+    <string name="settings_cid">ID GSM stanice</string>
+    <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Dosjetke</string>
+    <string name="help_longpress">Dodirnite i zadržite na ime za odabir</string>
+    <string name="help_ondemand">ograničenja će biti na upit</string>
+    <string name="help_application">Aplikacija</string>
+    <string name="help_internet">ima pristup internetu</string>
+    <string name="help_granted">ima Android dozvole</string>
+    <string name="help_used">ovi podaci su korišteni</string>
+    <string name="help_used_grayed">nema podataka o korištenju</string>
+    <string name="help_frozen">je onemogućeno</string>
+    <string name="help_dangerous">je opasno, ograničavanje može uzrokovati probleme</string>
+    <string name="help_half">djelomično ograničeno</string>
+    <string name="help_attention">ograničenja zahtijevaju pažnju</string>
+    <string name="help_restricted">ograničenja su promijenjena</string>
+    <string name="help_shared">ograničenja su izvezena</string>
+    <string name="tutorial_mainheader">Odaberite kategoriju za ograničiti</string>
+    <string name="tutorial_mainlist">Dodirnite kućicu za ograničavanje odabrane kategorije za aplikaciju\n\nAplikacijama će biti predani prazne ili lažni podaci\n\nDodirnite ikonu aplikacije za detaljan prikaz ograničenja i podešenja</string>
+    <string name="tutorial_detailsheader">Odaberite ikonu aplikacije za više mogućnosti</string>
+    <string name="tutorial_detailslist">Odaberite strelicu dole da bi vidjeli funkcijske iznimke određene kategorije ograničenja</string>
+    <string name="permission_manage">Upravljanje aplikacijama, uključujući zatvaranje</string>
+    <string name="permission_restrictions">Upravljanje Xprivacy ograničenjima i podešenjima</string>
+
+</resources>

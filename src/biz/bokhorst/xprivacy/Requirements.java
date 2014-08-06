@@ -44,7 +44,7 @@ public class Requirements {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							Intent androidIntent = new Intent(Intent.ACTION_VIEW);
-							androidIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy?mobile=0#installation"));
+							androidIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
 							context.startActivity(androidIntent);
 						}
 					});
@@ -417,6 +417,8 @@ public class Requirements {
 							String ourVersion = Util.getSelfVersionName(context);
 							StringBuilder sb = new StringBuilder(text);
 							sb.insert(0, "\r\n");
+							sb.insert(0, String.format("Display: %s\r\n", Build.DISPLAY));
+							sb.insert(0, String.format("Host: %s\r\n", Build.HOST));
 							sb.insert(0, String.format("Model: %s (%s)\r\n", Build.MODEL, Build.PRODUCT));
 							sb.insert(0, String.format("Android version: %s (SDK %d)\r\n", Build.VERSION.RELEASE,
 									Build.VERSION.SDK_INT));

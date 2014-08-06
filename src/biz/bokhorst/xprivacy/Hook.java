@@ -1,5 +1,7 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
+
 import android.os.Build;
 
 public class Hook implements Comparable<Hook> {
@@ -21,6 +23,7 @@ public class Hook implements Comparable<Hook> {
 	private int mAOSPSdk = 0;
 	private int mNotAOSPSdk = 0;
 	private boolean mUnsafe = false;
+	private boolean mOptional = false;
 	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
@@ -108,6 +111,11 @@ public class Hook implements Comparable<Hook> {
 		return this;
 	}
 
+	protected Hook optional() {
+		mOptional = true;
+		return this;
+	}
+
 	public void annotate(String text) {
 		mAnnotation = text;
 	}
@@ -141,6 +149,8 @@ public class Hook implements Comparable<Hook> {
 	public static boolean isAOSP(int sdk) {
 		if (!PrivacyManager.cVersion3)
 			return false;
+		if (new File("/data/system/xprivacy/aosp").exists())
+			return true;
 		if (Build.VERSION.SDK_INT >= sdk) {
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
@@ -196,6 +206,10 @@ public class Hook implements Comparable<Hook> {
 			return mUnsafe;
 		else
 			return false;
+	}
+
+	public boolean isOptional() {
+		return mOptional;
 	}
 
 	public String getAnnotation() {

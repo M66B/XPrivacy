@@ -46,6 +46,7 @@
     <string name="menu_exclude">排除</string>
     <string name="menu_close">关闭</string>
     <string name="menu_flush">清除缓存</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">正在中止</string>
     <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>
@@ -125,6 +126,7 @@
     <string name="restrict_help_browser">将访问浏览器信息限制，比如你的书签和下载历史记录</string>
     <string name="restrict_help_accounts">将访问帐户信息限制，比如您的谷歌帐户，其中包括您的G-mail地址</string>
     <string name="whitelist_address">地址</string>
+    <string name="whitelist_action">动作</string>
     <string name="whitelist_ipaddress">IP 地址</string>
     <string name="whitelist_library">本地库文件</string>
     <string name="whitelist_method">特殊方法名字</string>
@@ -180,7 +182,7 @@
     <string name="title_toggle_dangerous">长按标题切换到危险函数</string>
     <string name="title_ondemand_category">应用异常可在类别功能中重置为默认值</string>
     <string name="title_function_help">函数文档</string>
-    <string name="title_unsafe">is unsafe, can be circumvented</string>
+    <string name="title_unsafe">是不安全的，可以避免</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>

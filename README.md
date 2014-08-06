@@ -3,7 +3,7 @@ XPrivacy
 
 The ultimate, yet easy to use, privacy manager for Android
 
-![Open source Rookie of the year](http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png)
+![Open source Rookie of the year](http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png "Open source Rookie of the year")
 ([publication](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners))
 
 Index
@@ -335,7 +335,7 @@ Limitations
 * You cannot restrict *Configuration.MCC/MNC* on demand
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
 * Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/)
-* It is possible to unhook methods in user space using native libraries, see [here](https://github.com/cernekee/WinXP) for a proof of concept; XPrivacy 3 will indicate which restrictions are vulnerable to this
+* It is possible to unhook methods in user space using native libraries, see for more details [FAQ 68](#FAQ68)
 
 *XPrivacy*
 
@@ -905,13 +905,9 @@ If these suggestions don't help, please create an issue and provide a logcat (se
 IMHO you should at least install an ad blocker and a firewall.
 
 * [AdAway](http://sufficientlysecure.org/index.php/adaway/) ([source code](https://github.com/dschuermann/ad-away))
-* [CrappaLinks](http://forum.xda-developers.com/showthread.php?t=2603868) ([source code](https://github.com/GermainZ/CrappaLinks))
 * [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall) ([source code](https://github.com/ukanth/afwall))
+* [CrappaLinks](http://forum.xda-developers.com/showthread.php?t=2603868) ([source code](https://github.com/GermainZ/CrappaLinks))
 * [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) ([source code](https://github.com/GermainZ/PlayPermissionsExposed))
-* [NOGAPPS](http://forum.xda-developers.com/showthread.php?t=1715375) ([source code](https://github.com/mar-v-in))
-* [OS Monitor](https://f-droid.org/repository/browse/?fdfilter=os%20monitor&fdid=com.eolwral.osmonitor) ([source code](https://github.com/eolwral/OSMonitor))
-* [Shadowsocks](https://play.google.com/store/apps/details?id=com.github.shadowsocks) ([source code](https://github.com/clowwindy/shadowsocks))
-* [Orbot](https://play.google.com/store/apps/details?id=org.torproject.android) ([source code](https://gitweb.torproject.org/orbot.git))
 * [Xabber](https://play.google.com/store/apps/details?id=com.xabber.android) ([source code](https://github.com/redsolution/xabber-android))
 
 Please note that these applications are not written by me
@@ -1115,6 +1111,18 @@ You can check if [your IP address](http://www.whatismyip.com/) is black listed b
 * [Spamhaus EDROP List](http://www.spamhaus.org/drop/edrop.lasso)
 * [Stop Forum Spam](http://www.stopforumspam.com/search) (30 days or younger)
 
+<a name="FAQ68"></a>
+**(68) What are unsafe restrictions?**
+
+Unsafe restrictions can be disabled by removing the Xposed method hook using a native library.
+See [here](https://github.com/cernekee/WinXP) for a proof of concept.
+You can prevent this by not allowing native libaries to load, which will unfortunately often result in a crash.
+XPrivacy version 3 will partly address this problem for stock Android KitKat and [OmniROM](http://omnirom.org/).
+This is done by hooking into the Android counterparts of the user space functions.
+Unfortunately not all user space functions have an Android counterpart,
+meaning that this cannot be done for all restrictions.
+Nevertheless, the most sensitive data, like contacts and your location, can safely be protected by XPrivacy 3.
+
 Support
 -------
 
@@ -1259,6 +1267,7 @@ Current translations:
 1. Bulgarian (bg)
 1. Catalan (ca)
 1. Czech (cs)
+1. Croatian (hr)
 1. Danish (da)
 1. Dutch/Flemish (nl)
 1. English

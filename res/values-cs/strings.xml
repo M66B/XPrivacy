@@ -46,6 +46,7 @@
     <string name="menu_exclude">Vyloučit</string>
     <string name="menu_close">Zavřít</string>
     <string name="menu_flush">Flush cache</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Probíha přerušení</string>
     <string name="msg_aborted">Přerušeno</string>
     <string name="msg_new">Nové</string>

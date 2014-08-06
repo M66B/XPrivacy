@@ -22,8 +22,8 @@ public class XApplication extends XHook {
 	public static String ACTION_MANAGE_PACKAGE = "biz.bokhorst.xprivacy.ACTION_MANAGE_PACKAGE";
 	public static String PERMISSION_MANAGE_PACKAGES = "biz.bokhorst.xprivacy.MANAGE_PACKAGES";
 
-	public XApplication(Methods method, String restrictionName, String actionName, int sdk) {
-		super(restrictionName, method.name(), actionName, sdk);
+	public XApplication(Methods method, String restrictionName, String actionName) {
+		super(restrictionName, method.name(), actionName);
 		mMethod = method;
 	}
 
@@ -42,7 +42,7 @@ public class XApplication extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XApplication(Methods.onCreate, null, null, 1));
+		listHook.add(new XApplication(Methods.onCreate, null, null));
 		return listHook;
 	}
 

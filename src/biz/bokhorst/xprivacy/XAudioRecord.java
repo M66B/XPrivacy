@@ -9,7 +9,7 @@ public class XAudioRecord extends XHook {
 	private Methods mMethod;
 
 	private XAudioRecord(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), "Audio." + method.name());
 		mMethod = method;
 	}
 

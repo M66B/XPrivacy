@@ -46,6 +46,7 @@
     <string name="menu_exclude">除外</string>
     <string name="menu_close">閉じる</string>
     <string name="menu_flush">キャッシュの消去</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">中断中</string>
     <string name="msg_aborted">中断しました</string>
     <string name="msg_new">新規</string>

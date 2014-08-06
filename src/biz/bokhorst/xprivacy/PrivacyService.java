@@ -77,7 +77,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 373;
+	private static final int cCurrentVersion = 375;
 	private static final String cServiceName = "xprivacy367";
 
 	private SQLiteDatabase mDb = null;
@@ -608,7 +608,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 		long ms = System.currentTimeMillis() - start;
 		Util.log(null, ms < PrivacyManager.cWarnServiceDelayMs ? Log.INFO : Log.WARN,
-				String.format("get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
+				String.format("Get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
 
 		if (mresult.debug)
 			Util.logStack(null, Log.WARN);
@@ -1164,7 +1164,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 		long ms = System.currentTimeMillis() - start;
 		Util.log(null, ms < PrivacyManager.cWarnServiceDelayMs ? Log.INFO : Log.WARN,
-				String.format("get service %s %d ms", setting, ms));
+				String.format("Get service %s %d ms", setting, ms));
 
 		return result;
 	}

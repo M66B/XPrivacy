@@ -13,11 +13,6 @@ public class XSipManager extends XHook {
 		mMethod = method;
 	}
 
-	private XSipManager(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), "SIP." + method.name(), sdk);
-		mMethod = method;
-	}
-
 	public String getClassName() {
 		return "android.net.sip.SipManager";
 	}

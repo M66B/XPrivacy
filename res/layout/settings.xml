@@ -348,8 +348,9 @@
 
                     <EditText
                         android:id="@+id/etImei"
+                        android:digits="0123456789ABCDEF"
                         android:hint="000000000000000"
-                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:inputType="textCapCharacters|textNoSuggestions"
                         android:maxLength="16"
                         android:singleLine="true"
                         tools:ignore="HardcodedText" />

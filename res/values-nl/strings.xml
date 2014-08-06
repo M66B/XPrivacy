@@ -46,6 +46,7 @@
     <string name="menu_exclude">Sluit uit</string>
     <string name="menu_close">Sluiten</string>
     <string name="menu_flush">Leeg cache</string>
+    <string name="menu_update">Controleer op updates</string>
     <string name="msg_abort">Afbreken</string>
     <string name="msg_aborted">Afgebroken</string>
     <string name="msg_new">Nieuw</string>
