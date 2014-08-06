@@ -46,7 +46,7 @@
     <string name="menu_exclude">除外</string>
     <string name="menu_close">閉じる</string>
     <string name="menu_flush">キャッシュの消去</string>
-    <string name="menu_update">Check for updates</string>
+    <string name="menu_update">更新の確認</string>
     <string name="msg_abort">中断中</string>
     <string name="msg_aborted">中断しました</string>
     <string name="msg_new">新規</string>
@@ -126,7 +126,7 @@
     <string name="restrict_help_browser">ブラウザー情報へのアクセスを制限します (ブックマークやダウンロード履歴など)</string>
     <string name="restrict_help_accounts">アカウント情報へのアクセスを制限します (G-mail アドレスを含む Google アカウントなど)</string>
     <string name="whitelist_address">アドレス</string>
-    <string name="whitelist_action">Action</string>
+    <string name="whitelist_action">アクション</string>
     <string name="whitelist_ipaddress">IP アドレス</string>
     <string name="whitelist_library">ネイティブライブラリ</string>
     <string name="whitelist_method">メソッド名</string>
@@ -179,10 +179,10 @@
     <string name="title_usage_text_2">2. アプリアイコンをタップします</string>
     <string name="title_usage_text_3">3. 各カテゴリの一番上のチェックボックスをタップすると制限が設定されます</string>
     <string name="title_usage_footer">制限は常識的に判断して設定してください。インターネットアクセスを制限したらインターネットに接続できることを期待してはいけません。</string>
-    <string name="title_toggle_dangerous">危険性のある機能はタイトル部分を長押しするとチェックできるようになります</string>
-    <string name="title_ondemand_category">カテゴリ全体に設定すると除外機能の設定が初期値にリセットされます</string>
+    <string name="title_toggle_dangerous">危険性のある機能をトグルするには機能名を長押しします</string>
+    <string name="title_ondemand_category">カテゴリ全体に設定すると機能の除外項目の設定が初期化されます</string>
     <string name="title_function_help">機能のドキュメント</string>
-    <string name="title_unsafe">is unsafe, can be circumvented</string>
+    <string name="title_unsafe">安全ではありません。回避されるおそれがあります</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
@@ -230,7 +230,7 @@
 \n制限が設定されたアプリは、そのカテゴリについて空データまたは偽装データを受け取るようになります\n
 \n制限を詳細に設定するにはアプリアイコンをタップしてください</string>
     <string name="tutorial_detailsheader">アプリアイコンをタップすると様々な機能を実行することができます</string>
-    <string name="tutorial_detailslist">下向き矢印ボタンをタップするとカテゴリ内の除外機能を確認できます</string>
+    <string name="tutorial_detailslist">下向き矢印ボタンをタップするとカテゴリ内の機能の除外項目を確認できます</string>
     <string name="permission_manage">アプリの強制終了を含むアプリ管理</string>
     <string name="permission_restrictions">XPrivacy の制限および設定の管理</string>
 
