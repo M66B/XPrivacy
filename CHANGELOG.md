@@ -28,12 +28,6 @@ Changelog
 
 **Next release**
 
-* Fixed alignment of the check boxes in the details view
-* Added menu *Check for updates* (only [Pro license](http://www.xprivacy.eu/))
-* Fixed restriction *Srv_startActivities* ([issue](/../../issues/1853))
-* Updated Dutch translation
-* Updated Simplified Chinese translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **XPrivacy 3**
@@ -43,6 +37,14 @@ Changelog
 * Added restriction *Bluetooth.Srv_getName*
 * Added restriction *Srv_getCompleteVoiceMailNumber*
 * Added restriction *WiFi.Srv_getBatchedScanResults*
+
+**Version 2.2.4 TEST**
+
+* Fixed alignment of the check boxes in the details view
+* Added menu *Check for updates* (only [Pro license](http://www.xprivacy.eu/))
+* Fixed restriction *Srv_startActivities* ([issue](/../../issues/1853))
+* Updated Dutch translation
+* Updated Simplified Chinese translation
 
 **Version 2.2.3 TEST**
 
