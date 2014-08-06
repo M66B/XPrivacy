@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Enabled on demand restricting for *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
+* Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
