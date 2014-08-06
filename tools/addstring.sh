@@ -1,7 +1,7 @@
 #!/bin/bash
-grep -RIl "\<string name=\"title_unsafe" res | xargs sed -i -e '/title_unsafe/d'
-grep -RIl "\<string name=\"title_function_help" res | xargs sed -i -e '/title_function_help/a \
-\ \ \ \ <string name=\"title_unsafe\">is unsafe, can be circumvented</string>
+grep -RIl "\<string name=\"menu_update" res | xargs sed -i -e '/menu_update/d'
+grep -RIl "\<string name=\"menu_flush" res | xargs sed -i -e '/menu_flush/a \
+\ \ \ \ <string name=\"menu_update\">Check for updates</string>
 
 #grep -RIl "\<string name=\"restrict_view" res | xargs sed -i -e '/restrict_view/a \
 #\ \ \ \ <string name=\"restrict_help_view\">Will restrict access to view actions and information</string>\

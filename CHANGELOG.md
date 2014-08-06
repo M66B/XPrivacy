@@ -29,7 +29,9 @@ Changelog
 **Next release**
 
 * Fixed alignment of the check boxes in the details view
-* Update Simplified Chinese translation
+* Added menu *Check for updates* (only [Pro license](http://www.xprivacy.eu/))
+* Updated Dutch translation
+* Updated Simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

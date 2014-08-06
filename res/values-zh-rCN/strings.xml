@@ -46,6 +46,7 @@
     <string name="menu_exclude">排除</string>
     <string name="menu_close">关闭</string>
     <string name="menu_flush">清除缓存</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">正在中止</string>
     <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>

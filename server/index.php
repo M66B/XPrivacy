@@ -319,6 +319,45 @@
 				echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 306), 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
 			exit();
 		}
+
+		// Update
+		else if (!empty($action) && $action == 'update') {
+			// Check credentials
+			$signature = '';
+			if (openssl_sign($data->email, $signature, $private_key, OPENSSL_ALGO_SHA1))
+				$signature = bin2hex($signature);
+
+			if (empty($signature) || $signature != $data->signature) {
+				header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+				exit();
+			}
+
+			// Find latest version
+			$latest = null;
+			foreach (glob('./XPrivacy_*.apk') as $filename) {
+				$version = explode('_', basename($filename, '.apk'))[1];
+				if ($latest == null || version_compare($version, $latest) >= 0)
+					$latest = $version;
+			}
+
+			// Check if newer
+			if ($latest == null || version_compare($latest, $data->xprivacy_version_name) <= 0)
+				header($_SERVER['SERVER_PROTOCOL'] . ' 204 No Content');
+			else {
+				// Send latest
+				$apk = 'XPrivacy_' . $latest . '.apk';
+				header('Content-Description: File Transfer');
+				header('Content-Type: application/octet-stream');
+				header('Content-Disposition: attachment; filename=' . basename($apk));
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . filesize($apk));
+				readfile($apk);
+			}
+			exit();
+		}
+
 		else {
 			log_error('json: unknown action', $my_email, $data);
 			echo json_encode(array('ok' => false, 'errno' => 104, 'error' => 'Unknown action: ' . $action));

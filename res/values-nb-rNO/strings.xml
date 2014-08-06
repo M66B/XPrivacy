@@ -46,6 +46,7 @@
     <string name="menu_exclude">Ekskluder</string>
     <string name="menu_close">Lukk</string>
     <string name="menu_flush">Tømm hurtiglager</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Avbryter</string>
     <string name="msg_aborted">Avbrutt</string>
     <string name="msg_new">Nytt</string>

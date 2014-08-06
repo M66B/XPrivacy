@@ -46,6 +46,7 @@
     <string name="menu_exclude">Ausschließen</string>
     <string name="menu_close">Schließen</string>
     <string name="menu_flush">Cache Speicher löschen</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Abbrechen</string>
     <string name="msg_aborted">Abgebrochen</string>
     <string name="msg_new">Neu</string>

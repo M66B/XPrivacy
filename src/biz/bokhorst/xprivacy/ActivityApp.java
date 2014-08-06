@@ -158,8 +158,8 @@ public class ActivityApp extends ActivityBase {
 			@Override
 			public void onClick(View view) {
 				// Packages can be selected on the web site
-				Util.viewUri(ActivityApp.this, Uri.parse(String.format(ActivityShare.getBaseURL(ActivityApp.this)
-						+ "?package_name=%s", mAppInfo.getPackageName().get(0))));
+				Util.viewUri(ActivityApp.this, Uri.parse(String.format(ActivityShare.getBaseURL() + "?package_name=%s",
+						mAppInfo.getPackageName().get(0))));
 			}
 		});
 

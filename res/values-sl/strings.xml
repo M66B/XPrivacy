@@ -46,6 +46,7 @@
     <string name="menu_exclude">Izključi</string>
     <string name="menu_close">Zapri</string>
     <string name="menu_flush">Počisti predpomnilnik</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Preklicujem</string>
     <string name="msg_aborted">Preklicano</string>
     <string name="msg_new">Novo</string>
