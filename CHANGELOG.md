@@ -30,7 +30,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**XPrivacy 3**
+**XPrivacy 3** (not released yet)
 
 * Added icon for unsafe restrictions
 * Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
