@@ -32,13 +32,20 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+<a name="xprivacy3"></a>
 **XPrivacy 3** (not released yet)
+
+XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+XPrivacy 3 will be available for stock Android KitKat and the latest versions of [OmniROM](http://omnirom.org/) only,
+but will work in *legacy* mode on other Android versions/variants.
+XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 
 * Added icon for unsafe restrictions
 * Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
 * Added restriction *Bluetooth.Srv_getName*
 * Added restriction *Srv_getCompleteVoiceMailNumber*
 * Added restriction *WiFi.Srv_getBatchedScanResults*
+* Replaced all possible unsafe restrictions by safe restrictions
 
 **Version 2.2.4 TEST**
 
