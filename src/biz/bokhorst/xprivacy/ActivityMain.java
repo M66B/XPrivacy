@@ -790,7 +790,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					try {
 						// Encode package
 						String[] license = Util.getProLicenseUnchecked();
+						boolean test = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTestVersions, false);
 						JSONObject jRoot = new JSONObject();
+						jRoot.put("test_versions", test);
 						jRoot.put("xprivacy_version", Util.getSelfVersionCode(ActivityMain.this));
 						jRoot.put("xprivacy_version_name", Util.getSelfVersionName(ActivityMain.this));
 						jRoot.put("email", license[1]);

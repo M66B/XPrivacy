@@ -332,20 +332,26 @@
 				exit();
 			}
 
+			$folder = 'release';
+			if (!empty($data->test_versions) && $data->test_versions)
+				$folder = 'test';
+
 			// Find latest version
 			$latest = null;
-			foreach (glob('./XPrivacy_*.apk') as $filename) {
-				$version = explode('_', basename($filename, '.apk'))[1];
-				if ($latest == null || version_compare($version, $latest) >= 0)
-					$latest = $version;
-			}
+			$files = glob($folder . '/XPrivacy_*.apk');
+			if ($files)
+				foreach ($files as $filename) {
+					$version = explode('_', basename($filename, '.apk'))[1];
+					if ($latest == null || version_compare($version, $latest) >= 0)
+						$latest = $version;
+				}
 
 			// Check if newer
 			if ($latest == null || version_compare($latest, $data->xprivacy_version_name) <= 0)
 				header($_SERVER['SERVER_PROTOCOL'] . ' 204 No Content');
 			else {
 				// Send latest
-				$apk = 'XPrivacy_' . $latest . '.apk';
+				$apk = $folder . '/XPrivacy_' . $latest . '.apk';
 				header('Content-Description: File Transfer');
 				header('Content-Type: application/octet-stream');
 				header('Content-Disposition: attachment; filename=' . basename($apk));

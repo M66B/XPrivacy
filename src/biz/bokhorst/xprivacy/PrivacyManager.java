@@ -129,6 +129,7 @@ public class PrivacyManager {
 	public final static String cSettingPermMan = "PermMan";
 	public final static String cSettingIntentWall = "IntentWall";
 	public final static String cSettingSafeMode = "SafeMode";
+	public final static String cSettingTestVersions = "TestVersions";
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";
