@@ -347,9 +347,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 
 		// Providers
-		for (String className : XContentResolver.cProviderClassName)
-			if (className.startsWith(packageName))
-				hookAll(XContentResolver.getInstances(className), classLoader, secret);
+		hookAll(XContentResolver.getPackageInstances(packageName), classLoader, secret);
 
 		// Phone interface manager
 		if ("com.android.phone".equals(packageName))
