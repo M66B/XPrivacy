@@ -154,7 +154,8 @@ public class Hook implements Comparable<Hook> {
 		if (Build.VERSION.SDK_INT >= sdk) {
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
-			return (Build.HOST.endsWith(".google.com") || Build.DISPLAY.startsWith("omni"));
+			return (Build.HOST.endsWith(".google.com") || Build.HOST.equals("cyanogenmod") || Build.DISPLAY
+					.startsWith("omni"));
 		} else
 			return false;
 	}
