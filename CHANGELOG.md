@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Enabled on demand restricting for *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
+* Moved *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission* to XPrivacy 3 (not in legacy mode) ([issue](/../../issues/1855))
 * Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
