@@ -2614,16 +2614,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 						}
 					}
 
-					Util.log(null, Log.WARN, "Running VACUUM");
-					mLockUsage.writeLock().lock();
-					try {
-						dbUsage.execSQL("VACUUM");
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					} finally {
-						mLockUsage.writeLock().unlock();
-					}
-
 					Util.log(null, Log.WARN, "Changing to asynchronous mode");
 					try {
 						dbUsage.rawQuery("PRAGMA synchronous=OFF", null);

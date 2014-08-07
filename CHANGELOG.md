@@ -38,6 +38,7 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 * Enabled on demand restricting for *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
 * Moved *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission* to XPrivacy 3 (not in legacy mode) ([issue](/../../issues/1855))
 * Fixed repeated on demand restricting for functions with a whitelist
+* Removed [VACUUM](http://sqlite.org/lang_vacuum.html) for usage data database
 * Updated Dutch translation
 * Updated Japanese translation
 
