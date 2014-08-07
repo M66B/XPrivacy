@@ -8,6 +8,13 @@ Changelog
 * BETA: new or updated features with a lower risk for bugs
 * STABLE: all known bugs are fixed; low risk for bugs
 
+**XPrivacy modes** (XPrivacy 3)
+
+* AOSP mode = vanilla (Google) KitKat or OmniROM
+* Compatibility mode = all other Android versions/variants
+
+If there is no message about running in compatibility mode in *About*, XPrivacy is running in AOSP mode.
+
 **Downloads**
 
 * [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
