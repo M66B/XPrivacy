@@ -46,6 +46,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -904,6 +905,16 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			tvLicensed.setText(Environment.getExternalStorageDirectory().getAbsolutePath());
 		else
 			tvLicensed.setText(String.format(getString(R.string.app_licensed), licensed));
+
+		// Show some build properties
+		((TextView) dlgAbout.findViewById(R.id.build_brand)).setText(Build.BRAND);
+		((TextView) dlgAbout.findViewById(R.id.build_manufacturer)).setText(Build.MANUFACTURER);
+		((TextView) dlgAbout.findViewById(R.id.build_model)).setText(Build.MODEL);
+		((TextView) dlgAbout.findViewById(R.id.build_product)).setText(Build.PRODUCT);
+		((TextView) dlgAbout.findViewById(R.id.build_device)).setText(Build.DEVICE);
+		((TextView) dlgAbout.findViewById(R.id.build_host)).setText(Build.HOST);
+		((TextView) dlgAbout.findViewById(R.id.build_display)).setText(Build.DISPLAY);
+		((TextView) dlgAbout.findViewById(R.id.build_id)).setText(Build.ID);
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();

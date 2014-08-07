@@ -1,4 +1,5 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -56,6 +57,165 @@
             android:singleLine="true"
             android:text="@string/app_help"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="6dip"
+            android:shrinkColumns="1" >
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Brand:"
+                    android:textSize="5pt"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/build_brand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textSize="5pt" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Manufacturer:"
+                    android:textSize="5pt"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/build_manufacturer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textSize="5pt" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Model:"
+                    android:textSize="5pt"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/build_model"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textSize="5pt" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Product:"
+                    android:textSize="5pt"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/build_product"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textSize="5pt" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Device:"
+                    android:textSize="5pt"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/build_device"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textSize="5pt" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Host:"
+                    android:textSize="5pt"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/build_host"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textSize="5pt" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Display:"
+                    android:textSize="5pt"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/build_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textSize="5pt" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ID:"
+                    android:textSize="5pt"
+                    tools:ignore="HardcodedText" />
+
+                <TextView
+                    android:id="@+id/build_id"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingLeft="6dip"
+                    android:textSize="5pt" />
+            </TableRow>
+        </TableLayout>
     </LinearLayout>
 
 </ScrollView>
