@@ -37,21 +37,20 @@
 	// Check if JSON request
 	parse_str($_SERVER['QUERY_STRING']);
 	if (!empty($format) && $format == 'json') {
-		// Send header
-		header('Content-Type: application/json');
-
 		// Get data
 		$ok = true;
 		$body = file_get_contents('php://input');
 		$data = json_decode($body);
 		if (empty($body) || empty($data)) {
 			log_error('json: empty request', $my_email, $data);
+			header('Content-Type: application/json');
 			echo json_encode(array('ok' => false, 'errno' => 101, 'error' => 'Empty request'));
 			exit();
 		}
 
 		// Check XPrivacy version
 		if (empty($data->xprivacy_version) || (int)$data->xprivacy_version < 219) {
+			header('Content-Type: application/json');
 			echo json_encode(array('ok' => false, 'errno' => 102, 'error' => 'Please upgrade to at least XPrivacy version 1.11'));
 			exit();
 		}
@@ -60,6 +59,7 @@
 		$db = new mysqli($db_host, $db_user, $db_password, $db_database);
 		if ($db->connect_errno) {
 			log_error('json: database connect: ' . $db->connect_error, $my_email, $data);
+			header('Content-Type: application/json');
 			echo json_encode(array('ok' => false, 'errno' => 103, 'error' => 'Error connecting to database'));
 			exit();
 		}
@@ -69,6 +69,8 @@
 
 		// Store/update settings
 		if (empty($action) || $action == 'submit') {
+			header('Content-Type: application/json');
+
 			// Validate
 			if (empty($data->android_id)) {
 				log_error('submit: Android ID missing', $my_email, $data);
@@ -236,6 +238,8 @@
 
 		// Fetch settings
 		else if (!empty($action) && $action == 'fetch') {
+			header('Content-Type: application/json');
+
 			// Check credentials
 			$signature = '';
 			if (openssl_sign($data->email, $signature, $private_key, OPENSSL_ALGO_SHA1))
@@ -319,6 +323,60 @@
 				echo json_encode(array('ok' => $ok, 'errno' => ($ok ? 0 : 306), 'error' => ($ok ? '' : 'Error retrieving restrictions'), 'settings' => $settings));
 			exit();
 		}
+
+		// Update
+		else if (!empty($action) && $action == 'update') {
+			// Check credentials
+			$signature = '';
+			if (openssl_sign($data->email, $signature, $private_key, OPENSSL_ALGO_SHA1))
+				$signature = bin2hex($signature);
+
+			if (empty($signature) || $signature != $data->signature) {
+				header($_SERVER['SERVER_PROTOCOL'] . ' 403 Forbidden');
+				exit();
+			}
+
+			$folder = 'release';
+			if (!empty($data->test_versions) && $data->test_versions)
+				$folder = 'test';
+
+			// Find latest version
+			$latest = null;
+			$files = glob($folder . '/XPrivacy_*.apk');
+			if ($files)
+				foreach ($files as $filename) {
+					$version = explode('_', basename($filename, '.apk'))[1];
+					if ($latest == null || version_compare($version, $latest) >= 0)
+						$latest = $version;
+				}
+
+			$sql = "INSERT INTO xprivacy_update (installed_version, test_versions, current_version)";
+			$sql .= " VALUES (";
+			$sql .= "'" . $db->real_escape_string($data->xprivacy_version_name) . "'";
+			$sql .= ", " . (int)$data->test_versions;
+			$sql .= ", '" . $db->real_escape_string($latest) . "'";
+			$sql .= ")";
+			if (!$db->query($sql))
+				log_error('update: error=' . $db->error . ' query=' . $sql, $my_email, $data);
+
+			// Check if newer
+			if ($latest == null || version_compare($latest, $data->xprivacy_version_name) <= 0)
+				header($_SERVER['SERVER_PROTOCOL'] . ' 204 No Content');
+			else {
+				// Send latest
+				$apk = $folder . '/XPrivacy_' . $latest . '.apk';
+				header('Content-Type: application/octet-stream');
+				header('Content-Description: File Transfer');
+				header('Content-Disposition: attachment; filename=' . basename($apk));
+				header('Expires: 0');
+				header('Cache-Control: must-revalidate');
+				header('Pragma: public');
+				header('Content-Length: ' . filesize($apk));
+				readfile($apk);
+			}
+			exit();
+		}
+
 		else {
 			log_error('json: unknown action', $my_email, $data);
 			echo json_encode(array('ok' => false, 'errno' => 104, 'error' => 'Unknown action: ' . $action));
@@ -525,6 +583,30 @@
 					<strong>bold text</strong> means data was used</p>
 <?php
 				}
+
+				if (!empty($package_name)) {
+					$last_version = '';
+					$sql = "SELECT DISTINCT package_version";
+					$sql .= " FROM xprivacy";
+					$sql .= " WHERE package_name = '" . $db->real_escape_string($package_name) . "'";
+					$sql .= " ORDER BY package_version";
+					$result = $db->query($sql);
+					if ($result) {
+						echo '<p>';
+						while (($row = $result->fetch_object())) {
+							echo '<a href="?package_name=' . urlencode($package_name);
+							echo '&amp;package_version=' . urlencode($row->package_version) . '"">';
+							echo $row->package_version . '</a> ';
+							if (version_compare($row->package_version, $last_version, '>'))
+								$last_version = $row->package_version;
+						}
+						echo '</p>';
+						$result->close();
+					}
+
+					if (empty($package_version))
+						$package_version = $last_version;
+				}
 ?>
 				<table class="table table-hover table-condensed">
 					<thead>
@@ -538,7 +620,8 @@
 <?php
 						} else {
 ?>
-							<th style="text-align: center;">Votes <sup>*</sup><br />deny/allow</th>
+							<th style="text-align: center;">All versions<br />deny/allow <sup>*</sup></th>
+							<th style="text-align: center;">Version <?php echo htmlentities($package_version, ENT_COMPAT, 'UTF-8'); ?><br />deny/allow</th>
 							<th style="text-align: center;">Exceptions<br />(yes/no)</th>
 							<th style="text-align: center;">CI95 &plusmn;% <sup>**</sup></th>
 							<th style="display: none; text-align: center;" class="details">Used</th>
@@ -589,6 +672,10 @@
 						$sql .= ", SUM(CASE WHEN restricted != 1 THEN 1 ELSE 0 END) AS not_restricted";
 						$sql .= ", SUM(CASE WHEN allowed > 0 THEN 1 ELSE 0 END) AS allowed";
 						$sql .= ", SUM(CASE WHEN allowed <= 0 THEN 1 ELSE 0 END) AS not_allowed";
+						$sql .= ", SUM(CASE WHEN restricted = 1 AND package_version = '" . $db->real_escape_string($package_version) . "' THEN 1 ELSE 0 END) AS restricted_package";
+						$sql .= ", SUM(CASE WHEN restricted != 1 AND package_version = '" . $db->real_escape_string($package_version) . "' THEN 1 ELSE 0 END) AS not_restricted_package";
+						$sql .= ", SUM(CASE WHEN allowed > 0 AND package_version = '" . $db->real_escape_string($package_version) . "' THEN 1 ELSE 0 END) AS allowed_package";
+						$sql .= ", SUM(CASE WHEN allowed <= 0 AND package_version = '" . $db->real_escape_string($package_version) . "' THEN 1 ELSE 0 END) AS not_allowed_package";
 						$sql .= ", MAX(used) AS used";
 						$sql .= ", MAX(modified) AS modified";
 						$sql .= ", SUM(updates) AS updates";
@@ -623,6 +710,10 @@
 								echo ' / ';
 								echo ($row->restricted > $row->not_restricted) ? '<span class="text-muted">' . $row->not_restricted . '</span>' : $row->not_restricted;
 								echo ' <span style="font-size: smaller;">' . number_format($diff * 100, 0) . '%</span>';
+								echo '</td>';
+
+								echo '<td style="text-align: center; font-size: smaller;">';
+								echo $row->restricted_package . ' / ' . $row->not_restricted_package;
 								echo '</td>';
 
 								echo '<td style="text-align: center;">';

@@ -37,7 +37,7 @@
         android:contentDescription="@string/help_application"
         android:paddingLeft="3dip"
         android:src="?attr/icon_info_book"
-        android:visibility="invisible" />
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/llMethodName"
@@ -59,15 +59,29 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             tools:ignore="NestedWeights" />
 
-        <ImageView
-            android:id="@+id/imgMethodWhitelist"
-            android:layout_width="32dip"
-            android:layout_height="32dip"
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:contentDescription="@string/menu_whitelists"
-            android:paddingLeft="3dip"
-            android:src="?attr/icon_whitelist"
-            android:visibility="gone" />
+            android:orientation="vertical"
+            android:paddingLeft="3dip" >
+
+            <ImageView
+                android:id="@+id/imgMethodWhitelist"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:contentDescription="@string/menu_whitelists"
+                android:src="?attr/icon_whitelist"
+                android:visibility="invisible" />
+
+            <ImageView
+                android:id="@+id/imgUnsafe"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:contentDescription="@string/title_unsafe"
+                android:src="?attr/icon_unsafe"
+                android:visibility="invisible" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imgCbMethodRestricted"

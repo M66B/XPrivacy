@@ -8,6 +8,13 @@ Changelog
 * BETA: new or updated features with a lower risk for bugs
 * STABLE: all known bugs are fixed; low risk for bugs
 
+**XPrivacy modes** (XPrivacy 3)
+
+* AOSP mode = vanilla (Google) KitKat or OmniROM
+* Compatibility mode = all other Android versions/variants
+
+If there is no message about running in compatibility mode in *About*, XPrivacy is running in AOSP mode.
+
 **Downloads**
 
 * [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
@@ -15,15 +22,275 @@ Changelog
 
 **Important**
 
-* If you install a version from 2.0.35 the main template will be reset to default (once)
-* If you install a version from 2.1.5 on demand restricting will be disabled until the update is completed (once)
-* Dangerous functions need to be restricted always manually (manually includes the template, if defined to do so)
 * Xposed version 2.6+ is required
+* Updating from a version prior to 2.0.35 the main template will be reset to default
+* Updating from a version prior to 2.1.5 on demand restricting will be disabled until the update is completed
+* Updating from a version prior to 2.1.8 you will need to setup the IPC restrictions again
+* Updating from a version prior to 2.1.21 you will need to setup the IPC restrictions again, except for *Reflection*
+* From version 2.0.29 dangerous functions need to be restricted manually (manually includes the template, if defined to do so)
+* From version 2.1.20 batch operations (toggle restrictions for multiple applications) require a pro license
+	* I have put about 2000 hours into developing and supporting XPrivacy so far. The reason for [accepting donations](http://www.xprivacy.eu/) is to keep myself motivated to keep doing this. Unfortunately the number of donations is quite low and thus not very motivating. So, don't start complaining about this change, but instead think about supporting this huge project. You can still fully protect your privacy with all the free features of XPrivacy. I have made a promise that you will always be able to do so and I intent to keep this promise.
+* From version 2.1.21-5 *I don't know* will allow dangerous functions once (other functions are still denied once)
 * **Please send the support info when XPrivacy asks for it**
 
 **Next release**
 
+* Enabled on demand restricting for *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
+* Moved *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission* to XPrivacy 3 (not in legacy mode) ([issue](/../../issues/1855))
+* Fixed repeated on demand restricting for functions with a whitelist
+* Updated Dutch translation
+* Updated Japanese translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+<a name="xprivacy3"></a>
+**XPrivacy 3** (not released yet)
+
+XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+XPrivacy 3 will be available for stock Android KitKat and the latest versions of [OmniROM](http://omnirom.org/) only,
+but will work in *legacy* mode on other Android versions/variants.
+XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
+
+* Added icon for unsafe restrictions
+* Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
+* Added restriction *Bluetooth.Srv_getName*
+* Added restriction *Srv_getCompleteVoiceMailNumber*
+* Added restriction *WiFi.Srv_getBatchedScanResults*
+* Replaced unsafe restrictions by safe restrictions where possible (not in legacy mode)
+
+**Version 2.2.4 TEST**
+
+* Fixed alignment of the check boxes in the details view
+* Added menu *Check for updates* (only [Pro license](http://www.xprivacy.eu/))
+* Fixed restriction *Srv_startActivities* ([issue](/../../issues/1853))
+* Updated Dutch translation
+* Updated Simplified Chinese translation
+
+**Version 2.2.3 TEST**
+
+* Removed restriction *LinkAddress*, since it is not needed
+* Added support for [MEID](http://en.wikipedia.org/wiki/Mobile_equipment_identifier) and removed restrictions *getNetworkType* and *getPhoneType* ([issue](/../../issues/1843))
+* Prefixed *getAddress* and *getBondedDevices* with *Bluetooth*
+* Replaced *setPreviewCallback*, *setPreviewCallbackWithBuffer*, *setOneShotPreviewCallback* by *startPreview*
+* Prefixed *startPreview* and *takePicture* with *Camera*
+* Prefixed *startRecording* with *Audio*
+* Renamed *setOutputFile* into *MediaRecorder.start*
+* Restructured restriction meta data (no visible changes)
+* Fixed displaying white list entry state after scrolling ([issue](/../../issues/1850))
+* Added restrictions *Camera.permission*, *Record.Audio.permission* and *Record.Video.permission*
+* Hiding on demand restricting check box for functions without on demand restricting
+* Added Croatian translation
+* Updated Slovak translation
+
+**Version 2.2.2 TEST**
+
+The internet and network restrictions were reorganized.
+The internet restrictions are for restricting internet access,
+the network restrictions are for restricting network information, mainly IP addresses.
+Restrictions which were moved from one to the other category will be updated automatically,
+but a function can only be restricted if the category is restricted.
+This means that if a function was moved from internet to network,
+it will only be restricted if the network category was restricted.
+
+* Fixed all problems reported through the support info
+* Option to white/black list from usage data (long press entry) ([issue](/../../issues/1821)) (only [Pro license](http://www.xprivacy.eu/))
+* Added IPC restrictions for *IApplicationThread*, *IContentProvider* and *IWindowSession* (on demand restricting only)
+* Added wildcards for IPC transaction names
+* Fixed translating transaction codes into transaction names in most cases
+* Restricting [ACTION_PACKAGE_VERIFIED](http://developer.android.com/reference/android/content/Intent.html#ACTION_PACKAGE_VERIFIED) as intended
+* *DATA_SMS_RECEIVED*, *SMS_RECEIVED* and *WAP_PUSH_RECEIVED* were always part of Android, but only [documented since KitKat](https://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html)
+* Translating isolated uids into originating application uids
+* Fixed default on demand restricting for dangerous functions with a whitelist while no on demand restricting for category
+* Added restriction [ACTION_DIAL](http://developer.android.com/reference/android/content/Intent.html#ACTION_DIAL)
+* Removed restriction *ApplicationsProvider* for KitKat, since the provider doesn't exist anymore
+* Made *accounts/hasFeatures* dangerous
+* Added restrictions [SMS_DELIVER](https://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html#SMS_DELIVER_ACTION) and [WAP_PUSH_DELIVER](https://developer.android.com/reference/android/provider/Telephony.Sms.Intents.html#WAP_PUSH_DELIVER_ACTION)
+* Corrected some restriction permissions
+* Moved restrictions *getAllByName*, *getByAddress* and *getByName* ([InetAddress](http://developer.android.com/reference/java/net/InetAddress.html)) from *internet* to *network*
+* Fixed restrictions *getByAddress* and *getByName*; to prevent problems these dangerous restrictions need to be set again
+* Prefixed *getHardwareAddress*, *getInetAddresses* and *getInterfaceAddresses* (network) with [NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html)
+* Prefixed *getByInetAddress*, *getByName* and *getNetworkInterfaces* (internet) with [NetworkInterface](http://developer.android.com/reference/java/net/NetworkInterface.html)
+* Added restriction [NetworkInterface.getByIndex](http://developer.android.com/reference/java/net/NetworkInterface.html#getByIndex(int))
+* Prefixed *getDetailedState*, *getState*, *isConnected* and *isConnectedOrConnecting* with [NetworkInfo](http://developer.android.com/reference/android/net/NetworkInfo.html)
+* Moved *getExtraInfo* to *network*
+* Prefixed *getActiveNetworkInfo*, *getAllNetworkInfo* and *getNetworkInfo* with *Connectivity*
+* Prefixed *getConfiguredNetworks*, *getConnectionInfo*, *getDhcpInfo*, *getScanResults*, and *getWifiApConfiguration* with *WiFi*
+* Updated in application documentation
+* Updated Dutch translation
+* Updated German translation
+* Updated Simplified Chinese translation
+* Updated Slovak translation
+
+**Version 2.2.1 STABLE**
+
+* Fixed all problems reported through the support info
+* Removed restriction *IPC.Reflection* to fix delays/freezes ([issue](/../../issues/1820))
+* Better handling of [StrictMode](http://developer.android.com/reference/android/os/StrictMode.html)
+* Updated Polish translation
+
+**Version 2.2 STABLE**
+
+Changes since last stable version:
+
+* Added a series of new restrictions and improved/extended existing restrictions
+* Redesigned on demand restricting dialog
+* Added experimental support for [Cydia Substrate](http://www.cydiasubstrate.com/)
+* Several improvements and bug fixes
+* See for all details the changes since version 2.1.5
+
+Changes since previous version:
+
+* Updated German translation
+* Updated Italian translation
+* Updated Japanese translation
+* Updated Norwegian translation
+* Remember on demand dialog settings across reboots ([issue](/../../issues/1812))
+* Showing stored version in *About* when different from current version
+* Removed function help from on demand dialog
+* Displaying less details in on demand dialog in expert mode
+
+**Version 2.1.26 BETA**
+
+* Fixed crash while deleting white/black list entries
+* Fixed all problems reported through the support info
+* Updated Slovak translation
+
+**Version 2.1.25 TEST**
+
+* Enabled Google Maps API v2 restrictions
+* Added restrictions for [Google Maps API v1](https://developers.google.com/maps/documentation/android/v1/reference/index) ([issue](/../../issues/1807))
+
+**Version 2.1.24-2 TEST**
+
+* Added IPC restriction *ICameraService*
+
+**Version 2.1.24-1 TEST**
+
+* Updated some texts
+* Added restrictions for [Google Maps API v2](http://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html) ([issue](/../../issues/1807))
+
+**Version 2.1.24 TEST**
+
+* Added category help
+* Moved on demand restricting details to expert mode
+* Rewrote location restrictions
+* Fixed fake location for Play services locations
+* Optimized *intent* restricting for performance
+* Moved *android.intent.action.NEW_OUTGOING_CALL* and *CallLogProvider* from *Phone* to *Calling* category
+* Added *quirks* settings
+* Updated Dutch translation
+* Updated German translation
+* Updated Italian translation
+* Updated Lithuanian translation
+
+**Version 2.1.22 BETA**
+
+* Added reset button to on demand dialog
+* Optimized IPC restrictions performance
+* Updated Japanese translation
+
+**Version 2.1.21 TEST**
+
+* Added option to specify file name to export intent ([issue](/../../issues/1784))
+* Added option to blacklist applications, accounts and contacts ([issue](/../../issues/1781))
+* Fixed order of applications to allow ([Pro license](http://www.xprivacy.eu/) only)
+* Allowing cancel of accounts, applications and contacts to allow dialog
+* Faster and more secure IPC restriction implementation with transaction whitelisting
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Improved on demand dialog layout
+* Added help for function documentation icon
+* Show function help in on demand dialog ([issue](/../../issues/1790))
+* Allow dangerous functions for *I don't know*
+* Fixed on demand dialog freeze by not on demand restricting in some situations, see also the [FAQ](https://github.com/M66B/XPrivacy#FAQ64)
+* Updated Dutch translation
+* Updated Japanese translation
+* Updated Slovenian translation
+
+**Version 2.1.20 BETA**
+
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Added option to sort by state ([issue](/../../issues/1772))
+* Some small performance optimizations
+* Require a pro license for batch operations (toggle restrictions for multiple applications)
+	* I have put about 2000 hours into developing and supporting XPrivacy so far. The reason for [accepting donations](http://www.xprivacy.eu/) is to keep myself motivated to keep doing this. Unfortunately the number of donations is quite low and thus not very motivating. So, don't start complaining about this change, but instead think about supporting this huge project. You can still fully protect your privacy with all the free features of XPrivacy. I have made a promise that you will always be able to do so and I intent to keep this promise.
+* Allow white listing of top folders of file name of *android.intent.action.VIEW*
+* Made *getAllProviders* and *getBestProvider* dangerous
+* Updated Danish translation
+* Updated Dutch translation
+* Updated German translation
+* Updated Slovak translation
+
+**Version 2.1.19 BETA**
+
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Cache empty settings (performance)
+* Updated Russian translation
+
+**Version 2.1.18 TEST**
+
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Leave on demand dialog buttons enabled when new dialog within 1 second
+* Updated in application documentation, thanks @[an0n981](https://github.com/an0n981)
+* Updated German translation
+* Updated Vietnamese translation
+
+**Version 2.1.17 TEST**
+
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Removed restrictions for *NEW_PICTURE* and *ACTION_NEW_VIDEO* broadcasts
+	* Has been replaced by:
+* Added restrictions for [ContentResolver.open...](http://developer.android.com/reference/android/content/ContentResolver.html)
+* Added restriction for *InputDevice.getName*
+* Added restriction for *addGpsStatusListener*, *getAllProviders* and *getBestProvider*
+* Added parameter provider name to *isProviderEnabled*, *getLastKnownLocation*, *requestLocationUpdates*, *requestSingleUpdate*, and *sendExtraCommand*
+* Added parameter host name to *getAllByName*, *getByAddress* and *getByName*
+* Added parameter path to *MediaRecorder.setOutputFile*
+* Added restriction for *getPackagesForUid*
+* Added process name parameter to *queryContentProviders*
+* Added restriction *SIP.isSipWifiOnly*
+* Added parameter destination address to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
+* Added whitelist to *sendDataMessage*, *sendMultipartTextMessage* and *sendTextMessage* (SMS)
+* Added parameter key to *%imei*, *%hostname*, *%serialno*, *%macaddr* and *%cid*
+* Added parameter user agent to *getUserAgentString*
+* Added parameter device name to *USB.getDeviceId*
+* Added white list to *getAllByName*, *getByAddress* and *getByName*
+* Added restriction for *LinkAddress.toString* (Android "L") ([issue](/../../issues/1757))
+* Added restriction for heart rate sensor (Android "L") ([issue](/../../issues/1757))
+* Added restriction for *USB.getSerialNumber* (Android "L") ([issue](/../../issues/1757))
+* Added restriction for new camera device (Android "L") ([issue](/../../issues/1757))
+* One second delay before enabling on demand dialog buttons
+* Updated Dutch translation
+* Updated Italian translation
+
+**Version 2.1.16 BETA**
+
+* Fixed repeating on demand restricting
+
+**Version 2.1.15 BETA**
+
+* Added restrictions for NEW_PICTURE and ACTION_NEW_VIDEO broadcasts
+* Fixed on demand once caching restriction
+
+**Version 2.1.14 BETA**
+
+* Fixed all problems reported through the support info
+	* Thanks for sending all the support info!
+* Fixed returning wrong restriction sometimes for repeated on demand restricting
+* Fixed finger print lockscreen ([issue](/../../issues/1759))
+* Added allow/deny once for category ([issue](/../../issues/1764))
+* Added white/black listing for parent folder ([issue](/../../issues/1474))
+* Added option to disable restrictions at boot:
+
+```
+cd /data/system/xprivacy
+echo "ipc" >disabled
+echo "system.getInstalledProviders" >>disabled
+```
 
 **Version 2.1.12 BETA**
 

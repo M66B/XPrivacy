@@ -1,27 +1,24 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
 import android.util.Log;
 
-import com.google.android.gms.location.LocationListener;
-
 public class XLocationClient extends XHook {
 	private Methods mMethod;
-	private static final Map<LocationListener, XLocationListener> mListener = new WeakHashMap<LocationListener, XLocationListener>();
+	private static final Map<Object, Object> mMapProxy = new WeakHashMap<Object, Object>();
 
 	private XLocationClient(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), String.format("GMS.%s", method.name()));
-		mMethod = method;
-	}
-
-	private XLocationClient(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), String.format("GMS.%s", method.name()), sdk);
 		mMethod = method;
 	}
 
@@ -50,11 +47,11 @@ public class XLocationClient extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation).optional());
-		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation).optional());
-		listHook.add(new XLocationClient(Methods.removeGeofences, null, 1).optional());
-		listHook.add(new XLocationClient(Methods.removeLocationUpdates, null, 1).optional());
-		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation).optional());
+		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation));
+		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation));
+		listHook.add(new XLocationClient(Methods.removeGeofences, null));
+		listHook.add(new XLocationClient(Methods.removeLocationUpdates, null));
+		listHook.add(new XLocationClient(Methods.requestLocationUpdates, PrivacyManager.cLocation));
 		return listHook;
 	}
 
@@ -64,19 +61,42 @@ public class XLocationClient extends XHook {
 			if (isRestricted(param))
 				param.setResult(null);
 
+		} else if (mMethod == Methods.getLastLocation) {
+			// Do nothing
+
 		} else if (mMethod == Methods.removeGeofences) {
 			if (isRestricted(param, PrivacyManager.cLocation, "GMS.addGeofences"))
 				param.setResult(null);
 
-		} else if (mMethod == Methods.getLastLocation) {
-			// Do nothing
-
 		} else if (mMethod == Methods.removeLocationUpdates) {
-			removeLocationListener(param);
+			if (param.args.length > 0)
+				if (param.args[0] instanceof PendingIntent) {
+					if (isRestricted(param, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
+						param.setResult(null);
+				} else
+					synchronized (mMapProxy) {
+						if (mMapProxy.containsKey(param.args[0]))
+							param.args[0] = mMapProxy.get(param.args[0]);
+					}
 
 		} else if (mMethod == Methods.requestLocationUpdates) {
-			if (isRestricted(param))
-				replaceLocationListener(param);
+			if (param.args.length > 1)
+				if (isRestricted(param))
+					if (param.args[1] instanceof PendingIntent)
+						param.setResult(null);
+					else if (param.thisObject != null) {
+						// Create proxy
+						ClassLoader cl = param.thisObject.getClass().getClassLoader();
+						Class<?> ll = Class.forName("com.google.android.gms.location.LocationListener", false, cl);
+						InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[1]);
+						Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { ll }, ih);
+
+						// Use proxy
+						synchronized (mMapProxy) {
+							mMapProxy.put(param.args[1], proxy);
+						}
+						param.args[1] = proxy;
+					}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
@@ -102,57 +122,19 @@ public class XLocationClient extends XHook {
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
-	private void replaceLocationListener(XParam param) throws Throwable {
-		if (param.args.length >= 2 && param.args[1] != null
-				&& LocationListener.class.isAssignableFrom(param.args[1].getClass())) {
-			if (!(param.args[1] instanceof XLocationListener)) {
-				LocationListener listener = (LocationListener) param.args[1];
-				if (listener != null) {
-					XLocationListener xListener;
-					synchronized (mListener) {
-						xListener = mListener.get(listener);
-						if (xListener == null) {
-							xListener = new XLocationListener(listener);
-							mListener.put(listener, xListener);
-							Util.log(this, Log.WARN,
-									"Added count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-						}
-					}
-					param.args[1] = xListener;
-				}
-			}
-		} else
-			param.setResult(null);
-	}
+	private class OnLocationChangedHandler implements InvocationHandler {
+		private int mUid;
+		private Object mTarget;
 
-	private void removeLocationListener(XParam param) {
-		if (param.args.length >= 1 && param.args[0] != null
-				&& LocationListener.class.isAssignableFrom(param.args[0].getClass())) {
-			LocationListener listener = (LocationListener) param.args[0];
-			synchronized (mListener) {
-				XLocationListener xlistener = mListener.get(listener);
-				if (xlistener != null) {
-					param.args[0] = xlistener;
-					Util.log(this, Log.WARN, "Removed count=" + mListener.size() + " uid=" + Binder.getCallingUid());
-				}
-			}
-		} else
-			param.setResult(null);
-	}
-
-	private class XLocationListener implements LocationListener {
-
-		private LocationListener mLocationListener;
-
-		public XLocationListener(LocationListener locationListener) {
-			mLocationListener = locationListener;
+		public OnLocationChangedHandler(int uid, Object target) {
+			mUid = uid;
+			mTarget = target;
 		}
 
-		@Override
-		public void onLocationChanged(Location location) {
-			if (location != null)
-				location = PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location);
-			mLocationListener.onLocationChanged(location);
+		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+			if ("onLocationChanged".equals(method.getName()))
+				args[0] = PrivacyManager.getDefacedLocation(mUid, (Location) args[0]);
+			return method.invoke(mTarget, args);
 		}
 	}
 }

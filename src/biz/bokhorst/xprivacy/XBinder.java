@@ -1,20 +1,27 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import android.content.Context;
 import android.os.Binder;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
 import android.util.Log;
+import android.util.SparseArray;
 
 public class XBinder extends XHook {
 	private Methods mMethod;
-
 	private static long mToken = 0;
+	private static Map<String, Boolean> mMapClassSystem = new HashMap<String, Boolean>();
+	private static Map<String, SparseArray<String>> mMapCodeName = new HashMap<String, SparseArray<String>>();
+
 	private static final int BITS_TOKEN = 16;
 	private static final int FLAG_ALL = 0xFFFF;
 	private static final int MASK_TOKEN = 0xFFFF;
@@ -27,7 +34,6 @@ public class XBinder extends XHook {
 	private static final int SYSPROPS_TRANSACTION = ('_' << 24) | ('S' << 16) | ('P' << 8) | 'R';
 
 	// Service name should one-to-one correspond to the other lists
-	// TODO: service list
 
 	// @formatter:off
 	public static List<String> cServiceName = Arrays.asList(new String[] {
@@ -52,18 +58,11 @@ public class XBinder extends XHook {
 		"bluetooth_manager",
 		"input",
 		"sensorservice",
-		"usb"
-	});
-	// @formatter:on
-
-	// @formatter:off
-	public static List<String> cServiceOptional = Arrays.asList(new String[] {
-		"iphonesubinfo",
-		"iphonesubinfo_msim",
-		"sip",
-		"nfc",
-		"bluetooth",
-		"bluetooth_manager"
+		"usb",
+		"media.camera",
+		"<noname>",
+		"<noname>",
+		"<noname>"
 	});
 	// @formatter:on
 
@@ -90,136 +89,31 @@ public class XBinder extends XHook {
 		"android.bluetooth.IBluetoothManager",
 		"android.hardware.input.IInputManager",
 		"android.gui.SensorServer",
-		"android.hardware.usb.IUsbManager"
+		"android.hardware.usb.IUsbManager",
+		"android.hardware.ICameraService",
+		"android.app.IApplicationThread",
+		"android.content.IContentProvider",
+		"android.view.IWindowSession"
 	});
 	// @formatter:on
+
+	// TODO: audio/media record
 
 	// @formatter:off
-	public static List<String> cServiceClassName = Arrays.asList(new String[] {
-		"android.accounts.AccountManager",
-		"android.app.ActivityManager",
-		"android.content.ClipboardManager",
-		"android.net.ConnectivityManager,android.net.MultiSimConnectivityManager",
-		"android.content.ContentResolver,android.content.ContentProviderClient,com.android.providers.contacts.ContactsProvider2",
-		"android.location.LocationManager",
-		"android.telephony.TelephonyManager",
-		"android.telephony.TelephonyManager",
-		"android.app.ApplicationPackageManager",
-		"android.telephony.TelephonyManager",
-		"android.telephony.MSimTelephonyManager",
-		"android.view.WindowManagerImpl,android.view.WindowManagerGlobal,android.view.ViewRootImpl,android.view.View,android.view.Display",
-		"android.net.wifi.WifiManager",
-		"android.net.sip.SipManager",
-		"android.telephony.SmsManager",
-		"android.nfc.NfcActivityManager,android.nfc.NfcAdapter",
-		"android.appwidget.AppWidgetManager,android.appwidget.AppWidgetHost",
-		"com.android.server.BluetoothManagerService,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothSocket",
-		"android.bluetooth.BluetoothManager,android.bluetooth.BluetoothAdapter,android.bluetooth.BluetoothDevice,android.bluetooth.BluetoothPan",
-		"android.hardware.input.InputManager",
-		"android.hardware.SystemSensorManager",
-		"android.hardware.usb.UsbManager"
+	public static List<String> cServiceOptional = Arrays.asList(new String[] {
+		"<noname>",
+		"iphonesubinfo",
+		"iphonesubinfo_msim",
+		"sip",
+		"isms",
+		"nfc",
+		"bluetooth",
+		"bluetooth_manager"
 	});
 	// @formatter:on
 
-	// @formatter:off
-	// Forbidden classes
-	public static List<String> cBlackClassName = Arrays.asList(new String[] {
-		"java.lang.reflect.Method"
-	});
-	// @formatter:on
-
-	// @formatter:off
-	// Allow some common internal calls
-	public static List<String[]> cWhiteClassName = Arrays.asList(new String[][] {
-		new String[] { // AccountManager
-		},
-		new String[] { // ActivityManager
-			"android.app.Activity",
-			"android.app.ActivityThread",
-			"android.app.ActivityThread$Idler",
-			"android.app.ActivityThread$StopInfo",
-			"android.app.Application",
-			"android.app.ContextImpl",
-			"android.app.Instrumentation",
-			"android.app.LoadedApk",
-			"android.app.PendingIntent",
-			"android.app.Service",
-			"android.content.BroadcastReceiver",
-			"android.content.BroadcastReceiver$PendingResult",
-			"android.content.ContentResolver",
-			"android.hardware.SensorManager",
-			"android.media.MediaPlayer",
-			"android.widget.TextView",
-			"android.os.Looper",
-			"android.os.StrictMode$AndroidBlockGuardPolicy",
-			"com.android.internal.app.ResolverActivity",
-			"com.android.internal.os.RuntimeInit",
-			"com.android.internal.os.RuntimeInit$UncaughtHandler",
-		},
-		new String[] { // ClipboardManager
-		},
-		new String[] { // ConnectivityManager
-			"android.app.ActivityThread",
-			"android.net.VpnService",
-		},
-		new String[] { // ContentProvider
-		},
-		new String[] { // LocationManager
-			"android.location.Geocoder",
-			"android.telephony.cdma.CdmaCellLocation",
-		},
-		new String[] { // TelephonyManager
-		},
-		new String[] { // TelephonyManager
-		},
-		new String[] { // PackageManager
-			"android.app.ActivityThread",
-			"android.app.ContextImpl$TctExtContextImpl",
-			"android.app.LoadedApk",
-			"android.app.ResourcesManager",
-			"android.content.res.Resources",
-			"android.content.thm.ThemeIconManager",
-			"android.hardware.SensorManager",
-			"android.nfc.NfcAdapter",
-			"com.android.internal.app.ResolverActivity$ResolveListAdapter",
-		},
-		new String[] { // TelephonyManager
-		},
-		new String[] { // TelephonyManager
-		},
-		new String[] { // WindowManager
-			"android.app.Activity",
-			"android.app.ActivityThread",
-			"android.app.KeyguardManager",
-			"android.app.KeyguardManager$KeyguardLock",
-			"android.hardware.LegacySensorManager",
-			"android.widget.PopupWindow",
-		},
-		new String[] { // WifiManager
-		},
-		new String[] { // SipManager
-		},
-		new String[] { // SmsManager
-		},
-		new String[] { // NfcManager
-		},
-		new String[] { // AppWidgetManager
-		},
-		new String[] { // Bluetooth
-		},
-		new String[] { // BluetoothManager
-		},
-		new String[] { // InputManager
-		},
-		new String[] { // SensorManager
-		},
-		new String[] { // UsbManager
-		},
-	});
-	// @formatter:on
-
-	private XBinder(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), null, sdk);
+	private XBinder(Methods method, String restrictionName) {
+		super(restrictionName, method.name(), null);
 		mMethod = method;
 	}
 
@@ -253,20 +147,23 @@ public class XBinder extends XHook {
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XBinder(Methods.execTransact, null, 1)); // Binder
-		listHook.add(new XBinder(Methods.transact, null, 1)); // BinderProxy
+		listHook.add(new XBinder(Methods.execTransact, null)); // Binder
+		listHook.add(new XBinder(Methods.transact, null)); // BinderProxy
 		return listHook;
 	}
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.execTransact)
+		if (mMethod == Methods.execTransact) {
+			// execTransact calls the overridden onTransact
+
+			// Check for direct IPC
 			checkIPC(param);
 
-		else if (mMethod == Methods.transact)
+		} else if (mMethod == Methods.transact) {
 			markIPC(param);
 
-		else
+		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
@@ -276,131 +173,158 @@ public class XBinder extends XHook {
 	}
 
 	private void markIPC(XParam param) throws Throwable {
-		// Allow management transaction
+		// Allow management transactions
 		int code = (Integer) param.args[0];
 		if (isManagementTransaction(code))
 			return;
 
+		// Only for applications
 		int uid = Binder.getCallingUid();
-		if (PrivacyManager.isApplication(uid)) {
-			// Get interface name
-			IBinder binder = (IBinder) param.thisObject;
-			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+		if (!PrivacyManager.isApplication(uid))
+			return;
 
-			// Check if listed descriptor
-			int idx = cServiceDescriptor.indexOf(descriptor);
-			if (idx >= 0) {
-				// Search class in call stack
-				boolean ok = false;
-				boolean black = false;
-				boolean white = false;
-				boolean found = false;
-				String proxy = descriptor.replace(".I", ".") + "Proxy";
-				String[] serviceClassName = cServiceClassName.get(idx).split(",");
-				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
-				for (int i = 0; i < ste.length; i++)
-					if (ste[i].getClassName().startsWith(descriptor) || ste[i].getClassName().startsWith(proxy)) {
-						found = true;
+		// Check interface name
+		IBinder binder = (IBinder) param.thisObject;
+		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+		if (!cServiceDescriptor.contains(descriptor))
+			return;
 
-						// Check exceptions
-						if (i + 1 < ste.length) {
-							String name = ste[i + 1].getClassName();
-							black = cBlackClassName.contains(name);
-							white = Arrays.asList(cWhiteClassName.get(idx)).contains(name);
-							if (black || white)
-								break;
-						}
+		// Search this object in call stack
+		boolean ok = false;
+		boolean found = false;
+		StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+		for (int i = 0; i < ste.length; i++)
+			if (ste[i].getClassName().equals(param.thisObject.getClass().getName())) {
+				found = true;
 
-						// Check manager class name
-						for (int j = i + 1; j < ste.length; j++) {
-							for (String name : serviceClassName)
-								if (ste[j].getClassName().startsWith(name)) {
-									ok = true;
-									break;
-								}
-							if (ok)
-								break;
-						}
-						break;
+				// Check if caller class in user space
+				String callerClassName = (i + 2 < ste.length ? ste[i + 2].getClassName() : null);
+				if (callerClassName != null && !callerClassName.startsWith("java.lang.reflect."))
+					synchronized (mMapClassSystem) {
+						if (!mMapClassSystem.containsKey(callerClassName))
+							try {
+								ClassLoader loader = Thread.currentThread().getContextClassLoader();
+								Class<?> clazz = Class.forName(callerClassName, false, loader);
+								boolean boot = Context.class.getClassLoader().equals(clazz.getClassLoader());
+								mMapClassSystem.put(callerClassName, boot);
+							} catch (ClassNotFoundException ignored) {
+								mMapClassSystem.put(callerClassName, true);
+							}
+						ok = mMapClassSystem.get(callerClassName);
 					}
 
-				// Internal checks
-				if (!found) {
-					Util.log(this, Log.ERROR,
-							"Missing descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
-					Util.logStack(this, Log.ERROR);
-				}
-				if (black || white)
-					if (ok) {
-						Util.log(this, Log.ERROR, "Black/whitelisted descriptor=" + descriptor + " code=" + code + " uid="
-								+ Binder.getCallingUid());
-						Util.logStack(this, Log.ERROR);
-					} else if (white)
-						ok = true;
-
-				// Conditionally mark
-				if (ok) {
-					int flags = (Integer) param.args[3];
-					if ((flags & ~FLAG_ALL) != 0)
-						Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " descriptor="
-								+ descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
-					flags |= (mToken << BITS_TOKEN);
-					param.args[3] = flags;
-				}
-
-				if (!ok && !black && !PrivacyService.getClient().isSystemApp(uid)) {
-					Util.log(this, Log.ERROR,
-							"Unmarked descriptor=" + descriptor + " code=" + code + " uid=" + Binder.getCallingUid());
-					Util.logStack(this, Log.ERROR);
-				}
+				break;
 			}
+
+		// Conditionally mark
+		if (ok) {
+			int flags = (Integer) param.args[3];
+			if ((flags & ~FLAG_ALL) != 0)
+				Util.log(this, Log.ERROR, "Unknown flags=" + Integer.toHexString(flags) + " descriptor=" + descriptor
+						+ " code=" + code + " uid=" + Binder.getCallingUid());
+			flags |= (mToken << BITS_TOKEN);
+			param.args[3] = flags;
+		} else {
+			int level = (found ? Log.WARN : Log.ERROR);
+			Util.log(this, level, "Unmarked descriptor=" + descriptor + " found=" + found + " code=" + code + " uid="
+					+ Binder.getCallingUid());
+			Util.logStack(this, level, true);
 		}
 	}
 
+	// Entry point from android_util_Binder.cpp's onTransact
 	private void checkIPC(XParam param) throws Throwable {
-		// Entry point from android_util_Binder.cpp's onTransact
+		// Allow management transactions
 		int code = (Integer) param.args[0];
+		if (isManagementTransaction(code))
+			return;
+
+		// Only for applications
+		int uid = Binder.getCallingUid();
+		if (!PrivacyManager.isApplication(uid))
+			return;
+
+		// Check interface name
+		IBinder binder = (IBinder) param.thisObject;
+		String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
+		if (!cServiceDescriptor.contains(descriptor))
+			return;
+
+		// Get token
 		int flags = (Integer) param.args[3];
 		long token = (flags >> BITS_TOKEN) & MASK_TOKEN;
 		flags &= FLAG_ALL;
 		param.args[3] = flags;
 
-		// Allow management transaction
-		if (isManagementTransaction(code))
-			return;
+		// Check token
+		if (token != mToken) {
+			String[] name = descriptor.split("\\.");
+			String interfaceName = name[name.length - 1];
 
-		int uid = Binder.getCallingUid();
-		if (token != mToken && PrivacyManager.isApplication(uid)) {
-			// Get interface name
-			IBinder binder = (IBinder) param.thisObject;
-			String descriptor = (binder == null ? null : binder.getInterfaceDescriptor());
-			if (cServiceDescriptor.contains(descriptor)) {
-				String[] name = descriptor.split("\\.");
-				String methodName = name[name.length - 1];
-				Util.log(this, Log.INFO, "can restrict method=" + methodName + " code=" + code + " flags=" + flags
-						+ " uid=" + uid + " my=" + Process.myUid());
-				if (isRestrictedExtra(uid, PrivacyManager.cIPC, methodName, Integer.toString(code))) {
-					// Get reply parcel
-					Parcel reply = null;
+			// Get transaction code name
+			String codeName;
+			synchronized (mMapCodeName) {
+				if (!mMapCodeName.containsKey(descriptor)) {
+					SparseArray<String> sa = new SparseArray<String>();
+					mMapCodeName.put(descriptor, sa);
+
+					List<Class<?>> listClass = new ArrayList<Class<?>>();
+					if (param.thisObject.getClass().getSuperclass() != null)
+						listClass.add(param.thisObject.getClass().getSuperclass());
 					try {
-						// static protected final Parcel obtain(int obj)
-						// frameworks/base/core/java/android/os/Parcel.java
-						Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
-						methodObtain.setAccessible(true);
-						reply = (Parcel) methodObtain.invoke(null, param.args[2]);
-					} catch (NoSuchMethodException ex) {
-						Util.bug(this, ex);
+						listClass.add(Class.forName(descriptor));
+					} catch (ClassNotFoundException ignored) {
 					}
 
-					// Block IPC
-					if (reply == null)
-						Util.log(this, Log.ERROR, "reply is null uid=" + uid);
-					else {
-						reply.setDataPosition(0);
-						reply.writeException(new SecurityException("XPrivacy"));
-					}
-					param.setResult(true);
+					for (Class<?> clazz : listClass)
+						for (Field field : clazz.getDeclaredFields())
+							try {
+								if (field.getName().startsWith("TRANSACTION_")
+										|| field.getName().endsWith("_TRANSACTION")) {
+									field.setAccessible(true);
+									Integer txCode = (Integer) field.get(null);
+									String txName = field.getName().replace("TRANSACTION_", "")
+											.replace("_TRANSACTION", "");
+									sa.put(txCode, txName);
+								}
+							} catch (Throwable ignore) {
+							}
 				}
+
+				codeName = mMapCodeName.get(descriptor).get(code);
+			}
+			if (codeName == null) {
+				codeName = Integer.toString(code);
+				Util.log(this, Log.WARN, "Unknown transaction=" + descriptor + ":" + code + " class="
+						+ param.thisObject.getClass() + " uid=" + Binder.getCallingUid());
+				Util.logStack(this, Log.INFO);
+			}
+
+			Util.log(this, Log.INFO, "can restrict transaction=" + interfaceName + ":" + codeName + " flags=" + flags
+					+ " uid=" + uid + " my=" + Process.myUid());
+
+			if (isRestrictedExtra(uid, PrivacyManager.cIPC, "Binder", interfaceName + ":" + codeName)) {
+				Util.log(this, Log.WARN, "Restricting " + interfaceName + ":" + codeName + " code=" + code);
+				// Get reply parcel
+				Parcel reply = null;
+				try {
+					// static protected final Parcel obtain(int obj)
+					// frameworks/base/core/java/android/os/Parcel.java
+					Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
+					methodObtain.setAccessible(true);
+					reply = (Parcel) methodObtain.invoke(null, param.args[2]);
+				} catch (NoSuchMethodException ex) {
+					Util.bug(this, ex);
+				}
+
+				// Block IPC
+				if (reply == null)
+					Util.log(this, Log.ERROR, "reply is null uid=" + uid);
+				else {
+					reply.setDataPosition(0);
+					reply.writeException(new SecurityException("XPrivacy"));
+				}
+				param.setResult(true);
 			}
 		}
 	}

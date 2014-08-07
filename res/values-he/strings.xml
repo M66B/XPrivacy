@@ -1,13 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed מסגרת גרסה %d+ אינו מותקן</string>
     <string name="app_notenabled">XPrivacy אינו מאופשר במתקין Xposed</string>
     <string name="app_wrongandroid">Only for Android version 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">גירסא XPrivacy\u200F: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion">גרסת מסגרת Xposed\u200F: %d</string>
     <string name="app_copyright">כל הזכויות שמורות \u00A9 2013–2014 על ידי מ Bokhorst (M66B)\u200E</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">License found, thanks for your support!</string>
     <string name="menu_usage">Usage</string>
     <string name="menu_refresh">Refresh</string>
@@ -46,6 +45,7 @@
     <string name="menu_exclude">Exclude</string>
     <string name="menu_close">Close</string>
     <string name="menu_flush">Flush cache</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">New</string>
@@ -100,12 +100,40 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="restrict_shell">Shell (commands, superuser)</string>
     <string name="restrict_system">מערכת (יישומים מותקנים)</string>
     <string name="restrict_view">גישה (דפדפן)</string>
+    <string name="restrict_help_view">Will restrict access to view actions and information</string>
+    <string name="restrict_help_system">Will restrict access to system information, like installed applications</string>
+    <string name="restrict_help_shell">Will restrict access to shell commands, including superuser commands</string>
+    <string name="restrict_help_storage">Will restrict access to the storage, like files on your SD card or the internal storage</string>
+    <string name="restrict_help_sensors">Will restrict access to the sensors, like the motion sensor</string>
+    <string name="restrict_help_phone">Will restrict access to phone information, like your phone number</string>
+    <string name="restrict_help_overlay">Will restrict overlay windows to prevent phishing</string>
+    <string name="restrict_help_notifications">Will restrict access to system and application notifications and Google cloud messaging</string>
+    <string name="restrict_help_nfc">Will restrict access to near field communication</string>
+    <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
+    <string name="restrict_help_messages">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
+    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
+    <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
+    <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
+    <string name="restrict_help_internet">Will restrict access to the Internet</string>
+    <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
+    <string name="restrict_help_email">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
+    <string name="restrict_help_dictionary">Will restrict access to the user dictionary</string>
+    <string name="restrict_help_contacts">Will restrict access to information about your contacts</string>
+    <string name="restrict_help_clipboard">Will restrict access to information on the clipboard</string>
+    <string name="restrict_help_calling">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
+    <string name="restrict_help_calendar">Will restrict access to your calendar information, like your appointments</string>
+    <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
+    <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
+    <string name="whitelist_address">Addresses</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">File names</string>
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
+    <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_permission">Permissions</string>
     <string name="title_restrict">בחר להגביל:</string>
     <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filter on data usage</string>
@@ -121,6 +149,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_sinstalled">By date installed</string>
     <string name="title_supdated">By date updated</string>
     <string name="title_smodified">By date modified (XPrivacy)</string>
+    <string name="title_sstate">By state (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="title_attempt">Usage attempt of:</string>
     <string name="title_category">Category:</string>
@@ -128,7 +157,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
     <string name="title_once">Once for %s seconds</string>
-    <string name="title_whitelist">Whitelist \'%s\'</string>
+    <string name="title_whitelist">White/blacklist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
     <string name="title_dontknow">Don\'t know</string>
@@ -140,6 +169,8 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
+    <string name="title_ondemand_default">Timeout will:</string>
+    <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Alternate</string>
     <string name="title_usage_header">Usage</string>
@@ -149,6 +180,8 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
     <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
     <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
+    <string name="title_function_help">Function documentation</string>
+    <string name="title_unsafe">is unsafe, can be circumvented</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">קו אורך</string>
     <string name="settings_lon">קו רוחב</string>
@@ -166,6 +199,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_fake_data">Fake data</string>
     <string name="settings_notify">Update notifications</string>
     <string name="settings_ondemand">Restrict on demand</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Debug log (requires restart)</string>
     <string name="settings_expert">Expert mode</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
@@ -176,6 +210,7 @@ however it is impossible to guarantee it will work flawless on each and every de
     <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Long press name to select</string>
     <string name="help_ondemand">restrictions will be asked</string>
     <string name="help_application">יישום</string>

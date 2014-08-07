@@ -32,12 +32,14 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 
 	// Cache
 	private Drawable mIcon = null;
-	private boolean mInternet = false;
-	private boolean mInternetDetermined = false;
-	private boolean mFrozen = false;
-	private boolean mFrozenDetermined = false;
+	private Boolean mInternet = null;
+	private Boolean mFrozen = null;
 	private long mInstallTime = -1;
 	private long mUpdateTime = -1;
+
+	public static final int STATE_ATTENTION = 0;
+	public static final int STATE_CHANGED = 1;
+	public static final int STATE_SHARED = 2;
 
 	public ApplicationInfoEx(Context context, int uid) {
 		mUid = uid;
@@ -155,20 +157,20 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public boolean hasInternet(Context context) {
-		if (!mInternetDetermined) {
+		if (mInternet == null) {
+			mInternet = false;
 			PackageManager pm = context.getPackageManager();
 			for (ApplicationInfo appInfo : mMapAppInfo.values())
 				if (pm.checkPermission("android.permission.INTERNET", appInfo.packageName) == PackageManager.PERMISSION_GRANTED) {
 					mInternet = true;
 					break;
 				}
-			mInternetDetermined = true;
 		}
 		return mInternet;
 	}
 
 	public boolean isFrozen(Context context) {
-		if (!mFrozenDetermined) {
+		if (mFrozen == null) {
 			PackageManager pm = context.getPackageManager();
 			boolean enabled = false;
 			for (ApplicationInfo appInfo : mMapAppInfo.values())
@@ -181,7 +183,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 				} catch (IllegalArgumentException ignored) {
 				}
 			mFrozen = !enabled;
-			mFrozenDetermined = true;
 		}
 		return mFrozen;
 	}
@@ -191,7 +192,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public int getState(Context context) {
-		return Integer.parseInt(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingState, "1"));
+		return Integer.parseInt(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingState,
+				Integer.toString(STATE_CHANGED)));
 	}
 
 	public long getInstallTime(Context context) {

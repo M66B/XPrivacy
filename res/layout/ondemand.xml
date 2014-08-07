@@ -4,42 +4,15 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingLeft="16dip"
-    android:paddingRight="16dip"
-    android:paddingTop="16dip" >
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        tools:ignore="UseCompoundDrawables" >
-
-        <ImageView
-            android:layout_width="32dip"
-            android:layout_height="32dip"
-            android:contentDescription="@string/app_name"
-            android:src="@drawable/ic_launcher" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dip"
-            android:text="@string/app_name"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dip"
-        android:layout_marginTop="6dip"
-        android:background="@android:color/darker_gray" />
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin" >
 
     <ScrollView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dip"
-        android:orientation="vertical" >
+        android:orientation="vertical"
+        tools:ignore="UselessParent" >
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -51,6 +24,33 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 tools:ignore="UseCompoundDrawables" >
+
+                <ImageView
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/ic_launcher" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dip"
+                    android:text="@string/app_name"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dip"
+                android:layout_marginTop="6dip"
+                android:background="@android:color/darker_gray" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dip"
+                android:orientation="horizontal" >
 
                 <ImageView
                     android:id="@+id/ivAppIcon"
@@ -70,14 +70,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:paddingLeft="3dip"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
             </LinearLayout>
 
             <TextView
-                android:id="@+id/tvAttempt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="6dip" />
+                android:paddingTop="6dip"
+                android:text="@string/title_attempt" />
 
             <View
                 android:layout_width="match_parent"
@@ -98,111 +98,197 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
-                        android:text="@string/title_category" />
+                        android:text="@string/title_category"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
 
                     <TextView
                         android:id="@+id/tvCategory"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="6dip"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textStyle="bold" />
                 </TableRow>
 
                 <TableRow
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:tag="details"
+                    android:visibility="gone" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="@string/title_function"
-                        android:textSize="12sp" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
                         android:id="@+id/tvFunction"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="6dip"
-                        android:textSize="12sp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="bold" />
                 </TableRow>
 
                 <TableRow
                     android:id="@+id/rowParameters"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" >
+                    android:layout_height="wrap_content"
+                    android:tag="details"
+                    android:visibility="gone" >
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:singleLine="true"
                         android:text="@string/title_parameters"
-                        android:textSize="12sp" />
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
 
                     <TextView
                         android:id="@+id/tvParameters"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:paddingLeft="6dip"
-                        android:textSize="12sp"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textStyle="bold" />
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="details"
+                    android:visibility="gone" >
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="@string/title_ondemand_default"
+                        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                    <TextView
+                        android:id="@+id/tvDefault"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="6dip"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textStyle="bold" />
                 </TableRow>
             </TableLayout>
+
+            <TextView
+                android:id="@+id/tvInfoCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:tag="nodetails"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="bold" />
+
+            <CheckBox
+                android:id="@+id/cbExpert"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_expert" >
+            </CheckBox>
 
             <CheckBox
                 android:id="@+id/cbCategory"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="6dip"
-                android:text="@string/title_applycat" >
+                android:tag="details"
+                android:text="@string/title_applycat"
+                android:visibility="gone" >
             </CheckBox>
 
             <CheckBox
                 android:id="@+id/cbOnce"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" >
-            </CheckBox>
-
-            <CheckBox
-                android:id="@+id/cbWhitelist"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:tag="details"
                 android:visibility="gone" >
             </CheckBox>
 
-            <CheckBox
-                android:id="@+id/cbWhitelistExtra1"
+            <LinearLayout
+                android:id="@+id/llWhiteList"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:orientation="vertical"
                 android:visibility="gone" >
-            </CheckBox>
 
-            <CheckBox
-                android:id="@+id/cbWhitelistExtra2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:visibility="gone" >
-            </CheckBox>
+                <CheckBox
+                    android:id="@+id/cbWhitelist"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/cbWhitelistExtra1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/cbWhitelistExtra2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" >
+                </CheckBox>
+
+                <CheckBox
+                    android:id="@+id/cbWhitelistExtra3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:visibility="gone" >
+                </CheckBox>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="6dip"
+                android:tag="details"
                 android:text="@string/title_ondemand_category"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textStyle="italic" />
+                android:textStyle="italic"
+                android:visibility="gone" />
 
-            <ProgressBar
-                android:id="@+id/pbProgress"
-                style="@android:style/Widget.ProgressBar.Horizontal"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:indeterminate="false"
-                android:paddingTop="6dip" />
+                android:orientation="horizontal"
+                android:paddingTop="6dip" >
+
+                <ProgressBar
+                    android:id="@+id/pbProgress"
+                    style="@android:style/Widget.ProgressBar.Horizontal"
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_weight="1"
+                    android:indeterminate="false" />
+
+                <Button
+                    android:id="@+id/btnReset"
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="6dip"
+                    android:minHeight="0dp"
+                    android:minWidth="0dp"
+                    android:text="@string/title_ondemand_reset"
+                    android:textAppearance="?android:attr/textAppearanceSmall" >
+                </Button>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -232,6 +318,7 @@
                     android:layout_gravity="right"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
+                    android:enabled="false"
                     android:text="@string/title_allow"
                     android:textAppearance="?android:attr/textAppearanceSmall" >
                 </Button>
@@ -249,6 +336,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
+                    android:enabled="false"
                     android:text="@string/title_dontknow"
                     android:textAppearance="?android:attr/textAppearanceSmall" >
                 </Button>
@@ -266,6 +354,7 @@
                     android:layout_gravity="left"
                     android:layout_weight="1"
                     android:background="?android:attr/selectableItemBackground"
+                    android:enabled="false"
                     android:text="@string/title_deny"
                     android:textAppearance="?android:attr/textAppearanceSmall" >
                 </Button>

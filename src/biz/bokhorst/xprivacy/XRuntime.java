@@ -1,15 +1,24 @@
 package biz.bokhorst.xprivacy;
 
 import java.io.IOException;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedBridge;
+
+import android.content.Context;
+import android.os.Binder;
 import android.text.TextUtils;
 import android.util.Log;
 
 public class XRuntime extends XHook {
 	private Methods mMethod;
 	private String mCommand;
+
+	private static List<Method> listNative = new ArrayList<Method>();
 
 	private XRuntime(Methods method, String restrictionName, String command) {
 		super(restrictionName, method.name(), command);
@@ -70,11 +79,67 @@ public class XRuntime extends XHook {
 			}
 
 		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
-			if (isRestrictedExtra(param, (String) param.args[0]))
-				param.setThrowable(new UnsatisfiedLinkError("XPrivacy"));
+			if (param.args.length > 0) {
+				String libName = (String) param.args[0];
+				if (isRestrictedExtra(param, libName))
+					param.setThrowable(new UnsatisfiedLinkError("XPrivacy"));
+			}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+	}
+
+	@Override
+	protected void after(final XParam param) throws Throwable {
+		if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
+			if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
+				return;
+
+			if (param.args.length > 0 && PrivacyManager.isApplication(Binder.getCallingUid())) {
+				final String libName = (String) param.args[0];
+
+				// Get caller class name
+				String callerClassName = null;
+				StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+				for (int i = 0; i < ste.length; i++)
+					if (ste[i].getClassName().equals(param.thisObject.getClass().getName())) {
+						if (i + 2 < ste.length)
+							callerClassName = ste[i + 2].getClassName();
+						break;
+					}
+
+				// Get caller class
+				Class<?> clazz = null;
+				Util.log(this, Log.WARN, "Class name=" + callerClassName);
+				ClassLoader loader = Thread.currentThread().getContextClassLoader();
+				try {
+					clazz = Class.forName(callerClassName, false, loader);
+				} catch (ClassNotFoundException ignored) {
+					try {
+						clazz = Class.forName(callerClassName, false, Context.class.getClassLoader());
+					} catch (ClassNotFoundException ignored2) {
+						Util.log(this, Log.WARN, "Class not found name=" + callerClassName);
+					}
+				}
+
+				if (clazz != null)
+					synchronized (listNative) {
+						for (Method method : clazz.getDeclaredMethods())
+							if (Modifier.isNative(method.getModifiers()) && !listNative.contains(method)) {
+								listNative.add(method);
+								XposedBridge.hookMethod(method, new XC_MethodHook() {
+									@Override
+									protected void beforeHookedMethod(MethodHookParam mparam) throws Throwable {
+										Util.log(null, Log.WARN, "Native call method=" + mparam.method.getName());
+										if (isRestrictedExtra(param, libName + ":" + mparam.method.getName()))
+											mparam.setThrowable(new SecurityException("XPrivacy"));
+									}
+								});
+								Util.log(this, Log.WARN, "Hooked native method=" + method.getName());
+							}
+					}
+			}
+		}
 	}
 
 	public static boolean matches(String command, String mCommand) {
@@ -94,9 +159,5 @@ public class XRuntime extends XHook {
 
 	private static boolean isSU(String command) {
 		return command.startsWith("su") || command.matches("/.*/.*/su.*") || command.contains("su ");
-	}
-
-	@Override
-	protected void after(XParam param) throws Throwable {
 	}
 }

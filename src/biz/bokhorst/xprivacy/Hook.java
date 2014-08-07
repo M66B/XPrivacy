@@ -1,18 +1,29 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
+
+import android.os.Build;
+
 public class Hook implements Comparable<Hook> {
 	private String mRestrictionName;
 	private String mMethodName;
-	private boolean mDangerous;
-	private boolean mRestart;
-	private boolean mNoUsageData;
-	private boolean mNoOnDemand;
-	private String mWhitelist;
-	private boolean mNotify;
 	private String[] mPermissions;
-	private int mSdk;
+	private int mSdkFrom;
+	private int mSdkTo = Integer.MAX_VALUE;
 	private Version mFrom;
-	private String mReplaces;
+	private String mReplacedRestriction;
+	private String mReplacedMethod;
+
+	private boolean mDangerous = false;
+	private boolean mRestart = false;
+	private boolean mNoUsageData = false;
+	private boolean mNoOnDemand = false;
+	private String mWhitelist = null;
+	private boolean mNotify = false;
+	private int mAOSPSdk = 0;
+	private int mNotAOSPSdk = 0;
+	private boolean mUnsafe = false;
+	private boolean mOptional = false;
 	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
@@ -23,16 +34,28 @@ public class Hook implements Comparable<Hook> {
 	public Hook(String restrictionName, String methodName, String permissions, int sdk, String from, String replaces) {
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
-		mDangerous = false;
-		mRestart = false;
-		mNoUsageData = false;
-		mNoOnDemand = false;
-		mWhitelist = null;
-		mNotify = false;
 		mPermissions = (permissions == null ? null : permissions.split(","));
-		mSdk = sdk;
+		mSdkFrom = sdk;
 		mFrom = (from == null ? null : new Version(from));
-		mReplaces = replaces;
+		if (replaces != null) {
+			int slash = replaces.indexOf('/');
+			if (slash > 0) {
+				mReplacedRestriction = replaces.substring(0, slash);
+				mReplacedMethod = replaces.substring(slash + 1);
+				if ("".equals(mReplacedMethod))
+					mReplacedMethod = methodName;
+			} else {
+				mReplacedRestriction = mRestrictionName;
+				mReplacedMethod = replaces;
+			}
+		}
+	}
+
+	// Definitions
+
+	public Hook to(int sdk) {
+		mSdkTo = sdk;
+		return this;
 	}
 
 	public Hook dangerous() {
@@ -40,7 +63,11 @@ public class Hook implements Comparable<Hook> {
 		return this;
 	}
 
-	// Setters
+	public void toggleDangerous() {
+		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
+				this.getName());
+		PrivacyManager.setSetting(0, name, Boolean.toString(!isDangerous()));
+	}
 
 	public Hook restart() {
 		mRestart = true;
@@ -67,6 +94,34 @@ public class Hook implements Comparable<Hook> {
 		return this;
 	}
 
+	public Hook AOSP(int sdk) {
+		mAOSPSdk = sdk;
+		return this;
+	}
+
+	public Hook notAOSP(int sdk) {
+		mNotAOSPSdk = sdk;
+		if (!PrivacyManager.cIPC.equals(mRestrictionName))
+			mUnsafe = true;
+		return this;
+	}
+
+	public Hook unsafe() {
+		mUnsafe = true;
+		return this;
+	}
+
+	protected Hook optional() {
+		mOptional = true;
+		return this;
+	}
+
+	public void annotate(String text) {
+		mAnnotation = text;
+	}
+
+	// Getters
+
 	public String getRestrictionName() {
 		return mRestrictionName;
 	}
@@ -75,27 +130,57 @@ public class Hook implements Comparable<Hook> {
 		return mMethodName;
 	}
 
+	public String[] getPermissions() {
+		return mPermissions;
+	}
+
+	public boolean isAvailable() {
+		if (Build.VERSION.SDK_INT < mSdkFrom)
+			return false;
+		if (Build.VERSION.SDK_INT > mSdkTo)
+			return false;
+		if (mAOSPSdk > 0 && !isAOSP(mAOSPSdk))
+			return false;
+		if (mNotAOSPSdk > 0 && isAOSP(mNotAOSPSdk))
+			return false;
+		return true;
+	}
+
+	public static boolean isAOSP(int sdk) {
+		if (!PrivacyManager.cVersion3)
+			return false;
+		if (new File("/data/system/xprivacy/aosp").exists())
+			return true;
+		if (Build.VERSION.SDK_INT >= sdk) {
+			if (Build.DISPLAY == null || Build.HOST == null)
+				return false;
+			return (Build.HOST.endsWith(".google.com") || Build.HOST.equals("cyanogenmod") || Build.DISPLAY
+					.startsWith("omni"));
+		} else
+			return false;
+	}
+
+	public Version getFrom() {
+		return mFrom;
+	}
+
+	public String getReplacedRestriction() {
+		return mReplacedRestriction;
+	}
+
+	public String getReplacedMethod() {
+		return mReplacedMethod;
+	}
+
 	public boolean isDangerous() {
 		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
 				this.getName());
 		return PrivacyManager.getSettingBool(0, name, mDangerous);
 	}
 
-	public void toggleDangerous() {
-		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
-				this.getName());
-		PrivacyManager.setSetting(0, name, Boolean.toString(!isDangerous()));
-	}
-
 	public boolean isDangerousDefined() {
 		return mDangerous;
 	}
-
-	public void annotate(String text) {
-		mAnnotation = text;
-	}
-
-	// Getters
 
 	public boolean isRestartRequired() {
 		return mRestart;
@@ -117,25 +202,22 @@ public class Hook implements Comparable<Hook> {
 		return mNotify;
 	}
 
-	public String[] getPermissions() {
-		return mPermissions;
+	public boolean isUnsafe() {
+		if (PrivacyManager.cVersion3)
+			return mUnsafe;
+		else
+			return false;
 	}
 
-	public int getSdk() {
-		return mSdk;
-	}
-
-	public Version getFrom() {
-		return mFrom;
-	}
-
-	public String getReplaces() {
-		return mReplaces;
+	public boolean isOptional() {
+		return mOptional;
 	}
 
 	public String getAnnotation() {
 		return mAnnotation;
 	}
+
+	// Comparison
 
 	@Override
 	public int hashCode() {

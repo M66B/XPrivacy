@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.os.Binder;
 import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
@@ -65,15 +66,22 @@ public class XIoBridge extends XHook {
 	@SuppressLint("SdCardPath")
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.connect) {
-			if (param.args.length > 2 && param.args[1] instanceof InetAddress) {
+			if (param.args.length > 2 && param.args[1] instanceof InetAddress && param.args[2] instanceof Integer) {
 				InetAddress address = (InetAddress) param.args[1];
 				int port = (Integer) param.args[2];
+
 				String hostName;
-				try {
-					hostName = address.getHostName();
-				} catch (Throwable ignored) {
+				boolean resolve = !PrivacyManager.getSettingBool(Binder.getCallingUid(),
+						PrivacyManager.cSettingNoResolve, false);
+				if (resolve)
+					try {
+						hostName = address.getHostName();
+					} catch (Throwable ignored) {
+						hostName = address.toString();
+					}
+				else
 					hostName = address.toString();
-				}
+
 				if (isRestrictedExtra(param, hostName + ":" + port))
 					param.setThrowable(new SocketException("XPrivacy"));
 			}

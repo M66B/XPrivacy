@@ -13,11 +13,6 @@ public class XSipManager extends XHook {
 		mMethod = method;
 	}
 
-	private XSipManager(Methods method, String restrictionName, int sdk) {
-		super(restrictionName, method.name(), "SIP." + method.name(), sdk);
-		mMethod = method;
-	}
-
 	public String getClassName() {
 		return "android.net.sip.SipManager";
 	}
@@ -25,6 +20,7 @@ public class XSipManager extends XHook {
 	// @formatter:off
 
 	// static boolean isApiSupported(Context context)
+	// static boolean isSipWifiOnly(Context context)
 	// static boolean isVoipSupported(Context context)
 	// public static SipManager newInstance (Context context)
 	// http://developer.android.com/reference/android/net/sip/SipManager.html
@@ -32,12 +28,13 @@ public class XSipManager extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		isApiSupported, isVoipSupported, newInstance
+		isApiSupported, isSipWifiOnly, isVoipSupported, newInstance
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XSipManager(Methods.isApiSupported, PrivacyManager.cCalling));
+		listHook.add(new XSipManager(Methods.isSipWifiOnly, PrivacyManager.cCalling));
 		listHook.add(new XSipManager(Methods.isVoipSupported, PrivacyManager.cCalling));
 		listHook.add(new XSipManager(Methods.newInstance, PrivacyManager.cCalling));
 		return listHook;
@@ -45,7 +42,7 @@ public class XSipManager extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.isApiSupported || mMethod == Methods.isVoipSupported) {
+		if (mMethod == Methods.isApiSupported || mMethod == Methods.isSipWifiOnly || mMethod == Methods.isVoipSupported) {
 			if (isRestricted(param))
 				param.setResult(false);
 

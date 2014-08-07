@@ -1,6 +1,10 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.security.InvalidParameterException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -8,6 +12,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Environment;
 import android.os.Process;
 import android.text.TextUtils;
 import android.view.View;
@@ -41,6 +46,7 @@ public class SettingsDialog {
 
 		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
 		final CheckBox cbOnDemand = (CheckBox) dlgSettings.findViewById(R.id.cbOnDemand);
+		final CheckBox cbBlacklist = (CheckBox) dlgSettings.findViewById(R.id.cbBlacklist);
 		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
 		final CheckBox cbParameters = (CheckBox) dlgSettings.findViewById(R.id.cbParameters);
 		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
@@ -51,6 +57,8 @@ public class SettingsDialog {
 		final CheckBox cbHttps = (CheckBox) dlgSettings.findViewById(R.id.cbHttps);
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
 		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
+		final LinearLayout llQuirks = (LinearLayout) dlgSettings.findViewById(R.id.llQuirks);
+		final EditText etQuirks = (EditText) dlgSettings.findViewById(R.id.etQuirks);
 
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
@@ -112,11 +120,13 @@ public class SettingsDialog {
 				cbExperimental.setEnabled(isChecked);
 				cbHttps.setEnabled(isChecked);
 				etConfidence.setEnabled(isChecked);
+				etQuirks.setEnabled(isChecked);
 				if (!isChecked) {
 					cbSystem.setChecked(false);
 					cbExperimental.setChecked(false);
 					cbHttps.setChecked(true);
 					etConfidence.setText("");
+					etQuirks.setText("");
 				}
 			}
 		});
@@ -227,11 +237,33 @@ public class SettingsDialog {
 		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false);
 		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true);
 		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
-		final boolean expert = (components || experimental || !https || !"".equals(confidence));
+		boolean freeze = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
+		boolean noresolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNoResolve, false);
+		boolean permman = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingPermMan, false);
+		boolean iwall = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingIntentWall, false);
+		boolean safemode = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSafeMode, false);
+		boolean test = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingTestVersions, false);
+		List<String> listQuirks = new ArrayList<String>();
+		if (freeze)
+			listQuirks.add("freeze");
+		if (noresolve)
+			listQuirks.add("noresolve");
+		if (permman)
+			listQuirks.add("permman");
+		if (iwall)
+			listQuirks.add("iwall");
+		if (safemode)
+			listQuirks.add("safemode");
+		if (test)
+			listQuirks.add("test");
+		Collections.sort(listQuirks);
+		String quirks = TextUtils.join(",", listQuirks.toArray());
+		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
 
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
 		boolean ondemand = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemand, uid == userId);
+		boolean blacklist = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingBlacklist, false);
 		boolean enabled = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRestricted, true);
 
 		// Common
@@ -267,12 +299,14 @@ public class SettingsDialog {
 				cbExperimental.setChecked(experimental);
 				cbHttps.setChecked(https);
 				etConfidence.setText(confidence);
+				etQuirks.setText(quirks);
 			} else {
 				cbSystem.setEnabled(false);
 				cbExperimental.setEnabled(false);
 				cbHttps.setEnabled(false);
 				cbHttps.setChecked(true);
 				etConfidence.setEnabled(false);
+				etQuirks.setEnabled(false);
 			}
 		} else {
 			// Disable global settings
@@ -284,6 +318,7 @@ public class SettingsDialog {
 			cbExperimental.setVisibility(View.GONE);
 			cbHttps.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
+			llQuirks.setVisibility(View.GONE);
 		}
 
 		boolean gnotify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);
@@ -298,6 +333,12 @@ public class SettingsDialog {
 			cbOnDemand.setEnabled(enabled);
 		} else
 			cbOnDemand.setVisibility(View.GONE);
+
+		String blFileName = Environment.getExternalStorageDirectory().getPath() + "/.xprivacy/blacklist";
+		if (uid == userId || !new File(blFileName).exists())
+			cbBlacklist.setVisibility(View.GONE);
+		else
+			cbBlacklist.setChecked(blacklist);
 
 		// Common
 		cbRandom.setChecked(random);
@@ -459,6 +500,20 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHttps, Boolean.toString(cbHttps.isChecked()));
 					PrivacyManager
 							.setSetting(uid, PrivacyManager.cSettingConfidence, etConfidence.getText().toString());
+
+					List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().split(","));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingFreeze,
+							Boolean.toString(listQuirks.contains("freeze")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingNoResolve,
+							Boolean.toString(listQuirks.contains("noresolve")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingPermMan,
+							Boolean.toString(listQuirks.contains("permman")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingIntentWall,
+							Boolean.toString(listQuirks.contains("iwall")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingSafeMode,
+							Boolean.toString(listQuirks.contains("safemode")));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingTestVersions,
+							Boolean.toString(listQuirks.contains("test")));
 				}
 
 				// Notifications
@@ -468,6 +523,10 @@ public class SettingsDialog {
 				if (uid == userId || PrivacyManager.isApplication(uid))
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand,
 							Boolean.toString(cbOnDemand.isChecked()));
+
+				if (uid != userId)
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingBlacklist,
+							Boolean.toString(cbBlacklist.isChecked()));
 
 				// Random at boot
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingRandom,

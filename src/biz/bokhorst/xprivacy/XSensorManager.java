@@ -122,6 +122,9 @@ public class XSensorManager extends XHook {
 		} else if (type == Sensor.TYPE_STEP_COUNTER || type == Sensor.TYPE_STEP_DETECTOR) {
 			if (isRestricted(param, "step"))
 				return true;
+		} else if (type == 21) { // TODO: replace by TYPE_HEART_RATE
+			if (isRestricted(param, "heartrate"))
+				return true;
 		} else
 			Util.log(this, Log.WARN, "Unknown sensor type=" + type);
 		return false;

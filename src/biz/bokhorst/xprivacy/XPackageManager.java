@@ -1,14 +1,18 @@
 package biz.bokhorst.xprivacy;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
+import android.os.Build;
 import android.util.Log;
 import android.content.ComponentName;
 import android.content.IntentFilter;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.pm.ProviderInfo;
 import android.content.pm.ResolveInfo;
 
@@ -16,6 +20,12 @@ public class XPackageManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
 	private static final String cClassName = "android.app.ApplicationPackageManager";
+
+	private XPackageManager(Methods method, String restrictionName) {
+		super(restrictionName, method.name().replace("Srv_", ""), method.name());
+		mMethod = method;
+		mClassName = "com.android.server.pm.PackageManagerService";
+	}
 
 	private XPackageManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
@@ -31,8 +41,8 @@ public class XPackageManager extends XHook {
 
 	// public List<ApplicationInfo> getInstalledApplications(int flags)
 	// public List<PackageInfo> getInstalledPackages(int flags)
+	// public String[] getPackagesForUid(int uid)
 	// public List<PackageInfo> getPackagesHoldingPermissions(String[] permissions, int flags)
-	// abstract int getPreferredActivities(List<IntentFilter> outFilters, List<ComponentName> outActivities, String packageName)
 	// public List<PackageInfo> getPreferredPackages(int flags)
 	// public List<ResolveInfo> queryBroadcastReceivers(Intent intent, int flags)
 	// public List<ProviderInfo> queryContentProviders(String processName, int uid, int flags)
@@ -41,17 +51,49 @@ public class XPackageManager extends XHook {
 	// public List<ResolveInfo> queryIntentContentProviders(Intent intent, int flags)
 	// public List<ResolveInfo> queryIntentServices(Intent intent, int flags)
 	// frameworks/base/core/java/android/app/ApplicationPackageManager.java
-	
+	// http://developer.android.com/reference/android/content/pm/PackageManager.html
+
+	// public int checkPermission(String permName, String pkgName)
+	// public int checkUidPermission(String permName, int uid)
+
+	// public java.lang.String[] getPackagesForUid(int uid)
+	// public java.util.List<android.content.pm.ResolveInfo> queryIntentActivities(android.content.Intent intent, java.lang.String resolvedType, int flags, int userId)
+	// public java.util.List<android.content.pm.ResolveInfo> queryIntentActivityOptions(android.content.ComponentName caller, android.content.Intent[] specifics, java.lang.String[] specificTypes, android.content.Intent intent, java.lang.String resolvedType, int flags, int userId)
+	// public java.util.List<android.content.pm.ResolveInfo> queryIntentReceivers(android.content.Intent intent, java.lang.String resolvedType, int flags, int userId)
+	// public java.util.List<android.content.pm.ResolveInfo> queryIntentServices(android.content.Intent intent, java.lang.String resolvedType, int flags, int userId)
+	// public java.util.List<android.content.pm.ResolveInfo> queryIntentContentProviders(android.content.Intent intent, java.lang.String resolvedType, int flags, int userId)
+	// public java.util.List<android.content.pm.ApplicationInfo> getPersistentApplications(int flags)
+	// public java.util.List<android.content.pm.ProviderInfo> queryContentProviders(java.lang.String processName, int uid, int flags)
+	// public java.util.List<android.content.pm.PackageInfo> getPreferredPackages(int flags)
+	// public android.content.pm.ParceledListSlice getInstalledPackages(int flags, int userId)
+	// public android.content.pm.ParceledListSlice getPackagesHoldingPermissions(java.lang.String[] permissions, int flags, int userId)
+	// public android.content.pm.ParceledListSlice getInstalledApplications(int flags, int userId)
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/pm/PackageManagerService.java
+
 	// @formatter:on
 
 	// @formatter:off
 	private enum Methods {
 		getInstalledApplications, getInstalledPackages,
+		getPackagesForUid,
 		getPackagesHoldingPermissions,
 		getPreferredActivities, getPreferredPackages,
 		queryBroadcastReceivers, queryContentProviders,
 		queryIntentActivities, queryIntentActivityOptions,
-		queryIntentContentProviders, queryIntentServices
+		queryIntentContentProviders, queryIntentServices,
+
+		checkPermission, checkUidPermission,
+
+		Srv_getInstalledApplications, Srv_getInstalledPackages,
+		Srv_getPackagesForUid,
+		Srv_getPackagesHoldingPermissions,
+		Srv_getPersistentApplications,
+		Srv_getPreferredPackages,
+		Srv_queryContentProviders,
+		Srv_queryIntentActivities, Srv_queryIntentActivityOptions,
+		Srv_queryIntentContentProviders,
+		Srv_queryIntentReceivers,
+		Srv_queryIntentServices
 	};
 	// @formatter:on
 
@@ -61,48 +103,211 @@ public class XPackageManager extends XHook {
 			if (className == null)
 				className = cClassName;
 
-			for (Methods am : Methods.values())
-				listHook.add(new XPackageManager(am, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.Srv_getInstalledApplications, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_getInstalledPackages, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_getPackagesForUid, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_getPackagesHoldingPermissions, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_getPersistentApplications, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_getPreferredPackages, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_queryContentProviders, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_queryIntentActivities, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_queryIntentActivityOptions, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_queryIntentContentProviders, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_queryIntentReceivers, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_queryIntentServices, PrivacyManager.cSystem));
+
+			listHook.add(new XPackageManager(Methods.getInstalledApplications, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.getInstalledPackages, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.getPackagesForUid, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.getPackagesHoldingPermissions, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.getPreferredActivities, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.getPreferredPackages, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.queryBroadcastReceivers, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.queryContentProviders, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.queryIntentActivities, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.queryIntentActivityOptions, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.queryIntentContentProviders, PrivacyManager.cSystem, className));
+			listHook.add(new XPackageManager(Methods.queryIntentServices, PrivacyManager.cSystem, className));
+
+			listHook.add(new XPackageManager(Methods.checkPermission, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.checkUidPermission, PrivacyManager.cSystem));
 		}
 		return listHook;
 	}
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		// Do nothing
+		if (mMethod == Methods.getPreferredActivities)
+			if (param.args.length > 1)
+				if (isRestricted(param)) {
+					param.args[0] = new ArrayList<IntentFilter>();
+					param.args[1] = new ArrayList<ComponentName>();
+					param.setResult(0);
+				}
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.getInstalledApplications) {
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
+		switch (mMethod) {
+		case Srv_getInstalledApplications:
+			if (param.getResult() != null)
+				if (isRestricted(param)) {
+					Method mGetList = param.getResult().getClass().getDeclaredMethod("getList");
+					List<ApplicationInfo> listAppInfo = (List<ApplicationInfo>) mGetList.invoke(param.getResult());
+					Constructor<?> constructor = param.getResult().getClass().getConstructor(List.class);
+					param.setResult(constructor.newInstance(filterApplicationInfo(listAppInfo)));
+				}
+			break;
 
-		} else if (mMethod == Methods.getPreferredActivities) {
-			if (param.args.length > 1 && isRestricted(param)) {
-				param.args[0] = new ArrayList<IntentFilter>();
-				param.args[1] = new ArrayList<ComponentName>();
-				param.setResult(0);
-			}
+		case Srv_getInstalledPackages:
+		case Srv_getPackagesHoldingPermissions:
+			if (param.getResult() != null)
+				if (isRestricted(param)) {
+					Method mGetList = param.getResult().getClass().getDeclaredMethod("getList");
+					List<PackageInfo> listPkgInfo = (List<PackageInfo>) mGetList.invoke(param.getResult());
+					Constructor<?> constructor = param.getResult().getClass().getConstructor(List.class);
+					param.setResult(constructor.newInstance(filterPackageInfo(listPkgInfo)));
+				}
+			break;
 
-		} else if (mMethod == Methods.getInstalledPackages || mMethod == Methods.getPackagesHoldingPermissions
-				|| mMethod == Methods.getPreferredPackages) {
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
+		case Srv_getPackagesForUid:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(null);
+			break;
 
-		} else if (mMethod == Methods.queryBroadcastReceivers || mMethod == Methods.queryIntentActivities
-				|| mMethod == Methods.queryIntentActivityOptions || mMethod == Methods.queryIntentContentProviders
-				|| mMethod == Methods.queryIntentServices) {
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
+		case Srv_getPersistentApplications:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
+			break;
 
-		} else if (mMethod == Methods.queryContentProviders) {
-			if (param.getResult() != null && isRestricted(param))
+		case Srv_getPreferredPackages:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
+			break;
+
+		case Srv_queryContentProviders:
+			if (isRestricted(param))
 				param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+			break;
 
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		case Srv_queryIntentActivities:
+		case Srv_queryIntentActivityOptions:
+		case Srv_queryIntentContentProviders:
+		case Srv_queryIntentReceivers:
+		case Srv_queryIntentServices:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
+			break;
+
+		case getInstalledApplications:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterApplicationInfo((List<ApplicationInfo>) param.getResult()));
+			break;
+
+		case getPackagesForUid:
+			if (isRestricted(param))
+				param.setResult(null);
+			break;
+
+		case getPreferredActivities:
+			break;
+
+		case getInstalledPackages:
+		case getPackagesHoldingPermissions:
+		case getPreferredPackages:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
+			break;
+
+		case queryBroadcastReceivers:
+		case queryIntentActivities:
+		case queryIntentActivityOptions:
+		case queryIntentContentProviders:
+		case queryIntentServices:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(filterResolveInfo((List<ResolveInfo>) param.getResult()));
+			break;
+
+		case queryContentProviders:
+			if (param.args.length > 0 && param.args[0] instanceof String && param.getResult() != null) {
+				String processName = (String) param.args[0];
+				if (isRestrictedExtra(param, processName))
+					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+			}
+			break;
+
+		case checkPermission:
+			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof String) {
+				String permName = (String) param.args[0];
+				String pkgName = (String) param.args[1];
+				int resultOfCheck = (Integer) param.getResult();
+
+				if (resultOfCheck != PackageManager.PERMISSION_GRANTED)
+					return;
+
+				// Get uid
+				int uid;
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
+					// PackageInfo getPackageInfo(String packageName, int flags)
+					Method mGetPackageInfo = param.thisObject.getClass().getDeclaredMethod("getPackageInfo",
+							String.class, int.class);
+					mGetPackageInfo.setAccessible(true);
+					PackageInfo pInfo = (PackageInfo) mGetPackageInfo.invoke(param.thisObject, pkgName, 0);
+					uid = pInfo.applicationInfo.uid;
+
+				} else {
+					// public int getPackageUid(String packageName, int userId)
+					Method mGetPackageUid = param.thisObject.getClass().getDeclaredMethod("getPackageUid",
+							String.class, int.class);
+					mGetPackageUid.setAccessible(true);
+					int userId = Util.getUserId(Binder.getCallingUid());
+					uid = (Integer) mGetPackageUid.invoke(param.thisObject, pkgName, userId);
+				}
+
+				checkPermission(param, uid, permName);
+			}
+			break;
+
+		case checkUidPermission:
+			if (param.args.length > 1 && param.args[0] instanceof String && param.args[1] instanceof Integer) {
+				String permName = (String) param.args[0];
+				int uid = (Integer) param.args[1];
+				int resultOfCheck = (Integer) param.getResult();
+
+				if (resultOfCheck == PackageManager.PERMISSION_GRANTED)
+					checkPermission(param, uid, permName);
+			}
+			break;
+
+		}
+	}
+
+	private void checkPermission(XParam param, int uid, String permName) throws Throwable {
+		if ("android.permission.CAMERA".endsWith(permName))
+			if (getRestricted(uid, PrivacyManager.cMedia, "Camera.permission"))
+				param.setResult(PackageManager.PERMISSION_DENIED);
+
+		if ("android.permission.RECORD_AUDIO".endsWith(permName))
+			if (getRestricted(uid, PrivacyManager.cMedia, "Record.Audio.permission"))
+				param.setResult(PackageManager.PERMISSION_DENIED);
+
+		if ("android.permission.RECORD_VIDEO".endsWith(permName))
+			if (getRestricted(uid, PrivacyManager.cMedia, "Record.Video.permission"))
+				param.setResult(PackageManager.PERMISSION_DENIED);
+
+		if (PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false)) {
+			permName = permName.replace("android.permission.", "");
+			if (isRestrictedExtra(uid, getRestrictionName(), getMethodName(), permName))
+				param.setResult(PackageManager.PERMISSION_DENIED);
+		}
 	}
 
 	private List<ApplicationInfo> filterApplicationInfo(List<ApplicationInfo> original) {
@@ -147,6 +352,10 @@ public class XPackageManager extends XHook {
 			return false;
 		}
 
-		return PrivacyManager.getSettingBool(-uid, Meta.cTypeApplication, packageName, false);
+		boolean allowed = PrivacyManager.getSettingBool(-uid, Meta.cTypeApplication, packageName, false);
+		boolean blacklist = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingBlacklist, false);
+		if (blacklist)
+			allowed = !allowed;
+		return allowed;
 	}
 }

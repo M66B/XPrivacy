@@ -1,6 +1,9 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -11,6 +14,18 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpStatus;
+import org.apache.http.StatusLine;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ByteArrayEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONObject;
+
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -20,7 +35,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -32,6 +46,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -81,15 +96,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private Handler mProHandler = new Handler();
 
-	public static final int STATE_ATTENTION = 0;
-	public static final int STATE_CHANGED = 1;
-	public static final int STATE_SHARED = 2;
-
 	private static final int SORT_BY_NAME = 0;
 	private static final int SORT_BY_UID = 1;
 	private static final int SORT_BY_INSTALL_TIME = 2;
 	private static final int SORT_BY_UPDATE_TIME = 3;
 	private static final int SORT_BY_MODIFY_TIME = 4;
+	private static final int SORT_BY_STATE = 5;
 
 	private static final int ACTIVITY_LICENSE = 0;
 	private static final int LICENSED = 0x0100;
@@ -101,7 +113,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
 	public static final Uri cProUri = Uri.parse("http://www.xprivacy.eu/");
-	public static final String cXUrl = "https://github.com/M66B/XPrivacy?mobile=0";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -123,23 +134,30 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			case SORT_BY_NAME:
 				return sortOrder * appInfo0.compareTo(appInfo1);
 			case SORT_BY_UID:
-				// default lowest first
+				// Default lowest first
 				return sortOrder * (appInfo0.getUid() - appInfo1.getUid());
 			case SORT_BY_INSTALL_TIME:
-				// default newest first
+				// Default newest first
 				Long iTime0 = appInfo0.getInstallTime(ActivityMain.this);
 				Long iTime1 = appInfo1.getInstallTime(ActivityMain.this);
 				return sortOrder * iTime1.compareTo(iTime0);
 			case SORT_BY_UPDATE_TIME:
-				// default newest first
+				// Default newest first
 				Long uTime0 = appInfo0.getUpdateTime(ActivityMain.this);
 				Long uTime1 = appInfo1.getUpdateTime(ActivityMain.this);
 				return sortOrder * uTime1.compareTo(uTime0);
 			case SORT_BY_MODIFY_TIME:
-				// default newest first
+				// Default newest first
 				Long mTime0 = appInfo0.getModificationTime(ActivityMain.this);
 				Long mTime1 = appInfo1.getModificationTime(ActivityMain.this);
 				return sortOrder * mTime1.compareTo(mTime0);
+			case SORT_BY_STATE:
+				Integer state0 = appInfo0.getState(ActivityMain.this);
+				Integer state1 = appInfo1.getState(ActivityMain.this);
+				if (state0.compareTo(state1) == 0)
+					return sortOrder * appInfo0.compareTo(appInfo1);
+				else
+					return sortOrder * state0.compareTo(state1);
 			}
 			return 0;
 		}
@@ -166,7 +184,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Import license file
 		if (Intent.ACTION_VIEW.equals(getIntent().getAction()))
-			if (Util.importProLicense(new File(getIntent().getData().getEncodedPath())) != null)
+			if (Util.importProLicense(new File(getIntent().getData().getPath())) != null)
 				Toast.makeText(this, getString(R.string.menu_pro), Toast.LENGTH_LONG).show();
 
 		// Set layout
@@ -194,7 +212,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				if (position != AdapterView.INVALID_POSITION) {
 					String query = (position == 0 ? "restrictions" : (String) PrivacyManager
 							.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
-					Util.viewUri(ActivityMain.this, Uri.parse(cXUrl + "#" + query));
+					Util.viewUri(ActivityMain.this, Uri.parse("https://github.com/M66B/XPrivacy#" + query));
 				}
 			}
 		});
@@ -304,7 +322,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			mAppAdapter.notifyDataSetChanged();
 
 		if (Intent.ACTION_VIEW.equals(intent.getAction()))
-			Util.importProLicense(new File(intent.getData().getEncodedPath()));
+			Util.importProLicense(new File(intent.getData().getPath()));
 	}
 
 	@Override
@@ -381,6 +399,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		menu.findItem(R.id.menu_export).setEnabled(mounted);
 		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
+		menu.findItem(R.id.menu_update).setVisible(mounted);
 
 		// Update filter count
 
@@ -477,6 +496,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				return true;
 			case R.id.menu_pro:
 				optionPro();
+				return true;
+			case R.id.menu_update:
+				optionUpdate();
 				return true;
 			case R.id.menu_report:
 				optionReportIssue();
@@ -620,6 +642,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		alertDialog.show();
 	}
 
+	@SuppressLint("InflateParams")
 	private void optionTemplate() {
 		// Build view
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -671,7 +694,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private void optionReportIssue() {
 		// Report issue
-		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy/issues?mobile=0"));
+		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy#support"));
 	}
 
 	private void optionExport() {
@@ -760,6 +783,89 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		Util.viewUri(this, cProUri);
 	}
 
+	private void optionUpdate() {
+		if (Util.hasProLicense(this) == null)
+			Util.viewUri(this, ActivityMain.cProUri);
+		else {
+			new AsyncTask<Object, Object, Object>() {
+				@Override
+				protected Object doInBackground(Object... args) {
+					try {
+						// Encode package
+						String[] license = Util.getProLicenseUnchecked();
+						boolean test = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTestVersions, false);
+						JSONObject jRoot = new JSONObject();
+						jRoot.put("test_versions", test);
+						jRoot.put("xprivacy_version", Util.getSelfVersionCode(ActivityMain.this));
+						jRoot.put("xprivacy_version_name", Util.getSelfVersionName(ActivityMain.this));
+						jRoot.put("email", license[1]);
+						jRoot.put("signature", license[2]);
+
+						// Update
+						HttpParams httpParams = new BasicHttpParams();
+						HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+						HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+						HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+						HttpPost httpost = new HttpPost(ActivityShare.getBaseURL() + "?format=json&action=update");
+						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+						httpost.setHeader("Accept", "application/json");
+						httpost.setHeader("Content-type", "application/json");
+						HttpResponse response = httpclient.execute(httpost);
+						StatusLine statusLine = response.getStatusLine();
+						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+							String contentType = response.getFirstHeader("Content-Type").getValue();
+							if ("application/octet-stream".equals(contentType)) {
+								File folder = Environment
+										.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+								folder.mkdirs();
+								String fileName = response.getFirstHeader("Content-Disposition").getElements()[0]
+										.getParameterByName("filename").getValue();
+								File download = new File(folder, fileName);
+								FileOutputStream fos = null;
+								try {
+									fos = new FileOutputStream(download);
+									response.getEntity().writeTo(fos);
+								} finally {
+									if (fos != null)
+										fos.close();
+								}
+								return download;
+							} else if ("application/json".equals(contentType)) {
+								ByteArrayOutputStream out = new ByteArrayOutputStream();
+								response.getEntity().writeTo(out);
+								out.close();
+								throw new IOException(out.toString("UTF-8"));
+							} else
+								throw new IOException(contentType);
+						} else
+							return statusLine;
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+						return ex;
+					}
+				}
+
+				@Override
+				protected void onPostExecute(Object result) {
+					if (result instanceof StatusLine) {
+						StatusLine status = (StatusLine) result;
+						Toast.makeText(ActivityMain.this, status.getReasonPhrase(), Toast.LENGTH_LONG).show();
+					} else if (result instanceof Throwable) {
+						Throwable ex = (Throwable) result;
+						Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG).show();
+					} else {
+						File download = (File) result;
+						Intent intent = new Intent(Intent.ACTION_VIEW);
+						intent.setDataAndType(Uri.fromFile(download), "application/vnd.android.package-archive");
+						startActivity(intent);
+					}
+
+				}
+			}.executeOnExecutor(mExecutor);
+		}
+	}
+
 	private void optionAbout() {
 		// About
 		Dialog dlgAbout = new Dialog(this);
@@ -770,17 +876,25 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Show version
 		try {
-			PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+			int userId = Util.getUserId(Process.myUid());
+			Version currentVersion = new Version(Util.getSelfVersionName(this));
+			Version storedVersion = new Version(
+					PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0"));
+			boolean migrated = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingMigrated, false);
+			String versionName = currentVersion.toString();
+			if (currentVersion.compareTo(storedVersion) != 0)
+				versionName += "/" + storedVersion.toString();
+			if (!migrated)
+				versionName += "!";
+			int versionCode = Util.getSelfVersionCode(this);
 			TextView tvVersion = (TextView) dlgAbout.findViewById(R.id.tvVersion);
-			tvVersion.setText(String.format(getString(R.string.app_version), pInfo.versionName, pInfo.versionCode));
+			tvVersion.setText(String.format(getString(R.string.app_version), versionName, versionCode));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
 
-		// Show Xposed version
-		int xVersion = Util.getXposedAppProcessVersion();
-		TextView tvXVersion = (TextView) dlgAbout.findViewById(R.id.tvXVersion);
-		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
+		if (!PrivacyManager.cVersion3 || Hook.isAOSP(19))
+			((TextView) dlgAbout.findViewById(R.id.tvCompatibility)).setVisibility(View.GONE);
 
 		// Show license
 		String licensed = Util.hasProLicense(this);
@@ -789,6 +903,16 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			tvLicensed.setText(Environment.getExternalStorageDirectory().getAbsolutePath());
 		else
 			tvLicensed.setText(String.format(getString(R.string.app_licensed), licensed));
+
+		// Show some build properties
+		((TextView) dlgAbout.findViewById(R.id.build_brand)).setText(Build.BRAND);
+		((TextView) dlgAbout.findViewById(R.id.build_manufacturer)).setText(Build.MANUFACTURER);
+		((TextView) dlgAbout.findViewById(R.id.build_model)).setText(Build.MODEL);
+		((TextView) dlgAbout.findViewById(R.id.build_product)).setText(Build.PRODUCT);
+		((TextView) dlgAbout.findViewById(R.id.build_device)).setText(Build.DEVICE);
+		((TextView) dlgAbout.findViewById(R.id.build_host)).setText(Build.HOST);
+		((TextView) dlgAbout.findViewById(R.id.build_display)).setText(Build.DISPLAY);
+		((TextView) dlgAbout.findViewById(R.id.build_id)).setText(Build.ID);
 
 		dlgAbout.setCancelable(true);
 		dlgAbout.show();
@@ -824,6 +948,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
 		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());
+		((LinearLayout) dialog.findViewById(R.id.llUnsafe)).setVisibility(PrivacyManager.cVersion3 ? View.VISIBLE
+				: View.GONE);
 		dialog.setCancelable(true);
 		dialog.show();
 	}
@@ -834,6 +960,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			mAppAdapter.selectAllVisible();
 	}
 
+	@SuppressLint("InflateParams")
 	private void optionSort() {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.sort, null);
@@ -856,6 +983,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			break;
 		case SORT_BY_MODIFY_TIME:
 			rgSMode.check(R.id.rbSModified);
+			break;
+		case SORT_BY_STATE:
+			rgSMode.check(R.id.rbSState);
 			break;
 		}
 		cbSInvert.setChecked(mSortInvert);
@@ -885,6 +1015,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						case R.id.rbSModified:
 							mSortMode = SORT_BY_MODIFY_TIME;
 							break;
+						case R.id.rbSState:
+							mSortMode = SORT_BY_STATE;
+							break;
 						}
 						mSortInvert = cbSInvert.isChecked();
 
@@ -902,6 +1035,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		alertDialog.show();
 	}
 
+	@SuppressLint("InflateParams")
 	private void optionFilter() {
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.filters, null);
@@ -1161,6 +1295,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
 			final ViewHolder holder;
 			if (convertView == null) {
@@ -1258,6 +1393,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView,
 				ViewGroup parent) {
 			final ViewHolder holder;
@@ -1703,6 +1839,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Get can restrict
 					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
 							rstate.mMethodName, true);
+
 					return holder;
 				}
 				return null;
@@ -1718,10 +1855,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						holder.llAppType.setBackgroundColor(Color.TRANSPARENT);
 
 					// Display state
-					if (state == STATE_ATTENTION)
+					if (state == ApplicationInfoEx.STATE_ATTENTION)
 						holder.vwState.setBackgroundColor(getResources().getColor(
 								getThemed(R.attr.color_state_attention)));
-					else if (state == STATE_SHARED)
+					else if (state == ApplicationInfoEx.STATE_SHARED)
 						holder.vwState
 								.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_shared)));
 					else
@@ -1949,9 +2086,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			private void showState() {
 				state = xAppInfo.getState(ActivityMain.this);
-				if (state == STATE_ATTENTION)
+				if (state == ApplicationInfoEx.STATE_ATTENTION)
 					holder.vwState.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_attention)));
-				else if (state == STATE_SHARED)
+				else if (state == ApplicationInfoEx.STATE_SHARED)
 					holder.vwState.setBackgroundColor(getResources().getColor(getThemed(R.attr.color_state_shared)));
 				else
 					holder.vwState
@@ -1960,6 +2097,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {

@@ -1,13 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed rammeverk versjon %d+ er ikke installert</string>
     <string name="app_notenabled">XPrivacy er ikke frigitt i Xposed installasjon</string>
     <string name="app_wrongandroid">Kun for Android versjon 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy er ikke kompatibel med %s</string>
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_description">Den ultimative personvernbehandleren</string>
-    <string name="app_xversion" formatted="false">Xposed rammeverk versjon: %d</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013–2014</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Lisensert, takk for støtten!</string>
     <string name="menu_usage">Databruk</string>
     <string name="menu_refresh">Oppdater</string>
@@ -46,6 +45,7 @@
     <string name="menu_exclude">Ekskluder</string>
     <string name="menu_close">Lukk</string>
     <string name="menu_flush">Tømm hurtiglager</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Avbryter</string>
     <string name="msg_aborted">Avbrutt</string>
     <string name="msg_new">Nytt</string>
@@ -98,12 +98,40 @@
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
     <string name="restrict_system">System (installerte apper)</string>
     <string name="restrict_view">Betrakte (nettleser)</string>
+    <string name="restrict_help_view">Blokkerer tilgang til betraktning og informasjon</string>
+    <string name="restrict_help_system">Blokkerer tilgang til systeminformasjon, som installerte apper</string>
+    <string name="restrict_help_shell">Blokkerer tilgang til shell-kommandoer, til og med superuser kommandoer</string>
+    <string name="restrict_help_storage">Blokkerer tilgang til minne, som filer på SD-kortet eller internminnet</string>
+    <string name="restrict_help_sensors">Blokkerer tilgang til sensorer, som bevegelsessensoren</string>
+    <string name="restrict_help_phone">Blokkerer tilgang til informasjon om mobilen, som telefonnummeret ditt</string>
+    <string name="restrict_help_overlay">Blokkerer overlay-vinduer for å hindre phishing</string>
+    <string name="restrict_help_notifications">Blokkerer tilgang til system og app varslinger og Google Cloud meldingstjeneste</string>
+    <string name="restrict_help_nfc">Blokkerer tilgang til nærfeltskommunikasjon</string>
+    <string name="restrict_help_network">Blokkerer tilgang til nettverkinformasjon, som IP og MAC adresser og Wi-Fi nettverk informasjon</string>
+    <string name="restrict_help_messages">Blokkerer tilgang til lagrede og mottatte meldinger (SMS/MMS) og mobilsvar</string>
+    <string name="restrict_help_media">Blokkerer tilgang til kameraet (foto og video) og mikrofonen</string>
+    <string name="restrict_help_location">Blokkerer tilgang til posisjonen (fin/grov)</string>
+    <string name="restrict_help_ipc">Blokkerer kommunikasjon mellom prosesser/apper, når de blir brukt for å ungår andre restriksjoner</string>
+    <string name="restrict_help_internet">Blokkerer tilgang til internettet</string>
+    <string name="restrict_help_identification">Blokkerer tilgang til informasjon som kan brukes for å identifisere deg, som serienummeret til enheten din</string>
+    <string name="restrict_help_email">Blokkerer tilgang til e-mail informasjon, som adresser og meldinger (bare standardapper og G-mail)</string>
+    <string name="restrict_help_dictionary">Blokkerer tilgang til ordboka til brukeren</string>
+    <string name="restrict_help_contacts">Blokkerer tilgang til informasjon om kontaktene dine</string>
+    <string name="restrict_help_clipboard">Blokkerer tilgang til informasjon på utklippstavlen</string>
+    <string name="restrict_help_calling">Blokkerer å ringe, sende meldinger (SMS/MMS) og tilgang til ringeloggen</string>
+    <string name="restrict_help_calendar">Blokkerer tilgang til informasjon fra kalenderen, som avtalene dine</string>
+    <string name="restrict_help_browser">Blokkerer tilgang til informasjon fra nettleseren, som bokmerkene dine og historikken</string>
+    <string name="restrict_help_accounts">Blokkerer tilgang til informasjon fra kontoer, som Google-kontoen din (inneholder blant annet G-mail adressen din)</string>
+    <string name="whitelist_address">Adresser</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP adresser</string>
     <string name="whitelist_library">Lokale biblioteker</string>
-    <string name="whitelist_method">Method names</string>
+    <string name="whitelist_method">Metodenavner</string>
     <string name="whitelist_filename">Filnavner</string>
     <string name="whitelist_command">Shell kommandoer</string>
     <string name="whitelist_url">URLs</string>
+    <string name="whitelist_transaction">Transaksjoner</string>
+    <string name="whitelist_permission">Tillatelser</string>
     <string name="title_restrict">Marker for å blokkere:</string>
     <string name="title_check_whitelist">Marker for å tillate:</string>
     <string name="title_fused">Filtrer etter databruk</string>
@@ -119,6 +147,7 @@
     <string name="title_sinstalled">Etter dato, installert</string>
     <string name="title_supdated">Etter dato, oppdatert</string>
     <string name="title_smodified">Etter dato, modifisert (XPrivacy)</string>
+    <string name="title_sstate">Etter status (XPrivacy)</string>
     <string name="title_sinvert">Inverter sorteringsrekkefølge</string>
     <string name="title_attempt">Forsøk å bruke:</string>
     <string name="title_category">Kategori:</string>
@@ -129,24 +158,28 @@
     <string name="title_whitelist">Positivliste \'%s\'</string>
     <string name="title_allow">Tillat</string>
     <string name="title_deny">Nekt</string>
-    <string name="title_dontknow">Don\'t know</string>
+    <string name="title_dontknow">Vet ikke</string>
     <string name="title_pleasesubmit">Vennligst last opp restriksjonene dine for å hjelpe andre</string>
     <string name="title_permissions">Tillatelser</string>
     <string name="title_set_restrict">Blokker</string>
     <string name="title_template_category">Bruk skjema (kategorier)</string>
     <string name="title_template_full">Bruk skjema (kategorier+funksjoner)</string>
-    <string name="title_template_merge">Apply template (merge)</string>
+    <string name="title_template_merge">Bruk skjema (flett)</string>
     <string name="title_enable_ondemand">Aktiver blokkering på forespørsel</string>
     <string name="title_disable_ondemand">Deaktiver blokkering på forespørsel</string>
-    <string name="title_default">Default</string>
-    <string name="title_alternate">Alternate</string>
-    <string name="title_usage_header">Usage</string>
-    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
-    <string name="title_usage_text_2">2. Tap on the application icon</string>
-    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
-    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
-    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
-    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
+    <string name="title_ondemand_default">Tidsavbrudd skal:</string>
+    <string name="title_ondemand_reset">Nullstille</string>
+    <string name="title_default">Standard</string>
+    <string name="title_alternate">Alternere</string>
+    <string name="title_usage_header">Veiledning</string>
+    <string name="title_usage_text_1">1. Finn appen som skal blokkeres i app-hovedlisten</string>
+    <string name="title_usage_text_2">2. Trykk på ikonen til appen</string>
+    <string name="title_usage_text_3">3. Trykk på den firste avkryssingsboksen av en kategori som skal blokkeres</string>
+    <string name="title_usage_footer">Bruk sunn fornuft når du blokkerer noe, ikke forvent at tilgang til internettet virker ettersom du blokkerte internett-kategorien, osv.</string>
+    <string name="title_toggle_dangerous">Trykk lenge på tittelen til en farlig funksjon for å skifte mellom farlig/ufarlig</string>
+    <string name="title_ondemand_category">Bruk på en kategori vil nullstille unntakelser av funksjoner til standardverdier</string>
+    <string name="title_function_help">Dokumentasjon av funksjoner</string>
+    <string name="title_unsafe">is unsafe, can be circumvented</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breddegrad</string>
     <string name="settings_lon">Lengdegrad</string>
@@ -164,6 +197,7 @@
     <string name="settings_fake_data">Forfalsket data</string>
     <string name="settings_notify">Oppdater varslinger</string>
     <string name="settings_ondemand">Blokkering på forespørsel</string>
+    <string name="settings_blacklist">Set kontoer, apper og kontakter på negativlisten</string>
     <string name="settings_log">Feilsøkingsloggfil (omstart nødvendig)</string>
     <string name="settings_expert">Ekspert modus</string>
     <string name="settings_confidence">Maksimalt konfidensintervall for å hente restriksjoner</string>
@@ -174,7 +208,8 @@
     <string name="settings_parameters">Vis brukerdata-parametere</string>
     <string name="settings_cid">GSM Celle ID</string>
     <string name="settings_lac">GSM LAC</string>
-    <string name="help_longpress">>Trykk lenge på navnet som skal markeres</string>
+    <string name="settings_quirks">Særegenheter</string>
+    <string name="help_longpress">Trykk lenge på navnet som skal markeres</string>
     <string name="help_ondemand">apper spør om tillatelse</string>
     <string name="help_application">App</string>
     <string name="help_internet">har internet tillatelse</string>

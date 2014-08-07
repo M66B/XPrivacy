@@ -60,7 +60,7 @@ public class PackageChange extends BroadcastReceiver {
 
 					// Mark as new/changed
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
-							Integer.toString(ActivityMain.STATE_ATTENTION));
+							Integer.toString(ApplicationInfoEx.STATE_ATTENTION));
 
 					// New/update notification
 					boolean notify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);
@@ -143,6 +143,10 @@ public class PackageChange extends BroadcastReceiver {
 					// Notify reboot required
 					String packageName = inputUri.getSchemeSpecificPart();
 					if (packageName.equals(context.getPackageName())) {
+						// Mark self as new/changed
+						PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
+								Integer.toString(ApplicationInfoEx.STATE_ATTENTION));
+
 						// Start package update
 						Intent changeIntent = new Intent();
 						changeIntent.setClass(context, UpdateService.class);

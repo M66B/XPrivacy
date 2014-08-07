@@ -10,7 +10,7 @@ public class XInetAddress extends XHook {
 	private Methods mMethod;
 
 	private XInetAddress(Methods method, String restrictionName, String specifier) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name(), "InetAddress." + method.name());
 		mMethod = method;
 	}
 
@@ -32,7 +32,7 @@ public class XInetAddress extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods addr : Methods.values())
-			listHook.add(new XInetAddress(addr, PrivacyManager.cInternet, null));
+			listHook.add(new XInetAddress(addr, PrivacyManager.cNetwork, null));
 		return listHook;
 	}
 
@@ -47,9 +47,9 @@ public class XInetAddress extends XHook {
 		if (result != null) {
 			// Get addresses
 			InetAddress[] addresses;
-			if (result.getClass().equals(InetAddress.class))
+			if (result instanceof InetAddress)
 				addresses = new InetAddress[] { (InetAddress) result };
-			else if (result.getClass().equals(InetAddress[].class))
+			else if (result instanceof InetAddress[])
 				addresses = (InetAddress[]) result;
 			else
 				addresses = new InetAddress[0];
@@ -63,8 +63,15 @@ public class XInetAddress extends XHook {
 				}
 
 			// Restrict
-			if (restrict && isRestricted(param))
-				param.setThrowable(new UnknownHostException("XPrivacy"));
+			if (restrict)
+				if (param.args.length > 0 && param.args[0] instanceof String) {
+					if (isRestrictedExtra(param, (String) param.args[0]))
+						param.setThrowable(new UnknownHostException("XPrivacy"));
+
+				} else {
+					if (isRestricted(param))
+						param.setThrowable(new UnknownHostException("XPrivacy"));
+				}
 		}
 	}
 }

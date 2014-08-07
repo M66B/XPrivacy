@@ -307,24 +307,28 @@ public class UpdateService extends Service {
 						if (hook.isDangerous()) {
 							Util.log(null, Log.WARN, "Upgrading dangerous " + hook + " from=" + hook.getFrom()
 									+ " uid=" + uid);
-							listWork.add(new PRestriction(uid, hook.getRestrictionName(), hook.getName(), false));
+							PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(),
+									false, true);
+							listWork.add(restriction);
 						}
 
 						// Restrict replaced methods
-						if (hook.getReplaces() != null)
-							if (PrivacyManager.getRestrictionEx(uid, hook.getRestrictionName(), hook.getReplaces()).restricted) {
-								Util.log(null, Log.WARN, "Replaced " + hook.getReplaces() + " by " + hook + " from="
-										+ hook.getFrom() + " uid=" + uid);
-								listWork.add(new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true));
-							}
+						if (hook.getReplacedMethod() != null) {
+							PRestriction restriction = PrivacyManager.getRestrictionEx(uid,
+									hook.getReplacedRestriction(), hook.getReplacedMethod());
+							listWork.add(new PRestriction(uid, hook.getRestrictionName(), hook.getName(),
+									restriction.restricted, restriction.asked));
+							Util.log(null, Log.WARN,
+									"Replacing " + hook.getReplacedRestriction() + "/" + hook.getReplacedMethod()
+											+ " by " + hook + " from=" + hook.getFrom() + " uid=" + uid);
+						}
 					}
-
 				}
 
 				// Restrict dangerous
 				if (dangerous && restricted && hook.isDangerous()) {
-					PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true);
-					restriction.asked = (hook.whitelist() == null);
+					PRestriction restriction = new PRestriction(uid, hook.getRestrictionName(), hook.getName(), true,
+							hook.whitelist() == null);
 					if (PrivacyManager.isRestrictionSet(restriction))
 						Util.log(null, Log.WARN, "Restrict dangerous set restriction=" + restriction);
 					else {

@@ -1,13 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">尚未安裝 Xposed framework 版本 %d+ </string>
     <string name="app_notenabled">尚未於 Xposed installer 啟用 XPrivacy</string>
     <string name="app_wrongandroid">僅支援版本 Android 4.0.3+</string>
     <string name="app_incompatible" formatted="false">%s 與XPrivacy不相容</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_description">超強隱私管理工具，絕讚好評發售中!!</string>
-    <string name="app_xversion" formatted="false">Xposed framework 版本: %d</string>
     <string name="app_copyright">版權所有 \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">授權成功，感謝您贊助 XPrivacy!!</string>
     <string name="menu_usage">操作記錄</string>
     <string name="menu_refresh">重新整理</string>
@@ -46,6 +45,7 @@
     <string name="menu_exclude">排除</string>
     <string name="menu_close">關閉</string>
     <string name="menu_flush">清除快取</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">正在取消...</string>
     <string name="msg_aborted">已取消</string>
     <string name="msg_new">已安裝</string>
@@ -100,12 +100,40 @@
     <string name="restrict_shell">Shell (指令, ROOT指令)</string>
     <string name="restrict_system">系統資訊 (程式, 服務, etc)</string>
     <string name="restrict_view">瀏覽器介面</string>
+    <string name="restrict_help_view">Will restrict access to view actions and information</string>
+    <string name="restrict_help_system">Will restrict access to system information, like installed applications</string>
+    <string name="restrict_help_shell">Will restrict access to shell commands, including superuser commands</string>
+    <string name="restrict_help_storage">Will restrict access to the storage, like files on your SD card or the internal storage</string>
+    <string name="restrict_help_sensors">Will restrict access to the sensors, like the motion sensor</string>
+    <string name="restrict_help_phone">Will restrict access to phone information, like your phone number</string>
+    <string name="restrict_help_overlay">Will restrict overlay windows to prevent phishing</string>
+    <string name="restrict_help_notifications">Will restrict access to system and application notifications and Google cloud messaging</string>
+    <string name="restrict_help_nfc">Will restrict access to near field communication</string>
+    <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
+    <string name="restrict_help_messages">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
+    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
+    <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
+    <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
+    <string name="restrict_help_internet">Will restrict access to the Internet</string>
+    <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
+    <string name="restrict_help_email">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
+    <string name="restrict_help_dictionary">Will restrict access to the user dictionary</string>
+    <string name="restrict_help_contacts">Will restrict access to information about your contacts</string>
+    <string name="restrict_help_clipboard">Will restrict access to information on the clipboard</string>
+    <string name="restrict_help_calling">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
+    <string name="restrict_help_calendar">Will restrict access to your calendar information, like your appointments</string>
+    <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
+    <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
+    <string name="whitelist_address">Addresses</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP 位址</string>
     <string name="whitelist_library">原生資料庫元件</string>
     <string name="whitelist_method">Method names</string>
     <string name="whitelist_filename">檔案名稱</string>
     <string name="whitelist_command">Shell 指令</string>
     <string name="whitelist_url">網址</string>
+    <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_permission">Permissions</string>
     <string name="title_restrict">限制項目:</string>
     <string name="title_check_whitelist">允許：</string>
     <string name="title_fused">程式曾取得過資訊</string>
@@ -121,6 +149,7 @@
     <string name="title_sinstalled">安裝日期</string>
     <string name="title_supdated">更新日期</string>
     <string name="title_smodified">修改日期 (XPrivacy)</string>
+    <string name="title_sstate">By state (XPrivacy)</string>
     <string name="title_sinvert">反序排列</string>
     <string name="title_attempt">本程式嘗試存取：</string>
     <string name="title_category">分類：</string>
@@ -140,6 +169,8 @@
     <string name="title_template_merge">Apply template (merge)</string>
     <string name="title_enable_ondemand">開啟互動式限制</string>
     <string name="title_disable_ondemand">關閉互動式限制</string>
+    <string name="title_ondemand_default">Timeout will:</string>
+    <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">預設</string>
     <string name="title_alternate">其他</string>
     <string name="title_usage_header">使用方法</string>
@@ -149,6 +180,8 @@
     <string name="title_usage_footer">請用常理判斷，比如限制了"網際網路"，那麼該程式就不能存取網路了。</string>
     <string name="title_toggle_dangerous">欲選取不建議限制的項目時，需要長按項目名稱。</string>
     <string name="title_ondemand_category">套用到整個分類時會覆寫預設限制列表的設定。</string>
+    <string name="title_function_help">Function documentation</string>
+    <string name="title_unsafe">is unsafe, can be circumvented</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>
@@ -166,6 +199,7 @@
     <string name="settings_fake_data">偽造資訊設定</string>
     <string name="settings_notify">APP更新時顯示通知</string>
     <string name="settings_ondemand">開啟互動式限制設定</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">偵錯日誌 (需重新啟動)</string>
     <string name="settings_expert">進階模式</string>
     <string name="settings_confidence">最大擷取信賴區間</string>
@@ -176,6 +210,7 @@
     <string name="settings_parameters">顯示細部操作紀錄參數</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">長按程式名稱可選取</string>
     <string name="help_ondemand">存取該權限時詢問</string>
     <string name="help_application">程式名稱</string>

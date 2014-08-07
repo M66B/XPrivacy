@@ -44,30 +44,8 @@ public class Requirements {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							Intent androidIntent = new Intent(Intent.ACTION_VIEW);
-							androidIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy?mobile=0#installation"));
+							androidIntent.setData(Uri.parse("https://github.com/M66B/XPrivacy#installation"));
 							context.startActivity(androidIntent);
-						}
-					});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-		}
-
-		// Check Xposed version
-		int xVersion = Util.getXposedAppProcessVersion();
-		if (xVersion < PrivacyManager.cXposedAppProcessMinVersion) {
-			String msg = String.format(context.getString(R.string.app_notxposed),
-					PrivacyManager.cXposedAppProcessMinVersion);
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(R.string.app_name);
-			alertDialogBuilder.setMessage(msg);
-			alertDialogBuilder.setIcon(context.getThemed(R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-							xposedIntent.setData(Uri.parse("http://forum.xda-developers.com/showthread.php?t=1574401"));
-							context.startActivity(xposedIntent);
 						}
 					});
 			AlertDialog alertDialog = alertDialogBuilder.create();
@@ -134,7 +112,7 @@ public class Requirements {
 
 		// Check activity thread
 		try {
-			Class<?> clazz = Class.forName("android.app.ActivityThread");
+			Class<?> clazz = Class.forName("android.app.ActivityThread", false, null);
 			try {
 				clazz.getDeclaredMethod("unscheduleGcIdler");
 			} catch (NoSuchMethodException ex) {
@@ -146,12 +124,12 @@ public class Requirements {
 
 		// Check activity thread receiver data
 		try {
-			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData");
+			Class<?> clazz = Class.forName("android.app.ActivityThread$ReceiverData", false, null);
 			if (!checkField(clazz, "intent"))
 				reportClass(clazz, context);
 		} catch (ClassNotFoundException ex) {
 			try {
-				reportClass(Class.forName("android.app.ActivityThread"), context);
+				reportClass(Class.forName("android.app.ActivityThread", false, null), context);
 			} catch (ClassNotFoundException exex) {
 				sendSupportInfo(exex.toString(), context);
 			}
@@ -159,7 +137,7 @@ public class Requirements {
 
 		// Check file utils
 		try {
-			Class<?> clazz = Class.forName("android.os.FileUtils");
+			Class<?> clazz = Class.forName("android.os.FileUtils", false, null);
 			try {
 				clazz.getDeclaredMethod("setPermissions", String.class, int.class, int.class, int.class);
 			} catch (NoSuchMethodException ex) {
@@ -176,7 +154,7 @@ public class Requirements {
 
 		// Check package manager service
 		try {
-			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService");
+			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService", false, null);
 			try {
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
 					clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
@@ -191,7 +169,7 @@ public class Requirements {
 
 		// Check service manager
 		try {
-			Class<?> clazz = Class.forName("android.os.ServiceManager");
+			Class<?> clazz = Class.forName("android.os.ServiceManager", false, null);
 			try {
 				// @formatter:off
 				// public static void addService(String name, IBinder service)
@@ -199,10 +177,6 @@ public class Requirements {
 				// public static String[] listServices()
 				// public static IBinder checkService(String name)
 				// @formatter:on
-
-				if (XBinder.cServiceName.size() != XBinder.cServiceDescriptor.size()
-						|| XBinder.cServiceName.size() != XBinder.cWhiteClassName.size())
-					sendSupportInfo("XBinder size mismatch", context);
 
 				Method listServices = clazz.getDeclaredMethod("listServices");
 				Method getService = clazz.getDeclaredMethod("getService", String.class);
@@ -299,7 +273,7 @@ public class Requirements {
 		// Check mWifiSsid.octets
 		if (checkField(WifiInfo.class, "mWifiSsid"))
 			try {
-				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid");
+				Class<?> clazz = Class.forName("android.net.wifi.WifiSsid", false, null);
 				try {
 					clazz.getDeclaredMethod("createFromAsciiEncoded", String.class);
 				} catch (NoSuchMethodException ex) {
@@ -317,23 +291,29 @@ public class Requirements {
 		}
 
 		// Check context services
-		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager" });
+		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager",
+				"com.intel.arkham.ExtendAccountManager" /* Asus */});
 		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager",
 				"android.app.ActivityManagerEx" });
 		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
 		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager",
 				"android.net.MultiSimConnectivityManager" });
-		checkService(context, Context.LOCATION_SERVICE, new String[] { "android.location.LocationManager" });
+		checkService(context, Context.LOCATION_SERVICE, new String[] { "android.location.LocationManager",
+				"android.location.ZTEPrivacyLocationManager" });
 		Class<?> serviceClass = context.getPackageManager().getClass();
 		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
 			reportClass(serviceClass, context);
 		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SensorManager",
 				"android.hardware.SystemSensorManager" });
 		checkService(context, Context.TELEPHONY_SERVICE, new String[] { "android.telephony.TelephonyManager",
-				"android.telephony.MSimTelephonyManager", "android.telephony.MultiSimTelephonyManager" });
+				"android.telephony.MSimTelephonyManager", "android.telephony.MultiSimTelephonyManager",
+				"android.telephony.ZTEPrivacyTelephonyManager", "com.motorola.android.telephony.MotoTelephonyManager",
+				"android.privacy.surrogate.PrivacyTelephonyManager" /* PDroid */});
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
 				"android.view.Window$LocalWindowManager" });
-		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager" });
+		checkService(context, Context.WIFI_SERVICE,
+				new String[] { "android.net.wifi.WifiManager", "com.amazon.android.service.AmazonWifiManager",
+						"android.privacy.surrogate.PrivacyWifiManager" /* PDroid */});
 	}
 
 	public static void checkService(ActivityBase context, String name, String[] className) {
@@ -415,6 +395,8 @@ public class Requirements {
 							String ourVersion = Util.getSelfVersionName(context);
 							StringBuilder sb = new StringBuilder(text);
 							sb.insert(0, "\r\n");
+							sb.insert(0, String.format("Display: %s\r\n", Build.DISPLAY));
+							sb.insert(0, String.format("Host: %s\r\n", Build.HOST));
 							sb.insert(0, String.format("Model: %s (%s)\r\n", Build.MODEL, Build.PRODUCT));
 							sb.insert(0, String.format("Android version: %s (SDK %d)\r\n", Build.VERSION.RELEASE,
 									Build.VERSION.SDK_INT));
@@ -423,7 +405,7 @@ public class Requirements {
 							Intent sendEmail = new Intent(Intent.ACTION_SEND);
 							sendEmail.setType("message/rfc822");
 							sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-							sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy " + ourVersion + " support info");
+							sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy " + ourVersion + " support data");
 							sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
 							try {
 								context.startActivity(sendEmail);

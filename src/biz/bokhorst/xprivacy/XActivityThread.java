@@ -3,32 +3,74 @@ package biz.bokhorst.xprivacy;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
 import android.os.Binder;
-import android.os.Bundle;
-import android.os.Process;
+import android.os.Message;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 
+@SuppressLint("InlinedApi")
 public class XActivityThread extends XHook {
 	private Methods mMethod;
-	private String mActionName;
+	private static Map<String, String> mapActionRestriction = new HashMap<String, String>();
 
-	private XActivityThread(Methods method, String restrictionName, String actionName) {
-		super(restrictionName, method.name(), actionName);
+	static {
+		// Intent receive: calling
+		mapActionRestriction.put(Intent.ACTION_NEW_OUTGOING_CALL, PrivacyManager.cCalling);
+		mapActionRestriction.put(TelephonyManager.ACTION_PHONE_STATE_CHANGED, PrivacyManager.cPhone);
+		mapActionRestriction.put(TelephonyManager.ACTION_RESPOND_VIA_MESSAGE, PrivacyManager.cCalling);
+
+		// Intent receive: C2DM
+		mapActionRestriction.put("com.google.android.c2dm.intent.REGISTRATION", PrivacyManager.cNotifications);
+		mapActionRestriction.put("com.google.android.c2dm.intent.RECEIVE", PrivacyManager.cNotifications);
+
+		// Intent receive: NFC
+		mapActionRestriction.put(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED, PrivacyManager.cNfc);
+		mapActionRestriction.put(NfcAdapter.ACTION_NDEF_DISCOVERED, PrivacyManager.cNfc);
+		mapActionRestriction.put(NfcAdapter.ACTION_TAG_DISCOVERED, PrivacyManager.cNfc);
+		mapActionRestriction.put(NfcAdapter.ACTION_TECH_DISCOVERED, PrivacyManager.cNfc);
+
+		// Intent receive: SMS
+		mapActionRestriction.put(Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION, PrivacyManager.cMessages);
+		mapActionRestriction.put(Telephony.Sms.Intents.SMS_RECEIVED_ACTION, PrivacyManager.cMessages);
+		mapActionRestriction.put(Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION, PrivacyManager.cMessages);
+		mapActionRestriction.put(Telephony.Sms.Intents.SMS_DELIVER_ACTION, PrivacyManager.cMessages);
+		mapActionRestriction.put(Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION, PrivacyManager.cMessages);
+
+		// Intent receive: notifications
+		mapActionRestriction.put(NotificationListenerService.SERVICE_INTERFACE, PrivacyManager.cNotifications);
+
+		// Intent receive: package changes
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_ADDED, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_REPLACED, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_RESTARTED, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_REMOVED, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_CHANGED, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_DATA_CLEARED, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_FIRST_LAUNCH, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_FULLY_REMOVED, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_NEEDS_VERIFICATION, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_PACKAGE_VERIFIED, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE, PrivacyManager.cSystem);
+		mapActionRestriction.put(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE, PrivacyManager.cSystem);
+	}
+
+	private XActivityThread(Methods method) {
+		super(null, method.name(), null);
 		mMethod = method;
-		mActionName = actionName;
 	}
 
 	public String getClassName() {
-		return "android.app.ActivityThread";
+		return (mMethod == Methods.handleReceiver ? "android.app.ActivityThread" : "android.os.MessageQueue");
 	}
 
 	@Override
@@ -37,7 +79,7 @@ public class XActivityThread extends XHook {
 	}
 
 	private enum Methods {
-		handleReceiver
+		next, handleReceiver
 	};
 
 	// @formatter:off
@@ -45,145 +87,109 @@ public class XActivityThread extends XHook {
 	// private void handleReceiver(ReceiverData data)
 	// frameworks/base/core/java/android/app/ActivityThread.java
 
+	// final Message next()
+	// frameworks/base/core/java/android/android/os/MessageQueue.java
+
 	// @formatter:on
 
-	@SuppressLint("InlinedApi")
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 
-		// Intent receive: calling
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cPhone, Intent.ACTION_NEW_OUTGOING_CALL));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cPhone,
-				TelephonyManager.ACTION_PHONE_STATE_CHANGED));
-
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cCalling,
-				TelephonyManager.ACTION_RESPOND_VIA_MESSAGE));
-
-		// Intent receive: C2DM
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,
-				"com.google.android.c2dm.intent.REGISTRATION"));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,
-				"com.google.android.c2dm.intent.RECEIVE"));
-
-		// Intent receive: NFC
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc,
-				NfcAdapter.ACTION_ADAPTER_STATE_CHANGED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_NDEF_DISCOVERED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_TAG_DISCOVERED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNfc, NfcAdapter.ACTION_TECH_DISCOVERED));
-
-		// Intent receive: SMS
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
-				Telephony.Sms.Intents.DATA_SMS_RECEIVED_ACTION));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
-				Telephony.Sms.Intents.SMS_RECEIVED_ACTION));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cMessages,
-				Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION));
-
-		// Intent receive: notifications
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cNotifications,
-				NotificationListenerService.SERVICE_INTERFACE));
-
-		// Intent receive: package changes
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_ADDED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REPLACED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
-				Intent.ACTION_PACKAGE_RESTARTED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_REMOVED));
-
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_CHANGED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
-				Intent.ACTION_PACKAGE_DATA_CLEARED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
-				Intent.ACTION_PACKAGE_FIRST_LAUNCH));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
-				Intent.ACTION_PACKAGE_FULLY_REMOVED));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
-				Intent.ACTION_PACKAGE_NEEDS_VERIFICATION));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem, Intent.ACTION_PACKAGE_VERIFIED));
-
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
-				Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE));
-		listHook.add(new XActivityThread(Methods.handleReceiver, PrivacyManager.cSystem,
-				Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE));
+		listHook.add(new XActivityThread(Methods.next));
+		listHook.add(new XActivityThread(Methods.handleReceiver));
 
 		return listHook;
 	}
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		String methodName = param.method.getName();
-		if (mMethod == Methods.handleReceiver) {
-			if (param.args.length > 0 && param.args[0] != null) {
-				// Get intent
-				Intent intent = null;
-				try {
-					Field fieldIntent = param.args[0].getClass().getDeclaredField("intent");
-					fieldIntent.setAccessible(true);
-					intent = (Intent) fieldIntent.get(param.args[0]);
-				} catch (Throwable ex) {
-					Util.bug(this, ex);
-				}
+		if (mMethod == Methods.next) {
+			// Do nothing
 
-				// Process intent
+		} else if (mMethod == Methods.handleReceiver) {
+			if (param.args.length > 0 && param.args[0] != null) {
+				Field fieldIntent = param.args[0].getClass().getDeclaredField("intent");
+				fieldIntent.setAccessible(true);
+				Intent intent = (Intent) fieldIntent.get(param.args[0]);
 				if (intent != null) {
-					// Check action
-					String action = intent.getAction();
-					if (action != null)
-						Util.log(this, Log.INFO, "Intent action=" + action + " uid=" + Process.myUid());
-					if (mActionName.equals(action)) {
-						if (action.equals(Intent.ACTION_NEW_OUTGOING_CALL)) {
-							// Outgoing call
-							Bundle bundle = intent.getExtras();
-							if (bundle != null) {
-								String phoneNumber = bundle.getString(Intent.EXTRA_PHONE_NUMBER);
-								if (phoneNumber != null)
-									if (isRestrictedExtra(param, mActionName, phoneNumber))
-										intent.putExtra(Intent.EXTRA_PHONE_NUMBER, (String) PrivacyManager
-												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
-							}
-						} else if (action.equals(TelephonyManager.ACTION_PHONE_STATE_CHANGED)) {
-							// Incoming call
-							Bundle bundle = intent.getExtras();
-							if (bundle != null) {
-								String phoneNumber = bundle.getString(TelephonyManager.EXTRA_INCOMING_NUMBER);
-								if (phoneNumber != null) {
-									if (isRestrictedExtra(param, mActionName, phoneNumber))
-										intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER, (String) PrivacyManager
-												.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
-								}
-							}
-						} else if (getRestrictionName().equals(PrivacyManager.cSystem)) {
-							// Package event
-							if (isRestrictedExtra(param, mActionName, intent.getDataString())) {
-								String[] packageNames;
-								if (action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)
-										|| action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE))
-									packageNames = intent.getStringArrayExtra(Intent.EXTRA_CHANGED_PACKAGE_LIST);
-								else
-									packageNames = new String[] { intent.getData().getEncodedSchemeSpecificPart() };
-								for (String packageName : packageNames)
-									if (!XPackageManager.isPackageAllowed(packageName)) {
-										finish(param);
-										param.setResult(null);
-										break;
-									}
-							}
-						} else if (isRestrictedExtra(param, mActionName, intent.getDataString())) {
-							finish(param);
-							param.setResult(null);
-						}
+					if (checkIntent(Binder.getCallingUid(), intent)) {
+						finish(param);
+						param.setResult(null);
 					}
 				}
 			}
 
 		} else
-			Util.log(this, Log.WARN, "Unknown method=" + methodName);
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
 	}
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		// Do nothing
+		if (mMethod == Methods.next) {
+			Message msg = (Message) param.getResult();
+			if (msg != null) {
+				if (msg.obj instanceof Intent) {
+					Intent intent = (Intent) msg.obj;
+					if (intent != null)
+						if (checkIntent(Binder.getCallingUid(), intent))
+							param.setResult(null);
+				}
+			}
+
+		} else if (mMethod == Methods.handleReceiver) {
+			// Do nothing
+
+		} else
+			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+	}
+
+	private boolean checkIntent(int uid, Intent intent) throws Throwable {
+		String action = intent.getAction();
+		if (mapActionRestriction.containsKey(action)) {
+			// Get restriction category
+			String restrictionName = mapActionRestriction.get(action);
+
+			if (Intent.ACTION_NEW_OUTGOING_CALL.equals(action)) {
+				// Outgoing call
+				if (intent.hasExtra(Intent.EXTRA_PHONE_NUMBER)) {
+					String phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
+					if (phoneNumber != null)
+						if (isRestrictedExtra(uid, restrictionName, action, phoneNumber))
+							intent.putExtra(Intent.EXTRA_PHONE_NUMBER,
+									(String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
+				}
+
+			} else if (TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(action)) {
+				// Incoming call
+				if (intent.hasExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)) {
+					String phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
+					if (phoneNumber != null) {
+						if (isRestrictedExtra(uid, restrictionName, action, phoneNumber))
+							intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER,
+									(String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
+					}
+				}
+
+			} else if (PrivacyManager.cSystem.equals(restrictionName)) {
+				// Package event
+				if (isRestrictedExtra(uid, restrictionName, action, intent.getDataString())) {
+					String[] packageNames;
+					if (action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_AVAILABLE)
+							|| action.equals(Intent.ACTION_EXTERNAL_APPLICATIONS_UNAVAILABLE))
+						packageNames = intent.getStringArrayExtra(Intent.EXTRA_CHANGED_PACKAGE_LIST);
+					else
+						packageNames = new String[] { intent.getData().getSchemeSpecificPart() };
+					for (String packageName : packageNames)
+						if (!XPackageManager.isPackageAllowed(packageName))
+							return true;
+				}
+
+			} else if (isRestrictedExtra(uid, restrictionName, action, intent.getDataString()))
+				return true;
+
+		}
+
+		return false;
 	}
 
 	private void finish(XParam param) {

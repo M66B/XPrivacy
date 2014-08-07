@@ -82,7 +82,7 @@
                 android:textIsSelectable="false" />
         </LinearLayout>
 
-        <!-- used, granted, internet, frozen -->
+        <!-- used, granted, internet, frozen, documentation, whitelist -->
 
         <TextView
             android:layout_width="wrap_content"
@@ -137,12 +137,54 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="48dip"
+            android:drawableLeft="?attr/icon_info_book"
+            android:drawablePadding="6dip"
+            android:gravity="center_vertical"
+            android:text="@string/title_function_help"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textIsSelectable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="48dip"
             android:drawableLeft="?attr/icon_whitelist"
             android:drawablePadding="6dip"
             android:gravity="center_vertical"
             android:text="@string/menu_whitelists"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
+
+        <!-- unsafe -->
+
+        <LinearLayout
+            android:id="@+id/llUnsafe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone" >
+
+            <LinearLayout
+                android:layout_width="48dip"
+                android:layout_height="48dip"
+                android:gravity="center_vertical|center_horizontal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:layout_width="32dip"
+                    android:layout_height="32dip"
+                    android:contentDescription="@string/title_unsafe"
+                    android:src="?attr/icon_unsafe" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="48dip"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dip"
+                android:text="@string/title_unsafe"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textIsSelectable="false" />
+        </LinearLayout>
 
         <!-- dangerous -->
 

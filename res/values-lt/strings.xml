@@ -1,13 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed programos versija %d+ neįdiegta</string>
     <string name="app_notenabled">XPrivacy neaktyvuota Xposed programoje</string>
     <string name="app_wrongandroid">Tik nuo Android 4.0.3+ versijos</string>
     <string name="app_incompatible" formatted="false">XPrivacy yra nesuderinama su %s</string>
     <string name="app_version" formatted="false">XPrivacy programos versija: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Xposed programos versija: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Licenzijuota, ačiū už Jūsų paramą!</string>
     <string name="menu_usage">Duomenų naudojimas</string>
     <string name="menu_refresh">Atnaujinti</string>
@@ -46,6 +45,7 @@
     <string name="menu_exclude">Išskirti</string>
     <string name="menu_close">Uždaryti</string>
     <string name="menu_flush">Išvalyti talpyklą</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Nutraukti</string>
     <string name="msg_aborted">Atmesti</string>
     <string name="msg_new">Naujas</string>
@@ -100,12 +100,40 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_shell">Vykdymas (komandos, superuser)</string>
     <string name="restrict_system">Sistema (įdiegtos programos)</string>
     <string name="restrict_view">Peržiūra (Naršyklė)</string>
+    <string name="restrict_help_view">Galima riboti prieigą veiksmų ir informacijos peržiūrai</string>
+    <string name="restrict_help_system">Galima riboti prieigą prie sistemos informacijos (pvz: įdiegtas programas)</string>
+    <string name="restrict_help_shell">Galima riboti prieigą prie shell komandų, įskaitant administratoriaus komandų</string>
+    <string name="restrict_help_storage">Galima riboti prieigą prie atminties (pvz: failai iš SD kortelės arba vidinės atminties)</string>
+    <string name="restrict_help_sensors">Galima riboti prieigą prie jutiklių (pvz: kaip judesio davikliu)</string>
+    <string name="restrict_help_phone">Galima riboti priėjimą prie telefono informacijos, kaip jūsų telefono numeris</string>
+    <string name="restrict_help_overlay">Galima riboti perdangos langus, išvengti sukčiavimo apsimetant</string>
+    <string name="restrict_help_notifications">Galima riboti prieigą prie sistemos ir taikomųjų programų pranešimų ir "Google" debesis pranešimų</string>
+    <string name="restrict_help_nfc">Galima riboti prieigą prie NFC komunikacijos</string>
+    <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
+    <string name="restrict_help_messages">Galima riboti prieigą prie saugomų ir gautų žinučių (SMS / MMS) ir skambučių</string>
+    <string name="restrict_help_media">Galima riboti prieigą prie fotoaparato (nuotraukos ir vaizdo įrašai) ir mikrofono</string>
+    <string name="whitelist_address">Addresai</string>
+    <string name="whitelist_action">Action</string>
+    <string name="restrict_help_location">Galima riboti prieigą prie jūsų buvimo vietos</string>
+    <string name="restrict_help_ipc">Galima riboti tarp-procesines komunikacijas, kai naudojamos apeiti kitus ribojimus</string>
+    <string name="restrict_help_internet">Galima riboti prieigą prie interneto</string>
+    <string name="restrict_help_identification">Galima riboti informaciją, pagal kurią galima jus identifikuoti (pvz: serijinį numerį jūsų prietaiso)</string>
+    <string name="restrict_help_email">Galima riboti prieigą prie elektroninio pašto (pvz: adresai, žinutės)</string>
+    <string name="restrict_help_dictionary">Galima riboti vartotojo žodyną</string>
+    <string name="restrict_help_contacts">Galima riboti prieigą prie jūsų kontaktų</string>
+    <string name="restrict_help_clipboard">Galima riboti prieigą prie informacijos, esančios iškarpinėje</string>
+    <string name="restrict_help_calling">Galima riboti skambinti telefono numeriais, siųsti žinutes (SMS / MMS) ir prieigą prie jūsų telefono žurnalo</string>
+    <string name="restrict_help_calendar">Galima riboti prieigą prie kalendoriaus informacijos</string>
+    <string name="restrict_help_browser">Galima riboti prieigą prie naršyklės informacijos (pvz: žymos, parsisiuntimų istorija</string>
+    <string name="restrict_help_accounts">Galima riboti prieigą prie paskyros informacijos</string>
     <string name="whitelist_ipaddress">IP adresai</string>
     <string name="whitelist_library">Native libraries</string>
-    <string name="whitelist_method">Method names</string>
+    <string name="whitelist_method">Metodų pavadinimai</string>
     <string name="whitelist_filename">failų vardai</string>
     <string name="whitelist_command">Vykdymo komandos</string>
     <string name="whitelist_url">URL adresai</string>
+    <string name="whitelist_transaction">Tranzakcijos</string>
+    <string name="whitelist_permission">Leidimai</string>
     <string name="title_restrict">Naudoti ribojimus:</string>
     <string name="title_check_whitelist">Žiurėti leidžiamus:</string>
     <string name="title_fused">Duomenų naudojimas</string>
@@ -121,6 +149,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_sinstalled">Pagal įdiegimo datą</string>
     <string name="title_supdated">Pagal atnaujinimo datą</string>
     <string name="title_smodified">Pagal modifikavimo datą (XPrivacy)</string>
+    <string name="title_sstate">Pagal statusą (XPrivacy)</string>
     <string name="title_sinvert">Atvirkštinė rūšiavimo tvarka</string>
     <string name="title_attempt">Bando naudoti:</string>
     <string name="title_category">Kategorija:</string>
@@ -140,6 +169,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_template_merge">Taikyti šabloną (sujungti)</string>
     <string name="title_enable_ondemand">Įjungti ribojimus pagal reikalavimą</string>
     <string name="title_disable_ondemand">Išjungti ribojimus pagal reikalavimą</string>
+    <string name="title_ondemand_default">Užklausos laikas:</string>
+    <string name="title_ondemand_reset">Atstatyti</string>
     <string name="title_default">Numatytasis</string>
     <string name="title_alternate">Atsarginis</string>
     <string name="title_usage_header">Naudojimas</string>
@@ -149,6 +180,8 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
     <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
     <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
+    <string name="title_function_help">Funkcijų dokumentacija</string>
+    <string name="title_unsafe">is unsafe, can be circumvented</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
@@ -166,6 +199,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_fake_data">Netikri duomenys</string>
     <string name="settings_notify">Atnaujinimų Pranešimas</string>
     <string name="settings_ondemand">Riboti pagal reikalavimą</string>
+    <string name="settings_blacklist">Vartotojų, programų, kontaktų juodasis sąrašas</string>
     <string name="settings_log">DEBUG žurnalas (perkrauti prietaisą)</string>
     <string name="settings_expert">Eksperto režimas</string>
     <string name="settings_confidence">Maks. pasitikėjimo gavimo intervalas</string>
@@ -176,6 +210,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_parameters">Rodyti duomenų naudojimo parametrus</string>
     <string name="settings_cid">GSM stoties ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>
     <string name="help_ondemand">apribojimai bus paprašyti</string>
     <string name="help_application">Programa</string>

@@ -1,13 +1,12 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Chưa cài Xposed framework phiên bản %d+</string>
     <string name="app_notenabled">XPrivacy chưa được kích hoạt trong Xposed installer</string>
     <string name="app_wrongandroid">Chỉ hỗ trợ Android 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy không tương thích với %s</string>
     <string name="app_version" formatted="false">XPrivacy phiên bản: %s (%d)</string>
     <string name="app_description">Ứng dụng quản lý thông tin riêng tư tối đa</string>
-    <string name="app_xversion" formatted="false">Xposed framework phiên bản: %d</string>
     <string name="app_copyright">Bản quyền \u00A9 2013–2014 thuộc về M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Đã cấp bản quyền, cảm ơn vì sự hỗ trợ của bạn!</string>
     <string name="menu_usage">Sử dụng</string>
     <string name="menu_refresh">Làm mới</string>
@@ -45,7 +44,8 @@
     <string name="menu_tutorial">Hướng dẫn</string>
     <string name="menu_exclude">Loại trừ</string>
     <string name="menu_close">Đóng</string>
-    <string name="menu_flush">Flush cache</string>
+    <string name="menu_flush">Xóa bộ nhớ đệm</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Đang hủy</string>
     <string name="msg_aborted">Đã hủy</string>
     <string name="msg_new">Mới</string>
@@ -58,7 +58,7 @@
     <string name="msg_sure">Bạn có chắc không?</string>
     <string name="msg_select">Vui lòng chọn một vài ứng dụng</string>
     <string name="msg_limit">Vui lòng chọn ít hơn %d ứng dụng</string>
-    <string name="msg_done">Xong</string>
+    <string name="msg_done">Hoàn tất</string>
     <string name="msg_reboot">Yêu cầu khởi động lại thiết bị</string>
     <string name="msg_random_now">Tạo thông tin ngẫu nhiên</string>
     <string name="msg_random_access">Tạo thông tin ngẫu nhiên lúc truy cập</string>
@@ -99,16 +99,44 @@
     <string name="restrict_shell">Shell (câu lệnh, superuser)</string>
     <string name="restrict_system">Hệ thống (các ứng dụng)</string>
     <string name="restrict_view">Mở trình duyệt</string>
+    <string name="restrict_help_view">Will restrict access to view actions and information</string>
+    <string name="restrict_help_system">Will restrict access to system information, like installed applications</string>
+    <string name="restrict_help_shell">Will restrict access to shell commands, including superuser commands</string>
+    <string name="restrict_help_storage">Will restrict access to the storage, like files on your SD card or the internal storage</string>
+    <string name="restrict_help_sensors">Will restrict access to the sensors, like the motion sensor</string>
+    <string name="restrict_help_phone">Will restrict access to phone information, like your phone number</string>
+    <string name="restrict_help_overlay">Will restrict overlay windows to prevent phishing</string>
+    <string name="restrict_help_notifications">Will restrict access to system and application notifications and Google cloud messaging</string>
+    <string name="restrict_help_nfc">Will restrict access to near field communication</string>
+    <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
+    <string name="restrict_help_messages">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
+    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
+    <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
+    <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
+    <string name="restrict_help_internet">Will restrict access to the Internet</string>
+    <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
+    <string name="restrict_help_email">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
+    <string name="restrict_help_dictionary">Will restrict access to the user dictionary</string>
+    <string name="restrict_help_contacts">Will restrict access to information about your contacts</string>
+    <string name="restrict_help_clipboard">Will restrict access to information on the clipboard</string>
+    <string name="restrict_help_calling">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
+    <string name="restrict_help_calendar">Will restrict access to your calendar information, like your appointments</string>
+    <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
+    <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
+    <string name="whitelist_address">Addresses</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">Các địa chỉ IP</string>
     <string name="whitelist_library">Các thư viện gốc của máy</string>
-    <string name="whitelist_method">Method names</string>
+    <string name="whitelist_method">Tên các cách thức</string>
     <string name="whitelist_filename">Tên các tập tin</string>
     <string name="whitelist_command">Các câu lệnh</string>
     <string name="whitelist_url">Các URL</string>
+    <string name="whitelist_transaction">Transactions</string>
+    <string name="whitelist_permission">Permissions</string>
     <string name="title_restrict">Đánh dấu để hạn chế:</string>
     <string name="title_check_whitelist">Đánh dấu để chấp nhận:</string>
     <string name="title_fused">Lọc theo sử dụng dữ liệu</string>
-    <string name="title_finternet">Lọc theo truy cập internet</string>
+    <string name="title_finternet">Lọc theo truy cập Internet</string>
     <string name="title_fpermission">Lọc theo quyền</string>
     <string name="title_frestricted">Lọc các ứng dụng đã thiết lập hạn chế</string>
     <string name="title_fuser">Lọc các ứng dụng người dùng</string>
@@ -120,6 +148,7 @@
     <string name="title_sinstalled">Theo ngày cài đặt</string>
     <string name="title_supdated">Theo ngày cập nhật</string>
     <string name="title_smodified">Theo ngày chỉnh sửa (XPrivacy)</string>
+    <string name="title_sstate">By state (XPrivacy)</string>
     <string name="title_sinvert">Đảo ngược vị trí sắp xếp</string>
     <string name="title_attempt">Cố gắng sử dụng của:</string>
     <string name="title_category">Danh mục:</string>
@@ -130,24 +159,28 @@
     <string name="title_whitelist">Danh sách cho phép \'%s\'</string>
     <string name="title_allow">Cho phép</string>
     <string name="title_deny">Từ chối</string>
-    <string name="title_dontknow">Don\'t know</string>
+    <string name="title_dontknow">Không biết</string>
     <string name="title_pleasesubmit">Vui lòng gửi thông tin về các sự hạn chế để giúp đỡ người dùng khác</string>
     <string name="title_permissions">Các quyền</string>
     <string name="title_set_restrict">Hạn chế</string>
     <string name="title_template_category">Áp dụng mẫu (các danh mục)</string>
     <string name="title_template_full">Áp dụng mẫu (các danh mục+các chức năng)</string>
-    <string name="title_template_merge">Apply template (merge)</string>
+    <string name="title_template_merge">Áp dụng mẫu (kết hợp)</string>
     <string name="title_enable_ondemand">Kích hoạt hạn chế theo yêu cầu truy cập</string>
     <string name="title_disable_ondemand">Tắt hạn chế theo yêu cầu truy cập</string>
-    <string name="title_default">Default</string>
-    <string name="title_alternate">Alternate</string>
-    <string name="title_usage_header">Usage</string>
-    <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
-    <string name="title_usage_text_2">2. Tap on the application icon</string>
-    <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
-    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
-    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
-    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
+    <string name="title_ondemand_default">Timeout will:</string>
+    <string name="title_ondemand_reset">Reset</string>
+    <string name="title_default">Mặc định</string>
+    <string name="title_alternate">Thay thế</string>
+    <string name="title_usage_header">Sử dụng</string>
+    <string name="title_usage_text_1">1. Tìm ứng dụng để hạn chế từ danh sách các ứng dụng</string>
+    <string name="title_usage_text_2">2. Chạm vào biểu tượng của ứng dụng</string>
+    <string name="title_usage_text_3">3. Chạm vào ô checkbox đầu tiên của danh mục bạn muốn hạn chế</string>
+    <string name="title_usage_footer">Phán đoán các tình huống thông thường khi hạn chế một ứng dụng, ví dụ sẽ không truy cập internet được nếu bạn hạn chế danh mục internet .v.v.</string>
+    <string name="title_toggle_dangerous">Chạm vào tên và giữ để hiện ra các hàm không nên bị hạn chế</string>
+    <string name="title_ondemand_category">Áp dụng cho danh mục sẽ đưa các giá trị về giá trị mặc định</string>
+    <string name="title_function_help">Function documentation</string>
+    <string name="title_unsafe">is unsafe, can be circumvented</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Vĩ độ</string>
     <string name="settings_lon">Kinh độ</string>
@@ -165,6 +198,7 @@
     <string name="settings_fake_data">Dữ liệu giả</string>
     <string name="settings_notify">Cập nhật thông báo</string>
     <string name="settings_ondemand">Hạn chế theo yêu cầu truy cập dữ liệu</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Nhật ký lỗi (cần khởi động lại ứng dụng)</string>
     <string name="settings_expert">Chế độ nâng cao</string>
     <string name="settings_confidence">Tối đa khoảng thời gian lấy về các thiết lập</string>
@@ -175,6 +209,7 @@
     <string name="settings_parameters">Hiển thị các thông số của dữ liệu được sử dụng</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Nhấn và giữ để chọn</string>
     <string name="help_ondemand">các sự hạn chế sẽ được yêu cầu cấp quyền</string>
     <string name="help_application">Ứng dụng</string>
@@ -195,6 +230,6 @@
     <string name="tutorial_detailsheader">Chọn vào biểu tượng của ứng dụng để sử dụng các chức năng khác</string>
     <string name="tutorial_detailslist">Chọn vào mũi tên xuống để xem các hàm ngoại lệ của danh mục hạn chế</string>
     <string name="permission_manage">Quản lý các ứng dụng, bao gồm tắt ứng dụng</string>
-    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
+    <string name="permission_restrictions">Quản lý các sự hạn chế và cấu hình XPrivacy</string>
 
 </resources>

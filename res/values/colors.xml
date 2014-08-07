@@ -3,6 +3,7 @@
 
     <color name="color_dangerous_light">#3CF83A3A</color>
     <color name="color_dangerous_dark">#50F83A3A</color>
+    <color name="color_dangerous_dialog">#801D1D</color>
     <color name="color_dangerous_off_light">#0CF83A3A</color>
     <color name="color_dangerous_off_dark">#20F83A3A</color>
     <color name="color_dangerous_user_light">#3CF8743A</color>

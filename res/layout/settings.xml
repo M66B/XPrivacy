@@ -59,6 +59,12 @@
                 android:text="@string/settings_ondemand" />
 
             <CheckBox
+                android:id="@+id/cbBlacklist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_blacklist" />
+
+            <CheckBox
                 android:id="@+id/cbUsage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -128,6 +134,30 @@
                     android:hint="35"
                     android:inputType="numberDecimal"
                     android:maxLength="2"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llQuirks"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/settings_quirks"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etQuirks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="freeze,noresolve,safemode"
+                    android:inputType="text"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
 
@@ -318,8 +348,9 @@
 
                     <EditText
                         android:id="@+id/etImei"
+                        android:digits="0123456789ABCDEF"
                         android:hint="000000000000000"
-                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:inputType="textCapCharacters|textNoSuggestions"
                         android:maxLength="16"
                         android:singleLine="true"
                         tools:ignore="HardcodedText" />

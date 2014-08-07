@@ -1,13 +1,12 @@
 <resources>
 
-    <string name="app_notxposed">Xposed Framework Version %1$d+ ist nicht installiert</string>
     <string name="app_notenabled">XPrivacy ist im Xposed Installer nicht aktiviert</string>
     <string name="app_wrongandroid">Nur ab Android-Version 4.0.3+</string>
     <string name="app_incompatible">XPrivacy ist mit %1$s nicht kompatibel</string>
     <string name="app_version">XPrivacy Version: %1$s (%2$d)</string>
     <string name="app_description">Der ultimative Privacy Manager</string>
-    <string name="app_xversion">Xposed Framework Version: %1$d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014\n\t by M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Lizenz vorhanden, vielen Dank für Ihre Unterstützung!</string>
     <string name="menu_usage">Aktivitätslog</string>
     <string name="menu_refresh">Aktualisieren</string>
@@ -46,6 +45,7 @@
     <string name="menu_exclude">Ausschließen</string>
     <string name="menu_close">Schließen</string>
     <string name="menu_flush">Cache Speicher löschen</string>
+    <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Abbrechen</string>
     <string name="msg_aborted">Abgebrochen</string>
     <string name="msg_new">Neu</string>
@@ -100,12 +100,40 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
+    <string name="restrict_help_view">Beschränkt Zugriff auf &#8216;View&#8217; Aktionen und Informationen</string>
+    <string name="restrict_help_system">Beschränkt Zugriff auf System Informationen, wie z.B. installierte Apps</string>
+    <string name="restrict_help_shell">Beschränkt Zugriff auf Shell Befehle, inklusive SuperUser-Befehle</string>
+    <string name="restrict_help_storage">Beschränkt Zugriff das Dateisystem, z.B. Dateinen auf der SD-Karte oder dem Internen Speicher</string>
+    <string name="restrict_help_sensors">Beschränkt Zugriff auf Sensoren, wie der Bewegungssensor</string>
+    <string name="restrict_help_phone">Beschränkt Zugriff auf Telefon Informationen, wie die Telefonnummer</string>
+    <string name="restrict_help_overlay">Beschränkt Overlay-Fenster um Phishing zu verhindern</string>
+    <string name="restrict_help_notifications">Beschränkt Zugriff auf System-und Anwendungsbenachrichtigungen und Google Cloud Messaging</string>
+    <string name="restrict_help_nfc">Beschränkt Zugriff auf Near Feald Communications</string>
+    <string name="restrict_help_network">Beschränkt Zugriff auf Netzwerkinformationen, wie die IP und MAC Adressen, und WLAN Netzwerkinformationen</string>
+    <string name="restrict_help_messages">Beschränkt Zugriff auf gespeicherte und eingehende Nachrichten (SMS/MMS) und Voicemailos</string>
+    <string name="restrict_help_media">Beschränkt Zugriff auf die Kamera (Phtos und Videos) und das Mikrofon</string>
+    <string name="restrict_help_location">Beschränkt Zugriff auf den ungenauen und genauen Standort</string>
+    <string name="restrict_help_ipc">Beschränkt Zugriff auf Interprozess-Kommunikation, wenn dieser benutzt wird um andere Beschränkungen zu umgehen</string>
+    <string name="restrict_help_internet">Beschränkt Zugriff auf das Internet</string>
+    <string name="restrict_help_identification">Beschränkt Zugriff auf Informationen die Sie identifizieren kann, wie dei Seriennummer des Gerätes</string>
+    <string name="restrict_help_email">Beschränkt Zugriff auf E-mail Informationen, wie die Adresse und Nachrichten (nur für standard und G-Mail Applikationen)</string>
+    <string name="restrict_help_dictionary">Beschränkt Zugriff auf das Benutzerwörterbuch</string>
+    <string name="restrict_help_contacts">Beschränkt Zugriff auf Informationen über Ihre Kontakte</string>
+    <string name="restrict_help_clipboard">Beschränkt Zugriff auf Informationen in der Zwischenablage</string>
+    <string name="restrict_help_calling">Beschränkt ausgehende Anrufe, versenden von Nachrichten (SMS/MMS) sowie Zugriff auf die Anrufprotokolle</string>
+    <string name="restrict_help_calendar">Beschränkt Zugriff auf Kalendarinformationen, wie Ihre Termine</string>
+    <string name="restrict_help_browser">Beschränkt Zufriff auf Browser-Informatinoen, wie die Favoriten und Download-Verlauf</string>
+    <string name="restrict_help_accounts">Beschränkt Zugriff auf Kontoinformationen, wie Ihr Google Konto, welches Ihre G-Mail Adresse enthält</string>
+    <string name="whitelist_address">Adressen</string>
+    <string name="whitelist_action">Action</string>
     <string name="whitelist_ipaddress">IP Adressen</string>
     <string name="whitelist_library">Native Bibliotheken</string>
     <string name="whitelist_method">Methodennamen</string>
     <string name="whitelist_filename">Dateinamen</string>
     <string name="whitelist_command">Shell Kommandos</string>
     <string name="whitelist_url">URLs</string>
+    <string name="whitelist_transaction">Transaktionen</string>
+    <string name="whitelist_permission">Berechtigungen</string>
     <string name="title_restrict">Zum Beschränken markieren:</string>
     <string name="title_check_whitelist">Zum Freigeben markieren</string>
     <string name="title_fused">Datennutzung</string>
@@ -121,6 +149,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_sinstalled">nach Installationsdatum</string>
     <string name="title_supdated">nach Update-Datum</string>
     <string name="title_smodified">nach Änderungsdatum (XPrivacy)</string>
+    <string name="title_sstate">nach Status (XPrivacy)</string>
     <string name="title_sinvert">Sortierreihenfolge invertieren</string>
     <string name="title_attempt">Versuch der Verwendung von:</string>
     <string name="title_category">Kategorie:</string>
@@ -140,6 +169,8 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_template_merge">Template übernehmen (zusammenfügen)</string>
     <string name="title_enable_ondemand">\"Beschränken nach Aufforderung\" aktivieren</string>
     <string name="title_disable_ondemand">\"Beschränken nach Aufforderung\" deaktivieren</string>
+    <string name="title_ondemand_default">Bei Timeout:</string>
+    <string name="title_ondemand_reset">Zurücksetzen</string>
     <string name="title_default">Standard</string>
     <string name="title_alternate">Alternativ</string>
     <string name="title_usage_header">Benutzung</string>
@@ -149,6 +180,8 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_usage_footer">Benutzen Sie gesunden Menschenverstand beim Einschränken. Wenn Sie die Internet Kategorie einschränken, sollten Sie keinen Internetzugriff erwarten.</string>
     <string name="title_toggle_dangerous">Auf einen Title lange drücken um bedenkliche Beschränkungen umzuschalten</string>
     <string name="title_ondemand_category">Auf die gesamte Kategorie anwenden wird die Ausnahmen der Funktionen auf die Standardwerte zurücksetzen</string>
+    <string name="title_function_help">Dokumentation der Funktion</string>
+    <string name="title_unsafe">ist nicht sicher, kann umgangen werden</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
@@ -166,6 +199,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="settings_fake_data">Daten manipulieren</string>
     <string name="settings_notify">Update-Benachrichtigungen</string>
     <string name="settings_ondemand">Beschränkungen nach Aufforderung festlegen</string>
+    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
     <string name="settings_confidence">Maximales Abruf-Konfidenzintervall</string>
@@ -176,6 +210,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="settings_parameters">Parameter der Nutzungsdaten zeigen</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Quirks</string>
     <string name="help_longpress">Für Auswahl App-Name drücken und kurz halten</string>
     <string name="help_ondemand">Beschränkungen nach Aufforderung festlegen</string>
     <string name="help_application">App</string>

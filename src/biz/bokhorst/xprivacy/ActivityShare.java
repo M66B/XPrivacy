@@ -94,7 +94,7 @@ public class ActivityShare extends ActivityBase {
 	private boolean mAbort = false;
 	private int mProgressCurrent;
 	private int mProgressWidth = 0;
-	private String mFileName;
+	private String mFileName = null;
 	private boolean mInteractive = false;
 
 	private static final int STATE_WAITING = 0;
@@ -108,6 +108,7 @@ public class ActivityShare extends ActivityBase {
 	public static final String cRestriction = "Restriction";
 	public static final String cInteractive = "Interactive";
 	public static final String cChoice = "Choice";
+	public static final String cFileName = "FileName";
 	public static final String HTTP_BASE_URL = "http://crowd.xprivacy.eu/";
 	public static final String HTTPS_BASE_URL = "https://crowd.xprivacy.eu/";
 
@@ -152,9 +153,12 @@ public class ActivityShare extends ActivityBase {
 		final int[] uids = (extras != null && extras.containsKey(cUidList) ? extras.getIntArray(cUidList) : new int[0]);
 		final String restrictionName = (extras != null ? extras.getString(cRestriction) : null);
 		int choice = (extras != null && extras.containsKey(cChoice) ? extras.getInt(cChoice) : -1);
+		if (action.equals(ACTION_EXPORT))
+			mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName) : null);
 
 		// License check
-		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
+		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)
+				|| (action.equals(ACTION_TOGGLE) && uids.length > 1)) {
 			if (!Util.isProEnabled() && Util.hasProLicense(this) == null) {
 				Util.viewUri(this, ActivityMain.cProUri);
 				finish();
@@ -256,18 +260,19 @@ public class ActivityShare extends ActivityBase {
 			boolean hasIntent = Util.isIntentAvailable(ActivityShare.this, file);
 
 			// Get file name
-			if (action.equals(ACTION_EXPORT)) {
-				String packageName = null;
-				if (uids.length == 1)
-					try {
-						ApplicationInfoEx appInfo = new ApplicationInfoEx(this, uids[0]);
-						packageName = appInfo.getPackageName().get(0);
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					}
-				mFileName = getFileName(this, hasIntent, packageName);
-			} else
-				mFileName = (hasIntent ? null : getFileName(this, false, null));
+			if (mFileName == null)
+				if (action.equals(ACTION_EXPORT)) {
+					String packageName = null;
+					if (uids.length == 1)
+						try {
+							ApplicationInfoEx appInfo = new ApplicationInfoEx(this, uids[0]);
+							packageName = appInfo.getPackageName().get(0);
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+					mFileName = getFileName(this, hasIntent, packageName);
+				} else
+					mFileName = (hasIntent ? null : getFileName(this, false, null));
 
 			if (mFileName == null)
 				fileChooser();
@@ -278,7 +283,7 @@ public class ActivityShare extends ActivityBase {
 				cbClear.setVisibility(View.VISIBLE);
 
 		} else if (action.equals(ACTION_FETCH)) {
-			tvDescription.setText(getBaseURL(ActivityShare.this));
+			tvDescription.setText(getBaseURL());
 			cbClear.setVisibility(View.VISIBLE);
 
 		} else if (action.equals(ACTION_TOGGLE)) {
@@ -309,7 +314,7 @@ public class ActivityShare extends ActivityBase {
 				rbTemplateFull.setChecked(true);
 
 		} else
-			tvDescription.setText(getBaseURL(ActivityShare.this));
+			tvDescription.setText(getBaseURL());
 
 		if (mInteractive) {
 			// Enable ok
@@ -503,6 +508,7 @@ public class ActivityShare extends ActivityBase {
 		}
 
 		@Override
+		@SuppressLint("InflateParams")
 		public View getView(int position, View convertView, ViewGroup parent) {
 			ViewHolder holder;
 			if (convertView == null) {
@@ -531,9 +537,8 @@ public class ActivityShare extends ActivityBase {
 				@Override
 				public void onClick(View view) {
 					// Packages can be selected on the web site
-					Util.viewUri(ActivityShare.this, Uri.parse(String.format(
-							ActivityShare.getBaseURL(ActivityShare.this) + "?package_name=%s", xApp.appInfo
-									.getPackageName().get(0))));
+					Util.viewUri(ActivityShare.this, Uri.parse(String.format(ActivityShare.getBaseURL()
+							+ "?package_name=%s", xApp.appInfo.getPackageName().get(0))));
 				}
 			});
 
@@ -1313,7 +1318,7 @@ public class ActivityShare extends ActivityBase {
 						HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-						HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=fetch");
+						HttpPost httpost = new HttpPost(getBaseURL() + "?format=json&action=fetch");
 						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 						httpost.setHeader("Accept", "application/json");
 						httpost.setHeader("Content-type", "application/json");
@@ -1360,7 +1365,7 @@ public class ActivityShare extends ActivityBase {
 
 								// Mark as new/changed
 								PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingState,
-										Integer.toString(ActivityMain.STATE_ATTENTION));
+										Integer.toString(ApplicationInfoEx.STATE_ATTENTION));
 
 								// Change app modification time
 								PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingModifyTime,
@@ -1585,7 +1590,7 @@ public class ActivityShare extends ActivityBase {
 						HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-						HttpPost httpost = new HttpPost(getBaseURL(null) + "?format=json&action=submit");
+						HttpPost httpost = new HttpPost(getBaseURL() + "?format=json&action=submit");
 						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 						httpost.setHeader("Accept", "application/json");
 						httpost.setHeader("Content-type", "application/json");
@@ -1601,7 +1606,7 @@ public class ActivityShare extends ActivityBase {
 							if (status.getBoolean("ok")) {
 								// Mark as shared
 								PrivacyManager.setSetting(appInfo.getUid(), PrivacyManager.cSettingState,
-										Integer.toString(ActivityMain.STATE_SHARED));
+										Integer.toString(ApplicationInfoEx.STATE_SHARED));
 								setState(appInfo.getUid(), STATE_SUCCESS, null);
 							} else {
 								int errno = status.getInt("errno");
@@ -1661,6 +1666,7 @@ public class ActivityShare extends ActivityBase {
 		}
 	}
 
+	@SuppressLint("InflateParams")
 	public static boolean registerDevice(final ActivityBase context) {
 		int userId = Util.getUserId(Process.myUid());
 		if (Util.hasProLicense(context) == null
@@ -1738,7 +1744,7 @@ public class ActivityShare extends ActivityBase {
 				HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-				HttpPost httpost = new HttpPost(getBaseURL(null) + "device?format=json&action=register");
+				HttpPost httpost = new HttpPost(getBaseURL() + "device?format=json&action=register");
 				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 				httpost.setHeader("Accept", "application/json");
 				httpost.setHeader("Content-type", "application/json");
@@ -1877,7 +1883,7 @@ public class ActivityShare extends ActivityBase {
 		btnOk.setEnabled(true);
 	}
 
-	public static String getBaseURL(Context context) {
+	public static String getBaseURL() {
 		int userId = Util.getUserId(Process.myUid());
 		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingHttps, true))
 			return HTTPS_BASE_URL;
