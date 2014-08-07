@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">Versión de XPrivacy: %s (%d)</string>
     <string name="app_description">El administrador de permisos definitivo</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 por M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Uso</string>
     <string name="menu_refresh">Actualizar</string>

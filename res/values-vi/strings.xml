@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy phiên bản: %s (%d)</string>
     <string name="app_description">Ứng dụng quản lý thông tin riêng tư tối đa</string>
     <string name="app_copyright">Bản quyền \u00A9 2013–2014 thuộc về M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Đã cấp bản quyền, cảm ơn vì sự hỗ trợ của bạn!</string>
     <string name="menu_usage">Sử dụng</string>
     <string name="menu_refresh">Làm mới</string>

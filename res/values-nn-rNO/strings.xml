@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy versjon: %s (%d)</string>
     <string name="app_description">Den ultimative personvernbehandleren</string>
     <string name="app_copyright">Opphavsbeskyttet \u00A9 M. Bokhorst (M66B) 2013–2014</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Lisensert, takk for støtten!</string>
     <string name="menu_usage">Databruk</string>
     <string name="menu_refresh">Oppdater</string>

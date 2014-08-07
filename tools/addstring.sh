@@ -1,7 +1,7 @@
 #!/bin/bash
-grep -RIl "\<string name=\"menu_update" res | xargs sed -i -e '/menu_update/d'
-grep -RIl "\<string name=\"menu_flush" res | xargs sed -i -e '/menu_flush/a \
-\ \ \ \ <string name=\"menu_update\">Check for updates</string>
+grep -RIl "\<string name=\"app_compatibility" res | xargs sed -i -e '/app_compatibility/d'
+grep -RIl "\<string name=\"app_copyright" res | xargs sed -i -e '/app_copyright/a \
+\ \ \ \ <string name=\"app_compatibility\">Running in compatibility mode</string>
 
 #grep -RIl "\<string name=\"restrict_view" res | xargs sed -i -e '/restrict_view/a \
 #\ \ \ \ <string name=\"restrict_help_view\">Will restrict access to view actions and information</string>\

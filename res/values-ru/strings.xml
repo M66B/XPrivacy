@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">Версия XPrivacy: %1$s (%2$d)</string>
     <string name="app_description">Продвинутый менеджер конфиденциальности</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Зарегистрировано, спасибо за Вашу поддержку!</string>
     <string name="menu_usage">Использование</string>
     <string name="menu_refresh">Обновить</string>

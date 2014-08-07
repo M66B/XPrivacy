@@ -6,6 +6,7 @@
     <string name="app_version">Version XPrivacy : %1$s (%2$d)</string>
     <string name="app_description">Le gestionnaire de vie privée ultime</string>
     <string name="app_copyright">Droits d\'auteur : M. Bokhorst (M66B) \u00A9 2013–2014 </string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Licence trouvée, merci pour votre soutien!</string>
     <string name="menu_usage">Usage</string>
     <string name="menu_refresh">Rafraîchir</string>

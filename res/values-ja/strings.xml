@@ -6,6 +6,7 @@
     <string name="app_version">XPrivacy バージョン : %1$s (%2$d)</string>
     <string name="app_description">究極の個人情報管理</string>
     <string name="app_copyright">コピーライト \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">使用許諾されました。協力ありがとう!</string>
     <string name="menu_usage">要求されたデータの表示</string>
     <string name="menu_refresh">再読み込み</string>

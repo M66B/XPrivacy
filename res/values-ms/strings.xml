@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy versi: %s (%d)</string>
     <string name="app_description">Pengurus Privasi Yang Muktamad</string>
     <string name="app_copyright">Hak Cipta \u00A9 2013–2014 oleh M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Penggunaan data</string>
     <string name="menu_refresh">Penyegaran</string>

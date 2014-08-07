@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">نسخة XPrivacy\u200F : %s (%d)</string>
     <string name="app_description">مدير الخصوصية الرئيسي</string>
     <string name="app_copyright">حقوق الطبع \u00A9 2013–2014 ل M. Bokhorst (M66B)\u200E</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">الترخيص موجود، شكرا لدعمكم!</string>
     <string name="menu_usage">الإستخدام</string>
     <string name="menu_refresh">إنعاش</string>

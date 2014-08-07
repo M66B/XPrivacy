@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy versione: %s (%d)</string>
     <string name="app_description">Il gestore di privacy definitivo</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 di M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Attivato, grazie per il tuo supporto!</string>
     <string name="menu_usage">Dati utilizzati</string>
     <string name="menu_refresh">Aggiorna</string>

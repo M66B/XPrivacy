@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy leagan: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
     <string name="app_copyright">Cóipcheart \ u00A9 2013–2014 le M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Úsáid</string>
     <string name="menu_refresh">Athnuaigh</string>

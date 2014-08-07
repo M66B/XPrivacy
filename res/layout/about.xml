@@ -27,12 +27,23 @@
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
+            android:id="@+id/tvCompatibility"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dip"
+            android:text="@string/app_compatibility"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textIsSelectable="false"
+            android:textStyle="italic" />
+
+        <TextView
             android:id="@+id/tvLicensed"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dip"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="false" />
+            android:textIsSelectable="false"
+            android:textStyle="italic" />
 
         <TextView
             android:layout_width="match_parent"

@@ -6,6 +6,7 @@
     <string name="app_version" formatted="false">Verze XPrivacy: %s (%d)</string>
     <string name="app_description">Ultimátní správce soukromí</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014: M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Využití</string>
     <string name="menu_refresh">Obnovit</string>

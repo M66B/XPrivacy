@@ -31,6 +31,7 @@ Changelog
 * Enabled on demand restricting for *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
 * Moved *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission* to XPrivacy 3 (not in legacy mode) ([issue](/../../issues/1855))
 * Fixed repeated on demand restricting for functions with a whitelist
+* Updated Dutch translation
 * Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
