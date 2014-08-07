@@ -1960,7 +1960,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 		oResult.once = true;
 		result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
 
-		CRestriction key = new CRestriction(result, restriction.extra);
+		CRestriction key = new CRestriction(result, null);
 		if (category) {
 			key.setMethodName(null);
 			key.setExtra(null);
