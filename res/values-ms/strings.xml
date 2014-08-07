@@ -1,12 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_notxposed" formatted="false">Rangka Xposed versi %d+ tidak dipasang</string>
     <string name="app_notenabled">XPrivacy tidak diaktifkan di dalam pemasang Xposed</string>
     <string name="app_wrongandroid">Hanya untuk Android versi 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy tidak serasi dengan %s</string>
     <string name="app_version" formatted="false">XPrivacy versi: %s (%d)</string>
     <string name="app_description">Pengurus Privasi Yang Muktamad</string>
-    <string name="app_xversion" formatted="false">Rangka Xposed versi: %d</string>
     <string name="app_copyright">Hak Cipta \u00A9 2013–2014 oleh M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Penggunaan data</string>

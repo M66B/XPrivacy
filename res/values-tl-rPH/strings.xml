@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Ang Xposed framework na salin %d+ ay hindi nakalagay sa iyong kagamitan</string>
     <string name="app_notenabled">Ang XPrivacy ay hindi gumagana sa Xposed na installer</string>
     <string name="app_wrongandroid">Para lang sa Android na salin 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy na salin: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Xposed framework na salin: %d</string>
     <string name="app_copyright">Ang karapatan \u00A9 2013–2014 nito ay pag-aari ni M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Kaalaman tungkol sa mga pahintulot na nagamit</string>

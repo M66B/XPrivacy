@@ -1,12 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_notxposed">Xposed framework のバージョン %1$d 以降がインストールされていません</string>
     <string name="app_notenabled">XPrivacy が有効になっていません</string>
     <string name="app_wrongandroid">アンドロイドのバージョン 4.0.3 以降専用です</string>
     <string name="app_incompatible">XPrivacy は %1$s と互換性がありません</string>
     <string name="app_version">XPrivacy バージョン : %1$s (%2$d)</string>
     <string name="app_description">究極の個人情報管理</string>
-    <string name="app_xversion">Xposed framework のバージョン : %1$d</string>
     <string name="app_copyright">コピーライト \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">使用許諾されました。協力ありがとう!</string>
     <string name="menu_usage">要求されたデータの表示</string>

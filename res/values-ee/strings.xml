@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed raamistik versioon %d+ ei ole installeeritud</string>
     <string name="app_notenabled">XPrivacy ei ole aktiveeritud Xposed raamistiku installeerias</string>
     <string name="app_wrongandroid">See rakendus on ainult android 4.0.3+\'le </string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy versioon: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Xposed raamistiku versioon: %d</string>
     <string name="app_copyright">Autoriõigus \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Kasutus</string>

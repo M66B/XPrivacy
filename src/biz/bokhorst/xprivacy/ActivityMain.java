@@ -893,11 +893,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			Util.bug(null, ex);
 		}
 
-		// Show Xposed version
-		int xVersion = Util.getXposedAppProcessVersion();
-		TextView tvXVersion = (TextView) dlgAbout.findViewById(R.id.tvXVersion);
-		tvXVersion.setText(String.format(getString(R.string.app_xversion), xVersion));
-
 		// Show license
 		String licensed = Util.hasProLicense(this);
 		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);

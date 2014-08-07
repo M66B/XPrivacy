@@ -1,12 +1,10 @@
 ﻿<resources>
 
-    <string name="app_notxposed" formatted="false">Ní Xposed framework leagan %d+ suiteáilte</string>
     <string name="app_notenabled">Ní XPrivacy chumasú i an suiteálaí Xposed</string>
     <string name="app_wrongandroid">Ach amháin le haghaidh Android version 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy leagan: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Xposed framework leagan: %d</string>
     <string name="app_copyright">Cóipcheart \ u00A9 2013–2014 le M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Úsáid</string>

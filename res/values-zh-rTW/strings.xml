@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">尚未安裝 Xposed framework 版本 %d+ </string>
     <string name="app_notenabled">尚未於 Xposed installer 啟用 XPrivacy</string>
     <string name="app_wrongandroid">僅支援版本 Android 4.0.3+</string>
     <string name="app_incompatible" formatted="false">%s 與XPrivacy不相容</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_description">超強隱私管理工具，絕讚好評發售中!!</string>
-    <string name="app_xversion" formatted="false">Xposed framework 版本: %d</string>
     <string name="app_copyright">版權所有 \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">授權成功，感謝您贊助 XPrivacy!!</string>
     <string name="menu_usage">操作記錄</string>

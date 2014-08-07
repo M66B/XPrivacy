@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed framework versiunea %d+ nu este instalata</string>
     <string name="app_notenabled">XPrivacy nu este bifat in Xposed installer</string>
     <string name="app_wrongandroid">Only for Android version 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">versiunea XPrivacy: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">versiunea Xposed framework: %d</string>
     <string name="app_copyright">Drepturi de autor rezervate \u00A9 2013–2014 M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Usage</string>

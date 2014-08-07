@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed">Xposed framework različice %1$d+ ni nameščen</string>
     <string name="app_notenabled">XPrivacy ni omogočen v Xposed installer</string>
     <string name="app_wrongandroid">Samo za Android različice 4.0.3+</string>
     <string name="app_incompatible">XPrivacy ni kompatibilen z %1$s</string>
     <string name="app_version">XPrivacy različica: %1$s (%2$d)</string>
     <string name="app_description">Odlični upravljalec pravic</string>
-    <string name="app_xversion">Xposed framework različica: %1$d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Lincecirano, hvala za Vašo podporo!</string>
     <string name="menu_usage">Uporaba</string>

@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">La versió %d+ d\'Xposed framework no està instal·lada</string>
     <string name="app_notenabled">XPrivacy no està habilitat a l\'instal·lador d\'Xposed</string>
     <string name="app_wrongandroid">Només per a Android versió 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">Versió d\'XPrivacy: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Versió d\'Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 per M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Usos</string>

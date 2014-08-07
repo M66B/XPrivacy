@@ -52,28 +52,6 @@ public class Requirements {
 			alertDialog.show();
 		}
 
-		// Check Xposed version
-		int xVersion = Util.getXposedAppProcessVersion();
-		if (xVersion < PrivacyManager.cXposedAppProcessMinVersion) {
-			String msg = String.format(context.getString(R.string.app_notxposed),
-					PrivacyManager.cXposedAppProcessMinVersion);
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
-			alertDialogBuilder.setTitle(R.string.app_name);
-			alertDialogBuilder.setMessage(msg);
-			alertDialogBuilder.setIcon(context.getThemed(R.attr.icon_launcher));
-			alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
-					new DialogInterface.OnClickListener() {
-						@Override
-						public void onClick(DialogInterface dialog, int which) {
-							Intent xposedIntent = new Intent(Intent.ACTION_VIEW);
-							xposedIntent.setData(Uri.parse("http://forum.xda-developers.com/showthread.php?t=1574401"));
-							context.startActivity(xposedIntent);
-						}
-					});
-			AlertDialog alertDialog = alertDialogBuilder.create();
-			alertDialog.show();
-		}
-
 		// Check if XPrivacy is enabled
 		if (Util.isXposedEnabled()) {
 			// Check privacy client

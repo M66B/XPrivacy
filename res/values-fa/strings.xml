@@ -2,13 +2,11 @@
 
     <!-- Translators: do not include texts with translatable="false" -->
 
-    <string name="app_notxposed" formatted="false">فریم ورک اکس پوزد ویرایش %d+ نصب نشده است</string>
     <string name="app_notenabled"> نرم افزار ایکس پرایویسی در نصب کننده ی اکیس پوزد فعال نشده است</string>
     <string name="app_wrongandroid"> 4.0.3+ فقط برای اندروبد ورژن</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">نرم افزار ایکس پرایویسی ورژن: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion">فریم ورک ایکس پرایویسی ورژن: %d\u200F</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">License found, thanks for your support!</string>
     <string name="menu_usage">کاربرد</string>

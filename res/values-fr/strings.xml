@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed">La version %1$d+ de l\'environnement Xposed n\'est pas installée</string>
     <string name="app_notenabled">XPrivacy n\'est pas activé dans l\'installateur Xposed</string>
     <string name="app_wrongandroid">Uniquement pour Android 4.0.3 et ultérieur</string>
     <string name="app_incompatible">XPrivacy est incompatible avec %1$s</string>
     <string name="app_version">Version XPrivacy : %1$s (%2$d)</string>
     <string name="app_description">Le gestionnaire de vie privée ultime</string>
-    <string name="app_xversion">Version de l\'environnement Xposed : %1$d</string>
     <string name="app_copyright">Droits d\'auteur : M. Bokhorst (M66B) \u00A9 2013–2014 </string>
     <string name="app_licensed">Licence trouvée, merci pour votre soutien!</string>
     <string name="menu_usage">Usage</string>

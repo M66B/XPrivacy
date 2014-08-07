@@ -1,12 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string name="app_notxposed">Xposed framework verzija %1$d+ nije instalirana</string>
     <string name="app_notenabled">XPrivacy modul nije uključen u Xposed installeru</string>
     <string name="app_wrongandroid">Samo za Android verziju 4.0.3+</string>
     <string name="app_incompatible">XPrivacy nije kompatibilan s %1$s</string>
     <string name="app_version">XPrivacy verzija: %1$s (%2$d)</string>
     <string name="app_description">Ultimativni upravitelj privatnošću</string>
-    <string name="app_xversion">Xposed framework verzija: %1$d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licenca odobrena, hvala vam na vašoj podršci!</string>
     <string name="menu_usage">Podaci korištenja</string>

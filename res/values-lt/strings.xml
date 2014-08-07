@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed programos versija %d+ neįdiegta</string>
     <string name="app_notenabled">XPrivacy neaktyvuota Xposed programoje</string>
     <string name="app_wrongandroid">Tik nuo Android 4.0.3+ versijos</string>
     <string name="app_incompatible" formatted="false">XPrivacy yra nesuderinama su %s</string>
     <string name="app_version" formatted="false">XPrivacy programos versija: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Xposed programos versija: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licenzijuota, ačiū už Jūsų paramą!</string>
     <string name="menu_usage">Duomenų naudojimas</string>

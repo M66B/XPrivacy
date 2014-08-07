@@ -21,8 +21,6 @@ import java.security.Signature;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -143,29 +141,6 @@ public class Util {
 			trace.append("\n");
 		}
 		log(hook, priority, trace.toString());
-	}
-
-	public static int getXposedAppProcessVersion() {
-		final Pattern PATTERN_APP_PROCESS_VERSION = Pattern.compile(".*with Xposed support \\(version (.+)\\).*");
-		try {
-			InputStream is = new FileInputStream("/system/bin/app_process");
-			BufferedReader br = new BufferedReader(new InputStreamReader(is));
-			String line;
-			while ((line = br.readLine()) != null) {
-				if (!line.contains("Xposed"))
-					continue;
-				Matcher m = PATTERN_APP_PROCESS_VERSION.matcher(line);
-				if (m.find()) {
-					br.close();
-					is.close();
-					return Integer.parseInt(m.group(1));
-				}
-			}
-			br.close();
-			is.close();
-		} catch (Throwable ex) {
-		}
-		return -1;
 	}
 
 	public static boolean isXposedEnabled() {

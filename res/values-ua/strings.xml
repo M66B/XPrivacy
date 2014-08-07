@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Не встановлено Xposed framework версії %d+</string>
     <string name="app_notenabled">Модуль XPrivacy не активован в Xposed installer</string>
     <string name="app_wrongandroid">Тільки для Android версії 4.0 і новіше</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">Версія XPrivacy: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion" formatted="false">Версія Xposed framework: %d</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Використання</string>

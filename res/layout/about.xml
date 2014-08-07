@@ -21,13 +21,6 @@
             android:textIsSelectable="true" />
 
         <TextView
-            android:id="@+id/tvXVersion"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="true" />
-
-        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/app_copyright"

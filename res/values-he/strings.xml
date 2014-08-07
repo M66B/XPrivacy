@@ -1,12 +1,10 @@
 <resources>
 
-    <string name="app_notxposed" formatted="false">Xposed מסגרת גרסה %d+ אינו מותקן</string>
     <string name="app_notenabled">XPrivacy אינו מאופשר במתקין Xposed</string>
     <string name="app_wrongandroid">Only for Android version 4.0.3+</string>
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">גירסא XPrivacy\u200F: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_xversion">גרסת מסגרת Xposed\u200F: %d</string>
     <string name="app_copyright">כל הזכויות שמורות \u00A9 2013–2014 על ידי מ Bokhorst (M66B)\u200E</string>
     <string name="app_licensed">License found, thanks for your support!</string>
     <string name="menu_usage">Usage</string>
