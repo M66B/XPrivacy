@@ -68,7 +68,7 @@ public class XPackageManager extends XHook {
 	// public android.content.pm.ParceledListSlice getInstalledPackages(int flags, int userId)
 	// public android.content.pm.ParceledListSlice getPackagesHoldingPermissions(java.lang.String[] permissions, int flags, int userId)
 	// public android.content.pm.ParceledListSlice getInstalledApplications(int flags, int userId)
-	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/pm/PackageManagerService.java/
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/pm/PackageManagerService.java
 
 	// @formatter:on
 

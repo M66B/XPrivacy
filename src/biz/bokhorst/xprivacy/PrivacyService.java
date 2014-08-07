@@ -467,10 +467,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 			}
 
 			if (!cached) {
-				PRestriction cresult = new PRestriction(restriction.uid, restriction.restrictionName, null);
 				boolean methodFound = false;
+				PRestriction cresult = new PRestriction(restriction.uid, restriction.restrictionName, null);
 
-				// No permissions required
+				// Get database reference
 				SQLiteDatabase db = getDb();
 				if (db == null)
 					return mresult;
@@ -581,7 +581,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				// Update cache
 				if (oResult.ondemand && !oResult.once) {
-					CRestriction okey = new CRestriction(mresult, restriction.extra);
+					CRestriction okey = new CRestriction(mresult, oResult.whitelist ? restriction.extra : null);
 					synchronized (mRestrictionCache) {
 						if (mRestrictionCache.containsKey(okey))
 							mRestrictionCache.remove(okey);
@@ -1358,6 +1358,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 	final class OnDemandResult {
 		public boolean ondemand = false;
 		public boolean once = false;
+		public boolean whitelist = false;
 	}
 
 	final class OnDemandDialogHolder {
@@ -1438,8 +1439,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 					Util.log(null, Log.WARN, "On demanding " + restriction);
 
-					// Check if not asked before
-					CRestriction mkey = new CRestriction(restriction, restriction.extra);
+					// Check if method not asked before
+					CRestriction mkey = new CRestriction(restriction, null);
 					synchronized (mRestrictionCache) {
 						if (mRestrictionCache.containsKey(mkey))
 							if (mRestrictionCache.get(mkey).asked) {
@@ -1450,15 +1451,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 							}
 					}
 
-					synchronized (mAskedOnceCache) {
-						if (mAskedOnceCache.containsKey(mkey) && !mAskedOnceCache.get(mkey).isExpired()) {
-							Util.log(null, Log.WARN, "Already asked once " + restriction);
-							result.restricted = mAskedOnceCache.get(mkey).restricted;
-							result.asked = true;
-							return oResult;
-						}
-					}
-
+					// Check if category not asked before
 					CRestriction ckey = new CRestriction(restriction, null);
 					ckey.setMethodName(null);
 					synchronized (mAskedOnceCache) {
@@ -1470,6 +1463,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 						}
 					}
 
+					// Check if whitelist not asked before
 					if (restriction.extra != null && hook != null && hook.whitelist() != null) {
 						CSetting skey = new CSetting(restriction.uid, hook.whitelist(), restriction.extra);
 						synchronized (mSettingCache) {
@@ -1494,6 +1488,16 @@ public class PrivacyService extends IPrivacyService.Stub {
 									}
 								}
 							}
+						}
+					}
+
+					// Check if not asked before once
+					synchronized (mAskedOnceCache) {
+						if (mAskedOnceCache.containsKey(mkey) && !mAskedOnceCache.get(mkey).isExpired()) {
+							Util.log(null, Log.WARN, "Already asked once " + restriction);
+							result.restricted = mAskedOnceCache.get(mkey).restricted;
+							result.asked = true;
+							return oResult;
 						}
 					}
 
@@ -1815,23 +1819,24 @@ public class PrivacyService extends IPrivacyService.Stub {
 				// Allow
 				result.restricted = false;
 				result.asked = true;
-				if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()
-						&& !cbWhitelistExtra3.isChecked()) {
+
+				if (cbWhitelist.isChecked())
+					onDemandWhitelist(restriction, null, result, oResult, hook);
+				else if (cbWhitelistExtra1.isChecked())
+					onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, oResult, hook);
+				else if (cbWhitelistExtra2.isChecked())
+					onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, oResult, hook);
+				else if (cbWhitelistExtra3.isChecked())
+					onDemandWhitelist(restriction, getXExtra(restriction, hook)[2], result, oResult, hook);
+				else {
 					setSettingBool(userId, "", PrivacyManager.cSettingODCategory, cbCategory.isChecked());
 					setSettingBool(userId, "", PrivacyManager.cSettingODOnce, cbOnce.isChecked());
+
+					if (cbOnce.isChecked())
+						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
+					else
+						onDemandChoice(restriction, cbCategory.isChecked(), false);
 				}
-				if (cbWhitelist.isChecked())
-					onDemandWhitelist(restriction, null, result, hook);
-				else if (cbWhitelistExtra1.isChecked())
-					onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
-				else if (cbWhitelistExtra2.isChecked())
-					onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
-				else if (cbWhitelistExtra3.isChecked())
-					onDemandWhitelist(restriction, getXExtra(restriction, hook)[2], result, hook);
-				else if (cbOnce.isChecked())
-					onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
-				else
-					onDemandChoice(restriction, cbCategory.isChecked(), false);
 				holder.latch.countDown();
 			}
 		});
@@ -1853,23 +1858,24 @@ public class PrivacyService extends IPrivacyService.Stub {
 				// Deny
 				result.restricted = true;
 				result.asked = true;
-				if (!cbWhitelist.isChecked() && !cbWhitelistExtra1.isChecked() && !cbWhitelistExtra2.isChecked()
-						&& !cbWhitelistExtra3.isChecked()) {
+
+				if (cbWhitelist.isChecked())
+					onDemandWhitelist(restriction, null, result, oResult, hook);
+				else if (cbWhitelistExtra1.isChecked())
+					onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, oResult, hook);
+				else if (cbWhitelistExtra2.isChecked())
+					onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, oResult, hook);
+				else if (cbWhitelistExtra3.isChecked())
+					onDemandWhitelist(restriction, getXExtra(restriction, hook)[2], result, oResult, hook);
+				else {
 					setSettingBool(userId, "", PrivacyManager.cSettingODCategory, cbCategory.isChecked());
 					setSettingBool(userId, "", PrivacyManager.cSettingODOnce, cbOnce.isChecked());
+
+					if (cbOnce.isChecked())
+						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
+					else
+						onDemandChoice(restriction, cbCategory.isChecked(), true);
 				}
-				if (cbWhitelist.isChecked())
-					onDemandWhitelist(restriction, null, result, hook);
-				else if (cbWhitelistExtra1.isChecked())
-					onDemandWhitelist(restriction, getXExtra(restriction, hook)[0], result, hook);
-				else if (cbWhitelistExtra2.isChecked())
-					onDemandWhitelist(restriction, getXExtra(restriction, hook)[1], result, hook);
-				else if (cbWhitelistExtra3.isChecked())
-					onDemandWhitelist(restriction, getXExtra(restriction, hook)[2], result, hook);
-				else if (cbOnce.isChecked())
-					onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
-				else
-					onDemandChoice(restriction, cbCategory.isChecked(), true);
 				holder.latch.countDown();
 			}
 		});
@@ -1932,11 +1938,14 @@ public class PrivacyService extends IPrivacyService.Stub {
 		return listResult.toArray(new String[0]);
 	}
 
-	private void onDemandWhitelist(final PRestriction restriction, String xextra, final PRestriction result, Hook hook) {
+	private void onDemandWhitelist(PRestriction restriction, String xextra, PRestriction result,
+			OnDemandResult oResult, Hook hook) {
 		try {
-			// Set the whitelist
 			Util.log(null, Log.WARN, (result.restricted ? "Black" : "White") + "listing " + restriction + " xextra="
 					+ xextra);
+
+			oResult.whitelist = true;
+
 			setSettingInternal(new PSetting(restriction.uid, hook.whitelist(), (xextra == null ? restriction.extra
 					: xextra), Boolean.toString(!result.restricted)));
 		} catch (Throwable ex) {
@@ -1944,8 +1953,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 		}
 	}
 
-	private void onDemandOnce(final PRestriction restriction, boolean category, final PRestriction result,
-			final OnDemandResult oResult) {
+	private void onDemandOnce(PRestriction restriction, boolean category, PRestriction result, OnDemandResult oResult) {
 		Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction + " category="
 				+ category);
 
