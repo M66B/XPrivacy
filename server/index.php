@@ -350,6 +350,15 @@
 						$latest = $version;
 				}
 
+			$sql = "INSERT INTO xprivacy_update (installed_version, test_versions, current_version)";
+			$sql .= " VALUES (";
+			$sql .= "'" . $db->real_escape_string($data->xprivacy_version_name) . "'";
+			$sql .= ", " . (int)$data->test_versions;
+			$sql .= ", '" . $db->real_escape_string($latest) . "'";
+			$sql .= ")";
+			if (!$db->query($sql))
+				log_error('update: error=' . $db->error . ' query=' . $sql, $my_email, $data);
+
 			// Check if newer
 			if ($latest == null || version_compare($latest, $data->xprivacy_version_name) <= 0)
 				header($_SERVER['SERVER_PROTOCOL'] . ' 204 No Content');

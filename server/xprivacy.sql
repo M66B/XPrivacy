@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.0.9
+-- version 4.2.0
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 03, 2014 at 10:25 PM
--- Server version: 5.5.31-1~dotdeb.0
--- PHP Version: 5.3.28-1~dotdeb.0
+-- Generation Time: Aug 07, 2014 at 11:19 AM
+-- Server version: 5.6.19-1~dotdeb.1-log
+-- PHP Version: 5.5.15-1~dotdeb.1
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -27,7 +27,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE IF NOT EXISTS `xprivacy` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `android_id_md5` text NOT NULL,
   `android_sdk` int(11) NOT NULL,
   `xprivacy_version` int(11) DEFAULT NULL,
@@ -40,11 +40,8 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   `allowed` int(11) NOT NULL DEFAULT '0',
   `used` bigint(13) NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `updates` int(11) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `restriction` (`android_id_md5`(50),`android_sdk`,`package_name`(100),`package_version`(50),`package_version_code`,`restriction`(20),`method`(70)),
-  KEY `package` (`package_name`(100))
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=5086415 ;
+  `updates` int(11) NOT NULL DEFAULT '1'
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7877581 ;
 
 -- --------------------------------------------------------
 
@@ -53,16 +50,69 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
 --
 
 CREATE TABLE IF NOT EXISTS `xprivacy_app` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+`id` int(11) NOT NULL,
   `application_name` text CHARACTER SET utf8 NOT NULL,
   `package_name` text CHARACTER SET utf8 NOT NULL,
   `package_version` text CHARACTER SET utf8 NOT NULL,
   `package_version_code` int(11) NOT NULL,
-  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `application` (`application_name`(100),`package_name`(100),`package_version`(50),`package_version_code`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=37051 ;
+  `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=54080 ;
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `xprivacy_update`
+--
+
+CREATE TABLE IF NOT EXISTS `xprivacy_update` (
+`id` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `installed_version` text NOT NULL,
+  `test_versions` int(11) NOT NULL,
+  `current_version` text NOT NULL
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `xprivacy`
+--
+ALTER TABLE `xprivacy`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `restriction` (`android_id_md5`(50),`android_sdk`,`package_name`(100),`package_version`(50),`package_version_code`,`restriction`(20),`method`(70)), ADD KEY `package` (`package_name`(100));
+
+--
+-- Indexes for table `xprivacy_app`
+--
+ALTER TABLE `xprivacy_app`
+ ADD PRIMARY KEY (`id`), ADD UNIQUE KEY `application` (`application_name`(100),`package_name`(100),`package_version`(50),`package_version_code`);
+
+--
+-- Indexes for table `xprivacy_update`
+--
+ALTER TABLE `xprivacy_update`
+ ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `xprivacy`
+--
+ALTER TABLE `xprivacy`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7877581;
+--
+-- AUTO_INCREMENT for table `xprivacy_app`
+--
+ALTER TABLE `xprivacy_app`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54080;
+--
+-- AUTO_INCREMENT for table `xprivacy_update`
+--
+ALTER TABLE `xprivacy_update`
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
