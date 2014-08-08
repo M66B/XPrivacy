@@ -35,14 +35,6 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 
 **Next release**
 
-* Enabled on demand restricting for *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
-* Fixed *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission* for some ROMs ([issue](/../../issues/1855))
-* Fixed repeated on demand restricting for functions with a whitelist
-* Removed [VACUUM](http://sqlite.org/lang_vacuum.html) for usage data database
-* Updated Dutch translation
-* Updated Japanese translation
-* Updated Simplified Chinese translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
@@ -59,6 +51,16 @@ XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 * Added restriction *Srv_getCompleteVoiceMailNumber*
 * Added restriction *WiFi.Srv_getBatchedScanResults*
 * Replaced unsafe restrictions by safe restrictions where possible (not in legacy mode)
+
+**Version 2.2.5 BETA**
+
+* Enabled on demand restricting for *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
+* Fixed *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission* for some ROMs ([issue](/../../issues/1855))
+* Fixed repeated on demand restricting for functions with a whitelist
+* Removed [VACUUM](http://sqlite.org/lang_vacuum.html) for usage data database
+* Updated Dutch translation
+* Updated Japanese translation
+* Updated Simplified Chinese translation
 
 **Version 2.2.4 TEST**
 
