@@ -1117,7 +1117,8 @@ You can check if [your IP address](http://www.whatismyip.com/) is black listed b
 Unsafe restrictions can be disabled by removing the Xposed method hook using a native library.
 See [here](https://github.com/cernekee/WinXP) for a proof of concept.
 You can prevent this by not allowing native libaries to load, which will unfortunately often result in a crash.
-XPrivacy version 3 will partly address this problem for stock Android KitKat and [OmniROM](http://omnirom.org/).
+XPrivacy version 3 will partly address this problem for stock Android KitKat,
+[OmniROM](http://omnirom.org/) and [CyanogenMod](http://www.cyanogenmod.org/).
 This is done by hooking into the Android counterparts of the user space functions.
 Unfortunately not all user space functions have an Android counterpart,
 meaning that this cannot be done for all restrictions.
@@ -1323,13 +1324,8 @@ Using Eclipse:
 Testing:
 
 * [XPrivacy Tester](https://github.com/M66B/XPrivacyTester)
-* [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
-* [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
-* [SIM Card](https://play.google.com/store/apps/details?id=com.gsmdev.simcard)
 * [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
-* [ReadPhoneState](https://play.google.com/store/apps/details?id=jp.ne.neko.freewing.ReadPhoneState)
-* [ReadContacts](https://play.google.com/store/apps/details?id=jp.ne.neko.freewing.ReadContacts)
-* [ReadSms](https://play.google.com/store/apps/details?id=jp.ne.neko.freewing.ReadSms)
+* [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 
 Serious contributors do not have to donate for the [pro version](http://www.xprivacy.eu/).
 New translations are considered as a serious contribution, but translating a few lines of text is not.

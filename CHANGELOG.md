@@ -41,7 +41,8 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 **XPrivacy 3** (not released yet)
 
 XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
-XPrivacy 3 will be available for stock Android KitKat and the latest versions of [OmniROM](http://omnirom.org/) only,
+XPrivacy 3 will be available for vanilla Android KitKat
+and the latest versions of [OmniROM](http://omnirom.org/) and [CyanogenMod](http://www.cyanogenmod.org/) only,
 but will work in *legacy* mode on other Android versions/variants.
 XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 
