@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.lang.RuntimeException;
+import java.net.UnknownHostException;
 import java.nio.channels.FileChannel;
 import java.security.KeyFactory;
 import java.security.MessageDigest;
@@ -106,6 +107,8 @@ public class Util {
 		else if (ex instanceof SecurityException)
 			priority = Log.WARN;
 		else if (ex instanceof TransactionTooLargeException)
+			priority = Log.WARN;
+		else if (ex instanceof UnknownHostException)
 			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
