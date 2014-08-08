@@ -157,10 +157,11 @@ public class Requirements {
 		try {
 			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService", false, null);
 			try {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+				try {
 					clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
-				else
+				} catch (NoSuchMethodException ignored) {
 					clazz.getDeclaredMethod("getPackageUid", String.class);
+				}
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			}

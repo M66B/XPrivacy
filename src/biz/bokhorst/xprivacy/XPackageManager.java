@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
-import android.os.Build;
 import android.util.Log;
 import android.content.ComponentName;
 import android.content.IntentFilter;
@@ -255,21 +254,18 @@ public class XPackageManager extends XHook {
 
 				// Get uid
 				int uid;
-				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN) {
-					// PackageInfo getPackageInfo(String packageName, int flags)
-					Method mGetPackageInfo = param.thisObject.getClass().getDeclaredMethod("getPackageInfo",
-							String.class, int.class);
-					mGetPackageInfo.setAccessible(true);
-					PackageInfo pInfo = (PackageInfo) mGetPackageInfo.invoke(param.thisObject, pkgName, 0);
-					uid = pInfo.applicationInfo.uid;
-
-				} else {
+				Class<?> clazz = param.thisObject.getClass();
+				try {
 					// public int getPackageUid(String packageName, int userId)
-					Method mGetPackageUid = param.thisObject.getClass().getDeclaredMethod("getPackageUid",
-							String.class, int.class);
+					Method mGetPackageUid = clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
 					mGetPackageUid.setAccessible(true);
 					int userId = Util.getUserId(Binder.getCallingUid());
 					uid = (Integer) mGetPackageUid.invoke(param.thisObject, pkgName, userId);
+				} catch (NoSuchMethodException ignored) {
+					// public int getPackageUid(String packageName)
+					Method mGetPackageUid = clazz.getDeclaredMethod("getPackageUid", String.class);
+					mGetPackageUid.setAccessible(true);
+					uid = (Integer) mGetPackageUid.invoke(param.thisObject, pkgName);
 				}
 
 				checkPermission(param, uid, permName);
