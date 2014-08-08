@@ -945,8 +945,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			Util.bug(null, ex);
 		}
 
-		if (!PrivacyManager.cVersion3 || Hook.isAOSP(19))
-			((TextView) dlgAbout.findViewById(R.id.tvCompatibility)).setVisibility(View.GONE);
+		try {
+			if (!PrivacyManager.cVersion3 || PrivacyService.getClient().isAOSP())
+				((TextView) dlgAbout.findViewById(R.id.tvCompatibility)).setVisibility(View.GONE);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 
 		// Show license
 		String licensed = Util.hasProLicense(this);

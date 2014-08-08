@@ -5,6 +5,7 @@ import biz.bokhorst.xprivacy.PSetting;
 
 interface IPrivacyService {
 	int getVersion();
+	boolean isAOSP();
 	List /* String */ check();
 	void reportError(String message);
 	Map getStatistics();

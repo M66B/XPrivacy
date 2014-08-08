@@ -78,7 +78,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cTableSetting = "setting";
 
 	private static final int cCurrentVersion = 376;
-	private static final String cServiceName = "xprivacy367";
+	private static final String cServiceName = "xprivacy377";
 
 	private SQLiteDatabase mDb = null;
 	private SQLiteDatabase mDbUsage = null;
@@ -244,6 +244,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 	public int getVersion() throws RemoteException {
 		enforcePermission(-1);
 		return cCurrentVersion;
+	}
+
+	@Override
+	public boolean isAOSP() throws RemoteException {
+		return Hook.isAOSP(19);
 	}
 
 	@Override
