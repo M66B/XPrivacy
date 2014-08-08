@@ -40,8 +40,9 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
-**XPrivacy 3** (not released yet)
+**Version 2.99.10**
 
+XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
 XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 XPrivacy 3 will be available for vanilla Android KitKat
 and the latest versions of [OmniROM](http://omnirom.org/), [CyanogenMod](http://www.cyanogenmod.org/) and [MIUI](http://en.miui.com/) only,
