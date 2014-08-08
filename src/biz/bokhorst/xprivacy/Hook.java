@@ -152,7 +152,7 @@ public class Hook implements Comparable<Hook> {
 				return true;
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
-			return (isAOSP() || isCM() || isOmni() || isMIUI());
+			return (isAOSP() || isCM() || isOmni() || isMIUI() || isSlim());
 		} else
 			return false;
 	}
@@ -166,11 +166,15 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public static boolean isOmni() {
-		return Build.DISPLAY.startsWith("omni");
+		return Build.DISPLAY.startsWith("slim");
 	}
 
 	public static boolean isMIUI() {
 		return Build.HOST.equals("xiaomi");
+	}
+
+	public static boolean isSlim() {
+		return Build.DISPLAY.startsWith("omni");
 	}
 
 	public Version getFrom() {
