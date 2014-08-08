@@ -182,6 +182,10 @@
     <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
     <string name="title_function_help">Function documentation</string>
     <string name="title_unsafe">is unsafe, can be circumvented</string>
+    <string name="title_update_checking">Checking for update</string>
+    <string name="title_update_downloading">Downloading update</string>
+    <string name="title_update_install">Tap to install update</string>
+    <string name="title_update_none">No updates available</string>
     <string name="settings_serial">Ang iyong Seryal#</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longhitud</string>

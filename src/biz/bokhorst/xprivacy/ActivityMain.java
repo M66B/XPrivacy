@@ -29,6 +29,9 @@ import org.json.JSONObject;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -51,6 +54,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
+import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -788,9 +792,29 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			Util.viewUri(this, ActivityMain.cProUri);
 		else {
 			new AsyncTask<Object, Object, Object>() {
+				NotificationCompat.Builder builder = new NotificationCompat.Builder(ActivityMain.this);
+				Notification notification;
+				NotificationManager notificationManager = (NotificationManager) ActivityMain.this
+						.getSystemService(Context.NOTIFICATION_SERVICE);
+
+				@Override
+				protected void onPreExecute() {
+					// Build notification
+					builder.setSmallIcon(R.drawable.ic_launcher);
+					builder.setContentTitle(ActivityMain.this.getString(R.string.app_name));
+					builder.setAutoCancel(false);
+					builder.setOngoing(true);
+				}
+
 				@Override
 				protected Object doInBackground(Object... args) {
 					try {
+						// Notify
+						builder.setContentText(ActivityMain.this.getString(R.string.title_update_checking));
+						builder.setWhen(System.currentTimeMillis());
+						notification = builder.build();
+						notificationManager.notify(Util.NOTIFY_UPDATE, notification);
+
 						// Encode package
 						String[] license = Util.getProLicenseUnchecked();
 						boolean test = PrivacyManager.getSettingBool(0, PrivacyManager.cSettingTestVersions, false);
@@ -816,6 +840,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
 							String contentType = response.getFirstHeader("Content-Type").getValue();
 							if ("application/octet-stream".equals(contentType)) {
+								// Update notification
+								builder.setContentText(ActivityMain.this.getString(R.string.title_update_downloading));
+								builder.setWhen(System.currentTimeMillis());
+								notification = builder.build();
+								notificationManager.notify(Util.NOTIFY_UPDATE, notification);
+
+								// Download APK
 								File folder = Environment
 										.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 								folder.mkdirs();
@@ -830,6 +861,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									if (fos != null)
 										fos.close();
 								}
+
 								return download;
 							} else if ("application/json".equals(contentType)) {
 								ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -849,16 +881,36 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				@Override
 				protected void onPostExecute(Object result) {
 					if (result instanceof StatusLine) {
+						notificationManager.cancel(Util.NOTIFY_UPDATE);
 						StatusLine status = (StatusLine) result;
-						Toast.makeText(ActivityMain.this, status.getReasonPhrase(), Toast.LENGTH_LONG).show();
+						if (status.getStatusCode() == 204) { // No Content
+							String none = ActivityMain.this.getString(R.string.title_update_none);
+							Toast.makeText(ActivityMain.this, none, Toast.LENGTH_LONG).show();
+						} else
+							Toast.makeText(ActivityMain.this, status.getStatusCode() + " " + status.getReasonPhrase(),
+									Toast.LENGTH_LONG).show();
+
 					} else if (result instanceof Throwable) {
+						notificationManager.cancel(Util.NOTIFY_UPDATE);
 						Throwable ex = (Throwable) result;
 						Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG).show();
+
 					} else {
 						File download = (File) result;
 						Intent intent = new Intent(Intent.ACTION_VIEW);
 						intent.setDataAndType(Uri.fromFile(download), "application/vnd.android.package-archive");
-						startActivity(intent);
+
+						PendingIntent pi = PendingIntent.getActivity(ActivityMain.this, 0, intent,
+								PendingIntent.FLAG_UPDATE_CURRENT);
+
+						// Update notification
+						builder.setContentText(ActivityMain.this.getString(R.string.title_update_install));
+						builder.setWhen(System.currentTimeMillis());
+						builder.setAutoCancel(true);
+						builder.setOngoing(false);
+						builder.setContentIntent(pi);
+						notification = builder.build();
+						notificationManager.notify(Util.NOTIFY_UPDATE, notification);
 					}
 
 				}
