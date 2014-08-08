@@ -401,12 +401,20 @@ public class Requirements {
 							String ourVersion = Util.getSelfVersionName(context);
 							StringBuilder sb = new StringBuilder(text);
 							sb.insert(0, "\r\n");
+							sb.insert(0, String.format("Override: %s\r\n", System.getenv("XPrivacy.AOSP")));
+							sb.insert(0, "\r\n");
+							sb.insert(0, String.format("Id: %s\r\n", Build.ID));
 							sb.insert(0, String.format("Display: %s\r\n", Build.DISPLAY));
 							sb.insert(0, String.format("Host: %s\r\n", Build.HOST));
-							sb.insert(0, String.format("Model: %s (%s)\r\n", Build.MODEL, Build.PRODUCT));
-							sb.insert(0, String.format("Android version: %s (SDK %d)\r\n", Build.VERSION.RELEASE,
+							sb.insert(0, String.format("Device: %s\r\n", Build.DEVICE));
+							sb.insert(0, String.format("Product: %s\r\n", Build.PRODUCT));
+							sb.insert(0, String.format("Model: %s\r\n", Build.MODEL));
+							sb.insert(0, String.format("Manufacturer: %s\r\n", Build.MANUFACTURER));
+							sb.insert(0, String.format("Brand: %s\r\n", Build.BRAND));
+							sb.insert(0, "\r\n");
+							sb.insert(0, String.format("Android: %s (SDK %d)\r\n", Build.VERSION.RELEASE,
 									Build.VERSION.SDK_INT));
-							sb.insert(0, String.format("XPrivacy version: %s\r\n", ourVersion));
+							sb.insert(0, String.format("XPrivacy: %s\r\n", ourVersion));
 
 							Intent sendEmail = new Intent(Intent.ACTION_SEND);
 							sendEmail.setType("message/rfc822");
