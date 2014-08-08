@@ -42,7 +42,7 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 
 XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
 XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
-XPrivacy 3 will be available for vanilla Android KitKat
+XPrivacy 3 will be available for [vanilla Android KitKat](https://source.android.com/)
 and the latest versions of [OmniROM](http://omnirom.org/), [CyanogenMod](http://www.cyanogenmod.org/) and [MIUI](http://en.miui.com/) only,
 but will work in *legacy* mode on other Android versions/variants.
 XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.

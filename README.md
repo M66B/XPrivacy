@@ -1117,7 +1117,7 @@ You can check if [your IP address](http://www.whatismyip.com/) is black listed b
 Unsafe restrictions can be disabled by removing the Xposed method hook using a native library.
 See [here](https://github.com/cernekee/WinXP) for a proof of concept.
 You can prevent this by not allowing native libaries to load, which will unfortunately often result in a crash.
-XPrivacy version 3 will partly address this problem for stock Android KitKat,
+XPrivacy version 3 will partly address this problem for [vanilla Android KitKat](https://source.android.com/),
 [OmniROM](http://omnirom.org/), [CyanogenMod](http://www.cyanogenmod.org/) and [MIUI](http://en.miui.com/).
 This is done by hooking into the Android counterparts of the user space functions.
 Unfortunately not all user space functions have an Android counterpart,
