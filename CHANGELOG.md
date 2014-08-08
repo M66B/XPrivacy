@@ -41,6 +41,7 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 * Removed [VACUUM](http://sqlite.org/lang_vacuum.html) for usage data database
 * Updated Dutch translation
 * Updated Japanese translation
+* Updated Simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
