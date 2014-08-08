@@ -17,6 +17,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.location.GpsStatus;
 import android.net.Uri;
 import android.net.wifi.WifiInfo;
 import android.os.Build;
@@ -156,16 +157,21 @@ public class Requirements {
 		try {
 			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService", false, null);
 			try {
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN)
+				try {
 					clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
-				else
+				} catch (NoSuchMethodException ignored) {
 					clazz.getDeclaredMethod("getPackageUid", String.class);
+				}
 			} catch (NoSuchMethodException ex) {
 				reportClass(clazz, context);
 			}
 		} catch (ClassNotFoundException ex) {
 			sendSupportInfo(ex.toString(), context);
 		}
+
+		// Check GPS status
+		if (!checkField(GpsStatus.class, "mSatellites"))
+			reportClass(GpsStatus.class, context);
 
 		// Check service manager
 		try {

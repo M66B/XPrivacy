@@ -77,8 +77,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 375;
-	private static final String cServiceName = "xprivacy367";
+	private static final int cCurrentVersion = 377;
+	private static final String cServiceName = "xprivacy378";
 
 	private SQLiteDatabase mDb = null;
 	private SQLiteDatabase mDbUsage = null;
@@ -2612,16 +2612,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 								mLockUsage.writeLock().unlock();
 							}
 						}
-					}
-
-					Util.log(null, Log.WARN, "Running VACUUM");
-					mLockUsage.writeLock().lock();
-					try {
-						dbUsage.execSQL("VACUUM");
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					} finally {
-						mLockUsage.writeLock().unlock();
 					}
 
 					Util.log(null, Log.WARN, "Changing to asynchronous mode");

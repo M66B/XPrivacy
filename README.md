@@ -3,7 +3,7 @@ XPrivacy
 
 The ultimate, yet easy to use, privacy manager for Android
 
-![Open source Rookie of the year](http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png "Open source Rookie of the year")
+<img src="http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png" width="315" height="333" alt="Open source Rookie of the year" />
 ([publication](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners))
 
 Index
@@ -91,24 +91,24 @@ OR
 
 **Using XPrivacy is entirely at your own risk**
 
-<img src="screenshots/categories.png" width="232" hspace="4"/>
-<img src="screenshots/applications.png" width="232" hspace="4"/>
-<img src="screenshots/application.png" width="232" hspace="4"/>
-<img src="screenshots/expert.png" width="232" hspace="4"/>
-<img src="screenshots/expert-2.png" width="232" hspace="4"/>
-<img src="screenshots/help.png" width="232" hspace="4"/>
-<img src="screenshots/settings.png" width="232" hspace="4"/>
-<img src="screenshots/settings-2.png" width="232" hspace="4"/>
-<img src="screenshots/settings-3.png" width="232" hspace="4"/>
-<img src="screenshots/usagedata.png" width="232" hspace="4"/>
-<img src="screenshots/menu.png" width="232" hspace="4"/>
-<img src="screenshots/sort.png" width="232" hspace="4"/>
-<img src="screenshots/filter.png" width="232" hspace="4"/>
-<img src="screenshots/template.png" width="232" hspace="4"/>
-<img src="screenshots/toggle.png" width="232" hspace="4"/>
-<img src="screenshots/on-demand-dialogue.png" width="232" hspace="4"/>
-<img src="screenshots/whitelist.png" width="232" hspace="4"/>
-<img src="screenshots/about.png" width="232" hspace="4"/>
+<img src="screenshots/categories.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/applications.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/application.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/expert.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/expert-2.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/help.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/settings.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/settings-2.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/settings-3.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/usagedata.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/menu.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/sort.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/filter.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/template.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/toggle.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/on-demand-dialogue.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/whitelist.png" width="232" height="371" hspace="4"/>
+<img src="screenshots/about.png" width="232" height="371" hspace="4"/>
 
 Features
 --------
@@ -1117,7 +1117,8 @@ You can check if [your IP address](http://www.whatismyip.com/) is black listed b
 Unsafe restrictions can be disabled by removing the Xposed method hook using a native library.
 See [here](https://github.com/cernekee/WinXP) for a proof of concept.
 You can prevent this by not allowing native libaries to load, which will unfortunately often result in a crash.
-XPrivacy version 3 will partly address this problem for stock Android KitKat and [OmniROM](http://omnirom.org/).
+XPrivacy version 3 will partly address this problem for stock Android KitKat,
+[OmniROM](http://omnirom.org/) and [CyanogenMod](http://www.cyanogenmod.org/).
 This is done by hooking into the Android counterparts of the user space functions.
 Unfortunately not all user space functions have an Android counterpart,
 meaning that this cannot be done for all restrictions.
@@ -1323,13 +1324,8 @@ Using Eclipse:
 Testing:
 
 * [XPrivacy Tester](https://github.com/M66B/XPrivacyTester)
-* [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
-* [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
-* [SIM Card](https://play.google.com/store/apps/details?id=com.gsmdev.simcard)
 * [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
-* [ReadPhoneState](https://play.google.com/store/apps/details?id=jp.ne.neko.freewing.ReadPhoneState)
-* [ReadContacts](https://play.google.com/store/apps/details?id=jp.ne.neko.freewing.ReadContacts)
-* [ReadSms](https://play.google.com/store/apps/details?id=jp.ne.neko.freewing.ReadSms)
+* [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 
 Serious contributors do not have to donate for the [pro version](http://www.xprivacy.eu/).
 New translations are considered as a serious contribution, but translating a few lines of text is not.

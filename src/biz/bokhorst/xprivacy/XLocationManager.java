@@ -174,12 +174,20 @@ public class XLocationManager extends XHook {
 
 		case Srv_removeUpdates:
 			if (isRestricted(param, PrivacyManager.cLocation, "Srv_requestLocationUpdates"))
-				unproxyLocationListener(param, 0);
+				if (param.args.length > 1)
+					if (param.args[0] != null) // ILocationListener
+						unproxyLocationListener(param, 0);
+					else if (param.args[1] != null) // PendingIntent
+						param.setResult(null);
 			break;
 
 		case Srv_requestLocationUpdates:
 			if (isRestricted(param))
-				proxyLocationListener(param, 1, Class.forName("android.location.ILocationListener"));
+				if (param.args.length > 2)
+					if (param.args[1] != null) // ILocationListener
+						proxyLocationListener(param, 1, Class.forName("android.location.ILocationListener"));
+					else if (param.args[2] != null) // PendingIntent
+						param.setResult(null);
 			break;
 
 		case requestSingleUpdate:
@@ -223,7 +231,7 @@ public class XLocationManager extends XHook {
 			break;
 
 		case getGpsStatus:
-			if (param.getResult() != null)
+			if (param.getResult() instanceof GpsStatus)
 				if (isRestricted(param)) {
 					GpsStatus status = (GpsStatus) param.getResult();
 					// private GpsSatellite mSatellites[]
@@ -253,10 +261,10 @@ public class XLocationManager extends XHook {
 			break;
 
 		case getLastKnownLocation:
-			if (param.args.length > 0) {
+			if (param.args.length > 0 && param.getResult() instanceof Location) {
 				String provider = (String) param.args[0];
 				Location location = (Location) param.getResult();
-				if (location != null && isRestrictedExtra(param, provider))
+				if (isRestrictedExtra(param, provider))
 					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
 			}
 			break;
@@ -292,6 +300,7 @@ public class XLocationManager extends XHook {
 		if (param.args.length > arg)
 			if (param.args[arg] instanceof PendingIntent)
 				param.setResult(null);
+
 			else if (param.args[arg] != null && param.thisObject != null) {
 				// Create proxy
 				ClassLoader cl = param.thisObject.getClass().getClassLoader();
@@ -314,6 +323,7 @@ public class XLocationManager extends XHook {
 		if (param.args.length > arg)
 			if (param.args[arg] instanceof PendingIntent)
 				param.setResult(null);
+
 			else if (param.args[arg] != null) {
 				Object key = param.args[arg];
 				if (key instanceof IInterface)

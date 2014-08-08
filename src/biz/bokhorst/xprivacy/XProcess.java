@@ -33,8 +33,8 @@ public class XProcess extends XHook {
 
 	// private static ProcessStartResult startViaZygote(
 	//     final String processClass, final String niceName,
-	//     final int uid, final int gid, final int[] gids,
-	// frameworks/base/core/java/android/os/Process.java
+	//     final int uid, final int gid, final int[] gids, ...
+	// http://grepcode.com/file_/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/android/os/Process.java
 
 	// @formatter:on
 
@@ -78,13 +78,12 @@ public class XProcess extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.startViaZygote) {
-			if (param.args.length >= 5) {
+		switch (mMethod) {
+		case startViaZygote:
+			if (param.args.length >= 5 && param.args[2] instanceof Integer && param.args[4] instanceof int[]) {
 				// Get IDs
 				int uid = (Integer) param.args[2];
 				int[] gids = (int[]) param.args[4];
-				if (gids == null)
-					return;
 
 				// Build list of modified gids
 				List<Integer> listGids = new ArrayList<Integer>();
@@ -157,8 +156,8 @@ public class XProcess extends XHook {
 
 				param.args[4] = (mGids.length == 0 ? null : mGids);
 			}
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	@Override

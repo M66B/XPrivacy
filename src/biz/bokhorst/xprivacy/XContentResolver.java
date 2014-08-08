@@ -109,6 +109,7 @@ public class XContentResolver extends XHook {
 
 	// @formatter:off
 	public static List<String> cProviderClassName = Arrays.asList(new String[] {
+		"com.android.browser.provider.BrowserProvider2", // CyanogenMod
 		"com.android.browser.provider.BrowserProviderProxy",
 		"com.android.providers.downloads.DownloadProvider",
 		"com.android.providers.calendar.CalendarProvider2",
@@ -125,6 +126,20 @@ public class XContentResolver extends XHook {
 		"com.android.providers.settings.SettingsProvider",
 	});
 	// @formatter:on
+
+	public static List<XHook> getPackageInstances(String packageName) {
+		if (packageName.startsWith("com.android.browser.provider."))
+			if (Hook.isCM())
+				return getInstances("com.android.browser.provider.BrowserProvider2");
+			else
+				return getInstances("com.android.browser.provider.BrowserProviderProxy");
+
+		for (String className : cProviderClassName)
+			if (className.startsWith(packageName))
+				return getInstances(className);
+
+		return new ArrayList<XHook>();
+	}
 
 	public static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();

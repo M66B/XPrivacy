@@ -6,7 +6,7 @@
     <string name="app_version">XPrivacy 版本: %1$s (%2$d)</string>
     <string name="app_description">终级隐私管理器</string>
     <string name="app_copyright">版权所有 \u00A9 2013–2014 M. Bokhorst (M66B)</string>
-    <string name="app_compatibility">Running in compatibility mode</string>
+    <string name="app_compatibility">兼容模式运行</string>
     <string name="app_licensed">已授权, 感谢您的支持!</string>
     <string name="menu_usage">权限使用记录</string>
     <string name="menu_refresh">刷新应用列表</string>
@@ -45,7 +45,7 @@
     <string name="menu_exclude">排除</string>
     <string name="menu_close">关闭</string>
     <string name="menu_flush">清除缓存</string>
-    <string name="menu_update">Check for updates</string>
+    <string name="menu_update">检查更新</string>
     <string name="msg_abort">正在中止</string>
     <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>
@@ -182,6 +182,10 @@
     <string name="title_ondemand_category">应用异常可在类别功能中重置为默认值</string>
     <string name="title_function_help">函数文档</string>
     <string name="title_unsafe">是不安全的，可以避免</string>
+    <string name="title_update_checking">Checking for update</string>
+    <string name="title_update_downloading">Downloading update</string>
+    <string name="title_update_install">Tap to install update</string>
+    <string name="title_update_none">No updates available</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
@@ -194,7 +198,7 @@
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>
-    <string name="settings_ua">User Agent</string>
+    <string name="settings_ua">用户代理</string>
     <string name="settings_general">一般设置</string>
     <string name="settings_fake_data">模拟信息</string>
     <string name="settings_notify">通知栏提示</string>

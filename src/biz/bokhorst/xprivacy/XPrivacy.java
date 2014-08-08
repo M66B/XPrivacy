@@ -174,6 +174,19 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
+		try {
+			Class<?> libcore = Class.forName("libcore.io.Libcore");
+			Field fOs = libcore.getDeclaredField("os");
+			fOs.setAccessible(true);
+			Object os = fOs.get(null);
+			Method setenv = os.getClass().getMethod("setenv", String.class, String.class, boolean.class);
+			setenv.setAccessible(true);
+			boolean aosp = new File("/data/system/xprivacy/aosp").exists();
+			setenv.invoke(os, "XPrivacy.AOSP", Boolean.toString(aosp), false);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+
 		// System server
 		try {
 			// frameworks/base/services/java/com/android/server/SystemServer.java
@@ -347,9 +360,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 
 		// Providers
-		for (String className : XContentResolver.cProviderClassName)
-			if (className.startsWith(packageName))
-				hookAll(XContentResolver.getInstances(className), classLoader, secret);
+		hookAll(XContentResolver.getPackageInstances(packageName), classLoader, secret);
 
 		// Phone interface manager
 		if ("com.android.phone".equals(packageName))

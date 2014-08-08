@@ -45,7 +45,7 @@
     <string name="menu_exclude">Sluit uit</string>
     <string name="menu_close">Sluiten</string>
     <string name="menu_flush">Leeg cache</string>
-    <string name="menu_update">Controleer op updates</string>
+    <string name="menu_update">Controleer op nieuwe versie</string>
     <string name="msg_abort">Afbreken</string>
     <string name="msg_aborted">Afgebroken</string>
     <string name="msg_new">Nieuw</string>
@@ -182,6 +182,10 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_ondemand_category">Toepassen op de categorie zal de functie-uitzondering herstellen naar standaard waarden</string>
     <string name="title_function_help">Functie documentatie</string>
     <string name="title_unsafe">is onveilig, kan worden omzeild</string>
+    <string name="title_update_checking">Controleren op nieuwe versie</string>
+    <string name="title_update_downloading">Downloaden van nieuwe versie</string>
+    <string name="title_update_install">Raak aan om nieuwe versie te installeren</string>
+    <string name="title_update_none">Geen nieuwe versie beschikbaar</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
