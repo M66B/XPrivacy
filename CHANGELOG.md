@@ -10,7 +10,7 @@ Changelog
 
 **XPrivacy modes** (XPrivacy 3)
 
-* AOSP mode = vanilla (Google) KitKat or OmniROM
+* AOSP mode = vanilla (Google) KitKat, OmniROM, CyanogenMod or MIUI
 * Compatibility mode = all other Android versions/variants
 
 If there is no message about running in compatibility mode in *About*, XPrivacy is running in AOSP mode.
@@ -35,15 +35,14 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 
 **Next release**
 
-* Updated Slovak translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
-**XPrivacy 3** (not released yet)
+**Version 2.99.10 TEST** (only available for testers)
 
+XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
 XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
-XPrivacy 3 will be available for vanilla Android KitKat
+XPrivacy 3 will be available for [vanilla Android KitKat](https://source.android.com/)
 and the latest versions of [OmniROM](http://omnirom.org/), [CyanogenMod](http://www.cyanogenmod.org/) and [MIUI](http://en.miui.com/) only,
 but will work in *legacy* mode on other Android versions/variants.
 XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
@@ -54,6 +53,8 @@ XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 * Added restriction *Srv_getCompleteVoiceMailNumber*
 * Added restriction *WiFi.Srv_getBatchedScanResults*
 * Replaced unsafe restrictions by safe restrictions where possible (not in legacy mode)
+* Updated German translation
+* Updated Slovak translation
 
 **Version 2.2.6 BETA**
 
