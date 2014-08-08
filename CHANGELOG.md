@@ -10,7 +10,7 @@ Changelog
 
 **XPrivacy modes** (XPrivacy 3)
 
-* AOSP mode = vanilla (Google) KitKat or OmniROM
+* AOSP mode = vanilla (Google) KitKat, OmniROM, CyanogenMod or MIUI
 * Compatibility mode = all other Android versions/variants
 
 If there is no message about running in compatibility mode in *About*, XPrivacy is running in AOSP mode.
@@ -38,7 +38,7 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
-**Version 2.99.10 TEST**
+**Version 2.99.10 TEST** (only available for testers)
 
 XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
 XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
