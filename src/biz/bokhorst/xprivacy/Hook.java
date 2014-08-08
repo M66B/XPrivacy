@@ -147,12 +147,12 @@ public class Hook implements Comparable<Hook> {
 	public static boolean isAOSP(int sdk) {
 		if (!PrivacyManager.cVersion3)
 			return false;
-		if ("true".equals(System.getenv("XPrivacy.AOSP")))
-			return true;
 		if (Build.VERSION.SDK_INT >= sdk) {
+			if ("true".equals(System.getenv("XPrivacy.AOSP")))
+				return true;
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
-			return (isAOSP() || isCM() || isOmni());
+			return (isAOSP() || isCM() || isOmni() || isMIUI());
 		} else
 			return false;
 	}
@@ -167,6 +167,10 @@ public class Hook implements Comparable<Hook> {
 
 	public static boolean isOmni() {
 		return Build.DISPLAY.startsWith("omni");
+	}
+
+	public static boolean isMIUI() {
+		return Build.HOST.equals("xiaomi");
 	}
 
 	public Version getFrom() {
