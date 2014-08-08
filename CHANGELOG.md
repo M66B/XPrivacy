@@ -35,6 +35,8 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 
 **Next release**
 
+* Updated Slovak translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
