@@ -38,6 +38,10 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
+**Version 2.99.11 TEST**
+
+* Added support for [SlimKat](http://www.slimroms.net/)
+
 **Version 2.99.10 TEST** (only available for testers)
 
 XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
