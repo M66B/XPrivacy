@@ -35,8 +35,6 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 
 **Next release**
 
-* Enabled *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
@@ -54,6 +52,10 @@ XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 * Added restriction *Srv_getCompleteVoiceMailNumber*
 * Added restriction *WiFi.Srv_getBatchedScanResults*
 * Replaced unsafe restrictions by safe restrictions where possible (not in legacy mode)
+
+**Version 2.2.6 BETA**
+
+* Enabled *Camera.permission*, *Record.Video.permission* and *Record.Audio.permission*
 
 **Version 2.2.5 BETA**
 
