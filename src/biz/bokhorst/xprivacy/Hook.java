@@ -1,7 +1,5 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.File;
-
 import android.os.Build;
 
 public class Hook implements Comparable<Hook> {
@@ -149,7 +147,7 @@ public class Hook implements Comparable<Hook> {
 	public static boolean isAOSP(int sdk) {
 		if (!PrivacyManager.cVersion3)
 			return false;
-		if (new File("/data/system/xprivacy/aosp").exists())
+		if ("true".equals(System.getenv("XPrivacy.AOSP")))
 			return true;
 		if (Build.VERSION.SDK_INT >= sdk) {
 			if (Build.DISPLAY == null || Build.HOST == null)
