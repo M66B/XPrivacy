@@ -1376,7 +1376,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 			// Check if application
 			if (!PrivacyManager.isApplication(restriction.uid))
-				return oResult;
+				if (!getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem, false))
+					return oResult;
 
 			// Check for exceptions
 			if (hook != null && !hook.canOnDemand())
