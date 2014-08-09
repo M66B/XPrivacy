@@ -222,8 +222,6 @@ public class Meta {
 		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe().optional());
 		mListHook.add(new Hook("location", "GMS.requestActivityUpdates", "com.google.android.gms.permission.ACTIVITY_RECOGNITION", 1, null, null).unsafe());
 
-		mListHook.add(new Hook("location", "MapV1.getLatitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
-		mListHook.add(new Hook("location", "MapV1.getLongitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 		mListHook.add(new Hook("location", "MapV1.enableMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 
 		mListHook.add(new Hook("location", "MapV2.getMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
@@ -522,6 +520,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "Srv_removeUpdates", "", 19, null, null));
 		mListHook.add(new Hook(null, "Srv_removeGeofence", "", 19, null, null));
 		mListHook.add(new Hook(null, "Srv_removeGpsStatusListener", "", 19, null, null));
+		mListHook.add(new Hook(null, "MapV1.disableMyLocation", "", 1, null, null).optional());
 
 		// Resources
 		mListHook.add(new Hook(null, "updateConfiguration", "", 1, null, null));

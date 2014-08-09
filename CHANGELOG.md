@@ -35,6 +35,9 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 
 **Next release**
 
+* Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))
+* Handling *MapV1.disableMyLocation* when *MapV1.enableMyLocation* is restricted
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
