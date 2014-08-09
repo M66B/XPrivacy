@@ -8,13 +8,6 @@ Changelog
 * BETA: new or updated features with a lower risk for bugs
 * STABLE: all known bugs are fixed; low risk for bugs
 
-**XPrivacy modes** (XPrivacy 3)
-
-* AOSP mode = vanilla (Google) KitKat, OmniROM, CyanogenMod or MIUI
-* Compatibility mode = all other Android versions/variants
-
-If there is no message about running in compatibility mode in *About*, XPrivacy is running in AOSP mode.
-
 **Downloads**
 
 * [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
@@ -38,6 +31,10 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
+XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
+XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
+
 **Version 2.99.12 BETA**
 
 * Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))
@@ -48,13 +45,6 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 * Added support for [SlimKat](http://www.slimroms.net/)
 
 **Version 2.99.10 TEST** (only available for testers)
-
-XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
-XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
-XPrivacy 3 will be available for [vanilla Android KitKat](https://source.android.com/)
-and the latest versions of [OmniROM](http://omnirom.org/), [CyanogenMod](http://www.cyanogenmod.org/) and [MIUI](http://en.miui.com/) only,
-but will work in *legacy* mode on other Android versions/variants.
-XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 
 * Added icon for unsafe restrictions
 * Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
