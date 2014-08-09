@@ -35,12 +35,14 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 
 **Next release**
 
-* Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))
-* Handling *MapV1.disableMyLocation* when *MapV1.enableMyLocation* is restricted
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
+**Version 2.99.12 BETA**
+
+* Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))
+* Handling *MapV1.disableMyLocation* when *MapV1.enableMyLocation* is restricted
+
 **Version 2.99.11 TEST**
 
 * Added support for [SlimKat](http://www.slimroms.net/)
@@ -62,6 +64,12 @@ XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 * Replaced unsafe restrictions by safe restrictions where possible (not in legacy mode)
 * Updated German translation
 * Updated Slovak translation
+
+<a name="xprivacy2"></a>
+**Version 2.2.7 BETA**
+
+* Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))
+* Handling *MapV1.disableMyLocation* when *MapV1.enableMyLocation* is restricted
 
 **Version 2.2.6 BETA**
 
