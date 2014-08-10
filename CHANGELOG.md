@@ -28,8 +28,6 @@ Changelog
 
 **Next release**
 
-* Fixed restriction *WiFi.Srv_getConnectionInfo* (Xprivacy 3)
-* Fixed restriction *WiFi.Srv_getDhcpInfo* (Xprivacy 3)
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -47,6 +45,11 @@ You can install XPrivacy 2.99.x by following these steps:
 * Use the menu *Check for updates*
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+
+**Version 2.99.14 BETA**
+
+* Fixed restriction *WiFi.Srv_getConnectionInfo*
+* Fixed restriction *WiFi.Srv_getDhcpInfo*
 
 **Version 2.99.13 BETA**
 
