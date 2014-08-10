@@ -920,6 +920,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 	}
 
+	@SuppressLint("DefaultLocale")
 	private void optionAbout() {
 		// About
 		Dialog dlgAbout = new Dialog(this);
@@ -959,6 +960,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			tvLicensed.setText(String.format(getString(R.string.app_licensed), licensed));
 
 		// Show some build properties
+		String android = String.format("%s (%d)", Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+		((TextView) dlgAbout.findViewById(R.id.tvAndroid)).setText(android);
 		((TextView) dlgAbout.findViewById(R.id.build_brand)).setText(Build.BRAND);
 		((TextView) dlgAbout.findViewById(R.id.build_manufacturer)).setText(Build.MANUFACTURER);
 		((TextView) dlgAbout.findViewById(R.id.build_model)).setText(Build.MODEL);
