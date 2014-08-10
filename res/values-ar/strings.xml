@@ -186,7 +186,7 @@
     <string name="title_update_downloading">Downloading update</string>
     <string name="title_update_install">Tap to install update</string>
     <string name="title_update_none">No updates available</string>
-    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider to update to XPrivacy 3</string>
+    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider upgrading to XPrivacy 3</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>

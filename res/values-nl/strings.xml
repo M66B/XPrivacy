@@ -186,7 +186,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_update_downloading">Downloaden van nieuwe versie</string>
     <string name="title_update_install">Raak aan om nieuwe versie te installeren</string>
     <string name="title_update_none">Geen nieuwe versie beschikbaar</string>
-    <string name="title_update_legacy">XPrivacy 2 wordt niet meer ondersteund, denk er a.u.b. over om bij te werken naar XPrivacy 3</string>
+    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider upgrading to XPrivacy 3</string>
     <string name="settings_serial">Serienummer</string>
     <string name="settings_lat">Breedtegraad</string>
     <string name="settings_lon">Lengtegraad</string>
