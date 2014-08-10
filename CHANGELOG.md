@@ -50,6 +50,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 * Fixed restriction *WiFi.Srv_getConnectionInfo*
 * Fixed restriction *WiFi.Srv_getDhcpInfo*
+* Fixed restriction *BrowserProvider2*
 
 **Version 2.99.13 BETA**
 

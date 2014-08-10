@@ -128,8 +128,8 @@ public class XContentResolver extends XHook {
 	// @formatter:on
 
 	public static List<XHook> getPackageInstances(String packageName) {
-		if (packageName.startsWith("com.android.browser.provider."))
-			if (Hook.isCM())
+		if (packageName.startsWith("com.android.browser.provider"))
+			if (Hook.isCyanogenMod())
 				return getInstances("com.android.browser.provider.BrowserProvider2");
 			else
 				return getInstances("com.android.browser.provider.BrowserProviderProxy");

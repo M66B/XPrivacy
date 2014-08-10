@@ -152,7 +152,7 @@ public class Hook implements Comparable<Hook> {
 				return true;
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
-			return (isAOSP() || isCM() || isOmni() || isMIUI() || isSlim() || isCarbon());
+			return (isAOSP() || isCyanogenMod() || isOmni() || isMIUI() || isSlim() || isCarbon());
 		} else
 			return false;
 	}
@@ -161,7 +161,7 @@ public class Hook implements Comparable<Hook> {
 		return Build.HOST.endsWith(".google.com");
 	}
 
-	public static boolean isCM() {
+	public static boolean isCyanogenMod() {
 		return Build.HOST.equals("cyanogenmod");
 	}
 
