@@ -177,6 +177,14 @@ public class Hook implements Comparable<Hook> {
 		return Build.DISPLAY.startsWith("omni");
 	}
 
+	public static boolean isParanoidAndroid() {
+		return Build.HOST.startsWith("paranoid");
+	}
+
+	public static boolean isCarbon() {
+		return Build.DISPLAY.startsWith("carbon");
+	}
+
 	public Version getFrom() {
 		return mFrom;
 	}
