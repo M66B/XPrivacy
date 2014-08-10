@@ -32,8 +32,16 @@ Changelog
 
 <a name="xprivacy3"></a>
 XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
-XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
+
+You can install XPrivacy 2.99.x by following these steps:
+
+* Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
+* Update to the latest 2.2.x version
+* Enter the quirk *test* into the main settings
+* Use the menu *Check for updates*
+
+Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
 **Version 2.99.12 BETA**
 
