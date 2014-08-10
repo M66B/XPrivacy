@@ -1137,7 +1137,7 @@ You can switch XPrivacy 3 to AOSP mode by creating this file:
 
 /data/system/xprivacy/aosp
 
-For the benefit for others, please report if XPrivacy 3 works for the ROM you are using.
+For the benefit of others, please report if XPrivacy 3 works for the ROM you are using.
 
 Support
 -------
