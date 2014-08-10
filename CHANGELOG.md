@@ -28,6 +28,7 @@ Changelog
 
 **Next release**
 
+* Added support for [Carbon ROM](https://carbonrom.org/) (Xprivacy 3)
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
