@@ -35,6 +35,7 @@ Changelog
 <a name="xprivacy3"></a>
 XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
 XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
+See for some more information about XPrivacy 3 [here](https://github.com/M66B/XPrivacy#FAQ68).
 
 You can install XPrivacy 2.99.x by following these steps:
 
