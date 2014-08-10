@@ -131,6 +131,7 @@ public class PrivacyManager {
 	public final static String cSettingSafeMode = "SafeMode";
 	public final static String cSettingTestVersions = "TestVersions";
 	public final static String cSettingOnDemandSystem = "OnDemandSystem";
+	public final static String cSettingLegacy = "Legacy";
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";
