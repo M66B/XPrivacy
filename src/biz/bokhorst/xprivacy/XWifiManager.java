@@ -107,7 +107,8 @@ public class XWifiManager extends XHook {
 		case Srv_getConnectionInfo:
 			if (param.getResult() != null)
 				if (isRestricted(param)) {
-					WifiInfo wInfo = (WifiInfo) param.getResult();
+					WifiInfo result = (WifiInfo) param.getResult();
+					WifiInfo wInfo = WifiInfo.class.getConstructor(WifiInfo.class).newInstance(result);
 					if (getRestrictionName().equals(PrivacyManager.cInternet)) {
 						// Supplicant state
 						try {
@@ -170,6 +171,7 @@ public class XWifiManager extends XHook {
 							}
 						}
 					}
+					param.setResult(wInfo);
 				}
 			break;
 
