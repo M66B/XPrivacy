@@ -1133,6 +1133,12 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 *About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivay 2.
 If there is no message about compatibility mode, XPrivacy 3 is running in AOSP mode.
 
+You can switch XPrivacy 3 to AOSP mode by creating this file:
+
+/data/system/xprivacy/aosp
+
+For benefit for others, please report if XPrivacy 3 works for the ROM you are using.
+
 Support
 -------
 
