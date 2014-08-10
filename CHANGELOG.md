@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Fixed restriction *WiFi.Srv_getConnectionInfo* (Xprivacy 3)
+* Fixed restriction *WiFi.Srv_getDhcpInfo* (Xprivacy 3)
 * Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
