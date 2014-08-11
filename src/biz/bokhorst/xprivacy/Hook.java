@@ -152,7 +152,7 @@ public class Hook implements Comparable<Hook> {
 				return true;
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
-			return (isAOSP() || isCyanogenMod() || isOmni() || isMIUI() || isSlim() || isCarbon());
+			return (isAOSP() || isCyanogenMod() || isOmni() || isMIUI() || isSlim() || isCarbon() || isDirtyUnicorns() || isLiquidSmooth());
 		} else
 			return false;
 	}
@@ -162,7 +162,7 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public static boolean isCyanogenMod() {
-		return Build.HOST.equals("cyanogenmod");
+		return Build.HOST.equals("cyanogenmod") || Build.DISPLAY.startsWith("cm_");
 	}
 
 	public static boolean isOmni() {
@@ -183,6 +183,14 @@ public class Hook implements Comparable<Hook> {
 
 	public static boolean isCarbon() {
 		return Build.DISPLAY.startsWith("carbon");
+	}
+
+	public static boolean isDirtyUnicorns() {
+		return Build.DISPLAY.startsWith("du_");
+	}
+
+	public static boolean isLiquidSmooth() {
+		return Build.DISPLAY.startsWith("liquid_");
 	}
 
 	public Version getFrom() {
