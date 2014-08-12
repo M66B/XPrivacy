@@ -885,8 +885,6 @@ public class PrivacyManager {
 	}
 
 	public static void setTransient(int uid, String name, String value) {
-		checkCaller();
-
 		try {
 			PrivacyService.getClient().setTransient(new PSetting(uid, null, name, value));
 
