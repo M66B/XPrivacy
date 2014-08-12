@@ -857,9 +857,10 @@ public class PrivacyManager {
 
 	public static String getTransient(int uid, String name, String defaultValue) {
 		String value = null;
+		long start = System.currentTimeMillis();
 
 		boolean cached = false;
-		CSetting csetting = new CSetting(uid, null, name);
+		CSetting csetting = new CSetting(uid, "", name);
 		synchronized (mTransientCache) {
 			if (mTransientCache.containsKey(csetting)) {
 				value = mTransientCache.get(csetting).getValue();
@@ -869,17 +870,23 @@ public class PrivacyManager {
 
 		if (!cached)
 			try {
-				value = PrivacyService.getClient().getTransient(new PSetting(uid, "", name, null)).value;
+				value = PrivacyService.getClient().getTransient(new PSetting(uid, null, name, null)).value;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
 
 		if (value == null)
 			value = defaultValue;
+
+		long ms = System.currentTimeMillis() - start;
+		Util.log(null, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN,
+				String.format("Get transient uid=%d %s=%s%s %d ms", uid, name, value, (cached ? " (cached)" : ""), ms));
 		return value;
 	}
 
 	public static void setTransient(int uid, String name, String value) {
+		checkCaller();
+
 		try {
 			PrivacyService.getClient().setTransient(new PSetting(uid, null, name, value));
 
