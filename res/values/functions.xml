@@ -115,6 +115,9 @@
     <string name="internet_NetworkInfo_isConnectedOrConnecting" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#isConnectedOrConnecting()">Google documentation</a>]]></string>
     <string name="internet_WiFi_getConnectionInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
     <string name="internet_WiFi_Srv_getConnectionInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
+    <string name="internet_InetAddress_getAllByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getAllByName(java.lang.String)">Google documentation</a>]]></string>
+    <string name="internet_InetAddress_getByAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByAddress(java.lang.String,%20byte[])">Google documentation</a>]]></string>
+    <string name="internet_InetAddress_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByName(java.lang.String)">Google documentation</a>]]></string>
     <string name="internet_connect" translatable="false"><![CDATA[Will restrict access to the internet]]></string>
 
     <!-- ipc -->
@@ -214,9 +217,6 @@
     <string name="network_WiFi_Srv_getWifiApConfiguration" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://developer.android.com/reference/android/net/wifi/WifiConfiguration.html">WifiConfiguration</a>]]></string>
     <string name="network_Srv_Default_DNS" translatable="false"><![CDATA[Will restrict access to the hidden system global property default DNS server]]></string>
     <string name="network_Srv_WiFi_Country" translatable="false"><![CDATA[Will restrict access to the hidden system global property Wi-Fi country code]]></string>
-    <string name="network_InetAddress_getAllByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getAllByName(java.lang.String)">Google documentation</a>]]></string>
-    <string name="network_InetAddress_getByAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByAddress(java.lang.String,%20byte[])">Google documentation</a>]]></string>
-    <string name="network_InetAddress_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByName(java.lang.String)">Google documentation</a>]]></string>
     <string name="network_NetworkInfo_getExtraInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getExtraInfo()">Google documentation</a>]]></string>
 
     <!-- nfc -->
