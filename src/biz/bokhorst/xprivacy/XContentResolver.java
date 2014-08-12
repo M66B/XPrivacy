@@ -109,8 +109,6 @@ public class XContentResolver extends XHook {
 
 	// @formatter:off
 	public static List<String> cProviderClassName = Arrays.asList(new String[] {
-		"com.android.browser.provider.BrowserProvider2", // CyanogenMod
-		"com.android.browser.provider.BrowserProviderProxy",
 		"com.android.providers.downloads.DownloadProvider",
 		"com.android.providers.calendar.CalendarProvider2",
 		"com.android.providers.contacts.CallLogProvider",
@@ -127,16 +125,23 @@ public class XContentResolver extends XHook {
 	});
 	// @formatter:on
 
-	public static List<XHook> getPackageInstances(String packageName) {
+	public static List<XHook> getPackageInstances(String packageName, ClassLoader loader) {
 		if (packageName.startsWith("com.android.browser.provider"))
-			if (Hook.isCyanogenMod())
-				return getInstances("com.android.browser.provider.BrowserProvider2");
-			else
+			try {
+				Class.forName("com.android.browser.provider.BrowserProviderProxy", false, loader);
 				return getInstances("com.android.browser.provider.BrowserProviderProxy");
-
-		for (String className : cProviderClassName)
-			if (className.startsWith(packageName))
-				return getInstances(className);
+			} catch (ClassNotFoundException ignored) {
+				try {
+					Class.forName("com.android.browser.provider.BrowserProvider2", false, loader);
+					return getInstances("com.android.browser.provider.BrowserProvider2");
+				} catch (ClassNotFoundException ex) {
+					Util.log(null, Log.ERROR, "Browser provider not found, package=" + packageName);
+				}
+			}
+		else
+			for (String className : cProviderClassName)
+				if (className.startsWith(packageName))
+					return getInstances(className);
 
 		return new ArrayList<XHook>();
 	}
