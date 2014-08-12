@@ -30,7 +30,7 @@ Changelog
 
 * Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
 	* Since these functions were moved recently, it is not possible to update them
-* Performance optimizations
+* Performance optimizations (introduced transient values)
 * Fixed all problems reported through the support data
 * Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
 * Updated Dutch translation
@@ -59,7 +59,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Added support for some CyanogenMod based ROMs, like Spirit ROM
 * Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
 	* Since these functions were moved recently, it is not possible to automatically update them
-* Performance optimizations
+* Performance optimizations (introduced transient values)
 * Fixed all problems reported through the support data
 * Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
 * Updated Dutch translation
