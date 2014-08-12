@@ -33,6 +33,8 @@ Changelog
 * Added support for some CyanogenMod based ROMs, like Spirit ROM (XPrivacy 3)
 * Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
 	* Since these functions were moved recently, it is not possible to update them
+* Performance optimizations
+* Fixed all problems reported through the support data
 * Updated Dutch translation
 * Updated Italian translation
 
