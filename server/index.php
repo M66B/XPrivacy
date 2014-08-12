@@ -253,7 +253,7 @@
 
 			// Validate
 			if (empty($data->package_name)) {
-				log_error('fetch: package name missing', $my_email, $data);
+				//log_error('fetch: package name missing', $my_email, $data);
 				echo json_encode(array('ok' => false, 'errno' => 303, 'error' => 'Package name missing'));
 				exit();
 			}
