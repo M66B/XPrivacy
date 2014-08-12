@@ -155,6 +155,7 @@ public class PrivacyManager {
 	private static Map<String, List<String>> mRestart = new LinkedHashMap<String, List<String>>();
 	private static Map<String, List<Hook>> mPermission = new LinkedHashMap<String, List<Hook>>();
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
+	private static Map<CSetting, CSetting> mTransientCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 	private static SparseArray<Map<String, Boolean>> mPermissionRestrictionCache = new SparseArray<Map<String, Boolean>>();
 	private static SparseArray<Map<Hook, Boolean>> mPermissionHookCache = new SparseArray<Map<Hook, Boolean>>();
@@ -856,11 +857,23 @@ public class PrivacyManager {
 
 	public static String getTransient(int uid, String name, String defaultValue) {
 		String value = null;
-		try {
-			value = PrivacyService.getClient().getTransient(new PSetting(uid, null, name, null)).value;
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
+
+		boolean cached = false;
+		CSetting csetting = new CSetting(uid, null, name);
+		synchronized (mTransientCache) {
+			if (mTransientCache.containsKey(csetting)) {
+				value = mTransientCache.get(csetting).getValue();
+				cached = true;
+			}
 		}
+
+		if (!cached)
+			try {
+				value = PrivacyService.getClient().getTransient(new PSetting(uid, null, name, null)).value;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+
 		if (value == null)
 			value = defaultValue;
 		return value;
@@ -869,6 +882,12 @@ public class PrivacyManager {
 	public static void setTransient(int uid, String name, String value) {
 		try {
 			PrivacyService.getClient().setTransient(new PSetting(uid, null, name, value));
+
+			CSetting setting = new CSetting(uid, null, name);
+			setting.setValue(value);
+			synchronized (mTransientCache) {
+				mTransientCache.put(setting, setting);
+			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
