@@ -31,6 +31,8 @@ Changelog
 * Added support for [Dirty Unicorns](http://www.teamdirt.me/) (XPrivacy 3)
 * Added support for [Liquid Smooth](http://liquidsmooth.net/) (XPrivacy 3)
 * Added support for some CyanogenMod based ROMs, like Spirit ROM (XPrivacy 3)
+* Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
+	* Since these functions were moved recently, it is not possible to update them
 * Updated Dutch translation
 * Updated Italian translation
 
