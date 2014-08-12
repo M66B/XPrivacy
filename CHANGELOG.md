@@ -35,6 +35,7 @@ Changelog
 	* Since these functions were moved recently, it is not possible to update them
 * Performance optimizations
 * Fixed all problems reported through the support data
+* Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
 * Updated Dutch translation
 * Updated Italian translation
 
