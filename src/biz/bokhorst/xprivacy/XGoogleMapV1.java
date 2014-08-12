@@ -40,8 +40,7 @@ public class XGoogleMapV1 extends XHook {
 
 		case disableMyLocation:
 			if (isRestricted(param, PrivacyManager.cLocation, "MapV1.enableMyLocation"))
-				if (isRestricted(param))
-					param.setResult(null);
+				param.setResult(null);
 			break;
 		}
 	}
