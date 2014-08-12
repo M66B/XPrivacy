@@ -855,46 +855,21 @@ public class PrivacyManager {
 		}
 	}
 
-	public static String getTransient(int uid, String name, String defaultValue) {
-		String value = null;
-		long start = System.currentTimeMillis();
-
-		boolean cached = false;
-		CSetting csetting = new CSetting(uid, "", name);
+	public static String getTransient(String name, String defaultValue) {
+		CSetting csetting = new CSetting(0, "", name);
 		synchronized (mTransientCache) {
-			if (mTransientCache.containsKey(csetting)) {
-				value = mTransientCache.get(csetting).getValue();
-				cached = true;
-			}
+			if (mTransientCache.containsKey(csetting))
+				return mTransientCache.get(csetting).getValue();
 		}
 
-		if (!cached)
-			try {
-				value = PrivacyService.getClient().getTransient(new PSetting(uid, null, name, null)).value;
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
-
-		if (value == null)
-			value = defaultValue;
-
-		long ms = System.currentTimeMillis() - start;
-		Util.log(null, ms < cWarnServiceDelayMs ? Log.INFO : Log.WARN,
-				String.format("Get transient uid=%d %s=%s%s %d ms", uid, name, value, (cached ? " (cached)" : ""), ms));
-		return value;
+		return defaultValue;
 	}
 
-	public static void setTransient(int uid, String name, String value) {
-		try {
-			PrivacyService.getClient().setTransient(new PSetting(uid, null, name, value));
-
-			CSetting setting = new CSetting(uid, "", name);
-			setting.setValue(value);
-			synchronized (mTransientCache) {
-				mTransientCache.put(setting, setting);
-			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
+	public static void setTransient(String name, String value) {
+		CSetting setting = new CSetting(0, "", name);
+		setting.setValue(value);
+		synchronized (mTransientCache) {
+			mTransientCache.put(setting, setting);
 		}
 	}
 

@@ -78,7 +78,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cTableSetting = "setting";
 
 	private static final int cCurrentVersion = 385;
-	private static final String cServiceName = "xprivacy382";
+	private static final String cServiceName = "xprivacy386";
 
 	private SQLiteDatabase mDb = null;
 	private SQLiteDatabase mDbUsage = null;
@@ -95,8 +95,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
 	private Map<CRestriction, CRestriction> mAskedOnceCache = new HashMap<CRestriction, CRestriction>();
 	private Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
-
-	private SparseArray<Map<String, String>> mMapTransient = new SparseArray<Map<String, String>>();
 
 	private final long cMaxUsageDataHours = 12;
 	private final int cMaxUsageDataCount = 700;
@@ -1247,28 +1245,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 			Util.bug(null, ex);
 			throw new RemoteException(ex.toString());
 		}
-	}
-
-	@Override
-	public void setTransient(PSetting setting) {
-		synchronized (mMapTransient) {
-			if (mMapTransient.get(setting.uid) == null)
-				mMapTransient.put(setting.uid, new HashMap<String, String>());
-			if (setting.value == null)
-				mMapTransient.get(setting.uid).remove(setting.name);
-			else
-				mMapTransient.get(setting.uid).put(setting.name, setting.value);
-		}
-	}
-
-	@Override
-	public PSetting getTransient(PSetting setting) {
-		synchronized (mMapTransient) {
-			if (mMapTransient.get(setting.uid) != null)
-				if (mMapTransient.get(setting.uid).containsKey(setting.name))
-					setting.value = mMapTransient.get(setting.uid).get(setting.name);
-		}
-		return setting;
 	}
 
 	@Override

@@ -71,11 +71,10 @@ public class XWebView extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		int uid = Binder.getCallingUid();
-
 		switch (mMethod) {
 		case WebView:
 			if (param.args.length > 0 && param.thisObject instanceof WebView) {
+				int uid = Binder.getCallingUid();
 				if (getRestricted(uid)) {
 					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 					WebView webView = (WebView) param.thisObject;
@@ -92,8 +91,8 @@ public class XWebView extends XHook {
 		case getSettings:
 			if (param.getResult() != null) {
 				Class<?> clazz = param.getResult().getClass();
-				if (PrivacyManager.getTransient(uid, clazz.getName(), null) == null) {
-					PrivacyManager.setTransient(uid, clazz.getName(), Boolean.toString(true));
+				if (PrivacyManager.getTransient(clazz.getName(), null) == null) {
+					PrivacyManager.setTransient(clazz.getName(), Boolean.toString(true));
 					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()), null, getSecret());
 				}
 			}

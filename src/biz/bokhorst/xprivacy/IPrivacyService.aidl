@@ -26,9 +26,6 @@ interface IPrivacyService {
 	List<PSetting> getSettingList(in PSetting selector);
 	void deleteSettings(int uid);
 
-	void setTransient(in PSetting setting);
-	PSetting getTransient(in PSetting setting);
-
 	void clear();
 	void flush();
 	void dump(int uid);
