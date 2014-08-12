@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Random;
 
 import android.content.Context;
+import android.os.Binder;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
@@ -409,8 +410,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	public static void handleGetSystemService(String name, String className, String secret) {
-		if (PrivacyManager.getTransient(0, className, null) == null) {
-			PrivacyManager.setTransient(0, className, Boolean.toString(true));
+		int uid = Binder.getCallingUid();
+		if (PrivacyManager.getTransient(uid, className, null) == null) {
+			PrivacyManager.setTransient(uid, className, Boolean.toString(true));
 
 			if (name.equals(Context.ACCOUNT_SERVICE))
 				hookAll(XAccountManager.getInstances(className), null, secret);
