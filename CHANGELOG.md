@@ -28,9 +28,6 @@ Changelog
 
 **Next release**
 
-* Added support for [Dirty Unicorns](http://www.teamdirt.me/) (XPrivacy 3)
-* Added support for [Liquid Smooth](http://liquidsmooth.net/) (XPrivacy 3)
-* Added support for some CyanogenMod based ROMs, like Spirit ROM (XPrivacy 3)
 * Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
 	* Since these functions were moved recently, it is not possible to update them
 * Performance optimizations
@@ -54,6 +51,19 @@ You can install XPrivacy 2.99.x by following these steps:
 * Use the menu *Check for updates*
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+
+**Version 2.99.15 BETA**
+
+* Added support for [Dirty Unicorns](http://www.teamdirt.me/)
+* Added support for [Liquid Smooth](http://liquidsmooth.net/)
+* Added support for some CyanogenMod based ROMs, like Spirit ROM
+* Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
+	* Since these functions were moved recently, it is not possible to automatically update them
+* Performance optimizations
+* Fixed all problems reported through the support data
+* Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
+* Updated Dutch translation
+* Updated Italian translation
 
 **Version 2.99.14 BETA**
 
