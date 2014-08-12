@@ -773,7 +773,6 @@ public class PrivacyManager {
 						mSettingsCache.remove(key);
 					mSettingsCache.put(key, key);
 				}
-
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -850,6 +849,26 @@ public class PrivacyManager {
 			synchronized (mSettingsCache) {
 				mSettingsCache.clear();
 			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
+	public static String getTransient(int uid, String name, String defaultValue) {
+		String value = null;
+		try {
+			value = PrivacyService.getClient().getTransient(new PSetting(uid, null, name, null)).value;
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+		if (value == null)
+			value = defaultValue;
+		return value;
+	}
+
+	public static void setTransient(int uid, String name, String value) {
+		try {
+			PrivacyService.getClient().setTransient(new PSetting(uid, null, name, value));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
