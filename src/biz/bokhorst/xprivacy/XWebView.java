@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
-import android.util.Log;
 import android.webkit.WebView;
 
 public class XWebView extends XHook {
@@ -50,10 +49,13 @@ public class XWebView extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.WebView || mMethod == Methods.getSettings) {
+		switch (mMethod) {
+		case WebView:
+		case getSettings:
 			// Do nothing
+			break;
 
-		} else if (mMethod == Methods.loadUrl) {
+		case loadUrl:
 			if (param.args.length > 0 && param.thisObject instanceof WebView) {
 				String extra = (param.args[0] instanceof String ? (String) param.args[0] : null);
 				if (isRestrictedExtra(param, extra)) {
@@ -63,16 +65,17 @@ public class XWebView extends XHook {
 						webView.getSettings().setUserAgentString(ua);
 				}
 			}
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.WebView) {
+		int uid = Binder.getCallingUid();
+
+		switch (mMethod) {
+		case WebView:
 			if (param.args.length > 0 && param.thisObject instanceof WebView) {
-				int uid = Binder.getCallingUid();
 				if (getRestricted(uid)) {
 					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 					WebView webView = (WebView) param.thisObject;
@@ -80,20 +83,22 @@ public class XWebView extends XHook {
 						webView.getSettings().setUserAgentString(ua);
 				}
 			}
+			break;
 
-		} else if (mMethod == Methods.loadUrl) {
+		case loadUrl:
 			// Do nothing
+			break;
 
-		} else if (mMethod == Methods.getSettings) {
+		case getSettings:
 			if (param.getResult() != null) {
 				Class<?> clazz = param.getResult().getClass();
-				if (PrivacyManager.getTransient(0, clazz.getName(), null) == null) {
-					PrivacyManager.setTransient(0, clazz.getName(), Boolean.toString(true));
+				if (PrivacyManager.getTransient(uid, clazz.getName(), null) == null) {
+					PrivacyManager.setTransient(uid, clazz.getName(), Boolean.toString(true));
 					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()), null, getSecret());
 				}
 			}
+			break;
 
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		}
 	}
 }
