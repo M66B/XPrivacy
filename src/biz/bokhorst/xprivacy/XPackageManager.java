@@ -171,9 +171,12 @@ public class XPackageManager extends XHook {
 			break;
 
 		case Srv_getPackagesForUid:
-			if (param.getResult() != null)
-				if (isRestricted(param))
-					param.setResult(null);
+			if (param.args.length > 0 && param.args[0] instanceof Integer && param.getResult() != null) {
+				int uid = (Integer) param.args[0];
+				if (uid != Binder.getCallingUid())
+					if (isRestricted(param))
+						param.setResult(null);
+			}
 			break;
 
 		case Srv_getPersistentApplications:
@@ -186,11 +189,6 @@ public class XPackageManager extends XHook {
 			if (param.getResult() != null)
 				if (isRestricted(param))
 					param.setResult(filterPackageInfo((List<PackageInfo>) param.getResult()));
-			break;
-
-		case Srv_queryContentProviders:
-			if (isRestricted(param))
-				param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
 			break;
 
 		case Srv_queryIntentActivities:
@@ -236,10 +234,14 @@ public class XPackageManager extends XHook {
 			break;
 
 		case queryContentProviders:
-			if (param.args.length > 0 && param.args[0] instanceof String && param.getResult() != null) {
-				String processName = (String) param.args[0];
-				if (isRestrictedExtra(param, processName))
-					param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+		case Srv_queryContentProviders:
+			if (param.args.length > 1 && param.args[1] instanceof Integer && param.getResult() != null) {
+				int uid = (Integer) param.args[1];
+				if (uid != Binder.getCallingUid()) {
+					String processName = (String) param.args[0];
+					if (isRestrictedExtra(param, processName))
+						param.setResult(filterProviderInfo((List<ProviderInfo>) param.getResult()));
+				}
 			}
 			break;
 

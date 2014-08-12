@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.location.Location;
 import android.os.Binder;
-import android.util.Log;
 
 public class XGoogleMapV2 extends XHook {
 	private Methods mMethod;
@@ -51,32 +50,38 @@ public class XGoogleMapV2 extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.getMyLocation) {
+		switch (mMethod) {
+		case getMyLocation:
 			// Do nothing
+			break;
 
-		} else if (mMethod == Methods.getPosition) {
+		case getPosition:
 			// Do nothing
+			break;
 
-		} else if (mMethod == Methods.setLocationSource || mMethod == Methods.setOnMapClickListener
-				|| mMethod == Methods.setOnMapLongClickListener || mMethod == Methods.setOnMyLocationChangeListener) {
+		case setLocationSource:
+		case setOnMapClickListener:
+		case setOnMapLongClickListener:
+		case setOnMyLocationChangeListener:
 			if (isRestricted(param))
 				param.setResult(null);
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.getMyLocation) {
+		switch (mMethod) {
+		case getMyLocation:
 			if (param.getResult() != null)
 				if (isRestricted(param)) {
 					Location originalLocation = (Location) param.getResult();
 					Location fakeLocation = PrivacyManager.getDefacedLocation(Binder.getCallingUid(), originalLocation);
 					param.setResult(fakeLocation);
 				}
+			break;
 
-		} else if (mMethod == Methods.getPosition) {
+		case getPosition:
 			if (param.getResult() != null)
 				if (isRestricted(param)) {
 					Location fakeLocation = PrivacyManager.getDefacedLocation(Binder.getCallingUid(), null);
@@ -87,12 +92,14 @@ public class XGoogleMapV2 extends XHook {
 					fLat.set(param.getResult(), fakeLocation.getLatitude());
 					fLon.set(param.getResult(), fakeLocation.getLongitude());
 				}
+			break;
 
-		} else if (mMethod == Methods.setLocationSource || mMethod == Methods.setOnMapClickListener
-				|| mMethod == Methods.setOnMapLongClickListener || mMethod == Methods.setOnMyLocationChangeListener) {
+		case setLocationSource:
+		case setOnMapClickListener:
+		case setOnMapLongClickListener:
+		case setOnMyLocationChangeListener:
 			// Do nothing
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 }

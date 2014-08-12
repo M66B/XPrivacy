@@ -6,7 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy versione: %s (%d)</string>
     <string name="app_description">Il gestore di privacy definitivo</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 di M. Bokhorst (M66B)</string>
-    <string name="app_compatibility">Running in compatibility mode</string>
+    <string name="app_compatibility">Funzionamento in modalità compatibile</string>
     <string name="app_licensed">Attivato, grazie per il tuo supporto!</string>
     <string name="menu_usage">Dati utilizzati</string>
     <string name="menu_refresh">Aggiorna</string>
@@ -45,7 +45,7 @@
     <string name="menu_exclude">Escludi</string>
     <string name="menu_close">Chiudi</string>
     <string name="menu_flush">Svuota cache</string>
-    <string name="menu_update">Check for updates</string>
+    <string name="menu_update">Controllo aggiornamenti</string>
     <string name="msg_abort">Abortisco</string>
     <string name="msg_aborted">Abortito</string>
     <string name="msg_new">Nuovo</string>
@@ -96,7 +96,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_overlay">Sovrapposizione</string>
     <string name="restrict_phone">Telefono (ID, numeri, chiamate)</string>
     <string name="restrict_sensors">Sensori</string>
-    <string name="restrict_storage">Memoria (media, scheda SD)</string>
+    <string name="restrict_storage">Memoria (interna, scheda SD)</string>
     <string name="restrict_shell">Shell (comandi, superutente)</string>
     <string name="restrict_system">Sistema (applicazioni installate)</string>
     <string name="restrict_view">Visualizza (browser)</string>
@@ -125,7 +125,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="restrict_help_browser">Restringe l\'accesso alle informazioni del browser, come i segnalibri e lo storico dei file scaricati</string>
     <string name="restrict_help_accounts">Restringe l\'accesso alle informazioni dell\'account, come il tuo account Google che include l\'indirizzo G-mail</string>
     <string name="whitelist_address">Indirizzi</string>
-    <string name="whitelist_action">Action</string>
+    <string name="whitelist_action">Azione</string>
     <string name="whitelist_ipaddress">Indirizzi IP</string>
     <string name="whitelist_library">Librerie native</string>
     <string name="whitelist_method">Nomi metodi</string>
@@ -181,11 +181,12 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_toggle_dangerous">Premi a lungo su una intestazione per gestire le funzioni pericolose</string>
     <string name="title_ondemand_category">Applicando all\'intera categoria le funzioni verranno riportate ai valori di default</string>
     <string name="title_function_help">Documentazione funzione</string>
-    <string name="title_unsafe">is unsafe, can be circumvented</string>
-    <string name="title_update_checking">Checking for update</string>
-    <string name="title_update_downloading">Downloading update</string>
-    <string name="title_update_install">Tap to install update</string>
-    <string name="title_update_none">No updates available</string>
+    <string name="title_unsafe">è insicuro, può essere aggirato</string>
+    <string name="title_update_checking">Controllo aggiornamento</string>
+    <string name="title_update_downloading">Scarico aggiornamento</string>
+    <string name="title_update_install">Tocca per installare aggiornamento</string>
+    <string name="title_update_none">Nessun aggiornamento disponibile</string>
+    <string name="title_update_legacy">XPrivacy 2 non è più supportato, per favore valuta l\'aggiornamento a XPrivacy 3</string>
     <string name="settings_serial">Seriale#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>
@@ -233,7 +234,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
 \nAlle applicazioni verranno forniti dati vuoti o alterati per le categorie ristrette\n
 \nTocca l\'icona dell\'applicazione per le restrizioni e le impostazioni dettagliate</string>
     <string name="tutorial_detailsheader">Tocca l\'icona dell\'applicazione per ulteriori azioni</string>
-    <string name="tutorial_detailslist">Tocca la freccia verso il basso per visualizzare le funzioni escluse di una categoria ristretta</string>
+    <string name="tutorial_detailslist">Tocca la freccia verso il basso per visualizzare le funzioni di una categoria di restrizioni</string>
     <string name="permission_manage">Gestisce le applicazioni, inclusa la chiusura</string>
     <string name="permission_restrictions">Gestisce le restrizioni e le impostazioni di XPrivacy</string>
 

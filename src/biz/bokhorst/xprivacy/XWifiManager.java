@@ -107,7 +107,8 @@ public class XWifiManager extends XHook {
 		case Srv_getConnectionInfo:
 			if (param.getResult() != null)
 				if (isRestricted(param)) {
-					WifiInfo wInfo = (WifiInfo) param.getResult();
+					WifiInfo result = (WifiInfo) param.getResult();
+					WifiInfo wInfo = WifiInfo.class.getConstructor(WifiInfo.class).newInstance(result);
 					if (getRestrictionName().equals(PrivacyManager.cInternet)) {
 						// Supplicant state
 						try {
@@ -170,6 +171,7 @@ public class XWifiManager extends XHook {
 							}
 						}
 					}
+					param.setResult(wInfo);
 				}
 			break;
 
@@ -177,12 +179,14 @@ public class XWifiManager extends XHook {
 		case Srv_getDhcpInfo:
 			if (param.getResult() != null)
 				if (isRestricted(param)) {
-					DhcpInfo dInfo = (DhcpInfo) param.getResult();
+					DhcpInfo result = (DhcpInfo) param.getResult();
+					DhcpInfo dInfo = DhcpInfo.class.getConstructor(DhcpInfo.class).newInstance(result);
 					dInfo.ipAddress = (Integer) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "IPInt");
 					dInfo.gateway = dInfo.ipAddress;
 					dInfo.dns1 = dInfo.ipAddress;
 					dInfo.dns2 = dInfo.ipAddress;
 					dInfo.serverAddress = dInfo.ipAddress;
+					param.setResult(dInfo);
 				}
 			break;
 

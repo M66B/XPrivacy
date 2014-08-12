@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.concurrent.ExecutorService;
@@ -302,6 +303,37 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		};
 		((Button) findViewById(R.id.btnTutorialHeader)).setOnClickListener(listener);
 		((Button) findViewById(R.id.btnTutorialDetails)).setOnClickListener(listener);
+
+		// Legacy
+		if (!PrivacyManager.cVersion3) {
+			long now = new Date().getTime();
+			String legacy = PrivacyManager.getSetting(userId, PrivacyManager.cSettingLegacy, null);
+			if (legacy == null || now > Long.parseLong(legacy) + 7 * 24 * 60 * 60 * 1000L) {
+				PrivacyManager.setSetting(userId, PrivacyManager.cSettingLegacy, Long.toString(now));
+
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+				alertDialogBuilder.setMessage(R.string.title_update_legacy);
+				alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						Util.viewUri(ActivityMain.this,
+								Uri.parse("https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md#xprivacy3"));
+					}
+				});
+				alertDialogBuilder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// Do nothing
+					}
+				});
+
+				// Show dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+		}
 	}
 
 	@Override
@@ -920,6 +952,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 	}
 
+	@SuppressLint("DefaultLocale")
 	private void optionAbout() {
 		// About
 		Dialog dlgAbout = new Dialog(this);
@@ -959,6 +992,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			tvLicensed.setText(String.format(getString(R.string.app_licensed), licensed));
 
 		// Show some build properties
+		String android = String.format("%s (%d)", Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+		((TextView) dlgAbout.findViewById(R.id.tvAndroid)).setText(android);
 		((TextView) dlgAbout.findViewById(R.id.build_brand)).setText(Build.BRAND);
 		((TextView) dlgAbout.findViewById(R.id.build_manufacturer)).setText(Build.MANUFACTURER);
 		((TextView) dlgAbout.findViewById(R.id.build_model)).setText(Build.MODEL);

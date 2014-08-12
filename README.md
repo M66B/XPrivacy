@@ -1117,12 +1117,35 @@ You can check if [your IP address](http://www.whatismyip.com/) is black listed b
 Unsafe restrictions can be disabled by removing the Xposed method hook using a native library.
 See [here](https://github.com/cernekee/WinXP) for a proof of concept.
 You can prevent this by not allowing native libaries to load, which will unfortunately often result in a crash.
-XPrivacy version 3 will partly address this problem for [vanilla Android KitKat](https://source.android.com/),
-[OmniROM](http://omnirom.org/), [CyanogenMod](http://www.cyanogenmod.org/) and [MIUI](http://en.miui.com/).
+
+XPrivacy 3 does partly address this problem for [vanilla Android KitKat](https://source.android.com/)
+and some other frequently used ROMs (see below).
 This is done by hooking into the Android counterparts of the user space functions.
 Unfortunately not all user space functions have an Android counterpart,
 meaning that this cannot be done for all restrictions.
 Nevertheless, the most sensitive data, like contacts and your location, can safely be protected by XPrivacy 3.
+
+*XPrivacy 3 modes*
+
+* AOSP mode = vanilla (Google) Android KitKat or:
+	* [OmniROM](http://omnirom.org/)
+	* [CyanogenMod](http://www.cyanogenmod.org/)
+	* [MIUI](http://en.miui.com/)
+	* [SlimKat](http://www.slimroms.net/)
+	* [Carbon ROM](https://carbonrom.org/)
+	* [Dirty Unicorns](http://www.teamdirt.me/)
+	* [Liquid Smooth](http://liquidsmooth.net/)
+* Compatibility mode = all other Android versions/variants
+
+*About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivay 2.
+If there is no message about compatibility mode, XPrivacy 3 is running in AOSP mode.
+XPrivacy 3 will always run in compatibility mode on Android versions before KitKat.
+
+You can switch XPrivacy 3 to AOSP mode by creating this file:
+
+/data/system/xprivacy/aosp
+
+For the benefit of others, please report if XPrivacy 3 works for the ROM you are using.
 
 Support
 -------

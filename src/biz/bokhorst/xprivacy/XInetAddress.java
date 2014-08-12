@@ -32,7 +32,7 @@ public class XInetAddress extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods addr : Methods.values())
-			listHook.add(new XInetAddress(addr, PrivacyManager.cNetwork, null));
+			listHook.add(new XInetAddress(addr, PrivacyManager.cInternet, null));
 		return listHook;
 	}
 
@@ -54,7 +54,7 @@ public class XInetAddress extends XHook {
 			else
 				addresses = new InetAddress[0];
 
-			// Check to restrict
+			// Check if restricted
 			boolean restrict = false;
 			for (InetAddress address : addresses)
 				if (!address.isLoopbackAddress()) {

@@ -8,13 +8,6 @@ Changelog
 * BETA: new or updated features with a lower risk for bugs
 * STABLE: all known bugs are fixed; low risk for bugs
 
-**XPrivacy modes** (XPrivacy 3)
-
-* AOSP mode = vanilla (Google) KitKat, OmniROM, CyanogenMod or MIUI
-* Compatibility mode = all other Android versions/variants
-
-If there is no message about running in compatibility mode in *About*, XPrivacy is running in AOSP mode.
-
 **Downloads**
 
 * [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
@@ -35,21 +28,76 @@ If there is no message about running in compatibility mode in *About*, XPrivacy 
 
 **Next release**
 
+* Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
+	* Since these functions were moved recently, it is not possible to update them
+* Performance optimizations (introduced transient values)
+* Fixed all problems reported through the support data
+* Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
+* Updated Dutch translation
+* Updated Italian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
+XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
+XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
+See for some more information about XPrivacy 3 [here](https://github.com/M66B/XPrivacy#FAQ68).
+
+You can install XPrivacy 2.99.x by following these steps:
+
+* Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
+* Update to the latest 2.2.x version
+* Enter the quirk *test* into the main settings
+* Use the menu *Check for updates*
+
+Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+
+**Version 2.99.18 BETA**
+
+* Fixed hooking contacts and telephony providers
+
+**Version 2.99.17 BETA**
+
+* Fixed support info warning (transient values)
+
+**Version 2.99.16 BETA**
+
+* Better browser provider compatibility
+
+**Version 2.99.15 BETA**
+
+* Added support for [Dirty Unicorns](http://www.teamdirt.me/)
+* Added support for [Liquid Smooth](http://liquidsmooth.net/)
+* Added support for some CyanogenMod based ROMs, like Spirit ROM
+* Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
+	* Since these functions were moved recently, it is not possible to automatically update them
+* Performance optimizations (introduced transient values)
+* Fixed all problems reported through the support data
+* Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
+* Updated Dutch translation
+* Updated Italian translation
+
+**Version 2.99.14 BETA**
+
+* Fixed restriction *WiFi.Srv_getConnectionInfo*
+* Fixed restriction *WiFi.Srv_getDhcpInfo*
+* Fixed restriction *BrowserProvider2*
+
+**Version 2.99.13 BETA**
+
+* Added support for [Carbon ROM](https://carbonrom.org/)
+* Updated Dutch translation
+
+**Version 2.99.12 BETA**
+
+* Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))
+* Handling *MapV1.disableMyLocation* when *MapV1.enableMyLocation* is restricted
+
 **Version 2.99.11 TEST**
 
 * Added support for [SlimKat](http://www.slimroms.net/)
 
 **Version 2.99.10 TEST** (only available for testers)
-
-XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
-XPrivacy 3 will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
-XPrivacy 3 will be available for [vanilla Android KitKat](https://source.android.com/)
-and the latest versions of [OmniROM](http://omnirom.org/), [CyanogenMod](http://www.cyanogenmod.org/) and [MIUI](http://en.miui.com/) only,
-but will work in *legacy* mode on other Android versions/variants.
-XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 
 * Added icon for unsafe restrictions
 * Added system property restrictions *Srv_Default_DNS* and *Srv_WiFi_Country*
@@ -59,6 +107,12 @@ XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 * Replaced unsafe restrictions by safe restrictions where possible (not in legacy mode)
 * Updated German translation
 * Updated Slovak translation
+
+<a name="xprivacy2"></a>
+**Version 2.2.7 BETA**
+
+* Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))
+* Handling *MapV1.disableMyLocation* when *MapV1.enableMyLocation* is restricted
 
 **Version 2.2.6 BETA**
 

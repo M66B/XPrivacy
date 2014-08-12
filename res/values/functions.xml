@@ -115,6 +115,9 @@
     <string name="internet_NetworkInfo_isConnectedOrConnecting" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#isConnectedOrConnecting()">Google documentation</a>]]></string>
     <string name="internet_WiFi_getConnectionInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
     <string name="internet_WiFi_Srv_getConnectionInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/wifi/WifiManager.html#getConnectionInfo()">Google documentation</a>]]></string>
+    <string name="internet_InetAddress_getAllByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getAllByName(java.lang.String)">Google documentation</a>]]></string>
+    <string name="internet_InetAddress_getByAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByAddress(java.lang.String,%20byte[])">Google documentation</a>]]></string>
+    <string name="internet_InetAddress_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByName(java.lang.String)">Google documentation</a>]]></string>
     <string name="internet_connect" translatable="false"><![CDATA[Will restrict access to the internet]]></string>
 
     <!-- ipc -->
@@ -161,8 +164,6 @@
     <string name="location_GMS_getLastLocation" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/com/google/android/gms/location/LocationClient.html#getLastLocation()">Google documentation</a>]]></string>
     <string name="location_GMS_requestLocationUpdates" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/com/google/android/gms/location/LocationClient.html#requestLocationUpdates(com.google.android.gms.location.LocationRequest,%20android.app.PendingIntent)">Google documentation</a>]]></string>
     <string name="location_GMS_requestActivityUpdates" translatable="false"><![CDATA[<a href="https://developer.android.com/training/location/activity-recognition.html">Google documentation</a>]]></string>
-    <string name="location_MapV1_getLatitudeE6" translatable="false"><![CDATA[<a href="https://developers.google.com/maps/documentation/android/v1/reference/index">Google documentation</a>]]></string>
-    <string name="location_MapV1_getLongitudeE6" translatable="false"><![CDATA[<a href="https://developers.google.com/maps/documentation/android/v1/reference/index">Google documentation</a>]]></string>
     <string name="location_MapV1_enableMyLocation" translatable="false"><![CDATA[<a href="https://developers.google.com/maps/documentation/android/v1/reference/index">Google documentation</a>]]></string>
     <string name="location_MapV2_getMyLocation" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/com/google/android/gms/maps/GoogleMap.html">Google documentation</a>]]></string>
     <string name="location_MapV2_getPosition" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/com/google/android/gms/maps/model/Marker.html">Google documentation</a>]]></string>
@@ -216,9 +217,6 @@
     <string name="network_WiFi_Srv_getWifiApConfiguration" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://developer.android.com/reference/android/net/wifi/WifiConfiguration.html">WifiConfiguration</a>]]></string>
     <string name="network_Srv_Default_DNS" translatable="false"><![CDATA[Will restrict access to the hidden system global property default DNS server]]></string>
     <string name="network_Srv_WiFi_Country" translatable="false"><![CDATA[Will restrict access to the hidden system global property Wi-Fi country code]]></string>
-    <string name="network_InetAddress_getAllByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getAllByName(java.lang.String)">Google documentation</a>]]></string>
-    <string name="network_InetAddress_getByAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByAddress(java.lang.String,%20byte[])">Google documentation</a>]]></string>
-    <string name="network_InetAddress_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByName(java.lang.String)">Google documentation</a>]]></string>
     <string name="network_NetworkInfo_getExtraInfo" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/NetworkInfo.html#getExtraInfo()">Google documentation</a>]]></string>
 
     <!-- nfc -->

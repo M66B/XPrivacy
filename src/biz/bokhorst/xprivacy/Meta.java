@@ -173,6 +173,11 @@ public class Meta {
 		mListHook.add(new Hook("internet", "WiFi.getConnectionInfo", null, 10, "2.2.2", "getConnectionInfo").notAOSP(19));
 		mListHook.add(new Hook("internet", "WiFi.Srv_getConnectionInfo", null, 10, "2.99", "WiFi.getConnectionInfo").AOSP(19));
 
+		// java.net.InetAddress
+		mListHook.add(new Hook("internet", "InetAddress.getAllByName", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "InetAddress.getByAddress", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "InetAddress.getByName", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
+
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).notAOSP(19).dangerous().whitelist(cTypeTransaction));
@@ -222,8 +227,6 @@ public class Meta {
 		mListHook.add(new Hook("location", "GMS.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, null, null).unsafe().optional());
 		mListHook.add(new Hook("location", "GMS.requestActivityUpdates", "com.google.android.gms.permission.ACTIVITY_RECOGNITION", 1, null, null).unsafe());
 
-		mListHook.add(new Hook("location", "MapV1.getLatitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
-		mListHook.add(new Hook("location", "MapV1.getLongitudeE6", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 		mListHook.add(new Hook("location", "MapV1.enableMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 
 		mListHook.add(new Hook("location", "MapV2.getMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
@@ -291,11 +294,6 @@ public class Meta {
 
 		mListHook.add(new Hook("network", "Srv_Default_DNS", "", 19, "2.99", "getString").AOSP(19).dangerous());
 		mListHook.add(new Hook("network", "Srv_WiFi_Country", "", 19, "2.99", "getString").AOSP(19).dangerous());
-
-		// java.net.InetAddress
-		mListHook.add(new Hook("network", "InetAddress.getAllByName", "INTERNET", 1, "2.2.2", "internet/getAllByName").unsafe().dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("network", "InetAddress.getByAddress", "INTERNET", 1, "2.2.2", null).unsafe().dangerous().whitelist(cTypeIPAddress));
-		mListHook.add(new Hook("network", "InetAddress.getByName", "INTERNET", 1, "2.2.2", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		// android.net.NetworkInfo
 		mListHook.add(new Hook("network", "NetworkInfo.getExtraInfo", null, 1, "2.2.2", "internet/getExtraInfo").unsafe());
@@ -522,6 +520,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "Srv_removeUpdates", "", 19, null, null));
 		mListHook.add(new Hook(null, "Srv_removeGeofence", "", 19, null, null));
 		mListHook.add(new Hook(null, "Srv_removeGpsStatusListener", "", 19, null, null));
+		mListHook.add(new Hook(null, "MapV1.disableMyLocation", "", 1, null, null).optional());
 
 		// Resources
 		mListHook.add(new Hook(null, "updateConfiguration", "", 1, null, null));

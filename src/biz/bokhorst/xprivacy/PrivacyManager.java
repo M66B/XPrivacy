@@ -131,6 +131,7 @@ public class PrivacyManager {
 	public final static String cSettingSafeMode = "SafeMode";
 	public final static String cSettingTestVersions = "TestVersions";
 	public final static String cSettingOnDemandSystem = "OnDemandSystem";
+	public final static String cSettingLegacy = "Legacy";
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";
@@ -154,6 +155,7 @@ public class PrivacyManager {
 	private static Map<String, List<String>> mRestart = new LinkedHashMap<String, List<String>>();
 	private static Map<String, List<Hook>> mPermission = new LinkedHashMap<String, List<Hook>>();
 	private static Map<CSetting, CSetting> mSettingsCache = new HashMap<CSetting, CSetting>();
+	private static Map<CSetting, CSetting> mTransientCache = new HashMap<CSetting, CSetting>();
 	private static Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
 	private static SparseArray<Map<String, Boolean>> mPermissionRestrictionCache = new SparseArray<Map<String, Boolean>>();
 	private static SparseArray<Map<Hook, Boolean>> mPermissionHookCache = new SparseArray<Map<Hook, Boolean>>();
@@ -772,7 +774,6 @@ public class PrivacyManager {
 						mSettingsCache.remove(key);
 					mSettingsCache.put(key, key);
 				}
-
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -851,6 +852,24 @@ public class PrivacyManager {
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+		}
+	}
+
+	public static String getTransient(String name, String defaultValue) {
+		CSetting csetting = new CSetting(0, "", name);
+		synchronized (mTransientCache) {
+			if (mTransientCache.containsKey(csetting))
+				return mTransientCache.get(csetting).getValue();
+		}
+
+		return defaultValue;
+	}
+
+	public static void setTransient(String name, String value) {
+		CSetting setting = new CSetting(0, "", name);
+		setting.setValue(value);
+		synchronized (mTransientCache) {
+			mTransientCache.put(setting, setting);
 		}
 	}
 

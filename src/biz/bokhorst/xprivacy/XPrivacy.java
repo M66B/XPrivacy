@@ -32,7 +32,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mCydia = false;
 	private static String mSecret = null;
 	private static List<String> mListHookError = new ArrayList<String>();
-	private static List<String> mListSystemService = new ArrayList<String>();
 	private static List<CRestriction> mListDisabled = new ArrayList<CRestriction>();
 
 	// http://developer.android.com/reference/android/Manifest.permission.html
@@ -168,24 +167,24 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// Common
 	private static void init(String path) {
-		Util.log(null, Log.WARN, "Init path=" + path + " AOSP=" + Hook.isAOSP(Build.VERSION_CODES.KITKAT) + " host="
-				+ Build.HOST + " display=" + Build.DISPLAY);
+		Util.log(null, Log.WARN, "Init path=" + path);
 
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
-		try {
-			Class<?> libcore = Class.forName("libcore.io.Libcore");
-			Field fOs = libcore.getDeclaredField("os");
-			fOs.setAccessible(true);
-			Object os = fOs.get(null);
-			Method setenv = os.getClass().getMethod("setenv", String.class, String.class, boolean.class);
-			setenv.setAccessible(true);
-			boolean aosp = new File("/data/system/xprivacy/aosp").exists();
-			setenv.invoke(os, "XPrivacy.AOSP", Boolean.toString(aosp), false);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+			try {
+				Class<?> libcore = Class.forName("libcore.io.Libcore");
+				Field fOs = libcore.getDeclaredField("os");
+				fOs.setAccessible(true);
+				Object os = fOs.get(null);
+				Method setenv = os.getClass().getMethod("setenv", String.class, String.class, boolean.class);
+				setenv.setAccessible(true);
+				boolean aosp = new File("/data/system/xprivacy/aosp").exists();
+				setenv.invoke(os, "XPrivacy.AOSP", Boolean.toString(aosp), false);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
 		// System server
 		try {
@@ -360,7 +359,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 
 		// Providers
-		hookAll(XContentResolver.getPackageInstances(packageName), classLoader, secret);
+		hookAll(XContentResolver.getPackageInstances(packageName, classLoader), classLoader, secret);
 
 		// Phone interface manager
 		if ("com.android.phone".equals(packageName))
@@ -410,33 +409,30 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	public static void handleGetSystemService(String name, String className, String secret) {
-		synchronized (mListSystemService) {
-			if (mListSystemService.contains(className))
-				return;
-			else
-				mListSystemService.add(className);
-		}
+		if (PrivacyManager.getTransient(className, null) == null) {
+			PrivacyManager.setTransient(className, Boolean.toString(true));
 
-		if (name.equals(Context.ACCOUNT_SERVICE))
-			hookAll(XAccountManager.getInstances(className), null, secret);
-		else if (name.equals(Context.ACTIVITY_SERVICE))
-			hookAll(XActivityManager.getInstances(className), null, secret);
-		else if (name.equals(Context.CLIPBOARD_SERVICE))
-			hookAll(XClipboardManager.getInstances(className), null, secret);
-		else if (name.equals(Context.CONNECTIVITY_SERVICE))
-			hookAll(XConnectivityManager.getInstances(className), null, secret);
-		else if (name.equals(Context.LOCATION_SERVICE))
-			hookAll(XLocationManager.getInstances(className), null, secret);
-		else if (name.equals("PackageManager"))
-			hookAll(XPackageManager.getInstances(className), null, secret);
-		else if (name.equals(Context.SENSOR_SERVICE))
-			hookAll(XSensorManager.getInstances(className), null, secret);
-		else if (name.equals(Context.TELEPHONY_SERVICE))
-			hookAll(XTelephonyManager.getInstances(className), null, secret);
-		else if (name.equals(Context.WINDOW_SERVICE))
-			hookAll(XWindowManager.getInstances(className), null, secret);
-		else if (name.equals(Context.WIFI_SERVICE))
-			hookAll(XWifiManager.getInstances(className), null, secret);
+			if (name.equals(Context.ACCOUNT_SERVICE))
+				hookAll(XAccountManager.getInstances(className), null, secret);
+			else if (name.equals(Context.ACTIVITY_SERVICE))
+				hookAll(XActivityManager.getInstances(className), null, secret);
+			else if (name.equals(Context.CLIPBOARD_SERVICE))
+				hookAll(XClipboardManager.getInstances(className), null, secret);
+			else if (name.equals(Context.CONNECTIVITY_SERVICE))
+				hookAll(XConnectivityManager.getInstances(className), null, secret);
+			else if (name.equals(Context.LOCATION_SERVICE))
+				hookAll(XLocationManager.getInstances(className), null, secret);
+			else if (name.equals("PackageManager"))
+				hookAll(XPackageManager.getInstances(className), null, secret);
+			else if (name.equals(Context.SENSOR_SERVICE))
+				hookAll(XSensorManager.getInstances(className), null, secret);
+			else if (name.equals(Context.TELEPHONY_SERVICE))
+				hookAll(XTelephonyManager.getInstances(className), null, secret);
+			else if (name.equals(Context.WINDOW_SERVICE))
+				hookAll(XWindowManager.getInstances(className), null, secret);
+			else if (name.equals(Context.WIFI_SERVICE))
+				hookAll(XWifiManager.getInstances(className), null, secret);
+		}
 	}
 
 	public static void hookAll(List<XHook> listHook, ClassLoader classLoader, String secret) {
