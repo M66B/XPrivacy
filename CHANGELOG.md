@@ -52,6 +52,10 @@ You can install XPrivacy 2.99.x by following these steps:
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
+**Version 2.99.16 BETA**
+
+* Better browser provider compatibility
+
 **Version 2.99.15 BETA**
 
 * Added support for [Dirty Unicorns](http://www.teamdirt.me/)
