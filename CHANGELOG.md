@@ -52,6 +52,10 @@ You can install XPrivacy 2.99.x by following these steps:
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
+**Version 2.99.18 BETA**
+
+* Fixed hooking contacts and telephony providers
+
 **Version 2.99.17 BETA**
 
 * Fixed support info warning (transient values)

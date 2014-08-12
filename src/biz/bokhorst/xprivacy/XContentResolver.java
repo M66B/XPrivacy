@@ -136,14 +136,16 @@ public class XContentResolver extends XHook {
 					return getInstances("com.android.browser.provider.BrowserProvider2");
 				} catch (ClassNotFoundException ex) {
 					Util.log(null, Log.ERROR, "Browser provider not found, package=" + packageName);
+					return new ArrayList<XHook>();
 				}
 			}
-		else
+		else {
+			List<XHook> listHook = new ArrayList<XHook>();
 			for (String className : cProviderClassName)
 				if (className.startsWith(packageName))
-					return getInstances(className);
-
-		return new ArrayList<XHook>();
+					listHook.addAll(getInstances(className));
+			return listHook;
+		}
 	}
 
 	public static List<XHook> getInstances(String className) {
