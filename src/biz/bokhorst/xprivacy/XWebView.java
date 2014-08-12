@@ -9,7 +9,6 @@ import android.webkit.WebView;
 
 public class XWebView extends XHook {
 	private Methods mMethod;
-	private static final List<String> mWebSettings = new ArrayList<String>();
 
 	private XWebView(Methods method, String restrictionName) {
 		super(restrictionName, (method == Methods.WebView ? null : method.name()), (method == Methods.WebView ? method
@@ -88,8 +87,8 @@ public class XWebView extends XHook {
 		} else if (mMethod == Methods.getSettings) {
 			if (param.getResult() != null) {
 				Class<?> clazz = param.getResult().getClass();
-				if (!mWebSettings.contains(clazz.getName())) {
-					mWebSettings.add(clazz.getName());
+				if (PrivacyManager.getTransient(0, clazz.getName(), null) == null) {
+					PrivacyManager.setTransient(0, clazz.getName(), Boolean.toString(true));
 					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()), null, getSecret());
 				}
 			}
