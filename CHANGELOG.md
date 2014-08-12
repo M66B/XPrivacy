@@ -32,6 +32,7 @@ Changelog
 * Added support for [Liquid Smooth](http://liquidsmooth.net/) (XPrivacy 3)
 * Added support for some CyanogenMod based ROMs, like Spirit ROM (XPrivacy 3)
 * Updated Dutch translation
+* Updated Italian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
