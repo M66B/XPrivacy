@@ -869,7 +869,7 @@ public class PrivacyManager {
 
 		if (!cached)
 			try {
-				value = PrivacyService.getClient().getTransient(new PSetting(uid, null, name, null)).value;
+				value = PrivacyService.getClient().getTransient(new PSetting(uid, "", name, null)).value;
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
@@ -883,7 +883,7 @@ public class PrivacyManager {
 		try {
 			PrivacyService.getClient().setTransient(new PSetting(uid, null, name, value));
 
-			CSetting setting = new CSetting(uid, null, name);
+			CSetting setting = new CSetting(uid, "", name);
 			setting.setValue(value);
 			synchronized (mTransientCache) {
 				mTransientCache.put(setting, setting);
