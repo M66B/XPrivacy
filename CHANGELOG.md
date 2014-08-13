@@ -46,6 +46,10 @@ You can install XPrivacy 2.99.x by following these steps:
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
+**Version 2.99.20 BETA**
+
+* Added restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
+
 **Version 2.99.19 BETA**
 
 * Local transient values only
