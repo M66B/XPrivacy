@@ -28,14 +28,6 @@ Changelog
 
 **Next release**
 
-* Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
-	* Since these functions were moved recently, it is not possible to update them
-* Performance optimizations (introduced transient values)
-* Fixed all problems reported through the support data
-* Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
-* Updated Dutch translation
-* Updated Italian translation
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
@@ -51,6 +43,10 @@ You can install XPrivacy 2.99.x by following these steps:
 * Use the menu *Check for updates*
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+
+**Version 2.99.19 BETA**
+
+* Local transient values only
 
 **Version 2.99.18 BETA**
 
@@ -109,6 +105,16 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Updated Slovak translation
 
 <a name="xprivacy2"></a>
+**Version 2.2.8 BETA**
+
+* Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
+	* Since these functions were moved recently, it is not possible to update them
+* Performance optimizations (introduced transient values)
+* Fixed all problems reported through the support data
+* Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
+* Updated Dutch translation
+* Updated Italian translation
+
 **Version 2.2.7 BETA**
 
 * Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))
