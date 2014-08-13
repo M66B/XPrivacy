@@ -28,6 +28,8 @@ Changelog
 
 **Next release**
 
+* Added restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 <a name="xprivacy3"></a>
