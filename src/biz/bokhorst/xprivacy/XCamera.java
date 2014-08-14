@@ -17,7 +17,13 @@ public class XCamera extends XHook {
 
 	// @formatter:off
 
+	// public void setPreviewCallback(Camera.PreviewCallback cb)
+	// public void setPreviewCallbackWithBuffer(Camera.PreviewCallback cb)
+	// public void setPreviewDisplay(SurfaceHolder holder)
+	// public void setPreviewTexture(SurfaceTexture surfaceTexture)
+	// public final void setOneShotPreviewCallback (Camera.PreviewCallback cb)
 	// public native final void startPreview()
+	// public void stopPreview()
 	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback jpeg)
 	// public final void takePicture(ShutterCallback shutter, PictureCallback raw, PictureCallback postview, PictureCallback jpeg)
 	// frameworks/base/core/java/android/hardware/Camera.java
@@ -26,23 +32,34 @@ public class XCamera extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		startPreview, takePicture
+		setPreviewCallback, setPreviewCallbackWithBuffer, setPreviewDisplay, setPreviewTexture, setOneShotPreviewCallback, startPreview, stopPreview, takePicture
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		for (Methods cam : Methods.values())
-			listHook.add(new XCamera(cam, PrivacyManager.cMedia));
+			listHook.add(new XCamera(cam, cam == Methods.stopPreview ? null : PrivacyManager.cMedia));
 		return listHook;
 	}
 
 	@Override
 	protected void before(XParam param) throws Throwable {
 		switch (mMethod) {
+		case setPreviewCallback:
+		case setPreviewCallbackWithBuffer:
+		case setPreviewDisplay:
+		case setPreviewTexture:
+		case setOneShotPreviewCallback:
 		case startPreview:
 		case takePicture:
 			if (isRestricted(param))
 				param.setResult(null);
+			break;
+
+		case stopPreview:
+			if (isRestricted(param, PrivacyManager.cMedia, "Camera.stopPreview"))
+				param.setResult(null);
+			break;
 		}
 	}
 

@@ -237,6 +237,11 @@ public class Meta {
 		mListHook.add(new Hook("location", "MapV2.setOnMyLocationChangeListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 
 		mListHook.add(new Hook("media", "Audio.startRecording", "RECORD_AUDIO", 3, "2.2.3", "startRecording").unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera.setPreviewCallback", "CAMERA", 1, "2.99.21", "setPreviewCallback").unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera.setPreviewCallbackWithBuffer", "CAMERA", 8, "2.99.21", null).unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera.setPreviewDisplay", "CAMERA", 1, "2.99.21", null).unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera.setPreviewTexture", "CAMERA", 11, "2.99.21", null).unsafe().doNotify());
+		mListHook.add(new Hook("media", "Camera.setOneShotPreviewCallback", "CAMERA", 11, "2.99.21", null).unsafe().doNotify());
 		mListHook.add(new Hook("media", "Camera.startPreview", "CAMERA", 1, "2.2.3", "setPreviewCallback").unsafe().doNotify());
 		mListHook.add(new Hook("media", "Camera.takePicture", "CAMERA", 1, "2.2.3", "takePicture").unsafe().doNotify());
 		mListHook.add(new Hook("media", "MediaRecorder.start", "RECORD_AUDIO,RECORD_VIDEO", 1, "2.2.3", "setOutputFile").unsafe().doNotify());
@@ -475,7 +480,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "startActivityIfNeeded", "", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "startNextMatchingActivity", "", 1, null, null).notAOSP(19));
 
-		// ActivityManager // ActivityManagerService
+		// ActivityManager(Service)
 		mListHook.add(new Hook(null, "Srv_startActivities", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_startActivity", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_startActivityAsUser", "", 19, null, null).AOSP(19));
@@ -494,18 +499,24 @@ public class Meta {
 		// Application
 		mListHook.add(new Hook(null, "onCreate", "", 1, null, null));
 
+		// AudioRecord
+		mListHook.add(new Hook(null, "Audio.stop", "", 3, null, null));
+
 		// Binder
 		mListHook.add(new Hook(null, "execTransact", "", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "transact", "", 1, null, null).notAOSP(19));
 
-		// ClipboardManager / ClipboardService
+		// ClipboardManager/Service
 		mListHook.add(new Hook(null, "removePrimaryClipChangedListener", "", 11, null, null));
 		mListHook.add(new Hook(null, "Srv_removePrimaryClipChangedListener", "", 11, null, null));
 
-		// Provider
+		// Content resolvers
 		mListHook.add(new Hook(null, "query", "", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "Srv_call", "", 1, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_query", "", 1, null, null).AOSP(19));
+
+		// Camera
+		mListHook.add(new Hook(null, "Camera.stopPreview", "", 1, null, null));
 
 		// ContextImpl
 		mListHook.add(new Hook(null, "getPackageManager", "", 1, null, null).notAOSP(19));
@@ -516,12 +527,16 @@ public class Meta {
 		// IntentFirewall
 		mListHook.add(new Hook(null, "checkIntent", "", 19, null, null));
 
-		// LocationManager / LocationManagerService
+		// LocationManager/Service
 		mListHook.add(new Hook(null, "removeUpdates", "", 3, null, null));
 		mListHook.add(new Hook(null, "Srv_removeUpdates", "", 19, null, null));
 		mListHook.add(new Hook(null, "Srv_removeGeofence", "", 19, null, null));
 		mListHook.add(new Hook(null, "Srv_removeGpsStatusListener", "", 19, null, null));
 		mListHook.add(new Hook(null, "MapV1.disableMyLocation", "", 1, null, null).optional());
+
+		// MediaRecorder
+		mListHook.add(new Hook(null, "MediaRecorder.prepare", "", 1, null, null));
+		mListHook.add(new Hook(null, "MediaRecorder.stop", "", 1, null, null));
 
 		// Resources
 		mListHook.add(new Hook(null, "updateConfiguration", "", 1, null, null));
@@ -537,10 +552,8 @@ public class Meta {
 		mListHook.add(new Hook(null, "removeView", "", 1, null, null));
 		mListHook.add(new Hook(null, "updateViewLayout", "", 1, null, null));
 
-		// ActivityRecognitionClient
+		// LocationClient / ActivityRecognitionClient
 		mListHook.add(new Hook(null, "GMS.removeActivityUpdates", "", 1, null, null));
-
-		// LocationClient
 		mListHook.add(new Hook(null, "GMS.removeGeofences", "", 1, null, null).optional());
 		mListHook.add(new Hook(null, "GMS.removeLocationUpdates", "", 1, null, null).optional());
 

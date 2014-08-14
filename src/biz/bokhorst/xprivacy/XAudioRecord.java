@@ -3,8 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 public class XAudioRecord extends XHook {
 	private Methods mMethod;
 
@@ -19,27 +17,34 @@ public class XAudioRecord extends XHook {
 
 	// public void startRecording()
 	// public void startRecording(MediaSyncEvent syncEvent)
+	// public void stop()
 	// frameworks/base/media/java/android/media/AudioRecord.java
 	// http://developer.android.com/reference/android/media/AudioRecord.html
 
 	private enum Methods {
-		startRecording
+		startRecording, stop
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XAudioRecord(Methods.startRecording, PrivacyManager.cMedia));
+		listHook.add(new XAudioRecord(Methods.stop, null));
 		return listHook;
 	}
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.startRecording) {
+		switch (mMethod) {
+		case startRecording:
 			if (isRestricted(param))
 				param.setResult(null);
+			break;
 
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		case stop:
+			if (isRestricted(param, PrivacyManager.cMedia, "Audio.startRecording"))
+				param.setResult(null);
+			break;
+		}
 	}
 
 	@Override

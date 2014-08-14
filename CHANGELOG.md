@@ -28,7 +28,12 @@ Changelog
 
 **Next release**
 
-* Added restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
+* Restored restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
+* Restored restriction *Camera.setPreviewCallback*
+* Added restrictions *Camera.setPreviewCallbackWithBuffer*, *Camera.setPreviewDisplay*, *Camera.setPreviewTexture* and *Camera.setOneShotPreviewCallback*
+* Handling *Camera.stopPreview*
+* Handling *MediaRecorder.prepare* and *MediaRecorder.stop*
+* Handling *Audio.stop*
 * Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -49,7 +54,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Version 2.99.20 BETA**
 
-* Added restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
+* Restored restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
 
 **Version 2.99.19 BETA**
 
