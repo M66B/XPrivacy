@@ -52,6 +52,14 @@ You can install XPrivacy 2.99.x by following these steps:
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
+**Version 2.99.21 BETA**
+
+* Restored restriction *Camera.setPreviewCallback*
+* Added restrictions *Camera.setPreviewCallbackWithBuffer*, *Camera.setPreviewDisplay*, *Camera.setPreviewTexture* and *Camera.setOneShotPreviewCallback*
+* Handling *Camera.stopPreview*
+* Handling *MediaRecorder.prepare* and *MediaRecorder.stop*
+* Handling *Audio.stop*
+
 **Version 2.99.20 BETA**
 
 * Restored restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
