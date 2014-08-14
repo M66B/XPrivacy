@@ -223,6 +223,7 @@
                     android:layout_height="wrap_content"
                     android:entries="@array/once"
                     android:paddingLeft="6dip"
+                    android:spinnerMode="dropdown"
                     android:tag="details"
                     android:visibility="gone" />
             </LinearLayout>
