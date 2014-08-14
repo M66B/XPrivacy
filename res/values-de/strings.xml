@@ -156,7 +156,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_function">Funktion:</string>
     <string name="title_parameters">Parameter:</string>
     <string name="title_applycat">Auf die gesamte Kategorie anwenden</string>
-    <string name="title_once">Once for</string>
+    <string name="title_once">Nur einmalig für</string>
     <string name="title_whitelist">Positivliste \'%1$s\'</string>
     <string name="title_allow">Zulassen</string>
     <string name="title_deny">Blockieren</string>
@@ -186,7 +186,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_update_downloading">Update wird heruntergeladen</string>
     <string name="title_update_install">Bestätigen Sie, um das Update zu installieren</string>
     <string name="title_update_none">Keine Updates verfügbar</string>
-    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider upgrading to XPrivacy 3</string>
+    <string name="title_update_legacy">XPrivacy 2 wird nicht mehr länger unterstützt, bitte machen Sie ein Upgrade auf XPrivacy 3</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>
