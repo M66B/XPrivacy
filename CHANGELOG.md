@@ -29,6 +29,7 @@ Changelog
 **Next release**
 
 * Added restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
+* Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
