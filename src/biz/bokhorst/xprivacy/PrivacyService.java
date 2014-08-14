@@ -2002,6 +2002,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				+ category + " until=" + new Date(result.time));
 
 		CRestriction key = new CRestriction(result, null);
+		key.setExpiry(result.time);
 		if (category) {
 			key.setMethodName(null);
 			key.setExtra(null);
