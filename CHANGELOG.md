@@ -54,6 +54,11 @@ You can install XPrivacy 2.99.x by following these steps:
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
+**Version 2.99.23 BETA**
+
+* Fixed a problem reported through the debug info
+	* *Unknown method=Camera.stopPreview*
+
 **Version 2.99.22 BETA**
 
 * Option to select duration to allow/deny once ([issue](/../../issues/1873))
