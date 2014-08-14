@@ -403,7 +403,6 @@ public class Requirements {
 							StringBuilder sb = new StringBuilder(text);
 							sb.insert(0, "\r\n");
 							sb.insert(0, String.format("Override: %s\r\n", System.getenv("XPrivacy.AOSP")));
-							sb.insert(0, "\r\n");
 							sb.insert(0, String.format("Id: %s\r\n", Build.ID));
 							sb.insert(0, String.format("Display: %s\r\n", Build.DISPLAY));
 							sb.insert(0, String.format("Host: %s\r\n", Build.HOST));
@@ -420,7 +419,7 @@ public class Requirements {
 							Intent sendEmail = new Intent(Intent.ACTION_SEND);
 							sendEmail.setType("message/rfc822");
 							sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-							sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy " + ourVersion + " support data");
+							sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy " + ourVersion + " debug info");
 							sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
 							try {
 								context.startActivity(sendEmail);

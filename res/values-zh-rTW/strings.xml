@@ -156,7 +156,7 @@
     <string name="title_function">功能：</string>
     <string name="title_parameters">參數：</string>
     <string name="title_applycat">套用至整個限制分類</string>
-    <string name="title_once"> %s 秒後再次詢問</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">白名單 \'%s\'</string>
     <string name="title_allow">允許</string>
     <string name="title_deny">封鎖</string>

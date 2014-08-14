@@ -156,7 +156,7 @@
     <string name="title_function">Funkcija:</string>
     <string name="title_parameters">Parametri:</string>
     <string name="title_applycat">Uveljavi za celotno kategorijo</string>
-    <string name="title_once">Enkrat na %1$s sekund</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">Dodaj \'%1$s\' na belo listo</string>
     <string name="title_allow">Dovoli</string>
     <string name="title_deny">Zavrni</string>

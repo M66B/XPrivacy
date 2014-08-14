@@ -155,7 +155,7 @@
     <string name="title_function">Funkcija:</string>
     <string name="title_parameters">Parametri:</string>
     <string name="title_applycat">Primijeni na cijelu kategoriju</string>
-    <string name="title_once">Jednom svakih %1$s sekundi</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">Dodaj na listu dopuštenih/ograničenih &#8216;%1$s&#8217;</string>
     <string name="title_allow">Dopusti</string>
     <string name="title_deny">Zabrani</string>

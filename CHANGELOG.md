@@ -28,13 +28,15 @@ Changelog
 
 **Next release**
 
-* Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
-	* Since these functions were moved recently, it is not possible to update them
-* Performance optimizations (introduced transient values)
-* Fixed all problems reported through the support data
-* Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
+* Restored restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
+* Restored restriction *Camera.setPreviewCallback*
+* Added restrictions *Camera.setPreviewCallbackWithBuffer*, *Camera.setPreviewDisplay*, *Camera.setPreviewTexture* and *Camera.setOneShotPreviewCallback*
+* Handling *Camera.stopPreview*
+* Handling *MediaRecorder.prepare* and *MediaRecorder.stop*
+* Handling *Audio.stop*
+* Option to select duration to allow/deny once ([issue](/../../issues/1873))
 * Updated Dutch translation
-* Updated Italian translation
+* Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -51,6 +53,31 @@ You can install XPrivacy 2.99.x by following these steps:
 * Use the menu *Check for updates*
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+
+**Version 2.99.23 BETA**
+
+* Fixed a problem reported through the debug info
+	* *Unknown method=Camera.stopPreview*
+
+**Version 2.99.22 BETA**
+
+* Option to select duration to allow/deny once ([issue](/../../issues/1873))
+
+**Version 2.99.21 BETA**
+
+* Restored restriction *Camera.setPreviewCallback*
+* Added restrictions *Camera.setPreviewCallbackWithBuffer*, *Camera.setPreviewDisplay*, *Camera.setPreviewTexture* and *Camera.setOneShotPreviewCallback*
+* Handling *Camera.stopPreview*
+* Handling *MediaRecorder.prepare* and *MediaRecorder.stop*
+* Handling *Audio.stop*
+
+**Version 2.99.20 BETA**
+
+* Restored restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
+
+**Version 2.99.19 BETA**
+
+* Local transient values only
 
 **Version 2.99.18 BETA**
 
@@ -109,6 +136,16 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Updated Slovak translation
 
 <a name="xprivacy2"></a>
+**Version 2.2.8 BETA**
+
+* Moved *getAllByName*, *getByAddress* and *getByName* to *internet*
+	* Since these functions were moved recently, it is not possible to update them
+* Performance optimizations (introduced transient values)
+* Fixed all problems reported through the support data
+* Allow own uid for *getPackagesForUid* and *queryContentProviders* ([issue](/../../issues/1871))
+* Updated Dutch translation
+* Updated Italian translation
+
 **Version 2.2.7 BETA**
 
 * Removed restrictions *MapV1.getLatitudeE6* and *MapV1.getLongitudeE6*, since these are not needed and bad for performance ([issue](/../../issues/1862))

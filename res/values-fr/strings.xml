@@ -156,7 +156,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_function">Fonction :</string>
     <string name="title_parameters">Paramètres :</string>
     <string name="title_applycat">Appliquer à toute la catégorie</string>
-    <string name="title_once">Une fois pendant %1$s secondes</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">Se souvenir de \'%1$s\'</string>
     <string name="title_allow">Permettre</string>
     <string name="title_deny">Bloquer</string>

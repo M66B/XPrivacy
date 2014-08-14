@@ -135,6 +135,7 @@ public class PrivacyManager {
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";
+	public final static String cSettingODOnceDuration = "ODOnceDuration";
 
 	// Special value names
 	public final static String cValueRandom = "#Random#";

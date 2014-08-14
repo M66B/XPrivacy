@@ -156,7 +156,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="title_function">Function:</string>
     <string name="title_parameters">Parameters:</string>
     <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for %s seconds</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">White/blacklist \'%s\'</string>
     <string name="title_allow">Allow</string>
     <string name="title_deny">Deny</string>
