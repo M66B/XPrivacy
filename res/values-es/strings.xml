@@ -156,7 +156,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_function">Función:</string>
     <string name="title_parameters">Parámetros:</string>
     <string name="title_applycat">Aplicar a toda la categoría</string>
-    <string name="title_once">Recordar por %s segundos</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">White/blacklist \'%s\'</string>
     <string name="title_allow">Permitir</string>
     <string name="title_deny">Denegar</string>

@@ -203,13 +203,29 @@
                 android:visibility="gone" >
             </CheckBox>
 
-            <CheckBox
-                android:id="@+id/cbOnce"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:tag="details"
-                android:visibility="gone" >
-            </CheckBox>
+                android:orientation="horizontal" >
+
+                <CheckBox
+                    android:id="@+id/cbOnce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:tag="details"
+                    android:text="@string/title_once"
+                    android:visibility="gone" >
+                </CheckBox>
+
+                <Spinner
+                    android:id="@+id/spOnce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/once"
+                    android:paddingLeft="6dip"
+                    android:tag="details"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/llWhiteList"

@@ -34,6 +34,8 @@ Changelog
 * Handling *Camera.stopPreview*
 * Handling *MediaRecorder.prepare* and *MediaRecorder.stop*
 * Handling *Audio.stop*
+* Option to select time to allow/deny once ([issue](/../../issues/1873))
+* Updated Dutch translation
 * Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

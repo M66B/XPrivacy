@@ -155,7 +155,7 @@
     <string name="title_function">Chức năng:</string>
     <string name="title_parameters">Các thông số:</string>
     <string name="title_applycat">Áp dụng cho toàn bộ danh mục</string>
-    <string name="title_once">Một lần cho %s giây</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">Danh sách cho phép \'%s\'</string>
     <string name="title_allow">Cho phép</string>
     <string name="title_deny">Từ chối</string>

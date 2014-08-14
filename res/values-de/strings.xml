@@ -156,7 +156,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_function">Funktion:</string>
     <string name="title_parameters">Parameter:</string>
     <string name="title_applycat">Auf die gesamte Kategorie anwenden</string>
-    <string name="title_once">Nur einmal für %1$s Sekunden</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">Positivliste \'%1$s\'</string>
     <string name="title_allow">Zulassen</string>
     <string name="title_deny">Blockieren</string>

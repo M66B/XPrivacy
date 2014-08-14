@@ -154,7 +154,7 @@
     <string name="title_function">Funksjon:</string>
     <string name="title_parameters">Parametere:</string>
     <string name="title_applycat">Bruk for hele kategorien</string>
-    <string name="title_once">En gang i %s sekunder</string>
+    <string name="title_once">Once for</string>
     <string name="title_whitelist">Positivliste \'%s\'</string>
     <string name="title_allow">Tillat</string>
     <string name="title_deny">Nekt</string>

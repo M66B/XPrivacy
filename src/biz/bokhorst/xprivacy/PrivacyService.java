@@ -59,6 +59,7 @@ import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
 import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -1502,9 +1503,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 						}
 					}
 
-					// Build dialog view
 					final OnDemandDialogHolder holder = new OnDemandDialogHolder();
-					holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, holder, oResult);
 
 					// Build dialog parameters
 					final WindowManager.LayoutParams params = new WindowManager.LayoutParams();
@@ -1525,49 +1524,67 @@ public class PrivacyService extends IPrivacyService.Stub {
 					mHandler.post(new Runnable() {
 						@Override
 						public void run() {
-							wm.addView(holder.dialog, params);
-						}
-					});
+							try {
+								// Build dialog
+								holder.dialog = getOnDemandView(restriction, hook, appInfo, result, context, holder,
+										oResult);
 
-					// Update progress bar
-					Runnable runProgress = new Runnable() {
-						@Override
-						public void run() {
-							// Update progress bar
-							ProgressBar progressBar = (ProgressBar) holder.dialog.findViewById(R.id.pbProgress);
-							if (holder.dialog != null && holder.dialog.isShown() && progressBar.getProgress() > 0) {
-								progressBar.incrementProgressBy(-1);
-								mHandler.postDelayed(this, 50);
+								// Handle reset button
+								((Button) holder.dialog.findViewById(R.id.btnReset))
+										.setOnClickListener(new View.OnClickListener() {
+											@Override
+											public void onClick(View view) {
+												((ProgressBar) holder.dialog.findViewById(R.id.pbProgress))
+														.setProgress(cMaxOnDemandDialog * 20);
+												holder.reset = true;
+												holder.latch.countDown();
+											}
+										});
+
+								// Make dialog visible
+								wm.addView(holder.dialog, params);
+
+								// Update progress bar
+								Runnable runProgress = new Runnable() {
+									@Override
+									public void run() {
+										if (holder.dialog != null && holder.dialog.isShown()) {
+											// Update progress bar
+											ProgressBar progressBar = (ProgressBar) holder.dialog
+													.findViewById(R.id.pbProgress);
+											if (progressBar.getProgress() > 0) {
+												progressBar.incrementProgressBy(-1);
+												mHandler.postDelayed(this, 50);
+											}
+
+											// Check if activity manager locked
+											if (isAMLocked()) {
+												Util.log(null, Log.WARN, "On demand dialog locked " + restriction);
+												((Button) holder.dialog.findViewById(R.id.btnDontKnow)).callOnClick();
+											}
+										}
+									}
+								};
+								mHandler.postDelayed(runProgress, 50);
+
+								// Enabled buttons after one second
+								boolean repeat = (SystemClock.elapsedRealtime() - mOnDemandLastAnswer < 1000);
+								mHandler.postDelayed(new Runnable() {
+									@Override
+									public void run() {
+										if (holder.dialog != null && holder.dialog.isShown()) {
+											holder.dialog.findViewById(R.id.btnAllow).setEnabled(true);
+											holder.dialog.findViewById(R.id.btnDontKnow).setEnabled(true);
+											holder.dialog.findViewById(R.id.btnDeny).setEnabled(true);
+										}
+									}
+								}, repeat ? 0 : 1000);
+
+							} catch (NameNotFoundException ex) {
+								Util.log(null, Log.WARN, ex.toString());
+							} catch (Throwable ex) {
+								Util.bug(null, ex);
 							}
-
-							// Check if activity manager locked
-							if (isAMLocked()) {
-								Util.log(null, Log.WARN, "On demand dialog locked " + restriction);
-								((Button) holder.dialog.findViewById(R.id.btnDontKnow)).callOnClick();
-							}
-						}
-					};
-					mHandler.postDelayed(runProgress, 50);
-
-					// Enabled buttons after one second
-					boolean repeat = (SystemClock.elapsedRealtime() - mOnDemandLastAnswer < 1000);
-					mHandler.postDelayed(new Runnable() {
-						@Override
-						public void run() {
-							holder.dialog.findViewById(R.id.btnAllow).setEnabled(true);
-							holder.dialog.findViewById(R.id.btnDontKnow).setEnabled(true);
-							holder.dialog.findViewById(R.id.btnDeny).setEnabled(true);
-						}
-					}, repeat ? 0 : 1000);
-
-					// Handle reset button
-					((Button) holder.dialog.findViewById(R.id.btnReset)).setOnClickListener(new View.OnClickListener() {
-						@Override
-						public void onClick(View view) {
-							((ProgressBar) holder.dialog.findViewById(R.id.pbProgress))
-									.setProgress(cMaxOnDemandDialog * 20);
-							holder.reset = true;
-							holder.latch.countDown();
 						}
 					});
 
@@ -1601,8 +1618,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 			} finally {
 				Binder.restoreCallingIdentity(token);
 			}
-		} catch (NameNotFoundException ex) {
-			Util.log(null, Log.WARN, ex.toString());
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -1632,6 +1647,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 		final CheckBox cbExpert = (CheckBox) view.findViewById(R.id.cbExpert);
 		final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 		final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
+		final Spinner spOnce = (Spinner) view.findViewById(R.id.spOnce);
 		final LinearLayout llWhiteList = (LinearLayout) view.findViewById(R.id.llWhiteList);
 		final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
 		final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
@@ -1691,8 +1707,9 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 		// Once
 		cbOnce.setChecked(once);
-		cbOnce.setText(String.format(resources.getString(R.string.title_once),
-				PrivacyManager.cRestrictionCacheTimeoutMs / 1000));
+		int osel = Integer
+				.parseInt(getSetting(new PSetting(userId, "", PrivacyManager.cSettingODOnceDuration, "0")).value);
+		spOnce.setSelection(osel);
 
 		// Whitelisting
 		if (hook != null && hook.whitelist() != null && restriction.extra != null) {
@@ -1834,7 +1851,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 					setSettingBool(userId, "", PrivacyManager.cSettingODOnce, cbOnce.isChecked());
 
 					if (cbOnce.isChecked())
-						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
+						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult, spOnce);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), false);
 				}
@@ -1848,7 +1865,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				// Deny once
 				result.restricted = !(hook != null && hook.isDangerous());
 				result.asked = true;
-				onDemandOnce(restriction, false, result, oResult);
+				onDemandOnce(restriction, false, result, oResult, spOnce);
 				holder.latch.countDown();
 			}
 		});
@@ -1873,7 +1890,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 					setSettingBool(userId, "", PrivacyManager.cSettingODOnce, cbOnce.isChecked());
 
 					if (cbOnce.isChecked())
-						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult);
+						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult, spOnce);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), true);
 				}
@@ -1954,12 +1971,35 @@ public class PrivacyService extends IPrivacyService.Stub {
 		}
 	}
 
-	private void onDemandOnce(PRestriction restriction, boolean category, PRestriction result, OnDemandResult oResult) {
-		Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction + " category="
-				+ category);
-
+	private void onDemandOnce(PRestriction restriction, boolean category, PRestriction result, OnDemandResult oResult,
+			Spinner spOnce) {
 		oResult.once = true;
-		result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
+
+		// Get duration
+		String value = (String) spOnce.getSelectedItem();
+		if (value == null)
+			result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
+		else {
+			char unit = value.charAt(value.length() - 1);
+			value = value.substring(0, value.length() - 1);
+			if (unit == 's')
+				result.time = new Date().getTime() + Integer.parseInt(value) * 1000;
+			else if (unit == 'm')
+				result.time = new Date().getTime() + Integer.parseInt(value) * 60 * 1000;
+			else
+				result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
+
+			try {
+				int userId = Util.getUserId(restriction.uid);
+				String sel = Integer.toString(spOnce.getSelectedItemPosition());
+				setSettingInternal(new PSetting(userId, "", PrivacyManager.cSettingODOnceDuration, sel));
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
+		}
+
+		Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " once " + restriction + " category="
+				+ category + " until=" + new Date(result.time));
 
 		CRestriction key = new CRestriction(result, null);
 		if (category) {
