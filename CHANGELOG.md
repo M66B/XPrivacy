@@ -45,10 +45,12 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.24 BETA**
+
 * Fixed asking again for allow/deny once longer than 15 seconds ([issue](/../../issues/1873))
 * Force drop down mode for on demand duration
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.23 BETA**
 
