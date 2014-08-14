@@ -36,6 +36,7 @@ Changelog
 * Handling *Audio.stop*
 * Option to select duration to allow/deny once ([issue](/../../issues/1873))
 * Updated Dutch translation
+* Updated German translation
 * Updated Japanese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -58,6 +59,8 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 * Fixed a problem reported through the debug info
 	* *Unknown method=Camera.stopPreview*
+* Updated Dutch translation
+* Updated Japanese translation
 
 **Version 2.99.22 BETA**
 
