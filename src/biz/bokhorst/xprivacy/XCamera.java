@@ -57,7 +57,7 @@ public class XCamera extends XHook {
 			break;
 
 		case stopPreview:
-			if (isRestricted(param, PrivacyManager.cMedia, "Camera.stopPreview"))
+			if (isRestricted(param, PrivacyManager.cMedia, "Camera.startPreview"))
 				param.setResult(null);
 			break;
 		}
