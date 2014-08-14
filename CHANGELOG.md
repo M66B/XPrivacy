@@ -28,12 +28,6 @@ Changelog
 
 **Next release**
 
-* Restored restriction *MediaRecorder.setOutputFile* ([issue](/../../issues/1874))
-* Restored restriction *Camera.setPreviewCallback*
-* Added restrictions *Camera.setPreviewCallbackWithBuffer*, *Camera.setPreviewDisplay*, *Camera.setPreviewTexture* and *Camera.setOneShotPreviewCallback*
-* Handling *Camera.stopPreview*
-* Handling *MediaRecorder.prepare* and *MediaRecorder.stop*
-* Handling *Audio.stop*
 * Option to select duration to allow/deny once ([issue](/../../issues/1873))
 * Updated Dutch translation
 * Updated German translation
