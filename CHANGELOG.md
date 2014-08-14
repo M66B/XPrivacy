@@ -34,7 +34,7 @@ Changelog
 * Handling *Camera.stopPreview*
 * Handling *MediaRecorder.prepare* and *MediaRecorder.stop*
 * Handling *Audio.stop*
-* Option to select time to allow/deny once ([issue](/../../issues/1873))
+* Option to select duration to allow/deny once ([issue](/../../issues/1873))
 * Updated Dutch translation
 * Updated Japanese translation
 
@@ -53,6 +53,10 @@ You can install XPrivacy 2.99.x by following these steps:
 * Use the menu *Check for updates*
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+
+**Version 2.99.22 BETA**
+
+* Option to select duration to allow/deny once ([issue](/../../issues/1873))
 
 **Version 2.99.21 BETA**
 
