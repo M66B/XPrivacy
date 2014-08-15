@@ -11,7 +11,6 @@ import java.util.WeakHashMap;
 import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
-import android.util.Log;
 
 public class XLocationClient extends XHook {
 	private Methods mMethod;
@@ -57,18 +56,22 @@ public class XLocationClient extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.addGeofences) {
+		switch (mMethod) {
+		case addGeofences:
 			if (isRestricted(param))
 				param.setResult(null);
+			break;
 
-		} else if (mMethod == Methods.getLastLocation) {
+		case getLastLocation:
 			// Do nothing
+			break;
 
-		} else if (mMethod == Methods.removeGeofences) {
+		case removeGeofences:
 			if (isRestricted(param, PrivacyManager.cLocation, "GMS.addGeofences"))
 				param.setResult(null);
+			break;
 
-		} else if (mMethod == Methods.removeLocationUpdates) {
+		case removeLocationUpdates:
 			if (param.args.length > 0)
 				if (param.args[0] instanceof PendingIntent) {
 					if (isRestricted(param, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
@@ -78,8 +81,9 @@ public class XLocationClient extends XHook {
 						if (mMapProxy.containsKey(param.args[0]))
 							param.args[0] = mMapProxy.get(param.args[0]);
 					}
+			break;
 
-		} else if (mMethod == Methods.requestLocationUpdates) {
+		case requestLocationUpdates:
 			if (param.args.length > 1)
 				if (isRestricted(param))
 					if (param.args[1] instanceof PendingIntent)
@@ -97,29 +101,33 @@ public class XLocationClient extends XHook {
 						}
 						param.args[1] = proxy;
 					}
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.addGeofences || mMethod == Methods.removeGeofences) {
+		switch (mMethod) {
+		case addGeofences:
+		case removeGeofences:
 			// Do nothing
+			break;
 
-		} else if (mMethod == Methods.getLastLocation) {
+		case getLastLocation:
 			Location location = (Location) param.getResult();
 			if (location != null && isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+			break;
 
-		} else if (mMethod == Methods.removeLocationUpdates) {
+		case removeLocationUpdates:
 			// Do nothing
+			break;
 
-		} else if (mMethod == Methods.requestLocationUpdates) {
+		case requestLocationUpdates:
 			// Do nothing
+			break;
 
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		}
 	}
 
 	private class OnLocationChangedHandler implements InvocationHandler {
