@@ -50,7 +50,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Version 2.99.26 BETA**
 
 * Added restriction *GMS5.getLastLocation* and *GMS5.requestLocationUpdates* ([issue](/../../issues/1774))
-* Added restriction *GMS.requestActivityUpdates*
+* Added restriction *GMS.requestActivityUpdates* ([issue](/../../issues/1774))
 
 **Version 2.99.25 BETA**
 
