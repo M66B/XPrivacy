@@ -102,10 +102,10 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="restrict_view">Vue (navigateur)</string>
     <string name="restrict_help_view">Va restreindre l\'accès aux informations vue et les actions vue</string>
     <string name="restrict_help_system">Va restreindre l\'accès aux informations du système, comme les applis installées</string>
-    <string name="restrict_help_shell">Va restreindre l\'accès à des commandes shell, y compris les commandes de super-utilisateur</string>
+    <string name="restrict_help_shell">Va restreindre l\'accès aux commandes shell, y compris les commandes de super-utilisateur</string>
     <string name="restrict_help_storage">Va restreindre l\'accès au stockage, comme les fichiers sur votre carte SD ou la mémoire interne</string>
     <string name="restrict_help_sensors">Va restreindre l\'accès aux capteurs, comme le détecteur de mouvement</string>
-    <string name="restrict_help_phone">Va restreindre l\'accès aux informations du téléphone, comme votre numéro</string>
+    <string name="restrict_help_phone">Va restreindre l\'accès aux informations du téléphone, comme votre numéro de téléphone</string>
     <string name="restrict_help_overlay">Va restreindre les fenêtres superposées pour empêcher l\'hameçonnage</string>
     <string name="restrict_help_notifications">Va restreindre l\'accès aux notifications du système et des applis et la messagerie en nuage Google</string>
     <string name="restrict_help_nfc">Va restreindre l\'accès à la communication en champ proche</string>
