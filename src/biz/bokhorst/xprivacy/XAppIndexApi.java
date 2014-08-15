@@ -36,7 +36,7 @@ public class XAppIndexApi extends XHook {
 
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
-		Util.log(null, Log.WARN, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
+		Util.log(null, Log.INFO, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
 
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XAppIndexApi(Methods.viewEnd, null, className));
@@ -49,12 +49,12 @@ public class XAppIndexApi extends XHook {
 		switch (mMethod) {
 		case viewEnd:
 			if (isRestricted(param, PrivacyManager.cView, "GMS5.view"))
-				param.setResult(null);
+				param.setResult(XGoogleApiClient.getPendingResult(param.thisObject.getClass().getClassLoader()));
 			break;
 
 		case view:
 			if (isRestricted(param))
-				param.setResult(null);
+				param.setResult(XGoogleApiClient.getPendingResult(param.thisObject.getClass().getClassLoader()));
 			break;
 		}
 	}
