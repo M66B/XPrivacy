@@ -473,7 +473,7 @@ public class Meta {
 		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", Intent.ACTION_VIEW).AOSP(19).doNotify().whitelist(cTypeUrl));
 
-		mListHook.add(new Hook("view", "GMS5.view", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("view", "GMS5.view", "", 1, "2.99.27", null).unsafe());
 
 		// AccountManager
 		mListHook.add(new Hook(null, "removeOnAccountsUpdatedListener", "", 5, null, null));
