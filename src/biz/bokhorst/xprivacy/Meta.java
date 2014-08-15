@@ -473,6 +473,8 @@ public class Meta {
 		mListHook.add(new Hook("view", Intent.ACTION_VIEW, "", 1, null, null).notAOSP(19).doNotify().whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "Srv_" + Intent.ACTION_VIEW, "", 19, "2.99", Intent.ACTION_VIEW).AOSP(19).doNotify().whitelist(cTypeUrl));
 
+		mListHook.add(new Hook("view", "GMS5.view", "", 1, null, null).unsafe());
+
 		// AccountManager
 		mListHook.add(new Hook(null, "removeOnAccountsUpdatedListener", "", 5, null, null));
 
@@ -504,6 +506,9 @@ public class Meta {
 		mListHook.add(new Hook(null, "goingToSleep", "", 16, null, null));
 		mListHook.add(new Hook(null, "wakingUp", "", 16, null, null));
 		mListHook.add(new Hook(null, "shutdown", "", 15, null, null));
+
+		// AppIndexApi
+		mListHook.add(new Hook(null, "GMS5.viewEnd", "", 1, null, null));
 
 		// Application
 		mListHook.add(new Hook(null, "onCreate", "", 1, null, null));
