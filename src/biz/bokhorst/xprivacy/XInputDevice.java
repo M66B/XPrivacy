@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
-import android.util.Log;
 
 public class XInputDevice extends XHook {
 	private Methods mMethod;
@@ -40,12 +39,13 @@ public class XInputDevice extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.getDescriptor || mMethod == Methods.getName) {
+		switch (mMethod) {
+		case getDescriptor:
+		case getName:
 			if (isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "DeviceDescriptor"));
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	@Override

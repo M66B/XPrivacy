@@ -98,6 +98,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// TODO: Cydia: Build.SERIAL
 		// TODO: Cydia: android.provider.Settings.Secure
+		// TODO: Cydia: Phone instances
 
 		// Providers
 		for (final String className : XContentResolver.cProviderClassName)
@@ -107,14 +108,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					hookAll(XContentResolver.getInstances(className), clazz.getClassLoader(), mSecret);
 				}
 			});
-
-		// Phone interface manager
-		MS.hookClassLoad("com.android.phone", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XTelephonyManager.getPhoneInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
 
 		// Advertising Id
 		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient", new MS.ClassLoadHook() {
@@ -129,6 +122,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			@Override
 			public void classLoaded(Class<?> clazz) {
 				hookAll(XActivityRecognitionClient.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
+
+		// GoogleApiClient.Builder
+		MS.hookClassLoad("com.google.android.gms.common.api.GoogleApiClient", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XGoogleApiClient.getInstances(), clazz.getClassLoader(), mSecret);
 			}
 		});
 
@@ -358,24 +359,17 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Util.bug(null, ex);
 			}
 
-		// Providers
-		hookAll(XContentResolver.getPackageInstances(packageName, classLoader), classLoader, secret);
-
-		// Phone interface manager
-		if ("com.android.phone".equals(packageName))
-			hookAll(XTelephonyManager.getPhoneInstances(), classLoader, secret);
+		// Activity recognition
+		try {
+			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, classLoader);
+			hookAll(XActivityRecognitionClient.getInstances(), classLoader, secret);
+		} catch (Throwable ignored) {
+		}
 
 		// Advertising Id
 		try {
 			Class.forName("com.google.android.gms.ads.identifier.AdvertisingIdClient$Info", false, classLoader);
 			hookAll(XAdvertisingIdClientInfo.getInstances(), classLoader, secret);
-		} catch (Throwable ignored) {
-		}
-
-		// User activity
-		try {
-			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, classLoader);
-			hookAll(XActivityRecognitionClient.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}
 
@@ -386,10 +380,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		} catch (Throwable ignored) {
 		}
 
-		// Location client
+		// GoogleApiClient.Builder
 		try {
-			Class.forName("com.google.android.gms.location.LocationClient", false, classLoader);
-			hookAll(XLocationClient.getInstances(), classLoader, secret);
+			Class.forName("com.google.android.gms.common.api.GoogleApiClient$Builder", false, classLoader);
+			hookAll(XGoogleApiClient.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}
 
@@ -406,6 +400,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hookAll(XGoogleMapV2.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}
+
+		// Location client
+		try {
+			Class.forName("com.google.android.gms.location.LocationClient", false, classLoader);
+			hookAll(XLocationClient.getInstances(), classLoader, secret);
+		} catch (Throwable ignored) {
+		}
+
+		// Phone interface manager
+		if ("com.android.phone".equals(packageName))
+			hookAll(XTelephonyManager.getPhoneInstances(), classLoader, secret);
+
+		// Providers
+		hookAll(XContentResolver.getPackageInstances(packageName, classLoader), classLoader, secret);
 	}
 
 	public static void handleGetSystemService(String name, String className, String secret) {

@@ -78,7 +78,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 390;
+	private static final int cCurrentVersion = 392;
 	private static final String cServiceName = "xprivacy386";
 
 	private SQLiteDatabase mDb = null;
@@ -430,9 +430,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 				else if (hook.getFrom() != null) {
 					String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
 					if (new Version(version).compareTo(hook.getFrom()) < 0)
-						if (hook.getReplacedRestriction() == null)
+						if (hook.getReplacedRestriction() == null) {
+							Util.log(null, Log.WARN, "Disabled version=" + version + " from=" + hook.getFrom()
+									+ " hook=" + hook);
 							return mresult;
-						else {
+						} else {
 							restriction.restrictionName = hook.getReplacedRestriction();
 							restriction.methodName = hook.getReplacedMethod();
 							Util.log(null, Log.WARN, "Checking " + restriction + " instead of " + hook);
@@ -2002,6 +2004,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				+ category + " until=" + new Date(result.time));
 
 		CRestriction key = new CRestriction(result, null);
+		key.setExpiry(result.time);
 		if (category) {
 			key.setMethodName(null);
 			key.setExtra(null);
