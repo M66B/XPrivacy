@@ -367,6 +367,7 @@ public class Meta {
 
 		mListHook.add(new Hook("sensors", "getDefaultSensor", "", 3, null, null).unsafe().dangerous());
 		mListHook.add(new Hook("sensors", "getSensorList", "", 3, null, null).unsafe().dangerous());
+		mListHook.add(new Hook("sensors", "registerListener", "", 3, "2.99.27", null).unsafe());
 		mListHook.add(new Hook("sensors", "acceleration", "", 3, null, null).unsafe());
 		mListHook.add(new Hook("sensors", "gravity", "", 3, null, null).unsafe());
 		mListHook.add(new Hook("sensors", "humidity", "", 3, null, null).unsafe());

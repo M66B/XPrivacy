@@ -11,6 +11,8 @@ public class XSensorManager extends XHook {
 	private String mClassName;
 	private static final String cClassName = "android.hardware.SensorManager";
 
+	private static final int cMaxRateUs = (int) (0.01 * 1000 * 1000); // 100 Hz
+
 	private XSensorManager(Methods method, String restrictionName, String className) {
 		super(restrictionName, method.name(), null);
 		mMethod = method;
@@ -25,6 +27,10 @@ public class XSensorManager extends XHook {
 
 	// public Sensor getDefaultSensor(int type)
 	// public List<Sensor> getSensorList(int type)
+	// boolean registerListener(SensorEventListener listener, Sensor sensor, int rateUs, int maxBatchReportLatencyUs)
+	// boolean registerListener(SensorEventListener listener, Sensor sensor, int rateUs, Handler handler)
+	// boolean registerListener(SensorEventListener listener, Sensor sensor, int rateUs, int maxBatchReportLatencyUs, Handler handler)
+	// boolean registerListener(SensorEventListener listener, Sensor sensor, int rateUs)
 	// frameworks/base/core/java/android/hardware/SensorManager.java
 	// http://developer.android.com/reference/android/hardware/SensorManager.html
 	// http://developer.android.com/reference/android/hardware/Sensor.html
@@ -32,7 +38,7 @@ public class XSensorManager extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		getDefaultSensor, getSensorList
+		getDefaultSensor, getSensorList, registerListener
 	};
 
 	public static List<XHook> getInstances(String className) {
@@ -43,41 +49,64 @@ public class XSensorManager extends XHook {
 
 			listHook.add(new XSensorManager(Methods.getDefaultSensor, PrivacyManager.cSensors, className));
 			listHook.add(new XSensorManager(Methods.getSensorList, PrivacyManager.cSensors, className));
+			listHook.add(new XSensorManager(Methods.registerListener, PrivacyManager.cSensors, className));
 		}
 		return listHook;
 	}
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.getDefaultSensor) {
+		switch (mMethod) {
+		case getDefaultSensor:
 			if (isRestricted(param))
 				param.setResult(null);
-			else if (param.args.length > 0)
+			else if (param.args.length > 0 && param.args[0] instanceof Integer)
 				if (isRestricted(param, (Integer) param.args[0]))
 					param.setResult(null);
+			break;
 
-		} else if (mMethod == Methods.getSensorList) {
+		case getSensorList:
 			if (isRestricted(param))
 				param.setResult(new ArrayList<Sensor>());
-			else if (param.args.length > 0)
+			else if (param.args.length > 0 && param.args[0] instanceof Integer)
 				if (isRestricted(param, (Integer) param.args[0]))
 					param.setResult(new ArrayList<Sensor>());
+			break;
 
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+		case registerListener:
+			if (param.args.length > 2 && param.args[1] instanceof Sensor && param.args[2] instanceof Integer) {
+				int type = ((Sensor) param.args[1]).getType();
+				if (type == Sensor.TYPE_GYROSCOPE || type == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
+					int rateUs = (Integer) param.args[2];
+					if (rateUs < cMaxRateUs)
+						if (isRestricted(param))
+							param.args[2] = cMaxRateUs;
+				}
+			}
+			break;
+		}
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.getSensorList)
-			if (param.getResult() != null && param.args.length > 0 && (Integer) param.args[0] == Sensor.TYPE_ALL) {
-				List<Sensor> listSensor = new ArrayList<Sensor>();
-				for (Sensor sensor : (List<Sensor>) param.getResult())
-					if (!isRestricted(param, sensor.getType()))
-						listSensor.add(sensor);
-				param.setResult(listSensor);
-			}
+		switch (mMethod) {
+		case getDefaultSensor:
+		case registerListener:
+			// Do nothing
+			break;
+
+		case getSensorList:
+			if (param.getResult() != null && param.args.length > 0 && param.args[0] instanceof Integer)
+				if ((Integer) param.args[0] == Sensor.TYPE_ALL) {
+					List<Sensor> listSensor = new ArrayList<Sensor>();
+					for (Sensor sensor : (List<Sensor>) param.getResult())
+						if (!isRestricted(param, sensor.getType()))
+							listSensor.add(sensor);
+					param.setResult(listSensor);
+				}
+			break;
+		}
 	}
 
 	@SuppressWarnings("deprecation")
