@@ -430,9 +430,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 				else if (hook.getFrom() != null) {
 					String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
 					if (new Version(version).compareTo(hook.getFrom()) < 0)
-						if (hook.getReplacedRestriction() == null)
+						if (hook.getReplacedRestriction() == null) {
+							Util.log(null, Log.WARN, "Disabled version=" + version + " from=" + hook.getFrom()
+									+ " hook=" + hook);
 							return mresult;
-						else {
+						} else {
 							restriction.restrictionName = hook.getReplacedRestriction();
 							restriction.methodName = hook.getReplacedMethod();
 							Util.log(null, Log.WARN, "Checking " + restriction + " instead of " + hook);
