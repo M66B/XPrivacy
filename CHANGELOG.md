@@ -45,12 +45,14 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.27 BETA**
+
 * Added restriction *registerListener* to the *Sensors* category, which will limit the rate of the gyroscope to 100 Hz to prevent eavesdropping ([issue](/../../issues/1878))
 * Added restriction [GMS5.view](https://developer.android.com/reference/com/google/android/gms/appindexing/AppIndexApi.html) ([issue](/../../issues/1778))
 * Updated French translation
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.26 BETA**
 
