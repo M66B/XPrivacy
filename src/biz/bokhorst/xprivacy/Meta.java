@@ -507,7 +507,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "transact", "", 1, null, null).notAOSP(19));
 
 		// ClipboardManager/Service
-		mListHook.add(new Hook(null, "removePrimaryClipChangedListener", "", 11, null, null));
+		mListHook.add(new Hook(null, "removePrimaryClipChangedListener", "", 11, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "Srv_removePrimaryClipChangedListener", "", 11, null, null));
 
 		// Content resolvers
@@ -528,7 +528,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "checkIntent", "", 19, null, null));
 
 		// LocationManager/Service
-		mListHook.add(new Hook(null, "removeUpdates", "", 3, null, null));
+		mListHook.add(new Hook(null, "removeUpdates", "", 3, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "Srv_removeUpdates", "", 19, null, null));
 		mListHook.add(new Hook(null, "Srv_removeGeofence", "", 19, null, null));
 		mListHook.add(new Hook(null, "Srv_removeGpsStatusListener", "", 19, null, null));
@@ -542,7 +542,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "updateConfiguration", "", 1, null, null));
 
 		// TelephonyManager
-		mListHook.add(new Hook(null, "disableLocationUpdates", "", 10, null, null));
+		mListHook.add(new Hook(null, "disableLocationUpdates", "", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "Srv_disableLocationUpdates", "", 19, null, null));
 
 		// WebView
