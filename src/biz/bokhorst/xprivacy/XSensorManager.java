@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.util.Log;
 
 public class XSensorManager extends XHook {
@@ -78,7 +79,18 @@ public class XSensorManager extends XHook {
 				int type = ((Sensor) param.args[1]).getType();
 				if (type == Sensor.TYPE_GYROSCOPE || type == Sensor.TYPE_GYROSCOPE_UNCALIBRATED) {
 					int rateUs = (Integer) param.args[2];
-					if (rateUs < cMaxRateUs)
+
+					// http://developer.android.com/guide/topics/sensors/sensors_overview.html
+					if (rateUs == SensorManager.SENSOR_DELAY_NORMAL)
+						return; // 200,000 us
+					else if (rateUs == SensorManager.SENSOR_DELAY_UI)
+						return; // 60,000 us
+					else if (rateUs == SensorManager.SENSOR_DELAY_GAME)
+						return; // 20,000 us
+					else if (rateUs == SensorManager.SENSOR_DELAY_FASTEST)
+						; // 0 us
+
+					if (rateUs < cMaxRateUs) // 10,000 us
 						if (isRestricted(param))
 							param.args[2] = cMaxRateUs;
 				}
