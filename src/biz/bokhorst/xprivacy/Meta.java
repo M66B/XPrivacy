@@ -480,6 +480,10 @@ public class Meta {
 		mListHook.add(new Hook(null, "startActivityIfNeeded", "", 1, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "startNextMatchingActivity", "", 1, null, null).notAOSP(19));
 
+		// ActivityThread / MessageQueue
+		mListHook.add(new Hook(null, "next", "", 1, null, null).notAOSP(19).optional());
+		mListHook.add(new Hook(null, "handleReceiver", "", 1, null, null).notAOSP(19).optional());
+
 		// ActivityManager(Service)
 		mListHook.add(new Hook(null, "Srv_startActivities", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_startActivity", "", 19, null, null).AOSP(19));
@@ -524,8 +528,17 @@ public class Meta {
 		// ContextImpl / Activity
 		mListHook.add(new Hook(null, "getSystemService", "", 1, null, null).notAOSP(19));
 
+		// GoogleApiClient.Builder
+		mListHook.add(new Hook(null, "GAC.addConnectionCallbacks", "", 1, null, null).optional());
+		mListHook.add(new Hook(null, "GAC.onConnected", "", 1, null, null));
+
 		// IntentFirewall
 		mListHook.add(new Hook(null, "checkIntent", "", 19, null, null));
+
+		// LocationClient / ActivityRecognitionClient
+		mListHook.add(new Hook(null, "GMS.removeActivityUpdates", "", 1, null, null));
+		mListHook.add(new Hook(null, "GMS.removeGeofences", "", 1, null, null).optional());
+		mListHook.add(new Hook(null, "GMS.removeLocationUpdates", "", 1, null, null).optional());
 
 		// LocationManager/Service
 		mListHook.add(new Hook(null, "removeUpdates", "", 3, null, null).notAOSP(19));
@@ -545,24 +558,15 @@ public class Meta {
 		mListHook.add(new Hook(null, "disableLocationUpdates", "", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "Srv_disableLocationUpdates", "", 19, null, null));
 
+		// UtilHook
+		mListHook.add(new Hook(null, "isXposedEnabled", "", 15, null, null));
+
 		// WebView
 		mListHook.add(new Hook(null, "getSettings", "", 1, null, null));
 
 		// WindowManagerImpl
 		mListHook.add(new Hook(null, "removeView", "", 1, null, null));
 		mListHook.add(new Hook(null, "updateViewLayout", "", 1, null, null));
-
-		// LocationClient / ActivityRecognitionClient
-		mListHook.add(new Hook(null, "GMS.removeActivityUpdates", "", 1, null, null));
-		mListHook.add(new Hook(null, "GMS.removeGeofences", "", 1, null, null).optional());
-		mListHook.add(new Hook(null, "GMS.removeLocationUpdates", "", 1, null, null).optional());
-
-		// ActivityThread / MessageQueue
-		mListHook.add(new Hook(null, "next", "", 1, null, null).notAOSP(19).optional());
-		mListHook.add(new Hook(null, "handleReceiver", "", 1, null, null).notAOSP(19).optional());
-
-		// UtilHook
-		mListHook.add(new Hook(null, "isXposedEnabled", "", 15, null, null));
 
 		// @formatter:on
 		return mListHook;
