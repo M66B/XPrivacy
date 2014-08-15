@@ -11,7 +11,7 @@ public class XConnectionCallbacks extends XHook {
 	private String mClassName;
 
 	private XConnectionCallbacks(Methods method, String restrictionName, String className) {
-		super(restrictionName, method.name(), "GAC." + method.name());
+		super(restrictionName, method.name(), "GMS5." + method.name());
 		mMethod = method;
 		mClassName = className;
 	}
@@ -33,7 +33,7 @@ public class XConnectionCallbacks extends XHook {
 
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
-		Util.log(null, Log.INFO, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
+		Util.log(null, Log.WARN, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
 
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XConnectionCallbacks(Methods.onConnected, null, className));
@@ -44,14 +44,31 @@ public class XConnectionCallbacks extends XHook {
 	protected void before(XParam param) throws Throwable {
 		switch (mMethod) {
 		case onConnected:
+			Util.log(this, Log.INFO, "onConnected uid=" + Binder.getCallingUid());
 			ClassLoader loader = param.thisObject.getClass().getClassLoader();
+
+			// FusedLocationApi
 			Class<?> cLoc = Class.forName("com.google.android.gms.location.LocationServices", false, loader);
 			Object fusedLocationApi = cLoc.getDeclaredField("FusedLocationApi").get(null);
-			Util.log(this, Log.WARN, "FusedLocationApi class=" + fusedLocationApi.getClass());
+			if (PrivacyManager.getTransient(fusedLocationApi.getClass().getName(), null) == null) {
+				PrivacyManager.setTransient(fusedLocationApi.getClass().getName(), Boolean.toString(true));
 
+				XPrivacy.hookAll(XFusedLocationApi.getInstances(fusedLocationApi), loader, getSecret());
+			}
+
+			// ActivityRecognitionApi
 			Class<?> cRec = Class.forName("com.google.android.gms.location.ActivityRecognition", false, loader);
 			Object activityRecognitionApi = cRec.getDeclaredField("ActivityRecognitionApi").get(null);
-			Util.log(this, Log.WARN, "ActivityRecognitionApi class=" + activityRecognitionApi.getClass());
+			if (PrivacyManager.getTransient(activityRecognitionApi.getClass().getName(), null) == null) {
+				PrivacyManager.setTransient(activityRecognitionApi.getClass().getName(), Boolean.toString(true));
+			}
+
+			// AppIndexApi
+			Class<?> cApp = Class.forName("com.google.android.gms.appindexing.AppIndex", false, loader);
+			Object appIndexApi = cApp.getDeclaredField("AppIndexApi").get(null);
+			if (PrivacyManager.getTransient(appIndexApi.getClass().getName(), null) == null) {
+				PrivacyManager.setTransient(appIndexApi.getClass().getName(), Boolean.toString(true));
+			}
 
 			break;
 		}

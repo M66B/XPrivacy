@@ -84,7 +84,7 @@ public class XLocationClient extends XHook {
 				if (isRestricted(param))
 					if (param.args[1] instanceof PendingIntent)
 						param.setResult(null);
-					else if (param.thisObject != null) {
+					else if (param.thisObject != null && param.args[1] != null) {
 						// Create proxy
 						ClassLoader cl = param.thisObject.getClass().getClassLoader();
 						Class<?> ll = Class.forName("com.google.android.gms.location.LocationListener", false, cl);

@@ -382,7 +382,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// GoogleApiClient.Builder
 		try {
-			Class.forName("com.google.android.gms.common.api.GoogleApiClient", false, classLoader);
+			Class.forName("com.google.android.gms.common.api.GoogleApiClient$Builder", false, classLoader);
 			hookAll(XGoogleApiClient.getInstances(), classLoader, secret);
 		} catch (Throwable ignored) {
 		}

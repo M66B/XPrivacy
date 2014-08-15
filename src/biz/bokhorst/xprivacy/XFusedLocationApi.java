@@ -49,13 +49,9 @@ public class XFusedLocationApi extends XHook {
 		Util.log(null, Log.INFO, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
 
 		List<XHook> listHook = new ArrayList<XHook>();
-		if (PrivacyManager.getTransient(className, null) == null) {
-			PrivacyManager.setTransient(className, Boolean.toString(true));
-
-			listHook.add(new XFusedLocationApi(Methods.getLastLocation, PrivacyManager.cLocation, className));
-			listHook.add(new XFusedLocationApi(Methods.removeLocationUpdates, PrivacyManager.cLocation, className));
-			listHook.add(new XFusedLocationApi(Methods.requestLocationUpdates, PrivacyManager.cLocation, className));
-		}
+		listHook.add(new XFusedLocationApi(Methods.getLastLocation, PrivacyManager.cLocation, className));
+		listHook.add(new XFusedLocationApi(Methods.removeLocationUpdates, null, className));
+		listHook.add(new XFusedLocationApi(Methods.requestLocationUpdates, PrivacyManager.cLocation, className));
 		return listHook;
 	}
 
