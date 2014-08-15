@@ -297,6 +297,7 @@
     <!-- sensors -->
     <string name="sensors_getDefaultSensor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/SensorManager.html#getDefaultSensor(int)">Google documentation</a>]]></string>
     <string name="sensors_getSensorList" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/SensorManager.html#getSensorList(int)">Google documentation</a>]]></string>
+    <string name="sensors_registerListener" translatable="false"><![CDATA[Will limit the rate of the gyroscope to 100 Hz to prevent eavesdropping<br /><br /><a href="http://developer.android.com/reference/android/hardware/SensorManager.html#registerListener(android.hardware.SensorEventListener,%20android.hardware.Sensor, int)">Google documentation</a>]]></string>
     <string name="sensors_acceleration" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/Sensor.html">Google documentation</a>]]></string>
     <string name="sensors_gravity" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/Sensor.html">Google documentation</a>]]></string>
     <string name="sensors_humidity" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/Sensor.html">Google documentation</a>]]></string>
