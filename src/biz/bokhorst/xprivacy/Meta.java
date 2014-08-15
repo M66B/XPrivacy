@@ -229,6 +229,7 @@ public class Meta {
 
 		mListHook.add(new Hook("location", "GMS5.getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99.26", null).unsafe().optional());
 		mListHook.add(new Hook("location", "GMS5.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99.26", null).unsafe().optional());
+		mListHook.add(new Hook("location", "GMS5.requestActivityUpdates", "com.google.android.gms.permission.ACTIVITY_RECOGNITION", 1, "2.99.26", null).unsafe());
 
 		mListHook.add(new Hook("location", "MapV1.enableMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 
@@ -531,6 +532,10 @@ public class Meta {
 		// ContextImpl / Activity
 		mListHook.add(new Hook(null, "getSystemService", "", 1, null, null).notAOSP(19));
 
+		// FusedLocationProviderApi // ActivityRecognitionApi
+		mListHook.add(new Hook(null, "GMS5.removeLocationUpdates", "", 1, "2.99.26", null).optional());
+		mListHook.add(new Hook(null, "GMS5.removeActivityUpdates", "", 1, "2.99.26", null).optional());
+
 		// GoogleApiClient.Builder
 		mListHook.add(new Hook(null, "GMS5.addConnectionCallbacks", "", 1, null, null).optional());
 		mListHook.add(new Hook(null, "GMS5.onConnected", "", 1, null, null));
@@ -542,9 +547,6 @@ public class Meta {
 		mListHook.add(new Hook(null, "GMS.removeActivityUpdates", "", 1, null, null));
 		mListHook.add(new Hook(null, "GMS.removeGeofences", "", 1, null, null).optional());
 		mListHook.add(new Hook(null, "GMS.removeLocationUpdates", "", 1, null, null).optional());
-
-		// FusedLocationProviderApi
-		mListHook.add(new Hook(null, "GMS5.removeLocationUpdates", "", 1, "2.99.26", null).optional());
 
 		// LocationManager/Service
 		mListHook.add(new Hook(null, "removeUpdates", "", 3, null, null).notAOSP(19));

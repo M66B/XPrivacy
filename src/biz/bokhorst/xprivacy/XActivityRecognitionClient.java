@@ -3,8 +3,6 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.util.Log;
-
 public class XActivityRecognitionClient extends XHook {
 	private Methods mMethod;
 
@@ -38,17 +36,17 @@ public class XActivityRecognitionClient extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.removeActivityUpdates) {
+		switch (mMethod) {
+		case removeActivityUpdates:
 			if (isRestricted(param, PrivacyManager.cLocation, "GMS.requestActivityUpdates"))
 				param.setResult(null);
+			break;
 
-		} else if (mMethod == Methods.requestActivityUpdates) {
+		case requestActivityUpdates:
 			if (isRestricted(param))
 				param.setResult(null);
-
-		} else
-
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	@Override

@@ -33,7 +33,7 @@ public class XConnectionCallbacks extends XHook {
 
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
-		Util.log(null, Log.WARN, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
+		Util.log(null, Log.INFO, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
 
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XConnectionCallbacks(Methods.onConnected, null, className));
@@ -61,6 +61,8 @@ public class XConnectionCallbacks extends XHook {
 			Object activityRecognitionApi = cRec.getDeclaredField("ActivityRecognitionApi").get(null);
 			if (PrivacyManager.getTransient(activityRecognitionApi.getClass().getName(), null) == null) {
 				PrivacyManager.setTransient(activityRecognitionApi.getClass().getName(), Boolean.toString(true));
+
+				XPrivacy.hookAll(XActivityRecognitionApi.getInstances(activityRecognitionApi), loader, getSecret());
 			}
 
 			// AppIndexApi
@@ -68,6 +70,8 @@ public class XConnectionCallbacks extends XHook {
 			Object appIndexApi = cApp.getDeclaredField("AppIndexApi").get(null);
 			if (PrivacyManager.getTransient(appIndexApi.getClass().getName(), null) == null) {
 				PrivacyManager.setTransient(appIndexApi.getClass().getName(), Boolean.toString(true));
+
+				// TODO: AppIndexApi
 			}
 
 			break;
