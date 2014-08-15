@@ -53,7 +53,8 @@ public class XConnectionCallbacks extends XHook {
 			if (PrivacyManager.getTransient(fusedLocationApi.getClass().getName(), null) == null) {
 				PrivacyManager.setTransient(fusedLocationApi.getClass().getName(), Boolean.toString(true));
 
-				XPrivacy.hookAll(XFusedLocationApi.getInstances(fusedLocationApi), loader, getSecret());
+				if (fusedLocationApi != null)
+					XPrivacy.hookAll(XFusedLocationApi.getInstances(fusedLocationApi), loader, getSecret());
 			}
 
 			// ActivityRecognitionApi
@@ -62,7 +63,8 @@ public class XConnectionCallbacks extends XHook {
 			if (PrivacyManager.getTransient(activityRecognitionApi.getClass().getName(), null) == null) {
 				PrivacyManager.setTransient(activityRecognitionApi.getClass().getName(), Boolean.toString(true));
 
-				XPrivacy.hookAll(XActivityRecognitionApi.getInstances(activityRecognitionApi), loader, getSecret());
+				if (activityRecognitionApi != null)
+					XPrivacy.hookAll(XActivityRecognitionApi.getInstances(activityRecognitionApi), loader, getSecret());
 			}
 
 			// AppIndexApi
@@ -71,7 +73,8 @@ public class XConnectionCallbacks extends XHook {
 			if (PrivacyManager.getTransient(appIndexApi.getClass().getName(), null) == null) {
 				PrivacyManager.setTransient(appIndexApi.getClass().getName(), Boolean.toString(true));
 
-				// TODO: AppIndexApi
+				if (appIndexApi != null)
+					XPrivacy.hookAll(XAppIndexApi.getInstances(appIndexApi), loader, getSecret());
 			}
 
 			break;

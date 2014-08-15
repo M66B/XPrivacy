@@ -47,7 +47,7 @@ public class XActivityRecognitionApi extends XHook {
 	protected void before(XParam param) throws Throwable {
 		switch (mMethod) {
 		case removeActivityUpdates:
-			if (isRestricted(param, PrivacyManager.cLocation, "GMS.requestActivityUpdates"))
+			if (isRestricted(param, PrivacyManager.cLocation, "GMS5.requestActivityUpdates"))
 				param.setResult(null);
 			break;
 
