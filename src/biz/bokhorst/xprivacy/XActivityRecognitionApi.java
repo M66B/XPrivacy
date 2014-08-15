@@ -48,12 +48,12 @@ public class XActivityRecognitionApi extends XHook {
 		switch (mMethod) {
 		case removeActivityUpdates:
 			if (isRestricted(param, PrivacyManager.cLocation, "GMS5.requestActivityUpdates"))
-				param.setResult(null);
+				param.setResult(XGoogleApiClient.getPendingResult(param.thisObject.getClass().getClassLoader()));
 			break;
 
 		case requestActivityUpdates:
 			if (isRestricted(param))
-				param.setResult(null);
+				param.setResult(XGoogleApiClient.getPendingResult(param.thisObject.getClass().getClassLoader()));
 			break;
 		}
 	}

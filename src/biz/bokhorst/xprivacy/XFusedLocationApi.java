@@ -66,7 +66,7 @@ public class XFusedLocationApi extends XHook {
 			if (param.args.length > 1)
 				if (param.args[1] instanceof PendingIntent) {
 					if (isRestricted(param, PrivacyManager.cLocation, "GMS5.requestLocationUpdates"))
-						param.setResult(null);
+						param.setResult(XGoogleApiClient.getPendingResult(param.thisObject.getClass().getClassLoader()));
 				} else
 					synchronized (mMapProxy) {
 						if (mMapProxy.containsKey(param.args[1]))
@@ -78,7 +78,7 @@ public class XFusedLocationApi extends XHook {
 			if (param.args.length > 2)
 				if (isRestricted(param))
 					if (param.args[2] instanceof PendingIntent)
-						param.setResult(null);
+						param.setResult(XGoogleApiClient.getPendingResult(param.thisObject.getClass().getClassLoader()));
 					else if (param.thisObject != null && param.args[2] != null) {
 						// Create proxy
 						ClassLoader cl = param.thisObject.getClass().getClassLoader();
