@@ -48,33 +48,52 @@ public class XConnectionCallbacks extends XHook {
 			ClassLoader loader = param.thisObject.getClass().getClassLoader();
 
 			// FusedLocationApi
-			Class<?> cLoc = Class.forName("com.google.android.gms.location.LocationServices", false, loader);
-			Object fusedLocationApi = cLoc.getDeclaredField("FusedLocationApi").get(null);
-			if (PrivacyManager.getTransient(fusedLocationApi.getClass().getName(), null) == null) {
-				PrivacyManager.setTransient(fusedLocationApi.getClass().getName(), Boolean.toString(true));
+			try {
+				Class<?> cLoc = Class.forName("com.google.android.gms.location.LocationServices", false, loader);
+				Object fusedLocationApi = cLoc.getDeclaredField("FusedLocationApi").get(null);
+				if (PrivacyManager.getTransient(fusedLocationApi.getClass().getName(), null) == null) {
+					PrivacyManager.setTransient(fusedLocationApi.getClass().getName(), Boolean.toString(true));
 
-				if (fusedLocationApi != null)
-					XPrivacy.hookAll(XFusedLocationApi.getInstances(fusedLocationApi), loader, getSecret());
+					if (fusedLocationApi != null)
+						XPrivacy.hookAll(XFusedLocationApi.getInstances(fusedLocationApi), loader, getSecret());
+				}
+			} catch (ClassNotFoundException ex) {
+				Util.log(this, Log.WARN, ex.toString());
+			} catch (NoSuchFieldException ex) {
+				Util.log(this, Log.WARN, ex.toString());
 			}
 
 			// ActivityRecognitionApi
-			Class<?> cRec = Class.forName("com.google.android.gms.location.ActivityRecognition", false, loader);
-			Object activityRecognitionApi = cRec.getDeclaredField("ActivityRecognitionApi").get(null);
-			if (PrivacyManager.getTransient(activityRecognitionApi.getClass().getName(), null) == null) {
-				PrivacyManager.setTransient(activityRecognitionApi.getClass().getName(), Boolean.toString(true));
+			try {
+				Class<?> cRec = Class.forName("com.google.android.gms.location.ActivityRecognition", false, loader);
+				Object activityRecognitionApi = cRec.getDeclaredField("ActivityRecognitionApi").get(null);
+				if (PrivacyManager.getTransient(activityRecognitionApi.getClass().getName(), null) == null) {
+					PrivacyManager.setTransient(activityRecognitionApi.getClass().getName(), Boolean.toString(true));
 
-				if (activityRecognitionApi != null)
-					XPrivacy.hookAll(XActivityRecognitionApi.getInstances(activityRecognitionApi), loader, getSecret());
+					if (activityRecognitionApi != null)
+						XPrivacy.hookAll(XActivityRecognitionApi.getInstances(activityRecognitionApi), loader,
+								getSecret());
+				}
+			} catch (ClassNotFoundException ex) {
+				Util.log(this, Log.WARN, ex.toString());
+			} catch (NoSuchFieldException ex) {
+				Util.log(this, Log.WARN, ex.toString());
 			}
 
 			// AppIndexApi
-			Class<?> cApp = Class.forName("com.google.android.gms.appindexing.AppIndex", false, loader);
-			Object appIndexApi = cApp.getDeclaredField("AppIndexApi").get(null);
-			if (PrivacyManager.getTransient(appIndexApi.getClass().getName(), null) == null) {
-				PrivacyManager.setTransient(appIndexApi.getClass().getName(), Boolean.toString(true));
+			try {
+				Class<?> cApp = Class.forName("com.google.android.gms.appindexing.AppIndex", false, loader);
+				Object appIndexApi = cApp.getDeclaredField("AppIndexApi").get(null);
+				if (PrivacyManager.getTransient(appIndexApi.getClass().getName(), null) == null) {
+					PrivacyManager.setTransient(appIndexApi.getClass().getName(), Boolean.toString(true));
 
-				if (appIndexApi != null)
-					XPrivacy.hookAll(XAppIndexApi.getInstances(appIndexApi), loader, getSecret());
+					if (appIndexApi != null)
+						XPrivacy.hookAll(XAppIndexApi.getInstances(appIndexApi), loader, getSecret());
+				}
+			} catch (ClassNotFoundException ex) {
+				Util.log(this, Log.WARN, ex.toString());
+			} catch (NoSuchFieldException ex) {
+				Util.log(this, Log.WARN, ex.toString());
 			}
 
 			break;
