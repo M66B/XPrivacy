@@ -1729,6 +1729,7 @@ public class ActivityApp extends ActivityBase {
 			// Hide if permissions
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 
+			// Function help
 			if (hook.getAnnotation() == null)
 				holder.imgInfo.setVisibility(View.GONE);
 			else {
@@ -1736,42 +1737,8 @@ public class ActivityApp extends ActivityBase {
 				holder.imgInfo.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						LayoutInflater inflator = LayoutInflater.from(ActivityApp.this);
-						View layout = inflator.inflate(R.layout.popup, null);
-
-						TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
-						tvTitle.setText(hook.getName());
-
-						String text = hook.getAnnotation();
-						String[] permissions = hook.getPermissions();
-						if (permissions != null && permissions.length > 0) {
-							text += "<br /><br /><b>" + getString(R.string.title_permissions) + "</b><br /><br />";
-							if (permissions[0].equals(""))
-								text += "-";
-							else
-								text += TextUtils.join("<br />", permissions);
-						}
-
-						TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
-						tvInfo.setText(Html.fromHtml(text));
-						tvInfo.setMovementMethod(LinkMovementMethod.getInstance());
-
 						View parent = ActivityApp.this.findViewById(android.R.id.content);
-
-						final PopupWindow popup = new PopupWindow(layout);
-						popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-						popup.setWidth(90 * parent.getWidth() / 100);
-
-						Button btnOk = (Button) layout.findViewById(R.id.btnOk);
-						btnOk.setOnClickListener(new View.OnClickListener() {
-							@Override
-							public void onClick(View view) {
-								if (popup.isShowing())
-									popup.dismiss();
-							}
-						});
-
-						popup.showAtLocation(parent, Gravity.CENTER, 0, 0);
+						showHelp(ActivityApp.this, parent, hook);
 					}
 				});
 			}
@@ -1798,5 +1765,43 @@ public class ActivityApp extends ActivityBase {
 		public boolean hasStableIds() {
 			return true;
 		}
+	}
+
+	@SuppressLint("InflateParams")
+	public static void showHelp(ActivityBase context, View parent, Hook hook) {
+		LayoutInflater inflator = LayoutInflater.from(context);
+		View layout = inflator.inflate(R.layout.popup, null);
+
+		TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
+		tvTitle.setText(hook.getName());
+
+		String text = hook.getAnnotation();
+		String[] permissions = hook.getPermissions();
+		if (permissions != null && permissions.length > 0) {
+			text += "<br /><br /><b>" + context.getString(R.string.title_permissions) + "</b><br /><br />";
+			if (permissions[0].equals(""))
+				text += "-";
+			else
+				text += TextUtils.join("<br />", permissions);
+		}
+
+		TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
+		tvInfo.setText(Html.fromHtml(text));
+		tvInfo.setMovementMethod(LinkMovementMethod.getInstance());
+
+		final PopupWindow popup = new PopupWindow(layout);
+		popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
+		popup.setWidth(90 * parent.getWidth() / 100);
+
+		Button btnOk = (Button) layout.findViewById(R.id.btnOk);
+		btnOk.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (popup.isShowing())
+					popup.dismiss();
+			}
+		});
+
+		popup.showAtLocation(parent, Gravity.CENTER, 0, 0);
 	}
 }

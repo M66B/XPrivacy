@@ -676,7 +676,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		spTemplate.setAdapter(spAdapter);
 
 		// Template definition
-		final TemplateListAdapter templateAdapter = new TemplateListAdapter(this, spTemplate, R.layout.templateentry);
+		final TemplateListAdapter templateAdapter = new TemplateListAdapter(this, view, R.layout.templateentry);
 		elvTemplate.setAdapter(templateAdapter);
 		elvTemplate.setGroupIndicator(null);
 
@@ -1180,14 +1180,16 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	@SuppressLint("DefaultLocale")
 	private class TemplateListAdapter extends BaseExpandableListAdapter {
+		private View mView;
 		private Spinner mSpinner;
 		private List<String> listRestrictionName;
 		private List<String> listLocalizedTitle;
 		private boolean ondemand;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public TemplateListAdapter(Context context, Spinner spinner, int resource) {
-			mSpinner = spinner;
+		public TemplateListAdapter(Context context, View view, int resource) {
+			mView = view;
+			mSpinner = (Spinner) view.findViewById(R.id.spTemplate);
 
 			// Get restriction categories
 			TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(context);
@@ -1208,6 +1210,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		private class ViewHolder {
 			private View row;
 			public ImageView imgIndicator;
+			public ImageView imgInfo;
 			public TextView tvRestriction;
 			public ImageView imgCbRestrict;
 			public ImageView imgCbAsk;
@@ -1217,6 +1220,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ViewHolder(View theRow) {
 				row = theRow;
 				imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
+				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
 				imgCbRestrict = (ImageView) row.findViewById(R.id.imgCbRestrict);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
@@ -1283,6 +1287,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
 					: R.attr.icon_expander_minimized));
 			holder.imgIndicator.setVisibility(View.VISIBLE);
+			holder.imgInfo.setVisibility(View.GONE);
 
 			// Set data
 			holder.tvRestriction.setTypeface(null, Typeface.BOLD);
@@ -1374,6 +1379,19 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Set indicator
 			holder.imgIndicator.setVisibility(View.INVISIBLE);
+
+			// Function help
+			if (hook.getAnnotation() == null)
+				holder.imgInfo.setVisibility(View.GONE);
+			else {
+				holder.imgInfo.setVisibility(View.VISIBLE);
+				holder.imgInfo.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						ActivityApp.showHelp(ActivityMain.this, mView, hook);
+					}
+				});
+			}
 
 			// Set data
 			if (hook.isDangerous())
