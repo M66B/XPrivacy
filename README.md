@@ -1148,6 +1148,13 @@ You can switch XPrivacy 3 to AOSP mode by creating this file:
 
 For the benefit of others, please report if XPrivacy 3 works for the ROM you are using.
 
+<a name="FAQ69"></a>
+**(69) When do the state colors change?**
+
+* **Grey**: set/clear restriction/on demand asking, import, on demand choice (not for once)
+* **Orange**: fetch, new/updated application, delete restrictions
+* **Green**: submit
+
 Support
 -------
 
