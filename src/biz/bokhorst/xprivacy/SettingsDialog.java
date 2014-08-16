@@ -241,6 +241,7 @@ public class SettingsDialog {
 		// Get quirks
 		boolean freeze = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingFreeze, false);
 		boolean resolve = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingResolve, false);
+		boolean noresolve = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNoResolve, false);
 		boolean permman = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingPermMan, false);
 		boolean iwall = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingIntentWall, false);
 		boolean safemode = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingSafeMode, false);
@@ -251,6 +252,8 @@ public class SettingsDialog {
 			listQuirks.add("freeze");
 		if (resolve)
 			listQuirks.add("resolve");
+		if (noresolve)
+			listQuirks.add("noresolve");
 		if (permman)
 			listQuirks.add("permman");
 		if (iwall)
@@ -520,6 +523,8 @@ public class SettingsDialog {
 						Boolean.toString(listQuirks.contains("freeze")));
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingResolve,
 						Boolean.toString(listQuirks.contains("resolve")));
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingNoResolve,
+						Boolean.toString(listQuirks.contains("noresolve")));
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingPermMan,
 						Boolean.toString(listQuirks.contains("permman")));
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingIntentWall,
