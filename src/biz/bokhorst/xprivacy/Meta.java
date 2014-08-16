@@ -416,6 +416,8 @@ public class Meta {
 		mListHook.add(new Hook("system", "queryIntentContentProviders", "", 19, "1.99.1", null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("system", "queryIntentServices", "", 1, null, null).notAOSP(19).dangerous());
 
+		mListHook.add(new Hook("system", "Srv_getPackageInfo", "", 19, "2.99.30", null).AOSP(19).dangerous());
+		mListHook.add(new Hook("system", "Srv_getApplicationInfo", "", 19, "2.99.30", null).AOSP(19).dangerous());
 		mListHook.add(new Hook("system", "Srv_getInstalledApplications", "", 19, "2.99", "getInstalledApplications").AOSP(19).dangerous());
 		mListHook.add(new Hook("system", "Srv_getInstalledPackages", "", 19, "2.99", "getInstalledPackages").AOSP(19).dangerous());
 		mListHook.add(new Hook("system", "Srv_getPackagesForUid", "", 19, "2.99", "getPackagesForUid").AOSP(19).dangerous());
