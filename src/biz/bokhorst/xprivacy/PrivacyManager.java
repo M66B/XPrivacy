@@ -124,7 +124,7 @@ public class PrivacyManager {
 	public final static String cSettingCid = "Cid";
 	public final static String cSettingLac = "Lac";
 	public final static String cSettingBlacklist = "Blacklist";
-	public final static String cSettingNoResolve = "NoResolve";
+	public final static String cSettingResolve = "Resolve";
 	public final static String cSettingFreeze = "Freeze";
 	public final static String cSettingPermMan = "PermMan";
 	public final static String cSettingIntentWall = "IntentWall";

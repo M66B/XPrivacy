@@ -71,8 +71,8 @@ public class XIoBridge extends XHook {
 				int port = (Integer) param.args[2];
 
 				String hostName;
-				boolean resolve = !PrivacyManager.getSettingBool(Binder.getCallingUid(),
-						PrivacyManager.cSettingNoResolve, false);
+				boolean resolve = PrivacyManager.getSettingBool(Binder.getCallingUid(), PrivacyManager.cSettingResolve,
+						false);
 				if (resolve)
 					try {
 						hostName = address.getHostName();

@@ -39,6 +39,7 @@ You can install XPrivacy 2.99.x by following these steps:
 * Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
 * Update to the latest 2.2.x version
 * Enter the quirk *test* into the main settings
+* Changed quirk *noresolve* into *resolve*, since things should work out-of-the-box (no automatic update)
 * Use the menu *Check for updates*
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
