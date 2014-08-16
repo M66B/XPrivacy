@@ -1076,7 +1076,7 @@ am start -a biz.bokhorst.xprivacy.action.USAGE
 am start -a biz.bokhorst.xprivacy.action.USAGE --ei Uid 10123
 ```
 
-* Export, import, submit, fetch, toggle, update
+* Export, import, submit, fetch, toggle
 
 ```
 am start -a biz.bokhorst.xprivacy.action.EXPORT
@@ -1086,7 +1086,13 @@ am start -a biz.bokhorst.xprivacy.action.IMPORT --eia UidList 10123,10124 --ez I
 am start -a biz.bokhorst.xprivacy.action.SUBMIT --eia UidList 10123,10124 --ez Interactive true
 am start -a biz.bokhorst.xprivacy.action.FETCH --eia UidList 10123,10124 --ez Interactive true
 am start -a biz.bokhorst.xprivacy.action.TOGGLE --eia UidList 10123,10124 --ez Interactive true
-am start -a biz.bokhorst.xprivacy.action.UPDATE
+```
+
+* Flush cache, check for updates
+
+```
+am startservice -a biz.bokhorst.xprivacy.action.FLUSH
+am startservice -a biz.bokhorst.xprivacy.action.UPDATE
 ```
 
 With Tasker, you can create shortcuts on your homescreen:
