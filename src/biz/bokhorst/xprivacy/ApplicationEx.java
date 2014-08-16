@@ -8,7 +8,7 @@ public class ApplicationEx extends Application {
 
 	@Override
 	public void onCreate() {
-		Util.log(null, Log.WARN, "UI started version=" + Util.getSelfVersionName(this));
+		Util.log(null, Log.WARN, "UI started");
 		mPrevHandler = Thread.getDefaultUncaughtExceptionHandler();
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
 			@Override
