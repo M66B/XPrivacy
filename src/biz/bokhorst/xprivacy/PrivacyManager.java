@@ -443,13 +443,12 @@ public class PrivacyManager {
 					return false;
 
 		// @formatter:off
-		if ((_uid == Util.getAppId(xuid)) &&
-			(((PrivacyManager.cIdentification.equals(restrictionName) &&
-			("getString".equals(methodName) || "SERIAL".equals(methodName)))
+		if (_uid == Util.getAppId(xuid) &&
+			(PrivacyManager.cIdentification.equals(restrictionName)
 			|| PrivacyManager.cIPC.equals(restrictionName)
 			|| PrivacyManager.cStorage.equals(restrictionName)
 			|| PrivacyManager.cSystem.equals(restrictionName)
-			|| PrivacyManager.cView.equals(restrictionName))))
+			|| PrivacyManager.cView.equals(restrictionName)))
 			return false;
 		// @formatter:on
 

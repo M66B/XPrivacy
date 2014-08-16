@@ -339,7 +339,7 @@ Limitations
 
 *XPrivacy*
 
-* You cannot restrict the serial number and the Android ID for XPrivacy, because it is used for submitting restrictions
+* You cannot restrict *identification* for XPrivacy, because it is used for submitting restrictions
 	* The Android ID is salted with the serial number and MD5 hashed before communicating with the crowd sourced restrictions server
 	* This means that the crowd sourced restrictions server never gets the serial number nor the Android ID
 * You cannot restrict *IPC* for XPrivacy because it is needed for internal checks
