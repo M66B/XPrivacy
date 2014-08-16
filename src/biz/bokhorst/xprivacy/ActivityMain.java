@@ -1688,6 +1688,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
+				int userId = Util.getUserId(Process.myUid());
+
 				int filtersRunning = mFiltersRunning.addAndGet(1);
 				FilterResults results = new FilterResults();
 
@@ -1762,7 +1764,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 					// Get if onDemand
 					boolean onDemand = false;
-					if (fOnDemand && PrivacyManager.isApplication(xAppInfo.getUid())) {
+					boolean isApp = PrivacyManager.isApplication(xAppInfo.getUid());
+					boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem,
+							false);
+					boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+					if (fOnDemand && (isApp || odSystem) && gondemand) {
 						onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false);
 						if (onDemand && mRestrictionName != null)
@@ -1913,8 +1919,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 					// Get if on demand
 					gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
-					ondemand = (PrivacyManager.isApplication(xAppInfo.getUid()) && (mRestrictionName == null ? true
-							: PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false)));
+					boolean isApp = PrivacyManager.isApplication(xAppInfo.getUid());
+					boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem,
+							false);
+					ondemand = (isApp || odSystem);
+					if (ondemand && mRestrictionName != null)
+						ondemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+								false);
 
 					// Get if granted
 					granted = true;

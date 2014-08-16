@@ -187,8 +187,10 @@ public class ActivityApp extends ActivityBase {
 
 		// Display on-demand state
 		final ImageView imgCbOnDemand = (ImageView) findViewById(R.id.imgCbOnDemand);
-		if (PrivacyManager.isApplication(mAppInfo.getUid())
-				&& PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true)) {
+		boolean isApp = PrivacyManager.isApplication(mAppInfo.getUid());
+		boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem, false);
+		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+		if ((isApp || odSystem) && gondemand) {
 			boolean ondemand = PrivacyManager
 					.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false);
 			imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
@@ -336,8 +338,10 @@ public class ActivityApp extends ActivityBase {
 		// Update on demand check box
 		int userId = Util.getUserId(Process.myUid());
 		ImageView imgCbOnDemand = (ImageView) findViewById(R.id.imgCbOnDemand);
-		if (PrivacyManager.isApplication(mAppInfo.getUid())
-				&& PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true)) {
+		boolean isApp = PrivacyManager.isApplication(mAppInfo.getUid());
+		boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem, false);
+		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+		if ((isApp || odSystem) && gondemand) {
 			boolean ondemand = PrivacyManager
 					.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false);
 			imgCbOnDemand.setImageBitmap(ondemand ? getOnDemandCheckBox() : getOffCheckBox());
@@ -1224,8 +1228,12 @@ public class ActivityApp extends ActivityBase {
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, null);
-					ondemand = (PrivacyManager.isApplication(mAppInfo.getUid()) && PrivacyManager.getSettingBool(
-							userId, PrivacyManager.cSettingOnDemand, true));
+
+					boolean isApp = PrivacyManager.isApplication(mAppInfo.getUid());
+					boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem,
+							false);
+					boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+					ondemand = ((isApp || odSystem) && gondemand);
 					if (ondemand)
 						ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false);

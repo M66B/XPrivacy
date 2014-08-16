@@ -330,8 +330,10 @@ public class SettingsDialog {
 		else
 			cbNotify.setVisibility(View.GONE);
 
+		final boolean isApp = PrivacyManager.isApplication(uid);
+		final boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem, false);
 		boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
-		if (uid == userId || (PrivacyManager.isApplication(uid) && gondemand)) {
+		if (uid == userId || ((isApp || odSystem) && gondemand)) {
 			cbOnDemand.setChecked(ondemand);
 			cbOnDemand.setEnabled(enabled);
 		} else
@@ -525,7 +527,7 @@ public class SettingsDialog {
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingNotify, Boolean.toString(cbNotify.isChecked()));
 
 				// On demand restricting
-				if (uid == userId || PrivacyManager.isApplication(uid))
+				if (uid == userId || (isApp || odSystem))
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand,
 							Boolean.toString(cbOnDemand.isChecked()));
 
