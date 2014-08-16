@@ -39,19 +39,21 @@ You can install XPrivacy 2.99.x by following these steps:
 * Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
 * Update to the latest 2.2.x version
 * Enter the quirk *test* into the main settings
-* Changed quirk *noresolve* into *resolve*, since things should work out-of-the-box
 * Use the menu *Check for updates*
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.29 BETA**
+
 * Added application specific quirks ([issue](/../../issues/1844))
 * Added intent for update check ([issue](/../../issues/1867))
+* Changed the default to *noresolve* and added quirk *resolve*
 * Fixed all problems reported through the debug info
 * Updated Simplified Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.27 BETA**
 
