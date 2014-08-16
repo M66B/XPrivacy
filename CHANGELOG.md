@@ -46,6 +46,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Flush will clear the asked once cache too
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -174,9 +175,17 @@ XPrivacy 2
 **Next release**
 
 * Option to select duration to allow/deny once ([issue](/../../issues/1873))
+* Added help items to template ([issue](/../../issues/1827))
+* Added application specific quirks ([issue](/../../issues/1844))
+* Added intent for update check ([issue](/../../issues/1867))
+* Changed the default to *noresolve* and added quirk *resolve*
+* Performance optimizations
+* Local transient values only
 * Updated Dutch translation
+* Updated French translation
 * Updated German translation
 * Updated Japanese translation
+* Updated Simplified Chinese translation
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
