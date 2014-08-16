@@ -124,7 +124,6 @@ public class ActivityShare extends ActivityBase {
 	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
 	public static final String ACTION_SUBMIT = "biz.bokhorst.xprivacy.action.SUBMIT";
 	public static final String ACTION_TOGGLE = "biz.bokhorst.xprivacy.action.TOGGLE";
-	public static final String ACTION_UPDATE = "biz.bokhorst.xprivacy.action.UPDATE";
 
 	public static final int CHOICE_CLEAR = 1;
 	public static final int CHOICE_TEMPLATE = 2;
@@ -168,8 +167,7 @@ public class ActivityShare extends ActivityBase {
 				finish();
 				return;
 			}
-		} else if (action.equals(ACTION_FETCH) || action.equals(ACTION_UPDATE)
-				|| (action.equals(ACTION_TOGGLE) && uids.length > 1)) {
+		} else if (action.equals(ACTION_FETCH) || (action.equals(ACTION_TOGGLE) && uids.length > 1)) {
 			if (Util.hasProLicense(this) == null) {
 				Util.viewUri(this, ActivityMain.cProUri);
 				finish();
@@ -179,13 +177,6 @@ public class ActivityShare extends ActivityBase {
 
 		// Registration check
 		if (action.equals(ACTION_SUBMIT) && !registerDevice(this)) {
-			finish();
-			return;
-		}
-
-		// Update
-		if (action.equals(ACTION_UPDATE)) {
-			new UpdateTask(getApplicationContext()).executeOnExecutor(mExecutor);
 			finish();
 			return;
 		}
