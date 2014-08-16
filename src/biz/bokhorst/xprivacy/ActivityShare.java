@@ -1856,6 +1856,7 @@ public class ActivityShare extends ActivityBase {
 		}
 
 		@Override
+		@SuppressLint("DefaultLocale")
 		protected Object doInBackground(Object... args) {
 			try {
 				// Notify
@@ -1868,10 +1869,15 @@ public class ActivityShare extends ActivityBase {
 				String[] license = Util.getProLicenseUnchecked();
 				int userId = Util.getUserId(Process.myUid());
 				boolean test = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingTestVersions, false);
+				String android_id = Secure.getString(mContext.getContentResolver(), Secure.ANDROID_ID);
+
 				JSONObject jRoot = new JSONObject();
-				jRoot.put("test_versions", test);
+				jRoot.put("protocol_version", cProtocolVersion);
+				jRoot.put("android_id", Util.md5(android_id).toLowerCase());
+				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
 				jRoot.put("xprivacy_version", Util.getSelfVersionCode(mContext));
 				jRoot.put("xprivacy_version_name", Util.getSelfVersionName(mContext));
+				jRoot.put("test_versions", test);
 				jRoot.put("email", license[1]);
 				jRoot.put("signature", license[2]);
 
