@@ -11,6 +11,7 @@ import java.util.WeakHashMap;
 import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
+import android.util.Log;
 
 public class XLocationClient extends XHook {
 	private Methods mMethod;
@@ -45,6 +46,8 @@ public class XLocationClient extends XHook {
 	};
 
 	public static List<XHook> getInstances() {
+		Util.log(null, Log.WARN, "Hooking uid=" + Binder.getCallingUid());
+
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation));
 		listHook.add(new XLocationClient(Methods.getLastLocation, PrivacyManager.cLocation));
@@ -76,7 +79,7 @@ public class XLocationClient extends XHook {
 				if (param.args[0] instanceof PendingIntent) {
 					if (isRestricted(param, PrivacyManager.cLocation, "GMS.requestLocationUpdates"))
 						param.setResult(null);
-				} else
+				} else if (param.args[0] != null)
 					synchronized (mMapProxy) {
 						if (mMapProxy.containsKey(param.args[0]))
 							param.args[0] = mMapProxy.get(param.args[0]);
@@ -115,8 +118,9 @@ public class XLocationClient extends XHook {
 
 		case getLastLocation:
 			Location location = (Location) param.getResult();
-			if (location != null && isRestricted(param))
-				param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
+			if (location != null)
+				if (isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedLocation(Binder.getCallingUid(), location));
 			break;
 
 		case removeLocationUpdates:
