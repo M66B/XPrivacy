@@ -57,7 +57,6 @@ public class SettingsDialog {
 		final CheckBox cbHttps = (CheckBox) dlgSettings.findViewById(R.id.cbHttps);
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
 		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
-		final LinearLayout llQuirks = (LinearLayout) dlgSettings.findViewById(R.id.llQuirks);
 		final EditText etQuirks = (EditText) dlgSettings.findViewById(R.id.etQuirks);
 
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
@@ -230,20 +229,23 @@ public class SettingsDialog {
 			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
 
 		// Get current values
-		boolean usage = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingUsage, true);
-		boolean parameters = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingParameters, false);
-		boolean log = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingLog, false);
-		boolean components = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSystem, false);
-		boolean experimental = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingExperimental, false);
-		boolean https = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingHttps, true);
-		String confidence = PrivacyManager.getSetting(uid, PrivacyManager.cSettingConfidence, "");
-		boolean freeze = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
-		boolean noresolve = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingNoResolve, false);
-		boolean permman = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingPermMan, false);
-		boolean iwall = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingIntentWall, false);
-		boolean safemode = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingSafeMode, false);
-		boolean test = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingTestVersions, false);
-		boolean odsystem = PrivacyManager.getSettingBool(uid, PrivacyManager.cSettingOnDemandSystem, false);
+		boolean usage = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingUsage, true);
+		boolean parameters = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingParameters, false);
+		boolean log = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingLog, false);
+
+		boolean components = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingSystem, false);
+		boolean experimental = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingExperimental, false);
+		boolean https = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingHttps, true);
+		String confidence = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingConfidence, "");
+
+		// Get quirks
+		boolean freeze = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingFreeze, false);
+		boolean noresolve = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNoResolve, false);
+		boolean permman = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingPermMan, false);
+		boolean iwall = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingIntentWall, false);
+		boolean safemode = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingSafeMode, false);
+		boolean test = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingTestVersions, false);
+		boolean odsystem = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemandSystem, false);
 		List<String> listQuirks = new ArrayList<String>();
 		if (freeze)
 			listQuirks.add("freeze");
@@ -261,6 +263,7 @@ public class SettingsDialog {
 			listQuirks.add("odsystem");
 		Collections.sort(listQuirks);
 		String quirks = TextUtils.join(",", listQuirks.toArray());
+
 		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
 
 		// Application specific
@@ -316,12 +319,16 @@ public class SettingsDialog {
 			cbUsage.setVisibility(View.GONE);
 			cbParameters.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
-			cbExpert.setVisibility(View.GONE);
 			cbSystem.setVisibility(View.GONE);
 			cbExperimental.setVisibility(View.GONE);
 			cbHttps.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
-			llQuirks.setVisibility(View.GONE);
+
+			cbExpert.setChecked(expert);
+			if (expert)
+				etQuirks.setText(quirks);
+			else
+				etQuirks.setEnabled(false);
 		}
 
 		boolean gnotify = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingNotify, true);
@@ -505,23 +512,24 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHttps, Boolean.toString(cbHttps.isChecked()));
 					PrivacyManager
 							.setSetting(uid, PrivacyManager.cSettingConfidence, etConfidence.getText().toString());
-
-					List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().split(","));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingFreeze,
-							Boolean.toString(listQuirks.contains("freeze")));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingNoResolve,
-							Boolean.toString(listQuirks.contains("noresolve")));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingPermMan,
-							Boolean.toString(listQuirks.contains("permman")));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingIntentWall,
-							Boolean.toString(listQuirks.contains("iwall")));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingSafeMode,
-							Boolean.toString(listQuirks.contains("safemode")));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingTestVersions,
-							Boolean.toString(listQuirks.contains("test")));
-					PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemandSystem,
-							Boolean.toString(listQuirks.contains("odsystem")));
 				}
+
+				// Quirks
+				List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().split(","));
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingFreeze,
+						Boolean.toString(listQuirks.contains("freeze")));
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingNoResolve,
+						Boolean.toString(listQuirks.contains("noresolve")));
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingPermMan,
+						Boolean.toString(listQuirks.contains("permman")));
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingIntentWall,
+						Boolean.toString(listQuirks.contains("iwall")));
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingSafeMode,
+						Boolean.toString(listQuirks.contains("safemode")));
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingTestVersions,
+						Boolean.toString(listQuirks.contains("test")));
+				PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemandSystem,
+						Boolean.toString(listQuirks.contains("odsystem")));
 
 				// Notifications
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingNotify, Boolean.toString(cbNotify.isChecked()));
