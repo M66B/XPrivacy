@@ -569,6 +569,12 @@ public class PrivacyService extends IPrivacyService.Stub {
 				}
 
 				// Update cache
+				CRestriction ckey = new CRestriction(cresult, null);
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(ckey))
+						mRestrictionCache.remove(ckey);
+					mRestrictionCache.put(ckey, ckey);
+				}
 				CRestriction ukey = new CRestriction(mresult, restriction.extra);
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(ukey))
