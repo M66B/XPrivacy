@@ -203,6 +203,12 @@ public class UpdateService extends Service {
 			if (dangerous)
 				PrivacyManager.setSetting(userId, PrivacyManager.cSettingDangerous, null);
 
+			// Resolve quirk
+			if (storedVersion.compareTo(new Version("2.99.28")) < 0) {
+				Util.log(null, Log.WARN, "Enabling quirk resolve");
+				PrivacyManager.setSetting(0, PrivacyManager.cSettingResolve, Boolean.toString(true));
+			}
+
 			// Wipe template
 			if (storedVersion.compareTo(new Version("2.0.34")) < 0)
 				for (PSetting setting : PrivacyManager.getSettingList(0, null))
