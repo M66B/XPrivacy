@@ -207,7 +207,7 @@
 					$sql = "INSERT INTO xprivacy (android_id_md5, android_sdk, xprivacy_version,";
 					$sql .= " package_name, package_version, package_version_code,";
 					$sql .= " restriction, method, restricted, allowed, used) VALUES ";
-					$sql .= "('" . $data->android_id . "'";
+					$sql .= "('" . $db->real_escape_string($data->android_id) . "'";
 					$sql .= "," . $db->real_escape_string($data->android_sdk) . "";
 					$sql .= "," . (empty($data->xprivacy_version) ? 'NULL' : (int)$data->xprivacy_version) . "";
 					$sql .= ",'" . $db->real_escape_string($data->package_name[$i]) . "'";
@@ -336,6 +336,24 @@
 				exit();
 			}
 
+			// Throttling
+			if (empty($data->android_id))
+				$data->android_id = '';
+			else {
+				$sql = "SELECT UNIX_TIMESTAMP(MAX(time)) AS time FROM xprivacy_update";
+				$sql .= " WHERE android_id_md5 = '" . $db->real_escape_string($data->android_id) . "'";
+				$result = $db->query($sql);
+				if ($result) {
+					if (($row = $result->fetch_object()))
+						if ($row->time + 3600 > time()) {
+							header($_SERVER['SERVER_PROTOCOL'] . ' 429 Too Many Requests');
+							exit();
+						}
+				}
+				else
+					log_error('update: error=' . $db->error . ' query=' . $sql, $my_email, $data);
+			}
+
 			$folder = 'release';
 			if (!empty($data->test_versions) && $data->test_versions)
 				$folder = 'test';
@@ -350,9 +368,10 @@
 						$latest = $version;
 				}
 
-			$sql = "INSERT INTO xprivacy_update (installed_version, test_versions, current_version)";
+			$sql = "INSERT INTO xprivacy_update (android_id_md5, installed_version, test_versions, current_version)";
 			$sql .= " VALUES (";
-			$sql .= "'" . $db->real_escape_string($data->xprivacy_version_name) . "'";
+			$sql .= "'" . $db->real_escape_string($data->android_id) . "'";
+			$sql .= ", '" . $db->real_escape_string($data->xprivacy_version_name) . "'";
 			$sql .= ", " . (int)$data->test_versions;
 			$sql .= ", '" . $db->real_escape_string($latest) . "'";
 			$sql .= ")";
