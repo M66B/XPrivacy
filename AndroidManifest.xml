@@ -149,6 +149,7 @@
                 <action android:name="biz.bokhorst.xprivacy.action.FETCH" />
                 <action android:name="biz.bokhorst.xprivacy.action.SUBMIT" />
                 <action android:name="biz.bokhorst.xprivacy.action.TOGGLE" />
+                <action android:name="biz.bokhorst.xprivacy.action.UPDATE" />
 
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>

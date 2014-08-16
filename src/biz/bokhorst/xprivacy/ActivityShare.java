@@ -124,6 +124,7 @@ public class ActivityShare extends ActivityBase {
 	public static final String ACTION_FETCH = "biz.bokhorst.xprivacy.action.FETCH";
 	public static final String ACTION_SUBMIT = "biz.bokhorst.xprivacy.action.SUBMIT";
 	public static final String ACTION_TOGGLE = "biz.bokhorst.xprivacy.action.TOGGLE";
+	public static final String ACTION_UPDATE = "biz.bokhorst.xprivacy.action.UPDATE";
 
 	public static final int CHOICE_CLEAR = 1;
 	public static final int CHOICE_TEMPLATE = 2;
@@ -161,14 +162,14 @@ public class ActivityShare extends ActivityBase {
 			mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName) : null);
 
 		// License check
-		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)
-				|| (action.equals(ACTION_TOGGLE) && uids.length > 1)) {
+		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
 			if (!Util.isProEnabled() && Util.hasProLicense(this) == null) {
 				Util.viewUri(this, ActivityMain.cProUri);
 				finish();
 				return;
 			}
-		} else if (action.equals(ACTION_FETCH)) {
+		} else if (action.equals(ACTION_FETCH) || action.equals(ACTION_UPDATE)
+				|| (action.equals(ACTION_TOGGLE) && uids.length > 1)) {
 			if (Util.hasProLicense(this) == null) {
 				Util.viewUri(this, ActivityMain.cProUri);
 				finish();
@@ -178,6 +179,13 @@ public class ActivityShare extends ActivityBase {
 
 		// Registration check
 		if (action.equals(ACTION_SUBMIT) && !registerDevice(this)) {
+			finish();
+			return;
+		}
+
+		// Update
+		if (action.equals(ACTION_UPDATE)) {
+			new UpdateTask(getApplicationContext()).executeOnExecutor(mExecutor);
 			finish();
 			return;
 		}
@@ -1826,12 +1834,12 @@ public class ActivityShare extends ActivityBase {
 	}
 
 	public static class UpdateTask extends AsyncTask<Object, Object, Object> {
-		private ActivityBase mContext;
+		private Context mContext;
 		private NotificationCompat.Builder builder;
 		private Notification notification;
 		private NotificationManager notificationManager;
 
-		public UpdateTask(ActivityBase context) {
+		public UpdateTask(Context context) {
 			mContext = context;
 			builder = new NotificationCompat.Builder(context);
 			notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
