@@ -369,7 +369,7 @@ public class ActivityShare extends ActivityBase {
 								mRunning = true;
 								new SubmitTask().executeOnExecutor(mExecutor);
 							} else {
-								String message = getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1);
+								String message = getString(R.string.msg_limit, cSubmitLimit + 1);
 								Toast.makeText(ActivityShare.this, message, Toast.LENGTH_LONG).show();
 								btnOk.setEnabled(false);
 							}
@@ -540,8 +540,8 @@ public class ActivityShare extends ActivityBase {
 				@Override
 				public void onClick(View view) {
 					// Packages can be selected on the web site
-					Util.viewUri(ActivityShare.this, Uri.parse(String.format(ActivityShare.getBaseURL()
-							+ "?package_name=%s", xApp.appInfo.getPackageName().get(0))));
+					Util.viewUri(ActivityShare.this, Uri.parse(String.format(getBaseURL() + "?package_name=%s",
+							xApp.appInfo.getPackageName().get(0))));
 				}
 			});
 
@@ -1589,8 +1589,8 @@ public class ActivityShare extends ActivityBase {
 
 						// Submit
 						HttpParams httpParams = new BasicHttpParams();
-						HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-						HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+						HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+						HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 						HttpPost httpost = new HttpPost(getBaseURL() + "?format=json&action=submit");
@@ -1743,8 +1743,8 @@ public class ActivityShare extends ActivityBase {
 
 				// Submit
 				HttpParams httpParams = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-				HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 				HttpPost httpost = new HttpPost(getBaseURL() + "device?format=json&action=register");
@@ -1874,11 +1874,11 @@ public class ActivityShare extends ActivityBase {
 
 				// Update
 				HttpParams httpParams = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-				HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
-				HttpPost httpost = new HttpPost(ActivityShare.getBaseURL() + "?format=json&action=update");
+				HttpPost httpost = new HttpPost(getBaseURL() + "?format=json&action=update");
 				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
 				httpost.setHeader("Accept", "application/json");
 				httpost.setHeader("Content-type", "application/json");
