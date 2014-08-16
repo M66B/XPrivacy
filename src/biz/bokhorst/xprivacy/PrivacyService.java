@@ -1323,6 +1323,9 @@ public class PrivacyService extends IPrivacyService.Stub {
 			synchronized (mRestrictionCache) {
 				mRestrictionCache.clear();
 			}
+			synchronized (mAskedOnceCache) {
+				mAskedOnceCache.clear();
+			}
 			synchronized (mSettingCache) {
 				mSettingCache.clear();
 			}
