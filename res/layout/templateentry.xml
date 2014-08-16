@@ -34,6 +34,15 @@
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <ImageView
+        android:id="@+id/imgUnsafe"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:contentDescription="@string/title_unsafe"
+        android:paddingLeft="3dip"
+        android:src="?attr/icon_unsafe"
+        android:visibility="gone" />
+
+    <ImageView
         android:id="@+id/imgCbRestrict"
         android:layout_width="32dip"
         android:layout_height="32dip"

@@ -180,6 +180,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		if (Util.hasProLicense(this) != null)
 			setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
 
+		// Annotate
+		Meta.annotate(this.getResources());
+
 		// Get localized restriction name
 		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this).navigableKeySet());
 		listRestrictionName.add(0, getString(R.string.menu_all));
@@ -1212,6 +1215,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ImageView imgIndicator;
 			public ImageView imgInfo;
 			public TextView tvRestriction;
+			public ImageView imgUnsafe;
 			public ImageView imgCbRestrict;
 			public ImageView imgCbAsk;
 			public boolean restricted;
@@ -1222,6 +1226,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
 				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
+				imgUnsafe = (ImageView) row.findViewById(R.id.imgUnsafe);
 				imgCbRestrict = (ImageView) row.findViewById(R.id.imgCbRestrict);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 			}
@@ -1288,6 +1293,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					: R.attr.icon_expander_minimized));
 			holder.imgIndicator.setVisibility(View.VISIBLE);
 			holder.imgInfo.setVisibility(View.GONE);
+			holder.imgUnsafe.setVisibility(View.GONE);
 
 			// Set data
 			holder.tvRestriction.setTypeface(null, Typeface.BOLD);
@@ -1392,6 +1398,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					}
 				});
 			}
+			holder.imgUnsafe.setVisibility(hook.isUnsafe() ? View.VISIBLE : View.GONE);
 
 			// Set data
 			if (hook.isDangerous())

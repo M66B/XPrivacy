@@ -302,9 +302,6 @@ public class ActivityApp extends ActivityBase {
 			else if (extras.getInt(cAction) == cActionSettings)
 				optionSettings();
 		}
-
-		// Annotate
-		Meta.annotate(this.getResources());
 	}
 
 	@Override
