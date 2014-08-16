@@ -336,6 +336,24 @@
 				exit();
 			}
 
+			// Release type
+			$folder = 'release';
+			if (!empty($data->test_versions) && $data->test_versions)
+				$folder = 'test';
+
+			// Find latest version
+			$latest = null;
+			$modified = null;
+			$files = glob($folder . '/XPrivacy_*.apk');
+			if ($files)
+				foreach ($files as $filename) {
+					$version = explode('_', basename($filename, '.apk'))[1];
+					if ($latest == null || version_compare($version, $latest) >= 0) {
+						$latest = $version;
+						$modified = filemtime($filename);
+					}
+				}
+
 			// Throttling
 			if (empty($data->android_id))
 				$data->android_id = '';
@@ -344,29 +362,20 @@
 				$sql .= " WHERE android_id_md5 = '" . $db->real_escape_string($data->android_id) . "'";
 				$result = $db->query($sql);
 				if ($result) {
-					if (($row = $result->fetch_object()))
+					if (($row = $result->fetch_object())) {
+						if ($modified < $row->time) {
+							header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
+							exit();
+						}
 						if ($row->time + 3600 > time()) {
 							header($_SERVER['SERVER_PROTOCOL'] . ' 429 Too Many Requests');
 							exit();
 						}
+					}
 				}
 				else
 					log_error('update: error=' . $db->error . ' query=' . $sql, $my_email, $data);
 			}
-
-			$folder = 'release';
-			if (!empty($data->test_versions) && $data->test_versions)
-				$folder = 'test';
-
-			// Find latest version
-			$latest = null;
-			$files = glob($folder . '/XPrivacy_*.apk');
-			if ($files)
-				foreach ($files as $filename) {
-					$version = explode('_', basename($filename, '.apk'))[1];
-					if ($latest == null || version_compare($version, $latest) >= 0)
-						$latest = $version;
-				}
 
 			$sql = "INSERT INTO xprivacy_update (android_id_md5, installed_version, test_versions, current_version)";
 			$sql .= " VALUES (";
