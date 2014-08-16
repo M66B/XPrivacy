@@ -67,10 +67,13 @@ public class RState {
 			asked = query.asked;
 		}
 
+		boolean isApp = PrivacyManager.isApplication(uid);
+		boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem, false);
+
 		restricted = (allRestricted || someRestricted);
-		asked = (!onDemand || !PrivacyManager.isApplication(uid) || asked);
+		asked = (!onDemand || !(isApp || odSystem) || asked);
 		partialRestricted = (!allRestricted && someRestricted);
-		partialAsk = (onDemand && PrivacyManager.isApplication(uid) && !allAsk && someAsk);
+		partialAsk = (onDemand && (isApp || odSystem) && !allAsk && someAsk);
 	}
 
 	public void toggleRestriction() {

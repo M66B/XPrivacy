@@ -1549,11 +1549,17 @@ public class ActivityApp extends ActivityBase {
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName());
-					ondemand = (PrivacyManager.isApplication(mAppInfo.getUid()) && PrivacyManager.getSettingBool(
-							userId, PrivacyManager.cSettingOnDemand, true));
+
+					boolean isApp = PrivacyManager.isApplication(mAppInfo.getUid());
+					boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem,
+							false);
+					boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+
+					ondemand = ((isApp || odSystem) && gondemand);
 					if (ondemand)
 						ondemand = PrivacyManager.getSettingBool(-mAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false);
+
 					if (md.whitelist() == null)
 						whitelist = false;
 					else
