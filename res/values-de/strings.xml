@@ -11,7 +11,7 @@
     <string name="menu_usage">Aktivitätslog</string>
     <string name="menu_refresh">Aktualisieren</string>
     <string name="menu_settings">Einstellungen</string>
-    <string name="menu_template">Template (Vorlage)</string>
+    <string name="menu_template">Vorlage (Template)</string>
     <string name="menu_report">Problem melden</string>
     <string name="menu_export">Einstellungen exportieren</string>
     <string name="menu_import">Einstellungen importieren</string>
@@ -31,11 +31,11 @@
     <string name="menu_clear_usage">Löschen</string>
     <string name="menu_clear_db">Alle XPrivacy Daten löschen</string>
     <string name="menu_usage_all">Filter invertieren</string>
-    <string name="menu_apply">Template übernehmen</string>
+    <string name="menu_apply">Vorlage übernehmen</string>
     <string name="menu_clear">Einstellungen löschen</string>
     <string name="menu_app_launch">Öffnen</string>
     <string name="menu_app_settings">App-Info anzeigen</string>
-    <string name="menu_app_store">Im Play Store anzeigen</string>
+    <string name="menu_app_store">Im Play-Store anzeigen</string>
     <string name="menu_app_kill">App beenden</string>
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
     <string name="menu_applications">Apps für Zugriff freigeben</string>
@@ -52,7 +52,7 @@
     <string name="msg_update">Update</string>
     <string name="msg_loading">Lade...</string>
     <string name="msg_applying">Übernehme...</string>
-    <string name="msg_applied">Template übernommen</string>
+    <string name="msg_applied">Vorlage übernommen</string>
     <string name="msg_saved_to">Gespeichert nach %1$s</string>
     <string name="msg_no_restrictions">Keine Beschränkung gefunden</string>
     <string name="msg_sure">Sind Sie sicher?</string>
@@ -75,7 +75,7 @@
     <string name="msg_restrictedby">Durch XPrivacy beschränkt</string>
     <string name="msg_service_missing">Privacy Service nicht gefunden. Haben Sie XPrivacy im Xposed Installer aktiviert und Ihr Gerät neu gestartet?</string>
     <string name="msg_service_version">Privacy Service Versionsunterschied festgestellt. Haben Sie nach dem Upgrade von XPrivacy Ihr Gerät neu gestartet?</string>
-    <string name="msg_service_updating">Please wait until the update service has been completed</string>
+    <string name="msg_service_updating">Bitte warten Sie, bis der Update-Dienst beendet worden ist</string>
     <string name="msg_first"><b>XPrivacy wurde mit größter Sorgfalt entwickelt und getestet.\nDennoch kann nicht gewährleistet werden, 
 dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nSie verwenden XPrivacy ausschließlich auf eigenes Risiko!</b>\n\nBitte beachten Sie auch die Lizenz:</string>
@@ -165,9 +165,9 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_pleasesubmit">Bitte geben Sie Ihre Einstellungen der Beschränkungen weiter, um anderen zu helfen</string>
     <string name="title_permissions">Berechtigungen</string>
     <string name="title_set_restrict">Auswahl beschränken (Kategorien)</string>
-    <string name="title_template_category">Template übernehmen (nur Kategorien)</string>
-    <string name="title_template_full">Template übernehmen (Kategorien und Funktionen)</string>
-    <string name="title_template_merge">Template übernehmen (zusammenfügen)</string>
+    <string name="title_template_category">Vorlage übernehmen (nur Kategorien)</string>
+    <string name="title_template_full">Vorlage übernehmen (Kategorien und Funktionen)</string>
+    <string name="title_template_merge">Vorlage übernehmen (zusammenfügen)</string>
     <string name="title_enable_ondemand">\"Beschränken nach Aufforderung\" aktivieren</string>
     <string name="title_disable_ondemand">\"Beschränken nach Aufforderung\" deaktivieren</string>
     <string name="title_ondemand_default">Bei Timeout:</string>
