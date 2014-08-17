@@ -47,6 +47,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Flush will clear the asked once cache too
+* Updated French translation
 * Updated Slovenian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
