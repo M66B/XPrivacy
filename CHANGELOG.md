@@ -48,6 +48,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 * Flush will clear the asked once cache too
 * Display if update service is busy in reboot layout ([issue](/../../issues/1887))
+* Fixed asking again in some cases ([issue](/../../issues/1885))
 * Performance improvement (caching category restrictions)
 * Updated Dutch translation
 * Updated French translation
@@ -183,9 +184,9 @@ XPrivacy 2
 * Added application specific quirks ([issue](/../../issues/1844))
 * Added intent for update check ([issue](/../../issues/1867))
 * Changed the default to *noresolve* and added quirk *resolve*
-* Performance optimizations
 * Flush will clear the asked once cache too
 * Display if update service is busy in reboot layout ([issue](/../../issues/1887))
+* Fixed asking again in some cases ([issue](/../../issues/1885))
 * Performance improvement (caching category restrictions)
 * Local transient values only
 * Updated Dutch translation
