@@ -124,7 +124,7 @@ public class ActivityApp extends ActivityBase {
 		final int userId = Util.getUserId(Process.myUid());
 
 		// Check privacy service client
-		if (!PrivacyService.checkClient())
+		if (!PrivacyService.checkClient() || isUpdating())
 			return;
 
 		// Set layout

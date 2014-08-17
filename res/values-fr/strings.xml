@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">Restreint par XPrivacy</string>
     <string name="msg_service_missing">Service Privacy non trouvé : avez-vous activé XPrivacy dans l\'installateur Xposed et redémarré votre appareil ?</string>
     <string name="msg_service_version">Décalage de la version du service Privacy : avez-vous redémarré votre appareil après la mise à niveau de XPrivacy ?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>

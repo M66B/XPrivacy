@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
     <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>Malaking pag-aalaga ang ginampanan sa pagkabuo at sa pagsusuri ng XPrivacy,
     ngunit sadyang walang garantisado na gagana siya na walang kamali-mali sa lahat ng mga kagamitan o bawat sa isa\'t isang aplikasyon. 
 \n\nAng paggamit nito ay ganap na nasa sa iyong pagbabakasakali.</b>\n\nAlamin din ang kanyang lisensiya at sangguni dito sa:</string>

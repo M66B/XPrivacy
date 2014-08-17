@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">已被 XPrivacy 限制權限</string>
     <string name="msg_service_missing">找不到 XPrivacy 服務。請確認已經在 Xposed installer 中啟用 XPrivacy 模組，並且重新開機。</string>
     <string name="msg_service_version">XPrivacy 服務版本不符。請確認在更新 XPrivacy 後有重新開機。</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
     \n\n請自行承擔使用XPrivacy的可能風險。</b>
     \n\n請參閱說明文件：</string>

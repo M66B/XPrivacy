@@ -165,7 +165,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		final int userId = Util.getUserId(Process.myUid());
 
 		// Check privacy service client
-		if (!PrivacyService.checkClient())
+		if (!PrivacyService.checkClient() || isUpdating())
 			return;
 
 		// Import license file

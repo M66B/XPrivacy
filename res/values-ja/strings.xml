@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">XPrivacy により制限されました</string>
     <string name="msg_service_missing">Privacy service が見つかりません。XPrivacy を Xposed インストーラーで有効にして端末を再起動しましたか?</string>
     <string name="msg_service_version">Privacy service のバージョンが違います。XPrivacy を更新した後で端末を再起動しましたか?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>XPrivacy の開発およびテストには細心の注意を払いましたが、
 すべての端末のあらゆるアプリで完璧な動作を保証することは不可能です。
 \n\n完全に自己責任のうえでご利用ください。</b>\n\nライセンスについて :</string>

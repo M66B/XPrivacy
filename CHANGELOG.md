@@ -47,6 +47,8 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Flush will clear the asked once cache too
+* Display if update service is busy in reboot layout ([issue](/../../issues/1887))
+* Updated Dutch translation
 * Updated French translation
 * Updated Slovenian translation
 

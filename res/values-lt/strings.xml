@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">Ribojama su XPrivacy</string>
     <string name="msg_service_missing">Privacy procesas nerastas; ar aktyvavote XPrivacy sistemoje Xposed ir perkrovėte prietaisą?</string>
     <string name="msg_service_version">Privacy procesas veikia netinkamai; perkrovėte prietaisą po XPrivacy atnaujinimo?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
