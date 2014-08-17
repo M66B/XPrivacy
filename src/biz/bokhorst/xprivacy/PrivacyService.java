@@ -1473,24 +1473,42 @@ public class PrivacyService extends IPrivacyService.Stub {
 					// Check if method not asked before
 					CRestriction mkey = new CRestriction(restriction, null);
 					synchronized (mRestrictionCache) {
-						if (mRestrictionCache.containsKey(mkey))
-							if (mRestrictionCache.get(mkey).asked) {
+						if (mRestrictionCache.containsKey(mkey)) {
+							CRestriction mrestriction = mRestrictionCache.get(mkey);
+							if (mrestriction.asked) {
 								Util.log(null, Log.WARN, "Already asked " + restriction);
-								result.restricted = mRestrictionCache.get(mkey).restricted;
+								result.restricted = mrestriction.restricted;
 								result.asked = true;
 								return oResult;
 							}
+						}
 					}
 
-					// Check if category not asked before
+					// Check if category not asked before (once)
 					CRestriction ckey = new CRestriction(restriction, null);
 					ckey.setMethodName(null);
 					synchronized (mAskedOnceCache) {
-						if (mAskedOnceCache.containsKey(ckey) && !mAskedOnceCache.get(ckey).isExpired()) {
-							Util.log(null, Log.WARN, "Already asked once category " + restriction);
-							result.restricted = mAskedOnceCache.get(ckey).restricted;
-							result.asked = true;
-							return oResult;
+						if (mAskedOnceCache.containsKey(ckey)) {
+							CRestriction carestriction = mAskedOnceCache.get(ckey);
+							if (!carestriction.isExpired()) {
+								Util.log(null, Log.WARN, "Already asked once category " + restriction);
+								result.restricted = carestriction.restricted;
+								result.asked = true;
+								return oResult;
+							}
+						}
+					}
+
+					// Check if method not asked before once
+					synchronized (mAskedOnceCache) {
+						if (mAskedOnceCache.containsKey(mkey)) {
+							CRestriction marestriction = mAskedOnceCache.get(mkey);
+							if (!marestriction.isExpired()) {
+								Util.log(null, Log.WARN, "Already asked once method " + restriction);
+								result.restricted = marestriction.restricted;
+								result.asked = true;
+								return oResult;
+							}
 						}
 					}
 
@@ -1519,16 +1537,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 									}
 								}
 							}
-						}
-					}
-
-					// Check if not asked before once
-					synchronized (mAskedOnceCache) {
-						if (mAskedOnceCache.containsKey(mkey) && !mAskedOnceCache.get(mkey).isExpired()) {
-							Util.log(null, Log.WARN, "Already asked once " + restriction);
-							result.restricted = mAskedOnceCache.get(mkey).restricted;
-							result.asked = true;
-							return oResult;
 						}
 					}
 
