@@ -46,7 +46,7 @@ public class XLocationClient extends XHook {
 	};
 
 	public static List<XHook> getInstances() {
-		Util.log(null, Log.WARN, "Hooking uid=" + Binder.getCallingUid());
+		Util.log(null, Log.INFO, "Hooking uid=" + Binder.getCallingUid());
 
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XLocationClient(Methods.addGeofences, PrivacyManager.cLocation));
