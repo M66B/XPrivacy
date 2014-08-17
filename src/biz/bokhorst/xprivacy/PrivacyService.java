@@ -398,7 +398,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 		// Translate isolated uid
 		restriction.uid = getIsolatedUid(restriction.uid);
 
-		boolean cached = false;
+		boolean ccached = false;
+		boolean mcached = false;
 		int userId = Util.getUserId(restriction.uid);
 		final PRestriction mresult = new PRestriction(restriction);
 
@@ -458,20 +459,33 @@ public class PrivacyService extends IPrivacyService.Stub {
 			if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
 				return mresult;
 
-			// Check cache
+			// Check cache for method
 			CRestriction key = new CRestriction(restriction, restriction.extra);
 			synchronized (mRestrictionCache) {
 				if (mRestrictionCache.containsKey(key)) {
-					cached = true;
+					mcached = true;
 					CRestriction cache = mRestrictionCache.get(key);
 					mresult.restricted = cache.restricted;
 					mresult.asked = cache.asked;
 				}
 			}
 
-			if (!cached) {
+			if (!mcached) {
 				boolean methodFound = false;
 				PRestriction cresult = new PRestriction(restriction.uid, restriction.restrictionName, null);
+
+				// Check cache for category
+				CRestriction ckey = new CRestriction(cresult, null);
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(ckey)) {
+						ccached = true;
+						CRestriction crestriction = mRestrictionCache.get(ckey);
+						cresult.restricted = crestriction.restricted;
+						cresult.asked = crestriction.asked;
+						mresult.restricted = cresult.restricted;
+						mresult.asked = cresult.asked;
+					}
+				}
 
 				// Get database reference
 				SQLiteDatabase db = getDb();
@@ -489,20 +503,21 @@ public class PrivacyService extends IPrivacyService.Stub {
 				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
-					try {
-						synchronized (stmtGetRestriction) {
-							stmtGetRestriction.clearBindings();
-							stmtGetRestriction.bindLong(1, restriction.uid);
-							stmtGetRestriction.bindString(2, restriction.restrictionName);
-							stmtGetRestriction.bindString(3, "");
-							long state = stmtGetRestriction.simpleQueryForLong();
-							cresult.restricted = ((state & 1) != 0);
-							cresult.asked = ((state & 2) != 0);
-							mresult.restricted = cresult.restricted;
-							mresult.asked = cresult.asked;
+					if (!ccached)
+						try {
+							synchronized (stmtGetRestriction) {
+								stmtGetRestriction.clearBindings();
+								stmtGetRestriction.bindLong(1, restriction.uid);
+								stmtGetRestriction.bindString(2, restriction.restrictionName);
+								stmtGetRestriction.bindString(3, "");
+								long state = stmtGetRestriction.simpleQueryForLong();
+								cresult.restricted = ((state & 1) != 0);
+								cresult.asked = ((state & 2) != 0);
+								mresult.restricted = cresult.restricted;
+								mresult.asked = cresult.asked;
+							}
+						} catch (SQLiteDoneException ignored) {
 						}
-					} catch (SQLiteDoneException ignored) {
-					}
 
 					if (restriction.methodName != null)
 						try {
@@ -569,11 +584,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 				}
 
 				// Update cache
-				CRestriction ckey = new CRestriction(cresult, null);
+				CRestriction cukey = new CRestriction(cresult, null);
 				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(ckey))
-						mRestrictionCache.remove(ckey);
-					mRestrictionCache.put(ckey, ckey);
+					if (mRestrictionCache.containsKey(cukey))
+						mRestrictionCache.remove(cukey);
+					mRestrictionCache.put(cukey, cukey);
 				}
 				CRestriction ukey = new CRestriction(mresult, restriction.extra);
 				synchronized (mRestrictionCache) {
@@ -616,8 +631,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 		}
 
 		long ms = System.currentTimeMillis() - start;
-		Util.log(null, ms < PrivacyManager.cWarnServiceDelayMs ? Log.INFO : Log.WARN,
-				String.format("Get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
+		Util.log(
+				null,
+				ms < PrivacyManager.cWarnServiceDelayMs ? Log.INFO : Log.WARN,
+				String.format("Get service %s%s %d ms", restriction, (ccached ? " (ccached)" : "")
+						+ (mcached ? " (mcached)" : ""), ms));
 
 		if (mresult.debug)
 			Util.logStack(null, Log.WARN);
