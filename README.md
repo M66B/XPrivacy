@@ -1142,6 +1142,7 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 	* [Carbon ROM](https://carbonrom.org/)
 	* [Dirty Unicorns](http://www.teamdirt.me/)
 	* [Liquid Smooth](http://liquidsmooth.net/)
+	* [Paranoid Android](http://paranoidandroid.co/)
 * Compatibility mode = all other Android versions/variants
 
 *About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivay 2.
