@@ -152,7 +152,8 @@ public class Hook implements Comparable<Hook> {
 				return true;
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
-			return (isAOSP() || isCyanogenMod() || isOmni() || isMIUI() || isSlim() || isCarbon() || isDirtyUnicorns() || isLiquidSmooth());
+			return (isAOSP() || isCyanogenMod() || isOmni() || isMIUI() || isSlim() || isParanoidAndroid()
+					|| isCarbon() || isDirtyUnicorns() || isLiquidSmooth());
 		} else
 			return false;
 	}
