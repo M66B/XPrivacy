@@ -46,6 +46,10 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.31 TEST**
+
 * Flush will clear the asked once cache too
 * Display if update service is busy in reboot layout ([issue](/../../issues/1887))
 * Fixed asking again in some cases ([issue](/../../issues/1885))
@@ -53,8 +57,6 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Updated Dutch translation
 * Updated French translation
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.30 BETA**
 
@@ -179,6 +181,10 @@ XPrivacy 2
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.2.9 TEST**
+
 * Option to select duration to allow/deny once ([issue](/../../issues/1873))
 * Added help items to template ([issue](/../../issues/1827))
 * Added application specific quirks ([issue](/../../issues/1844))
@@ -195,8 +201,6 @@ XPrivacy 2
 * Updated Japanese translation
 * Updated Simplified Chinese translation
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.2.8 BETA**
 
