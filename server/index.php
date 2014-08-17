@@ -363,7 +363,7 @@
 				$result = $db->query($sql);
 				if ($result) {
 					if (($row = $result->fetch_object())) {
-						if ($modified < $row->time) {
+						if ($row->time + 24 * 3600 > time() && $modified < $row->time) {
 							header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
 							exit();
 						}
