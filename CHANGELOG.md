@@ -46,6 +46,9 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Updated French translation
+* Updated German translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.31 TEST**
