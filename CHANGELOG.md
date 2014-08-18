@@ -189,6 +189,8 @@ XPrivacy 2
 
 **Next release**
 
+* Fixed crash ([issue](/../../issues/1893))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.2.11 BETA**
