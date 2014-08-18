@@ -366,7 +366,7 @@
 				if ($result) {
 					if (($row = $result->fetch_object()))
 						if ($row->count >= 3) {
-							header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
+							header($_SERVER['SERVER_PROTOCOL'] . ' 429 Too Many Requests');
 							exit();
 						}
 				}
