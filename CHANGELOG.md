@@ -184,6 +184,8 @@ XPrivacy 2
 
 **Next release**
 
+* Fixed all problems reported through the debug info
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.2.10 BETA**
