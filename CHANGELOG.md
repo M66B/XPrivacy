@@ -54,7 +54,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 2.99.31 TEST**
+**Version 2.99.31 BETA**
 
 * Flush will clear the asked once cache too
 * Display if update service is busy in reboot layout ([issue](/../../issues/1887))
