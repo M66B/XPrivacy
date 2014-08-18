@@ -1362,7 +1362,7 @@ Using Eclipse:
 
 Testing:
 
-* [XPrivacy Tester](https://github.com/M66B/XPrivacyTester)
+* [XPrivacy Tester](https://github.com/M66B/XPrivacyTester) (developers only)
 * [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 
