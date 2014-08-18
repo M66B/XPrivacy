@@ -147,7 +147,7 @@ public class ActivityShare extends ActivityBase {
 		super.onCreate(savedInstanceState);
 
 		// Check privacy service client
-		if (!PrivacyService.checkClient() || isUpdating())
+		if (!PrivacyService.checkClient())
 			return;
 
 		// Get data

@@ -27,9 +27,8 @@ public class ActivityBase extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		// Check if update service running
-		boolean updating = isUpdating();
-		if (PrivacyService.checkClient() && !updating) {
+		// Check if Privacy client available
+		if (PrivacyService.checkClient()) {
 			// Set theme
 			int userId = Util.getUserId(Process.myUid());
 			String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
@@ -48,19 +47,21 @@ public class ActivityBase extends Activity {
 			}
 
 			// Show reason
-			if (updating)
-				((TextView) findViewById(R.id.tvServiceUpdating)).setVisibility(View.VISIBLE);
-			else if (PrivacyService.getClient() == null) {
+			if (PrivacyService.getClient() == null) {
 				((TextView) findViewById(R.id.tvRebootClient)).setVisibility(View.VISIBLE);
 				Requirements.checkCompatibility(this);
 			} else {
 				((TextView) findViewById(R.id.tvRebootVersion)).setVisibility(View.VISIBLE);
 				Requirements.check(this);
 			}
+
+			// Show if updating
+			if (isUpdating())
+				((TextView) findViewById(R.id.tvServiceUpdating)).setVisibility(View.VISIBLE);
 		}
 	}
 
-	protected boolean isUpdating() {
+	private boolean isUpdating() {
 		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
 			if (UpdateService.class.getName().equals(service.service.getClassName()))

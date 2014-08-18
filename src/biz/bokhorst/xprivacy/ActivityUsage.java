@@ -62,7 +62,7 @@ public class ActivityUsage extends ActivityBase {
 		super.onCreate(savedInstanceState);
 
 		// Check privacy service client
-		if (!PrivacyService.checkClient() || isUpdating())
+		if (!PrivacyService.checkClient())
 			return;
 
 		// Set layout
