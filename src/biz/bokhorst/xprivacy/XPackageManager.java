@@ -162,7 +162,7 @@ public class XPackageManager extends XHook {
 				String packageName = (String) param.args[0];
 				// Prevent recursion
 				if (!XPackageManager.class.getPackage().getName().equals(packageName))
-					if (isRestricted(param))
+					if (isRestrictedExtra(param, packageName))
 						if (!isPackageAllowed(packageName))
 							param.setResult(null);
 			}
