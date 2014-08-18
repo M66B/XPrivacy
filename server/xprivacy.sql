@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Aug 16, 2014 at 12:13 PM
+-- Generation Time: Aug 18, 2014 at 04:19 PM
 -- Server version: 5.6.19-1~dotdeb.1-log
 -- PHP Version: 5.5.15-1~dotdeb.1
 
@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `xprivacy` (
   `used` bigint(13) NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updates` int(11) NOT NULL DEFAULT '1'
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8170557 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8302378 ;
 
 -- --------------------------------------------------------
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `xprivacy_app` (
   `package_version` text CHARACTER SET utf8 NOT NULL,
   `package_version_code` int(11) NOT NULL,
   `modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=54865 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=56302 ;
 
 -- --------------------------------------------------------
 
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `xprivacy_update` (
   `installed_version` text CHARACTER SET utf8 NOT NULL,
   `test_versions` int(11) NOT NULL,
   `current_version` text CHARACTER SET utf8 NOT NULL
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1256 ;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1705 ;
 
 --
 -- Indexes for dumped tables
@@ -93,7 +93,7 @@ ALTER TABLE `xprivacy_app`
 -- Indexes for table `xprivacy_update`
 --
 ALTER TABLE `xprivacy_update`
- ADD PRIMARY KEY (`id`), ADD KEY `android_id` (`android_id_md5`(50));
+ ADD PRIMARY KEY (`id`), ADD KEY `android_id_time` (`android_id_md5`(50),`time`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -103,17 +103,17 @@ ALTER TABLE `xprivacy_update`
 -- AUTO_INCREMENT for table `xprivacy`
 --
 ALTER TABLE `xprivacy`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8170557;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8302378;
 --
 -- AUTO_INCREMENT for table `xprivacy_app`
 --
 ALTER TABLE `xprivacy_app`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=54865;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56302;
 --
 -- AUTO_INCREMENT for table `xprivacy_update`
 --
 ALTER TABLE `xprivacy_update`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1256;
+MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=1705;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
