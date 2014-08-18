@@ -135,7 +135,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transacties</string>
     <string name="whitelist_permission">Rechten</string>
-    <string name="title_restrict">Vink aan om te beperken:</string>
+    <string name="title_restrict">Vink aan om te beperken / op aanvraag:</string>
     <string name="title_check_whitelist">Vink aan om toe te staan:</string>
     <string name="title_fused">Filter op gegevensgebruik</string>
     <string name="title_finternet">Filter op internettoegang</string>

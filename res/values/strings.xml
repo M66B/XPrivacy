@@ -144,7 +144,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="whitelist_transaction" tools:ignore="UnusedResources">Transactions</string>
     <string name="whitelist_permission">Permissions</string>
     <string name="whitelist_proc" translatable="false" tools:ignore="UnusedResources">/proc</string>
-    <string name="title_restrict">Check to restrict:</string>
+    <string name="title_restrict">Check to restrict / on demand:</string>
     <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>
