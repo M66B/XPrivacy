@@ -47,6 +47,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Added parameter package name to *Srv_getPackageInfo* and *Srv_getApplicationInfo*
+* Added support for [Android Revolution HD](http://forum.xda-developers.com/showthread.php?t=1925402)
 * Updated French translation
 * Updated German translation
 
