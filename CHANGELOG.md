@@ -46,6 +46,9 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Fixed crash caused by legacy restrictions ([issue](/../../issues/1893))
+* Updated Slovak translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.32 BETA**
@@ -189,7 +192,8 @@ XPrivacy 2
 
 **Next release**
 
-* Fixed crash ([issue](/../../issues/1893))
+* Fixed crash caused by legacy restrictions ([issue](/../../issues/1893))
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
