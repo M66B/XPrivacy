@@ -14,7 +14,7 @@ public class RState {
 	public boolean partialRestricted = false;
 	public boolean partialAsk = false;
 
-	public RState(int uid, String restrictionName, String methodName) {
+	public RState(int uid, String restrictionName, String methodName, Version version) {
 		mUid = uid;
 		mRestrictionName = restrictionName;
 		mMethodName = methodName;
@@ -49,9 +49,12 @@ public class RState {
 				someRestricted = query.restricted;
 				someAsk = !query.asked;
 				for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
+					Hook hook = PrivacyManager.getHook(restrictionName, restriction.methodName);
+					if (version != null && hook.getFrom() != null && version.compareTo(hook.getFrom()) < 0)
+						continue;
+
 					allRestricted = (allRestricted && restriction.restricted);
 					someRestricted = (someRestricted || restriction.restricted);
-					Hook hook = PrivacyManager.getHook(restrictionName, restriction.methodName);
 					if (hook == null || hook.canOnDemand()) {
 						allAsk = (allAsk && !restriction.asked);
 						someAsk = (someAsk || !restriction.asked);

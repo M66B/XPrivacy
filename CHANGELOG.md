@@ -48,6 +48,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 * Added parameter package name to *Srv_getPackageInfo* and *Srv_getApplicationInfo*
 * Added support for [Android Revolution HD](http://forum.xda-developers.com/showthread.php?t=1925402)
+* Fixed all problems reported through the debug info
 * Updated French translation
 * Updated German translation
 
@@ -186,9 +187,11 @@ XPrivacy 2
 
 **Next release**
 
-* Fixed all problems reported through the debug info
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.2.11 BETA**
+
+* Filtering restrictions available from version 2.99.x only (reported on XDA)
 
 **Version 2.2.10 BETA**
 

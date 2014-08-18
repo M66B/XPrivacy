@@ -1818,7 +1818,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 							granted = false;
 
 					// Get restriction/ask state
-					rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+					rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
 
 					// Get can restrict
 					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
@@ -1966,7 +1966,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									@Override
 									protected Object doInBackground(Object... arg0) {
 										rstate.toggleAsked();
-										rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+										rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
 										return null;
 									}
 
@@ -2009,7 +2009,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								getThemed(R.attr.color_state_attention)));
 
 						// Update stored state
-						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 
@@ -2049,7 +2049,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					@Override
 					protected void onPostExecute(Object result) {
 						// Update restriction display
-						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 

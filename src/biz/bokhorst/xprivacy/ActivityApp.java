@@ -1231,7 +1231,7 @@ public class ActivityApp extends ActivityBase {
 					int userId = Util.getUserId(Process.myUid());
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
 					permission = PrivacyManager.hasPermission(mContext, mAppInfo, restrictionName, mVersion);
-					rstate = new RState(mAppInfo.getUid(), restrictionName, null);
+					rstate = new RState(mAppInfo.getUid(), restrictionName, null, mVersion);
 
 					boolean isApp = PrivacyManager.isApplication(mAppInfo.getUid());
 					boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem,
@@ -1552,7 +1552,7 @@ public class ActivityApp extends ActivityBase {
 					lastUsage = PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName());
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
 					permission = PrivacyManager.hasPermission(mContext, mAppInfo, md);
-					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName());
+					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName(), mVersion);
 
 					boolean isApp = PrivacyManager.isApplication(mAppInfo.getUid());
 					boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem,
