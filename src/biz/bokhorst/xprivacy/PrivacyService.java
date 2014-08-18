@@ -429,8 +429,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 					// Can happen after updating
 					Util.log(null, Log.WARN, "Hook not found in service: " + restriction);
 				else if (hook.getFrom() != null) {
-					String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
-					if (new Version(version).compareTo(hook.getFrom()) < 0)
+					String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, null)).value;
+					if (version != null && new Version(version).compareTo(hook.getFrom()) < 0)
 						if (hook.getReplacedRestriction() == null) {
 							Util.log(null, Log.WARN, "Disabled version=" + version + " from=" + hook.getFrom()
 									+ " hook=" + hook);
