@@ -2,7 +2,7 @@
     package="biz.bokhorst.xprivacy"
     android:installLocation="internalOnly"
     android:versionCode="398"
-    android:versionName="2.2.10" >
+    android:versionName="2.99.31" >
 
     <uses-sdk
         android:minSdkVersion="15"
