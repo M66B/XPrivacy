@@ -1188,6 +1188,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		private List<String> listRestrictionName;
 		private List<String> listLocalizedTitle;
 		private boolean ondemand;
+		private Version version;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 		public TemplateListAdapter(Context context, View view, int resource) {
@@ -1201,6 +1202,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			int userId = Util.getUserId(Process.myUid());
 			ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+			version = new Version(Util.getSelfVersionName(context));
 		}
 
 		private String getTemplate() {
@@ -1271,7 +1273,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			boolean partialRestricted = false;
 			boolean partialAsked = false;
 			if (holder.restricted || !holder.asked)
-				for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
+				for (Hook hook : PrivacyManager.getHooks(restrictionName, version)) {
 					String settingName = restrictionName + "." + hook.getName();
 					String childValue = PrivacyManager.getSetting(userId, getTemplate(), settingName, null);
 					if (childValue == null)
@@ -1329,7 +1331,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return PrivacyManager.getHooks((String) getGroup(groupPosition)).get(childPosition);
+			return PrivacyManager.getHooks((String) getGroup(groupPosition), version).get(childPosition);
 		}
 
 		@Override
@@ -1339,7 +1341,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return PrivacyManager.getHooks((String) getGroup(groupPosition)).size();
+			return PrivacyManager.getHooks((String) getGroup(groupPosition), version).size();
 		}
 
 		@Override
@@ -1474,6 +1476,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		private List<ApplicationInfoEx> mListAppAll;
 		private List<ApplicationInfoEx> mListAppSelected = new ArrayList<ApplicationInfoEx>();
 		private String mRestrictionName;
+		private Version mVersion;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		private AtomicInteger mFiltersRunning = new AtomicInteger(0);
 		private int mHighlightColor;
@@ -1488,6 +1491,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			mListAppAll = new ArrayList<ApplicationInfoEx>();
 			mListAppAll.addAll(objects);
 			mRestrictionName = initialRestrictionName;
+			mVersion = new Version(Util.getSelfVersionName(context));
 
 			TypedArray ta1 = context.getTheme().obtainStyledAttributes(
 					new int[] { android.R.attr.colorLongPressedHighlight });
@@ -1638,7 +1642,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					if (fPermission)
 						if (mRestrictionName == null)
 							permission = true;
-						else if (PrivacyManager.hasPermission(mContext, xAppInfo, mRestrictionName)
+						else if (PrivacyManager.hasPermission(mContext, xAppInfo, mRestrictionName, mVersion)
 								|| PrivacyManager.getUsage(xAppInfo.getUid(), mRestrictionName, null) > 0)
 							permission = true;
 
@@ -1810,7 +1814,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Get if granted
 					granted = true;
 					if (mRestrictionName != null)
-						if (!PrivacyManager.hasPermission(ActivityMain.this, xAppInfo, mRestrictionName))
+						if (!PrivacyManager.hasPermission(ActivityMain.this, xAppInfo, mRestrictionName, mVersion))
 							granted = false;
 
 					// Get restriction/ask state

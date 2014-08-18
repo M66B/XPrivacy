@@ -316,7 +316,7 @@ public class UpdateService extends Service {
 		for (String restrictionName : PrivacyManager.getRestrictions()) {
 			boolean restricted = PrivacyManager.getRestrictionEx(uid, restrictionName, null).restricted;
 
-			for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
+			for (Hook hook : PrivacyManager.getHooks(restrictionName, null)) {
 				// Disable new dangerous restrictions
 				if (hook.getFrom() != null) {
 					if (sVersion.compareTo(hook.getFrom()) < 0) {

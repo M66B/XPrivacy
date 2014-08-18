@@ -725,7 +725,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 					result.add(restriction);
 				}
 			else
-				for (Hook md : PrivacyManager.getHooks(selector.restrictionName)) {
+				for (Hook md : PrivacyManager.getHooks(selector.restrictionName, null)) {
 					PRestriction restriction = new PRestriction(selector.uid, selector.restrictionName, md.getName(),
 							false);
 					query = getRestriction(restriction, false, null);
@@ -1051,7 +1051,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			// Clear restrictions for white list
 			if (Meta.isWhitelist(setting.type))
 				for (String restrictionName : PrivacyManager.getRestrictions())
-					for (Hook hook : PrivacyManager.getHooks(restrictionName))
+					for (Hook hook : PrivacyManager.getHooks(restrictionName, null))
 						if (setting.type.equals(hook.whitelist())) {
 							PRestriction restriction = new PRestriction(setting.uid, hook.getRestrictionName(),
 									hook.getName());
@@ -2074,7 +2074,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				setRestrictionInternal(result);
 
 				// Clear category on change
-				for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
+				for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName, null))
 					if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
 							hook.getName(), false)) {
 						result.methodName = hook.getName();

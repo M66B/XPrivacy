@@ -230,28 +230,34 @@ public class PrivacyManager {
 		return null;
 	}
 
-	public static List<Hook> getHooks(String restrictionName) {
+	public static List<Hook> getHooks(String restrictionName, Version version) {
 		List<Hook> listMethod = new ArrayList<Hook>();
 		for (String methodName : mMethod.get(restrictionName).keySet()) {
 			Hook hook = mMethod.get(restrictionName).get(methodName);
+
 			if (!hook.isAvailable())
 				continue;
-			else if ("IntentFirewall".equals(hook.getName())) {
+
+			if (version != null && hook.getFrom() != null && version.compareTo(hook.getFrom()) < 0)
+				continue;
+
+			if ("IntentFirewall".equals(hook.getName()))
 				if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingIntentWall, false))
 					continue;
-			} else if ("checkPermission".equals(hook.getName()) || "checkUidPermission".equals(hook.getName())) {
+
+			if ("checkPermission".equals(hook.getName()) || "checkUidPermission".equals(hook.getName()))
 				if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingPermMan, false))
 					continue;
-			}
+
 			listMethod.add(mMethod.get(restrictionName).get(methodName));
 		}
 		Collections.sort(listMethod);
 		return listMethod;
 	}
 
-	public static List<String> getPermissions(String restrictionName) {
+	public static List<String> getPermissions(String restrictionName, Version version) {
 		List<String> listPermission = new ArrayList<String>();
-		for (Hook md : getHooks(restrictionName))
+		for (Hook md : getHooks(restrictionName, version))
 			if (md.getPermissions() != null)
 				for (String permission : md.getPermissions())
 					if (!listPermission.contains(permission))
@@ -419,7 +425,7 @@ public class PrivacyManager {
 		// Make exceptions
 		if (methodName == null)
 			for (String rRestrictionName : listRestriction)
-				for (Hook md : getHooks(rRestrictionName)) {
+				for (Hook md : getHooks(rRestrictionName, null)) {
 					if (!canRestrict(uid, Process.myUid(), rRestrictionName, md.getName(), false))
 						listPRestriction.add(new PRestriction(uid, rRestrictionName, md.getName(), false, true));
 					else if (md.isDangerous())
@@ -602,7 +608,7 @@ public class PrivacyManager {
 
 			// Childs
 			if (methods)
-				for (Hook hook : getHooks(rRestrictionName))
+				for (Hook hook : getHooks(rRestrictionName, null))
 					if (canRestrict(uid, Process.myUid(), rRestrictionName, hook.getName(), true)) {
 						// Child
 						String settingName = rRestrictionName + "." + hook.getName();
@@ -1278,13 +1284,15 @@ public class PrivacyManager {
 		return (uid >= FIRST_ISOLATED_UID && uid <= LAST_ISOLATED_UID);
 	}
 
-	public static boolean hasPermission(Context context, ApplicationInfoEx appInfo, String restrictionName) {
+	public static boolean hasPermission(Context context, ApplicationInfoEx appInfo, String restrictionName,
+			Version version) {
 		int uid = appInfo.getUid();
 		synchronized (mPermissionRestrictionCache) {
 			if (mPermissionRestrictionCache.get(uid) == null)
 				mPermissionRestrictionCache.append(uid, new HashMap<String, Boolean>());
 			if (!mPermissionRestrictionCache.get(uid).containsKey(restrictionName)) {
-				boolean permission = hasPermission(context, appInfo.getPackageName(), getPermissions(restrictionName));
+				boolean permission = hasPermission(context, appInfo.getPackageName(),
+						getPermissions(restrictionName, version));
 				mPermissionRestrictionCache.get(uid).put(restrictionName, permission);
 			}
 			return mPermissionRestrictionCache.get(uid).get(restrictionName);

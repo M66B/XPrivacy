@@ -184,6 +184,8 @@ XPrivacy 2
 
 **Next release**
 
+* Filtering restrictions available from version 2.99.x only (reported on XDA)
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.2.9 TEST**

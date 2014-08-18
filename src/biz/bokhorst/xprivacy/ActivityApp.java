@@ -251,7 +251,8 @@ public class ActivityApp extends ActivityBase {
 		// Fill privacy list view adapter
 		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
 		lvRestriction.setGroupIndicator(null);
-		mPrivacyListAdapter = new RestrictionAdapter(R.layout.restrictionentry, mAppInfo, restrictionName, methodName);
+		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.restrictionentry, mAppInfo, restrictionName,
+				methodName);
 		lvRestriction.setAdapter(mPrivacyListAdapter);
 		if (restrictionName != null) {
 			int groupPosition = new ArrayList<String>(PrivacyManager.getRestrictions(this).values())
@@ -259,7 +260,8 @@ public class ActivityApp extends ActivityBase {
 			lvRestriction.expandGroup(groupPosition);
 			lvRestriction.setSelectedGroup(groupPosition);
 			if (methodName != null) {
-				int childPosition = PrivacyManager.getHooks(restrictionName).indexOf(
+				Version version = new Version(Util.getSelfVersionName(this));
+				int childPosition = PrivacyManager.getHooks(restrictionName, version).indexOf(
 						new Hook(restrictionName, methodName));
 				lvRestriction.setSelectedChild(groupPosition, childPosition, true);
 			}
@@ -1126,28 +1128,33 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
+		private Context mContext;
 		private ApplicationInfoEx mAppInfo;
 		private String mSelectedRestrictionName;
 		private String mSelectedMethodName;
 		private List<String> mListRestriction;
 		private HashMap<Integer, List<Hook>> mHook;
-		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		private Version mVersion;
+		private LayoutInflater mInflater;
 
-		public RestrictionAdapter(int resource, ApplicationInfoEx appInfo, String selectedRestrictionName,
-				String selectedMethodName) {
+		public RestrictionAdapter(Context context, int resource, ApplicationInfoEx appInfo,
+				String selectedRestrictionName, String selectedMethodName) {
+			mContext = context;
 			mAppInfo = appInfo;
 			mSelectedRestrictionName = selectedRestrictionName;
 			mSelectedMethodName = selectedMethodName;
 			mListRestriction = new ArrayList<String>();
 			mHook = new LinkedHashMap<Integer, List<Hook>>();
+			mVersion = new Version(Util.getSelfVersionName(context));
+			mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
 			int userId = Util.getUserId(Process.myUid());
 			boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false);
 			boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, false);
 
-			for (String rRestrictionName : PrivacyManager.getRestrictions(ActivityApp.this).values()) {
+			for (String rRestrictionName : PrivacyManager.getRestrictions(mContext).values()) {
 				boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), rRestrictionName, null) > 0);
-				boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, rRestrictionName);
+				boolean hasPermission = PrivacyManager.hasPermission(mContext, mAppInfo, rRestrictionName, mVersion);
 				if (mSelectedRestrictionName != null
 						|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 					mListRestriction.add(rRestrictionName);
@@ -1223,7 +1230,7 @@ public class ActivityApp extends ActivityBase {
 					// Get info
 					int userId = Util.getUserId(Process.myUid());
 					used = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, null) != 0);
-					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, restrictionName);
+					permission = PrivacyManager.hasPermission(mContext, mAppInfo, restrictionName, mVersion);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, null);
 
 					boolean isApp = PrivacyManager.isApplication(mAppInfo.getUid());
@@ -1256,7 +1263,7 @@ public class ActivityApp extends ActivityBase {
 								}
 					}
 					if (!whitelist)
-						for (Hook hook : PrivacyManager.getHooks(restrictionName))
+						for (Hook hook : PrivacyManager.getHooks(restrictionName, mVersion))
 							if (hook.whitelist() != null)
 								if (PrivacyManager.getSettingList(mAppInfo.getUid(), hook.whitelist()).size() > 0) {
 									whitelist = true;
@@ -1339,8 +1346,8 @@ public class ActivityApp extends ActivityBase {
 
 									// Notify restart
 									if (!newState.equals(oldState))
-										Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
-												Toast.LENGTH_LONG).show();
+										Toast.makeText(mContext, getString(R.string.msg_restart), Toast.LENGTH_LONG)
+												.show();
 
 									holder.pbRunning.setVisibility(View.GONE);
 									holder.imgCbRestricted.setVisibility(View.VISIBLE);
@@ -1421,12 +1428,12 @@ public class ActivityApp extends ActivityBase {
 				public void onClick(View view) {
 					int stringId = getResources().getIdentifier("restrict_help_" + restrictionName, "string",
 							getPackageName());
-					Toast.makeText(ActivityApp.this, stringId, Toast.LENGTH_SHORT).show();
+					Toast.makeText(mContext, stringId, Toast.LENGTH_SHORT).show();
 				}
 			});
 
 			// Display localized name
-			TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(ActivityApp.this);
+			TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(mContext);
 			int index = new ArrayList<String>(tmRestriction.values()).indexOf(restrictionName);
 			String title = (String) tmRestriction.navigableKeySet().toArray()[index];
 			holder.tvName.setText(title);
@@ -1449,10 +1456,10 @@ public class ActivityApp extends ActivityBase {
 				boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, false);
 				List<Hook> listMethod = new ArrayList<Hook>();
 				String restrictionName = mListRestriction.get(groupPosition);
-				for (Hook hook : PrivacyManager.getHooks((String) getGroup(groupPosition))) {
+				for (Hook hook : PrivacyManager.getHooks((String) getGroup(groupPosition), mVersion)) {
 					// Filter
 					boolean isUsed = (PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, hook.getName()) > 0);
-					boolean hasPermission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, hook);
+					boolean hasPermission = PrivacyManager.hasPermission(mContext, mAppInfo, hook);
 					if (mSelectedMethodName != null
 							|| ((fUsed ? isUsed : true) && (fPermission ? isUsed || hasPermission : true)))
 						listMethod.add(hook);
@@ -1544,7 +1551,7 @@ public class ActivityApp extends ActivityBase {
 					md = (Hook) getChild(groupPosition, childPosition);
 					lastUsage = PrivacyManager.getUsage(mAppInfo.getUid(), restrictionName, md.getName());
 					parent = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), restrictionName, null);
-					permission = PrivacyManager.hasPermission(ActivityApp.this, mAppInfo, md);
+					permission = PrivacyManager.hasPermission(mContext, mAppInfo, md);
 					rstate = new RState(mAppInfo.getUid(), restrictionName, md.getName());
 
 					boolean isApp = PrivacyManager.isApplication(mAppInfo.getUid());
@@ -1642,8 +1649,8 @@ public class ActivityApp extends ActivityBase {
 
 										// Notify restart
 										if (md.isRestartRequired())
-											Toast.makeText(ActivityApp.this, getString(R.string.msg_restart),
-													Toast.LENGTH_LONG).show();
+											Toast.makeText(mContext, getString(R.string.msg_restart), Toast.LENGTH_LONG)
+													.show();
 
 										holder.pbRunning.setVisibility(View.GONE);
 										holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
