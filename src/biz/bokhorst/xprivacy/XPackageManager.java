@@ -67,6 +67,10 @@ public class XPackageManager extends XHook {
 	// public android.content.pm.ParceledListSlice getInstalledPackages(int flags, int userId)
 	// public android.content.pm.ParceledListSlice getPackagesHoldingPermissions(java.lang.String[] permissions, int flags, int userId)
 	// public android.content.pm.ParceledListSlice getInstalledApplications(int flags, int userId)
+
+	// public PackageInfo getPackageInfo(String packageName, int flags, int userId)
+	// public ApplicationInfo getApplicationInfo(String packageName, int flags, int userId)
+
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/pm/PackageManagerService.java
 
 	// @formatter:on
@@ -83,6 +87,7 @@ public class XPackageManager extends XHook {
 
 		checkPermission, checkUidPermission,
 
+		Srv_getPackageInfo, Srv_getApplicationInfo,
 		Srv_getInstalledApplications, Srv_getInstalledPackages,
 		Srv_getPackagesForUid,
 		Srv_getPackagesHoldingPermissions,
@@ -102,6 +107,8 @@ public class XPackageManager extends XHook {
 			if (className == null)
 				className = cClassName;
 
+			listHook.add(new XPackageManager(Methods.Srv_getPackageInfo, PrivacyManager.cSystem));
+			listHook.add(new XPackageManager(Methods.Srv_getApplicationInfo, PrivacyManager.cSystem));
 			listHook.add(new XPackageManager(Methods.Srv_getInstalledApplications, PrivacyManager.cSystem));
 			listHook.add(new XPackageManager(Methods.Srv_getInstalledPackages, PrivacyManager.cSystem));
 			listHook.add(new XPackageManager(Methods.Srv_getPackagesForUid, PrivacyManager.cSystem));
@@ -149,6 +156,18 @@ public class XPackageManager extends XHook {
 	@SuppressWarnings("unchecked")
 	protected void after(XParam param) throws Throwable {
 		switch (mMethod) {
+		case Srv_getPackageInfo:
+		case Srv_getApplicationInfo:
+			if (param.args.length > 0 && param.args[0] instanceof String && param.getResult() != null) {
+				String packageName = (String) param.args[0];
+				// Prevent recursion
+				if (!XPackageManager.class.getPackage().getName().equals(packageName))
+					if (isRestrictedExtra(param, packageName))
+						if (!isPackageAllowed(packageName))
+							param.setResult(null);
+			}
+			break;
+
 		case Srv_getInstalledApplications:
 			if (param.getResult() != null)
 				if (isRestricted(param)) {

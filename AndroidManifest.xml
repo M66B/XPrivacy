@@ -1,8 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="biz.bokhorst.xprivacy"
     android:installLocation="internalOnly"
-    android:versionCode="394"
-    android:versionName="2.99.27" >
+    android:versionCode="399"
+    android:versionName="2.99.31" >
 
     <uses-sdk
         android:minSdkVersion="15"
@@ -190,6 +190,7 @@
             android:process=":update" >
             <intent-filter>
                 <action android:name="biz.bokhorst.xprivacy.action.FLUSH" />
+                <action android:name="biz.bokhorst.xprivacy.action.UPDATE" />
             </intent-filter>
         </service>
     </application>

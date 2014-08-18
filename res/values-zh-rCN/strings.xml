@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">由 XPrivacy 限制</string>
     <string name="msg_service_missing">没有找到Privacy服务，您是否在Xposed Installer中启用XPrivacy并重启设备？</string>
     <string name="msg_service_version">Privacy服务版本不对，您是否在升级XPrivacy后忘了重启？</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -182,11 +183,11 @@
     <string name="title_ondemand_category">应用异常可在类别功能中重置为默认值</string>
     <string name="title_function_help">函数文档</string>
     <string name="title_unsafe">是不安全的，可以避免</string>
-    <string name="title_update_checking">Checking for update</string>
-    <string name="title_update_downloading">Downloading update</string>
-    <string name="title_update_install">Tap to install update</string>
-    <string name="title_update_none">No updates available</string>
-    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider upgrading to XPrivacy 3</string>
+    <string name="title_update_checking">检查更新</string>
+    <string name="title_update_downloading">下载更新</string>
+    <string name="title_update_install">点击安装更新</string>
+    <string name="title_update_none">没有可用更新</string>
+    <string name="title_update_legacy">XPrivacy2已经不支持，请考虑升级到XPrivacy3</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
@@ -194,8 +195,8 @@
     <string name="settings_mac">MAC 地址</string>
     <string name="settings_ip">IP 地址</string>
     <string name="settings_phone">电话号码</string>
-    <string name="settings_id">Android ID</string>
-    <string name="settings_adid">广告 ID</string>
+    <string name="settings_id">安卓ID</string>
+    <string name="settings_adid">广告ID</string>
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
     <string name="settings_subscriber">IMSI</string>

@@ -23,6 +23,7 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.HttpHostConnectException;
 
 import android.annotation.SuppressLint;
@@ -111,6 +112,8 @@ public class Util {
 		else if (ex instanceof TransactionTooLargeException)
 			priority = Log.WARN;
 		else if (ex instanceof UnknownHostException)
+			priority = Log.WARN;
+		else if (ex instanceof ConnectTimeoutException)
 			priority = Log.WARN;
 		else if (ex instanceof HttpHostConnectException)
 			priority = Log.WARN;

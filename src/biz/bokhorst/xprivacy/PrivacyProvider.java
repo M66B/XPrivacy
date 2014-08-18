@@ -24,6 +24,8 @@ import android.os.Binder;
 import android.os.Process;
 import android.util.Log;
 
+// This code is legacy and only used for updating to newer versions
+
 @SuppressWarnings("deprecation")
 @SuppressLint({ "DefaultLocale", "WorldReadableFiles", "Registered" })
 public class PrivacyProvider extends ContentProvider {
@@ -141,7 +143,7 @@ public class PrivacyProvider extends ContentProvider {
 						cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, null, true });
 
 						// Exceptions
-						for (Hook md : PrivacyManager.getHooks(eRestrictionName)) {
+						for (Hook md : PrivacyManager.getHooks(eRestrictionName, null)) {
 							boolean restricted = getRestricted(eRestrictionName, md.getName(), prefs);
 							if (!restricted || md.isDangerous())
 								cursor.addRow(new Object[] { appInfo.uid, eRestrictionName, md.getName(), restricted });
@@ -158,7 +160,7 @@ public class PrivacyProvider extends ContentProvider {
 				for (String eRestrictionName : listRestrictionName) {
 					boolean eRestricted = getRestricted(eRestrictionName, null, prefs);
 					cursor.addRow(new Object[] { uid, eRestrictionName, null, Boolean.toString(eRestricted) });
-					for (Hook md : PrivacyManager.getHooks(eRestrictionName)) {
+					for (Hook md : PrivacyManager.getHooks(eRestrictionName, null)) {
 						eRestricted = getRestricted(eRestrictionName, md.getName(), prefs);
 						cursor.addRow(new Object[] { uid, eRestrictionName, md.getName(), Boolean.toString(eRestricted) });
 					}
@@ -227,7 +229,7 @@ public class PrivacyProvider extends ContentProvider {
 			// Selected restrictions/methods
 			for (String eRestrictionName : listRestriction)
 				if (methodName == null)
-					for (Hook md : PrivacyManager.getHooks(eRestrictionName))
+					for (Hook md : PrivacyManager.getHooks(eRestrictionName, null))
 						getUsage(uid, eRestrictionName, md.getName(), cursor);
 				else
 					getUsage(uid, eRestrictionName, methodName, cursor);
@@ -698,7 +700,7 @@ public class PrivacyProvider extends ContentProvider {
 					listWork.add(new PRestriction(uid, restrictionName, null, true));
 
 					// Exceptions
-					for (Hook md : PrivacyManager.getHooks(restrictionName)) {
+					for (Hook md : PrivacyManager.getHooks(restrictionName, null)) {
 						boolean restricted = getRestricted(restrictionName, md.getName(), prefs);
 						if (!restricted || md.isDangerous())
 							listWork.add(new PRestriction(uid, restrictionName, md.getName(), restricted));

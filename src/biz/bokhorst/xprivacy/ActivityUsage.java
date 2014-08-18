@@ -19,6 +19,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Process;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.text.TextUtils;
@@ -293,9 +294,14 @@ public class ActivityUsage extends ActivityBase {
 					View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
+							int userId = Util.getUserId(Process.myUid());
 							final PRestriction usageData = mUsageAdapter.getItem(position);
 							final Hook hook = PrivacyManager.getHook(usageData.restrictionName, usageData.methodName);
-							if (PrivacyManager.isApplication(usageData.uid) && hook != null && hook.whitelist() != null
+
+							boolean isApp = PrivacyManager.isApplication(usageData.uid);
+							boolean odSystem = PrivacyManager.getSettingBool(userId,
+									PrivacyManager.cSettingOnDemandSystem, false);
+							if ((isApp || odSystem) && hook != null && hook.whitelist() != null
 									&& usageData.extra != null) {
 								if (Util.hasProLicense(ActivityUsage.this) == null)
 									Util.viewUri(ActivityUsage.this, ActivityMain.cProUri);

@@ -1,9 +1,6 @@
 package biz.bokhorst.xprivacy;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -15,24 +12,9 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.StatusLine;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
-import org.apache.http.params.HttpConnectionParams;
-import org.apache.http.params.HttpParams;
-import org.json.JSONObject;
-
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -55,7 +37,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
-import android.support.v4.app.NotificationCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -198,6 +179,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		if (Util.hasProLicense(this) != null)
 			setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
+
+		// Annotate
+		Meta.annotate(this.getResources());
 
 		// Get localized restriction name
 		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this).navigableKeySet());
@@ -695,7 +679,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		spTemplate.setAdapter(spAdapter);
 
 		// Template definition
-		final TemplateListAdapter templateAdapter = new TemplateListAdapter(this, spTemplate, R.layout.templateentry);
+		final TemplateListAdapter templateAdapter = new TemplateListAdapter(this, view, R.layout.templateentry);
 		elvTemplate.setAdapter(templateAdapter);
 		elvTemplate.setGroupIndicator(null);
 
@@ -822,134 +806,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private void optionUpdate() {
 		if (Util.hasProLicense(this) == null)
 			Util.viewUri(this, ActivityMain.cProUri);
-		else {
-			new AsyncTask<Object, Object, Object>() {
-				NotificationCompat.Builder builder = new NotificationCompat.Builder(ActivityMain.this);
-				Notification notification;
-				NotificationManager notificationManager = (NotificationManager) ActivityMain.this
-						.getSystemService(Context.NOTIFICATION_SERVICE);
-
-				@Override
-				protected void onPreExecute() {
-					// Build notification
-					builder.setSmallIcon(R.drawable.ic_launcher);
-					builder.setContentTitle(ActivityMain.this.getString(R.string.app_name));
-					builder.setAutoCancel(false);
-					builder.setOngoing(true);
-				}
-
-				@Override
-				protected Object doInBackground(Object... args) {
-					try {
-						// Notify
-						builder.setContentText(ActivityMain.this.getString(R.string.title_update_checking));
-						builder.setWhen(System.currentTimeMillis());
-						notification = builder.build();
-						notificationManager.notify(Util.NOTIFY_UPDATE, notification);
-
-						// Encode package
-						String[] license = Util.getProLicenseUnchecked();
-						int userId = Util.getUserId(Process.myUid());
-						boolean test = PrivacyManager
-								.getSettingBool(userId, PrivacyManager.cSettingTestVersions, false);
-						JSONObject jRoot = new JSONObject();
-						jRoot.put("test_versions", test);
-						jRoot.put("xprivacy_version", Util.getSelfVersionCode(ActivityMain.this));
-						jRoot.put("xprivacy_version_name", Util.getSelfVersionName(ActivityMain.this));
-						jRoot.put("email", license[1]);
-						jRoot.put("signature", license[2]);
-
-						// Update
-						HttpParams httpParams = new BasicHttpParams();
-						HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-						HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-						HttpClient httpclient = new DefaultHttpClient(httpParams);
-
-						HttpPost httpost = new HttpPost(ActivityShare.getBaseURL() + "?format=json&action=update");
-						httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
-						httpost.setHeader("Accept", "application/json");
-						httpost.setHeader("Content-type", "application/json");
-						HttpResponse response = httpclient.execute(httpost);
-						StatusLine statusLine = response.getStatusLine();
-						if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
-							String contentType = response.getFirstHeader("Content-Type").getValue();
-							if ("application/octet-stream".equals(contentType)) {
-								// Update notification
-								builder.setContentText(ActivityMain.this.getString(R.string.title_update_downloading));
-								builder.setWhen(System.currentTimeMillis());
-								notification = builder.build();
-								notificationManager.notify(Util.NOTIFY_UPDATE, notification);
-
-								// Download APK
-								File folder = Environment
-										.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-								folder.mkdirs();
-								String fileName = response.getFirstHeader("Content-Disposition").getElements()[0]
-										.getParameterByName("filename").getValue();
-								File download = new File(folder, fileName);
-								FileOutputStream fos = null;
-								try {
-									fos = new FileOutputStream(download);
-									response.getEntity().writeTo(fos);
-								} finally {
-									if (fos != null)
-										fos.close();
-								}
-
-								return download;
-							} else if ("application/json".equals(contentType)) {
-								ByteArrayOutputStream out = new ByteArrayOutputStream();
-								response.getEntity().writeTo(out);
-								out.close();
-								throw new IOException(out.toString("UTF-8"));
-							} else
-								throw new IOException(contentType);
-						} else
-							return statusLine;
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-						return ex;
-					}
-				}
-
-				@Override
-				protected void onPostExecute(Object result) {
-					if (result instanceof StatusLine) {
-						notificationManager.cancel(Util.NOTIFY_UPDATE);
-						StatusLine status = (StatusLine) result;
-						if (status.getStatusCode() == 204) { // No Content
-							String none = ActivityMain.this.getString(R.string.title_update_none);
-							Toast.makeText(ActivityMain.this, none, Toast.LENGTH_LONG).show();
-						} else
-							Toast.makeText(ActivityMain.this, status.getStatusCode() + " " + status.getReasonPhrase(),
-									Toast.LENGTH_LONG).show();
-
-					} else if (result instanceof Throwable) {
-						notificationManager.cancel(Util.NOTIFY_UPDATE);
-						Throwable ex = (Throwable) result;
-						Toast.makeText(ActivityMain.this, ex.toString(), Toast.LENGTH_LONG).show();
-
-					} else {
-						File download = (File) result;
-						Intent intent = new Intent(Intent.ACTION_VIEW);
-						intent.setDataAndType(Uri.fromFile(download), "application/vnd.android.package-archive");
-
-						PendingIntent pi = PendingIntent.getActivity(ActivityMain.this, 0, intent,
-								PendingIntent.FLAG_UPDATE_CURRENT);
-
-						// Update notification
-						builder.setContentText(ActivityMain.this.getString(R.string.title_update_install));
-						builder.setWhen(System.currentTimeMillis());
-						builder.setAutoCancel(true);
-						builder.setOngoing(false);
-						builder.setContentIntent(pi);
-						notification = builder.build();
-						notificationManager.notify(Util.NOTIFY_UPDATE, notification);
-					}
-
-				}
-			}.executeOnExecutor(mExecutor);
-		}
+		else
+			new ActivityShare.UpdateTask(this).executeOnExecutor(mExecutor);
 	}
 
 	@SuppressLint("DefaultLocale")
@@ -1325,14 +1183,17 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	@SuppressLint("DefaultLocale")
 	private class TemplateListAdapter extends BaseExpandableListAdapter {
+		private View mView;
 		private Spinner mSpinner;
 		private List<String> listRestrictionName;
 		private List<String> listLocalizedTitle;
 		private boolean ondemand;
+		private Version version;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-		public TemplateListAdapter(Context context, Spinner spinner, int resource) {
-			mSpinner = spinner;
+		public TemplateListAdapter(Context context, View view, int resource) {
+			mView = view;
+			mSpinner = (Spinner) view.findViewById(R.id.spTemplate);
 
 			// Get restriction categories
 			TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(context);
@@ -1341,6 +1202,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			int userId = Util.getUserId(Process.myUid());
 			ondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+			version = new Version(Util.getSelfVersionName(context));
 		}
 
 		private String getTemplate() {
@@ -1353,7 +1215,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		private class ViewHolder {
 			private View row;
 			public ImageView imgIndicator;
+			public ImageView imgInfo;
 			public TextView tvRestriction;
+			public ImageView imgUnsafe;
 			public ImageView imgCbRestrict;
 			public ImageView imgCbAsk;
 			public boolean restricted;
@@ -1362,7 +1226,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ViewHolder(View theRow) {
 				row = theRow;
 				imgIndicator = (ImageView) row.findViewById(R.id.imgIndicator);
+				imgInfo = (ImageView) row.findViewById(R.id.imgInfo);
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
+				imgUnsafe = (ImageView) row.findViewById(R.id.imgUnsafe);
 				imgCbRestrict = (ImageView) row.findViewById(R.id.imgCbRestrict);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 			}
@@ -1407,7 +1273,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			boolean partialRestricted = false;
 			boolean partialAsked = false;
 			if (holder.restricted || !holder.asked)
-				for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
+				for (Hook hook : PrivacyManager.getHooks(restrictionName, version)) {
 					String settingName = restrictionName + "." + hook.getName();
 					String childValue = PrivacyManager.getSetting(userId, getTemplate(), settingName, null);
 					if (childValue == null)
@@ -1428,6 +1294,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgIndicator.setImageResource(getThemed(isExpanded ? R.attr.icon_expander_maximized
 					: R.attr.icon_expander_minimized));
 			holder.imgIndicator.setVisibility(View.VISIBLE);
+			holder.imgInfo.setVisibility(View.GONE);
+			holder.imgUnsafe.setVisibility(View.GONE);
 
 			// Set data
 			holder.tvRestriction.setTypeface(null, Typeface.BOLD);
@@ -1463,7 +1331,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		@Override
 		public Object getChild(int groupPosition, int childPosition) {
-			return PrivacyManager.getHooks((String) getGroup(groupPosition)).get(childPosition);
+			return PrivacyManager.getHooks((String) getGroup(groupPosition), version).get(childPosition);
 		}
 
 		@Override
@@ -1473,7 +1341,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		@Override
 		public int getChildrenCount(int groupPosition) {
-			return PrivacyManager.getHooks((String) getGroup(groupPosition)).size();
+			return PrivacyManager.getHooks((String) getGroup(groupPosition), version).size();
 		}
 
 		@Override
@@ -1519,6 +1387,20 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Set indicator
 			holder.imgIndicator.setVisibility(View.INVISIBLE);
+
+			// Function help
+			if (hook.getAnnotation() == null)
+				holder.imgInfo.setVisibility(View.GONE);
+			else {
+				holder.imgInfo.setVisibility(View.VISIBLE);
+				holder.imgInfo.setOnClickListener(new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						ActivityApp.showHelp(ActivityMain.this, mView, hook);
+					}
+				});
+			}
+			holder.imgUnsafe.setVisibility(hook.isUnsafe() ? View.VISIBLE : View.GONE);
 
 			// Set data
 			if (hook.isDangerous())
@@ -1594,6 +1476,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		private List<ApplicationInfoEx> mListAppAll;
 		private List<ApplicationInfoEx> mListAppSelected = new ArrayList<ApplicationInfoEx>();
 		private String mRestrictionName;
+		private Version mVersion;
 		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		private AtomicInteger mFiltersRunning = new AtomicInteger(0);
 		private int mHighlightColor;
@@ -1608,6 +1491,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			mListAppAll = new ArrayList<ApplicationInfoEx>();
 			mListAppAll.addAll(objects);
 			mRestrictionName = initialRestrictionName;
+			mVersion = new Version(Util.getSelfVersionName(context));
 
 			TypedArray ta1 = context.getTheme().obtainStyledAttributes(
 					new int[] { android.R.attr.colorLongPressedHighlight });
@@ -1688,6 +1572,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			@Override
 			protected FilterResults performFiltering(CharSequence constraint) {
+				int userId = Util.getUserId(Process.myUid());
+
 				int filtersRunning = mFiltersRunning.addAndGet(1);
 				FilterResults results = new FilterResults();
 
@@ -1756,13 +1642,17 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					if (fPermission)
 						if (mRestrictionName == null)
 							permission = true;
-						else if (PrivacyManager.hasPermission(mContext, xAppInfo, mRestrictionName)
+						else if (PrivacyManager.hasPermission(mContext, xAppInfo, mRestrictionName, mVersion)
 								|| PrivacyManager.getUsage(xAppInfo.getUid(), mRestrictionName, null) > 0)
 							permission = true;
 
 					// Get if onDemand
 					boolean onDemand = false;
-					if (fOnDemand && PrivacyManager.isApplication(xAppInfo.getUid())) {
+					boolean isApp = PrivacyManager.isApplication(xAppInfo.getUid());
+					boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem,
+							false);
+					boolean gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
+					if (fOnDemand && (isApp || odSystem) && gondemand) {
 						onDemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
 								false);
 						if (onDemand && mRestrictionName != null)
@@ -1913,17 +1803,22 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 					// Get if on demand
 					gondemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemand, true);
-					ondemand = (PrivacyManager.isApplication(xAppInfo.getUid()) && (mRestrictionName == null ? true
-							: PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand, false)));
+					boolean isApp = PrivacyManager.isApplication(xAppInfo.getUid());
+					boolean odSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingOnDemandSystem,
+							false);
+					ondemand = (isApp || odSystem);
+					if (ondemand && mRestrictionName != null)
+						ondemand = PrivacyManager.getSettingBool(-xAppInfo.getUid(), PrivacyManager.cSettingOnDemand,
+								false);
 
 					// Get if granted
 					granted = true;
 					if (mRestrictionName != null)
-						if (!PrivacyManager.hasPermission(ActivityMain.this, xAppInfo, mRestrictionName))
+						if (!PrivacyManager.hasPermission(ActivityMain.this, xAppInfo, mRestrictionName, mVersion))
 							granted = false;
 
 					// Get restriction/ask state
-					rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+					rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
 
 					// Get can restrict
 					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
@@ -2071,7 +1966,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 									@Override
 									protected Object doInBackground(Object... arg0) {
 										rstate.toggleAsked();
-										rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+										rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
 										return null;
 									}
 
@@ -2114,7 +2009,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								getThemed(R.attr.color_state_attention)));
 
 						// Update stored state
-						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 
@@ -2154,7 +2049,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					@Override
 					protected void onPostExecute(Object result) {
 						// Update restriction display
-						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null);
+						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
 						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
 						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
 

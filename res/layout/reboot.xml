@@ -56,8 +56,7 @@
         android:text="@string/msg_service_missing"
         android:textAppearance="?android:attr/textAppearance"
         android:textStyle="italic"
-        android:visibility="gone"
-        tools:ignore="HardcodedText" />
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tvRebootVersion"
@@ -67,7 +66,16 @@
         android:text="@string/msg_service_version"
         android:textAppearance="?android:attr/textAppearance"
         android:textStyle="italic"
-        android:visibility="gone"
-        tools:ignore="HardcodedText" />
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@+id/tvServiceUpdating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:text="@string/msg_service_updating"
+        android:textAppearance="?android:attr/textAppearance"
+        android:textStyle="italic"
+        android:visibility="gone" />
 
 </LinearLayout>

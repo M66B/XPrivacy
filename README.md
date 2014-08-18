@@ -339,7 +339,7 @@ Limitations
 
 *XPrivacy*
 
-* You cannot restrict the serial number and the Android ID for XPrivacy, because it is used for submitting restrictions
+* You cannot restrict *identification* for XPrivacy, because it is used for submitting restrictions
 	* The Android ID is salted with the serial number and MD5 hashed before communicating with the crowd sourced restrictions server
 	* This means that the crowd sourced restrictions server never gets the serial number nor the Android ID
 * You cannot restrict *IPC* for XPrivacy because it is needed for internal checks
@@ -966,8 +966,8 @@ Expert mode has the following sub-options which can be toggled individually:
 * *Quirks*
 	* Used to fix some application compatibility issues or to enable special or expert features
 		* *freeze*: shows the on demand restriction dialog, even if there is the possibility it will freeze
-		* *noresolve*: disables resolving IP addresses to names for usage data / on demand restricting
-		* *safemode*: disables *unsafe* restrictions
+		* *resolve*, *noresolve*: enabled/disables resolving IP addresses to names for usage data / on demand restricting
+		* *test*: let check for updates check for test versions
 
 <a name="FAQ58"></a>
 **(58) Can I write a thesis about XPrivacy?**
@@ -1088,6 +1088,13 @@ am start -a biz.bokhorst.xprivacy.action.FETCH --eia UidList 10123,10124 --ez In
 am start -a biz.bokhorst.xprivacy.action.TOGGLE --eia UidList 10123,10124 --ez Interactive true
 ```
 
+* Flush cache, check for updates
+
+```
+am startservice -a biz.bokhorst.xprivacy.action.FLUSH
+am startservice -a biz.bokhorst.xprivacy.action.UPDATE
+```
+
 With Tasker, you can create shortcuts on your homescreen:
 
 * Create a task and give it a name (Tasker)
@@ -1135,6 +1142,8 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 	* [Carbon ROM](https://carbonrom.org/)
 	* [Dirty Unicorns](http://www.teamdirt.me/)
 	* [Liquid Smooth](http://liquidsmooth.net/)
+	* [Paranoid Android](http://paranoidandroid.co/)
+	* [Android Revolution HD](http://forum.xda-developers.com/showthread.php?t=1925402)
 * Compatibility mode = all other Android versions/variants
 
 *About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivay 2.
@@ -1145,7 +1154,15 @@ You can switch XPrivacy 3 to AOSP mode by creating this file:
 
 /data/system/xprivacy/aosp
 
-For the benefit of others, please report if XPrivacy 3 works for the ROM you are using.
+For the benefit of others, please report if XPrivacy 3 works for the ROM you are using
+(also post a screenshot of the *About* of XPrivacy so I can see how the ROM can be recognized).
+
+<a name="FAQ69"></a>
+**(69) When do the state colors change?**
+
+* **Grey**: set/clear restriction/on demand asking, import, on demand choice (not for once)
+* **Orange**: fetch, new/updated application, delete restrictions
+* **Green**: submit
 
 Support
 -------
@@ -1346,7 +1363,7 @@ Using Eclipse:
 
 Testing:
 
-* [XPrivacy Tester](https://github.com/M66B/XPrivacyTester)
+* [XPrivacy Tester](https://github.com/M66B/XPrivacyTester) (developers only)
 * [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 

@@ -77,6 +77,7 @@
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
     <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>نرم افزار ایکس پرایوسی با دقت بالایی تولید و تست شده است، با این وجود تضمینی برای عملکرد صحیح
 این نرم افزار بر روی تمامی دستگاه ها و در مورد تمامی نرم افزارها وجود ندارد.
 \n\n ریسک استفاده از این نرم افزار بر عهده ی شما می باشد</b>\n\n:همچنین پروانه ی برنامه را مشاهده کنید</string>

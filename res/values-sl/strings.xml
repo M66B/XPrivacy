@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">Omejeno z XPrivacy</string>
     <string name="msg_service_missing">Storitev za zasebnost ni bila najdena; ste omogočili XPrivacy v programu Xposed installer in ponovno zagnali Vašo napravo?</string>
     <string name="msg_service_version">Različica storitve za zasebnost se ne ujema; ste zagnali ponovno Vašo napravo po nadgradnji programa XPrivacy?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>V razvoj in preizkušanje programa XPrivacy je bilo vloženo veliko truda, vendar pa
     je nemogoče zagotoviti brezhibno delovanje na vsaki napravi in za vsak program.\n\nUporaba programa je na lastno
     odgovornost</b>\n\nPreberite si tudi licenco:</string>
@@ -169,7 +170,7 @@
     <string name="title_template_merge">Uveljeavi predlogo (združevanje)</string>
     <string name="title_enable_ondemand">Omogoči omejevanje na zahtevo</string>
     <string name="title_disable_ondemand">Onemogoči omejevanje na zahtevo</string>
-    <string name="title_ondemand_default">Po pretečeni časovni omejitvi bo uveljavljeno:</string>
+    <string name="title_ondemand_default">Čas. omejitev bo:</string>
     <string name="title_ondemand_reset">Ponastavi</string>
     <string name="title_default">Privzeto</string>
     <string name="title_alternate">Nadomestno</string>

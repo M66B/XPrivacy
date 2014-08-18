@@ -40,12 +40,42 @@ You can install XPrivacy 2.99.x by following these steps:
 * Update to the latest 2.2.x version
 * Enter the quirk *test* into the main settings
 * Use the menu *Check for updates*
+* Make sure notifications are not suppressed by another Xposed module
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
 **Next release**
 
+* Added parameter package name to *Srv_getPackageInfo* and *Srv_getApplicationInfo*
+* Added support for [Android Revolution HD](http://forum.xda-developers.com/showthread.php?t=1925402)
+* Fixed all problems reported through the debug info
+* Updated French translation
+* Updated German translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.31 BETA**
+
+* Flush will clear the asked once cache too
+* Display if update service is busy in reboot layout ([issue](/../../issues/1887))
+* Fixed asking again in some cases ([issue](/../../issues/1885))
+* Performance improvement (caching category restrictions)
+* Updated Dutch translation
+* Updated French translation
+* Updated Slovenian translation
+
+**Version 2.99.30 BETA**
+
+* Added help items to template ([issue](/../../issues/1827))
+* Added restrictions *Srv_getPackageInfo* and *Srv_getApplicationInfo*  ([issue](/../../issues/1834))
+
+**Version 2.99.29 BETA**
+
+* Added application specific quirks ([issue](/../../issues/1844))
+* Added intent for update check ([issue](/../../issues/1867))
+* Changed the default to *noresolve* and added quirk *resolve*
+* Fixed all problems reported through the debug info
+* Updated Simplified Chinese translation
 
 **Version 2.99.27 BETA**
 
@@ -157,13 +187,34 @@ XPrivacy 2
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.2.11 BETA**
+
+* Filtering restrictions available from version 2.99.x only (reported on XDA)
+
+**Version 2.2.10 BETA**
+
+* Filtering restrictions available from version 2.99.x only (reported on XDA)
+
+**Version 2.2.9 TEST**
+
 * Option to select duration to allow/deny once ([issue](/../../issues/1873))
+* Added help items to template ([issue](/../../issues/1827))
+* Added application specific quirks ([issue](/../../issues/1844))
+* Added intent for update check ([issue](/../../issues/1867))
+* Changed the default to *noresolve* and added quirk *resolve*
+* Flush will clear the asked once cache too
+* Display if update service is busy in reboot layout ([issue](/../../issues/1887))
+* Fixed asking again in some cases ([issue](/../../issues/1885))
+* Performance improvement (caching category restrictions)
+* Local transient values only
 * Updated Dutch translation
+* Updated French translation
 * Updated German translation
 * Updated Japanese translation
+* Updated Simplified Chinese translation
 * Updated Slovenian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.2.8 BETA**
 

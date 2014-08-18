@@ -46,6 +46,9 @@ import org.xmlpull.v1.XmlSerializer;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.ProgressDialog;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -64,6 +67,7 @@ import android.os.PowerManager;
 import android.os.Process;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -157,14 +161,13 @@ public class ActivityShare extends ActivityBase {
 			mFileName = (extras != null && extras.containsKey(cFileName) ? extras.getString(cFileName) : null);
 
 		// License check
-		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)
-				|| (action.equals(ACTION_TOGGLE) && uids.length > 1)) {
+		if (action.equals(ACTION_IMPORT) || action.equals(ACTION_EXPORT)) {
 			if (!Util.isProEnabled() && Util.hasProLicense(this) == null) {
 				Util.viewUri(this, ActivityMain.cProUri);
 				finish();
 				return;
 			}
-		} else if (action.equals(ACTION_FETCH)) {
+		} else if (action.equals(ACTION_FETCH) || (action.equals(ACTION_TOGGLE) && uids.length > 1)) {
 			if (Util.hasProLicense(this) == null) {
 				Util.viewUri(this, ActivityMain.cProUri);
 				finish();
@@ -366,7 +369,7 @@ public class ActivityShare extends ActivityBase {
 								mRunning = true;
 								new SubmitTask().executeOnExecutor(mExecutor);
 							} else {
-								String message = getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1);
+								String message = getString(R.string.msg_limit, cSubmitLimit + 1);
 								Toast.makeText(ActivityShare.this, message, Toast.LENGTH_LONG).show();
 								btnOk.setEnabled(false);
 							}
@@ -537,8 +540,8 @@ public class ActivityShare extends ActivityBase {
 				@Override
 				public void onClick(View view) {
 					// Packages can be selected on the web site
-					Util.viewUri(ActivityShare.this, Uri.parse(String.format(ActivityShare.getBaseURL()
-							+ "?package_name=%s", xApp.appInfo.getPackageName().get(0))));
+					Util.viewUri(ActivityShare.this, Uri.parse(String.format(getBaseURL() + "?package_name=%s",
+							xApp.appInfo.getPackageName().get(0))));
 				}
 			});
 
@@ -832,7 +835,7 @@ public class ActivityShare extends ActivityBase {
 								serializer.endTag(null, "Restriction");
 
 								// Methods
-								for (Hook md : PrivacyManager.getHooks(restrictionName)) {
+								for (Hook md : PrivacyManager.getHooks(restrictionName, null)) {
 									PRestriction mrestricted = PrivacyManager.getRestrictionEx(uid, restrictionName,
 											md.getName());
 									if ((crestricted.restricted && !mrestricted.restricted)
@@ -1517,7 +1520,7 @@ public class ActivityShare extends ActivityBase {
 							jSettings.put(jRestriction);
 
 							// Methods
-							for (Hook md : PrivacyManager.getHooks(restrictionName)) {
+							for (Hook md : PrivacyManager.getHooks(restrictionName, null)) {
 								boolean mRestricted = restricted
 										&& PrivacyManager.getRestrictionEx(appInfo.getUid(), restrictionName,
 												md.getName()).restricted;
@@ -1586,8 +1589,8 @@ public class ActivityShare extends ActivityBase {
 
 						// Submit
 						HttpParams httpParams = new BasicHttpParams();
-						HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-						HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+						HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+						HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 						HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 						HttpPost httpost = new HttpPost(getBaseURL() + "?format=json&action=submit");
@@ -1740,8 +1743,8 @@ public class ActivityShare extends ActivityBase {
 
 				// Submit
 				HttpParams httpParams = new BasicHttpParams();
-				HttpConnectionParams.setConnectionTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
-				HttpConnectionParams.setSoTimeout(httpParams, ActivityShare.TIMEOUT_MILLISEC);
+				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
 				HttpClient httpclient = new DefaultHttpClient(httpParams);
 
 				HttpPost httpost = new HttpPost(getBaseURL() + "device?format=json&action=register");
@@ -1818,6 +1821,143 @@ public class ActivityShare extends ActivityBase {
 				alertDialog.show();
 			}
 			super.onPostExecute(result);
+		}
+	}
+
+	public static class UpdateTask extends AsyncTask<Object, Object, Object> {
+		private Context mContext;
+		private NotificationCompat.Builder builder;
+		private Notification notification;
+		private NotificationManager notificationManager;
+
+		public UpdateTask(Context context) {
+			mContext = context;
+			builder = new NotificationCompat.Builder(context);
+			notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+
+		}
+
+		@Override
+		protected void onPreExecute() {
+			// Build notification
+			builder.setSmallIcon(R.drawable.ic_launcher);
+			builder.setContentTitle(mContext.getString(R.string.app_name));
+			builder.setAutoCancel(false);
+			builder.setOngoing(true);
+		}
+
+		@Override
+		@SuppressLint("DefaultLocale")
+		protected Object doInBackground(Object... args) {
+			try {
+				// Notify
+				builder.setContentText(mContext.getString(R.string.title_update_checking));
+				builder.setWhen(System.currentTimeMillis());
+				notification = builder.build();
+				notificationManager.notify(Util.NOTIFY_UPDATE, notification);
+
+				// Encode package
+				String[] license = Util.getProLicenseUnchecked();
+				int userId = Util.getUserId(Process.myUid());
+				boolean test = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingTestVersions, false);
+				String android_id = Secure.getString(mContext.getContentResolver(), Secure.ANDROID_ID);
+
+				JSONObject jRoot = new JSONObject();
+				jRoot.put("protocol_version", cProtocolVersion);
+				jRoot.put("android_id", Util.md5(android_id).toLowerCase());
+				jRoot.put("android_sdk", Build.VERSION.SDK_INT);
+				jRoot.put("xprivacy_version", Util.getSelfVersionCode(mContext));
+				jRoot.put("xprivacy_version_name", Util.getSelfVersionName(mContext));
+				jRoot.put("test_versions", test);
+				jRoot.put("email", license[1]);
+				jRoot.put("signature", license[2]);
+
+				// Update
+				HttpParams httpParams = new BasicHttpParams();
+				HttpConnectionParams.setConnectionTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpConnectionParams.setSoTimeout(httpParams, TIMEOUT_MILLISEC);
+				HttpClient httpclient = new DefaultHttpClient(httpParams);
+
+				HttpPost httpost = new HttpPost(getBaseURL() + "?format=json&action=update");
+				httpost.setEntity(new ByteArrayEntity(jRoot.toString().getBytes("UTF-8")));
+				httpost.setHeader("Accept", "application/json");
+				httpost.setHeader("Content-type", "application/json");
+				HttpResponse response = httpclient.execute(httpost);
+				StatusLine statusLine = response.getStatusLine();
+				if (statusLine.getStatusCode() == HttpStatus.SC_OK) {
+					String contentType = response.getFirstHeader("Content-Type").getValue();
+					if ("application/octet-stream".equals(contentType)) {
+						// Update notification
+						builder.setContentText(mContext.getString(R.string.title_update_downloading));
+						builder.setWhen(System.currentTimeMillis());
+						notification = builder.build();
+						notificationManager.notify(Util.NOTIFY_UPDATE, notification);
+
+						// Download APK
+						File folder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+						folder.mkdirs();
+						String fileName = response.getFirstHeader("Content-Disposition").getElements()[0]
+								.getParameterByName("filename").getValue();
+						File download = new File(folder, fileName);
+						FileOutputStream fos = null;
+						try {
+							fos = new FileOutputStream(download);
+							response.getEntity().writeTo(fos);
+						} finally {
+							if (fos != null)
+								fos.close();
+						}
+
+						return download;
+					} else if ("application/json".equals(contentType)) {
+						ByteArrayOutputStream out = new ByteArrayOutputStream();
+						response.getEntity().writeTo(out);
+						out.close();
+						throw new IOException(out.toString("UTF-8"));
+					} else
+						throw new IOException(contentType);
+				} else
+					return statusLine;
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return ex;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Object result) {
+			if (result instanceof StatusLine) {
+				notificationManager.cancel(Util.NOTIFY_UPDATE);
+				StatusLine status = (StatusLine) result;
+				if (status.getStatusCode() == 204) { // No Content
+					String none = mContext.getString(R.string.title_update_none);
+					Toast.makeText(mContext, none, Toast.LENGTH_LONG).show();
+				} else
+					Toast.makeText(mContext, status.getStatusCode() + " " + status.getReasonPhrase(), Toast.LENGTH_LONG)
+							.show();
+
+			} else if (result instanceof Throwable) {
+				notificationManager.cancel(Util.NOTIFY_UPDATE);
+				Throwable ex = (Throwable) result;
+				Toast.makeText(mContext, ex.toString(), Toast.LENGTH_LONG).show();
+
+			} else {
+				File download = (File) result;
+				Intent intent = new Intent(Intent.ACTION_VIEW);
+				intent.setDataAndType(Uri.fromFile(download), "application/vnd.android.package-archive");
+
+				PendingIntent pi = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+				// Update notification
+				builder.setContentText(mContext.getString(R.string.title_update_install));
+				builder.setWhen(System.currentTimeMillis());
+				builder.setAutoCancel(true);
+				builder.setOngoing(false);
+				builder.setContentIntent(pi);
+				notification = builder.build();
+				notificationManager.notify(Util.NOTIFY_UPDATE, notification);
+			}
+
 		}
 	}
 

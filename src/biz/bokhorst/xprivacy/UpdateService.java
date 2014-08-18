@@ -19,10 +19,11 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 public class UpdateService extends Service {
-	public static String cAction = "Action";
-	public static int cActionBoot = 1;
-	public static int cActionUpdated = 2;
-	public static String cFlush = "biz.bokhorst.xprivacy.action.FLUSH";
+	public static final String cAction = "Action";
+	public static final int cActionBoot = 1;
+	public static final int cActionUpdated = 2;
+	public static final String cFlush = "biz.bokhorst.xprivacy.action.FLUSH";
+	public static final String cUpdate = "biz.bokhorst.xprivacy.action.UPDATE";
 
 	private static Thread mWorkerThread;
 
@@ -39,13 +40,21 @@ public class UpdateService extends Service {
 			return 0;
 		}
 
-		// Check intent
+		// Flush
 		if (cFlush.equals(intent.getAction())) {
 			try {
 				PrivacyService.getClient().flush();
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+			stopSelf();
+			return 0;
+		}
+
+		// Update
+		if (cUpdate.equals(intent.getAction())) {
+			if (Util.hasProLicense(this) != null)
+				new ActivityShare.UpdateTask(this).execute();
 			stopSelf();
 			return 0;
 		}
@@ -194,6 +203,13 @@ public class UpdateService extends Service {
 			if (dangerous)
 				PrivacyManager.setSetting(userId, PrivacyManager.cSettingDangerous, null);
 
+			// Resolve quirk
+			if (storedVersion.compareTo(new Version("2.99.28")) < 0)
+				if (!PrivacyManager.getSettingBool(0, PrivacyManager.cSettingNoResolve, false)) {
+					Util.log(null, Log.WARN, "Enabling quirk resolve");
+					PrivacyManager.setSetting(0, PrivacyManager.cSettingResolve, Boolean.toString(true));
+				}
+
 			// Wipe template
 			if (storedVersion.compareTo(new Version("2.0.34")) < 0)
 				for (PSetting setting : PrivacyManager.getSettingList(0, null))
@@ -300,7 +316,7 @@ public class UpdateService extends Service {
 		for (String restrictionName : PrivacyManager.getRestrictions()) {
 			boolean restricted = PrivacyManager.getRestrictionEx(uid, restrictionName, null).restricted;
 
-			for (Hook hook : PrivacyManager.getHooks(restrictionName)) {
+			for (Hook hook : PrivacyManager.getHooks(restrictionName, null)) {
 				// Disable new dangerous restrictions
 				if (hook.getFrom() != null) {
 					if (sVersion.compareTo(hook.getFrom()) < 0) {

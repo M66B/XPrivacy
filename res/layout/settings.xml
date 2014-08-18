@@ -138,7 +138,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/llQuirks"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dip"
@@ -156,7 +155,7 @@
                     android:id="@+id/etQuirks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="freeze,noresolve,safemode"
+                    android:hint="freeze,resolve"
                     android:inputType="text"
                     tools:ignore="HardcodedText" />
             </LinearLayout>

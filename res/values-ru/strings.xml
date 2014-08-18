@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">Запрещено XPrivacy</string>
     <string name="msg_service_missing">Сервис Privacy не найден; Вы включили XPrivacy в Xposed и перезагрузили своё устройство?</string>
     <string name="msg_service_version">Версия сервиса Privacy не совпадает; Вы перезагрузили своё устройство после обновления XPrivacy?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
 \n\nИспользуйте исключительно на свой страх и риск.</b>\n\nСм. также лицензию:</string>

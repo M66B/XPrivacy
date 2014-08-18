@@ -80,6 +80,7 @@
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
     <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_question" translatable="false">\?</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
@@ -143,7 +144,7 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="whitelist_transaction" tools:ignore="UnusedResources">Transactions</string>
     <string name="whitelist_permission">Permissions</string>
     <string name="whitelist_proc" translatable="false" tools:ignore="UnusedResources">/proc</string>
-    <string name="title_restrict">Check to restrict:</string>
+    <string name="title_restrict">Check to restrict / on demand:</string>
     <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>

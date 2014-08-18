@@ -67,7 +67,7 @@
     <string name="msg_register">Registreer a.u.b. uw apparaat</string>
     <string name="msg_email">Vul a.u.b. uw e-mail adres in:</string>
     <string name="msg_registered">Controleer uw e-mail om uw apparaat te activeren</string>
-    <string name="msg_service">Bijwerkdienst actief</string>
+    <string name="msg_service">Bijwerken</string>
     <string name="msg_migrating">Migratie %1$s</string>
     <string name="msg_randomizing">Willekeurig %1$s</string>
     <string name="msg_upgrading">Bijwerken %1$s</string>
@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">Beperkt door XPrivacy</string>
     <string name="msg_service_missing">Privacy service niet gevonden; heeft u XPrivacy aangezet in de Xposed installer en uw apparaat opnieuw gestart?</string>
     <string name="msg_service_version">Privacy service versie verkeerd; heeft u uw apparaat opnieuw gestart na het bijwerken van XPrivacy?</string>
+    <string name="msg_service_updating">Wacht a.u.b. tot het bijwerken voltooid is</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>
@@ -134,7 +135,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transacties</string>
     <string name="whitelist_permission">Rechten</string>
-    <string name="title_restrict">Vink aan om te beperken:</string>
+    <string name="title_restrict">Vink aan om te beperken / op aanvraag:</string>
     <string name="title_check_whitelist">Vink aan om toe te staan:</string>
     <string name="title_fused">Filter op gegevensgebruik</string>
     <string name="title_finternet">Filter op internettoegang</string>

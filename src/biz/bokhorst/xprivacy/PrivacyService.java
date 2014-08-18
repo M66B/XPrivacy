@@ -78,7 +78,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 394;
+	private static final int cCurrentVersion = 399;
 	private static final String cServiceName = "xprivacy386";
 
 	private SQLiteDatabase mDb = null;
@@ -398,7 +398,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 		// Translate isolated uid
 		restriction.uid = getIsolatedUid(restriction.uid);
 
-		boolean cached = false;
+		boolean ccached = false;
+		boolean mcached = false;
 		int userId = Util.getUserId(restriction.uid);
 		final PRestriction mresult = new PRestriction(restriction);
 
@@ -428,8 +429,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 					// Can happen after updating
 					Util.log(null, Log.WARN, "Hook not found in service: " + restriction);
 				else if (hook.getFrom() != null) {
-					String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, "0.0")).value;
-					if (new Version(version).compareTo(hook.getFrom()) < 0)
+					String version = getSetting(new PSetting(userId, "", PrivacyManager.cSettingVersion, null)).value;
+					if (version != null && new Version(version).compareTo(hook.getFrom()) < 0)
 						if (hook.getReplacedRestriction() == null) {
 							Util.log(null, Log.WARN, "Disabled version=" + version + " from=" + hook.getFrom()
 									+ " hook=" + hook);
@@ -458,20 +459,33 @@ public class PrivacyService extends IPrivacyService.Stub {
 			if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
 				return mresult;
 
-			// Check cache
+			// Check cache for method
 			CRestriction key = new CRestriction(restriction, restriction.extra);
 			synchronized (mRestrictionCache) {
 				if (mRestrictionCache.containsKey(key)) {
-					cached = true;
+					mcached = true;
 					CRestriction cache = mRestrictionCache.get(key);
 					mresult.restricted = cache.restricted;
 					mresult.asked = cache.asked;
 				}
 			}
 
-			if (!cached) {
+			if (!mcached) {
 				boolean methodFound = false;
 				PRestriction cresult = new PRestriction(restriction.uid, restriction.restrictionName, null);
+
+				// Check cache for category
+				CRestriction ckey = new CRestriction(cresult, null);
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(ckey)) {
+						ccached = true;
+						CRestriction crestriction = mRestrictionCache.get(ckey);
+						cresult.restricted = crestriction.restricted;
+						cresult.asked = crestriction.asked;
+						mresult.restricted = cresult.restricted;
+						mresult.asked = cresult.asked;
+					}
+				}
 
 				// Get database reference
 				SQLiteDatabase db = getDb();
@@ -489,20 +503,21 @@ public class PrivacyService extends IPrivacyService.Stub {
 				mLock.readLock().lock();
 				db.beginTransaction();
 				try {
-					try {
-						synchronized (stmtGetRestriction) {
-							stmtGetRestriction.clearBindings();
-							stmtGetRestriction.bindLong(1, restriction.uid);
-							stmtGetRestriction.bindString(2, restriction.restrictionName);
-							stmtGetRestriction.bindString(3, "");
-							long state = stmtGetRestriction.simpleQueryForLong();
-							cresult.restricted = ((state & 1) != 0);
-							cresult.asked = ((state & 2) != 0);
-							mresult.restricted = cresult.restricted;
-							mresult.asked = cresult.asked;
+					if (!ccached)
+						try {
+							synchronized (stmtGetRestriction) {
+								stmtGetRestriction.clearBindings();
+								stmtGetRestriction.bindLong(1, restriction.uid);
+								stmtGetRestriction.bindString(2, restriction.restrictionName);
+								stmtGetRestriction.bindString(3, "");
+								long state = stmtGetRestriction.simpleQueryForLong();
+								cresult.restricted = ((state & 1) != 0);
+								cresult.asked = ((state & 2) != 0);
+								mresult.restricted = cresult.restricted;
+								mresult.asked = cresult.asked;
+							}
+						} catch (SQLiteDoneException ignored) {
 						}
-					} catch (SQLiteDoneException ignored) {
-					}
 
 					if (restriction.methodName != null)
 						try {
@@ -569,6 +584,12 @@ public class PrivacyService extends IPrivacyService.Stub {
 				}
 
 				// Update cache
+				CRestriction cukey = new CRestriction(cresult, null);
+				synchronized (mRestrictionCache) {
+					if (mRestrictionCache.containsKey(cukey))
+						mRestrictionCache.remove(cukey);
+					mRestrictionCache.put(cukey, cukey);
+				}
 				CRestriction ukey = new CRestriction(mresult, restriction.extra);
 				synchronized (mRestrictionCache) {
 					if (mRestrictionCache.containsKey(ukey))
@@ -610,8 +631,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 		}
 
 		long ms = System.currentTimeMillis() - start;
-		Util.log(null, ms < PrivacyManager.cWarnServiceDelayMs ? Log.INFO : Log.WARN,
-				String.format("Get service %s%s %d ms", restriction, (cached ? " (cached)" : ""), ms));
+		Util.log(
+				null,
+				ms < PrivacyManager.cWarnServiceDelayMs ? Log.INFO : Log.WARN,
+				String.format("Get service %s%s %d ms", restriction, (ccached ? " (ccached)" : "")
+						+ (mcached ? " (mcached)" : ""), ms));
 
 		if (mresult.debug)
 			Util.logStack(null, Log.WARN);
@@ -701,7 +725,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 					result.add(restriction);
 				}
 			else
-				for (Hook md : PrivacyManager.getHooks(selector.restrictionName)) {
+				for (Hook md : PrivacyManager.getHooks(selector.restrictionName, null)) {
 					PRestriction restriction = new PRestriction(selector.uid, selector.restrictionName, md.getName(),
 							false);
 					query = getRestriction(restriction, false, null);
@@ -1027,7 +1051,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			// Clear restrictions for white list
 			if (Meta.isWhitelist(setting.type))
 				for (String restrictionName : PrivacyManager.getRestrictions())
-					for (Hook hook : PrivacyManager.getHooks(restrictionName))
+					for (Hook hook : PrivacyManager.getHooks(restrictionName, null))
 						if (setting.type.equals(hook.whitelist())) {
 							PRestriction restriction = new PRestriction(setting.uid, hook.getRestrictionName(),
 									hook.getName());
@@ -1323,6 +1347,9 @@ public class PrivacyService extends IPrivacyService.Stub {
 			synchronized (mRestrictionCache) {
 				mRestrictionCache.clear();
 			}
+			synchronized (mAskedOnceCache) {
+				mAskedOnceCache.clear();
+			}
 			synchronized (mSettingCache) {
 				mSettingCache.clear();
 			}
@@ -1446,24 +1473,42 @@ public class PrivacyService extends IPrivacyService.Stub {
 					// Check if method not asked before
 					CRestriction mkey = new CRestriction(restriction, null);
 					synchronized (mRestrictionCache) {
-						if (mRestrictionCache.containsKey(mkey))
-							if (mRestrictionCache.get(mkey).asked) {
+						if (mRestrictionCache.containsKey(mkey)) {
+							CRestriction mrestriction = mRestrictionCache.get(mkey);
+							if (mrestriction.asked) {
 								Util.log(null, Log.WARN, "Already asked " + restriction);
-								result.restricted = mRestrictionCache.get(mkey).restricted;
+								result.restricted = mrestriction.restricted;
 								result.asked = true;
 								return oResult;
 							}
+						}
 					}
 
-					// Check if category not asked before
+					// Check if category not asked before (once)
 					CRestriction ckey = new CRestriction(restriction, null);
 					ckey.setMethodName(null);
 					synchronized (mAskedOnceCache) {
-						if (mAskedOnceCache.containsKey(ckey) && !mAskedOnceCache.get(ckey).isExpired()) {
-							Util.log(null, Log.WARN, "Already asked once category " + restriction);
-							result.restricted = mAskedOnceCache.get(ckey).restricted;
-							result.asked = true;
-							return oResult;
+						if (mAskedOnceCache.containsKey(ckey)) {
+							CRestriction carestriction = mAskedOnceCache.get(ckey);
+							if (!carestriction.isExpired()) {
+								Util.log(null, Log.WARN, "Already asked once category " + restriction);
+								result.restricted = carestriction.restricted;
+								result.asked = true;
+								return oResult;
+							}
+						}
+					}
+
+					// Check if method not asked before once
+					synchronized (mAskedOnceCache) {
+						if (mAskedOnceCache.containsKey(mkey)) {
+							CRestriction marestriction = mAskedOnceCache.get(mkey);
+							if (!marestriction.isExpired()) {
+								Util.log(null, Log.WARN, "Already asked once method " + restriction);
+								result.restricted = marestriction.restricted;
+								result.asked = true;
+								return oResult;
+							}
 						}
 					}
 
@@ -1492,16 +1537,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 									}
 								}
 							}
-						}
-					}
-
-					// Check if not asked before once
-					synchronized (mAskedOnceCache) {
-						if (mAskedOnceCache.containsKey(mkey) && !mAskedOnceCache.get(mkey).isExpired()) {
-							Util.log(null, Log.WARN, "Already asked once " + restriction);
-							result.restricted = mAskedOnceCache.get(mkey).restricted;
-							result.asked = true;
-							return oResult;
 						}
 					}
 
@@ -2039,7 +2074,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				setRestrictionInternal(result);
 
 				// Clear category on change
-				for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName))
+				for (Hook hook : PrivacyManager.getHooks(restriction.restrictionName, null))
 					if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
 							hook.getName(), false)) {
 						result.methodName = hook.getName();

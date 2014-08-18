@@ -75,6 +75,7 @@
     <string name="msg_restrictedby">Obmedzené pomocou XPrivacy</string>
     <string name="msg_service_missing">Nenájdená služba súkromia; povolili ste XPrivacy v Xposed Inštalátori a vykonali reštart vášho zariadenia?</string>
     <string name="msg_service_version">Verzia služby súkromia sa nezhoduje; vykonali ste reštart vášho zariadenia po aktualizovaní XPrivacy?</string>
+    <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>

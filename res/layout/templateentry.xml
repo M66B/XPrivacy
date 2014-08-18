@@ -14,6 +14,16 @@
         android:contentDescription="@string/title_category"
         android:src="?attr/icon_expander_minimized" />
 
+    <ImageView
+        android:id="@+id/imgInfo"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:layout_gravity="center_vertical"
+        android:contentDescription="@string/help_application"
+        android:paddingLeft="3dip"
+        android:src="?attr/icon_info_book"
+        android:visibility="gone" />
+
     <TextView
         android:id="@+id/tvRestriction"
         android:layout_width="0dip"
@@ -22,6 +32,15 @@
         android:layout_weight="1"
         android:paddingLeft="3dip"
         android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/imgUnsafe"
+        android:layout_width="32dip"
+        android:layout_height="32dip"
+        android:contentDescription="@string/title_unsafe"
+        android:paddingLeft="3dip"
+        android:src="?attr/icon_unsafe"
+        android:visibility="gone" />
 
     <ImageView
         android:id="@+id/imgCbRestrict"

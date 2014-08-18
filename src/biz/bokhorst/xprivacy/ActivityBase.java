@@ -2,6 +2,8 @@ package biz.bokhorst.xprivacy;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.content.pm.PackageInfo;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -25,6 +27,7 @@ public class ActivityBase extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
+		// Check if Privacy client available
 		if (PrivacyService.checkClient()) {
 			// Set theme
 			int userId = Util.getUserId(Process.myUid());
@@ -32,7 +35,7 @@ public class ActivityBase extends Activity {
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 			setTheme(mThemeId);
 		} else {
-			// Privacy client now available
+			// Privacy client not available
 			setContentView(R.layout.reboot);
 
 			try {
@@ -45,15 +48,25 @@ public class ActivityBase extends Activity {
 
 			// Show reason
 			if (PrivacyService.getClient() == null) {
-				TextView tvRebootClient = (TextView) findViewById(R.id.tvRebootClient);
-				tvRebootClient.setVisibility(View.VISIBLE);
+				((TextView) findViewById(R.id.tvRebootClient)).setVisibility(View.VISIBLE);
 				Requirements.checkCompatibility(this);
 			} else {
-				TextView tvRebootClient = (TextView) findViewById(R.id.tvRebootVersion);
-				tvRebootClient.setVisibility(View.VISIBLE);
+				((TextView) findViewById(R.id.tvRebootVersion)).setVisibility(View.VISIBLE);
 				Requirements.check(this);
 			}
+
+			// Show if updating
+			if (isUpdating())
+				((TextView) findViewById(R.id.tvServiceUpdating)).setVisibility(View.VISIBLE);
 		}
+	}
+
+	private boolean isUpdating() {
+		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))
+			if (UpdateService.class.getName().equals(service.service.getClassName()))
+				return true;
+		return false;
 	}
 
 	protected Bitmap getOffCheckBox() {
