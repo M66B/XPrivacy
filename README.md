@@ -1280,6 +1280,11 @@ XPrivacy can restrict more data than any of the above solutions,
 also for closed source applications and libraries, like Google Play services.
 Unlike any other solution, XPrivacy has [crowd sourced restrictions](http://crowd.xprivacy.eu/).
 
+I do not recommend using XPrivacy in combination with any of the similar solutions, because this could result in conflicts and potential data leaks.
+
+I need all my time developing XPrivacy, so I will not test XPrivacy along side any of the similar solutions.
+If you test XPrivacy along side any of the similar solutions, you can probably help others by reporting your test results.
+
 News
 ----
 
