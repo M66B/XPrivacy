@@ -725,6 +725,7 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 * Wi-Fi settings
 * Bluetooth settings
 * shortcuts
+* autostarting
 * starting other applications
 * Android version
 * vibration
