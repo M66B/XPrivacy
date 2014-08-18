@@ -969,6 +969,7 @@ Expert mode has the following sub-options which can be toggled individually:
 		* *freeze*: shows the on demand restriction dialog, even if there is the possibility it will freeze
 		* *resolve*, *noresolve*: enabled/disables resolving IP addresses to names for usage data / on demand restricting
 		* *test*: let check for updates check for test versions
+		* *safemode*: hide unsafe function restrictions
 
 <a name="FAQ58"></a>
 **(58) Can I write a thesis about XPrivacy?**
