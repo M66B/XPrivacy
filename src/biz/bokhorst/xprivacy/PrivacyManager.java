@@ -862,6 +862,22 @@ public class PrivacyManager {
 		}
 	}
 
+	private static final List<String> cSettingAppSpecific = Arrays.asList(new String[] { cSettingRandom,
+			cSettingSerial, cSettingLatitude, cSettingLongitude, cSettingAltitude, cSettingMac, cSettingIP,
+			cSettingImei, cSettingPhone, cSettingId, cSettingGsfId, cSettingAdId, cSettingMcc, cSettingMnc,
+			cSettingCountry, cSettingOperator, cSettingIccId, cSettingCid, cSettingLac, cSettingSubscriber,
+			cSettingSSID, cSettingUa });
+
+	public static boolean hasSpecificSettings(int uid) {
+		boolean specific = false;
+		for (PSetting setting : getSettingList(uid, ""))
+			if (cSettingAppSpecific.contains(setting.name)) {
+				specific = true;
+				break;
+			}
+		return specific;
+	}
+
 	public static String getTransient(String name, String defaultValue) {
 		CSetting csetting = new CSetting(0, "", name);
 		synchronized (mTransientCache) {

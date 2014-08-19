@@ -230,6 +230,7 @@
     <string name="help_attention">प्रतिबंध पर ध्यान आवश्यक</string>
     <string name="help_restricted">प्रतिबंध बदले गए</string>
     <string name="help_shared">प्रतिबंध submit हो गए</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">App कि चुनी गयी श्रेणी को प्रतिबंधित करने के लिए checkbox tap करे\n
 \nप्रतिबंधित श्रेणी के लिए Apps को खाली या नकली डेटा दिया जायेगा\n

@@ -230,6 +230,7 @@
     <string name="help_attention">restrykcje wymagają sprawdzenia</string>
     <string name="help_restricted">restrykcje się zmieniły</string>
     <string name="help_shared">restrykcje zostały wysłane</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Wybierz kategorię do ograniczenia</string>
     <string name="tutorial_mainlist">Tapnij checkbox aby ograniczyć wybraną kategorię dla danej aplikacji\n
 \nDla ograniczonych kategorii aplikacjom będą podawane puste albo sfałszowane dane\n

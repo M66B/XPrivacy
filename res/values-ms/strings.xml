@@ -230,6 +230,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="help_attention">sekatan memerlukan perhatian</string>
     <string name="help_restricted">sekatan telah berubah</string>
     <string name="help_shared">sekatan telah dikemukakan</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Pilih kategori untuk sekat</string>
     <string name="tutorial_mainlist">Tanda kotak untuk sekat kategori yang dipilih untuk aplikasi\n
 \nAplikasi akan diberikan data kosong atau palsu untuk kategori yang disekat\n

@@ -230,6 +230,7 @@
     <string name="help_attention">可以下载限制规则的应用</string>
     <string name="help_restricted">限制规则已经生效的应用</string>
     <string name="help_shared">已经分享限制规则的应用</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">选择权限类别进行限制</string>
     <string name="tutorial_mainlist">勾选应用后的复选框以限制所选类别的权限\n
 \n被限制的应用请求该权限时会接收到空或伪造的数据\n

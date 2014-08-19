@@ -230,6 +230,7 @@ nicméně je nemožné zaručit bezchybnou funkčnost na všech zařízeních a 
     <string name="help_attention">má omezení vyžadující pozornost</string>
     <string name="help_restricted">má změněné omezení</string>
     <string name="help_shared">má odeslané omezení</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Pro omezení zvolené kategorie aplikace stiskněte zaškrtávací pole\n
 \nV rámci omezených kategorií aplikace obdrží prázdné nebo falešné údaje\n

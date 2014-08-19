@@ -230,6 +230,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="help_attention">Las restricciones requieren su atención</string>
     <string name="help_restricted">Restricciones cambiadas</string>
     <string name="help_shared">Restricciones subidas</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Seleccione la categoría que quiere restringir</string>
     <string name="tutorial_mainlist">Pulsa un checkbox para restringir la categoría seleccionada para la aplicación\n
 \nLas aplicaciones no recibirán información o se les proporcionará información falsa\n

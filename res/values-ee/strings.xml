@@ -230,6 +230,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="help_attention">restrictions need attention</string>
     <string name="help_restricted">restrictions are changed</string>
     <string name="help_shared">restrictions are submitted</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
 \nApps will be fed empty or fake data for restricted categories\n

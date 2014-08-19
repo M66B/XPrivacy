@@ -230,6 +230,7 @@
     <string name="help_attention">mga paghihigpit ay kailangan tingnan</string>
     <string name="help_restricted">mga paghihigpit ay naiba</string>
     <string name="help_shared">mga paghihigpit ay naipasa</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Sa tuwing app, lagyan ng Check sa kanang gilid para pahigpitan ang napiling pangkat
 \n\nSa gayon ay ang mga Apps mabibigyan ng wala o pekeng impormasyon ayon sa mga nahigpitan na pangkat

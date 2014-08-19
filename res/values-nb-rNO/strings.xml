@@ -228,6 +228,7 @@
     <string name="help_attention">restriksjoner trenger oppmerksomhet</string>
     <string name="help_restricted">restriksjoner ble forandret</string>
     <string name="help_shared">restriksjoner ble lastet opp</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Marker kategori som skal blokkeres</string>
     <string name="tutorial_mainlist">Sett hake for å blokkere kategorien som er valgt for en app\n
 \nApper får tom eller forfalsket data for kategorier som er blokkert\n

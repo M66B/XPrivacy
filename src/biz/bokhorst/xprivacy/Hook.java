@@ -153,7 +153,7 @@ public class Hook implements Comparable<Hook> {
 			if (Build.DISPLAY == null || Build.HOST == null)
 				return false;
 			return (isAOSP() || isCyanogenMod() || isOmni() || isMIUI() || isSlim() || isParanoidAndroid()
-					|| isCarbon() || isDirtyUnicorns() || isLiquidSmooth() || isAndroidRevolutionHD());
+					|| isCarbon() || isDirtyUnicorns() || isLiquidSmooth() || isAndroidRevolutionHD() || isMahdi());
 		} else
 			return false;
 	}
@@ -196,6 +196,10 @@ public class Hook implements Comparable<Hook> {
 
 	public static boolean isAndroidRevolutionHD() {
 		return Build.DISPLAY.startsWith("Android Revolution HD");
+	}
+
+	public static boolean isMahdi() {
+		return Build.HOST.startsWith("mahdi");
 	}
 
 	public Version getFrom() {

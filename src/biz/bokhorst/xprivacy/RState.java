@@ -50,7 +50,8 @@ public class RState {
 				someAsk = !query.asked;
 				for (PRestriction restriction : PrivacyManager.getRestrictionList(uid, restrictionName)) {
 					Hook hook = PrivacyManager.getHook(restrictionName, restriction.methodName);
-					if (version != null && hook.getFrom() != null && version.compareTo(hook.getFrom()) < 0)
+					if (version != null && hook != null && hook.getFrom() != null
+							&& version.compareTo(hook.getFrom()) < 0)
 						continue;
 
 					allRestricted = (allRestricted && restriction.restricted);

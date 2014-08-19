@@ -725,6 +725,7 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 * Wi-Fi settings
 * Bluetooth settings
 * shortcuts
+* autostarting
 * starting other applications
 * Android version
 * vibration
@@ -968,6 +969,7 @@ Expert mode has the following sub-options which can be toggled individually:
 		* *freeze*: shows the on demand restriction dialog, even if there is the possibility it will freeze
 		* *resolve*, *noresolve*: enabled/disables resolving IP addresses to names for usage data / on demand restricting
 		* *test*: let check for updates check for test versions
+		* *safemode*: hide unsafe function restrictions
 
 <a name="FAQ58"></a>
 **(58) Can I write a thesis about XPrivacy?**
@@ -1144,6 +1146,7 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 	* [Liquid Smooth](http://liquidsmooth.net/)
 	* [Paranoid Android](http://paranoidandroid.co/)
 	* [Android Revolution HD](http://forum.xda-developers.com/showthread.php?t=1925402)
+	* [Mahdi ROM](https://plus.google.com/u/0/communities/116540622179206449806)
 * Compatibility mode = all other Android versions/variants
 
 *About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivay 2.
@@ -1278,6 +1281,11 @@ System applications cannot be restricted.
 XPrivacy can restrict more data than any of the above solutions,
 also for closed source applications and libraries, like Google Play services.
 Unlike any other solution, XPrivacy has [crowd sourced restrictions](http://crowd.xprivacy.eu/).
+
+I do not recommend using XPrivacy in combination with any of the similar solutions, because this could result in conflicts and potential data leaks.
+
+I need all my time developing XPrivacy, so I will not test XPrivacy along side any of the similar solutions.
+If you test XPrivacy along side any of the similar solutions, you can probably help others by reporting your test results.
 
 News
 ----

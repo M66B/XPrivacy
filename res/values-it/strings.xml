@@ -230,6 +230,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="help_attention">restrizioni necessitano di attenzione</string>
     <string name="help_restricted">restrizioni modificate</string>
     <string name="help_shared">restrizioni inviate</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Seleziona la categoria da restringere</string>
     <string name="tutorial_mainlist">Tocca la casella di controllo per restringere la categoria selezionata per un\'applicazione\n
 \nAlle applicazioni verranno forniti dati vuoti o alterati per le categorie ristrette\n

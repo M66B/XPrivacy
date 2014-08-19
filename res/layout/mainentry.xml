@@ -91,6 +91,16 @@
                 tools:ignore="NestedWeights" />
 
             <ImageView
+                android:id="@+id/imgSettings"
+                android:layout_width="24dip"
+                android:layout_height="24dip"
+                android:layout_gravity="center_vertical"
+                android:contentDescription="@string/help_application"
+                android:paddingLeft="3dip"
+                android:src="@android:drawable/ic_menu_edit"
+                android:visibility="gone" />
+
+            <ImageView
                 android:id="@+id/imgCbRestricted"
                 android:layout_width="32dip"
                 android:layout_height="32dip"

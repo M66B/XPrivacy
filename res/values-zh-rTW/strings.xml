@@ -6,7 +6,7 @@
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_description">超強隱私管理工具，絕讚好評發售中!!</string>
     <string name="app_copyright">版權所有 \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
-    <string name="app_compatibility">Running in compatibility mode</string>
+    <string name="app_compatibility">[相容模式 Compatibility Mode]</string>
     <string name="app_licensed">授權成功，感謝您贊助 XPrivacy!!</string>
     <string name="menu_usage">操作記錄</string>
     <string name="menu_refresh">重新整理</string>
@@ -167,11 +167,11 @@
     <string name="title_set_restrict">限制</string>
     <string name="title_template_category">套用預設規則 (僅大分類)</string>
     <string name="title_template_full">套用預設規則 (分類及功能)</string>
-    <string name="title_template_merge">Apply template (merge)</string>
+    <string name="title_template_merge">套用預設規則 (整合)</string>
     <string name="title_enable_ondemand">開啟互動式限制</string>
     <string name="title_disable_ondemand">關閉互動式限制</string>
-    <string name="title_ondemand_default">Timeout will:</string>
-    <string name="title_ondemand_reset">Reset</string>
+    <string name="title_ondemand_default">若逾時則:</string>
+    <string name="title_ondemand_reset">重設</string>
     <string name="title_default">預設</string>
     <string name="title_alternate">其他</string>
     <string name="title_usage_header">使用方法</string>
@@ -181,13 +181,13 @@
     <string name="title_usage_footer">請用常理判斷，比如限制了"網際網路"，那麼該程式就不能存取網路了。</string>
     <string name="title_toggle_dangerous">欲選取不建議限制的項目時，需要長按項目名稱。</string>
     <string name="title_ondemand_category">套用到整個分類時會覆寫預設限制列表的設定。</string>
-    <string name="title_function_help">Function documentation</string>
+    <string name="title_function_help">功能說明</string>
     <string name="title_unsafe">is unsafe, can be circumvented</string>
-    <string name="title_update_checking">Checking for update</string>
-    <string name="title_update_downloading">Downloading update</string>
-    <string name="title_update_install">Tap to install update</string>
-    <string name="title_update_none">No updates available</string>
-    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider upgrading to XPrivacy 3</string>
+    <string name="title_update_checking">檢查更新</string>
+    <string name="title_update_downloading">下載更新中....</string>
+    <string name="title_update_install">按下安裝更新</string>
+    <string name="title_update_none">無可用更新。</string>
+    <string name="title_update_legacy">XPrivacy 2 已經停止支援，建議更新到XPrivacy 3。</string>
     <string name="settings_serial">序號</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">經度</string>
@@ -205,7 +205,7 @@
     <string name="settings_fake_data">偽造資訊設定</string>
     <string name="settings_notify">APP更新時顯示通知</string>
     <string name="settings_ondemand">開啟互動式限制設定</string>
-    <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
+    <string name="settings_blacklist">黑名單設定(帳戶、程式、聯絡人)</string>
     <string name="settings_log">偵錯日誌 (需重新啟動)</string>
     <string name="settings_expert">進階模式</string>
     <string name="settings_confidence">最大擷取信賴區間</string>
@@ -230,6 +230,7 @@
     <string name="help_attention">限制時需特別注意</string>
     <string name="help_restricted">規則已變更</string>
     <string name="help_shared">規則已上傳</string>
+    <string name="help_settings">已設定app專用偽造資料</string>
     <string name="tutorial_mainheader">選擇要限制的權限分類</string>
     <string name="tutorial_mainlist">點選勾選框可封鎖APP使無法取得敏感資訊或功能權限\n
      \n當特定資訊被封鎖時，該APP會接收到假資料或空白資料\n

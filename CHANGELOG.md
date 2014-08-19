@@ -46,13 +46,31 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Added support for [Mahdi ROM](https://plus.google.com/u/0/communities/116540622179206449806)
+* Updated in application documentation
+* Updated French translation
+* Updated traditional Chinese translation
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.34 BETA**
+
+* Displaying if an application has specific fake values ([issue](/../../issues/1831))
+* Allow own package name for *Srv_getPackageInfo* and *Srv_getApplicationInfo*
+* Updated Dutch translation
+
+**Version 2.99.33 BETA**
+
+* Fixed crash caused by legacy restrictions ([issue](/../../issues/1893))
+* Updated Slovak translation
+
+**Version 2.99.32 BETA**
+
 * Added parameter package name to *Srv_getPackageInfo* and *Srv_getApplicationInfo*
 * Added support for [Android Revolution HD](http://forum.xda-developers.com/showthread.php?t=1925402)
 * Fixed all problems reported through the debug info
 * Updated French translation
 * Updated German translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.31 BETA**
 
@@ -187,7 +205,19 @@ XPrivacy 2
 
 **Next release**
 
+* Displaying if an application has specific fake values ([issue](/../../issues/1831))
+* Allow own package name for *Srv_getPackageInfo* and *Srv_getApplicationInfo*
+* Updated in application documentation
+* Updated Dutch translation
+* Updated French translation
+* Updated traditional Chinese translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.2.12 BETA**
+
+* Fixed crash caused by legacy restrictions ([issue](/../../issues/1893))
+* Updated Slovak translation
 
 **Version 2.2.11 BETA**
 

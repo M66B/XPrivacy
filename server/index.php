@@ -358,20 +358,17 @@
 			if (empty($data->android_id))
 				$data->android_id = '';
 			else {
-				$sql = "SELECT UNIX_TIMESTAMP(MAX(time)) AS time FROM xprivacy_update";
+				$sql = "SELECT COUNT(*) AS count FROM xprivacy_update";
 				$sql .= " WHERE android_id_md5 = '" . $db->real_escape_string($data->android_id) . "'";
+				$sql .= " AND time > '" . date('Y-m-d H:i:s', time() - 24 * 3600) . "'";
+				$sql .= " AND installed_version <> current_version";
 				$result = $db->query($sql);
 				if ($result) {
-					if (($row = $result->fetch_object())) {
-						if ($row->time + 24 * 3600 > time() && $modified < $row->time) {
-							header($_SERVER['SERVER_PROTOCOL'] . ' 304 Not Modified');
-							exit();
-						}
-						if ($row->time + 3600 > time()) {
+					if (($row = $result->fetch_object()))
+						if ($row->count >= 3) {
 							header($_SERVER['SERVER_PROTOCOL'] . ' 429 Too Many Requests');
 							exit();
 						}
-					}
 				}
 				else
 					log_error('update: error=' . $db->error . ' query=' . $sql, $my_email, $data);

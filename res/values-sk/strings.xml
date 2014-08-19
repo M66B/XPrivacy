@@ -73,9 +73,9 @@
     <string name="msg_upgrading">Aktualizácia %1$s</string>
     <string name="msg_support_info">Vnútorná kontrola zlyhala. Chcete odoslať informácie na podporu?</string>
     <string name="msg_restrictedby">Obmedzené pomocou XPrivacy</string>
-    <string name="msg_service_missing">Nenájdená služba súkromia; povolili ste XPrivacy v Xposed Inštalátori a vykonali reštart vášho zariadenia?</string>
+    <string name="msg_service_missing">Nenájdená služba súkromia; povolili ste XPrivacy v Xposed Installeri a vykonali reštart vášho zariadenia?</string>
     <string name="msg_service_version">Verzia služby súkromia sa nezhoduje; vykonali ste reštart vášho zariadenia po aktualizovaní XPrivacy?</string>
-    <string name="msg_service_updating">Please wait until the update service has been completed</string>
+    <string name="msg_service_updating">Prosím, počkajte, kým nebude dokončená aktualizačná služba</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
@@ -141,7 +141,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_finternet">Filter na prístup k internetu</string>
     <string name="title_fpermission">Filter na povolenie</string>
     <string name="title_frestricted">Filter na obmedzené</string>
-    <string name="title_fuser">Filter na užívateľské aplikácie</string>
+    <string name="title_fuser">Filter na používateľské aplikácie</string>
     <string name="title_fondemand">Filter podľa požiadavkov</string>
     <string name="title_fsystem">Filter na systémové aplikácie</string>
     <string name="title_fnot">Obrátene</string>
@@ -157,7 +157,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_function">Funkcia:</string>
     <string name="title_parameters">Parametre:</string>
     <string name="title_applycat">Použiť na celú kategóriu</string>
-    <string name="title_once">Once for</string>
+    <string name="title_once">Raz za</string>
     <string name="title_whitelist">Biela/čierna listina \'%1$s\'</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>
@@ -187,7 +187,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_update_downloading">Sťahovanie akualizácie</string>
     <string name="title_update_install">Dotykom nainštalujete aktualizáciu</string>
     <string name="title_update_none">Žiadne aktualizácie k dispozícii</string>
-    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider upgrading to XPrivacy 3</string>
+    <string name="title_update_legacy">Aplikácia XPrivacy 2 už nie je podporovaná, prosím, zvážte aktualizáciu na XPrivacy 3</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>
@@ -230,9 +230,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="help_attention">obmedzenia vyžadujú pozornosť</string>
     <string name="help_restricted">obmedzenia sú zmenené</string>
     <string name="help_shared">obmedzenia sú odoslané</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Vyberte kategóriu na obmedzenie</string>
     <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole pre obmedzenie vybranej kategórie pre aplikáciu\n
-\nPri obmedzených kategóriách budú aplikáciám poskytované prázdne alebo falošné údaje\n
+\nPri obmedzených kategóriách budú aplikáciám poskytované prázdne, alebo falošné údaje\n
 \nKliknite na ikonu aplikácie pre podrobné obmedzenia a nastavenia</string>
     <string name="tutorial_detailsheader">Kliknite na ikonu aplikácie pre viac akcií</string>
     <string name="tutorial_detailslist">Kliknite na šípku nadol pre zobrazenie funkčných výnimiek pre kategóriu obmedzení</string>
