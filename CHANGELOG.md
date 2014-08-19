@@ -47,6 +47,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Updated in application documentation
+* Updated French translation
 * Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -207,6 +208,7 @@ XPrivacy 2
 * Allow own package name for *Srv_getPackageInfo* and *Srv_getApplicationInfo*
 * Updated in application documentation
 * Updated Dutch translation
+* Updated French translation
 * Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
