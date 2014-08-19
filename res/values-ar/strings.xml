@@ -230,6 +230,7 @@
     <string name="help_attention">قيود تحتاج لعناية</string>
     <string name="help_restricted">القيود التي تم تغييرها</string>
     <string name="help_shared">القيود تم تسجيلها</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">إختر الفئة لتقييدها</string>
     <string name="tutorial_mainlist">إلمس مربع الإختيار لتقييد الفئة المحددة للتطبيق\n
 \nوسوف يتم إعطاء بيانات فارغة أو وهمية للفئات المقيدة\n

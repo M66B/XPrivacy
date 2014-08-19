@@ -230,6 +230,7 @@ de lehetetlen garantálni hogy tökéletesen működjön az összes eszközön �
     <string name="help_attention">a korlátozásoknak beavatkozásra van szükségük</string>
     <string name="help_restricted">korlátozások megváltoztatva</string>
     <string name="help_shared">korlátozások beküldve</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Select the category to restrict</string>
     <string name="tutorial_mainlist">Kattintson a jelölőnégyzetre a kategória korlátozásához egy alkalmazásnál\n
 \nAz alkalmazások feltöltődnek üres vagy kamu adatokkal a korlátozott kategóriákban\n

@@ -46,6 +46,9 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Show if application has specific fake values ([issue](/../../issues/1831))
+* Updated Dutch translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.33 BETA**
@@ -193,6 +196,9 @@ XPrivacy 2
 ----------
 
 **Next release**
+
+* Show if application has specific fake values ([issue](/../../issues/1831))
+* Updated Dutch translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

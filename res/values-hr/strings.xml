@@ -229,6 +229,7 @@
     <string name="help_attention">ograničenja zahtijevaju pažnju</string>
     <string name="help_restricted">ograničenja su promijenjena</string>
     <string name="help_shared">ograničenja su izvezena</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Odaberite kategoriju za ograničiti</string>
     <string name="tutorial_mainlist">Dodirnite kućicu za ograničavanje odabrane kategorije za aplikaciju\n\nAplikacijama će biti predani prazne ili lažni podaci\n\nDodirnite ikonu aplikacije za detaljan prikaz ograničenja i podešenja</string>
     <string name="tutorial_detailsheader">Odaberite ikonu aplikacije za više mogućnosti</string>

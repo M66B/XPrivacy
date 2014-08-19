@@ -230,6 +230,7 @@
     <string name="help_attention">注意が必要です</string>
     <string name="help_restricted">変更しました</string>
     <string name="help_shared">投稿しました</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">制限を設定したいカテゴリを選択します</string>
     <string name="tutorial_mainlist">アプリのチェックボックスをタップすると、選択したカテゴリに対して制限が設定されます\n
 \n制限が設定されたアプリは、そのカテゴリについて空データまたは偽装データを受け取るようになります\n

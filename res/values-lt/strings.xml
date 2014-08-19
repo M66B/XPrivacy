@@ -230,6 +230,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="help_attention">Leidimams reikia dėmesio</string>
     <string name="help_restricted">Leidimai yra pakeisti</string>
     <string name="help_shared">Leidimai yra pateikti</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Pasirinkite kategoriją ribojimui</string>
     <string name="tutorial_mainlist">Bakstelėkite žymės langelį apriboti pasirinktą kategoriją\n
 \nProgramos bus įtrauktos ribojimų kategorijas\n

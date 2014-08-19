@@ -230,6 +230,7 @@
     <string name="help_attention">omejitve potrebujejo pozornost</string>
     <string name="help_restricted">omejitve so spremenjene</string>
     <string name="help_shared">omejitve so poslane</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Izberite kategorijo za omejevanje</string>
     <string name="tutorial_mainlist">Tapni na potrditveno polje za omejitev izbrane kategorije za aplikacije\n
 \nAplikacije bodo nahranjene s praznimi ali lažnimi podatki za omejene kotegorije\n

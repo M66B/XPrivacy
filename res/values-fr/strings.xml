@@ -230,6 +230,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_attention">les restrictions ont besoin d\'attention</string>
     <string name="help_restricted">les restrictions sont changées</string>
     <string name="help_shared">les restrictions sont envoyées</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Sélectionnez la catégorie à restreindre.</string>
     <string name="tutorial_mainlist">Cocher une case pour restreindre la catégorie choisie pour l’appli.\n
 \nL’appli sera dupée par des données vides ou modifiées.\n

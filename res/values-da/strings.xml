@@ -228,6 +228,7 @@
     <string name="help_attention">begrænsninger kræver need opmærksomhed</string>
     <string name="help_restricted">begrænsninger er ændret</string>
     <string name="help_shared">begrænsninger er indsendt</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Vælg kategorien du vil begrænse</string>
     <string name="tutorial_mainlist">Tryk på en checkboks for at begrænse den valgte kategori for en app\n
 \nApps vil blive fodret tom eller falsk data for begrænsede kategorier\n

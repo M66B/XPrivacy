@@ -230,6 +230,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="help_attention">obmedzenia vyžadujú pozornosť</string>
     <string name="help_restricted">obmedzenia sú zmenené</string>
     <string name="help_shared">obmedzenia sú odoslané</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Vyberte kategóriu na obmedzenie</string>
     <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole pre obmedzenie vybranej kategórie pre aplikáciu\n
 \nPri obmedzených kategóriách budú aplikáciám poskytované prázdne, alebo falošné údaje\n

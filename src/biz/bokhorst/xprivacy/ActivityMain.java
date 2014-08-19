@@ -1744,6 +1744,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ImageView imgGranted;
 			public ImageView imgInternet;
 			public ImageView imgFrozen;
+			public ImageView imgSettings;
 			public TextView tvName;
 			public ImageView imgCbRestricted;
 			public ProgressBar pbRunning;
@@ -1760,6 +1761,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				imgGranted = (ImageView) row.findViewById(R.id.imgGranted);
 				imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
+				imgSettings = (ImageView) row.findViewById(R.id.imgSettings);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
@@ -1776,6 +1778,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			private boolean used;
 			private boolean enabled;
 			private boolean granted;
+			private boolean settings;
 			private RState rstate;
 			private boolean gondemand;
 			private boolean ondemand;
@@ -1816,6 +1819,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					if (mRestrictionName != null)
 						if (!PrivacyManager.hasPermission(ActivityMain.this, xAppInfo, mRestrictionName, mVersion))
 							granted = false;
+
+					// Get if application settings
+					settings = PrivacyManager.hasSpecificSettings(xAppInfo.getUid());
 
 					// Get restriction/ask state
 					rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
@@ -1877,6 +1883,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Display if frozen
 					holder.imgFrozen
 							.setVisibility(xAppInfo.isFrozen(ActivityMain.this) ? View.VISIBLE : View.INVISIBLE);
+
+					// Display if settings
+					holder.imgSettings.setVisibility(settings ? View.VISIBLE : View.GONE);
 
 					// Display restriction
 					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
@@ -2118,6 +2127,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 			holder.imgInternet.setVisibility(View.INVISIBLE);
 			holder.imgFrozen.setVisibility(View.INVISIBLE);
+			holder.imgSettings.setVisibility(View.GONE);
 			holder.imgCbRestricted.setVisibility(View.INVISIBLE);
 			holder.imgCbAsk.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);

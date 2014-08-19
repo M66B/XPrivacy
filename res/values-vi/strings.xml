@@ -229,6 +229,7 @@
     <string name="help_attention">các sự hạn chế cần xem xét</string>
     <string name="help_restricted">các sự hạn chế đã được thay đổi</string>
     <string name="help_shared">các sự hạn chế đã được gửi đi</string>
+    <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Chọn danh mục để hạn chế</string>
     <string name="tutorial_mainlist">Tích vào một ô chọn để hạn chế danh mục đang được chọn cho một ứng dụng\n
 \nỨng dụng sẽ được nhập thông tin giả hoặc thông tin rỗng cho các danh mục bị hạn chế\n
