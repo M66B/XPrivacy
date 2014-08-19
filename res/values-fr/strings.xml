@@ -239,5 +239,6 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="tutorial_detailslist">Appuyez sur la flèche vers les bas pour voir les exceptions d’une catégorie de restrictions.</string>
     <string name="permission_manage">Gérer les applications, y compris les tuer</string>
     <string name="permission_restrictions">Gérer les restrictions et les paramètres XPrivacy</string>
+    <string name="menu_update">Vérifier mises à jour</string>
 
 </resources>
