@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
-    <string-array name="once">
+    <string-array name="once" tools:ignore="MissingTranslation">
         <item>15s</item>
         <item>30s</item>
         <item>1m</item>
