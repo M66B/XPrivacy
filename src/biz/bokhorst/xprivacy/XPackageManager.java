@@ -159,7 +159,21 @@ public class XPackageManager extends XHook {
 		case Srv_getPackageInfo:
 		case Srv_getApplicationInfo:
 			if (param.args.length > 0 && param.args[0] instanceof String && param.getResult() != null) {
+				// Allow own package name
+				int uid = -1;
+				if (mMethod == Methods.Srv_getPackageInfo) {
+					PackageInfo pInfo = (PackageInfo) param.getResult();
+					if (pInfo.applicationInfo != null)
+						uid = pInfo.applicationInfo.uid;
+				} else if (mMethod == Methods.Srv_getApplicationInfo) {
+					ApplicationInfo aInfo = (ApplicationInfo) param.getResult();
+					uid = aInfo.uid;
+				}
+				if (uid == Binder.getCallingUid())
+					return;
+
 				String packageName = (String) param.args[0];
+
 				// Prevent recursion
 				if (!XPackageManager.class.getPackage().getName().equals(packageName))
 					if (isRestrictedExtra(param, packageName))
