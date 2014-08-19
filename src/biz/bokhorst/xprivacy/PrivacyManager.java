@@ -862,10 +862,11 @@ public class PrivacyManager {
 		}
 	}
 
-	private static final List<String> cSettingAppSpecific = Arrays.asList(new String[] { cSettingSerial,
-			cSettingLatitude, cSettingLongitude, cSettingAltitude, cSettingMac, cSettingImei, cSettingPhone,
-			cSettingId, cSettingGsfId, cSettingAdId, cSettingCountry, cSettingSubscriber, cSettingSSID, cSettingIP,
-			cSettingMcc, cSettingMnc, cSettingOperator, cSettingIccId, cSettingCid, cSettingLac, cSettingUa });
+	private static final List<String> cSettingAppSpecific = Arrays.asList(new String[] { cSettingRandom,
+			cSettingSerial, cSettingLatitude, cSettingLongitude, cSettingAltitude, cSettingMac, cSettingIP,
+			cSettingImei, cSettingPhone, cSettingId, cSettingGsfId, cSettingAdId, cSettingMcc, cSettingMnc,
+			cSettingCountry, cSettingOperator, cSettingIccId, cSettingCid, cSettingLac, cSettingSubscriber,
+			cSettingSSID, cSettingUa });
 
 	public static boolean hasSpecificSettings(int uid) {
 		boolean specific = false;
