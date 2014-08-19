@@ -135,7 +135,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transactions</string>
     <string name="whitelist_permission">Permissions</string>
-    <string name="title_restrict">Cocher pour restreindre :</string>
+    <string name="title_restrict">Cocher pour restreindre / à la demande :</string>
     <string name="title_check_whitelist">Cocher pour permettre</string>
     <string name="title_fused">Filtrer utilisation des données</string>
     <string name="title_finternet">Filtrer ayant accès à Internet</string>
@@ -230,7 +230,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_attention">les restrictions ont besoin d\'attention</string>
     <string name="help_restricted">les restrictions sont changées</string>
     <string name="help_shared">les restrictions sont envoyées</string>
-    <string name="help_settings">has application specific fake values</string>
+    <string name="help_settings">a de fausses données définies spécifiquement</string>
     <string name="tutorial_mainheader">Sélectionnez la catégorie à restreindre.</string>
     <string name="tutorial_mainlist">Cocher une case pour restreindre la catégorie choisie pour l’appli.\n
 \nL’appli sera dupée par des données vides ou modifiées.\n
