@@ -218,8 +218,10 @@
             android:paddingTop="2dip" >
 
             <View
-                android:layout_width="48dip"
+                android:layout_width="12dip"
                 android:layout_height="48dip"
+                android:layout_marginLeft="18dip"
+                android:layout_marginRight="18dip"
                 android:background="?attr/color_state_attention" />
 
             <TextView
@@ -239,8 +241,10 @@
             android:paddingTop="2dip" >
 
             <View
-                android:layout_width="48dip"
+                android:layout_width="12dip"
                 android:layout_height="48dip"
+                android:layout_marginLeft="18dip"
+                android:layout_marginRight="18dip"
                 android:background="?attr/color_state_restricted" />
 
             <TextView
@@ -260,8 +264,10 @@
             android:paddingTop="2dip" >
 
             <View
-                android:layout_width="48dip"
+                android:layout_width="12dip"
                 android:layout_height="48dip"
+                android:layout_marginLeft="18dip"
+                android:layout_marginRight="18dip"
                 android:background="?attr/color_state_shared" />
 
             <TextView
