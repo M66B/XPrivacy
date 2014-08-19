@@ -49,6 +49,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Added support for [Mahdi ROM](https://plus.google.com/u/0/communities/116540622179206449806)
 * Updated in application documentation
 * Updated French translation
+* Updated German translation
 * Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
@@ -210,6 +211,7 @@ XPrivacy 2
 * Updated in application documentation
 * Updated Dutch translation
 * Updated French translation
+* Updated German translation
 * Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
