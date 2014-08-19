@@ -46,6 +46,8 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Updated traditional Chinese translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.34 BETA**
@@ -203,6 +205,7 @@ XPrivacy 2
 * Displaying if an application has specific fake values ([issue](/../../issues/1831))
 * Allow own package name for *Srv_getPackageInfo* and *Srv_getApplicationInfo*
 * Updated Dutch translation
+* Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
