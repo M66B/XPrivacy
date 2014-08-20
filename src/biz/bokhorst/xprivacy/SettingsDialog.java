@@ -55,6 +55,7 @@ public class SettingsDialog {
 		final CheckBox cbSystem = (CheckBox) dlgSettings.findViewById(R.id.cbSystem);
 		final CheckBox cbExperimental = (CheckBox) dlgSettings.findViewById(R.id.cbExperimental);
 		final CheckBox cbHttps = (CheckBox) dlgSettings.findViewById(R.id.cbHttps);
+		final CheckBox cbAOSP = (CheckBox) dlgSettings.findViewById(R.id.cbAOSP);
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
 		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
 		final EditText etQuirks = (EditText) dlgSettings.findViewById(R.id.etQuirks);
@@ -118,12 +119,14 @@ public class SettingsDialog {
 				cbSystem.setEnabled(isChecked);
 				cbExperimental.setEnabled(isChecked);
 				cbHttps.setEnabled(isChecked);
+				cbAOSP.setEnabled(isChecked);
 				etConfidence.setEnabled(isChecked);
 				etQuirks.setEnabled(isChecked);
 				if (!isChecked) {
 					cbSystem.setChecked(false);
 					cbExperimental.setChecked(false);
 					cbHttps.setChecked(true);
+					cbAOSP.setChecked(false);
 					etConfidence.setText("");
 					etQuirks.setText("");
 				}
@@ -236,6 +239,7 @@ public class SettingsDialog {
 		boolean components = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingSystem, false);
 		boolean experimental = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingExperimental, false);
 		boolean https = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingHttps, true);
+		boolean aosp = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingAOSPMode, false);
 		String confidence = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingConfidence, "");
 
 		// Get quirks
@@ -267,7 +271,8 @@ public class SettingsDialog {
 		Collections.sort(listQuirks);
 		String quirks = TextUtils.join(",", listQuirks.toArray());
 
-		final boolean expert = (components || experimental || !https || !"".equals(confidence) || listQuirks.size() > 0);
+		final boolean expert = (components || experimental || !https || aosp || !"".equals(confidence) || listQuirks
+				.size() > 0);
 
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
@@ -303,10 +308,15 @@ public class SettingsDialog {
 			else
 				cbLog.setVisibility(View.GONE);
 			cbExpert.setChecked(expert);
+
+			if (PrivacyManager.cVersion3)
+				cbAOSP.setVisibility(View.VISIBLE);
+
 			if (expert) {
 				cbSystem.setChecked(components);
 				cbExperimental.setChecked(experimental);
 				cbHttps.setChecked(https);
+				cbAOSP.setChecked(aosp);
 				etConfidence.setText(confidence);
 				etQuirks.setText(quirks);
 			} else {
@@ -314,6 +324,8 @@ public class SettingsDialog {
 				cbExperimental.setEnabled(false);
 				cbHttps.setEnabled(false);
 				cbHttps.setChecked(true);
+				cbAOSP.setEnabled(false);
+				cbAOSP.setChecked(false);
 				etConfidence.setEnabled(false);
 				etQuirks.setEnabled(false);
 			}
@@ -324,7 +336,7 @@ public class SettingsDialog {
 			cbLog.setVisibility(View.GONE);
 			cbSystem.setVisibility(View.GONE);
 			cbExperimental.setVisibility(View.GONE);
-			cbHttps.setVisibility(View.GONE);
+			cbAOSP.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
 
 			cbExpert.setChecked(expert);
@@ -513,6 +525,8 @@ public class SettingsDialog {
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingExperimental,
 							Boolean.toString(cbExperimental.isChecked()));
 					PrivacyManager.setSetting(uid, PrivacyManager.cSettingHttps, Boolean.toString(cbHttps.isChecked()));
+					PrivacyManager.setSetting(uid, PrivacyManager.cSettingAOSPMode,
+							Boolean.toString(cbAOSP.isChecked()));
 					PrivacyManager
 							.setSetting(uid, PrivacyManager.cSettingConfidence, etConfidence.getText().toString());
 				}

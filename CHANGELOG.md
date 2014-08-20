@@ -47,7 +47,9 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Added support for [Mahdi ROM](https://plus.google.com/u/0/communities/116540622179206449806)
+* Added option to enable/disable AOSP mode
 * Updated in application documentation
+* Updated Dutch translation
 * Updated French translation
 * Updated German translation
 * Updated traditional Chinese translation

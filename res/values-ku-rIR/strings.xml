@@ -205,7 +205,7 @@
     <string name="settings_notify">نوی کردنه وهی ئاگه داریه کان</string>
     <string name="settings_ondemand">داوات لیبکریت بو سنوردار کردنیان</string>
     <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
-    <string name="settings_log">Debug log (requires restart)</string>
+    <string name="settings_log">Debug log (requires reboot)</string>
     <string name="settings_expert">چه ند هه لبژاردنیکی مه ترسیدار که تایبه ته به که سانی شاره زا</string>
     <string name="settings_confidence">زورترین راده ی دلنیابوون له زانیاریه دابه زینراوه کان</string>
     <string name="settings_experimental">فرمانی ئه زمونى(پیویست به دوباره داگیرساندنی موبایل ده کات)</string>
@@ -216,6 +216,7 @@
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
+    <string name="settings_aosp">AOSP mode (requires reboot)</string>
     <string name="help_longpress">په نجه ت دابگره له سه ر ئه و ناوه ى كه ده ته ویت هه لی بژیریت</string>
     <string name="help_ondemand">داوات لیده کریت بو سنوردار کردن</string>
     <string name="help_application">به رنامه کان</string>

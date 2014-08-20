@@ -217,6 +217,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
+    <string name="settings_aosp">AOSP mode (requires reboot)</string>
     <string name="help_longpress">Maintenez appuyé le nom de l\'appli pour la sélectionner</string>
     <string name="help_ondemand">Détermination des restrictions sur demande</string>
     <string name="help_application">Application</string>

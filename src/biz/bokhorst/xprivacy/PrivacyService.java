@@ -1038,6 +1038,12 @@ public class PrivacyService extends IPrivacyService.Stub {
 				}
 			}
 
+			if (PrivacyManager.cSettingAOSPMode.equals(setting.name))
+				if (setting.value == null || Boolean.toString(false).equals(setting.value))
+					new File("/data/system/xprivacy/aosp").delete();
+				else
+					new File("/data/system/xprivacy/aosp").createNewFile();
+
 			// Update cache
 			CSetting key = new CSetting(setting.uid, setting.type, setting.name);
 			key.setValue(setting.value);

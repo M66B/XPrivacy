@@ -215,6 +215,7 @@
     <string name="settings_cid">GSM Celle ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Særegenheter</string>
+    <string name="settings_aosp">AOSP mode (requires reboot)</string>
     <string name="help_longpress">Trykk lenge på navnet som skal markeres</string>
     <string name="help_ondemand">apper spør om tillatelse</string>
     <string name="help_application">App</string>
