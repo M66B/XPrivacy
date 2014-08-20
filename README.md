@@ -1175,6 +1175,7 @@ Everybody can download a new version of XPrivacy five times in 12 hour,
 after this you will get '*429 Too Many Requests*'.
 This is to limit the bandwidth of the server to acceptable levels.
 Just wait 12 hour after the last download and you can download again.
+Please note that I will not make exceptions to this, because the limit is there for a reason.
 
 Support
 -------
