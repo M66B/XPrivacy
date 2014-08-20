@@ -111,6 +111,14 @@
                 android:layout_marginLeft="30dip"
                 android:text="@string/settings_https" />
 
+            <CheckBox
+                android:id="@+id/cbAOSP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/settings_aosp"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:id="@+id/llConfidence"
                 android:layout_width="match_parent"

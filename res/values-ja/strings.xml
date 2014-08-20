@@ -217,6 +217,7 @@
     <string name="settings_cid">GSM セル ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirk 設定</string>
+    <string name="settings_aosp">AOSP mode (requires reboot)</string>
     <string name="help_longpress">アプリ名の長押しでアプリが選択されます</string>
     <string name="help_ondemand">制限するか尋ねます</string>
     <string name="help_application">アプリ</string>

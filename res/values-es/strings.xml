@@ -212,11 +212,12 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="settings_experimental">Funciones experimentales (requiere reinicio)</string>
     <string name="settings_https">Usar conexiones seguras</string>
     <string name="settings_syscomponents">Restringir componentes del sistema (Android) (requiere reinicio)</string>
-    <string name="settings_usagedata">Mostrar uso de datos de las aplicaciones (requires restart)</string>
+    <string name="settings_usagedata">Mostrar uso de datos de las aplicaciones (requires reboot)</string>
     <string name="settings_parameters">Show parameters of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
+    <string name="settings_aosp">AOSP mode (requires reboot)</string>
     <string name="help_longpress">Click largo sobre un nombre selecciona la aplicación</string>
     <string name="help_ondemand">Se le preguntará por las restricciones</string>
     <string name="help_application">Aplicación</string>

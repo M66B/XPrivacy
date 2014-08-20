@@ -216,6 +216,7 @@
     <string name="settings_cid">ID GSM stanice</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Dosjetke</string>
+    <string name="settings_aosp">AOSP mode (requires reboot)</string>
     <string name="help_longpress">Dodirnite i zadržite na ime za odabir</string>
     <string name="help_ondemand">ograničenja će biti na upit</string>
     <string name="help_application">Aplikacija</string>

@@ -183,6 +183,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				setenv.setAccessible(true);
 				boolean aosp = new File("/data/system/xprivacy/aosp").exists();
 				setenv.invoke(os, "XPrivacy.AOSP", Boolean.toString(aosp), false);
+				Util.log(null, Log.WARN, "AOSP mode forced=" + aosp);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}

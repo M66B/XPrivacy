@@ -216,6 +216,7 @@
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
+    <string name="settings_aosp">AOSP mode (requires reboot)</string>
     <string name="help_longpress">Nhấn và giữ để chọn</string>
     <string name="help_ondemand">các sự hạn chế sẽ được yêu cầu cấp quyền</string>
     <string name="help_application">Ứng dụng</string>
