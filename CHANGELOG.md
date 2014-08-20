@@ -48,6 +48,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 * Displaying AOSP mode setting for KitKat and later only
 * Updated Japanese translation
+* Updated Lithuanian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -220,6 +221,7 @@ XPrivacy 2
 * Updated French translation
 * Updated German translation
 * Updated Japanese translation
+* Updated Lithuanian translation
 * Updated traditional Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
