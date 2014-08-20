@@ -336,6 +336,30 @@
 				exit();
 			}
 
+			// Fixes
+			if (empty($data->android_id))
+				$data->android_id = '';
+			if (empty($data->xprivacy_version))
+				$data->xprivacy_version = 0;
+
+			// Throttling
+			if ($data->xprivacy_version >= 395) { // 2.99.29 (395) / 2.2.9 (397)
+				$sql = "SELECT COUNT(*) AS count FROM xprivacy_update";
+				$sql .= " WHERE android_id_md5 = '" . $db->real_escape_string($data->android_id) . "'";
+				$sql .= " AND time > '" . date('Y-m-d H:i:s', time() - 12 * 3600) . "'";
+				$sql .= " AND installed_version <> current_version";
+				$result = $db->query($sql);
+				if ($result) {
+					if (($row = $result->fetch_object()))
+						if ($row->count >= 5) {
+							header($_SERVER['SERVER_PROTOCOL'] . ' 429 Too Many Requests');
+							exit();
+						}
+				}
+				else
+					log_error('update: error=' . $db->error . ' query=' . $sql, $my_email, $data);
+			}
+
 			// Release type
 			$folder = 'release';
 			if (!empty($data->test_versions) && $data->test_versions)
@@ -354,26 +378,7 @@
 					}
 				}
 
-			// Throttling
-			if (empty($data->android_id))
-				$data->android_id = '';
-			else {
-				$sql = "SELECT COUNT(*) AS count FROM xprivacy_update";
-				$sql .= " WHERE android_id_md5 = '" . $db->real_escape_string($data->android_id) . "'";
-				$sql .= " AND time > '" . date('Y-m-d H:i:s', time() - 12 * 3600) . "'";
-				$sql .= " AND installed_version <> current_version";
-				$result = $db->query($sql);
-				if ($result) {
-					if (($row = $result->fetch_object()))
-						if ($row->count >= 5) {
-							header($_SERVER['SERVER_PROTOCOL'] . ' 429 Too Many Requests');
-							exit();
-						}
-				}
-				else
-					log_error('update: error=' . $db->error . ' query=' . $sql, $my_email, $data);
-			}
-
+			// Register check
 			$sql = "INSERT INTO xprivacy_update (android_id_md5, installed_version, test_versions, current_version)";
 			$sql .= " VALUES (";
 			$sql .= "'" . $db->real_escape_string($data->android_id) . "'";
