@@ -45,7 +45,7 @@
     <string name="menu_exclude">Išskirti</string>
     <string name="menu_close">Uždaryti</string>
     <string name="menu_flush">Išvalyti talpyklą</string>
-    <string name="menu_update">Check for updates</string>
+    <string name="menu_update">Patikrinti atnaujinimus</string>
     <string name="msg_abort">Nutraukti</string>
     <string name="msg_aborted">Atmesti</string>
     <string name="msg_new">Naujas</string>
@@ -75,7 +75,7 @@
     <string name="msg_restrictedby">Ribojama su XPrivacy</string>
     <string name="msg_service_missing">Privacy procesas nerastas; ar aktyvavote XPrivacy sistemoje Xposed ir perkrovėte prietaisą?</string>
     <string name="msg_service_version">Privacy procesas veikia netinkamai; perkrovėte prietaisą po XPrivacy atnaujinimo?</string>
-    <string name="msg_service_updating">Please wait until the update service has been completed</string>
+    <string name="msg_service_updating">Prašome palaukti, kol atnaujinimas bus baigtas</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
@@ -108,13 +108,13 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_help_sensors">Galima riboti prieigą prie jutiklių (pvz: kaip judesio davikliu)</string>
     <string name="restrict_help_phone">Galima riboti priėjimą prie telefono informacijos, kaip jūsų telefono numeris</string>
     <string name="restrict_help_overlay">Galima riboti perdangos langus, išvengti sukčiavimo apsimetant</string>
-    <string name="restrict_help_notifications">Galima riboti prieigą prie sistemos ir taikomųjų programų pranešimų ir "Google" debesis pranešimų</string>
+    <string name="restrict_help_notifications">Galima riboti prieigą prie sistemos ir taikomųjų programų pranešimų ir "Google" pranešimų</string>
     <string name="restrict_help_nfc">Galima riboti prieigą prie NFC komunikacijos</string>
-    <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
+    <string name="restrict_help_network">Galima riboti prieigą prie tinklo informacijos, kaip IP ir MAC adresai ir "Wi-Fi" tinklo informacija</string>
     <string name="restrict_help_messages">Galima riboti prieigą prie saugomų ir gautų žinučių (SMS / MMS) ir skambučių</string>
     <string name="restrict_help_media">Galima riboti prieigą prie fotoaparato (nuotraukos ir vaizdo įrašai) ir mikrofono</string>
     <string name="whitelist_address">Addresai</string>
-    <string name="whitelist_action">Action</string>
+    <string name="whitelist_action">Veiksmas</string>
     <string name="restrict_help_location">Galima riboti prieigą prie jūsų buvimo vietos</string>
     <string name="restrict_help_ipc">Galima riboti tarp-procesines komunikacijas, kai naudojamos apeiti kitus ribojimus</string>
     <string name="restrict_help_internet">Galima riboti prieigą prie interneto</string>
@@ -157,7 +157,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_function">Funkcija:</string>
     <string name="title_parameters">Parameterai:</string>
     <string name="title_applycat">Taikyti esamoje kategorijoje</string>
-    <string name="title_once">Once for</string>
+    <string name="title_once">Kartą</string>
     <string name="title_whitelist">Baltasis sąrašas \'%s\'</string>
     <string name="title_allow">Leisti</string>
     <string name="title_deny">Drausti</string>
@@ -178,16 +178,16 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_usage_text_1">1. Rasti programos ribojimų pagrindiniame programos sąraše</string>
     <string name="title_usage_text_2">2. Bakstelėkite programos piktogramą</string>
     <string name="title_usage_text_3">3. Bakstelėkite ant ketegorijų, norėdami riboti</string>
-    <string name="title_usage_footer">Use common sense when restricting, don\'t expect internet access if you restricted the internet category, etc.</string>
-    <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
-    <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
+    <string name="title_usage_footer">Naudokite apgalvotai, apribojus interneto kategoriją, nereikia tikėtis, kad nebus interneto prieigos ir t.t.</string>
+    <string name="title_toggle_dangerous">Ilgai paspausti ant programos pavadinimo, perjungti pavojingas funkcijas</string>
+    <string name="title_ondemand_category">Kategorijai galite atstatyti funcijas, išskyrus pradinius duomenis</string>
     <string name="title_function_help">Funkcijų dokumentacija</string>
-    <string name="title_unsafe">is unsafe, can be circumvented</string>
-    <string name="title_update_checking">Checking for update</string>
-    <string name="title_update_downloading">Downloading update</string>
-    <string name="title_update_install">Tap to install update</string>
-    <string name="title_update_none">No updates available</string>
-    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider upgrading to XPrivacy 3</string>
+    <string name="title_unsafe">Yra nesaugus, gali būti apeinamas</string>
+    <string name="title_update_checking">Ieškoma atnaujinimo</string>
+    <string name="title_update_downloading">Atsiunčiamas atnaujinimas</string>
+    <string name="title_update_install">Bakstelėkite, jei norite įdiegti atnaujinimą</string>
+    <string name="title_update_none">Nėra atnaujinimų</string>
+    <string name="title_update_legacy">XPrivacy 2 nebe nepalaikomas, prašome apsvarstyti galimybę atnaujinti į XPrivacy 3</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>
@@ -217,7 +217,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_cid">GSM stoties ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
-    <string name="settings_aosp">AOSP mode (requires reboot)</string>
+    <string name="settings_aosp">AOSP mode (reikia perkrauti)</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>
     <string name="help_ondemand">apribojimai bus paprašyti</string>
     <string name="help_application">Programa</string>
@@ -231,7 +231,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="help_attention">Leidimams reikia dėmesio</string>
     <string name="help_restricted">Leidimai yra pakeisti</string>
     <string name="help_shared">Leidimai yra pateikti</string>
-    <string name="help_settings">has application specific fake values</string>
+    <string name="help_settings">Programa turi netikrus duomenis</string>
     <string name="tutorial_mainheader">Pasirinkite kategoriją ribojimui</string>
     <string name="tutorial_mainlist">Bakstelėkite žymės langelį apriboti pasirinktą kategoriją\n
 \nProgramos bus įtrauktos ribojimų kategorijas\n
