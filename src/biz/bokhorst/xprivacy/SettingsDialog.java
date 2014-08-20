@@ -12,6 +12,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Build;
 import android.os.Environment;
 import android.os.Process;
 import android.text.TextUtils;
@@ -309,7 +310,7 @@ public class SettingsDialog {
 				cbLog.setVisibility(View.GONE);
 			cbExpert.setChecked(expert);
 
-			if (PrivacyManager.cVersion3)
+			if (PrivacyManager.cVersion3 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
 				cbAOSP.setVisibility(View.VISIBLE);
 
 			if (expert) {
