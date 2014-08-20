@@ -46,6 +46,10 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.35 BETA**
+
 * Added support for [Mahdi ROM](https://plus.google.com/u/0/communities/116540622179206449806)
 * Added option to enable/disable AOSP mode
 * Updated in application documentation
@@ -53,8 +57,6 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Updated French translation
 * Updated German translation
 * Updated traditional Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.34 BETA**
 
