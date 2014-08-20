@@ -1167,6 +1167,15 @@ For the benefit of others, please report if XPrivacy 3 works for the ROM you are
 * **Orange**: fetch, new/updated application, delete restrictions
 * **Green**: submit
 
+<a name="FAQ70"></a>
+**(70) I get '429 Too Many Requests'**
+
+This can happen when checking for updates using the main menu.
+Everybody can download a new version of XPrivacy three times in 24 hour,
+after this you will get '*429 Too Many Requests*'.
+This is to limit the bandwidth of the server to acceptable levels.
+Just wait 24 hour after the last download and you can download again.
+
 Support
 -------
 
