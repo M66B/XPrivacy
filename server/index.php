@@ -360,12 +360,12 @@
 			else {
 				$sql = "SELECT COUNT(*) AS count FROM xprivacy_update";
 				$sql .= " WHERE android_id_md5 = '" . $db->real_escape_string($data->android_id) . "'";
-				$sql .= " AND time > '" . date('Y-m-d H:i:s', time() - 24 * 3600) . "'";
+				$sql .= " AND time > '" . date('Y-m-d H:i:s', time() - 12 * 3600) . "'";
 				$sql .= " AND installed_version <> current_version";
 				$result = $db->query($sql);
 				if ($result) {
 					if (($row = $result->fetch_object()))
-						if ($row->count >= 3) {
+						if ($row->count >= 5) {
 							header($_SERVER['SERVER_PROTOCOL'] . ' 429 Too Many Requests');
 							exit();
 						}
