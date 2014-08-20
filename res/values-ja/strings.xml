@@ -75,7 +75,7 @@
     <string name="msg_restrictedby">XPrivacy により制限されました</string>
     <string name="msg_service_missing">Privacy service が見つかりません。XPrivacy を Xposed インストーラーで有効にして端末を再起動しましたか?</string>
     <string name="msg_service_version">Privacy service のバージョンが違います。XPrivacy を更新した後で端末を再起動しましたか?</string>
-    <string name="msg_service_updating">Please wait until the update service has been completed</string>
+    <string name="msg_service_updating">更新サービスが完了するまでお待ちください</string>
     <string name="msg_first"><b>XPrivacy の開発およびテストには細心の注意を払いましたが、
 すべての端末のあらゆるアプリで完璧な動作を保証することは不可能です。
 \n\n完全に自己責任のうえでご利用ください。</b>\n\nライセンスについて :</string>
@@ -135,7 +135,7 @@
     <string name="whitelist_url">URL</string>
     <string name="whitelist_transaction">トランザクション</string>
     <string name="whitelist_permission">パーミッション</string>
-    <string name="title_restrict">チェックして制限します :</string>
+    <string name="title_restrict">チェックして(制限/オンデマンド制限)します :</string>
     <string name="title_check_whitelist">チェックして許可します :</string>
     <string name="title_fused">データの要求あり</string>
     <string name="title_finternet">インターネットアクセスあり</string>
@@ -157,8 +157,8 @@
     <string name="title_function">機能 :</string>
     <string name="title_parameters">パラメーター :</string>
     <string name="title_applycat">カテゴリ全体に設定する</string>
-    <string name="title_once">Once for</string>
-    <string name="title_whitelist">ホワイトリスト/ブラックリスト &#8216;%1$s&#8217;</string>
+    <string name="title_once">今回のみ設定する</string>
+    <string name="title_whitelist">ホワイト/ブラックリスト &#8216;%1$s&#8217;</string>
     <string name="title_allow">許可</string>
     <string name="title_deny">拒否</string>
     <string name="title_dontknow">わからない</string>
@@ -182,7 +182,7 @@
     <string name="title_toggle_dangerous">危険性のある機能をトグルするには機能名を長押しします</string>
     <string name="title_ondemand_category">カテゴリ全体に設定すると機能の除外項目の設定が初期化されます</string>
     <string name="title_function_help">機能のドキュメント</string>
-    <string name="title_unsafe">安全ではありません。回避されるおそれがあります</string>
+    <string name="title_unsafe">安全でない : 回避されるおそれがあります</string>
     <string name="title_update_checking">更新を確認しています</string>
     <string name="title_update_downloading">更新をダウンロードしています</string>
     <string name="title_update_install">タップして更新をインストールします</string>
@@ -217,7 +217,7 @@
     <string name="settings_cid">GSM セル ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirk 設定</string>
-    <string name="settings_aosp">AOSP mode (requires reboot)</string>
+    <string name="settings_aosp">AOSP モード (要再起動)</string>
     <string name="help_longpress">アプリ名の長押しでアプリが選択されます</string>
     <string name="help_ondemand">制限するか尋ねます</string>
     <string name="help_application">アプリ</string>
@@ -231,7 +231,7 @@
     <string name="help_attention">注意が必要です</string>
     <string name="help_restricted">変更しました</string>
     <string name="help_shared">投稿しました</string>
-    <string name="help_settings">has application specific fake values</string>
+    <string name="help_settings">アプリ固有の偽装データが設定されています</string>
     <string name="tutorial_mainheader">制限を設定したいカテゴリを選択します</string>
     <string name="tutorial_mainlist">アプリのチェックボックスをタップすると、選択したカテゴリに対して制限が設定されます\n
 \n制限が設定されたアプリは、そのカテゴリについて空データまたは偽装データを受け取るようになります\n
