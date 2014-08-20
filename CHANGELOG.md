@@ -215,7 +215,6 @@ XPrivacy 2
 **Next release**
 
 * Displaying if an application has specific fake values ([issue](/../../issues/1831))
-* Allow own package name for *Srv_getPackageInfo* and *Srv_getApplicationInfo*
 * Updated in application documentation
 * Updated Dutch translation
 * Updated French translation
