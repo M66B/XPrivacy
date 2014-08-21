@@ -38,7 +38,7 @@ You can install XPrivacy 2.99.x by following these steps:
 
 * Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
 * Update to the latest 2.2.x version
-* Enter the quirk *test* into the main settings
+* Enter the quirk *test* (all lower case) into the main settings
 * Use the main menu *Check for updates*
 * Make sure notifications are not suppressed by another Xposed module or an application manager
 
