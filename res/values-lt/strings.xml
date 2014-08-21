@@ -218,6 +218,9 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">AOSP mode (reikia perkrauti)</string>
+    <string name="help_check_restrict">First check box: restrict category or function</string>
+    <string name="help_check_ondemand">Second check box: restrict on demand</string>
+    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>
     <string name="help_ondemand">apribojimai bus paprašyti</string>
     <string name="help_application">Programa</string>

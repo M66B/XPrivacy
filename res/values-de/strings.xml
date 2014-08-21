@@ -218,6 +218,9 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">AOSP-Modus (erfordert Geräteneustart)</string>
+    <string name="help_check_restrict">First check box: restrict category or function</string>
+    <string name="help_check_ondemand">Second check box: restrict on demand</string>
+    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
     <string name="help_longpress">Für Auswahl App-Name drücken und kurz halten</string>
     <string name="help_ondemand">Beschränkungen nach Aufforderung festlegen</string>
     <string name="help_application">App</string>

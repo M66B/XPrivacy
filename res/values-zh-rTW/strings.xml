@@ -218,6 +218,9 @@
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">使用 AOSP 模式 (需重新啟動)</string>
+    <string name="help_check_restrict">First check box: restrict category or function</string>
+    <string name="help_check_ondemand">Second check box: restrict on demand</string>
+    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
     <string name="help_longpress">長按程式名稱可選取</string>
     <string name="help_ondemand">存取該權限時詢問</string>
     <string name="help_application">程式名稱</string>

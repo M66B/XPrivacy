@@ -217,6 +217,9 @@
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">AOSP mode (requires reboot)</string>
+    <string name="help_check_restrict">First check box: restrict category or function</string>
+    <string name="help_check_ondemand">Second check box: restrict on demand</string>
+    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
     <string name="help_longpress">په نجه ت دابگره له سه ر ئه و ناوه ى كه ده ته ویت هه لی بژیریت</string>
     <string name="help_ondemand">داوات لیده کریت بو سنوردار کردن</string>
     <string name="help_application">به رنامه کان</string>
