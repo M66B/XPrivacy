@@ -217,10 +217,10 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
-    <string name="settings_aosp">AOSP mode (requires reboot)</string>
-    <string name="help_check_restrict">First check box: restrict category or function</string>
-    <string name="help_check_ondemand">Second check box: restrict on demand</string>
-    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
+    <string name="settings_aosp">Mode AOSP (redémarrage requis)</string>
+    <string name="help_check_restrict">Première case : restreindre la catégorie ou la fonction</string>
+    <string name="help_check_ondemand">Deuxième case : restreindre sur demande</string>
+    <string name="help_switch">Interrupteur marche / arrêt : activer ou désactiver toutes les restrictions</string>
     <string name="help_longpress">Maintenez appuyé le nom de l\'appli pour la sélectionner</string>
     <string name="help_ondemand">Détermination des restrictions sur demande</string>
     <string name="help_application">Application</string>
