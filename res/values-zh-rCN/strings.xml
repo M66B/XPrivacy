@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_notenabled">XPrivacy 没有在 Xposed 框架中启用</string>
-    <string name="app_wrongandroid">仅支持 Android 4.0.3 以上的版本</string>
+    <string name="app_wrongandroid">仅支持 Android 4.0.3 以上版本</string>
     <string name="app_incompatible">XPrivacy 与 %1$s 不兼容</string>
     <string name="app_version">XPrivacy 版本: %1$s (%2$d)</string>
     <string name="app_description">终级隐私管理器</string>
@@ -75,7 +75,7 @@
     <string name="msg_restrictedby">由 XPrivacy 限制</string>
     <string name="msg_service_missing">没有找到Privacy服务，您是否在Xposed Installer中启用XPrivacy并重启设备？</string>
     <string name="msg_service_version">Privacy服务版本不对，您是否在升级XPrivacy后忘了重启？</string>
-    <string name="msg_service_updating">Please wait until the update service has been completed</string>
+    <string name="msg_service_updating">更新服务已完成请等待</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -217,7 +217,7 @@
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
-    <string name="settings_aosp">AOSP mode (requires reboot)</string>
+    <string name="settings_aosp">AOSP模式 (需要重新启动)</string>
     <string name="help_longpress">长按名称进行选择</string>
     <string name="help_ondemand">当限制时询问</string>
     <string name="help_application">请输入应用名称</string>
@@ -231,7 +231,7 @@
     <string name="help_attention">可以下载限制规则的应用</string>
     <string name="help_restricted">限制规则已经生效的应用</string>
     <string name="help_shared">已经分享限制规则的应用</string>
-    <string name="help_settings">has application specific fake values</string>
+    <string name="help_settings">有特殊应用假值</string>
     <string name="tutorial_mainheader">选择权限类别进行限制</string>
     <string name="tutorial_mainlist">勾选应用后的复选框以限制所选类别的权限\n
 \n被限制的应用请求该权限时会接收到空或伪造的数据\n
