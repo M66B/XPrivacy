@@ -336,6 +336,8 @@ Limitations
 * Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
 * Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/)
 * It is possible to unhook methods in user space using native libraries, see for more details [FAQ 68](#FAQ68)
+* In some situations the on demand restricting dialog freezes, notably when using volume keys. This cannot be fixed due too limitations of Android.
+* In some situations the on demand restricting dialog is overlayed by other windows, notably notifications. This cannot be fixed due too limitations of Android.
 
 *XPrivacy*
 
