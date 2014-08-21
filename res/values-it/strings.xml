@@ -218,6 +218,9 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Anomalie</string>
     <string name="settings_aosp">AOSP mode (requires reboot)</string>
+    <string name="help_check_restrict">First check box: restrict category or function</string>
+    <string name="help_check_ondemand">Second check box: restrict on demand</string>
+    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
     <string name="help_longpress">Premi a lungo sul nome per selezionare</string>
     <string name="help_ondemand">le restrizioni verranno richieste</string>
     <string name="help_application">Applicazione</string>

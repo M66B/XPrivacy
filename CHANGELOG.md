@@ -47,6 +47,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Displaying AOSP mode setting for KitKat and later only
+* Added help texts
 * Updated German translation
 * Updated Japanese translation
 * Updated Lithuanian translation
@@ -218,6 +219,7 @@ XPrivacy 2
 **Next release**
 
 * Displaying if an application has specific fake values ([issue](/../../issues/1831))
+* Added help texts
 * Updated in application documentation
 * Updated Dutch translation
 * Updated French translation
