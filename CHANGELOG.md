@@ -52,6 +52,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Updated German translation
 * Updated Japanese translation
 * Updated Lithuanian translation
+* Updated Norwegian translation
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
 
@@ -228,6 +229,7 @@ XPrivacy 2
 * Updated German translation
 * Updated Japanese translation
 * Updated Lithuanian translation
+* Updated Norwegian translation
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
 
