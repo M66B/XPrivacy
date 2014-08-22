@@ -81,10 +81,17 @@
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <RadioButton
-                    android:id="@+id/rbTemplateMerge"
+                    android:id="@+id/rbTemplateMergeSet"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/title_template_merge"
+                    android:textAppearance="?android:attr/textAppearanceSmall" />
+
+                <RadioButton
+                    android:id="@+id/rbTemplateMergeReset"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/title_template_merge_reset"
                     android:textAppearance="?android:attr/textAppearanceSmall" />
 
                 <RadioButton

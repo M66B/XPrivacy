@@ -168,6 +168,7 @@
     <string name="title_template_category">Применить шаблон (категории)</string>
     <string name="title_template_full">Применить шаблон (категории+функции)</string>
     <string name="title_template_merge">Применить шаблон (слить)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">Включить запрос разрешений</string>
     <string name="title_disable_ondemand">Отключить запрос разрешений</string>
     <string name="title_ondemand_default">Timeout will:</string>

@@ -168,6 +168,7 @@
     <string name="title_template_category">テンプレートを適用する (カテゴリ)</string>
     <string name="title_template_full">テンプレートを適用する (カテゴリと機能)</string>
     <string name="title_template_merge">テンプレートを適用する (統合)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">オンデマンド制限を有効にする</string>
     <string name="title_disable_ondemand">オンデマンド制限を無効にする</string>
     <string name="title_ondemand_default">タイムアウトすると :</string>

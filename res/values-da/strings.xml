@@ -166,6 +166,7 @@
     <string name="title_template_category">Anvend skabelon (kategorier)</string>
     <string name="title_template_full">Anvend skabelon (kategorier+funktioner)</string>
     <string name="title_template_merge">Anvend skabelon (flet)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">Aktivér on demand begrænsning</string>
     <string name="title_disable_ondemand">Deaktivér on demand begrænsning</string>
     <string name="title_ondemand_default">Timeout will:</string>

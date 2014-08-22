@@ -168,6 +168,7 @@
     <string name="title_template_category">套用預設規則 (僅大分類)</string>
     <string name="title_template_full">套用預設規則 (分類及功能)</string>
     <string name="title_template_merge">套用預設規則 (整合)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">開啟互動式限制</string>
     <string name="title_disable_ondemand">關閉互動式限制</string>
     <string name="title_ondemand_default">若逾時則:</string>

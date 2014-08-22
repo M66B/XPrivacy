@@ -50,7 +50,7 @@ public class PackageChange extends BroadcastReceiver {
 							PrivacyManager.clearPermissionCache(uid);
 
 							// Apply template
-							PrivacyManager.applyTemplate(uid, Meta.cTypeTemplate, null, true, true);
+							PrivacyManager.applyTemplate(uid, Meta.cTypeTemplate, null, true, true, false);
 
 							// Enable on demand
 							if (ondemand)

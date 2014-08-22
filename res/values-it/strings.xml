@@ -168,6 +168,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_template_category">Applica modello (categorie)</string>
     <string name="title_template_full">Applica modello (categorie+funzioni)</string>
     <string name="title_template_merge">Applica modello (unisci)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
     <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
     <string name="title_ondemand_default">Allo scadere:</string>

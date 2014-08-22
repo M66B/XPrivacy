@@ -564,7 +564,7 @@ public class PrivacyManager {
 	}
 
 	public static void applyTemplate(int uid, String templateName, String restrictionName, boolean methods,
-			boolean clear) {
+			boolean clear, boolean invert) {
 		checkCaller();
 
 		int userId = Util.getUserId(uid);
@@ -629,7 +629,17 @@ public class PrivacyManager {
 						else
 							childMerge = getRestrictionEx(uid, rRestrictionName, hook.getName());
 
-						// APply
+						// Invert
+						if (invert && parentRestricted && restricted) {
+							restricted = false;
+							childMerge.restricted = false;
+						}
+						if (invert && !parentAsked && !asked) {
+							asked = true;
+							childMerge.asked = true;
+						}
+
+						// Apply
 						if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.isDangerous()
 								|| !clear) {
 							PRestriction child = new PRestriction(uid, rRestrictionName, hook.getName(),
