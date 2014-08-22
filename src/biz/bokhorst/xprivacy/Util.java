@@ -23,6 +23,8 @@ import java.security.spec.X509EncodedKeySpec;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.net.ssl.SSLPeerUnverifiedException;
+
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.HttpHostConnectException;
 
@@ -116,6 +118,8 @@ public class Util {
 		else if (ex instanceof ConnectTimeoutException)
 			priority = Log.WARN;
 		else if (ex instanceof HttpHostConnectException)
+			priority = Log.WARN;
+		else if (ex instanceof SSLPeerUnverifiedException)
 			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
