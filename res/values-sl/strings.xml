@@ -168,6 +168,7 @@
     <string name="title_template_category">Uveljavi predlogo (kategorije)</string>
     <string name="title_template_full">Uveljavi predlogo (kategorije+funkcije)</string>
     <string name="title_template_merge">Uveljeavi predlogo (združevanje)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">Omogoči omejevanje na zahtevo</string>
     <string name="title_disable_ondemand">Onemogoči omejevanje na zahtevo</string>
     <string name="title_ondemand_default">Čas. omejitev bo:</string>

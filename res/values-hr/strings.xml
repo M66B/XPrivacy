@@ -167,6 +167,7 @@
     <string name="title_template_category">Primijeni predložak (kategorije)</string>
     <string name="title_template_full">Primijeni predložak (kategorije+funkcije)</string>
     <string name="title_template_merge">Primijeni predložak (spajanje)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">Uključi ograničenje na zahtjev</string>
     <string name="title_disable_ondemand">Isključi ograničenje na zahtjev</string>
     <string name="title_ondemand_default">Odbrojavanje:</string>

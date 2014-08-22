@@ -302,8 +302,10 @@ public class ActivityShare extends ActivityBase {
 					spRestriction.setVisibility(checkedId == R.id.rbEnableOndemand
 							|| checkedId == R.id.rbDisableOndemand ? View.GONE : View.VISIBLE);
 
-					spTemplate.setVisibility(checkedId == R.id.rbTemplateCategory || checkedId == R.id.rbTemplateFull
-							|| checkedId == R.id.rbTemplateMerge ? View.VISIBLE : View.GONE);
+					spTemplate
+							.setVisibility(checkedId == R.id.rbTemplateCategory || checkedId == R.id.rbTemplateFull
+									|| checkedId == R.id.rbTemplateMergeSet || checkedId == R.id.rbTemplateMergeReset ? View.VISIBLE
+									: View.GONE);
 				}
 			});
 
@@ -697,13 +699,16 @@ public class ActivityShare extends ActivityBase {
 						}
 
 						else if (actionId == R.id.rbTemplateCategory)
-							PrivacyManager.applyTemplate(uid, templateName, restrictionName, false, true);
+							PrivacyManager.applyTemplate(uid, templateName, restrictionName, false, true, false);
 
 						else if (actionId == R.id.rbTemplateFull)
-							PrivacyManager.applyTemplate(uid, templateName, restrictionName, true, true);
+							PrivacyManager.applyTemplate(uid, templateName, restrictionName, true, true, false);
 
-						else if (actionId == R.id.rbTemplateMerge)
-							PrivacyManager.applyTemplate(uid, templateName, restrictionName, true, false);
+						else if (actionId == R.id.rbTemplateMergeSet)
+							PrivacyManager.applyTemplate(uid, templateName, restrictionName, true, false, false);
+
+						else if (actionId == R.id.rbTemplateMergeReset)
+							PrivacyManager.applyTemplate(uid, templateName, restrictionName, true, false, true);
 
 						else if (actionId == R.id.rbEnableOndemand) {
 							PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(true));

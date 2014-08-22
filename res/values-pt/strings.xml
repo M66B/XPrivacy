@@ -167,7 +167,8 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="title_set_restrict">Restrict</string>
     <string name="title_template_category">Apply template (categories)</string>
     <string name="title_template_full">Apply template (categories+functions)</string>
-    <string name="title_template_merge">Apply template (merge)</string>
+    <string name="title_template_merge">Apply template (merge set)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">Enable on demand restricting</string>
     <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="title_ondemand_default">Timeout will:</string>

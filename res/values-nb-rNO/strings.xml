@@ -166,6 +166,7 @@
     <string name="title_template_category">Bruk skjema (kategorier)</string>
     <string name="title_template_full">Bruk skjema (kategorier+funksjoner)</string>
     <string name="title_template_merge">Bruk skjema (flett)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">Aktiver blokkering på forespørsel</string>
     <string name="title_disable_ondemand">Deaktiver blokkering på forespørsel</string>
     <string name="title_ondemand_default">Tidsavbrudd skal:</string>

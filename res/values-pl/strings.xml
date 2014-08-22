@@ -168,6 +168,7 @@
     <string name="title_template_category">Zastosuj szablon (kategorie)</string>
     <string name="title_template_full">Zastosuj szablon (kategorie+funkcje)</string>
     <string name="title_template_merge">Zastosuj szablon (scalenie)</string>
+    <string name="title_template_merge_reset">Apply template (merge reset)</string>
     <string name="title_enable_ondemand">Włącz restrykcje na żądanie</string>
     <string name="title_disable_ondemand">Wyłącz restrykcje na żądanie</string>
     <string name="title_ondemand_default">Timeout spowoduje:</string>
