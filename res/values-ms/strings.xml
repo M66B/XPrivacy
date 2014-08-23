@@ -27,7 +27,6 @@
     <string name="menu_all">Semua</string>
     <string name="menu_toggle">Aktif sekatan</string>
     <string name="menu_clear_all">Bersih semua</string>
-    <string name="menu_restrict_all">Sekat semua</string>
     <string name="menu_clear_usage">Bersih</string>
     <string name="menu_clear_db">Bersih semua data XPrivacy</string>
     <string name="menu_usage_all">Aktif tapisan</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Pilih hubungan yang dibenarkan</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Bimbingan</string>
-    <string name="menu_exclude">Kecualikan</string>
-    <string name="menu_close">Tutup</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Sedang dibatalkan</string>

@@ -27,7 +27,6 @@
     <string name="menu_all">Alle</string>
     <string name="menu_toggle">Skift restriksjoner</string>
     <string name="menu_clear_all">Nullstill alt</string>
-    <string name="menu_restrict_all">Blokk alt</string>
     <string name="menu_clear_usage">Nullstill</string>
     <string name="menu_clear_db">Nullstill XPRivacy data</string>
     <string name="menu_usage_all">Skift filter</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
     <string name="menu_whitelists">Behandel positivlister</string>
     <string name="menu_tutorial">Innføring</string>
-    <string name="menu_exclude">Ekskluder</string>
-    <string name="menu_close">Lukk</string>
     <string name="menu_flush">Tømm hurtiglager</string>
     <string name="menu_update">Sjekk for oppdateringer</string>
     <string name="msg_abort">Avbryter</string>

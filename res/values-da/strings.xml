@@ -27,7 +27,6 @@
     <string name="menu_all">Alle</string>
     <string name="menu_toggle">Slå restriktioner til/fra</string>
     <string name="menu_clear_all">Ryd alle</string>
-    <string name="menu_restrict_all">Indfør restriktioner for alle</string>
     <string name="menu_clear_usage">Ryd</string>
     <string name="menu_clear_db">Ryd al data</string>
     <string name="menu_usage_all">Slå filter til/fra</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Vælg kontakter som skal tillades</string>
     <string name="menu_whitelists">Administrér white lister</string>
     <string name="menu_tutorial">Vejledning</string>
-    <string name="menu_exclude">Udeluk</string>
-    <string name="menu_close">Luk</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Anullerer</string>

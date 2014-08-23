@@ -27,7 +27,6 @@
     <string name="menu_all">تحديد الكل</string>
     <string name="menu_toggle">تبديل القيود</string>
     <string name="menu_clear_all">مسح الكل</string>
-    <string name="menu_restrict_all">تقييد الكل</string>
     <string name="menu_clear_usage">إزالة</string>
     <string name="menu_clear_db">مسح جميع البيانات</string>
     <string name="menu_usage_all">تغيير الفلتر</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">إختر الأسماء التي تود تمكينها</string>
     <string name="menu_whitelists">إدارة القوائم البيضاء</string>
     <string name="menu_tutorial">تعليمي</string>
-    <string name="menu_exclude">إستبعاد</string>
-    <string name="menu_close">إغلاق</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">إيقاف</string>

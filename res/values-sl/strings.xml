@@ -27,7 +27,6 @@
     <string name="menu_all">Vse</string>
     <string name="menu_toggle">Preklopi omejitve</string>
     <string name="menu_clear_all">Počisti vse</string>
-    <string name="menu_restrict_all">Omeji vse</string>
     <string name="menu_clear_usage">Počisti</string>
     <string name="menu_clear_db">Počisti vse podatke</string>
     <string name="menu_usage_all">Preklopi filtre</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Izberi dovoljene stike</string>
     <string name="menu_whitelists">Upravljanje bele liste</string>
     <string name="menu_tutorial">Navodila</string>
-    <string name="menu_exclude">Izključi</string>
-    <string name="menu_close">Zapri</string>
     <string name="menu_flush">Počisti predpomnilnik</string>
     <string name="menu_update">Preveri za posodobitvami</string>
     <string name="msg_abort">Preklicujem</string>

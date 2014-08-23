@@ -27,7 +27,6 @@
     <string name="menu_all">Všetko</string>
     <string name="menu_toggle">Prepnúť obmedzenia</string>
     <string name="menu_clear_all">Vymazať všetky</string>
-    <string name="menu_restrict_all">Obmedziť všetky</string>
     <string name="menu_clear_usage">Vymazať</string>
     <string name="menu_clear_db">Vymazať všetky údaje</string>
     <string name="menu_usage_all">Prepnúť filter</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Povolené kontakty</string>
     <string name="menu_whitelists">Spravovať biele listiny</string>
     <string name="menu_tutorial">Príručka</string>
-    <string name="menu_exclude">Vylúčiť</string>
-    <string name="menu_close">Zavrieť</string>
     <string name="menu_flush">Vymazať vyrovnávaciu pamäť</string>
     <string name="menu_update">Skontrolovať aktualizácie</string>
     <string name="msg_abort">Rušenie</string>

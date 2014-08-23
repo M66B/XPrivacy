@@ -27,7 +27,6 @@
     <string name="menu_all">Wszystko</string>
     <string name="menu_toggle">Przełącz restrykcje</string>
     <string name="menu_clear_all">Wyczyść wszystko</string>
-    <string name="menu_restrict_all">Ogranicz wszystko</string>
     <string name="menu_clear_usage">Wyczyść</string>
     <string name="menu_clear_db">Wyczyść wszystkie dane</string>
     <string name="menu_usage_all">Przełącz filtry</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Wybierz dozwolone kontakty</string>
     <string name="menu_whitelists">Zarządzaj białymi listami</string>
     <string name="menu_tutorial">Samouczek</string>
-    <string name="menu_exclude">Wyklucz</string>
-    <string name="menu_close">Zamknij</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Przerywanie</string>

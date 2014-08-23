@@ -27,7 +27,6 @@
     <string name="menu_all">Vše</string>
     <string name="menu_toggle">Přepnout omezení</string>
     <string name="menu_clear_all">Vymazat vše</string>
-    <string name="menu_restrict_all">Omezit vše</string>
     <string name="menu_clear_usage">Vymazat</string>
     <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Přepnout filtr</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Povolené kontakty aplikace</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Příručka</string>
-    <string name="menu_exclude">Vyloučit</string>
-    <string name="menu_close">Zavřít</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Probíha přerušení</string>

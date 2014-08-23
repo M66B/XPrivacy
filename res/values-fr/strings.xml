@@ -27,7 +27,6 @@
     <string name="menu_all">Tous</string>
     <string name="menu_toggle">Inverser restrictions</string>
     <string name="menu_clear_all">Tout effacer</string>
-    <string name="menu_restrict_all">Tout restreindre</string>
     <string name="menu_clear_usage">Effacer</string>
     <string name="menu_clear_db">Effacer toutes les données XPrivacy</string>
     <string name="menu_usage_all">Basculer toutes/restreintes</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
     <string name="menu_whitelists">Gérer les listes blanches</string>
     <string name="menu_tutorial">Didacticiel</string>
-    <string name="menu_exclude">Exclure</string>
-    <string name="menu_close">Fermer</string>
     <string name="menu_flush">Vider le cache</string>
     <string name="menu_update">Rechercher des mises à jour</string>
     <string name="msg_abort">Arrêt en cours</string>

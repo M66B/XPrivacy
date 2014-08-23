@@ -27,7 +27,6 @@
     <string name="menu_all">Все</string>
     <string name="menu_toggle">Переключить разрешения</string>
     <string name="menu_clear_all">Очистить все</string>
-    <string name="menu_restrict_all">Запретить все</string>
     <string name="menu_clear_usage">Очистить</string>
     <string name="menu_clear_db">Очистить все данные</string>
     <string name="menu_usage_all">Переключить фильтр</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Выберите разрешенные контакты</string>
     <string name="menu_whitelists">Управление белым списком</string>
     <string name="menu_tutorial">Обучение</string>
-    <string name="menu_exclude">Исключить</string>
-    <string name="menu_close">Закрыть</string>
     <string name="menu_flush">Очистить кэш</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Прерывается</string>

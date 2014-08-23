@@ -27,7 +27,6 @@
     <string name="menu_all">Виділити все</string>
     <string name="menu_toggle">Переключити довзоли</string>
     <string name="menu_clear_all">Очистити всі</string>
-    <string name="menu_restrict_all">Заборонити всі</string>
     <string name="menu_clear_usage">Очистити</string>
     <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Переключити фільтр</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Оберіть дозволені контакти</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Навчання</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Aborting</string>

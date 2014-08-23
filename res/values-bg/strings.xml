@@ -27,7 +27,6 @@
     <string name="menu_all">Всички</string>
     <string name="menu_toggle">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_clear_usage">Clear</string>
     <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Toggle filter</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Изберете контакти с позволение</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Tutorial</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Aborting</string>

@@ -27,7 +27,6 @@
     <string name="menu_all">Sve</string>
     <string name="menu_toggle">Uključi/Isključi ograničenja</string>
     <string name="menu_clear_all">Izbriši sve</string>
-    <string name="menu_restrict_all">Ograniči sve</string>
     <string name="menu_clear_usage">Izbriši</string>
     <string name="menu_clear_db">Izbriši sve XPrivacy podatke</string>
     <string name="menu_usage_all">Uključi/Isključi filter</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Odaberi dopuštene kontakte</string>
     <string name="menu_whitelists">Odredi liste dopuštenih</string>
     <string name="menu_tutorial">Vodič</string>
-    <string name="menu_exclude">Isključi iz odabira</string>
-    <string name="menu_close">Zatvori</string>
     <string name="menu_flush">Izbriši cache memoriju</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Zaustavljam</string>
