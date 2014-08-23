@@ -27,7 +27,6 @@
     <string name="menu_all">प्रत्येक</string>
     <string name="menu_toggle">प्रतिबंध toggle करे</string>
     <string name="menu_clear_all">सब clear करे</string>
-    <string name="menu_restrict_all">सब प्रतिबंध करे</string>
     <string name="menu_clear_usage">Clear</string>
     <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">फिल्टर toggle करे</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">शिक्षा</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Aborting</string>

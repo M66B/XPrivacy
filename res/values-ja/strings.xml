@@ -27,7 +27,6 @@
     <string name="menu_all">すべて</string>
     <string name="menu_toggle">制限の一括設定</string>
     <string name="menu_clear_all">すべて消去</string>
-    <string name="menu_restrict_all">すべて制限する</string>
     <string name="menu_clear_usage">消去</string>
     <string name="menu_clear_db">全設定の初期化</string>
     <string name="menu_usage_all">フィルタのオン/オフ</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">許可する連絡先の選択</string>
     <string name="menu_whitelists">ホワイトリストの管理</string>
     <string name="menu_tutorial">チュートリアル</string>
-    <string name="menu_exclude">除外</string>
-    <string name="menu_close">閉じる</string>
     <string name="menu_flush">キャッシュの消去</string>
     <string name="menu_update">更新の確認</string>
     <string name="msg_abort">中断中</string>

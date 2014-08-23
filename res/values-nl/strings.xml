@@ -27,7 +27,6 @@
     <string name="menu_all">Alles</string>
     <string name="menu_toggle">Schakel beperkingen</string>
     <string name="menu_clear_all">Alles wissen</string>
-    <string name="menu_restrict_all">Alles beperken</string>
     <string name="menu_clear_usage">Wissen</string>
     <string name="menu_clear_db">Wis alle XPrivacy gegevens</string>
     <string name="menu_usage_all">Schakel filter</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Sta contacten toe</string>
     <string name="menu_whitelists">Beheer negeerlijsten</string>
     <string name="menu_tutorial">Zelfstudie</string>
-    <string name="menu_exclude">Sluit uit</string>
-    <string name="menu_close">Sluiten</string>
     <string name="menu_flush">Leeg cache</string>
     <string name="menu_update">Controleer op nieuwe versie</string>
     <string name="msg_abort">Afbreken</string>
@@ -135,7 +132,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transacties</string>
     <string name="whitelist_permission">Rechten</string>
-    <string name="title_restrict">Vink aan om te beperken / op aanvraag:</string>
+    <string name="title_restrict">Vink aan om te beperken:</string>
     <string name="title_check_whitelist">Vink aan om toe te staan:</string>
     <string name="title_fused">Filter op gegevensgebruik</string>
     <string name="title_finternet">Filter op internettoegang</string>

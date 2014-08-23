@@ -27,7 +27,6 @@
     <string name="menu_all">全部权限</string>
     <string name="menu_toggle">全选/不选列表中的应用</string>
     <string name="menu_clear_all">清除限制</string>
-    <string name="menu_restrict_all">限制所有权限</string>
     <string name="menu_clear_usage">清除权限使用记录</string>
     <string name="menu_clear_db">清除全部数据</string>
     <string name="menu_usage_all">过滤器开关</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="menu_whitelists">管理白名单</string>
     <string name="menu_tutorial">界面功能指引</string>
-    <string name="menu_exclude">排除</string>
-    <string name="menu_close">关闭</string>
     <string name="menu_flush">清除缓存</string>
     <string name="menu_update">检查更新</string>
     <string name="msg_abort">正在中止</string>

@@ -32,7 +32,6 @@
     <string name="menu_all">All</string>
     <string name="menu_toggle">Toggle restrictions</string>
     <string name="menu_clear_all">Clear all</string>
-    <string name="menu_restrict_all">Restrict all</string>
     <string name="menu_clear_usage">Clear</string>
     <string name="menu_clear_db">Clear all XPrivacy data</string>
     <string name="menu_usage_all">Toggle filter</string>
@@ -47,8 +46,6 @@
     <string name="menu_contacts">Select contacts to allow</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Tutorial</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Aborting</string>
@@ -81,7 +78,6 @@
     <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
     <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_service_updating">Please wait until the update service has been completed</string>
-    <string name="msg_question" translatable="false">\?</string>
     <string name="msg_first"><b>Great care has been taken to develop and test XPrivacy,
 however it is impossible to guarantee it will work flawlessly on each and every device and for each and every application.
 \n\nUse is entirely at your own risk.</b>\n\nSee also the license:</string>
@@ -109,32 +105,32 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="restrict_shell" tools:ignore="UnusedResources">Shell</string>
     <string name="restrict_system" tools:ignore="UnusedResources">System</string>
     <string name="restrict_view" tools:ignore="UnusedResources">View</string>
-    <string name="restrict_help_view">Will restrict access to view actions and information</string>
-    <string name="restrict_help_system">Will restrict access to system information, like installed applications</string>
-    <string name="restrict_help_shell">Will restrict access to shell commands, including superuser commands</string>
-    <string name="restrict_help_storage">Will restrict access to the storage, like files on your SD card or the internal storage</string>
-    <string name="restrict_help_sensors">Will restrict access to the sensors, like the motion sensor</string>
-    <string name="restrict_help_phone">Will restrict access to phone information, like your phone number</string>
-    <string name="restrict_help_overlay">Will restrict overlay windows to prevent phishing</string>
-    <string name="restrict_help_notifications">Will restrict access to system and application notifications and Google cloud messaging</string>
-    <string name="restrict_help_nfc">Will restrict access to near field communication</string>
-    <string name="restrict_help_network">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
-    <string name="restrict_help_messages">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
-    <string name="restrict_help_media">Will restrict access to the camera (photos and videos) and the microphone</string>
-    <string name="restrict_help_location">Will restrict access to your coarse and fine location</string>
-    <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
-    <string name="restrict_help_internet">Will restrict access to the Internet</string>
-    <string name="restrict_help_identification">Will restrict information which can identify you, like the serial number of your device</string>
-    <string name="restrict_help_email">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
-    <string name="restrict_help_dictionary">Will restrict access to the user dictionary</string>
-    <string name="restrict_help_contacts">Will restrict access to information about your contacts</string>
-    <string name="restrict_help_clipboard">Will restrict access to information on the clipboard</string>
-    <string name="restrict_help_calling">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
-    <string name="restrict_help_calendar">Will restrict access to your calendar information, like your appointments</string>
-    <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
-    <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
+    <string name="restrict_help_view" tools:ignore="UnusedResources">Will restrict access to view actions and information</string>
+    <string name="restrict_help_system" tools:ignore="UnusedResources">Will restrict access to system information, like installed applications</string>
+    <string name="restrict_help_shell" tools:ignore="UnusedResources">Will restrict access to shell commands, including superuser commands</string>
+    <string name="restrict_help_storage" tools:ignore="UnusedResources">Will restrict access to the storage, like files on your SD card or the internal storage</string>
+    <string name="restrict_help_sensors" tools:ignore="UnusedResources">Will restrict access to the sensors, like the motion sensor</string>
+    <string name="restrict_help_phone" tools:ignore="UnusedResources">Will restrict access to phone information, like your phone number</string>
+    <string name="restrict_help_overlay" tools:ignore="UnusedResources">Will restrict overlay windows to prevent phishing</string>
+    <string name="restrict_help_notifications" tools:ignore="UnusedResources">Will restrict access to system and application notifications and Google cloud messaging</string>
+    <string name="restrict_help_nfc" tools:ignore="UnusedResources">Will restrict access to near field communication</string>
+    <string name="restrict_help_network" tools:ignore="UnusedResources">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
+    <string name="restrict_help_messages" tools:ignore="UnusedResources">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
+    <string name="restrict_help_media" tools:ignore="UnusedResources">Will restrict access to the camera (photos and videos) and the microphone</string>
+    <string name="restrict_help_location" tools:ignore="UnusedResources">Will restrict access to your coarse and fine location</string>
+    <string name="restrict_help_ipc" tools:ignore="UnusedResources">Will restrict inter-process communication, when used to circumvent other restrictions</string>
+    <string name="restrict_help_internet" tools:ignore="UnusedResources">Will restrict access to the Internet</string>
+    <string name="restrict_help_identification" tools:ignore="UnusedResources">Will restrict information which can identify you, like the serial number of your device</string>
+    <string name="restrict_help_email" tools:ignore="UnusedResources">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
+    <string name="restrict_help_dictionary" tools:ignore="UnusedResources">Will restrict access to the user dictionary</string>
+    <string name="restrict_help_contacts" tools:ignore="UnusedResources">Will restrict access to information about your contacts</string>
+    <string name="restrict_help_clipboard" tools:ignore="UnusedResources">Will restrict access to information on the clipboard</string>
+    <string name="restrict_help_calling" tools:ignore="UnusedResources">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
+    <string name="restrict_help_calendar" tools:ignore="UnusedResources">Will restrict access to your calendar information, like your appointments</string>
+    <string name="restrict_help_browser" tools:ignore="UnusedResources">Will restrict access to browser information, like your bookmarks and the download history</string>
+    <string name="restrict_help_accounts" tools:ignore="UnusedResources">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
     <string name="whitelist_address" tools:ignore="UnusedResources">Addresses</string>
-    <string name="whitelist_action">Action</string>
+    <string name="whitelist_action" tools:ignore="UnusedResources">Action</string>
     <string name="whitelist_ipaddress" tools:ignore="UnusedResources">IP addresses</string>
     <string name="whitelist_library" tools:ignore="UnusedResources">Native libraries</string>
     <string name="whitelist_method" tools:ignore="UnusedResources">Method names</string>
@@ -142,9 +138,9 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="whitelist_command" tools:ignore="UnusedResources">Shell commands</string>
     <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>
     <string name="whitelist_transaction" tools:ignore="UnusedResources">Transactions</string>
-    <string name="whitelist_permission">Permissions</string>
+    <string name="whitelist_permission" tools:ignore="UnusedResources">Permissions</string>
     <string name="whitelist_proc" translatable="false" tools:ignore="UnusedResources">/proc</string>
-    <string name="title_restrict">Check to restrict / on demand:</string>
+    <string name="title_restrict">Check to restrict:</string>
     <string name="title_check_whitelist">Check to allow:</string>
     <string name="title_fused">Filter on data usage</string>
     <string name="title_finternet">Filter on internet access</string>

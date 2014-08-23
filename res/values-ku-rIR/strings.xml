@@ -27,7 +27,6 @@
     <string name="menu_all">هه موو</string>
     <string name="menu_toggle">سنوردارکردن / سنوردار نه کردن</string>
     <string name="menu_clear_all">به تال کردنی هه مویان</string>
-    <string name="menu_restrict_all">سنوردار کردنی هه مویان</string>
     <string name="menu_clear_usage">به تال کردن</string>
     <string name="menu_clear_db">ره شکردنه وه ی هه موو داتاکان</string>
     <string name="menu_usage_all">پالاوتن / نه پالاوتن</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">ریپیدان به به کارهینانی ئه م ژماره ته له فونانه</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">فیربون</string>
-    <string name="menu_exclude">جیاکردن</string>
-    <string name="menu_close">داخستن</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">پاشگه ز بوونه وه</string>

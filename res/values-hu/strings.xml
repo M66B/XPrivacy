@@ -27,7 +27,6 @@
     <string name="menu_all">Minden</string>
     <string name="menu_toggle">Korlátozások kapcsolása</string>
     <string name="menu_clear_all">Összes törlése</string>
-    <string name="menu_restrict_all">Összes korlátozása</string>
     <string name="menu_clear_usage">Clear</string>
     <string name="menu_clear_db">Clear all data</string>
     <string name="menu_usage_all">Szűrő kapcsolása</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Válassza ki az engedélyezendő névjegyeket</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Útmutató</string>
-    <string name="menu_exclude">Exclude</string>
-    <string name="menu_close">Close</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Aborting</string>

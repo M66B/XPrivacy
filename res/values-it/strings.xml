@@ -27,7 +27,6 @@
     <string name="menu_all">Tutto</string>
     <string name="menu_toggle">Gestisci restrizioni</string>
     <string name="menu_clear_all">Azzera tutto</string>
-    <string name="menu_restrict_all">Restringi tutto</string>
     <string name="menu_clear_usage">Azzera</string>
     <string name="menu_clear_db">Azzera tutti i dati di XPrivacy</string>
     <string name="menu_usage_all">Filtra</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Seleziona i contatti da consentire</string>
     <string name="menu_whitelists">Gestisci le whitelists</string>
     <string name="menu_tutorial">Guida</string>
-    <string name="menu_exclude">Escludi</string>
-    <string name="menu_close">Chiudi</string>
     <string name="menu_flush">Svuota cache</string>
     <string name="menu_update">Controllo aggiornamenti</string>
     <string name="msg_abort">Abortisco</string>

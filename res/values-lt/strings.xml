@@ -27,7 +27,6 @@
     <string name="menu_all">Visos</string>
     <string name="menu_toggle">Išvalyti visus ribojimus</string>
     <string name="menu_clear_all">Išvalyti viską</string>
-    <string name="menu_restrict_all">Įjungti visus ribojimus</string>
     <string name="menu_clear_usage">Valyti</string>
     <string name="menu_clear_db">Išvalyti visus duomenis</string>
     <string name="menu_usage_all">Perjungti filtrą</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
     <string name="menu_whitelists">Valdyti baltajį sąrašą</string>
     <string name="menu_tutorial">Instrukcija</string>
-    <string name="menu_exclude">Išskirti</string>
-    <string name="menu_close">Uždaryti</string>
     <string name="menu_flush">Išvalyti talpyklą</string>
     <string name="menu_update">Patikrinti atnaujinimus</string>
     <string name="msg_abort">Nutraukti</string>

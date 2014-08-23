@@ -27,7 +27,6 @@
     <string name="menu_all">Tất cả</string>
     <string name="menu_toggle">Thay đổi các sự hạn chế</string>
     <string name="menu_clear_all">Xóa tất cả</string>
-    <string name="menu_restrict_all">Hạn chế tất cả</string>
     <string name="menu_clear_usage">Xóa</string>
     <string name="menu_clear_db">Xóa tất cả dữ liệu</string>
     <string name="menu_usage_all">Thay đổi bộ lọc</string>
@@ -42,8 +41,6 @@
     <string name="menu_contacts">Chọn liên lạc cho phép</string>
     <string name="menu_whitelists">Quản lý danh sách cho phép</string>
     <string name="menu_tutorial">Hướng dẫn</string>
-    <string name="menu_exclude">Loại trừ</string>
-    <string name="menu_close">Đóng</string>
     <string name="menu_flush">Xóa bộ nhớ đệm</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Đang hủy</string>
