@@ -5,8 +5,6 @@ For interested developers:
 
 * Accessibility: *android:labelFor="..."*
 * [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
-* Individual account methods
-* Individual package methods
 * Revoke BLUETOOTH, NFC, USE_SIP
 
 Android source code
