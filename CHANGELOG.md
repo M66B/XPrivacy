@@ -48,7 +48,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 * Displaying AOSP mode setting for KitKat and later only
 * Added help texts
-* Added option to merge template with reset
+* Added option to merge template to reset functions (not categories)
 * Updated German translation
 * Updated Japanese translation
 * Updated Lithuanian translation
@@ -223,7 +223,7 @@ XPrivacy 2
 * Displaying if an application has specific fake values ([issue](/../../issues/1831))
 * Added help texts
 * Updated in application documentation
-* Added option to merge template with reset
+* Added option to merge template to reset functions (not categories)
 * Updated Dutch translation
 * Updated French translation
 * Updated German translation
