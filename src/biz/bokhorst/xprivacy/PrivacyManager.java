@@ -640,8 +640,8 @@ public class PrivacyManager {
 						}
 
 						// Apply
-						if ((parentRestricted && !restricted) || (!parentAsked && asked) || hook.isDangerous()
-								|| !clear) {
+						if ((parentRestricted && !restricted) || (!parentAsked && asked)
+								|| (invert ? false : hook.isDangerous() || !clear)) {
 							PRestriction child = new PRestriction(uid, rRestrictionName, hook.getName(),
 									(parentRestricted && restricted) || childMerge.restricted, (parentAsked || asked)
 											&& childMerge.asked);
