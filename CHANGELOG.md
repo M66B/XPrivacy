@@ -46,6 +46,10 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.36 BETA**
+
 * Displaying AOSP mode setting for KitKat and later only
 * Added help texts
 * Added option to merge template to reset functions (not categories)
@@ -55,8 +59,6 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Updated Norwegian translation
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.35 BETA**
 
