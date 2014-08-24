@@ -72,7 +72,7 @@
     <string name="msg_restrictedby">Ristretto da XPrivacy</string>
     <string name="msg_service_missing">Servizio Privacy non trovato; hai attivato XPrivacy nell\'installatore di Xposed e riavviato il dispositivo?</string>
     <string name="msg_service_version">Servizio Privacy conflitto di versione; hai riavviato il dispositivo dopo l\'aggiornamento di XPrivacy?</string>
-    <string name="msg_service_updating">Please wait until the update service has been completed</string>
+    <string name="msg_service_updating">Attendere finchè l\'aggiornamento è completato</string>
     <string name="msg_first"><b>Grande cura è stata posta nello sviluppo e verifica di XPrivacy,
 tuttavia non è possibile garantire che funzioni perfettamente su qualunque dispositivo e per qualsiasi applicazione.
 \n\nL\'utilizzo è interamente a tuo rischio.</b>\n\nVedi anche la licenza:</string>
@@ -154,7 +154,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_function">Funzione:</string>
     <string name="title_parameters">Parametri:</string>
     <string name="title_applycat">Applica a intera categoria</string>
-    <string name="title_once">Once for</string>
+    <string name="title_once">Una volta per</string>
     <string name="title_whitelist">White/blacklist \'%s\'</string>
     <string name="title_allow">Consenti</string>
     <string name="title_deny">Rifiuta</string>
@@ -165,11 +165,11 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_template_category">Applica modello (categorie)</string>
     <string name="title_template_full">Applica modello (categorie+funzioni)</string>
     <string name="title_template_merge">Applica modello (unisci)</string>
-    <string name="title_template_merge_reset">Apply template (merge reset)</string>
+    <string name="title_template_merge_reset">Applica modello (unisci resetta)</string>
     <string name="title_enable_ondemand">Abilita restrizioni su richiesta</string>
     <string name="title_disable_ondemand">Disabilita restrizioni su richiesta</string>
     <string name="title_ondemand_default">Allo scadere:</string>
-    <string name="title_ondemand_reset">Reset</string>
+    <string name="title_ondemand_reset">Resetta</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Opzione</string>
     <string name="title_usage_header">Utilizzo</string>
@@ -215,10 +215,10 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Anomalie</string>
-    <string name="settings_aosp">AOSP mode (requires reboot)</string>
-    <string name="help_check_restrict">First check box: restrict category or function</string>
-    <string name="help_check_ondemand">Second check box: restrict on demand</string>
-    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
+    <string name="settings_aosp">Modo AOSP (richiede reboot)</string>
+    <string name="help_check_restrict">Prima casella di controllo: restringe categoria o funzione</string>
+    <string name="help_check_ondemand">Seconda casella di controllo: restringe su richiesta</string>
+    <string name="help_switch">Pulsante On/off: abilita o disabilita tutte le restrizioni</string>
     <string name="help_longpress">Premi a lungo sul nome per selezionare</string>
     <string name="help_ondemand">le restrizioni verranno richieste</string>
     <string name="help_application">Applicazione</string>
@@ -232,7 +232,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="help_attention">restrizioni necessitano di attenzione</string>
     <string name="help_restricted">restrizioni modificate</string>
     <string name="help_shared">restrizioni inviate</string>
-    <string name="help_settings">has application specific fake values</string>
+    <string name="help_settings">ha dati alterati specifici all\'applicazione</string>
     <string name="tutorial_mainheader">Seleziona la categoria da restringere</string>
     <string name="tutorial_mainlist">Tocca la casella di controllo per restringere la categoria selezionata per un\'applicazione\n
 \nAlle applicazioni verranno forniti dati vuoti o alterati per le categorie ristrette\n
