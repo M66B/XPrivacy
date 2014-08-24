@@ -164,8 +164,8 @@
     <string name="title_set_restrict">制限を設定する (カテゴリ)</string>
     <string name="title_template_category">テンプレートを適用する (カテゴリ)</string>
     <string name="title_template_full">テンプレートを適用する (カテゴリと機能)</string>
-    <string name="title_template_merge">テンプレートを適用する (統合)</string>
-    <string name="title_template_merge_reset">Apply template (merge reset)</string>
+    <string name="title_template_merge">テンプレートを適用する (統合 セット)</string>
+    <string name="title_template_merge_reset">テンプレートを適用する (統合 リセット)</string>
     <string name="title_enable_ondemand">オンデマンド制限を有効にする</string>
     <string name="title_disable_ondemand">オンデマンド制限を無効にする</string>
     <string name="title_ondemand_default">タイムアウトすると :</string>
@@ -216,9 +216,9 @@
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirk 設定</string>
     <string name="settings_aosp">AOSP モード (要再起動)</string>
-    <string name="help_check_restrict">First check box: restrict category or function</string>
-    <string name="help_check_ondemand">Second check box: restrict on demand</string>
-    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
+    <string name="help_check_restrict">チェック1 : カテゴリや機能を制限します</string>
+    <string name="help_check_ondemand">チェック2 : オンデマンドで制限します</string>
+    <string name="help_switch">スイッチ : 全制限を有効または無効にします</string>
     <string name="help_longpress">アプリ名の長押しでアプリが選択されます</string>
     <string name="help_ondemand">制限するか尋ねます</string>
     <string name="help_application">アプリ</string>
