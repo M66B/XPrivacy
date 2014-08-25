@@ -41,7 +41,7 @@
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
     <string name="menu_whitelists">Gérer les listes blanches</string>
     <string name="menu_tutorial">Didacticiel</string>
-    <string name="menu_changelog">Changelog</string>
+    <string name="menu_changelog">Journal des modifications</string>
     <string name="menu_flush">Vider le cache</string>
     <string name="menu_update">Rechercher des mises à jour</string>
     <string name="msg_abort">Arrêt en cours</string>
@@ -166,7 +166,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_template_category">Appliquer le modèle (seulement les catégories)</string>
     <string name="title_template_full">Appliquer tout le modèle (catégories et fonctions)</string>
     <string name="title_template_merge">Appliquer le modèle (fusionner)</string>
-    <string name="title_template_merge_reset">Apply template (merge reset)</string>
+    <string name="title_template_merge_reset">Appliquer le modèle (fusionner à l\'inverse)</string>
     <string name="title_enable_ondemand">Activer \"restreindre sur demande\"</string>
     <string name="title_disable_ondemand">Désactiver \"restreindre sur demande\"</string>
     <string name="title_ondemand_default">Temps écoulé fera :</string>
