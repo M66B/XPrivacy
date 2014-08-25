@@ -46,7 +46,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
-* Clear will also clear usage data and settings
+* Clear will also clear usage data and application specific settings
 * Changed application specific fake values icon to a star ([issue](/../../issues/1831))
 * Updated Arabic translation
 * Updated Italian translation
@@ -232,7 +232,7 @@ XPrivacy 2
 * Added help texts
 * Updated in application documentation
 * Added option to merge template to reset functions (not categories)
-* Clear will also clear usage data and settings
+* Clear will also clear usage data and application specific settings
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated French translation
