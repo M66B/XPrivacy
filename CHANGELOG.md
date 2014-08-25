@@ -47,6 +47,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Clear will also clear usage data and settings
+* Changed application specific fake values icon to a star ([issue](/../../issues/1831))
 * Updated Arabic translation
 * Updated Italian translation
 * Updated Japanese translation
