@@ -12,6 +12,7 @@ Changelog
 
 * [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 * [GitHub releases](https://github.com/M66B/XPrivacy/releases)
+* Main menu *Check for updates*, available with a [pro license](http://www.xprivacy.eu/) only
 
 **Important**
 
