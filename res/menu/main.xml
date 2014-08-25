@@ -31,6 +31,9 @@
         android:id="@+id/menu_tutorial"
         android:title="@string/menu_tutorial"/>
     <item
+        android:id="@+id/menu_changelog"
+        android:title="@string/menu_changelog"/>
+    <item
         android:id="@+id/menu_usage"
         android:title="@string/menu_usage"/>
     <item

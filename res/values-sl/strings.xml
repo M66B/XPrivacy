@@ -41,6 +41,7 @@
     <string name="menu_contacts">Izberi dovoljene stike</string>
     <string name="menu_whitelists">Upravljanje bele liste</string>
     <string name="menu_tutorial">Navodila</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Počisti predpomnilnik</string>
     <string name="menu_update">Preveri za posodobitvami</string>
     <string name="msg_abort">Preklicujem</string>

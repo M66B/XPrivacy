@@ -41,6 +41,7 @@
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
     <string name="menu_whitelists">Behandel positivlister</string>
     <string name="menu_tutorial">Innføring</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Tømm hurtiglager</string>
     <string name="menu_update">Sjekk for oppdateringer</string>
     <string name="msg_abort">Avbryter</string>

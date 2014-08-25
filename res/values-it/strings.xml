@@ -41,6 +41,7 @@
     <string name="menu_contacts">Seleziona i contatti da consentire</string>
     <string name="menu_whitelists">Gestisci le whitelists</string>
     <string name="menu_tutorial">Guida</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Svuota cache</string>
     <string name="menu_update">Controllo aggiornamenti</string>
     <string name="msg_abort">Abortisco</string>

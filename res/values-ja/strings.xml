@@ -41,6 +41,7 @@
     <string name="menu_contacts">許可する連絡先の選択</string>
     <string name="menu_whitelists">ホワイトリストの管理</string>
     <string name="menu_tutorial">チュートリアル</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">キャッシュの消去</string>
     <string name="menu_update">更新の確認</string>
     <string name="msg_abort">中断中</string>

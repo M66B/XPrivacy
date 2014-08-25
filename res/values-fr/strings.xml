@@ -41,6 +41,7 @@
     <string name="menu_contacts">Choisir les contacts à autoriser</string>
     <string name="menu_whitelists">Gérer les listes blanches</string>
     <string name="menu_tutorial">Didacticiel</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Vider le cache</string>
     <string name="menu_update">Rechercher des mises à jour</string>
     <string name="msg_abort">Arrêt en cours</string>

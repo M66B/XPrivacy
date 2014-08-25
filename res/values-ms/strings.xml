@@ -41,6 +41,7 @@
     <string name="menu_contacts">Pilih hubungan yang dibenarkan</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Bimbingan</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Sedang dibatalkan</string>

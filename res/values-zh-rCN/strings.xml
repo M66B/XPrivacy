@@ -41,6 +41,7 @@
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="menu_whitelists">管理白名单</string>
     <string name="menu_tutorial">界面功能指引</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">清除缓存</string>
     <string name="menu_update">检查更新</string>
     <string name="msg_abort">正在中止</string>

@@ -41,6 +41,7 @@
     <string name="menu_contacts">إختر الأسماء التي تود تمكينها</string>
     <string name="menu_whitelists">إدارة القوائم البيضاء</string>
     <string name="menu_tutorial">تعليمي</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">مسح ذاكرة التخزين المؤقت</string>
     <string name="menu_update">فحص التحديثات</string>
     <string name="msg_abort">إيقاف</string>
