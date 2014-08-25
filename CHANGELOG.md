@@ -233,6 +233,7 @@ XPrivacy 2
 * Updated in application documentation
 * Added option to merge template to reset functions (not categories)
 * Clear will also clear usage data and application specific settings
+* Showing changelog if new version installed
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated French translation
