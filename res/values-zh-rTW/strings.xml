@@ -41,6 +41,7 @@
     <string name="menu_contacts">設定允許存取之聯絡人</string>
     <string name="menu_whitelists">設定白名單</string>
     <string name="menu_tutorial">說明</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">清除快取</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">正在取消...</string>

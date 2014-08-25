@@ -330,28 +330,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		if (showChangelog) {
 			String sVersion = PrivacyManager.getSetting(userId, PrivacyManager.cSettingChangelog, null);
 			Version changelogVersion = new Version(sVersion == null ? "0.0" : sVersion);
-			final Version currentVersion = new Version(Util.getSelfVersionName(this));
-
-			if (sVersion == null || changelogVersion.compareTo(currentVersion) < 0) {
-				WebView webview = new WebView(this);
-				webview.setWebViewClient(new WebViewClient() {
-					public void onPageFinished(WebView view, String url) {
-						PrivacyManager.setSetting(userId, PrivacyManager.cSettingChangelog, currentVersion.toString());
-					}
-				});
-				webview.loadUrl("https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md");
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(R.string.app_name);
-				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-				alertDialogBuilder.setView(webview);
-				alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			}
+			Version currentVersion = new Version(Util.getSelfVersionName(this));
+			if (sVersion == null || changelogVersion.compareTo(currentVersion) < 0)
+				optionChangelog();
 		}
 	}
 
@@ -527,6 +508,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				return true;
 			case R.id.menu_tutorial:
 				optionTutorial();
+				return true;
+			case R.id.menu_changelog:
+				optionChangelog();
 				return true;
 			case R.id.menu_usage:
 				optionUsage();
@@ -1155,6 +1139,29 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		dlgUsage.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		dlgUsage.setCancelable(true);
 		dlgUsage.show();
+	}
+
+	private void optionChangelog() {
+		WebView webview = new WebView(this);
+		webview.setWebViewClient(new WebViewClient() {
+			public void onPageFinished(WebView view, String url) {
+				int userId = Util.getUserId(Process.myUid());
+				Version currentVersion = new Version(Util.getSelfVersionName(ActivityMain.this));
+				PrivacyManager.setSetting(userId, PrivacyManager.cSettingChangelog, currentVersion.toString());
+			}
+		});
+		webview.loadUrl("https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md");
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(R.string.app_name);
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setView(webview);
+		alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
 	}
 
 	// Tasks

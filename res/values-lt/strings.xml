@@ -41,6 +41,7 @@
     <string name="menu_contacts">Leisti pažymėtus kontaktus</string>
     <string name="menu_whitelists">Valdyti baltajį sąrašą</string>
     <string name="menu_tutorial">Instrukcija</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Išvalyti talpyklą</string>
     <string name="menu_update">Patikrinti atnaujinimus</string>
     <string name="msg_abort">Nutraukti</string>

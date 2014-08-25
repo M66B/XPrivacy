@@ -41,6 +41,7 @@
     <string name="menu_contacts">Odaberi dopuštene kontakte</string>
     <string name="menu_whitelists">Odredi liste dopuštenih</string>
     <string name="menu_tutorial">Vodič</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Izbriši cache memoriju</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Zaustavljam</string>

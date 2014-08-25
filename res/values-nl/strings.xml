@@ -41,6 +41,7 @@
     <string name="menu_contacts">Sta contacten toe</string>
     <string name="menu_whitelists">Beheer negeerlijsten</string>
     <string name="menu_tutorial">Zelfstudie</string>
+    <string name="menu_changelog">Wijzigingslog</string>
     <string name="menu_flush">Leeg cache</string>
     <string name="menu_update">Controleer op nieuwe versie</string>
     <string name="msg_abort">Afbreken</string>

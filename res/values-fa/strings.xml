@@ -43,6 +43,7 @@
     <string name="menu_contacts">تماس هایی را که احازه می دهید انتخاب کنید</string>
     <string name="menu_whitelists">Manage whitelists</string>
     <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="msg_abort">Aborting</string>
