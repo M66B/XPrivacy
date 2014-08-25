@@ -47,14 +47,16 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.37 BETA**
+
 * Clear will also clear usage data and application specific settings
 * Changed application specific fake values icon to a star ([issue](/../../issues/1831))
 * Showing changelog if new version installed
 * Updated Arabic translation
 * Updated Italian translation
 * Updated Japanese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.36 BETA**
 
