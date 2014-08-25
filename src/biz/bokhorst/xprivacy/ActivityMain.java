@@ -1073,12 +1073,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public void onClick(View arg0) {
 				cbFUsed.setChecked(false);
 				cbFInternet.setChecked(false);
-				cbFPermission.setChecked(false);
+				cbFPermission.setChecked(true);
 				cbFRestriction.setChecked(false);
 				cbFRestrictionNot.setChecked(false);
 				cbFOnDemand.setChecked(false);
 				cbFOnDemandNot.setChecked(false);
-				cbFUser.setChecked(false);
+				cbFUser.setChecked(true);
 				cbFSystem.setChecked(false);
 			}
 		});

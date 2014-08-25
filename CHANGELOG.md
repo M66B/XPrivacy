@@ -47,6 +47,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Clear filters will reset the filters to their default state
 * Updated Lithuanian translation
 * Updated Russian translation
 * Updated Slovak translation
@@ -241,6 +242,7 @@ XPrivacy 2
 * Updated in application documentation
 * Added option to merge template to reset functions (not categories)
 * Clear will also clear usage data and application specific settings
+* Clear filters will reset the filters to their default state
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated French translation
