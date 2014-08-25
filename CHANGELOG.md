@@ -48,6 +48,8 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Updated Lithuanian translation
+* Updated Russian translation
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -247,6 +249,8 @@ XPrivacy 2
 * Updated Japanese translation
 * Updated Lithuanian translation
 * Updated Norwegian translation
+* Updated Russian translation
+* Updated Slovak translation
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
 
