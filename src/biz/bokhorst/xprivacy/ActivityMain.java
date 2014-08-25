@@ -50,6 +50,8 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
 import android.view.WindowManager;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -264,14 +266,18 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		registerReceiver(mPackageChangeReceiver, iff);
 		mPackageChangeReceiverRegistered = true;
 
+		boolean showChangelog = true;
+
 		// First run
 		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFirstRun, true)) {
+			showChangelog = false;
 			optionAbout();
 			PrivacyManager.setSetting(userId, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
 
 		// Tutorial
 		if (!PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingTutorialMain, false)) {
+			showChangelog = false;
 			((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
 			((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		}
@@ -293,6 +299,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			long now = new Date().getTime();
 			String legacy = PrivacyManager.getSetting(userId, PrivacyManager.cSettingLegacy, null);
 			if (legacy == null || now > Long.parseLong(legacy) + 7 * 24 * 60 * 60 * 1000L) {
+				showChangelog = false;
 				PrivacyManager.setSetting(userId, PrivacyManager.cSettingLegacy, Long.toString(now));
 
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
@@ -314,6 +321,34 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				});
 
 				// Show dialog
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+		}
+
+		// Show changelog
+		if (showChangelog) {
+			String sVersion = PrivacyManager.getSetting(userId, PrivacyManager.cSettingChangelog, null);
+			Version changelogVersion = new Version(sVersion == null ? "0.0" : sVersion);
+			final Version currentVersion = new Version(Util.getSelfVersionName(this));
+
+			if (sVersion == null || changelogVersion.compareTo(currentVersion) < 0) {
+				WebView webview = new WebView(this);
+				webview.setWebViewClient(new WebViewClient() {
+					public void onPageFinished(WebView view, String url) {
+						PrivacyManager.setSetting(userId, PrivacyManager.cSettingChangelog, currentVersion.toString());
+					}
+				});
+				webview.loadUrl("https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md");
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+				alertDialogBuilder.setView(webview);
+				alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
 				AlertDialog alertDialog = alertDialogBuilder.create();
 				alertDialog.show();
 			}
