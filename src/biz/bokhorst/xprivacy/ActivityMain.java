@@ -1152,7 +1152,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		});
 		webview.loadUrl("https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md");
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(R.string.app_name);
+		alertDialogBuilder.setTitle(R.string.menu_changelog);
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setView(webview);
 		alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
