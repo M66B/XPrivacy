@@ -1181,6 +1181,12 @@ This is to limit the bandwidth of the server to acceptable levels.
 Just wait 12 hour after the last download and you can download again.
 Please note that I will not make exceptions to this, because the limit is there for a reason.
 
+<a name="FAQ71"></a>
+**(71) I don't see the changelog**
+
+Make sure you have an internet connection and that XPrivacy has internet access (check your firewall).
+The changelog is an in application display of [this page](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md)
+
 Support
 -------
 
