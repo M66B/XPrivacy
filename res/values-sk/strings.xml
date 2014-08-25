@@ -41,7 +41,7 @@
     <string name="menu_contacts">Povolené kontakty</string>
     <string name="menu_whitelists">Spravovať biele listiny</string>
     <string name="menu_tutorial">Príručka</string>
-    <string name="menu_changelog">Changelog</string>
+    <string name="menu_changelog">Zoznam zmien</string>
     <string name="menu_flush">Vymazať vyrovnávaciu pamäť</string>
     <string name="menu_update">Skontrolovať aktualizácie</string>
     <string name="msg_abort">Rušenie</string>
@@ -165,8 +165,8 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_set_restrict">Obmedziť (kategórie)</string>
     <string name="title_template_category">Použiť šablónu (kategórie)</string>
     <string name="title_template_full">Použiť šablónu (kategórie+funkcie)</string>
-    <string name="title_template_merge">Použiť šablónu (zlúčiť)</string>
-    <string name="title_template_merge_reset">Apply template (merge reset)</string>
+    <string name="title_template_merge">Použiť šablónu (nastaviť zlúčenie)</string>
+    <string name="title_template_merge_reset">Použiť šablónu (obnoviť zlúčenie)</string>
     <string name="title_enable_ondemand">Povoliť obmedzenie na požiadanie</string>
     <string name="title_disable_ondemand">Zakázať obmedzenie na požiadanie</string>
     <string name="title_ondemand_default">Časový limit bude:</string>
@@ -216,10 +216,10 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_cid">Identifikátor bunky GSM</string>
     <string name="settings_lac">Kód lokality GSM</string>
     <string name="settings_quirks">Quirky</string>
-    <string name="settings_aosp">AOSP mode (requires reboot)</string>
-    <string name="help_check_restrict">First check box: restrict category or function</string>
-    <string name="help_check_ondemand">Second check box: restrict on demand</string>
-    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
+    <string name="settings_aosp">Režim AOSP (vyžadovaný reštart)</string>
+    <string name="help_check_restrict">Prvé zaškrtávacie pole: obmedziť kategóriu alebo funkciu</string>
+    <string name="help_check_ondemand">Druhé zaškrtávacie pole: obmedziť na požiadanie</string>
+    <string name="help_switch">Prepínač zapnutia/vypnutia: povoliť alebo zakázať všetky obmedzenia</string>
     <string name="help_longpress">Vyberte dlhým stlačením názvu</string>
     <string name="help_ondemand">obmedzenia budú požadované</string>
     <string name="help_application">Aplikácia</string>
@@ -233,7 +233,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="help_attention">obmedzenia vyžadujú pozornosť</string>
     <string name="help_restricted">obmedzenia sú zmenené</string>
     <string name="help_shared">obmedzenia sú odoslané</string>
-    <string name="help_settings">has application specific fake values</string>
+    <string name="help_settings">aplikácia má určité falošné hodnoty</string>
     <string name="tutorial_mainheader">Vyberte kategóriu na obmedzenie</string>
     <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole pre obmedzenie vybranej kategórie pre aplikáciu\n
 \nPri obmedzených kategóriách budú aplikáciám poskytované prázdne, alebo falošné údaje\n
