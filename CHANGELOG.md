@@ -46,6 +46,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Clear will also clear usage data and settings
 * Updated Arabic translation
 * Updated Italian translation
 * Updated Japanese translation
@@ -230,6 +231,7 @@ XPrivacy 2
 * Added help texts
 * Updated in application documentation
 * Added option to merge template to reset functions (not categories)
+* Clear will also clear usage data and settings
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated French translation
