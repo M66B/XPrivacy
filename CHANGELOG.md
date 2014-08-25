@@ -48,6 +48,8 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Clear filters will reset the filters to their default state
+* Updated French translation
+* Updated German translation
 * Updated Lithuanian translation
 * Updated Russian translation
 * Updated Slovak translation
