@@ -211,7 +211,7 @@
                 android:textIsSelectable="false" />
         </LinearLayout>
 
-        <!-- application setting -->
+        <!-- application specific settings -->
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -228,7 +228,7 @@
                     android:layout_width="32dip"
                     android:layout_height="32dip"
                     android:contentDescription="@string/help_settings"
-                    android:src="@android:drawable/ic_menu_edit" />
+                    android:src="@android:drawable/btn_star_big_off" />
             </LinearLayout>
 
             <TextView

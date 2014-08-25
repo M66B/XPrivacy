@@ -97,7 +97,7 @@
                 android:layout_gravity="center_vertical"
                 android:contentDescription="@string/help_application"
                 android:paddingLeft="3dip"
-                android:src="@android:drawable/ic_menu_edit"
+                android:src="@android:drawable/btn_star_big_off"
                 android:visibility="gone" />
 
             <ImageView
