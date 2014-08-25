@@ -446,8 +446,7 @@ You can drill down the data categories in the detailed view to reveal individual
 If the category is restricted, you can un-restrict individual functions by clearing the function's check box.
 
 To see restriction in action, try restricting the category *Identification* for
-[Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid)
-or try restriction the category *Contacts* for the Contacts application.
+[Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid).
 
 **Applying some restrictions require restarting applications**
 
