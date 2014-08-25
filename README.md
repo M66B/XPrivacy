@@ -34,7 +34,7 @@ by restricting the categories of data an application can access.
 XPrivacy feeds applications fake data or no data at all.
 It can restrict several data categories, such as *contacts* or *location*.
 For example, if you restrict an application's access to contacts,
-that application will receive an empty contacts list.
+that application will receive an empty contacts list (don't try this with the contacts application itself without a backup).
 Similarly, restricting an application's access to your location will send a fake location to that application.
 
 XPrivacy doesn't revoke or block permissions from an application,
