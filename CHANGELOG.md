@@ -51,6 +51,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Changed on demand restricting progress bar to holo style
 * Clicking the application name will open the application details view
 * Changed multi-select color
+* Reorganized menus
 * Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
@@ -251,6 +252,7 @@ XPrivacy 2
 * Changed on demand restricting progress bar to holo style
 * Clicking the application name will open the application details view
 * Changed multi-select color
+* Reorganized menus
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated French translation

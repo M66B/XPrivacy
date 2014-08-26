@@ -69,6 +69,8 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -77,7 +79,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityApp extends ActivityBase {
+public class ActivityApp extends ActivityBase implements OnMenuItemClickListener {
 	private ApplicationInfoEx mAppInfo = null;
 	private Switch swEnabled = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
@@ -413,17 +415,15 @@ public class ActivityApp extends ActivityBase {
 
 	@Override
 	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 		boolean accountsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cAccounts, null).restricted;
 		boolean appsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cSystem, null).restricted;
 		boolean contactsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cContacts, null).restricted;
 
-		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
-		menu.findItem(R.id.menu_export).setEnabled(mounted);
-		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
 		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
 		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
+
+		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
 
 		return super.onPrepareOptionsMenu(menu);
 	}
@@ -476,35 +476,14 @@ public class ActivityApp extends ActivityBase {
 				else
 					NavUtils.navigateUpTo(this, upIntent);
 			return true;
-		case R.id.menu_dump:
-			optionDump();
+		case R.id.menu_play:
+			optionPlay();
 			return true;
 		case R.id.menu_help:
 			optionHelp();
 			return true;
-		case R.id.menu_tutorial:
-			optionTutorial();
-			return true;
 		case R.id.menu_usage:
 			optionUsage();
-			return true;
-		case R.id.menu_apply:
-			optionTemplate();
-			return true;
-		case R.id.menu_clear:
-			optionClear();
-			return true;
-		case R.id.menu_export:
-			optionExport();
-			return true;
-		case R.id.menu_import:
-			optionImport();
-			return true;
-		case R.id.menu_submit:
-			optionSubmit();
-			return true;
-		case R.id.menu_fetch:
-			optionFetch();
 			return true;
 		case R.id.menu_accounts:
 			optionAccounts();
@@ -524,8 +503,45 @@ public class ActivityApp extends ActivityBase {
 		case R.id.menu_settings:
 			optionSettings();
 			return true;
+		case R.id.menu_dump:
+			optionDump();
+			return true;
+		case R.id.menu_tutorial:
+			optionTutorial();
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		try {
+			switch (item.getItemId()) {
+			case R.id.menu_apply:
+				optionTemplate();
+				return true;
+			case R.id.menu_clear:
+				optionClear();
+				return true;
+			case R.id.menu_export:
+				optionExport();
+				return true;
+			case R.id.menu_import:
+				optionImport();
+				return true;
+			case R.id.menu_submit:
+				optionSubmit();
+				return true;
+			case R.id.menu_fetch:
+				optionFetch();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return true;
 		}
 	}
 
@@ -551,12 +567,19 @@ public class ActivityApp extends ActivityBase {
 
 	// Options
 
-	private void optionDump() {
-		try {
-			PrivacyService.getClient().dump(mAppInfo.getUid());
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+	private void optionPlay() {
+		View anchor = findViewById(R.id.menu_play);
+		if (anchor == null)
+			anchor = findViewById(android.R.id.content);
+		PopupMenu popupMenu = new PopupMenu(this, anchor);
+		popupMenu.inflate(R.menu.appplay);
+
+		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+		popupMenu.getMenu().findItem(R.id.menu_export).setEnabled(mounted);
+		popupMenu.getMenu().findItem(R.id.menu_import).setEnabled(mounted);
+
+		popupMenu.setOnMenuItemClickListener(this);
+		popupMenu.show();
 	}
 
 	private void optionHelp() {
@@ -574,17 +597,64 @@ public class ActivityApp extends ActivityBase {
 		dialog.show();
 	}
 
+	private void optionUsage() {
+		Intent intent = new Intent(this, ActivityUsage.class);
+		intent.putExtra(ActivityUsage.cUid, mAppInfo.getUid());
+		startActivity(intent);
+	}
+
+	private void optionAccounts() {
+		AccountsTask accountsTask = new AccountsTask();
+		accountsTask.executeOnExecutor(mExecutor, (Object) null);
+	}
+
+	private void optionApplications() {
+		if (Util.hasProLicense(this) == null) {
+			// Redirect to pro page
+			Util.viewUri(this, ActivityMain.cProUri);
+		} else {
+			ApplicationsTask appsTask = new ApplicationsTask();
+			appsTask.executeOnExecutor(mExecutor, (Object) null);
+		}
+	}
+
+	private void optionContacts(int groupId) {
+		if (Util.hasProLicense(this) == null) {
+			// Redirect to pro page
+			Util.viewUri(this, ActivityMain.cProUri);
+		} else {
+			ContactsTask contactsTask = new ContactsTask();
+			contactsTask.executeOnExecutor(mExecutor, groupId);
+		}
+	}
+
+	private void optionWhitelists(String type) {
+		if (Util.hasProLicense(this) == null) {
+			// Redirect to pro page
+			Util.viewUri(this, ActivityMain.cProUri);
+		} else {
+			WhitelistsTask whitelistsTask = new WhitelistsTask(type);
+			whitelistsTask.executeOnExecutor(mExecutor, (Object) null);
+		}
+	}
+
+	private void optionSettings() {
+		SettingsDialog.edit(ActivityApp.this, mAppInfo);
+	}
+
+	private void optionDump() {
+		try {
+			PrivacyService.getClient().dump(mAppInfo.getUid());
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
 	private void optionTutorial() {
 		((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
 		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
 		int userId = Util.getUserId(Process.myUid());
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
-	}
-
-	private void optionUsage() {
-		Intent intent = new Intent(this, ActivityUsage.class);
-		intent.putExtra(ActivityUsage.cUid, mAppInfo.getUid());
-		startActivity(intent);
 	}
 
 	private void optionTemplate() {
@@ -631,45 +701,6 @@ public class ActivityApp extends ActivityBase {
 		intent.putExtra(ActivityShare.cUidList, new int[] { mAppInfo.getUid() });
 		intent.putExtra(ActivityShare.cInteractive, true);
 		startActivity(intent);
-	}
-
-	private void optionAccounts() {
-		AccountsTask accountsTask = new AccountsTask();
-		accountsTask.executeOnExecutor(mExecutor, (Object) null);
-	}
-
-	private void optionApplications() {
-		if (Util.hasProLicense(this) == null) {
-			// Redirect to pro page
-			Util.viewUri(this, ActivityMain.cProUri);
-		} else {
-			ApplicationsTask appsTask = new ApplicationsTask();
-			appsTask.executeOnExecutor(mExecutor, (Object) null);
-		}
-	}
-
-	private void optionContacts(int groupId) {
-		if (Util.hasProLicense(this) == null) {
-			// Redirect to pro page
-			Util.viewUri(this, ActivityMain.cProUri);
-		} else {
-			ContactsTask contactsTask = new ContactsTask();
-			contactsTask.executeOnExecutor(mExecutor, groupId);
-		}
-	}
-
-	private void optionWhitelists(String type) {
-		if (Util.hasProLicense(this) == null) {
-			// Redirect to pro page
-			Util.viewUri(this, ActivityMain.cProUri);
-		} else {
-			WhitelistsTask whitelistsTask = new WhitelistsTask(type);
-			whitelistsTask.executeOnExecutor(mExecutor, (Object) null);
-		}
-	}
-
-	private void optionSettings() {
-		SettingsDialog.edit(ActivityApp.this, mAppInfo);
 	}
 
 	private void optionLaunch(int which) {

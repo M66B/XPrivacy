@@ -3,42 +3,18 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <item
+        android:id="@+id/menu_play"
+        android:icon="@android:drawable/ic_media_play"
+        android:showAsAction="always"
+        android:title="@string/app_name"/>
+    <item
         android:id="@+id/menu_help"
         android:icon="?attr/icon_help"
         android:showAsAction="always"
         android:title="@string/menu_help"/>
     <item
-        android:id="@+id/menu_dump"
-        android:title="Dump"
-        tools:ignore="HardcodedText"/>
-    <item
-        android:id="@+id/menu_tutorial"
-        android:title="@string/menu_tutorial"/>
-    <item
         android:id="@+id/menu_usage"
         android:title="@string/menu_usage"/>
-    <item
-        android:id="@+id/menu_apply"
-        android:title="@string/menu_apply"/>
-    <item
-        android:id="@+id/menu_clear"
-        android:title="@string/menu_clear"/>
-    <item
-        android:id="@+id/menu_export"
-        android:title="@string/menu_export"
-        android:visible="true"/>
-    <item
-        android:id="@+id/menu_import"
-        android:title="@string/menu_import"
-        android:visible="true"/>
-    <item
-        android:id="@+id/menu_submit"
-        android:title="@string/menu_submit"
-        android:visible="true"/>
-    <item
-        android:id="@+id/menu_fetch"
-        android:title="@string/menu_fetch"
-        android:visible="true"/>
     <item
         android:id="@+id/menu_accounts"
         android:title="@string/menu_accounts"/>
@@ -56,5 +32,16 @@
     <item
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"/>
+    <item android:title="@string/menu_help">
+        <menu>
+            <item
+                android:id="@+id/menu_dump"
+                android:title="Dump"
+                tools:ignore="HardcodedText"/>
+            <item
+                android:id="@+id/menu_tutorial"
+                android:title="@string/menu_tutorial"/>
+        </menu>
+    </item>
 
 </menu>

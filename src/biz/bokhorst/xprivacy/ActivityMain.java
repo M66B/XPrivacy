@@ -66,6 +66,8 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -74,7 +76,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityMain extends ActivityBase implements OnItemSelectedListener {
+public class ActivityMain extends ActivityBase implements OnItemSelectedListener, OnMenuItemClickListener {
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private int mSortMode;
@@ -431,11 +433,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
 
 		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
-		menu.findItem(R.id.menu_clear_db).setVisible(userId == 0);
-		menu.findItem(R.id.menu_export).setEnabled(mounted);
-		menu.findItem(R.id.menu_import).setEnabled(mounted);
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
 		menu.findItem(R.id.menu_update).setVisible(mounted);
+		menu.findItem(R.id.menu_clear_db).setVisible(userId == 0);
 
 		// Update filter count
 
@@ -491,14 +491,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	public boolean onOptionsItemSelected(MenuItem item) {
 		try {
 			switch (item.getItemId()) {
-			case R.id.menu_dump:
-				optionDump();
-				return true;
-			case R.id.menu_help:
-				optionHelp();
-				return true;
-			case R.id.menu_select_all:
-				optionSelectAll();
+			case R.id.menu_play:
+				optionPlay();
 				return true;
 			case R.id.menu_sort:
 				optionSort();
@@ -506,20 +500,63 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			case R.id.menu_filter:
 				optionFilter();
 				return true;
+			case R.id.menu_help:
+				optionHelp();
+				return true;
+			case R.id.menu_usage:
+				optionUsage();
+				return true;
+			case R.id.menu_template:
+				optionTemplate();
+				return true;
+			case R.id.menu_settings:
+				SettingsDialog.edit(ActivityMain.this, null);
+				return true;
+			case R.id.menu_pro:
+				optionPro();
+				return true;
+			case R.id.menu_dump:
+				optionDump();
+				return true;
 			case R.id.menu_tutorial:
 				optionTutorial();
 				return true;
 			case R.id.menu_changelog:
 				optionChangelog();
 				return true;
-			case R.id.menu_usage:
-				optionUsage();
+			case R.id.menu_update:
+				optionUpdate();
 				return true;
-			case R.id.menu_toggle:
-				optionToggle();
+			case R.id.menu_report:
+				optionReportIssue();
+				return true;
+			case R.id.menu_theme:
+				optionSwitchTheme();
 				return true;
 			case R.id.menu_clear_db:
 				optionClearDB();
+				return true;
+			case R.id.menu_about:
+				optionAbout();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return true;
+		}
+	}
+
+	@Override
+	public boolean onMenuItemClick(MenuItem item) {
+		try {
+			switch (item.getItemId()) {
+			case R.id.menu_select_all:
+				optionSelectAll();
+				return true;
+			case R.id.menu_toggle:
+				optionToggle();
 				return true;
 			case R.id.menu_export:
 				optionExport();
@@ -532,27 +569,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				return true;
 			case R.id.menu_fetch:
 				optionFetch();
-				return true;
-			case R.id.menu_pro:
-				optionPro();
-				return true;
-			case R.id.menu_update:
-				optionUpdate();
-				return true;
-			case R.id.menu_report:
-				optionReportIssue();
-				return true;
-			case R.id.menu_theme:
-				optionSwitchTheme();
-				return true;
-			case R.id.menu_template:
-				optionTemplate();
-				return true;
-			case R.id.menu_settings:
-				SettingsDialog.edit(ActivityMain.this, null);
-				return true;
-			case R.id.menu_about:
-				optionAbout();
 				return true;
 			default:
 				return super.onOptionsItemSelected(item);
@@ -629,301 +645,19 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	// Options
 
-	private void optionUsage() {
-		Intent intent = new Intent(this, ActivityUsage.class);
-		if (mAppAdapter != null && mAppAdapter.getRestrictionName() != null)
-			intent.putExtra(ActivityUsage.cRestriction, mAppAdapter.getRestrictionName());
-		startActivity(intent);
-	}
+	private void optionPlay() {
+		View anchor = findViewById(R.id.menu_play);
+		if (anchor == null)
+			anchor = findViewById(android.R.id.content);
+		PopupMenu popupMenu = new PopupMenu(this, anchor);
+		popupMenu.inflate(R.menu.mainplay);
 
-	private void optionToggle() {
-		if (mAppAdapter != null) {
-			Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
-			intent.putExtra(ActivityShare.cInteractive, true);
-			intent.putExtra(ActivityShare.cUidList,
-					mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
-			intent.putExtra(ActivityShare.cRestriction, mAppAdapter.getRestrictionName());
-			startActivity(intent);
-		}
-	}
+		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+		popupMenu.getMenu().findItem(R.id.menu_export).setEnabled(mounted);
+		popupMenu.getMenu().findItem(R.id.menu_import).setEnabled(mounted);
 
-	private void optionClearDB() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
-		alertDialogBuilder.setTitle(R.string.menu_clear_db);
-		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				new AsyncTask<Object, Object, Object>() {
-					@Override
-					protected Object doInBackground(Object... arg0) {
-						PrivacyManager.clear();
-						return null;
-					}
-
-					@Override
-					protected void onPostExecute(Object result) {
-						spRestriction.setSelection(0);
-						((EditText) findViewById(R.id.etFilter)).setText("");
-						ActivityMain.this.recreate();
-						Toast.makeText(ActivityMain.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG).show();
-					}
-				}.executeOnExecutor(mExecutor);
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
-	}
-
-	@SuppressLint("InflateParams")
-	private void optionTemplate() {
-		// Build view
-		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		View view = inflater.inflate(R.layout.template, null);
-		Spinner spTemplate = (Spinner) view.findViewById(R.id.spTemplate);
-		ExpandableListView elvTemplate = (ExpandableListView) view.findViewById(R.id.elvTemplate);
-
-		// Template selector
-		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
-		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spAdapter.add(getString(R.string.title_default));
-		for (int i = 1; i <= 4; i++)
-			spAdapter.add(getString(R.string.title_alternate) + " " + i);
-		spTemplate.setAdapter(spAdapter);
-
-		// Template definition
-		final TemplateListAdapter templateAdapter = new TemplateListAdapter(this, view, R.layout.templateentry);
-		elvTemplate.setAdapter(templateAdapter);
-		elvTemplate.setGroupIndicator(null);
-
-		spTemplate.setOnItemSelectedListener(new OnItemSelectedListener() {
-			@Override
-			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-				templateAdapter.notifyDataSetChanged();
-			}
-
-			@Override
-			public void onNothingSelected(AdapterView<?> arg0) {
-				templateAdapter.notifyDataSetChanged();
-			}
-		});
-
-		// Build dialog
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-		alertDialogBuilder.setTitle(R.string.menu_template);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setView(view);
-		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				// Do nothing
-			}
-		});
-
-		// Show dialog
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
-	}
-
-	private void optionReportIssue() {
-		// Report issue
-		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy#support"));
-	}
-
-	private void optionExport() {
-		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
-		intent.putExtra(ActivityShare.cInteractive, true);
-		intent.putExtra(ActivityShare.cUidList,
-				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(AppListAdapter.cSelectAppAll));
-		startActivity(intent);
-	}
-
-	private void optionImport() {
-		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-		intent.putExtra(ActivityShare.cInteractive, true);
-		intent.putExtra(ActivityShare.cUidList,
-				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
-		startActivity(intent);
-	}
-
-	private void optionSubmit() {
-		if (ActivityShare.registerDevice(this)) {
-			int[] uid = (mAppAdapter == null ? new int[0] : mAppAdapter
-					.getSelectedOrVisibleUid(AppListAdapter.cSelectAppNone));
-			if (uid.length == 0) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(R.string.app_name);
-				alertDialogBuilder.setMessage(R.string.msg_select);
-				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			} else if (uid.length <= ActivityShare.cSubmitLimit) {
-				if (mAppAdapter != null) {
-					Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
-					intent.putExtra(ActivityShare.cInteractive, true);
-					intent.putExtra(ActivityShare.cUidList, uid);
-					startActivity(intent);
-				}
-			} else {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(R.string.app_name);
-				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			}
-		}
-	}
-
-	private void optionFetch() {
-		if (Util.hasProLicense(this) == null) {
-			// Redirect to pro page
-			Util.viewUri(this, cProUri);
-		} else {
-			if (mAppAdapter != null) {
-
-				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
-				intent.putExtra(ActivityShare.cInteractive, true);
-				intent.putExtra(ActivityShare.cUidList,
-						mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
-				startActivity(intent);
-			}
-		}
-	}
-
-	private void optionSwitchTheme() {
-		int userId = Util.getUserId(Process.myUid());
-		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
-		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
-		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTheme, themeName);
-		this.recreate();
-	}
-
-	private void optionPro() {
-		// Redirect to pro page
-		Util.viewUri(this, cProUri);
-	}
-
-	private void optionUpdate() {
-		if (Util.hasProLicense(this) == null)
-			Util.viewUri(this, ActivityMain.cProUri);
-		else
-			new ActivityShare.UpdateTask(this).executeOnExecutor(mExecutor);
-	}
-
-	@SuppressLint("DefaultLocale")
-	private void optionAbout() {
-		// About
-		Dialog dlgAbout = new Dialog(this);
-		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgAbout.setTitle(R.string.menu_about);
-		dlgAbout.setContentView(R.layout.about);
-		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-
-		// Show version
-		try {
-			int userId = Util.getUserId(Process.myUid());
-			Version currentVersion = new Version(Util.getSelfVersionName(this));
-			Version storedVersion = new Version(
-					PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0"));
-			boolean migrated = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingMigrated, false);
-			String versionName = currentVersion.toString();
-			if (currentVersion.compareTo(storedVersion) != 0)
-				versionName += "/" + storedVersion.toString();
-			if (!migrated)
-				versionName += "!";
-			int versionCode = Util.getSelfVersionCode(this);
-			TextView tvVersion = (TextView) dlgAbout.findViewById(R.id.tvVersion);
-			tvVersion.setText(String.format(getString(R.string.app_version), versionName, versionCode));
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-
-		if (!PrivacyManager.cVersion3 || Hook.isAOSP(19))
-			((TextView) dlgAbout.findViewById(R.id.tvCompatibility)).setVisibility(View.GONE);
-
-		// Show license
-		String licensed = Util.hasProLicense(this);
-		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
-		if (licensed == null)
-			tvLicensed.setText(Environment.getExternalStorageDirectory().getAbsolutePath());
-		else
-			tvLicensed.setText(String.format(getString(R.string.app_licensed), licensed));
-
-		// Show some build properties
-		String android = String.format("%s (%d)", Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
-		((TextView) dlgAbout.findViewById(R.id.tvAndroid)).setText(android);
-		((TextView) dlgAbout.findViewById(R.id.build_brand)).setText(Build.BRAND);
-		((TextView) dlgAbout.findViewById(R.id.build_manufacturer)).setText(Build.MANUFACTURER);
-		((TextView) dlgAbout.findViewById(R.id.build_model)).setText(Build.MODEL);
-		((TextView) dlgAbout.findViewById(R.id.build_product)).setText(Build.PRODUCT);
-		((TextView) dlgAbout.findViewById(R.id.build_device)).setText(Build.DEVICE);
-		((TextView) dlgAbout.findViewById(R.id.build_host)).setText(Build.HOST);
-		((TextView) dlgAbout.findViewById(R.id.build_display)).setText(Build.DISPLAY);
-		((TextView) dlgAbout.findViewById(R.id.build_id)).setText(Build.ID);
-
-		dlgAbout.setCancelable(true);
-		dlgAbout.show();
-		dlgAbout.setOnDismissListener(new DialogInterface.OnDismissListener() {
-
-			@Override
-			public void onDismiss(DialogInterface dialog) {
-				Dialog dlgUsage = new Dialog(ActivityMain.this);
-				dlgUsage.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-				dlgUsage.setTitle(R.string.app_name);
-				dlgUsage.setContentView(R.layout.usage);
-				dlgUsage.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-				dlgUsage.setCancelable(true);
-				dlgUsage.show();
-			}
-		});
-	}
-
-	private void optionDump() {
-		try {
-			PrivacyService.getClient().dump(0);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	private void optionHelp() {
-		// Show help
-		Dialog dialog = new Dialog(ActivityMain.this);
-		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dialog.setTitle(R.string.menu_help);
-		dialog.setContentView(R.layout.help);
-		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
-		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());
-		((LinearLayout) dialog.findViewById(R.id.llUnsafe)).setVisibility(PrivacyManager.cVersion3 ? View.VISIBLE
-				: View.GONE);
-		dialog.setCancelable(true);
-		dialog.show();
-	}
-
-	private void optionSelectAll() {
-		// Select all visible apps
-		if (mAppAdapter != null)
-			mAppAdapter.selectAllVisible();
+		popupMenu.setOnMenuItemClickListener(this);
+		popupMenu.show();
 	}
 
 	@SuppressLint("InflateParams")
@@ -1126,6 +860,99 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		alertDialog.show();
 	}
 
+	private void optionHelp() {
+		// Show help
+		Dialog dialog = new Dialog(ActivityMain.this);
+		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dialog.setTitle(R.string.menu_help);
+		dialog.setContentView(R.layout.help);
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
+		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());
+		((LinearLayout) dialog.findViewById(R.id.llUnsafe)).setVisibility(PrivacyManager.cVersion3 ? View.VISIBLE
+				: View.GONE);
+		dialog.setCancelable(true);
+		dialog.show();
+	}
+
+	private void optionUsage() {
+		Intent intent = new Intent(this, ActivityUsage.class);
+		if (mAppAdapter != null && mAppAdapter.getRestrictionName() != null)
+			intent.putExtra(ActivityUsage.cRestriction, mAppAdapter.getRestrictionName());
+		startActivity(intent);
+	}
+
+	@SuppressLint("InflateParams")
+	private void optionTemplate() {
+		// Build view
+		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+		View view = inflater.inflate(R.layout.template, null);
+		Spinner spTemplate = (Spinner) view.findViewById(R.id.spTemplate);
+		ExpandableListView elvTemplate = (ExpandableListView) view.findViewById(R.id.elvTemplate);
+
+		// Template selector
+		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+		spAdapter.add(getString(R.string.title_default));
+		for (int i = 1; i <= 4; i++)
+			spAdapter.add(getString(R.string.title_alternate) + " " + i);
+		spTemplate.setAdapter(spAdapter);
+
+		// Template definition
+		final TemplateListAdapter templateAdapter = new TemplateListAdapter(this, view, R.layout.templateentry);
+		elvTemplate.setAdapter(templateAdapter);
+		elvTemplate.setGroupIndicator(null);
+
+		spTemplate.setOnItemSelectedListener(new OnItemSelectedListener() {
+			@Override
+			public void onItemSelected(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
+				templateAdapter.notifyDataSetChanged();
+			}
+
+			@Override
+			public void onNothingSelected(AdapterView<?> arg0) {
+				templateAdapter.notifyDataSetChanged();
+			}
+		});
+
+		// Build dialog
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+		alertDialogBuilder.setTitle(R.string.menu_template);
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setView(view);
+		alertDialogBuilder.setPositiveButton(getString(R.string.msg_done), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				// Do nothing
+			}
+		});
+
+		// Show dialog
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	private void optionPro() {
+		// Redirect to pro page
+		Util.viewUri(this, cProUri);
+	}
+
+	private void optionSwitchTheme() {
+		int userId = Util.getUserId(Process.myUid());
+		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
+		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
+		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTheme, themeName);
+		this.recreate();
+	}
+
+	private void optionDump() {
+		try {
+			PrivacyService.getClient().dump(0);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
 	private void optionTutorial() {
 		((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
 		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
@@ -1162,6 +989,210 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
+	}
+
+	private void optionUpdate() {
+		if (Util.hasProLicense(this) == null)
+			Util.viewUri(this, ActivityMain.cProUri);
+		else
+			new ActivityShare.UpdateTask(this).executeOnExecutor(mExecutor);
+	}
+
+	private void optionReportIssue() {
+		// Report issue
+		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy#support"));
+	}
+
+	private void optionClearDB() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+		alertDialogBuilder.setTitle(R.string.menu_clear_db);
+		alertDialogBuilder.setMessage(R.string.msg_sure);
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				new AsyncTask<Object, Object, Object>() {
+					@Override
+					protected Object doInBackground(Object... arg0) {
+						PrivacyManager.clear();
+						return null;
+					}
+
+					@Override
+					protected void onPostExecute(Object result) {
+						spRestriction.setSelection(0);
+						((EditText) findViewById(R.id.etFilter)).setText("");
+						ActivityMain.this.recreate();
+						Toast.makeText(ActivityMain.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG).show();
+					}
+				}.executeOnExecutor(mExecutor);
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	@SuppressLint("DefaultLocale")
+	private void optionAbout() {
+		// About
+		Dialog dlgAbout = new Dialog(this);
+		dlgAbout.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dlgAbout.setTitle(R.string.menu_about);
+		dlgAbout.setContentView(R.layout.about);
+		dlgAbout.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+
+		// Show version
+		try {
+			int userId = Util.getUserId(Process.myUid());
+			Version currentVersion = new Version(Util.getSelfVersionName(this));
+			Version storedVersion = new Version(
+					PrivacyManager.getSetting(userId, PrivacyManager.cSettingVersion, "0.0"));
+			boolean migrated = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingMigrated, false);
+			String versionName = currentVersion.toString();
+			if (currentVersion.compareTo(storedVersion) != 0)
+				versionName += "/" + storedVersion.toString();
+			if (!migrated)
+				versionName += "!";
+			int versionCode = Util.getSelfVersionCode(this);
+			TextView tvVersion = (TextView) dlgAbout.findViewById(R.id.tvVersion);
+			tvVersion.setText(String.format(getString(R.string.app_version), versionName, versionCode));
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+
+		if (!PrivacyManager.cVersion3 || Hook.isAOSP(19))
+			((TextView) dlgAbout.findViewById(R.id.tvCompatibility)).setVisibility(View.GONE);
+
+		// Show license
+		String licensed = Util.hasProLicense(this);
+		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
+		if (licensed == null)
+			tvLicensed.setText(Environment.getExternalStorageDirectory().getAbsolutePath());
+		else
+			tvLicensed.setText(String.format(getString(R.string.app_licensed), licensed));
+
+		// Show some build properties
+		String android = String.format("%s (%d)", Build.VERSION.RELEASE, Build.VERSION.SDK_INT);
+		((TextView) dlgAbout.findViewById(R.id.tvAndroid)).setText(android);
+		((TextView) dlgAbout.findViewById(R.id.build_brand)).setText(Build.BRAND);
+		((TextView) dlgAbout.findViewById(R.id.build_manufacturer)).setText(Build.MANUFACTURER);
+		((TextView) dlgAbout.findViewById(R.id.build_model)).setText(Build.MODEL);
+		((TextView) dlgAbout.findViewById(R.id.build_product)).setText(Build.PRODUCT);
+		((TextView) dlgAbout.findViewById(R.id.build_device)).setText(Build.DEVICE);
+		((TextView) dlgAbout.findViewById(R.id.build_host)).setText(Build.HOST);
+		((TextView) dlgAbout.findViewById(R.id.build_display)).setText(Build.DISPLAY);
+		((TextView) dlgAbout.findViewById(R.id.build_id)).setText(Build.ID);
+
+		dlgAbout.setCancelable(true);
+		dlgAbout.show();
+		dlgAbout.setOnDismissListener(new DialogInterface.OnDismissListener() {
+
+			@Override
+			public void onDismiss(DialogInterface dialog) {
+				Dialog dlgUsage = new Dialog(ActivityMain.this);
+				dlgUsage.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+				dlgUsage.setTitle(R.string.app_name);
+				dlgUsage.setContentView(R.layout.usage);
+				dlgUsage.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+				dlgUsage.setCancelable(true);
+				dlgUsage.show();
+			}
+		});
+	}
+
+	private void optionSelectAll() {
+		// Select all visible apps
+		if (mAppAdapter != null)
+			mAppAdapter.selectAllVisible();
+	}
+
+	private void optionToggle() {
+		if (mAppAdapter != null) {
+			Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
+			intent.putExtra(ActivityShare.cInteractive, true);
+			intent.putExtra(ActivityShare.cUidList,
+					mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
+			intent.putExtra(ActivityShare.cRestriction, mAppAdapter.getRestrictionName());
+			startActivity(intent);
+		}
+	}
+
+	private void optionExport() {
+		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList,
+				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(AppListAdapter.cSelectAppAll));
+		startActivity(intent);
+	}
+
+	private void optionImport() {
+		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList,
+				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
+		startActivity(intent);
+	}
+
+	private void optionSubmit() {
+		if (ActivityShare.registerDevice(this)) {
+			int[] uid = (mAppAdapter == null ? new int[0] : mAppAdapter
+					.getSelectedOrVisibleUid(AppListAdapter.cSelectAppNone));
+			if (uid.length == 0) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(R.string.msg_select);
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			} else if (uid.length <= ActivityShare.cSubmitLimit) {
+				if (mAppAdapter != null) {
+					Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+					intent.putExtra(ActivityShare.cInteractive, true);
+					intent.putExtra(ActivityShare.cUidList, uid);
+					startActivity(intent);
+				}
+			} else {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+		}
+	}
+
+	private void optionFetch() {
+		if (Util.hasProLicense(this) == null) {
+			// Redirect to pro page
+			Util.viewUri(this, cProUri);
+		} else {
+			if (mAppAdapter != null) {
+
+				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
+				intent.putExtra(ActivityShare.cInteractive, true);
+				intent.putExtra(ActivityShare.cUidList,
+						mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
+				startActivity(intent);
+			}
+		}
 	}
 
 	// Tasks

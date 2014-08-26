@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <item
-        android:id="@+id/menu_select_all"
-        android:icon="@drawable/icon_select_all"
+        android:id="@+id/menu_play"
+        android:icon="@android:drawable/ic_media_play"
         android:showAsAction="always"
-        android:title="@string/menu_select_all"/>
+        android:title="@string/app_name"/>
     <item
         android:id="@+id/menu_sort"
         android:icon="@drawable/icon_sort"
@@ -24,56 +24,45 @@
         android:title="@string/menu_help"
         tools:ignore="AlwaysShowAction"/>
     <item
-        android:id="@+id/menu_dump"
-        android:title="Dump"
-        tools:ignore="HardcodedText"/>
-    <item
-        android:id="@+id/menu_tutorial"
-        android:title="@string/menu_tutorial"/>
-    <item
-        android:id="@+id/menu_changelog"
-        android:title="@string/menu_changelog"/>
-    <item
         android:id="@+id/menu_usage"
         android:title="@string/menu_usage"/>
-    <item
-        android:id="@+id/menu_toggle"
-        android:title="@string/menu_toggle"/>
-    <item
-        android:id="@+id/menu_clear_db"
-        android:title="@string/menu_clear_db"/>
-    <item
-        android:id="@+id/menu_export"
-        android:title="@string/menu_export"/>
-    <item
-        android:id="@+id/menu_import"
-        android:title="@string/menu_import"/>
-    <item
-        android:id="@+id/menu_submit"
-        android:title="@string/menu_submit"/>
-    <item
-        android:id="@+id/menu_fetch"
-        android:title="@string/menu_fetch"/>
-    <item
-        android:id="@+id/menu_pro"
-        android:title="@string/menu_pro"/>
-    <item
-        android:id="@+id/menu_update"
-        android:title="@string/menu_update"/>
-    <item
-        android:id="@+id/menu_report"
-        android:title="@string/menu_report"/>
-    <item
-        android:id="@+id/menu_theme"
-        android:title="@string/menu_theme"/>
     <item
         android:id="@+id/menu_template"
         android:title="@string/menu_template"/>
     <item
+        android:id="@+id/menu_theme"
+        android:title="@string/menu_theme"/>
+    <item
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"/>
     <item
-        android:id="@+id/menu_about"
-        android:title="@string/menu_about"/>
+        android:id="@+id/menu_pro"
+        android:title="@string/menu_pro"/>
+    <item android:title="@string/menu_help">
+        <menu>
+            <item
+                android:id="@+id/menu_dump"
+                android:title="Dump"
+                tools:ignore="HardcodedText"/>
+            <item
+                android:id="@+id/menu_tutorial"
+                android:title="@string/menu_tutorial"/>
+            <item
+                android:id="@+id/menu_changelog"
+                android:title="@string/menu_changelog"/>
+            <item
+                android:id="@+id/menu_update"
+                android:title="@string/menu_update"/>
+            <item
+                android:id="@+id/menu_report"
+                android:title="@string/menu_report"/>
+            <item
+                android:id="@+id/menu_clear_db"
+                android:title="@string/menu_clear_db"/>
+            <item
+                android:id="@+id/menu_about"
+                android:title="@string/menu_about"/>
+        </menu>
+    </item>
 
 </menu>
