@@ -515,6 +515,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			case R.id.menu_pro:
 				optionPro();
 				return true;
+			case R.id.menu_theme:
+				optionSwitchTheme();
+				return true;
 			case R.id.menu_dump:
 				optionDump();
 				return true;
@@ -529,9 +532,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				return true;
 			case R.id.menu_report:
 				optionReportIssue();
-				return true;
-			case R.id.menu_theme:
-				optionSwitchTheme();
 				return true;
 			case R.id.menu_about:
 				optionAbout();
