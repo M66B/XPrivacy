@@ -15,8 +15,8 @@
     <string name="menu_report">Сообщить об ошибке</string>
     <string name="menu_export">Экспорт настроек</string>
     <string name="menu_import">Импорт настроек</string>
-    <string name="menu_submit">Отправить разрешения</string>
-    <string name="menu_fetch">Получить разрешения</string>
+    <string name="menu_submit">Отправить ограничения</string>
+    <string name="menu_fetch">Получить ограничения</string>
     <string name="menu_theme">Переключить тему</string>
     <string name="menu_pro">Pro-версия</string>
     <string name="menu_about">О программе</string>
@@ -25,7 +25,7 @@
     <string name="menu_sort">Сортировка</string>
     <string name="menu_filter">Фильтр</string>
     <string name="menu_all">Все</string>
-    <string name="menu_toggle">Переключить разрешения</string>
+    <string name="menu_toggle">Переключить ограничения</string>
     <string name="menu_clear_all">Очистить все</string>
     <string name="menu_clear_usage">Очистить</string>
     <string name="menu_clear_db">Очистить все данные</string>
@@ -43,7 +43,7 @@
     <string name="menu_tutorial">Обучение</string>
     <string name="menu_changelog">Список изменений</string>
     <string name="menu_flush">Очистить кэш</string>
-    <string name="menu_update">Проверка обновления</string>
+    <string name="menu_update">Проверка обновлений</string>
     <string name="msg_abort">Прерывается</string>
     <string name="msg_aborted">Прервано</string>
     <string name="msg_new">Новое</string>
@@ -52,7 +52,7 @@
     <string name="msg_applying">Применение &#8230;</string>
     <string name="msg_applied">Шаблон применен</string>
     <string name="msg_saved_to" formatted="false">Сохранено в %1$s</string>
-    <string name="msg_no_restrictions">Не найдено разрешений</string>
+    <string name="msg_no_restrictions">Не найдено ограничений</string>
     <string name="msg_sure">Вы уверены?</string>
     <string name="msg_select">Пожалуйста, выберите приложения</string>
     <string name="msg_limit">Пожалуйста, выберите меньше, чем %1$d приложений</string>
@@ -140,7 +140,7 @@
     <string name="title_fpermission">с разрешениями</string>
     <string name="title_frestricted">запрещенные</string>
     <string name="title_fuser">пользовательские приложения</string>
-    <string name="title_fondemand">запрос разрешений</string>
+    <string name="title_fondemand">с запросом ограничений</string>
     <string name="title_fsystem">системные приложения</string>
     <string name="title_fnot">переключить</string>
     <string name="title_sname">По имени</string>
@@ -160,15 +160,15 @@
     <string name="title_allow">Разрешить</string>
     <string name="title_deny">Запретить</string>
     <string name="title_dontknow">Не знаю</string>
-    <string name="title_pleasesubmit">Пожалуйста, отправьте ваши разрешения, чтобы помочь остальным</string>
+    <string name="title_pleasesubmit">Пожалуйста, отправьте ваши ограничения, чтобы помочь остальным</string>
     <string name="title_permissions">Разрешения</string>
     <string name="title_set_restrict">Запретить</string>
     <string name="title_template_category">Применить шаблон (категории)</string>
     <string name="title_template_full">Применить шаблон (категории+функции)</string>
     <string name="title_template_merge">Применить шаблон (слить)</string>
     <string name="title_template_merge_reset">Применить шаблон (сброс)</string>
-    <string name="title_enable_ondemand">Включить запрос разрешений</string>
-    <string name="title_disable_ondemand">Отключить запрос разрешений</string>
+    <string name="title_enable_ondemand">Включить запрос ограничений</string>
+    <string name="title_disable_ondemand">Отключить запрос ограничений</string>
     <string name="title_ondemand_default">Время на выбор:</string>
     <string name="title_ondemand_reset">Сбросить</string>
     <string name="title_default">По умолчанию</string>
@@ -203,7 +203,7 @@
     <string name="settings_general">Общее</string>
     <string name="settings_fake_data">Фальшивые данные</string>
     <string name="settings_notify">Обновить уведомления</string>
-    <string name="settings_ondemand">Запрос разрешений</string>
+    <string name="settings_ondemand">Запрос ограничений</string>
     <string name="settings_blacklist">Черный список аккаунтов, приложений и контактов</string>
     <string name="settings_log">Отладочный лог (требует перезапуска)</string>
     <string name="settings_expert">Режим эксперта</string>
@@ -221,26 +221,26 @@
     <string name="help_check_ondemand">Вторая галочка: ограничить при запросе</string>
     <string name="help_switch">Переключатель вкл/выкл: включить или выключить все ограничения</string>
     <string name="help_longpress">Длинное нажатие на имени для выбора</string>
-    <string name="help_ondemand">разрешения будут запрошены</string>
+    <string name="help_ondemand">ограничения будут запрошены</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">запрашивает доступ в интернет</string>
     <string name="help_granted">имеет разрешение Android</string>
     <string name="help_used">данные уже использовались</string>
     <string name="help_used_grayed">нет данных по использованию</string>
     <string name="help_frozen">отключено</string>
-    <string name="help_dangerous">изменение разрешений опасно</string>
+    <string name="help_dangerous">изменение ограничений опасно</string>
     <string name="help_half">частично запрещено</string>
-    <string name="help_attention">разрешения требуют внимания</string>
-    <string name="help_restricted">разрешения изменены</string>
-    <string name="help_shared">разрешения отправлены</string>
-    <string name="help_settings">has application specific fake values</string>
-    <string name="tutorial_mainheader">Выберите категорию для запрета.</string>
-    <string name="tutorial_mainlist">Тапните по чекбоксу для запрета выбранной категории для приложения.\n
-\nПриложения будут получать пустые или фальшивые данные для запрещенных категорий.\n
-\nТапните по иконке приложения, чтобы увидеть подробные разрешения и настройки.</string>
+    <string name="help_attention">ограничения требуют внимания</string>
+    <string name="help_restricted">ограничения изменены</string>
+    <string name="help_shared">ограничения отправлены</string>
+    <string name="help_settings">имеет специфичные для себя фальшивые данные</string>
+    <string name="tutorial_mainheader">Выберите категорию для ограничения.</string>
+    <string name="tutorial_mainlist">Тапните по чекбоксу для ограничения выбранной категории для приложения.\n
+\nПриложения будут получать пустые или фальшивые данные для ограниченных категорий.\n
+\nТапните по иконке приложения, чтобы увидеть подробные ограничения и настройки.</string>
     <string name="tutorial_detailsheader">Тапните по иконке приложения для дополнительных действий.</string>
-    <string name="tutorial_detailslist">Тапните по стрелке, чтобы увидеть отдельные функции и их разрешения в категории.</string>
+    <string name="tutorial_detailslist">Тапните по стрелке, чтобы увидеть отдельные функции и их ограничения в категории.</string>
     <string name="permission_manage">Управление приложениями, включая завершение</string>
-    <string name="permission_restrictions">Управление разрешениями и настройками XPrivacy</string>
+    <string name="permission_restrictions">Управление ограничениями и настройками XPrivacy</string>
 
 </resources>
