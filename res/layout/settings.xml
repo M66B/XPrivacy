@@ -163,10 +163,17 @@
                     android:id="@+id/etQuirks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="freeze,resolve"
+                    android:hint="freeze,resolve,test"
                     android:inputType="text"
                     tools:ignore="HardcodedText" />
             </LinearLayout>
+
+            <Button
+                android:id="@+id/btnClearDb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/menu_clear_db" />
 
             <TextView
                 android:layout_width="wrap_content"

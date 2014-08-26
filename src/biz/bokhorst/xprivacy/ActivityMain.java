@@ -366,6 +366,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+
 		if (mPackageChangeReceiverRegistered) {
 			unregisterReceiver(mPackageChangeReceiver);
 			mPackageChangeReceiverRegistered = false;
@@ -435,7 +436,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
 		menu.findItem(R.id.menu_update).setVisible(mounted);
-		menu.findItem(R.id.menu_clear_db).setVisible(userId == 0);
 
 		// Update filter count
 
@@ -532,9 +532,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				return true;
 			case R.id.menu_theme:
 				optionSwitchTheme();
-				return true;
-			case R.id.menu_clear_db:
-				optionClearDB();
 				return true;
 			case R.id.menu_about:
 				optionAbout();
@@ -1001,40 +998,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private void optionReportIssue() {
 		// Report issue
 		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy#support"));
-	}
-
-	private void optionClearDB() {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
-		alertDialogBuilder.setTitle(R.string.menu_clear_db);
-		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-				new AsyncTask<Object, Object, Object>() {
-					@Override
-					protected Object doInBackground(Object... arg0) {
-						PrivacyManager.clear();
-						return null;
-					}
-
-					@Override
-					protected void onPostExecute(Object result) {
-						spRestriction.setSelection(0);
-						((EditText) findViewById(R.id.etFilter)).setText("");
-						ActivityMain.this.recreate();
-						Toast.makeText(ActivityMain.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG).show();
-					}
-				}.executeOnExecutor(mExecutor);
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
 	}
 
 	@SuppressLint("DefaultLocale")

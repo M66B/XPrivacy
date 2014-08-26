@@ -57,9 +57,6 @@
                 android:id="@+id/menu_report"
                 android:title="@string/menu_report"/>
             <item
-                android:id="@+id/menu_clear_db"
-                android:title="@string/menu_clear_db"/>
-            <item
                 android:id="@+id/menu_about"
                 android:title="@string/menu_about"/>
         </menu>

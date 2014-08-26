@@ -8,7 +8,9 @@ import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
@@ -60,6 +62,7 @@ public class SettingsDialog {
 		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
 		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
 		final EditText etQuirks = (EditText) dlgSettings.findViewById(R.id.etQuirks);
+		final Button btnClearDb = (Button) dlgSettings.findViewById(R.id.btnClearDb);
 
 		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
 		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
@@ -123,6 +126,7 @@ public class SettingsDialog {
 				cbAOSP.setEnabled(isChecked);
 				etConfidence.setEnabled(isChecked);
 				etQuirks.setEnabled(isChecked);
+				btnClearDb.setEnabled(isChecked);
 				if (!isChecked) {
 					cbSystem.setChecked(false);
 					cbExperimental.setChecked(false);
@@ -306,8 +310,10 @@ public class SettingsDialog {
 			cbParameters.setEnabled(Util.hasProLicense(context) != null);
 			if (userId == 0)
 				cbLog.setChecked(log);
-			else
+			else {
 				cbLog.setVisibility(View.GONE);
+				btnClearDb.setVisibility(View.GONE);
+			}
 			cbExpert.setChecked(expert);
 
 			if (PrivacyManager.cVersion3 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
@@ -329,6 +335,7 @@ public class SettingsDialog {
 				cbAOSP.setChecked(false);
 				etConfidence.setEnabled(false);
 				etQuirks.setEnabled(false);
+				btnClearDb.setEnabled(false);
 			}
 		} else {
 			// Disable global settings
@@ -337,8 +344,10 @@ public class SettingsDialog {
 			cbLog.setVisibility(View.GONE);
 			cbSystem.setVisibility(View.GONE);
 			cbExperimental.setVisibility(View.GONE);
+			cbHttps.setVisibility(View.GONE);
 			cbAOSP.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
+			btnClearDb.setVisibility(View.GONE);
 
 			cbExpert.setChecked(expert);
 			if (expert)
@@ -428,38 +437,33 @@ public class SettingsDialog {
 		etLac.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLac, ""));
 		etUa.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingUa, ""));
 
-		// Handle search
-		btnSearch.setOnClickListener(new View.OnClickListener() {
+		btnClearDb.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				try {
-					String search = etSearch.getText().toString();
-					final List<Address> listAddress = new Geocoder(context).getFromLocationName(search, 1);
-					if (listAddress.size() > 0) {
-						Address address = listAddress.get(0);
-
-						// Get coordinates
-						if (address.hasLatitude()) {
-							cbLat.setChecked(false);
-							etLat.setText(Double.toString(address.getLatitude()));
-						}
-						if (address.hasLongitude()) {
-							cbLon.setChecked(false);
-							etLon.setText(Double.toString(address.getLongitude()));
-						}
-
-						// Get address
-						StringBuilder sb = new StringBuilder();
-						for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
-							if (i != 0)
-								sb.append(", ");
-							sb.append(address.getAddressLine(i));
-						}
-						etSearch.setText(sb.toString());
-					}
-				} catch (Throwable ex) {
-					Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
-				}
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+				alertDialogBuilder.setTitle(R.string.menu_clear_db);
+				alertDialogBuilder.setMessage(R.string.msg_sure);
+				alertDialogBuilder.setIcon(context.getThemed(R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+								PrivacyManager.clear();
+								((EditText) context.findViewById(R.id.etFilter)).setText("");
+								context.recreate();
+								Toast.makeText(context, context.getString(R.string.msg_reboot), Toast.LENGTH_LONG)
+										.show();
+								dlgSettings.dismiss();
+							}
+						});
+				alertDialogBuilder.setNegativeButton(context.getString(android.R.string.cancel),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
 			}
 		});
 
@@ -508,6 +512,41 @@ public class SettingsDialog {
 			});
 		else
 			btnFlush.setVisibility(View.GONE);
+
+		// Handle search
+		btnSearch.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				try {
+					String search = etSearch.getText().toString();
+					final List<Address> listAddress = new Geocoder(context).getFromLocationName(search, 1);
+					if (listAddress.size() > 0) {
+						Address address = listAddress.get(0);
+
+						// Get coordinates
+						if (address.hasLatitude()) {
+							cbLat.setChecked(false);
+							etLat.setText(Double.toString(address.getLatitude()));
+						}
+						if (address.hasLongitude()) {
+							cbLon.setChecked(false);
+							etLon.setText(Double.toString(address.getLongitude()));
+						}
+
+						// Get address
+						StringBuilder sb = new StringBuilder();
+						for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+							if (i != 0)
+								sb.append(", ");
+							sb.append(address.getAddressLine(i));
+						}
+						etSearch.setText(sb.toString());
+					}
+				} catch (Throwable ex) {
+					Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+				}
+			}
+		});
 
 		// Handle OK
 		btnOk.setOnClickListener(new View.OnClickListener() {
