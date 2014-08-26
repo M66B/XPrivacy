@@ -41,16 +41,6 @@
             android:text="@string/title_usage_footer"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="web"
-            android:ellipsize="end"
-            android:paddingTop="6dip"
-            android:singleLine="true"
-            android:text="@string/app_help"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
 </ScrollView>
