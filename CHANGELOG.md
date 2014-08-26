@@ -49,6 +49,10 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 2.99.40 BETA**
+
+* Fixed long application names not showing
+
 **Version 2.99.39 BETA**
 
 * Moved clear all data to settings dialog
