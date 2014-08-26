@@ -347,6 +347,7 @@
 				$sql = "SELECT COUNT(*) AS count FROM xprivacy_update";
 				$sql .= " WHERE android_id_md5 = '" . $db->real_escape_string($data->android_id) . "'";
 				$sql .= " AND time > '" . date('Y-m-d H:i:s', time() - 12 * 3600) . "'";
+				$sql .= " AND installed_version = '" . $db->real_escape_string($data->xprivacy_version_name) . "'";
 				$sql .= " AND installed_version <> current_version";
 				$result = $db->query($sql);
 				if ($result) {
