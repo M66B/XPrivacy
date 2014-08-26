@@ -341,13 +341,20 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingTop="6dip" >
+            android:paddingTop="12dip" >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/menu_help"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textStyle="bold" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:singleLine="true"
+                android:paddingTop="6dip"
                 android:text="@string/app_help"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
 
@@ -355,7 +362,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:autoLink="web"
-                android:singleLine="true"
+                android:paddingTop="6dip"
                 android:text="@string/app_support"
                 android:textAppearance="?android:attr/textAppearanceSmall" />
         </LinearLayout>

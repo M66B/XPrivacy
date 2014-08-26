@@ -14,8 +14,16 @@
         android:orientation="vertical" >
 
         <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_usage_header"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="6dip"
             android:text="@string/title_usage_text_1"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -23,6 +31,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="6dip"
             android:text="@string/title_usage_text_2"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -30,6 +39,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:paddingTop="6dip"
             android:text="@string/title_usage_text_3"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -37,7 +47,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="6dip"
+            android:paddingTop="12dip"
             android:text="@string/title_usage_footer"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -45,11 +55,25 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingTop="12dip"
+            android:text="@string/menu_help"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:autoLink="web"
-            android:ellipsize="end"
             android:paddingTop="6dip"
-            android:singleLine="true"
             android:text="@string/app_help"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:autoLink="web"
+            android:paddingTop="6dip"
+            android:text="@string/app_support"
             android:textAppearance="?android:attr/textAppearanceSmall" />
     </LinearLayout>
 
