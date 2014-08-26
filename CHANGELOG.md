@@ -48,6 +48,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 **Next release**
 
 * Clear filters will reset the filters to their default state
+* Changed on demand restricting progress bar to holo style
 * Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
@@ -245,6 +246,7 @@ XPrivacy 2
 * Added option to merge template to reset functions (not categories)
 * Clear will also clear usage data and application specific settings
 * Clear filters will reset the filters to their default state
+* Changed on demand restricting progress bar to holo style
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated French translation
