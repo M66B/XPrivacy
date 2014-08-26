@@ -47,6 +47,10 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.38 BETA**
+
 * Clear filters will reset the filters to their default state
 * Changed on demand restricting progress bar to holo style
 * Clicking the application name will open the application details view
@@ -57,8 +61,6 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Updated Lithuanian translation
 * Updated Russian translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.37 BETA**
 
