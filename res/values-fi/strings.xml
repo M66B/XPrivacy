@@ -12,7 +12,6 @@
     <string name="menu_refresh">Päivitä</string>
     <string name="menu_settings">Asetukset</string>
     <string name="menu_template">Pohja</string>
-    <string name="menu_report">Raportoi asia</string>
     <string name="menu_export">Vie</string>
     <string name="menu_import">Tuo</string>
     <string name="menu_submit">Aseta rajoitukset</string>

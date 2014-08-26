@@ -12,7 +12,6 @@
     <string name="menu_refresh">Frissítés</string>
     <string name="menu_settings">Beállítások</string>
     <string name="menu_template">Sablon</string>
-    <string name="menu_report">Probléma bejelentése</string>
     <string name="menu_export">Exportálás</string>
     <string name="menu_import">Importálás</string>
     <string name="menu_submit">Submit restrictions</string>

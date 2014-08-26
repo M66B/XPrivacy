@@ -12,7 +12,6 @@
     <string name="menu_refresh">Odśwież</string>
     <string name="menu_settings">Ustawienia</string>
     <string name="menu_template">Szablon</string>
-    <string name="menu_report">Zgłoś problem</string>
     <string name="menu_export">Eksport</string>
     <string name="menu_import">Import</string>
     <string name="menu_submit">Wyślij restrykcje</string>

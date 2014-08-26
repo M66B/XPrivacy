@@ -12,7 +12,6 @@
     <string name="menu_refresh">重新整理</string>
     <string name="menu_settings">設定</string>
     <string name="menu_template">設定預設規則</string>
-    <string name="menu_report">回報問題</string>
     <string name="menu_export">匯出規則</string>
     <string name="menu_import">匯入規則</string>
     <string name="menu_submit">上傳規則</string>

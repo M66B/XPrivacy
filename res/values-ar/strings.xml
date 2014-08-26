@@ -12,7 +12,6 @@
     <string name="menu_refresh">إنعاش</string>
     <string name="menu_settings">الإعدادات</string>
     <string name="menu_template">القالب</string>
-    <string name="menu_report">التبليغ عن مشكلة</string>
     <string name="menu_export">تصدير</string>
     <string name="menu_import">إستيراد</string>
     <string name="menu_submit">إرسال القيود</string>

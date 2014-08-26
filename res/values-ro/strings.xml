@@ -12,7 +12,6 @@
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Setari</string>
     <string name="menu_template">Template</string>
-    <string name="menu_report">Raporteaza o problema</string>
     <string name="menu_export">Exporta</string>
     <string name="menu_import">Importa</string>
     <string name="menu_submit">Submit restrictions</string>

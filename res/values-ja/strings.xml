@@ -12,7 +12,6 @@
     <string name="menu_refresh">再読み込み</string>
     <string name="menu_settings">設定</string>
     <string name="menu_template">テンプレート</string>
-    <string name="menu_report">問題の報告</string>
     <string name="menu_export">エクスポート</string>
     <string name="menu_import">インポート</string>
     <string name="menu_submit">制限の設定の投稿</string>

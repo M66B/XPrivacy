@@ -14,7 +14,6 @@
     <string name="menu_refresh">تازه سازی</string>
     <string name="menu_settings">تنظیمات</string>
     <string name="menu_template">قالب</string>
-    <string name="menu_report">گزارش مشکلات</string>
     <string name="menu_export">خارج کردن</string>
     <string name="menu_import">وارد کردن</string>
     <string name="menu_submit">ثبت محدودیت ها</string>

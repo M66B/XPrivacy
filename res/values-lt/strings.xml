@@ -12,7 +12,6 @@
     <string name="menu_refresh">Atnaujinti</string>
     <string name="menu_settings">Parametrai</string>
     <string name="menu_template">Šablonai</string>
-    <string name="menu_report">Pranešti problemą</string>
     <string name="menu_export">Eksportuoti</string>
     <string name="menu_import">Importuoti</string>
     <string name="menu_submit">Pateikti leidimus į serverį</string>

@@ -12,7 +12,6 @@
     <string name="menu_refresh">Rafraîchir</string>
     <string name="menu_settings">Paramètres</string>
     <string name="menu_template">Modèle</string>
-    <string name="menu_report">Signaler un problème</string>
     <string name="menu_export">Exporter</string>
     <string name="menu_import">Importer</string>
     <string name="menu_submit">Envoyer ses restrictions</string>

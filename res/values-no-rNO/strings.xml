@@ -12,7 +12,6 @@
     <string name="menu_refresh">Oppdater</string>
     <string name="menu_settings">Innstillinger</string>
     <string name="menu_template">Skjema</string>
-    <string name="menu_report">Rapporter en feil</string>
     <string name="menu_export">Eksporter</string>
     <string name="menu_import">Importer</string>
     <string name="menu_submit">Last opp restriksjoner</string>

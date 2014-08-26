@@ -539,9 +539,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			case R.id.menu_update:
 				optionUpdate();
 				return true;
-			case R.id.menu_report:
-				optionReportIssue();
-				return true;
 			case R.id.menu_theme:
 				optionSwitchTheme();
 				return true;
@@ -729,11 +726,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Show dialog
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
-	}
-
-	private void optionReportIssue() {
-		// Report issue
-		Util.viewUri(this, Uri.parse("https://github.com/M66B/XPrivacy#support"));
 	}
 
 	private void optionExport() {

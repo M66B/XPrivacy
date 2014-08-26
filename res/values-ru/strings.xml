@@ -12,7 +12,6 @@
     <string name="menu_refresh">Обновить</string>
     <string name="menu_settings">Параметры</string>
     <string name="menu_template">Шаблон</string>
-    <string name="menu_report">Сообщить об ошибке</string>
     <string name="menu_export">Экспорт настроек</string>
     <string name="menu_import">Импорт настроек</string>
     <string name="menu_submit">Отправить ограничения</string>
