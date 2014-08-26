@@ -1536,7 +1536,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			mVersion = new Version(Util.getSelfVersionName(context));
 
 			TypedArray ta1 = context.getTheme().obtainStyledAttributes(
-					new int[] { android.R.attr.colorLongPressedHighlight });
+					new int[] { android.R.attr.colorPressedHighlight });
 			mHighlightColor = ta1.getColor(0, 0xFF00FF);
 			ta1.recycle();
 		}
