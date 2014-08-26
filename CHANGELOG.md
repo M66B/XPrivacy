@@ -54,8 +54,8 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 * Clear filters will reset the filters to their default state
 * Changed on demand restricting progress bar to holo style
 * Clicking the application name will open the application details view
-* Changed multi-select color
-* Reorganized menus
+* Changed multiple selection background color
+* Reorganized menus and action bar items
 * Updated French translation
 * Updated German translation
 * Updated Lithuanian translation
@@ -253,8 +253,8 @@ XPrivacy 2
 * Clear filters will reset the filters to their default state
 * Changed on demand restricting progress bar to holo style
 * Clicking the application name will open the application details view
-* Changed multi-select color
-* Reorganized menus
+* Changed multiple selection background color
+* Reorganized menus and action bar items
 * Updated Arabic translation
 * Updated Dutch translation
 * Updated French translation
