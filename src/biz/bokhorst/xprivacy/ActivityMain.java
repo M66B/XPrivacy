@@ -1790,7 +1790,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public TextView tvName;
 			public ImageView imgCbRestricted;
 			public ProgressBar pbRunning;
-			public LinearLayout llName;
 			public ImageView imgCbAsk;
 
 			public ViewHolder(View theRow, int thePosition) {
@@ -1807,7 +1806,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
-				llName = (LinearLayout) row.findViewById(R.id.llName);
 				imgCbAsk = (ImageView) row.findViewById(R.id.imgCbAsk);
 			}
 		}
@@ -1937,7 +1935,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.tvName.setEnabled(enabled && can);
 					holder.imgCbRestricted.setEnabled(enabled && can);
 					holder.imgCbAsk.setEnabled(enabled && can);
-					holder.llName.setEnabled(enabled && can);
 
 					// Display selection
 					if (mListAppSelected.contains(xAppInfo))
@@ -1946,7 +1943,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 					// Listen for multiple select
-					holder.llName.setOnLongClickListener(new View.OnLongClickListener() {
+					holder.tvName.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
 							if (mListAppSelected.contains(xAppInfo)) {
@@ -1963,8 +1960,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						}
 					});
 
-					// Listen for restriction changes
-					holder.llName.setOnClickListener(new View.OnClickListener() {
+					// Listen for application selection
+					holder.tvName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(final View view) {
 							if (mSelecting) {
@@ -1979,29 +1976,40 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								}
 								showStats();
 							} else {
-								if (mRestrictionName == null && rstate.restricted != false) {
-									AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
-									alertDialogBuilder.setTitle(R.string.menu_clear_all);
-									alertDialogBuilder.setMessage(R.string.msg_sure);
-									alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-									alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-											new DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(DialogInterface dialog, int which) {
-													deleteRestrictions();
-												}
-											});
-									alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-											new DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(DialogInterface dialog, int which) {
-												}
-											});
-									AlertDialog alertDialog = alertDialogBuilder.create();
-									alertDialog.show();
-								} else
-									toggleRestrictions();
+								Intent intentSettings = new Intent(ActivityMain.this, ActivityApp.class);
+								intentSettings.putExtra(ActivityApp.cUid, xAppInfo.getUid());
+								intentSettings.putExtra(ActivityApp.cRestrictionName, mRestrictionName);
+								ActivityMain.this.startActivity(intentSettings);
 							}
+						}
+					});
+
+					// Listen for restriction changes
+					holder.imgCbRestricted.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							if (mRestrictionName == null && rstate.restricted != false) {
+								AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+								alertDialogBuilder.setTitle(R.string.menu_clear_all);
+								alertDialogBuilder.setMessage(R.string.msg_sure);
+								alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+								alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+										new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+												deleteRestrictions();
+											}
+										});
+								alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+										new DialogInterface.OnClickListener() {
+											@Override
+											public void onClick(DialogInterface dialog, int which) {
+											}
+										});
+								AlertDialog alertDialog = alertDialogBuilder.create();
+								alertDialog.show();
+							} else
+								toggleRestrictions();
 						}
 					});
 
@@ -2036,7 +2044,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			}
 
 			private void deleteRestrictions() {
-				holder.llName.setEnabled(false);
 				holder.imgCbRestricted.setVisibility(View.GONE);
 				holder.pbRunning.setVisibility(View.VISIBLE);
 
@@ -2074,13 +2081,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						holder.pbRunning.setVisibility(View.GONE);
 						holder.imgCbRestricted.setVisibility(View.VISIBLE);
-						holder.llName.setEnabled(true);
 					}
 				}.executeOnExecutor(mExecutor);
 			}
 
 			private void toggleRestrictions() {
-				holder.llName.setEnabled(false);
 				holder.imgCbRestricted.setVisibility(View.GONE);
 				holder.pbRunning.setVisibility(View.VISIBLE);
 
@@ -2114,7 +2119,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						holder.pbRunning.setVisibility(View.GONE);
 						holder.imgCbRestricted.setVisibility(View.VISIBLE);
-						holder.llName.setEnabled(true);
 					}
 				}.executeOnExecutor(mExecutor);
 			}
@@ -2174,7 +2178,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgCbAsk.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);
 			holder.imgCbRestricted.setEnabled(false);
-			holder.llName.setEnabled(false);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);

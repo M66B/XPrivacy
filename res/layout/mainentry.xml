@@ -24,6 +24,7 @@
             android:layout_width="?android:attr/listPreferredItemHeightSmall"
             android:layout_height="?android:attr/listPreferredItemHeightSmall"
             android:layout_gravity="center_vertical"
+            android:background="@drawable/list_item_pressed"
             android:contentDescription="@string/help_application"
             android:paddingLeft="6dip" />
 
@@ -71,22 +72,21 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/llName"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/list_item_pressed"
-            android:clickable="true"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/tvName"
                 android:layout_width="0dip"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
+                android:background="@drawable/list_item_pressed"
+                android:gravity="center_vertical"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 tools:ignore="NestedWeights" />
 
