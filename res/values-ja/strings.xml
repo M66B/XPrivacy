@@ -6,7 +6,7 @@
     <string name="app_version">XPrivacy バージョン : %1$s (%2$d)</string>
     <string name="app_description">究極の個人情報管理</string>
     <string name="app_copyright">コピーライト \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
-    <string name="app_compatibility">互換モードで実行しています</string>
+    <string name="app_compatibility">互換モードで動作しています</string>
     <string name="app_licensed">使用許諾されました。協力ありがとう!</string>
     <string name="menu_usage">要求されたデータの表示</string>
     <string name="menu_refresh">再読み込み</string>
@@ -41,7 +41,7 @@
     <string name="menu_contacts">許可する連絡先の選択</string>
     <string name="menu_whitelists">ホワイトリストの管理</string>
     <string name="menu_tutorial">チュートリアル</string>
-    <string name="menu_changelog">Changelog</string>
+    <string name="menu_changelog">変更履歴</string>
     <string name="menu_flush">キャッシュの消去</string>
     <string name="menu_update">更新の確認</string>
     <string name="msg_abort">中断中</string>
@@ -133,7 +133,7 @@
     <string name="whitelist_url">URL</string>
     <string name="whitelist_transaction">トランザクション</string>
     <string name="whitelist_permission">パーミッション</string>
-    <string name="title_restrict">チェックして(制限/オンデマンド制限)します :</string>
+    <string name="title_restrict">チェックして制限します :</string>
     <string name="title_check_whitelist">チェックして許可します :</string>
     <string name="title_fused">データの要求あり</string>
     <string name="title_finternet">インターネットアクセスあり</string>
