@@ -12,6 +12,7 @@
     <string name="menu_refresh">Opdatér</string>
     <string name="menu_settings">Indstillinger</string>
     <string name="menu_template">Skabelon</string>
+    <string name="menu_report">Rapportér problem</string>
     <string name="menu_export">Eksportér</string>
     <string name="menu_import">Importér</string>
     <string name="menu_submit">Angiv restriktioner</string>

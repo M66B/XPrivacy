@@ -12,6 +12,7 @@
     <string name="menu_refresh">Ververs</string>
     <string name="menu_settings">Instellingen</string>
     <string name="menu_template">Sjabloon</string>
+    <string name="menu_report">Meld probleem</string>
     <string name="menu_export">Exporteer</string>
     <string name="menu_import">Importeer</string>
     <string name="menu_submit">Zend beperkingen</string>

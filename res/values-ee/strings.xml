@@ -12,6 +12,7 @@
     <string name="menu_refresh">Värskenda</string>
     <string name="menu_settings">Seaded</string>
     <string name="menu_template">Mall</string>
+    <string name="menu_report">Teavita veast</string>
     <string name="menu_export">Ekspordi</string>
     <string name="menu_import">Impordi</string>
     <string name="menu_submit">Saada keelud</string>

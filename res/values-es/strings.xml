@@ -12,6 +12,7 @@
     <string name="menu_refresh">Actualizar</string>
     <string name="menu_settings">Configuración</string>
     <string name="menu_template">Plantilla</string>
+    <string name="menu_report">Reportar problema</string>
     <string name="menu_export">Exportar</string>
     <string name="menu_import">Importar</string>
     <string name="menu_submit">Enviar restricciones</string>

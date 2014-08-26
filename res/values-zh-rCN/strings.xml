@@ -12,6 +12,7 @@
     <string name="menu_refresh">刷新应用列表</string>
     <string name="menu_settings">设置</string>
     <string name="menu_template">新装应用默认权限模板</string>
+    <string name="menu_report">报告问题</string>
     <string name="menu_export">导出全局配置</string>
     <string name="menu_import">导入全局配置</string>
     <string name="menu_submit">提交权限限制规则</string>

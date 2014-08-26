@@ -12,6 +12,7 @@
     <string name="menu_refresh">Làm mới</string>
     <string name="menu_settings">Thiết lập</string>
     <string name="menu_template">Thiết lập mẫu (cho ứng dụng mới)</string>
+    <string name="menu_report">Báo cáo lỗi</string>
     <string name="menu_export">Xuất thông tin cấu hình</string>
     <string name="menu_import">Nhập thông tin cấu hình</string>
     <string name="menu_submit">Áp dụng thiết lập</string>

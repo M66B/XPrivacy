@@ -12,6 +12,7 @@
     <string name="menu_refresh">Atualizar</string>
     <string name="menu_settings">Definições</string>
     <string name="menu_template">Modelo</string>
+    <string name="menu_report">Reportar problemas</string>
     <string name="menu_export">Exportar</string>
     <string name="menu_import">Importar</string>
     <string name="menu_submit">Enviar restrições</string>

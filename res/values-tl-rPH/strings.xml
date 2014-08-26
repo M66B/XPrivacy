@@ -12,6 +12,7 @@
     <string name="menu_refresh">Paulitin ang nakatakdang kaalaman</string>
     <string name="menu_settings">Palitan ang paglalagay</string>
     <string name="menu_template">Nakahandang paghihigpit</string>
+    <string name="menu_report">Ipaalam kung mayroon mang suliranin</string>
     <string name="menu_export">Iluwas ang iyong nakatakdang paghihigpit</string>
     <string name="menu_import">Iangkat ang dating paghihigpit</string>
     <string name="menu_submit">Ipasa ang iyong paghihigpit</string>

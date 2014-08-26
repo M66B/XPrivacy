@@ -12,6 +12,7 @@
     <string name="menu_refresh">पुन: करे</string>
     <string name="menu_settings">सेटिंग्स</string>
     <string name="menu_template">नमूना</string>
+    <string name="menu_report">मुद्दे को रिपोर्ट करे</string>
     <string name="menu_export">निर्यात</string>
     <string name="menu_import">आयात</string>
     <string name="menu_submit">प्रतिबंध प्रस्तुत करे</string>

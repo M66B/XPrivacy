@@ -12,6 +12,7 @@
     <string name="menu_refresh">Опресняване</string>
     <string name="menu_settings">Настройки</string>
     <string name="menu_template">Шаблони</string>
+    <string name="menu_report">Съобщаване за проблем</string>
     <string name="menu_export">Експортиране</string>
     <string name="menu_import">Импортиране</string>
     <string name="menu_submit">Submit restrictions</string>

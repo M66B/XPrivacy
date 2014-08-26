@@ -12,6 +12,7 @@
     <string name="menu_refresh">Obnoviť</string>
     <string name="menu_settings">Nastavenia</string>
     <string name="menu_template">Šablóna</string>
+    <string name="menu_report">Nahlásiť problém</string>
     <string name="menu_export">Exportovať</string>
     <string name="menu_import">Importovať</string>
     <string name="menu_theme">Zmeniť tému</string>

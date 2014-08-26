@@ -12,6 +12,7 @@
     <string name="menu_refresh">Ανανέωση</string>
     <string name="menu_settings">Ρυθμίσεις</string>
     <string name="menu_template">Πρότυπο</string>
+    <string name="menu_report">Αναφορά σφάλματος</string>
     <string name="menu_export">Εξαγωγή</string>
     <string name="menu_import">Εισαγωγή</string>
     <string name="menu_submit">Υποβολή περιορισμών</string>

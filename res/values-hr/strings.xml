@@ -12,6 +12,7 @@
     <string name="menu_refresh">Osvježi</string>
     <string name="menu_settings">Podešenja</string>
     <string name="menu_template">Predložak</string>
+    <string name="menu_report">Prijavi problem</string>
     <string name="menu_export">Izvezi</string>
     <string name="menu_import">Uvezi</string>
     <string name="menu_submit">Predaj ograničenja</string>

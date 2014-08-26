@@ -12,6 +12,7 @@
     <string name="menu_refresh">Yenile</string>
     <string name="menu_settings">Ayarlar</string>
     <string name="menu_template">Şablon</string>
+    <string name="menu_report">Problem Bildir</string>
     <string name="menu_export">Ayarları dışa aktar</string>
     <string name="menu_import">Ayarları içe aktar</string>
     <string name="menu_submit">Engellemeleri bildir</string>

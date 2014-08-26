@@ -12,6 +12,7 @@
     <string name="menu_refresh">Uppdatera</string>
     <string name="menu_settings">Inställningar</string>
     <string name="menu_template">Mall</string>
+    <string name="menu_report">Rapportera problem</string>
     <string name="menu_export">Exportera</string>
     <string name="menu_import">Importera</string>
     <string name="menu_submit">Skicka restriktioner</string>

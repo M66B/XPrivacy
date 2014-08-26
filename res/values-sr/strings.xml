@@ -12,6 +12,7 @@
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Подешавања</string>
     <string name="menu_template">Шаблон</string>
+    <string name="menu_report">Пријави проблем</string>
     <string name="menu_export">Експорт</string>
     <string name="menu_import">Импорт</string>
     <string name="menu_submit">Submit restrictions</string>
