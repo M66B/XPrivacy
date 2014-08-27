@@ -44,8 +44,8 @@
     <string name="menu_changelog">Zoznam zmien</string>
     <string name="menu_flush">Vymazať vyrovnávaciu pamäť</string>
     <string name="menu_update">Skontrolovať aktualizácie</string>
-    <string name="menu_batch">Operations &#8230;</string>
-    <string name="menu_legend">Legend</string>
+    <string name="menu_batch">Operácie &#8230;</string>
+    <string name="menu_legend">Legenda</string>
     <string name="msg_abort">Rušenie</string>
     <string name="msg_aborted">Zrušené</string>
     <string name="msg_new">Nové</string>
