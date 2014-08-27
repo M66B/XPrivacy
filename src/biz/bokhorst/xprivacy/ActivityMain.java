@@ -179,8 +179,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		setContentView(R.layout.mainlist);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
+		// Set sub title
 		if (Util.hasProLicense(this) != null)
-			setTitle(String.format("%s - %s", getString(R.string.app_name), getString(R.string.menu_pro)));
+			getActionBar().setSubtitle(R.string.menu_pro);
 
 		// Annotate
 		Meta.annotate(this.getResources());

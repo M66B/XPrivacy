@@ -148,9 +148,8 @@ public class ActivityApp extends ActivityBase {
 			return;
 		}
 
-		// Set title
-		setTitle(String.format("%s - %s", getString(R.string.app_name),
-				TextUtils.join(", ", mAppInfo.getApplicationName())));
+		// Set sub title
+		getActionBar().setSubtitle(TextUtils.join(", ", mAppInfo.getApplicationName()));
 
 		// Handle info click
 		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
