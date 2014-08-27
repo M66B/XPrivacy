@@ -177,7 +177,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_alternate">Alternatief</string>
     <string name="title_usage_header">Gebruik</string>
     <string name="title_usage_text_1">1. Zoek de te beperken applicatie op in de lijst met applicaties</string>
-    <string name="title_usage_text_2">2. Klik op het applicatie-icoon</string>
+    <string name="title_usage_text_2">2. Klik op het icoon of de naam van de applicatie</string>
     <string name="title_usage_text_3">3. Vink het eerste vakje van elke categorie die je wilt beperken aan</string>
     <string name="title_usage_footer">Gebruik gezond verstand bij het beperken, verwacht geen internet toegang als je internet beperkt, etc.</string>
     <string name="title_toggle_dangerous">Druk lang op een titel om gevaarlijke functies te schakelen</string>
