@@ -45,6 +45,7 @@
     <string name="menu_flush">Počisti predpomnilnik</string>
     <string name="menu_update">Preveri za posodobitvami</string>
     <string name="menu_batch">Operations</string>
+    <string name="menu_legend">Legend</string>
     <string name="msg_abort">Preklicujem</string>
     <string name="msg_aborted">Preklicano</string>
     <string name="msg_new">Novo</string>

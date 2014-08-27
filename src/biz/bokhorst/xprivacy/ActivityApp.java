@@ -539,9 +539,6 @@ public class ActivityApp extends ActivityBase {
 				else
 					NavUtils.navigateUpTo(this, upIntent);
 			return true;
-		case R.id.menu_help:
-			optionHelp();
-			return true;
 		case R.id.menu_usage:
 			optionUsage();
 			return true;
@@ -584,27 +581,15 @@ public class ActivityApp extends ActivityBase {
 		case R.id.menu_dump:
 			optionDump();
 			return true;
+		case R.id.menu_legend:
+			optionLegend();
+			return true;
 		case R.id.menu_tutorial:
 			optionTutorial();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	private void optionHelp() {
-		// Show help
-		Dialog dialog = new Dialog(ActivityApp.this);
-		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dialog.setTitle(R.string.menu_help);
-		dialog.setContentView(R.layout.help);
-		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
-		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());
-		((LinearLayout) dialog.findViewById(R.id.llUnsafe)).setVisibility(PrivacyManager.cVersion3 ? View.VISIBLE
-				: View.GONE);
-		dialog.setCancelable(true);
-		dialog.show();
 	}
 
 	private void optionUsage() {
@@ -704,6 +689,21 @@ public class ActivityApp extends ActivityBase {
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
+	}
+
+	private void optionLegend() {
+		// Show help
+		Dialog dialog = new Dialog(ActivityApp.this);
+		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dialog.setTitle(R.string.menu_help);
+		dialog.setContentView(R.layout.help);
+		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
+		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());
+		((LinearLayout) dialog.findViewById(R.id.llUnsafe)).setVisibility(PrivacyManager.cVersion3 ? View.VISIBLE
+				: View.GONE);
+		dialog.setCancelable(true);
+		dialog.show();
 	}
 
 	private void optionTutorial() {

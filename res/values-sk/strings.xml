@@ -45,6 +45,7 @@
     <string name="menu_flush">Vymazať vyrovnávaciu pamäť</string>
     <string name="menu_update">Skontrolovať aktualizácie</string>
     <string name="menu_batch">Operations</string>
+    <string name="menu_legend">Legend</string>
     <string name="msg_abort">Rušenie</string>
     <string name="msg_aborted">Zrušené</string>
     <string name="msg_new">Nové</string>

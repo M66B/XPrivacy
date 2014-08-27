@@ -45,6 +45,7 @@
     <string name="menu_flush">Išvalyti talpyklą</string>
     <string name="menu_update">Patikrinti atnaujinimus</string>
     <string name="menu_batch">Operations</string>
+    <string name="menu_legend">Legend</string>
     <string name="msg_abort">Nutraukti</string>
     <string name="msg_aborted">Atmesti</string>
     <string name="msg_new">Naujas</string>

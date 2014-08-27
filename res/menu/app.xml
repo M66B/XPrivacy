@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <item
-        android:id="@+id/menu_help"
-        android:icon="?attr/icon_help"
-        android:showAsAction="always"
-        android:title="@string/menu_help"/>
-    <item
         android:id="@+id/menu_usage"
         android:title="@string/menu_usage"/>
     <item
@@ -59,6 +54,9 @@
                 android:id="@+id/menu_dump"
                 android:title="Dump"
                 tools:ignore="HardcodedText"/>
+            <item
+                android:id="@+id/menu_legend"
+                android:title="@string/menu_legend"/>
             <item
                 android:id="@+id/menu_tutorial"
                 android:title="@string/menu_tutorial"/>

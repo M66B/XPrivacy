@@ -45,6 +45,7 @@
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
     <string name="menu_batch">Operations</string>
+    <string name="menu_legend">Legend</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
     <string name="msg_new">New</string>
