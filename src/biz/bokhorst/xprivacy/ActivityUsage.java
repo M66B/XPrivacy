@@ -409,7 +409,7 @@ public class ActivityUsage extends ActivityBase {
 			Util.bug(null, ex);
 		}
 
-		// Set title
-		setTitle(String.format("%s %d/%d %.2f/s", getString(R.string.app_name), restricted, count, persec));
+		// Set sub title
+		getActionBar().setSubtitle(String.format("%d/%d %.2f/s", restricted, count, persec));
 	}
 }
