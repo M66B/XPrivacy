@@ -50,8 +50,8 @@
     <string name="msg_aborted">Arrêté</string>
     <string name="msg_new">Nouv. :</string>
     <string name="msg_update">MàJ :</string>
-    <string name="msg_loading">Chargement&#8230;</string>
-    <string name="msg_applying">Application en cours&#8230;</string>
+    <string name="msg_loading">Chargement &#8230;</string>
+    <string name="msg_applying">Application en cours &#8230;</string>
     <string name="msg_applied">Modèle appliqué</string>
     <string name="msg_saved_to">Sauvé dans %1$s</string>
     <string name="msg_no_restrictions">Pas de restriction trouvée</string>
