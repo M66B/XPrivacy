@@ -135,8 +135,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transactions</string>
     <string name="whitelist_permission">Permissions</string>
-    <string name="title_restrict">Cocher pour restreindre / à la demande :</string>
-    <string name="title_check_whitelist">Cocher pour permettre</string>
+    <string name="title_restrict">Cocher pour restreindre :</string>
+    <string name="title_check_whitelist">Cocher pour autoriser</string>
     <string name="title_fused">Filtrer utilisation des données</string>
     <string name="title_finternet">Filtrer ayant accès à Internet</string>
     <string name="title_fpermission">Filtrer par permissions</string>
@@ -158,8 +158,8 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_parameters">Paramètres :</string>
     <string name="title_applycat">Appliquer à toute la catégorie</string>
     <string name="title_once">Une fois pendant</string>
-    <string name="title_whitelist">Se souvenir de \'%1$s\'</string>
-    <string name="title_allow">Permettre</string>
+    <string name="title_whitelist">Se souvenir de &#8216;%1$s&#8217;</string>
+    <string name="title_allow">Autoriser</string>
     <string name="title_deny">Bloquer</string>
     <string name="title_dontknow">Je ne sais pas</string>
     <string name="title_pleasesubmit">Veuillez envoyer vos restrictions pour aider les autres utilisateurs</string>
