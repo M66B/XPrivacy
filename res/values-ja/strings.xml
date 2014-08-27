@@ -44,6 +44,7 @@
     <string name="menu_changelog">変更履歴</string>
     <string name="menu_flush">キャッシュの消去</string>
     <string name="menu_update">更新の確認</string>
+    <string name="menu_batch">Operations</string>
     <string name="msg_abort">中断中</string>
     <string name="msg_aborted">中断しました</string>
     <string name="msg_new">新規</string>

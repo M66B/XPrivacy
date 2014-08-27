@@ -44,6 +44,7 @@
     <string name="menu_changelog">Wijzigingslog</string>
     <string name="menu_flush">Leeg cache</string>
     <string name="menu_update">Controleer op nieuwe versie</string>
+    <string name="menu_batch">Bewerkingen</string>
     <string name="msg_abort">Afbreken</string>
     <string name="msg_aborted">Afgebroken</string>
     <string name="msg_new">Nieuw</string>

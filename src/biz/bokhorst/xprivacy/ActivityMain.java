@@ -66,8 +66,6 @@ import android.widget.Filter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
@@ -76,7 +74,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityMain extends ActivityBase implements OnItemSelectedListener, OnMenuItemClickListener {
+public class ActivityMain extends ActivityBase implements OnItemSelectedListener {
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
 	private int mSortMode;
@@ -418,164 +416,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		if (inflater != null && PrivacyService.checkClient()) {
-			inflater.inflate(R.menu.main, menu);
-			return true;
-		} else
-			return false;
-	}
-
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		int userId = Util.getUserId(Process.myUid());
-		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-
-		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
-		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
-		menu.findItem(R.id.menu_update).setVisible(mounted);
-
-		// Update filter count
-
-		// Get settings
-		boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false);
-		boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false);
-		boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false);
-		boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, true);
-		boolean fOnDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemand, false);
-		boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true);
-		boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false);
-
-		// Count number of active filters
-		int numberOfFilters = 0;
-		if (fUsed)
-			numberOfFilters++;
-		if (fInternet)
-			numberOfFilters++;
-		if (fRestriction)
-			numberOfFilters++;
-		if (fPermission)
-			numberOfFilters++;
-		if (fOnDemand)
-			numberOfFilters++;
-		if (fUser)
-			numberOfFilters++;
-		if (fSystem)
-			numberOfFilters++;
-
-		if (numberOfFilters > 0) {
-			Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_filter).copy(
-					Bitmap.Config.ARGB_8888, true);
-
-			Paint paint = new Paint();
-			paint.setStyle(Style.FILL);
-			paint.setColor(Color.GRAY);
-			paint.setTextSize(bitmap.getWidth() / 3);
-			paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-
-			String text = Integer.toString(numberOfFilters);
-
-			Canvas canvas = new Canvas(bitmap);
-			canvas.drawText(text, bitmap.getWidth() - paint.measureText(text), bitmap.getHeight(), paint);
-
-			MenuItem fMenu = menu.findItem(R.id.menu_filter);
-			fMenu.setIcon(new BitmapDrawable(getResources(), bitmap));
-		}
-
-		return super.onPrepareOptionsMenu(menu);
-	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		try {
-			switch (item.getItemId()) {
-			case R.id.menu_play:
-				optionPlay();
-				return true;
-			case R.id.menu_sort:
-				optionSort();
-				return true;
-			case R.id.menu_filter:
-				optionFilter();
-				return true;
-			case R.id.menu_help:
-				optionHelp();
-				return true;
-			case R.id.menu_usage:
-				optionUsage();
-				return true;
-			case R.id.menu_template:
-				optionTemplate();
-				return true;
-			case R.id.menu_settings:
-				SettingsDialog.edit(ActivityMain.this, null);
-				return true;
-			case R.id.menu_pro:
-				optionPro();
-				return true;
-			case R.id.menu_theme:
-				optionSwitchTheme();
-				return true;
-			case R.id.menu_dump:
-				optionDump();
-				return true;
-			case R.id.menu_tutorial:
-				optionTutorial();
-				return true;
-			case R.id.menu_changelog:
-				optionChangelog();
-				return true;
-			case R.id.menu_update:
-				optionUpdate();
-				return true;
-			case R.id.menu_report:
-				optionReportIssue();
-				return true;
-			case R.id.menu_about:
-				optionAbout();
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return true;
-		}
-	}
-
-	@Override
-	public boolean onMenuItemClick(MenuItem item) {
-		try {
-			switch (item.getItemId()) {
-			case R.id.menu_select_all:
-				optionSelectAll();
-				return true;
-			case R.id.menu_toggle:
-				optionToggle();
-				return true;
-			case R.id.menu_export:
-				optionExport();
-				return true;
-			case R.id.menu_import:
-				optionImport();
-				return true;
-			case R.id.menu_submit:
-				optionSubmit();
-				return true;
-			case R.id.menu_fetch:
-				optionFetch();
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return true;
-		}
-	}
-
 	// Filtering
 
 	@Override
@@ -642,19 +482,150 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	// Options
 
-	private void optionPlay() {
-		View anchor = findViewById(R.id.menu_play);
-		if (anchor == null)
-			anchor = findViewById(android.R.id.content);
-		PopupMenu popupMenu = new PopupMenu(this, anchor);
-		popupMenu.inflate(R.menu.mainplay);
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		if (inflater != null && PrivacyService.checkClient()) {
+			inflater.inflate(R.menu.main, menu);
+			return true;
+		} else
+			return false;
+	}
 
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		int userId = Util.getUserId(Process.myUid());
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-		popupMenu.getMenu().findItem(R.id.menu_export).setEnabled(mounted);
-		popupMenu.getMenu().findItem(R.id.menu_import).setEnabled(mounted);
 
-		popupMenu.setOnMenuItemClickListener(this);
-		popupMenu.show();
+		menu.findItem(R.id.menu_export).setEnabled(mounted);
+		menu.findItem(R.id.menu_import).setEnabled(mounted);
+
+		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
+
+		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
+		menu.findItem(R.id.menu_update).setVisible(mounted);
+
+		// Update filter count
+
+		// Get settings
+		boolean fUsed = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUsed, false);
+		boolean fInternet = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFInternet, false);
+		boolean fRestriction = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFRestriction, false);
+		boolean fPermission = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFPermission, true);
+		boolean fOnDemand = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFOnDemand, false);
+		boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true);
+		boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false);
+
+		// Count number of active filters
+		int numberOfFilters = 0;
+		if (fUsed)
+			numberOfFilters++;
+		if (fInternet)
+			numberOfFilters++;
+		if (fRestriction)
+			numberOfFilters++;
+		if (fPermission)
+			numberOfFilters++;
+		if (fOnDemand)
+			numberOfFilters++;
+		if (fUser)
+			numberOfFilters++;
+		if (fSystem)
+			numberOfFilters++;
+
+		if (numberOfFilters > 0) {
+			Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.icon_filter).copy(
+					Bitmap.Config.ARGB_8888, true);
+
+			Paint paint = new Paint();
+			paint.setStyle(Style.FILL);
+			paint.setColor(Color.GRAY);
+			paint.setTextSize(bitmap.getWidth() / 3);
+			paint.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+
+			String text = Integer.toString(numberOfFilters);
+
+			Canvas canvas = new Canvas(bitmap);
+			canvas.drawText(text, bitmap.getWidth() - paint.measureText(text), bitmap.getHeight(), paint);
+
+			MenuItem fMenu = menu.findItem(R.id.menu_filter);
+			fMenu.setIcon(new BitmapDrawable(getResources(), bitmap));
+		}
+
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		try {
+			switch (item.getItemId()) {
+			case R.id.menu_sort:
+				optionSort();
+				return true;
+			case R.id.menu_filter:
+				optionFilter();
+				return true;
+			case R.id.menu_help:
+				optionHelp();
+				return true;
+			case R.id.menu_usage:
+				optionUsage();
+				return true;
+			case R.id.menu_template:
+				optionTemplate();
+				return true;
+			case R.id.menu_select_all:
+				optionSelectAll();
+				return true;
+			case R.id.menu_toggle:
+				optionToggle();
+				return true;
+			case R.id.menu_export:
+				optionExport();
+				return true;
+			case R.id.menu_import:
+				optionImport();
+				return true;
+			case R.id.menu_submit:
+				optionSubmit();
+				return true;
+			case R.id.menu_fetch:
+				optionFetch();
+				return true;
+			case R.id.menu_pro:
+				optionPro();
+				return true;
+			case R.id.menu_theme:
+				optionSwitchTheme();
+				return true;
+			case R.id.menu_settings:
+				SettingsDialog.edit(ActivityMain.this, null);
+				return true;
+			case R.id.menu_dump:
+				optionDump();
+				return true;
+			case R.id.menu_tutorial:
+				optionTutorial();
+				return true;
+			case R.id.menu_changelog:
+				optionChangelog();
+				return true;
+			case R.id.menu_update:
+				optionUpdate();
+				return true;
+			case R.id.menu_report:
+				optionReportIssue();
+				return true;
+			case R.id.menu_about:
+				optionAbout();
+				return true;
+			default:
+				return super.onOptionsItemSelected(item);
+			}
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return true;
+		}
 	}
 
 	@SuppressLint("InflateParams")
@@ -929,6 +900,96 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		alertDialog.show();
 	}
 
+	private void optionSelectAll() {
+		// Select all visible apps
+		if (mAppAdapter != null)
+			mAppAdapter.selectAllVisible();
+	}
+
+	private void optionToggle() {
+		if (mAppAdapter != null) {
+			Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
+			intent.putExtra(ActivityShare.cInteractive, true);
+			intent.putExtra(ActivityShare.cUidList,
+					mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
+			intent.putExtra(ActivityShare.cRestriction, mAppAdapter.getRestrictionName());
+			startActivity(intent);
+		}
+	}
+
+	private void optionExport() {
+		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList,
+				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(AppListAdapter.cSelectAppAll));
+		startActivity(intent);
+	}
+
+	private void optionImport() {
+		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
+		intent.putExtra(ActivityShare.cInteractive, true);
+		intent.putExtra(ActivityShare.cUidList,
+				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
+		startActivity(intent);
+	}
+
+	private void optionSubmit() {
+		if (ActivityShare.registerDevice(this)) {
+			int[] uid = (mAppAdapter == null ? new int[0] : mAppAdapter
+					.getSelectedOrVisibleUid(AppListAdapter.cSelectAppNone));
+			if (uid.length == 0) {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(R.string.msg_select);
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			} else if (uid.length <= ActivityShare.cSubmitLimit) {
+				if (mAppAdapter != null) {
+					Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
+					intent.putExtra(ActivityShare.cInteractive, true);
+					intent.putExtra(ActivityShare.cUidList, uid);
+					startActivity(intent);
+				}
+			} else {
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+				alertDialogBuilder.setTitle(R.string.app_name);
+				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+						new DialogInterface.OnClickListener() {
+							@Override
+							public void onClick(DialogInterface dialog, int which) {
+							}
+						});
+				AlertDialog alertDialog = alertDialogBuilder.create();
+				alertDialog.show();
+			}
+		}
+	}
+
+	private void optionFetch() {
+		if (Util.hasProLicense(this) == null) {
+			// Redirect to pro page
+			Util.viewUri(this, cProUri);
+		} else {
+			if (mAppAdapter != null) {
+
+				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
+				intent.putExtra(ActivityShare.cInteractive, true);
+				intent.putExtra(ActivityShare.cUidList,
+						mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
+				startActivity(intent);
+			}
+		}
+	}
+
 	private void optionPro() {
 		// Redirect to pro page
 		Util.viewUri(this, cProUri);
@@ -1066,96 +1127,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				dlgUsage.show();
 			}
 		});
-	}
-
-	private void optionSelectAll() {
-		// Select all visible apps
-		if (mAppAdapter != null)
-			mAppAdapter.selectAllVisible();
-	}
-
-	private void optionToggle() {
-		if (mAppAdapter != null) {
-			Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
-			intent.putExtra(ActivityShare.cInteractive, true);
-			intent.putExtra(ActivityShare.cUidList,
-					mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
-			intent.putExtra(ActivityShare.cRestriction, mAppAdapter.getRestrictionName());
-			startActivity(intent);
-		}
-	}
-
-	private void optionExport() {
-		Intent intent = new Intent(ActivityShare.ACTION_EXPORT);
-		intent.putExtra(ActivityShare.cInteractive, true);
-		intent.putExtra(ActivityShare.cUidList,
-				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(AppListAdapter.cSelectAppAll));
-		startActivity(intent);
-	}
-
-	private void optionImport() {
-		Intent intent = new Intent(ActivityShare.ACTION_IMPORT);
-		intent.putExtra(ActivityShare.cInteractive, true);
-		intent.putExtra(ActivityShare.cUidList,
-				mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
-		startActivity(intent);
-	}
-
-	private void optionSubmit() {
-		if (ActivityShare.registerDevice(this)) {
-			int[] uid = (mAppAdapter == null ? new int[0] : mAppAdapter
-					.getSelectedOrVisibleUid(AppListAdapter.cSelectAppNone));
-			if (uid.length == 0) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(R.string.app_name);
-				alertDialogBuilder.setMessage(R.string.msg_select);
-				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			} else if (uid.length <= ActivityShare.cSubmitLimit) {
-				if (mAppAdapter != null) {
-					Intent intent = new Intent(ActivityShare.ACTION_SUBMIT);
-					intent.putExtra(ActivityShare.cInteractive, true);
-					intent.putExtra(ActivityShare.cUidList, uid);
-					startActivity(intent);
-				}
-			} else {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-				alertDialogBuilder.setTitle(R.string.app_name);
-				alertDialogBuilder.setMessage(getString(R.string.msg_limit, ActivityShare.cSubmitLimit + 1));
-				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			}
-		}
-	}
-
-	private void optionFetch() {
-		if (Util.hasProLicense(this) == null) {
-			// Redirect to pro page
-			Util.viewUri(this, cProUri);
-		} else {
-			if (mAppAdapter != null) {
-
-				Intent intent = new Intent(ActivityShare.ACTION_FETCH);
-				intent.putExtra(ActivityShare.cInteractive, true);
-				intent.putExtra(ActivityShare.cUidList,
-						mAppAdapter == null ? new int[0] : mAppAdapter.getSelectedOrVisibleUid(0));
-				startActivity(intent);
-			}
-		}
 	}
 
 	// Tasks

@@ -44,6 +44,7 @@
     <string name="menu_changelog">Änderungsprotokoll</string>
     <string name="menu_flush">Cache Speicher löschen</string>
     <string name="menu_update">Nach Updates suchen</string>
+    <string name="menu_batch">Operations</string>
     <string name="msg_abort">Abbrechen</string>
     <string name="msg_aborted">Abgebrochen</string>
     <string name="msg_new">Neu</string>

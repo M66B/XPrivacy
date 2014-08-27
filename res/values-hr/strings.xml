@@ -44,6 +44,7 @@
     <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Izbriši cache memoriju</string>
     <string name="menu_update">Check for updates</string>
+    <string name="menu_batch">Operations</string>
     <string name="msg_abort">Zaustavljam</string>
     <string name="msg_aborted">Zaustavljeno</string>
     <string name="msg_new">Novo</string>

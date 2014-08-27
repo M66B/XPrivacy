@@ -47,6 +47,7 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+* Replaced *Play* action by *Operations* sub-menu
 * Renamed filter button *Clear all* to *Default* ([issue](/../../issues/1920))
 * Updated Japanese translation
 

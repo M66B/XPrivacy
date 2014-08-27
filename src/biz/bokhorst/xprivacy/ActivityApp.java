@@ -69,8 +69,6 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupMenu;
-import android.widget.PopupMenu.OnMenuItemClickListener;
 import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
@@ -79,7 +77,7 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class ActivityApp extends ActivityBase implements OnMenuItemClickListener {
+public class ActivityApp extends ActivityBase {
 	private ApplicationInfoEx mAppInfo = null;
 	private Switch swEnabled = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
@@ -413,20 +411,7 @@ public class ActivityApp extends ActivityBase implements OnMenuItemClickListener
 			return false;
 	}
 
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
-		boolean accountsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cAccounts, null).restricted;
-		boolean appsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cSystem, null).restricted;
-		boolean contactsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cContacts, null).restricted;
-
-		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
-		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
-		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
-
-		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
-
-		return super.onPrepareOptionsMenu(menu);
-	}
+	// Application context menu
 
 	@Override
 	public void onCreateContextMenu(ContextMenu menu, View v, ContextMenuInfo menuInfo) {
@@ -466,6 +451,84 @@ public class ActivityApp extends ActivityBase implements OnMenuItemClickListener
 	}
 
 	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case MENU_LAUNCH:
+			optionLaunch(item.getGroupId());
+			return true;
+		case MENU_SETTINGS:
+			optionAppSettings(item.getGroupId());
+			return true;
+		case MENU_KILL:
+			optionKill(item.getGroupId());
+			return true;
+		case MENU_STORE:
+			optionStore(item.getGroupId());
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
+	}
+
+	private void optionLaunch(int which) {
+		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName().get(which));
+		startActivity(intentLaunch);
+	}
+
+	private void optionAppSettings(int which) {
+		Intent intentSettings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+				Uri.parse("package:" + mAppInfo.getPackageName().get(which)));
+		startActivity(intentSettings);
+	}
+
+	private void optionKill(final int which) {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+		alertDialogBuilder.setTitle(R.string.menu_app_kill);
+		alertDialogBuilder.setMessage(R.string.msg_sure);
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int _which) {
+				XApplication.manage(ActivityApp.this, mAppInfo.getPackageName().get(which),
+						XApplication.cActionKillProcess);
+				Toast.makeText(ActivityApp.this, getString(R.string.msg_done), Toast.LENGTH_LONG).show();
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	private void optionStore(int which) {
+		Util.viewUri(this, Uri.parse("market://details?id=" + mAppInfo.getPackageName().get(which)));
+	}
+
+	// Options
+
+	@Override
+	public boolean onPrepareOptionsMenu(Menu menu) {
+		boolean accountsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cAccounts, null).restricted;
+		boolean appsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cSystem, null).restricted;
+		boolean contactsRestricted = PrivacyManager.getRestrictionEx(mAppInfo.getUid(), PrivacyManager.cContacts, null).restricted;
+
+		menu.findItem(R.id.menu_accounts).setEnabled(accountsRestricted);
+		menu.findItem(R.id.menu_applications).setEnabled(appsRestricted);
+		menu.findItem(R.id.menu_contacts).setEnabled(contactsRestricted);
+
+		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+		menu.findItem(R.id.menu_export).setEnabled(mounted);
+		menu.findItem(R.id.menu_import).setEnabled(mounted);
+
+		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
+
+		return super.onPrepareOptionsMenu(menu);
+	}
+
+	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
@@ -475,9 +538,6 @@ public class ActivityApp extends ActivityBase implements OnMenuItemClickListener
 					TaskStackBuilder.create(this).addNextIntentWithParentStack(upIntent).startActivities();
 				else
 					NavUtils.navigateUpTo(this, upIntent);
-			return true;
-		case R.id.menu_play:
-			optionPlay();
 			return true;
 		case R.id.menu_help:
 			optionHelp();
@@ -500,6 +560,24 @@ public class ActivityApp extends ActivityBase implements OnMenuItemClickListener
 		case R.id.menu_whitelists:
 			optionWhitelists(null);
 			return true;
+		case R.id.menu_apply:
+			optionTemplate();
+			return true;
+		case R.id.menu_clear:
+			optionClear();
+			return true;
+		case R.id.menu_export:
+			optionExport();
+			return true;
+		case R.id.menu_import:
+			optionImport();
+			return true;
+		case R.id.menu_submit:
+			optionSubmit();
+			return true;
+		case R.id.menu_fetch:
+			optionFetch();
+			return true;
 		case R.id.menu_settings:
 			optionSettings();
 			return true;
@@ -512,74 +590,6 @@ public class ActivityApp extends ActivityBase implements OnMenuItemClickListener
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	@Override
-	public boolean onMenuItemClick(MenuItem item) {
-		try {
-			switch (item.getItemId()) {
-			case R.id.menu_apply:
-				optionTemplate();
-				return true;
-			case R.id.menu_clear:
-				optionClear();
-				return true;
-			case R.id.menu_export:
-				optionExport();
-				return true;
-			case R.id.menu_import:
-				optionImport();
-				return true;
-			case R.id.menu_submit:
-				optionSubmit();
-				return true;
-			case R.id.menu_fetch:
-				optionFetch();
-				return true;
-			default:
-				return super.onOptionsItemSelected(item);
-			}
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return true;
-		}
-	}
-
-	@Override
-	public boolean onContextItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case MENU_LAUNCH:
-			optionLaunch(item.getGroupId());
-			return true;
-		case MENU_SETTINGS:
-			optionAppSettings(item.getGroupId());
-			return true;
-		case MENU_KILL:
-			optionKill(item.getGroupId());
-			return true;
-		case MENU_STORE:
-			optionStore(item.getGroupId());
-			return true;
-		default:
-			return super.onContextItemSelected(item);
-		}
-	}
-
-	// Options
-
-	private void optionPlay() {
-		View anchor = findViewById(R.id.menu_play);
-		if (anchor == null)
-			anchor = findViewById(android.R.id.content);
-		PopupMenu popupMenu = new PopupMenu(this, anchor);
-		popupMenu.inflate(R.menu.appplay);
-
-		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
-		popupMenu.getMenu().findItem(R.id.menu_export).setEnabled(mounted);
-		popupMenu.getMenu().findItem(R.id.menu_import).setEnabled(mounted);
-
-		popupMenu.setOnMenuItemClickListener(this);
-		popupMenu.show();
 	}
 
 	private void optionHelp() {
@@ -638,25 +648,6 @@ public class ActivityApp extends ActivityBase implements OnMenuItemClickListener
 		}
 	}
 
-	private void optionSettings() {
-		SettingsDialog.edit(ActivityApp.this, mAppInfo);
-	}
-
-	private void optionDump() {
-		try {
-			PrivacyService.getClient().dump(mAppInfo.getUid());
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	private void optionTutorial() {
-		((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
-		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
-		int userId = Util.getUserId(Process.myUid());
-		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
-	}
-
 	private void optionTemplate() {
 		Intent intent = new Intent(ActivityShare.ACTION_TOGGLE);
 		intent.putExtra(ActivityShare.cInteractive, true);
@@ -703,41 +694,23 @@ public class ActivityApp extends ActivityBase implements OnMenuItemClickListener
 		startActivity(intent);
 	}
 
-	private void optionLaunch(int which) {
-		Intent intentLaunch = getPackageManager().getLaunchIntentForPackage(mAppInfo.getPackageName().get(which));
-		startActivity(intentLaunch);
+	private void optionSettings() {
+		SettingsDialog.edit(ActivityApp.this, mAppInfo);
 	}
 
-	private void optionAppSettings(int which) {
-		Intent intentSettings = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
-				Uri.parse("package:" + mAppInfo.getPackageName().get(which)));
-		startActivity(intentSettings);
+	private void optionDump() {
+		try {
+			PrivacyService.getClient().dump(mAppInfo.getUid());
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
 	}
 
-	private void optionKill(final int which) {
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-		alertDialogBuilder.setTitle(R.string.menu_app_kill);
-		alertDialogBuilder.setMessage(R.string.msg_sure);
-		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int _which) {
-				XApplication.manage(ActivityApp.this, mAppInfo.getPackageName().get(which),
-						XApplication.cActionKillProcess);
-				Toast.makeText(ActivityApp.this, getString(R.string.msg_done), Toast.LENGTH_LONG).show();
-			}
-		});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
-		AlertDialog alertDialog = alertDialogBuilder.create();
-		alertDialog.show();
-	}
-
-	private void optionStore(int which) {
-		Util.viewUri(this, Uri.parse("market://details?id=" + mAppInfo.getPackageName().get(which)));
+	private void optionTutorial() {
+		((ScrollView) findViewById(R.id.svTutorialHeader)).setVisibility(View.VISIBLE);
+		((ScrollView) findViewById(R.id.svTutorialDetails)).setVisibility(View.VISIBLE);
+		int userId = Util.getUserId(Process.myUid());
+		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTutorialDetails, Boolean.FALSE.toString());
 	}
 
 	// Tasks

@@ -44,6 +44,7 @@
     <string name="menu_changelog">Journal des modifications</string>
     <string name="menu_flush">Vider le cache</string>
     <string name="menu_update">Rechercher des mises à jour</string>
+    <string name="menu_batch">Operations</string>
     <string name="msg_abort">Arrêt en cours</string>
     <string name="msg_aborted">Arrêté</string>
     <string name="msg_new">Nouv. :</string>
