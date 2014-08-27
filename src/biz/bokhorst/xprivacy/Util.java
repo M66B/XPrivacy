@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.lang.RuntimeException;
+import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.nio.channels.FileChannel;
 import java.security.KeyFactory;
@@ -120,6 +121,8 @@ public class Util {
 		else if (ex instanceof HttpHostConnectException)
 			priority = Log.WARN;
 		else if (ex instanceof SSLPeerUnverifiedException)
+			priority = Log.WARN;
+		else if (ex instanceof SocketTimeoutException)
 			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
