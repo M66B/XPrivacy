@@ -1000,8 +1000,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Show help
 		Dialog dialog = new Dialog(ActivityMain.this);
 		dialog.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dialog.setTitle(R.string.menu_help);
-		dialog.setContentView(R.layout.help);
+		dialog.setTitle(R.string.menu_legend);
+		dialog.setContentView(R.layout.legend);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
 		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
 		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());

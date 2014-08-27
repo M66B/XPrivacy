@@ -44,7 +44,7 @@
     <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">مسح ذاكرة التخزين المؤقت</string>
     <string name="menu_update">فحص التحديثات</string>
-    <string name="menu_batch">Operations</string>
+    <string name="menu_batch">Operations &#8230;</string>
     <string name="menu_legend">Legend</string>
     <string name="msg_abort">إيقاف</string>
     <string name="msg_aborted">تم الإيقاف</string>

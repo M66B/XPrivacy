@@ -20,7 +20,7 @@
     <string name="menu_theme">Schimba tema</string>
     <string name="menu_pro">Versiunea Pro</string>
     <string name="menu_about">Despre</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Help &#8230;</string>
     <string name="menu_select_all">Select all</string>
     <string name="menu_sort">Sort</string>
     <string name="menu_filter">Filter</string>
@@ -44,7 +44,7 @@
     <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
-    <string name="menu_batch">Operations</string>
+    <string name="menu_batch">Operations &#8230;</string>
     <string name="menu_legend">Legend</string>
     <string name="msg_abort">Aborting</string>
     <string name="msg_aborted">Aborted</string>
