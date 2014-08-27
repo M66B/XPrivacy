@@ -1407,6 +1407,8 @@ Empty values (*null*) will not be replaced by fake values to prevent misuse.
 There is no need to apply restrictions in situations where the user is presented a dialog first (for example to pick an account).
 Setting data (in contrary to getting data) should never be restricted, this is outside the goal of XPrivacy.
 
+See [here](https://www.openhub.net/p/xprivacy/) for XPrivacy code metrics.
+
 Please note that you agree to the license below by contributing, including the copyright.
 
 License
