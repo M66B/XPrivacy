@@ -20,7 +20,7 @@
     <string name="menu_theme">Wissel thema</string>
     <string name="menu_pro">Pro versie</string>
     <string name="menu_about">Over</string>
-    <string name="menu_help">Help</string>
+    <string name="menu_help">Help &#8230;</string>
     <string name="menu_select_all">Selecteer alles</string>
     <string name="menu_sort">Sorteer</string>
     <string name="menu_filter">Filter</string>
@@ -44,7 +44,7 @@
     <string name="menu_changelog">Wijzigingslog</string>
     <string name="menu_flush">Leeg cache</string>
     <string name="menu_update">Controleer op nieuwe versie</string>
-    <string name="menu_batch">Bewerkingen</string>
+    <string name="menu_batch">Bewerkingen &#8230;</string>
     <string name="menu_legend">Legenda</string>
     <string name="msg_abort">Afbreken</string>
     <string name="msg_aborted">Afgebroken</string>

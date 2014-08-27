@@ -44,7 +44,7 @@
     <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">Flush cache</string>
     <string name="menu_update">Check for updates</string>
-    <string name="menu_batch">Operations</string>
+    <string name="menu_batch">Operations &#8230;</string>
     <string name="menu_legend">Legend</string>
     <string name="msg_abort">Anullerer</string>
     <string name="msg_aborted">Anulleret</string>
