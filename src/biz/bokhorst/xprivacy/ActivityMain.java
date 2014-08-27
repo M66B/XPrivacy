@@ -745,7 +745,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		final CheckBox cbFOnDemandNot = (CheckBox) view.findViewById(R.id.cbFOnDemandNot);
 		final CheckBox cbFUser = (CheckBox) view.findViewById(R.id.cbFUser);
 		final CheckBox cbFSystem = (CheckBox) view.findViewById(R.id.cbFSystem);
-		final Button btnClear = (Button) view.findViewById(R.id.btnClear);
+		final Button btnDefault = (Button) view.findViewById(R.id.btnDefault);
 
 		// Get settings
 		final int userId = Util.getUserId(Process.myUid());
@@ -799,7 +799,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		cbFOnDemand.setOnCheckedChangeListener(checkListener);
 
 		// Clear button
-		btnClear.setOnClickListener(new OnClickListener() {
+		btnDefault.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View arg0) {
 				cbFUsed.setChecked(false);
