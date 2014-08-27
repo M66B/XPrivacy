@@ -20,7 +20,7 @@
     <string name="menu_theme">Changer de thème</string>
     <string name="menu_pro">Version pro</string>
     <string name="menu_about">À propos</string>
-    <string name="menu_help">Aide</string>
+    <string name="menu_help">Aide &#8230;</string>
     <string name="menu_select_all">Tout sélectionner</string>
     <string name="menu_sort">Trier</string>
     <string name="menu_filter">Filtrer</string>
