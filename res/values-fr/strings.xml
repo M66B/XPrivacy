@@ -20,7 +20,7 @@
     <string name="menu_theme">Changer de thème</string>
     <string name="menu_pro">Version pro</string>
     <string name="menu_about">À propos</string>
-    <string name="menu_help">Aide &#8230;</string>
+    <string name="menu_help">Aide&#8230;</string>
     <string name="menu_select_all">Tout sélectionner</string>
     <string name="menu_sort">Trier</string>
     <string name="menu_filter">Filtrer</string>
@@ -44,14 +44,14 @@
     <string name="menu_changelog">Journal des modifications</string>
     <string name="menu_flush">Vider le cache</string>
     <string name="menu_update">Rechercher des mises à jour</string>
-    <string name="menu_batch">Opérations &#8230;</string>
+    <string name="menu_batch">Opérations&#8230;</string>
     <string name="menu_legend">Légende</string>
     <string name="msg_abort">Arrêt en cours</string>
     <string name="msg_aborted">Arrêté</string>
     <string name="msg_new">Nouv. :</string>
     <string name="msg_update">MàJ :</string>
-    <string name="msg_loading">Chargement &#8230;</string>
-    <string name="msg_applying">Application en cours &#8230;</string>
+    <string name="msg_loading">Chargement&#8230;</string>
+    <string name="msg_applying">Application en cours&#8230;</string>
     <string name="msg_applied">Modèle appliqué</string>
     <string name="msg_saved_to">Sauvé dans %1$s</string>
     <string name="msg_no_restrictions">Pas de restriction trouvée</string>
