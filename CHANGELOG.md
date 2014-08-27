@@ -47,13 +47,15 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.41 BETA**
+
 * Replaced *Play* action by *Operations* menu
 * Moved *Help* action bar item to *Legend* menu
 * Renamed filter button *Clear all* to *Default* ([issue](/../../issues/1920))
 * Updated Dutch translation
 * Updated Japanese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.40 BETA**
 
