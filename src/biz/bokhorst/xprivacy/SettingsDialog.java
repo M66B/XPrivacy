@@ -572,7 +572,8 @@ public class SettingsDialog {
 				}
 
 				// Quirks
-				List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().toLowerCase().split(","));
+				List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().toLowerCase().replace(" ", "")
+						.split(","));
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingFreeze,
 						Boolean.toString(listQuirks.contains("freeze")));
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingResolve,
