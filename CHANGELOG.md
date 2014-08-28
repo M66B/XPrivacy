@@ -35,17 +35,30 @@ XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
 XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
 See for some more information about XPrivacy 3 [here](https://github.com/M66B/XPrivacy#FAQ68).
 
-You can install XPrivacy 2.99.x by following these steps:
+You can install XPrivacy 2.99.x / 3.x by following these steps:
 
 * Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
 * Update to the latest 2.2.x version
-* Enter the quirk *test* (all lower case) into the main settings
+* If you want to receive test/beta versions: enter the quirk *test* into the main settings
 * Use the main menu *Check for updates*
 * Make sure notifications are not suppressed by another Xposed module or an application manager
 
 Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
 
 **Next release**
+
+Main changes since stable version 2.2.1:
+
+* Reviewed all about 250 restrictions, resulting in numerous changes, mainly visible as performance improvements
+* Added about 150 new restrictions to fix the unhook vulnerability, see [FAQ #68](https://github.com/M66B/XPrivacy#FAQ68) for details
+* Reorganized menus, action bar items and other user interface elements to improve usability
+* Fixed all reported bugs and implemented lots of requested features
+* See for all details the changelogs of version 2.99.x
+
+Other changes:
+
+* Layout improvement ([pull request](/../../issues/1933))
+* Show usage statistics as subtitle
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
@@ -268,7 +281,19 @@ Version 2.99.x and version 3.x will be available with a [pro license](http://www
 XPrivacy 2
 ----------
 
+XPrivacy 2 will not be maintained anymore.
+See for more information about XPrivacy 3 [here](#xprivacy3).
+
 **Next release**
+
+Main changes since stable version 2.2.1:
+
+* Reviewed all about 250 restrictions, resulting in numerous changes, mainly visible as performance improvements
+* Reorganized menus, action bar items and other user interface elements to improve usability
+* Fixed all reported bugs and implemented lots of requested features
+* See for all details the changelogs of version 2.2.x
+
+Other changes:
 
 * Displaying if an application has specific fake values ([issue](/../../issues/1831))
 * Added help texts
