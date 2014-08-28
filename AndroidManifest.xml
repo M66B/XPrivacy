@@ -122,7 +122,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".SettingsDialog"
+            android:name=".ActivitySettings"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:parentActivityName=".ActivityMain" >

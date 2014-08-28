@@ -679,9 +679,9 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	private void optionSettings() {
-		Intent intent = new Intent(ActivityApp.this, SettingsDialog.class);
-		intent.putExtra(SettingsDialog.cAppUid, mAppInfo.getUid());
-		intent.putStringArrayListExtra(SettingsDialog.cAppName, mAppInfo.getApplicationName());
+		Intent intent = new Intent(ActivityApp.this, ActivitySettings.class);
+		intent.putExtra(ActivitySettings.cAppUid, mAppInfo.getUid());
+		intent.putStringArrayListExtra(ActivitySettings.cAppName, mAppInfo.getApplicationName());
 		startActivity(intent);
 	}
 

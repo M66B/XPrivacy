@@ -27,7 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SettingsDialog extends ActivityBase {
+public class ActivitySettings extends ActivityBase {
 
 	public static final String ACTION_SETTINGS = "biz.bokhorst.xprivacy.action.SETTINGS";
 	public static final String cAppUid = "AppUid";

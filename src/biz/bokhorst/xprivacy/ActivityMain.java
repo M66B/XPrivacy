@@ -597,8 +597,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				optionSwitchTheme();
 				return true;
 			case R.id.menu_settings:
-				Intent intent = new Intent(this, SettingsDialog.class);
-				startActivity(intent);
+				optionSettings();
 				return true;
 			case R.id.menu_dump:
 				optionDump();
@@ -988,6 +987,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTheme, themeName);
 		this.recreate();
+	}
+
+	private void optionSettings() {
+		Intent intent = new Intent(this, ActivitySettings.class);
+		startActivity(intent);
 	}
 
 	private void optionDump() {
