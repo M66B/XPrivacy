@@ -20,7 +20,7 @@
     <string name="menu_theme">テーマの変更</string>
     <string name="menu_pro">プロ版</string>
     <string name="menu_about">XPrivacy について</string>
-    <string name="menu_help">ヘルプ</string>
+    <string name="menu_help">ヘルプ&#8230;</string>
     <string name="menu_select_all">すべて選択</string>
     <string name="menu_sort">並べ替え</string>
     <string name="menu_filter">フィルタ</string>
@@ -28,10 +28,10 @@
     <string name="menu_toggle">制限の一括設定</string>
     <string name="menu_clear_all">すべて消去</string>
     <string name="menu_clear_usage">消去</string>
-    <string name="menu_clear_db">全設定の初期化</string>
+    <string name="menu_clear_db">XPrivacy の設定を完全に初期化する</string>
     <string name="menu_usage_all">フィルタのオン/オフ</string>
     <string name="menu_apply">テンプレートの適用</string>
-    <string name="menu_clear">クリア</string>
+    <string name="menu_clear">初期化する</string>
     <string name="menu_app_launch">起動</string>
     <string name="menu_app_settings">設定</string>
     <string name="menu_app_store">Play ストア</string>
@@ -42,10 +42,10 @@
     <string name="menu_whitelists">ホワイトリストの管理</string>
     <string name="menu_tutorial">チュートリアル</string>
     <string name="menu_changelog">変更履歴</string>
-    <string name="menu_flush">キャッシュの消去</string>
+    <string name="menu_flush">キャッシュを消去する</string>
     <string name="menu_update">更新の確認</string>
-    <string name="menu_batch">Operations &#8230;</string>
-    <string name="menu_legend">Legend</string>
+    <string name="menu_batch">オペレーション&#8230;</string>
+    <string name="menu_legend">凡例</string>
     <string name="msg_abort">中断中</string>
     <string name="msg_aborted">中断しました</string>
     <string name="msg_new">新規</string>
@@ -177,7 +177,7 @@
     <string name="title_alternate">代替</string>
     <string name="title_usage_header">使い方</string>
     <string name="title_usage_text_1">1. 制限を設定したいアプリをアプリリストで見つけます</string>
-    <string name="title_usage_text_2">2. アプリアイコンをタップします</string>
+    <string name="title_usage_text_2">2. アプリアイコンまたはアプリ名をタップします</string>
     <string name="title_usage_text_3">3. 各カテゴリの一番上のチェックボックスをタップすると制限が設定されます</string>
     <string name="title_usage_footer">制限は常識的に判断して設定してください。インターネットアクセスを制限したらインターネットに接続できることを期待してはいけません。</string>
     <string name="title_toggle_dangerous">危険性のある機能をトグルするには機能名を長押しします</string>
