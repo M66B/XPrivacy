@@ -9,17 +9,16 @@ import java.util.List;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Environment;
 import android.os.Process;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -28,20 +27,29 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class SettingsDialog {
+public class SettingsDialog extends ActivityBase {
 
-	public static void edit(final ActivityBase context, ApplicationInfoEx appInfo) {
+	public static final String ACTION_SETTINGS = "biz.bokhorst.xprivacy.action.SETTINGS";
+	public static final String cAppUid = "AppUid";
+	public static final String cAppName = "AppName";
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.settings);
+		setTitle(R.string.menu_settings);
+
+		final Bundle extras = getIntent().getExtras();
 		final int userId = Util.getUserId(Process.myUid());
-		final int uid = (appInfo == null ? userId : appInfo.getUid());
+		final int uid;
 
-		// Build dialog
-		String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
-		int themeId = (themeName.equals("Dark") ? R.style.CustomTheme_Dialog : R.style.CustomTheme_Light_Dialog);
-		final Dialog dlgSettings = new Dialog(context, themeId);
-		dlgSettings.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-		dlgSettings.setTitle(R.string.menu_settings);
-		dlgSettings.setContentView(R.layout.settings);
-		dlgSettings.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, context.getThemed(R.attr.icon_launcher));
+		if (extras != null && extras.containsKey(cAppUid))
+			uid = extras.getInt(cAppUid);
+		else
+			uid = userId;
+
+		// XXX hack to avoid changing variable names right now
+		final ActivityBase context = this, dlgSettings = this;
 
 		// Reference controls
 		TextView tvAppName = (TextView) dlgSettings.findViewById(R.id.tvAppName);
@@ -230,11 +238,15 @@ public class SettingsDialog {
 		});
 
 		// Display app name
-		if (appInfo == null) {
+		if (extras == null) {
 			tvAppName.setVisibility(View.GONE);
 			vwAppNameBorder.setVisibility(View.GONE);
-		} else
-			tvAppName.setText(TextUtils.join(", ", appInfo.getApplicationName()));
+		} else {
+			if (extras.containsKey(cAppName))
+				tvAppName.setText(TextUtils.join(", ", extras.getIntegerArrayList(cAppName)));
+			else // Should never happen
+				tvAppName.setText("-");
+		}
 
 		// Get current values
 		boolean usage = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingUsage, true);
@@ -453,7 +465,7 @@ public class SettingsDialog {
 								context.recreate();
 								Toast.makeText(context, context.getString(R.string.msg_reboot), Toast.LENGTH_LONG)
 										.show();
-								dlgSettings.dismiss();
+								dlgSettings.finish();
 							}
 						});
 				alertDialogBuilder.setNegativeButton(context.getString(android.R.string.cancel),
@@ -678,7 +690,7 @@ public class SettingsDialog {
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingSSID, getValue(cbSSID, etSSID));
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingUa, getValue(null, etUa));
 
-				dlgSettings.dismiss();
+				dlgSettings.finish();
 
 				// Refresh view
 				if (uid == userId) {
@@ -697,13 +709,9 @@ public class SettingsDialog {
 		btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				dlgSettings.dismiss();
+				dlgSettings.finish();
 			}
 		});
-
-		// Show dialog
-		dlgSettings.setCancelable(true);
-		dlgSettings.show();
 	}
 
 	private static String getValue(CheckBox check, EditText edit) {

@@ -597,7 +597,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				optionSwitchTheme();
 				return true;
 			case R.id.menu_settings:
-				SettingsDialog.edit(ActivityMain.this, null);
+				Intent intent = new Intent(this, SettingsDialog.class);
+				startActivity(intent);
 				return true;
 			case R.id.menu_dump:
 				optionDump();
