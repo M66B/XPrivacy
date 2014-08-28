@@ -58,6 +58,8 @@ Main changes since stable version 2.2.1:
 Other changes:
 
 * Updated Italian translation
+* Updated Japanese translation
+* Updated Norwegian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
