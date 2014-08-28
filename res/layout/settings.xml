@@ -19,7 +19,6 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
             android:text="@string/settings_general"
             android:textAllCaps="true"
             android:textStyle="bold" />
@@ -27,6 +26,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dip"
+            android:layout_marginBottom="6dp"
             android:background="#888888" />
 
         <CheckBox
@@ -169,6 +169,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dip"
+            android:layout_marginBottom="6dp"
             android:background="#888888" />
 
         <CheckBox
