@@ -38,7 +38,7 @@ See for some more information about XPrivacy 3 [here](https://github.com/M66B/XP
 You can install XPrivacy 2.99.x / 3.x by following these steps:
 
 * Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
-* Update to the latest 2.2.x version
+* Update to the latest 2.2.x (beta) version
 * If you want to receive test/beta versions: enter the quirk *test* into the main settings
 * Use the main menu *Check for updates* (in the *Help ...* menu in the most recent versions)
 * Make sure notifications are not suppressed by another Xposed module or an application manager
