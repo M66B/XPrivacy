@@ -27,7 +27,6 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivitySettings extends ActivityBase {
@@ -102,9 +101,6 @@ public class ActivitySettings extends ActivityBase {
 			uid = userId;
 
 		// Reference controls
-		TextView tvAppName = (TextView) findViewById(R.id.tvAppName);
-		View vwAppNameBorder = (View) findViewById(R.id.vwAppNameBorder);
-
 		cbNotify = (CheckBox) findViewById(R.id.cbNotify);
 		cbOnDemand = (CheckBox) findViewById(R.id.cbOnDemand);
 		cbBlacklist = (CheckBox) findViewById(R.id.cbBlacklist);
@@ -285,14 +281,13 @@ public class ActivitySettings extends ActivityBase {
 		});
 
 		// Display app name
-		if (extras == null) {
-			tvAppName.setVisibility(View.GONE);
-			vwAppNameBorder.setVisibility(View.GONE);
-		} else {
+		if (extras != null) {
+			String subtitle;
 			if (extras.containsKey(cAppName))
-				tvAppName.setText(TextUtils.join(", ", extras.getIntegerArrayList(cAppName)));
+				subtitle = TextUtils.join(", ", extras.getIntegerArrayList(cAppName));
 			else // Should never happen
-				tvAppName.setText("-");
+				subtitle = "-";
+			getActionBar().setSubtitle(subtitle);
 		}
 
 		// Get current values
