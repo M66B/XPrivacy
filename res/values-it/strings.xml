@@ -41,11 +41,11 @@
     <string name="menu_contacts">Seleziona i contatti da consentire</string>
     <string name="menu_whitelists">Gestisci le whitelists</string>
     <string name="menu_tutorial">Guida</string>
-    <string name="menu_changelog">Changelog</string>
+    <string name="menu_changelog">Cambiamenti</string>
     <string name="menu_flush">Svuota cache</string>
     <string name="menu_update">Controllo aggiornamenti</string>
-    <string name="menu_batch">Operations &#8230;</string>
-    <string name="menu_legend">Legend</string>
+    <string name="menu_batch">Operazioni &#8230;</string>
+    <string name="menu_legend">Legenda</string>
     <string name="msg_abort">Abortisco</string>
     <string name="msg_aborted">Abortito</string>
     <string name="msg_new">Nuovo</string>
@@ -218,7 +218,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Anomalie</string>
-    <string name="settings_aosp">Modo AOSP (richiede reboot)</string>
+    <string name="settings_aosp">Modalità AOSP (richiede reboot)</string>
     <string name="help_check_restrict">Prima casella di controllo: restringe categoria o funzione</string>
     <string name="help_check_ondemand">Seconda casella di controllo: restringe su richiesta</string>
     <string name="help_switch">Pulsante On/off: abilita o disabilita tutte le restrizioni</string>
