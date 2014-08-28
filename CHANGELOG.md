@@ -57,10 +57,12 @@ Main changes since stable version 2.2.1:
 
 Other changes:
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 2.99.43 BETA**
+
 * Layout improvement ([pull request](/../../issues/1933))
 * Show usage statistics as subtitle
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.42 BETA**
 
