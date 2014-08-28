@@ -48,75 +48,72 @@ public class ActivitySettings extends ActivityBase {
 		else
 			uid = userId;
 
-		// XXX hack to avoid changing variable names right now
-		final ActivityBase context = this, dlgSettings = this;
-
 		// Reference controls
-		TextView tvAppName = (TextView) dlgSettings.findViewById(R.id.tvAppName);
-		View vwAppNameBorder = (View) dlgSettings.findViewById(R.id.vwAppNameBorder);
+		TextView tvAppName = (TextView) findViewById(R.id.tvAppName);
+		View vwAppNameBorder = (View) findViewById(R.id.vwAppNameBorder);
 
-		final CheckBox cbNotify = (CheckBox) dlgSettings.findViewById(R.id.cbNotify);
-		final CheckBox cbOnDemand = (CheckBox) dlgSettings.findViewById(R.id.cbOnDemand);
-		final CheckBox cbBlacklist = (CheckBox) dlgSettings.findViewById(R.id.cbBlacklist);
-		final CheckBox cbUsage = (CheckBox) dlgSettings.findViewById(R.id.cbUsage);
-		final CheckBox cbParameters = (CheckBox) dlgSettings.findViewById(R.id.cbParameters);
-		final CheckBox cbLog = (CheckBox) dlgSettings.findViewById(R.id.cbLog);
+		final CheckBox cbNotify = (CheckBox) findViewById(R.id.cbNotify);
+		final CheckBox cbOnDemand = (CheckBox) findViewById(R.id.cbOnDemand);
+		final CheckBox cbBlacklist = (CheckBox) findViewById(R.id.cbBlacklist);
+		final CheckBox cbUsage = (CheckBox) findViewById(R.id.cbUsage);
+		final CheckBox cbParameters = (CheckBox) findViewById(R.id.cbParameters);
+		final CheckBox cbLog = (CheckBox) findViewById(R.id.cbLog);
 
-		final CheckBox cbExpert = (CheckBox) dlgSettings.findViewById(R.id.cbExpert);
-		final CheckBox cbSystem = (CheckBox) dlgSettings.findViewById(R.id.cbSystem);
-		final CheckBox cbExperimental = (CheckBox) dlgSettings.findViewById(R.id.cbExperimental);
-		final CheckBox cbHttps = (CheckBox) dlgSettings.findViewById(R.id.cbHttps);
-		final CheckBox cbAOSP = (CheckBox) dlgSettings.findViewById(R.id.cbAOSP);
-		final LinearLayout llConfidence = (LinearLayout) dlgSettings.findViewById(R.id.llConfidence);
-		final EditText etConfidence = (EditText) dlgSettings.findViewById(R.id.etConfidence);
-		final EditText etQuirks = (EditText) dlgSettings.findViewById(R.id.etQuirks);
-		final Button btnClearDb = (Button) dlgSettings.findViewById(R.id.btnClearDb);
+		final CheckBox cbExpert = (CheckBox) findViewById(R.id.cbExpert);
+		final CheckBox cbSystem = (CheckBox) findViewById(R.id.cbSystem);
+		final CheckBox cbExperimental = (CheckBox) findViewById(R.id.cbExperimental);
+		final CheckBox cbHttps = (CheckBox) findViewById(R.id.cbHttps);
+		final CheckBox cbAOSP = (CheckBox) findViewById(R.id.cbAOSP);
+		final LinearLayout llConfidence = (LinearLayout) findViewById(R.id.llConfidence);
+		final EditText etConfidence = (EditText) findViewById(R.id.etConfidence);
+		final EditText etQuirks = (EditText) findViewById(R.id.etQuirks);
+		final Button btnClearDb = (Button) findViewById(R.id.btnClearDb);
 
-		final CheckBox cbRandom = (CheckBox) dlgSettings.findViewById(R.id.cbRandom);
-		final Button btnRandom = (Button) dlgSettings.findViewById(R.id.btnRandom);
-		final Button btnClear = (Button) dlgSettings.findViewById(R.id.btnClear);
-		final Button btnFlush = (Button) dlgSettings.findViewById(R.id.btnFlush);
+		final CheckBox cbRandom = (CheckBox) findViewById(R.id.cbRandom);
+		final Button btnRandom = (Button) findViewById(R.id.btnRandom);
+		final Button btnClear = (Button) findViewById(R.id.btnClear);
+		final Button btnFlush = (Button) findViewById(R.id.btnFlush);
 
-		final EditText etSerial = (EditText) dlgSettings.findViewById(R.id.etSerial);
-		final EditText etLat = (EditText) dlgSettings.findViewById(R.id.etLat);
-		final EditText etLon = (EditText) dlgSettings.findViewById(R.id.etLon);
-		final EditText etAlt = (EditText) dlgSettings.findViewById(R.id.etAlt);
-		final EditText etSearch = (EditText) dlgSettings.findViewById(R.id.etSearch);
-		final Button btnSearch = (Button) dlgSettings.findViewById(R.id.btnSearch);
-		final EditText etMac = (EditText) dlgSettings.findViewById(R.id.etMac);
-		final EditText etIP = (EditText) dlgSettings.findViewById(R.id.etIP);
-		final EditText etImei = (EditText) dlgSettings.findViewById(R.id.etImei);
-		final EditText etPhone = (EditText) dlgSettings.findViewById(R.id.etPhone);
-		final EditText etId = (EditText) dlgSettings.findViewById(R.id.etId);
-		final EditText etGsfId = (EditText) dlgSettings.findViewById(R.id.etGsfId);
-		final EditText etAdId = (EditText) dlgSettings.findViewById(R.id.etAdId);
-		final EditText etMcc = (EditText) dlgSettings.findViewById(R.id.etMcc);
-		final EditText etMnc = (EditText) dlgSettings.findViewById(R.id.etMnc);
-		final EditText etCountry = (EditText) dlgSettings.findViewById(R.id.etCountry);
-		final EditText etOperator = (EditText) dlgSettings.findViewById(R.id.etOperator);
-		final EditText etIccId = (EditText) dlgSettings.findViewById(R.id.etIccId);
-		final EditText etCid = (EditText) dlgSettings.findViewById(R.id.etCid);
-		final EditText etLac = (EditText) dlgSettings.findViewById(R.id.etLac);
-		final EditText etSubscriber = (EditText) dlgSettings.findViewById(R.id.etSubscriber);
-		final EditText etSSID = (EditText) dlgSettings.findViewById(R.id.etSSID);
-		final EditText etUa = (EditText) dlgSettings.findViewById(R.id.etUa);
+		final EditText etSerial = (EditText) findViewById(R.id.etSerial);
+		final EditText etLat = (EditText) findViewById(R.id.etLat);
+		final EditText etLon = (EditText) findViewById(R.id.etLon);
+		final EditText etAlt = (EditText) findViewById(R.id.etAlt);
+		final EditText etSearch = (EditText) findViewById(R.id.etSearch);
+		final Button btnSearch = (Button) findViewById(R.id.btnSearch);
+		final EditText etMac = (EditText) findViewById(R.id.etMac);
+		final EditText etIP = (EditText) findViewById(R.id.etIP);
+		final EditText etImei = (EditText) findViewById(R.id.etImei);
+		final EditText etPhone = (EditText) findViewById(R.id.etPhone);
+		final EditText etId = (EditText) findViewById(R.id.etId);
+		final EditText etGsfId = (EditText) findViewById(R.id.etGsfId);
+		final EditText etAdId = (EditText) findViewById(R.id.etAdId);
+		final EditText etMcc = (EditText) findViewById(R.id.etMcc);
+		final EditText etMnc = (EditText) findViewById(R.id.etMnc);
+		final EditText etCountry = (EditText) findViewById(R.id.etCountry);
+		final EditText etOperator = (EditText) findViewById(R.id.etOperator);
+		final EditText etIccId = (EditText) findViewById(R.id.etIccId);
+		final EditText etCid = (EditText) findViewById(R.id.etCid);
+		final EditText etLac = (EditText) findViewById(R.id.etLac);
+		final EditText etSubscriber = (EditText) findViewById(R.id.etSubscriber);
+		final EditText etSSID = (EditText) findViewById(R.id.etSSID);
+		final EditText etUa = (EditText) findViewById(R.id.etUa);
 
-		final CheckBox cbSerial = (CheckBox) dlgSettings.findViewById(R.id.cbSerial);
-		final CheckBox cbLat = (CheckBox) dlgSettings.findViewById(R.id.cbLat);
-		final CheckBox cbLon = (CheckBox) dlgSettings.findViewById(R.id.cbLon);
-		final CheckBox cbAlt = (CheckBox) dlgSettings.findViewById(R.id.cbAlt);
-		final CheckBox cbMac = (CheckBox) dlgSettings.findViewById(R.id.cbMac);
-		final CheckBox cbImei = (CheckBox) dlgSettings.findViewById(R.id.cbImei);
-		final CheckBox cbPhone = (CheckBox) dlgSettings.findViewById(R.id.cbPhone);
-		final CheckBox cbId = (CheckBox) dlgSettings.findViewById(R.id.cbId);
-		final CheckBox cbGsfId = (CheckBox) dlgSettings.findViewById(R.id.cbGsfId);
-		final CheckBox cbAdId = (CheckBox) dlgSettings.findViewById(R.id.cbAdId);
-		final CheckBox cbCountry = (CheckBox) dlgSettings.findViewById(R.id.cbCountry);
-		final CheckBox cbSubscriber = (CheckBox) dlgSettings.findViewById(R.id.cbSubscriber);
-		final CheckBox cbSSID = (CheckBox) dlgSettings.findViewById(R.id.cbSSID);
+		final CheckBox cbSerial = (CheckBox) findViewById(R.id.cbSerial);
+		final CheckBox cbLat = (CheckBox) findViewById(R.id.cbLat);
+		final CheckBox cbLon = (CheckBox) findViewById(R.id.cbLon);
+		final CheckBox cbAlt = (CheckBox) findViewById(R.id.cbAlt);
+		final CheckBox cbMac = (CheckBox) findViewById(R.id.cbMac);
+		final CheckBox cbImei = (CheckBox) findViewById(R.id.cbImei);
+		final CheckBox cbPhone = (CheckBox) findViewById(R.id.cbPhone);
+		final CheckBox cbId = (CheckBox) findViewById(R.id.cbId);
+		final CheckBox cbGsfId = (CheckBox) findViewById(R.id.cbGsfId);
+		final CheckBox cbAdId = (CheckBox) findViewById(R.id.cbAdId);
+		final CheckBox cbCountry = (CheckBox) findViewById(R.id.cbCountry);
+		final CheckBox cbSubscriber = (CheckBox) findViewById(R.id.cbSubscriber);
+		final CheckBox cbSSID = (CheckBox) findViewById(R.id.cbSSID);
 
-		Button btnOk = (Button) dlgSettings.findViewById(R.id.btnOk);
-		Button btnCancel = (Button) dlgSettings.findViewById(R.id.btnCancel);
+		Button btnOk = (Button) findViewById(R.id.btnOk);
+		Button btnCancel = (Button) findViewById(R.id.btnCancel);
 
 		final EditText[] edits = new EditText[] { etSerial, etLat, etLon, etAlt, etMac, etIP, etImei, etPhone, etId,
 				etGsfId, etAdId, etMcc, etMnc, etCountry, etOperator, etIccId, etCid, etLac, etSubscriber, etSSID, etUa };
@@ -319,7 +316,7 @@ public class ActivitySettings extends ActivityBase {
 			// Global settings
 			cbUsage.setChecked(usage);
 			cbParameters.setChecked(parameters);
-			cbParameters.setEnabled(Util.hasProLicense(context) != null);
+			cbParameters.setEnabled(Util.hasProLicense(this) != null);
 			if (userId == 0)
 				cbLog.setChecked(log);
 			else {
@@ -452,23 +449,23 @@ public class ActivitySettings extends ActivityBase {
 		btnClearDb.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivitySettings.this);
 				alertDialogBuilder.setTitle(R.string.menu_clear_db);
 				alertDialogBuilder.setMessage(R.string.msg_sure);
-				alertDialogBuilder.setIcon(context.getThemed(R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(context.getString(android.R.string.ok),
+				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								PrivacyManager.clear();
-								((EditText) context.findViewById(R.id.etFilter)).setText("");
-								context.recreate();
-								Toast.makeText(context, context.getString(R.string.msg_reboot), Toast.LENGTH_LONG)
+								((EditText) findViewById(R.id.etFilter)).setText("");
+								recreate();
+								Toast.makeText(ActivitySettings.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG)
 										.show();
-								dlgSettings.finish();
+								finish();
 							}
 						});
-				alertDialogBuilder.setNegativeButton(context.getString(android.R.string.cancel),
+				alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
 						new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
@@ -518,8 +515,8 @@ public class ActivitySettings extends ActivityBase {
 				@Override
 				public void onClick(View view) {
 					Intent flushIntent = new Intent(UpdateService.cFlush);
-					context.startService(flushIntent);
-					Toast.makeText(context, context.getString(R.string.msg_done), Toast.LENGTH_LONG).show();
+					startService(flushIntent);
+					Toast.makeText(ActivitySettings.this, getString(R.string.msg_done), Toast.LENGTH_LONG).show();
 				}
 			});
 		else
@@ -531,7 +528,7 @@ public class ActivitySettings extends ActivityBase {
 			public void onClick(View view) {
 				try {
 					String search = etSearch.getText().toString();
-					final List<Address> listAddress = new Geocoder(context).getFromLocationName(search, 1);
+					final List<Address> listAddress = new Geocoder(ActivitySettings.this).getFromLocationName(search, 1);
 					if (listAddress.size() > 0) {
 						Address address = listAddress.get(0);
 
@@ -555,7 +552,7 @@ public class ActivitySettings extends ActivityBase {
 						etSearch.setText(sb.toString());
 					}
 				} catch (Throwable ex) {
-					Toast.makeText(context, ex.getMessage(), Toast.LENGTH_LONG).show();
+					Toast.makeText(ActivitySettings.this, ex.getMessage(), Toast.LENGTH_LONG).show();
 				}
 			}
 		});
@@ -690,17 +687,17 @@ public class ActivitySettings extends ActivityBase {
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingSSID, getValue(cbSSID, etSSID));
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingUa, getValue(null, etUa));
 
-				dlgSettings.finish();
+				finish();
 
 				// Refresh view
 				if (uid == userId) {
-					Intent intent = new Intent(context, ActivityMain.class);
-					context.startActivity(intent);
+					Intent intent = new Intent(ActivitySettings.this, ActivityMain.class);
+					startActivity(intent);
 				} else {
-					Intent intent = new Intent(context, ActivityApp.class);
+					Intent intent = new Intent(ActivitySettings.this, ActivityApp.class);
 					intent.putExtra(ActivityApp.cUid, uid);
 					intent.putExtra(ActivityApp.cAction, ActivityApp.cActionRefresh);
-					context.startActivity(intent);
+					startActivity(intent);
 				}
 			}
 		});
@@ -709,7 +706,7 @@ public class ActivitySettings extends ActivityBase {
 		btnCancel.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				dlgSettings.finish();
+				finish();
 			}
 		});
 	}
