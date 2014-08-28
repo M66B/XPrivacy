@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
@@ -71,54 +70,45 @@
                 android:src="?attr/icon_frozen" />
         </LinearLayout>
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/tvName"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:orientation="horizontal" >
+            android:background="@drawable/list_item_pressed"
+            android:gravity="center_vertical"
+            android:minHeight="?android:attr/listPreferredItemHeightSmall"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <TextView
-                android:id="@+id/tvName"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_weight="1"
-                android:background="@drawable/list_item_pressed"
-                android:gravity="center_vertical"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                tools:ignore="NestedWeights" />
+        <ImageView
+            android:id="@+id/imgSettings"
+            android:layout_width="24dip"
+            android:layout_height="24dip"
+            android:layout_gravity="center_vertical"
+            android:contentDescription="@string/help_application"
+            android:paddingLeft="3dip"
+            android:src="@android:drawable/btn_star_big_off"
+            android:visibility="gone" />
 
-            <ImageView
-                android:id="@+id/imgSettings"
-                android:layout_width="24dip"
-                android:layout_height="24dip"
-                android:layout_gravity="center_vertical"
-                android:contentDescription="@string/help_application"
-                android:paddingLeft="3dip"
-                android:src="@android:drawable/btn_star_big_off"
-                android:visibility="gone" />
+        <ImageView
+            android:id="@+id/imgCbRestricted"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dip"
+            android:layout_marginRight="3dip"
+            android:contentDescription="@string/title_restrict"
+            android:visibility="invisible" />
 
-            <ImageView
-                android:id="@+id/imgCbRestricted"
-                android:layout_width="32dip"
-                android:layout_height="32dip"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="3dip"
-                android:layout_marginRight="3dip"
-                android:contentDescription="@string/title_restrict"
-                android:visibility="invisible" />
-
-            <ProgressBar
-                android:id="@+id/pbRunning"
-                style="?android:attr/progressBarStyleInverse"
-                android:layout_width="32dip"
-                android:layout_height="32dip"
-                android:layout_gravity="center_vertical"
-                android:layout_marginLeft="3dip"
-                android:visibility="gone" />
-        </LinearLayout>
+        <ProgressBar
+            android:id="@+id/pbRunning"
+            style="?android:attr/progressBarStyleInverse"
+            android:layout_width="32dip"
+            android:layout_height="32dip"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dip"
+            android:visibility="gone" />
 
         <ImageView
             android:id="@+id/imgCbAsk"
