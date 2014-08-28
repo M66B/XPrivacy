@@ -125,7 +125,8 @@
             android:name=".ActivitySettings"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
-            android:parentActivityName=".ActivityMain" >
+            android:parentActivityName=".ActivityMain"
+            android:windowSoftInputMode="stateHidden" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="biz.bokhorst.xprivacy.ActivityMain" />
