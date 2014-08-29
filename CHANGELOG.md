@@ -31,21 +31,23 @@ Changelog
 XPrivacy 3
 ----------
 
-XPrivacy 2.99.x are XPrivacy 3 test/beta versions.
-XPrivacy 2 will not be maintained anymore after XPrivacy 3 has been released.
-See for some more information about XPrivacy 3 [here](https://github.com/M66B/XPrivacy#FAQ68).
+See for more information about XPrivacy 3 [here](https://github.com/M66B/XPrivacy#FAQ68).
 
-You can install XPrivacy 2.99.x / 3.x by following these steps:
+You can install XPrivacy 3.x by following these steps:
 
 * Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
-* Update to the latest 2.2.x (beta) version
+* Update to stable version 2.3
 * If you want to receive test/beta versions: enter the quirk *test* into the main settings
 * Use the main menu *Check for updates* (in the *Help ...* menu in the most recent versions)
 * Make sure notifications are not suppressed by another Xposed module or an application manager
 
-Version 2.99.x and version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for the time being.
+Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for some time.
 
 **Next release**
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.0**
 
 Main changes since stable version 2.2.1:
 
@@ -60,8 +62,6 @@ Other changes:
 * Updated Italian translation
 * Updated Japanese translation
 * Updated Norwegian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.99.43 BETA**
 
