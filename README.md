@@ -1154,11 +1154,13 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 If there is no message about compatibility mode, XPrivacy 3 is running in AOSP mode.
 XPrivacy 3 will always run in compatibility mode on Android versions before KitKat.
 
-You can switch XPrivacy 3 to AOSP mode by creating this file:
+You can force XPrivacy 3 into AOSP mode by creating this file:
 
 /data/system/xprivacy/aosp
 
-From version 2.99.35 AOSP mode can be enabled from the main settings.
+From version 2.99.35 AOSP mode can be enabled from the main settings (which will in fact create the trigger file).
+
+There is no need to force AOSP mode if XPrivacy recognizes your ROM as a compatible ROM.
 
 For the benefit of others, please report if XPrivacy 3 works for the ROM you are using
 (also post a screenshot of the *About* of XPrivacy so I can see how the ROM can be recognized).
