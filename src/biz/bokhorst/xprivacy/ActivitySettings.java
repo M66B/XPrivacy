@@ -25,11 +25,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class ActivitySettings extends ActivityBase {
+public class ActivitySettings extends ActivityBase implements OnCheckedChangeListener {
 	private int userId;
 	private int uid;
 	boolean isApp;
@@ -46,6 +47,7 @@ public class ActivitySettings extends ActivityBase {
 	private CheckBox cbAOSP;
 	private EditText etConfidence;
 	private EditText etQuirks;
+	private Button btnClearDb;
 	private CheckBox cbRandom;
 	private EditText etSerial;
 	private EditText etLat;
@@ -116,7 +118,7 @@ public class ActivitySettings extends ActivityBase {
 		final LinearLayout llConfidence = (LinearLayout) findViewById(R.id.llConfidence);
 		etConfidence = (EditText) findViewById(R.id.etConfidence);
 		etQuirks = (EditText) findViewById(R.id.etQuirks);
-		final Button btnClearDb = (Button) findViewById(R.id.btnClearDb);
+		btnClearDb = (Button) findViewById(R.id.btnClearDb);
 
 		cbRandom = (CheckBox) findViewById(R.id.cbRandom);
 		final Button btnRandom = (Button) findViewById(R.id.btnRandom);
@@ -168,117 +170,20 @@ public class ActivitySettings extends ActivityBase {
 				cbAdId, cbCountry, cbSubscriber, cbSSID };
 
 		// Listen for changes
-		cbExpert.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				cbSystem.setEnabled(isChecked);
-				cbExperimental.setEnabled(isChecked);
-				cbHttps.setEnabled(isChecked);
-				cbAOSP.setEnabled(isChecked);
-				etConfidence.setEnabled(isChecked);
-				etQuirks.setEnabled(isChecked);
-				btnClearDb.setEnabled(isChecked);
-				if (!isChecked) {
-					cbSystem.setChecked(false);
-					cbExperimental.setChecked(false);
-					cbHttps.setChecked(true);
-					cbAOSP.setChecked(false);
-					etConfidence.setText("");
-					etQuirks.setText("");
-				}
-			}
-		});
-
-		cbSerial.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etSerial.setEnabled(!isChecked);
-			}
-		});
-
-		cbLat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etLat.setEnabled(!isChecked);
-			}
-		});
-
-		cbLon.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etLon.setEnabled(!isChecked);
-			}
-		});
-
-		cbAlt.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etAlt.setEnabled(!isChecked);
-			}
-		});
-
-		cbMac.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etMac.setEnabled(!isChecked);
-			}
-		});
-
-		cbImei.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etImei.setEnabled(!isChecked);
-			}
-		});
-
-		cbPhone.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etPhone.setEnabled(!isChecked);
-			}
-		});
-
-		cbId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etId.setEnabled(!isChecked);
-			}
-		});
-
-		cbGsfId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etGsfId.setEnabled(!isChecked);
-			}
-		});
-
-		cbAdId.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etAdId.setEnabled(!isChecked);
-			}
-		});
-
-		cbCountry.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etCountry.setEnabled(!isChecked);
-			}
-		});
-
-		cbSubscriber.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etSubscriber.setEnabled(!isChecked);
-			}
-		});
-
-		cbSSID.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				etSSID.setEnabled(!isChecked);
-			}
-		});
+		cbExpert.setOnCheckedChangeListener(this);
+		cbSerial.setOnCheckedChangeListener(this);
+		cbLat.setOnCheckedChangeListener(this);
+		cbLon.setOnCheckedChangeListener(this);
+		cbAlt.setOnCheckedChangeListener(this);
+		cbMac.setOnCheckedChangeListener(this);
+		cbImei.setOnCheckedChangeListener(this);
+		cbPhone.setOnCheckedChangeListener(this);
+		cbId.setOnCheckedChangeListener(this);
+		cbGsfId.setOnCheckedChangeListener(this);
+		cbAdId.setOnCheckedChangeListener(this);
+		cbCountry.setOnCheckedChangeListener(this);
+		cbSubscriber.setOnCheckedChangeListener(this);
+		cbSSID.setOnCheckedChangeListener(this);
 
 		// Display app name
 		if (extras != null) {
@@ -624,6 +529,68 @@ public class ActivitySettings extends ActivityBase {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@Override
+	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+		switch (buttonView.getId()) {
+		case R.id.cbSerial:
+			etSerial.setEnabled(!isChecked);
+			break;
+		case R.id.cbLat:
+			etLat.setEnabled(!isChecked);
+			break;
+		case R.id.cbLon:
+			etLon.setEnabled(!isChecked);
+			break;
+		case R.id.cbAlt:
+			etAlt.setEnabled(!isChecked);
+			break;
+		case R.id.cbMac:
+			etMac.setEnabled(!isChecked);
+			break;
+		case R.id.cbImei:
+			etImei.setEnabled(!isChecked);
+			break;
+		case R.id.cbPhone:
+			etPhone.setEnabled(!isChecked);
+			break;
+		case R.id.cbId:
+			etId.setEnabled(!isChecked);
+			break;
+		case R.id.cbGsfId:
+			etGsfId.setEnabled(!isChecked);
+			break;
+		case R.id.cbAdId:
+			etAdId.setEnabled(!isChecked);
+			break;
+		case R.id.cbCountry:
+			etCountry.setEnabled(!isChecked);
+			break;
+		case R.id.cbSubscriber:
+			etSubscriber.setEnabled(!isChecked);
+			break;
+		case R.id.cbSSID:
+			etSSID.setEnabled(!isChecked);
+			break;
+		case R.id.cbExpert:
+			cbSystem.setEnabled(isChecked);
+			cbExperimental.setEnabled(isChecked);
+			cbHttps.setEnabled(isChecked);
+			cbAOSP.setEnabled(isChecked);
+			etConfidence.setEnabled(isChecked);
+			etQuirks.setEnabled(isChecked);
+			btnClearDb.setEnabled(isChecked);
+			if (!isChecked) {
+				cbSystem.setChecked(false);
+				cbExperimental.setChecked(false);
+				cbHttps.setChecked(true);
+				cbAOSP.setChecked(false);
+				etConfidence.setText("");
+				etQuirks.setText("");
+			}
+			break;
 		}
 	}
 
