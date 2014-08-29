@@ -41,11 +41,11 @@
     <string name="menu_contacts">选择允许访问的联系人</string>
     <string name="menu_whitelists">管理白名单</string>
     <string name="menu_tutorial">界面功能指引</string>
-    <string name="menu_changelog">Changelog</string>
+    <string name="menu_changelog">更新日志</string>
     <string name="menu_flush">清除缓存</string>
     <string name="menu_update">检查更新</string>
-    <string name="menu_batch">Operations &#8230;</string>
-    <string name="menu_legend">Legend</string>
+    <string name="menu_batch">操作&#8230;</string>
+    <string name="menu_legend">图例</string>
     <string name="msg_abort">正在中止</string>
     <string name="msg_aborted">已中止</string>
     <string name="msg_new">新应用</string>
@@ -219,9 +219,9 @@
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">AOSP模式 (需要重新启动)</string>
-    <string name="help_check_restrict">First check box: restrict category or function</string>
-    <string name="help_check_ondemand">Second check box: restrict on demand</string>
-    <string name="help_switch">On/off switch: enable or disable all restrictions</string>
+    <string name="help_check_restrict">第一个复选框：限制类或函数</string>
+    <string name="help_check_ondemand">第二个复选框：限制需求</string>
+    <string name="help_switch">开关：启用或禁用所有限制</string>
     <string name="help_longpress">长按名称进行选择</string>
     <string name="help_ondemand">当限制时询问</string>
     <string name="help_application">请输入应用名称</string>
