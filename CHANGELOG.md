@@ -290,7 +290,7 @@ XPrivacy 2
 XPrivacy 2 will not be maintained anymore.
 See for more information about XPrivacy 3 [here](#xprivacy3).
 
-**Next release**
+**Version 2.3 STABLE**
 
 Main changes since stable version 2.2.1:
 
@@ -323,8 +323,6 @@ Other changes:
 * Updated Slovak translation
 * Updated simplified Chinese translation
 * Updated traditional Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 2.2.12 BETA**
 
