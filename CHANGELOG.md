@@ -31,7 +31,7 @@ Changelog
 XPrivacy 3
 ----------
 
-See for more information about XPrivacy 3 [here](https://github.com/M66B/XPrivacy#FAQ68).
+See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPrivacy#FAQ68).
 
 You can install XPrivacy 3.x by following these steps:
 
