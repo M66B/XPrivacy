@@ -329,6 +329,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			// 3 restricted, asked
 
 			mLock.writeLock().lock();
+			try {
 			db.beginTransaction();
 			try {
 				// Create category record
@@ -353,11 +354,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				db.setTransactionSuccessful();
 			} finally {
-				try {
-					db.endTransaction();
-				} finally {
-					mLock.writeLock().unlock();
-				}
+				db.endTransaction();
+			}
+			} finally {
+				mLock.writeLock().unlock();
 			}
 
 			// Update cache
@@ -501,6 +501,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				// Execute statement
 				mLock.readLock().lock();
+				try {
 				db.beginTransaction();
 				try {
 					if (!ccached)
@@ -540,11 +541,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 					db.setTransactionSuccessful();
 				} finally {
-					try {
-						db.endTransaction();
-					} finally {
-						mLock.readLock().unlock();
-					}
+					db.endTransaction();
+				}
+				} finally {
+					mLock.readLock().unlock();
 				}
 
 				// Default dangerous
@@ -677,6 +677,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 										extra = restriction.extra;
 
 								mLockUsage.writeLock().lock();
+								try {
 								dbUsage.beginTransaction();
 								try {
 									ContentValues values = new ContentValues();
@@ -691,11 +692,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 									dbUsage.setTransactionSuccessful();
 								} finally {
-									try {
-										dbUsage.endTransaction();
-									} finally {
-										mLockUsage.writeLock().unlock();
-									}
+									dbUsage.endTransaction();
+								}
+								} finally {
+									mLockUsage.writeLock().unlock();
 								}
 							}
 						} catch (SQLiteException ex) {
@@ -757,6 +757,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				// Execute statement
 				mLock.readLock().lock();
+				try {
 				db.beginTransaction();
 				try {
 					try {
@@ -773,11 +774,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 					db.setTransactionSuccessful();
 				} finally {
-					try {
-						db.endTransaction();
-					} finally {
-						mLock.readLock().unlock();
-					}
+					db.endTransaction();
+				}
+				} finally {
+					mLock.readLock().unlock();
 				}
 			}
 
@@ -797,6 +797,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				return;
 
 			mLock.writeLock().lock();
+			try {
 			db.beginTransaction();
 			try {
 				if ("".equals(restrictionName))
@@ -808,11 +809,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				db.setTransactionSuccessful();
 			} finally {
-				try {
-					db.endTransaction();
-				} finally {
-					mLock.writeLock().unlock();
-				}
+				db.endTransaction();
+			}
+			} finally {
+				mLock.writeLock().unlock();
 			}
 
 			// Clear caches
@@ -854,6 +854,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			}
 
 			mLockUsage.readLock().lock();
+			try {
 			dbUsage.beginTransaction();
 			try {
 				for (PRestriction restriction : listRestriction) {
@@ -882,11 +883,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				dbUsage.setTransactionSuccessful();
 			} finally {
-				try {
-					dbUsage.endTransaction();
-				} finally {
-					mLockUsage.readLock().unlock();
-				}
+				dbUsage.endTransaction();
+			}
+			} finally {
+				mLockUsage.readLock().unlock();
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -904,6 +904,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			int userId = Util.getUserId(Binder.getCallingUid());
 
 			mLockUsage.readLock().lock();
+			try {
 			dbUsage.beginTransaction();
 			try {
 				String sFrom = Long.toString(new Date().getTime() - cMaxUsageDataHours * 60L * 60L * 1000L);
@@ -950,11 +951,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				dbUsage.setTransactionSuccessful();
 			} finally {
-				try {
-					dbUsage.endTransaction();
-				} finally {
-					mLockUsage.readLock().unlock();
-				}
+				dbUsage.endTransaction();
+			}
+			} finally {
+				mLockUsage.readLock().unlock();
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -970,6 +970,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			SQLiteDatabase dbUsage = getDbUsage();
 
 			mLockUsage.writeLock().lock();
+			try {
 			dbUsage.beginTransaction();
 			try {
 				if (uid == 0)
@@ -980,11 +981,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				dbUsage.setTransactionSuccessful();
 			} finally {
-				try {
-					dbUsage.endTransaction();
-				} finally {
-					mLockUsage.writeLock().unlock();
-				}
+				dbUsage.endTransaction();
+			}
+			} finally {
+				mLockUsage.writeLock().unlock();
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -1012,6 +1012,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				return;
 
 			mLock.writeLock().lock();
+			try {
 			db.beginTransaction();
 			try {
 				if (setting.value == null)
@@ -1031,11 +1032,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				db.setTransactionSuccessful();
 			} finally {
-				try {
-					db.endTransaction();
-				} finally {
-					mLock.writeLock().unlock();
-				}
+				db.endTransaction();
+			}
+			} finally {
+				mLock.writeLock().unlock();
 			}
 
 			if (PrivacyManager.cSettingAOSPMode.equals(setting.name))
@@ -1155,6 +1155,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			// Execute statement
 			boolean found = false;
 			mLock.readLock().lock();
+			try {
 			db.beginTransaction();
 			try {
 				try {
@@ -1171,11 +1172,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				db.setTransactionSuccessful();
 			} finally {
-				try {
-					db.endTransaction();
-				} finally {
-					mLock.readLock().unlock();
-				}
+				db.endTransaction();
+			}
+			} finally {
+				mLock.readLock().unlock();
 			}
 
 			// Add to cache
@@ -1212,6 +1212,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				return listSetting;
 
 			mLock.readLock().lock();
+			try {
 			db.beginTransaction();
 			try {
 				Cursor cursor;
@@ -1234,11 +1235,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				db.setTransactionSuccessful();
 			} finally {
-				try {
-					db.endTransaction();
-				} finally {
-					mLock.readLock().unlock();
-				}
+				db.endTransaction();
+			}
+			} finally {
+				mLock.readLock().unlock();
 			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -1256,6 +1256,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				return;
 
 			mLock.writeLock().lock();
+			try {
 			db.beginTransaction();
 			try {
 				db.delete(cTableSetting, "uid=?", new String[] { Integer.toString(uid) });
@@ -1263,11 +1264,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				db.setTransactionSuccessful();
 			} finally {
-				try {
-					db.endTransaction();
-				} finally {
-					mLock.writeLock().unlock();
-				}
+				db.endTransaction();
+			}
+			} finally {
+				mLock.writeLock().unlock();
 			}
 
 			// Clear cache
@@ -1290,6 +1290,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				return;
 
 			mLock.writeLock().lock();
+			try {
 			db.beginTransaction();
 			try {
 				db.execSQL("DELETE FROM " + cTableRestriction);
@@ -1306,11 +1307,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				db.setTransactionSuccessful();
 			} finally {
-				try {
-					db.endTransaction();
-				} finally {
-					mLock.writeLock().unlock();
-				}
+				db.endTransaction();
+			}
+			} finally {
+				mLock.writeLock().unlock();
 			}
 
 			// Clear caches
@@ -1326,6 +1326,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			Util.log(null, Log.WARN, "Caches cleared");
 
 			mLockUsage.writeLock().lock();
+			try {
 			dbUsage.beginTransaction();
 			try {
 				dbUsage.execSQL("DELETE FROM " + cTableUsage);
@@ -1333,11 +1334,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 				dbUsage.setTransactionSuccessful();
 			} finally {
-				try {
-					dbUsage.endTransaction();
-				} finally {
-					mLockUsage.writeLock().unlock();
-				}
+				dbUsage.endTransaction();
+			}
+			} finally {
+				mLockUsage.writeLock().unlock();
 			}
 
 		} catch (Throwable ex) {
@@ -2369,6 +2369,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 					if (db.getVersion() > 1) {
 						Util.log(null, Log.WARN, "Updating migration status");
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							ContentValues values = new ContentValues();
@@ -2381,11 +2382,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
@@ -2393,6 +2393,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 					if (db.needUpgrade(1)) {
 						Util.log(null, Log.WARN, "Creating database");
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							// http://www.sqlite.org/lang_createtable.html
@@ -2405,11 +2406,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 							db.setVersion(1);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 
 					}
@@ -2423,40 +2423,41 @@ public class PrivacyService extends IPrivacyService.Stub {
 					if (db.needUpgrade(3)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							db.execSQL("DELETE FROM usage WHERE method=''");
 							db.setVersion(3);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
 					if (db.needUpgrade(4)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							db.execSQL("DELETE FROM setting WHERE value IS NULL");
 							db.setVersion(4);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
 					if (db.needUpgrade(5)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							db.execSQL("DELETE FROM setting WHERE value = ''");
@@ -2464,51 +2465,51 @@ public class PrivacyService extends IPrivacyService.Stub {
 							db.setVersion(5);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
 					if (db.needUpgrade(6)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							db.execSQL("DELETE FROM setting WHERE name LIKE 'OnDemand.%'");
 							db.setVersion(6);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
 					if (db.needUpgrade(7)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							db.execSQL("ALTER TABLE usage ADD COLUMN extra TEXT");
 							db.setVersion(7);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
 					if (db.needUpgrade(8)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							db.execSQL("DROP INDEX idx_usage");
@@ -2516,34 +2517,34 @@ public class PrivacyService extends IPrivacyService.Stub {
 							db.setVersion(8);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
 					if (db.needUpgrade(9)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							db.execSQL("DROP TABLE usage");
 							db.setVersion(9);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
 					if (db.needUpgrade(10)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							db.execSQL("ALTER TABLE setting ADD COLUMN type TEXT");
@@ -2553,17 +2554,17 @@ public class PrivacyService extends IPrivacyService.Stub {
 							db.setVersion(10);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
 					if (db.needUpgrade(11)) {
 						Util.log(null, Log.WARN, "Upgrading from version=" + db.getVersion());
 						mLock.writeLock().lock();
+						try {
 						db.beginTransaction();
 						try {
 							List<PSetting> listSetting = new ArrayList<PSetting>();
@@ -2615,11 +2616,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 							db.setVersion(11);
 							db.setTransactionSuccessful();
 						} finally {
-							try {
-								db.endTransaction();
-							} finally {
-								mLock.writeLock().unlock();
-							}
+							db.endTransaction();
+						}
+						} finally {
+							mLock.writeLock().unlock();
 						}
 					}
 
@@ -2684,6 +2684,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 					if (dbUsage.needUpgrade(1)) {
 						Util.log(null, Log.WARN, "Creating usage database");
 						mLockUsage.writeLock().lock();
+						try {
 						dbUsage.beginTransaction();
 						try {
 							dbUsage.execSQL("CREATE TABLE usage (uid INTEGER NOT NULL, restriction TEXT NOT NULL, method TEXT NOT NULL, extra TEXT NOT NULL, restricted INTEGER NOT NULL, time INTEGER NOT NULL)");
@@ -2691,11 +2692,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 							dbUsage.setVersion(1);
 							dbUsage.setTransactionSuccessful();
 						} finally {
-							try {
-								dbUsage.endTransaction();
-							} finally {
-								mLockUsage.writeLock().unlock();
-							}
+							dbUsage.endTransaction();
+						}
+						} finally {
+							mLockUsage.writeLock().unlock();
 						}
 					}
 
