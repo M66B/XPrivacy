@@ -22,6 +22,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -30,7 +31,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-public class ActivitySettings extends ActivityBase implements OnCheckedChangeListener {
+public class ActivitySettings extends ActivityBase implements OnCheckedChangeListener, OnClickListener {
 	private int userId;
 	private int uid;
 	private boolean isApp;
@@ -53,6 +54,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 	private EditText etLat;
 	private EditText etLon;
 	private EditText etAlt;
+	private EditText etSearch;
 	private EditText etMac;
 	private EditText etIP;
 	private EditText etImei;
@@ -129,7 +131,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		etLat = (EditText) findViewById(R.id.etLat);
 		etLon = (EditText) findViewById(R.id.etLon);
 		etAlt = (EditText) findViewById(R.id.etAlt);
-		final EditText etSearch = (EditText) findViewById(R.id.etSearch);
+		etSearch = (EditText) findViewById(R.id.etSearch);
 		final Button btnSearch = (Button) findViewById(R.id.btnSearch);
 		etMac = (EditText) findViewById(R.id.etMac);
 		etIP = (EditText) findViewById(R.id.etIP);
@@ -162,12 +164,6 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		cbCountry = (CheckBox) findViewById(R.id.cbCountry);
 		cbSubscriber = (CheckBox) findViewById(R.id.cbSubscriber);
 		cbSSID = (CheckBox) findViewById(R.id.cbSSID);
-
-		final EditText[] edits = new EditText[] { etSerial, etLat, etLon, etAlt, etMac, etIP, etImei, etPhone, etId,
-				etGsfId, etAdId, etMcc, etMnc, etCountry, etOperator, etIccId, etCid, etLac, etSubscriber, etSSID, etUa };
-
-		final CheckBox[] boxes = new CheckBox[] { cbSerial, cbLat, cbLon, cbAlt, cbMac, cbImei, cbPhone, cbId, cbGsfId,
-				cbAdId, cbCountry, cbSubscriber, cbSSID };
 
 		// Listen for changes
 		cbExpert.setOnCheckedChangeListener(this);
@@ -396,116 +392,16 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		etLac.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLac, ""));
 		etUa.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingUa, ""));
 
-		btnClearDb.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivitySettings.this);
-				alertDialogBuilder.setTitle(R.string.menu_clear_db);
-				alertDialogBuilder.setMessage(R.string.msg_sure);
-				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-				alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								PrivacyManager.clear();
-								((EditText) findViewById(R.id.etFilter)).setText("");
-								recreate();
-								Toast.makeText(ActivitySettings.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG)
-										.show();
-								finish();
-							}
-						});
-				alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-							}
-						});
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			}
-		});
-
-		// Handle manual randomize
-		btnRandom.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				etSerial.setText(PrivacyManager.getRandomProp("SERIAL"));
-				etLat.setText(PrivacyManager.getRandomProp("LAT"));
-				etLon.setText(PrivacyManager.getRandomProp("LON"));
-				etAlt.setText(PrivacyManager.getRandomProp("ALT"));
-				etMac.setText(PrivacyManager.getRandomProp("MAC"));
-				etImei.setText(PrivacyManager.getRandomProp("IMEI"));
-				etPhone.setText(PrivacyManager.getRandomProp("PHONE"));
-				etId.setText(PrivacyManager.getRandomProp("ANDROID_ID"));
-				etGsfId.setText(PrivacyManager.getRandomProp("GSF_ID"));
-				etAdId.setText(PrivacyManager.getRandomProp("AdvertisingId"));
-				etCountry.setText(PrivacyManager.getRandomProp("ISO3166"));
-				etSubscriber.setText(PrivacyManager.getRandomProp("SubscriberId"));
-				etSSID.setText(PrivacyManager.getRandomProp("SSID"));
-			}
-		});
-
-		// Handle clear
-		btnClear.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				for (EditText edit : edits)
-					edit.setText("");
-				etSearch.setText("");
-
-				for (CheckBox box : boxes)
-					box.setChecked(false);
-			}
-		});
+		btnClearDb.setOnClickListener(this);
+		btnRandom.setOnClickListener(this);
+		btnClear.setOnClickListener(this);
+		btnSearch.setOnClickListener(this);
 
 		// Handle flush
 		if (uid == 0)
-			btnFlush.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					Intent flushIntent = new Intent(UpdateService.cFlush);
-					startService(flushIntent);
-					Toast.makeText(ActivitySettings.this, getString(R.string.msg_done), Toast.LENGTH_LONG).show();
-				}
-			});
+			btnFlush.setOnClickListener(this);
 		else
 			btnFlush.setVisibility(View.GONE);
-
-		// Handle search
-		btnSearch.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				try {
-					String search = etSearch.getText().toString();
-					final List<Address> listAddress = new Geocoder(ActivitySettings.this).getFromLocationName(search, 1);
-					if (listAddress.size() > 0) {
-						Address address = listAddress.get(0);
-
-						// Get coordinates
-						if (address.hasLatitude()) {
-							cbLat.setChecked(false);
-							etLat.setText(Double.toString(address.getLatitude()));
-						}
-						if (address.hasLongitude()) {
-							cbLon.setChecked(false);
-							etLon.setText(Double.toString(address.getLongitude()));
-						}
-
-						// Get address
-						StringBuilder sb = new StringBuilder();
-						for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
-							if (i != 0)
-								sb.append(", ");
-							sb.append(address.getAddressLine(i));
-						}
-						etSearch.setText(sb.toString());
-					}
-				} catch (Throwable ex) {
-					Toast.makeText(ActivitySettings.this, ex.getMessage(), Toast.LENGTH_LONG).show();
-				}
-			}
-		});
 	}
 
 	@Override
@@ -592,6 +488,121 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			}
 			break;
 		}
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+		case R.id.btnClearDb:
+			clearDB();
+			break;
+		case R.id.btnRandom:
+			randomize();
+			break;
+		case R.id.btnClear:
+			clear();
+			break;
+		case R.id.btnSearch:
+			search();
+			break;
+		case R.id.btnFlush:
+			flush();
+			break;
+		}
+	}
+
+	private void clearDB() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivitySettings.this);
+		alertDialogBuilder.setTitle(R.string.menu_clear_db);
+		alertDialogBuilder.setMessage(R.string.msg_sure);
+		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						PrivacyManager.clear();
+						((EditText) findViewById(R.id.etFilter)).setText("");
+						recreate();
+						Toast.makeText(ActivitySettings.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG)
+								.show();
+						finish();
+					}
+				});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+					}
+				});
+		AlertDialog alertDialog = alertDialogBuilder.create();
+		alertDialog.show();
+	}
+
+	private void randomize() {
+		etSerial.setText(PrivacyManager.getRandomProp("SERIAL"));
+		etLat.setText(PrivacyManager.getRandomProp("LAT"));
+		etLon.setText(PrivacyManager.getRandomProp("LON"));
+		etAlt.setText(PrivacyManager.getRandomProp("ALT"));
+		etMac.setText(PrivacyManager.getRandomProp("MAC"));
+		etImei.setText(PrivacyManager.getRandomProp("IMEI"));
+		etPhone.setText(PrivacyManager.getRandomProp("PHONE"));
+		etId.setText(PrivacyManager.getRandomProp("ANDROID_ID"));
+		etGsfId.setText(PrivacyManager.getRandomProp("GSF_ID"));
+		etAdId.setText(PrivacyManager.getRandomProp("AdvertisingId"));
+		etCountry.setText(PrivacyManager.getRandomProp("ISO3166"));
+		etSubscriber.setText(PrivacyManager.getRandomProp("SubscriberId"));
+		etSSID.setText(PrivacyManager.getRandomProp("SSID"));
+	}
+
+	private void clear() {
+		final EditText[] edits = new EditText[] { etSerial, etLat, etLon, etAlt, etMac, etIP, etImei, etPhone, etId,
+				etGsfId, etAdId, etMcc, etMnc, etCountry, etOperator, etIccId, etCid, etLac, etSubscriber, etSSID, etUa };
+		final CheckBox[] boxes = new CheckBox[] { cbSerial, cbLat, cbLon, cbAlt, cbMac, cbImei, cbPhone, cbId, cbGsfId,
+				cbAdId, cbCountry, cbSubscriber, cbSSID };
+
+		for (EditText edit : edits)
+			edit.setText("");
+		etSearch.setText("");
+
+		for (CheckBox box : boxes)
+			box.setChecked(false);
+	}
+
+	private void search() {
+		try {
+			String search = etSearch.getText().toString();
+			final List<Address> listAddress = new Geocoder(ActivitySettings.this).getFromLocationName(search, 1);
+			if (listAddress.size() > 0) {
+				Address address = listAddress.get(0);
+
+				// Get coordinates
+				if (address.hasLatitude()) {
+					cbLat.setChecked(false);
+					etLat.setText(Double.toString(address.getLatitude()));
+				}
+				if (address.hasLongitude()) {
+					cbLon.setChecked(false);
+					etLon.setText(Double.toString(address.getLongitude()));
+				}
+
+				// Get address
+				StringBuilder sb = new StringBuilder();
+				for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {
+					if (i != 0)
+						sb.append(", ");
+					sb.append(address.getAddressLine(i));
+				}
+				etSearch.setText(sb.toString());
+			}
+		} catch (Throwable ex) {
+			Toast.makeText(ActivitySettings.this, ex.getMessage(), Toast.LENGTH_LONG).show();
+		}
+	}
+
+	private void flush() {
+		Intent flushIntent = new Intent(UpdateService.cFlush);
+		startService(flushIntent);
+		Toast.makeText(ActivitySettings.this, getString(R.string.msg_done), Toast.LENGTH_LONG).show();
 	}
 
 	@SuppressLint("DefaultLocale")
