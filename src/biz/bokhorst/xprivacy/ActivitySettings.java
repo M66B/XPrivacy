@@ -521,11 +521,14 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						PrivacyManager.clear();
-						((EditText) ActivitySettings.this.findViewById(R.id.etFilter)).setText("");
-						recreate();
 						Toast.makeText(ActivitySettings.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG)
 								.show();
 						finish();
+
+						// Refresh main UI
+						Intent intent = new Intent(ActivitySettings.this, ActivityMain.class);
+						intent.putExtra(ActivityMain.cRefreshUI, true);
+						startActivity(intent);
 					}
 				});
 		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
