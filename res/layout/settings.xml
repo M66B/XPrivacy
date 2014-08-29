@@ -28,140 +28,148 @@
             android:layout_marginBottom="6dp"
             android:background="#888888" />
 
-        <CheckBox
-            android:id="@+id/cbNotify"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_notify" />
-
-        <CheckBox
-            android:id="@+id/cbOnDemand"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_ondemand" />
-
-        <CheckBox
-            android:id="@+id/cbBlacklist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_blacklist" />
-
-        <CheckBox
-            android:id="@+id/cbUsage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_usagedata" />
-
-        <CheckBox
-            android:id="@+id/cbParameters"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_parameters" />
-
-        <CheckBox
-            android:id="@+id/cbLog"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_log" />
-
-        <CheckBox
-            android:id="@+id/cbExpert"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/settings_expert" />
-
-        <CheckBox
-            android:id="@+id/cbSystem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:background="?attr/color_dangerous"
-            android:text="@string/settings_syscomponents" />
-
-        <CheckBox
-            android:id="@+id/cbExperimental"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:text="@string/settings_experimental"
-            android:visibility="gone" />
-
-        <CheckBox
-            android:id="@+id/cbHttps"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:text="@string/settings_https" />
-
-        <CheckBox
-            android:id="@+id/cbAOSP"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:text="@string/settings_aosp"
-            android:visibility="gone" />
-
-        <LinearLayout
-            android:id="@+id/llConfidence"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:gravity="center_vertical"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/settings_confidence"
-                android:textIsSelectable="false" />
-
-            <EditText
-                android:id="@+id/etConfidence"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="35"
-                android:inputType="numberDecimal"
-                android:maxLength="2"
-                tools:ignore="HardcodedText" />
-        </LinearLayout>
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:orientation="horizontal" >
+            android:divider="?android:attr/listDivider"
+            android:orientation="vertical"
+            android:showDividers="middle" >
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:text="@string/settings_quirks"
-                android:textIsSelectable="false" />
-
-            <EditText
-                android:id="@+id/etQuirks"
+            <CheckBox
+                android:id="@+id/cbNotify"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="freeze,resolve,test"
-                android:inputType="text"
-                tools:ignore="HardcodedText" />
+                android:text="@string/settings_notify" />
+
+            <CheckBox
+                android:id="@+id/cbOnDemand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_ondemand" />
+
+            <CheckBox
+                android:id="@+id/cbBlacklist"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_blacklist" />
+
+            <CheckBox
+                android:id="@+id/cbUsage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_usagedata" />
+
+            <CheckBox
+                android:id="@+id/cbParameters"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_parameters" />
+
+            <CheckBox
+                android:id="@+id/cbLog"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_log" />
+
+            <CheckBox
+                android:id="@+id/cbExpert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/settings_expert" />
+
+            <CheckBox
+                android:id="@+id/cbSystem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:background="?attr/color_dangerous"
+                android:text="@string/settings_syscomponents" />
+
+            <CheckBox
+                android:id="@+id/cbExperimental"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/settings_experimental"
+                android:visibility="gone" />
+
+            <CheckBox
+                android:id="@+id/cbHttps"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/settings_https" />
+
+            <CheckBox
+                android:id="@+id/cbAOSP"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/settings_aosp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/llConfidence"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:gravity="center_vertical"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/settings_confidence"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etConfidence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="35"
+                    android:inputType="numberDecimal"
+                    android:maxLength="2"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:orientation="horizontal" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/settings_quirks"
+                    android:textIsSelectable="false" />
+
+                <EditText
+                    android:id="@+id/etQuirks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="freeze,resolve,test"
+                    android:inputType="text"
+                    tools:ignore="HardcodedText" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btnFlush"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/menu_flush" />
+
+            <Button
+                android:id="@+id/btnClearDb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dip"
+                android:text="@string/menu_clear_db" />
         </LinearLayout>
-
-        <Button
-            android:id="@+id/btnFlush"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:text="@string/menu_flush" />
-
-        <Button
-            android:id="@+id/btnClearDb"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="30dip"
-            android:text="@string/menu_clear_db" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -177,29 +185,43 @@
             android:layout_marginBottom="6dp"
             android:background="#888888" />
 
-        <CheckBox
-            android:id="@+id/cbRandom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/msg_random_boot" />
-
-        <Button
-            android:id="@+id/btnRandom"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/msg_random_now" />
-
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_clear" />
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:divider="?android:attr/listDivider"
+            android:showDividers="middle"
             android:shrinkColumns="2"
             android:stretchColumns="2" >
+
+            <TableRow>
+
+                <CheckBox
+                    android:id="@+id/cbRandom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:text="@string/msg_random_boot" />
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/btnClear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:text="@string/menu_clear" />
+            </TableRow>
+
+            <TableRow>
+
+                <Button
+                    android:id="@+id/btnRandom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_span="3"
+                    android:text="@string/msg_random_now" />
+            </TableRow>
 
             <TableRow>
 
