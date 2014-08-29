@@ -46,6 +46,7 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 **Next release**
 
 * Improved database locking ([pull request](/../../issues/1939))
+* Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
