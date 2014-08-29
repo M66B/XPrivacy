@@ -521,7 +521,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						PrivacyManager.clear();
-						((EditText) findViewById(R.id.etFilter)).setText("");
+						((EditText) ActivitySettings.this.findViewById(R.id.etFilter)).setText("");
 						recreate();
 						Toast.makeText(ActivitySettings.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG)
 								.show();
