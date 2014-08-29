@@ -33,8 +33,8 @@ import android.widget.Toast;
 public class ActivitySettings extends ActivityBase implements OnCheckedChangeListener {
 	private int userId;
 	private int uid;
-	boolean isApp;
-	boolean odSystem;
+	private boolean isApp;
+	private boolean odSystem;
 	private CheckBox cbNotify;
 	private CheckBox cbOnDemand;
 	private CheckBox cbBlacklist;
