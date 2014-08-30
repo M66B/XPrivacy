@@ -42,7 +42,7 @@
 		$body = file_get_contents('php://input');
 		$data = json_decode($body);
 		if (empty($body) || empty($data)) {
-			log_error('json: empty request', $my_email, $data);
+			//log_error('json: empty request', $my_email, $data);
 			header('Content-Type: application/json');
 			echo json_encode(array('ok' => false, 'errno' => 101, 'error' => 'Empty request'));
 			exit();
