@@ -1779,7 +1779,7 @@ public class ActivityApp extends ActivityBase {
 		Dialog dlgHelp = new Dialog(context);
 		dlgHelp.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgHelp.setTitle(R.string.app_name);
-		dlgHelp.setContentView(R.layout.popup);
+		dlgHelp.setContentView(R.layout.help);
 		dlgHelp.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, context.getThemed(R.attr.icon_launcher));
 		dlgHelp.setCancelable(true);
 

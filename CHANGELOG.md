@@ -52,6 +52,7 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 **Version 3.0.2 BETA**
 
 * Layout improvements
+* Show function help in a dialog
 * Fixed tutorial header
 * Fixed Indonesian translation
 * Updated Lithuanian translation
