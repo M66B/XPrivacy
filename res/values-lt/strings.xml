@@ -45,12 +45,12 @@
     <string name="menu_flush">Išvalyti talpyklą</string>
     <string name="menu_update">Patikrinti atnaujinimus</string>
     <string name="menu_batch">Operacijos</string>
-    <string name="menu_legend">Legend</string>
+    <string name="menu_legend">Paaiškinimai</string>
     <string name="msg_abort">Nutraukti</string>
     <string name="msg_aborted">Atmesti</string>
     <string name="msg_new">Naujas</string>
     <string name="msg_update">Atnaujinta</string>
-    <string name="msg_loading">Palaukite...</string>
+    <string name="msg_loading">Lukterkite</string>
     <string name="msg_applying">Vykdoma</string>
     <string name="msg_applied">Šablonas pritaikytas</string>
     <string name="msg_saved_to" formatted="false">Išsaugomi %s</string>
@@ -176,14 +176,14 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_default">Numatytasis</string>
     <string name="title_alternate">Atsarginis</string>
     <string name="title_usage_header">Naudojimas</string>
-    <string name="title_usage_text_1">1. Rasti programos ribojimų pagrindiniame programos sąraše</string>
+    <string name="title_usage_text_1">1. Rastite norimą riboti programą pagrindiniame sąraše</string>
     <string name="title_usage_text_2">2. Bakstelėkite programos piktogramą</string>
     <string name="title_usage_text_3">3. Bakstelėkite ant ketegorijų, norėdami riboti</string>
     <string name="title_usage_footer">Naudokite apgalvotai, apribojus interneto kategoriją, nereikia tikėtis, kad nebus interneto prieigos ir t.t.</string>
     <string name="title_toggle_dangerous">Ilgai paspausti ant programos pavadinimo, perjungti pavojingas funkcijas</string>
     <string name="title_ondemand_category">Kategorijai galite atstatyti funcijas, išskyrus pradinius duomenis</string>
     <string name="title_function_help">Funkcijų dokumentacija</string>
-    <string name="title_unsafe">Yra nesaugus, gali būti apeinamas</string>
+    <string name="title_unsafe">Nesaugus, gali būti apeinamas</string>
     <string name="title_update_checking">Ieškoma atnaujinimo</string>
     <string name="title_update_downloading">Atsiunčiamas atnaujinimas</string>
     <string name="title_update_install">Bakstelėkite, jei norite įdiegti atnaujinimą</string>
@@ -204,7 +204,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_ua">Vartotojo agentas</string>
     <string name="settings_general">Bendras</string>
     <string name="settings_fake_data">Netikri duomenys</string>
-    <string name="settings_notify">Atnaujinimų Pranešimas</string>
+    <string name="settings_notify">Atnaujinimų pranešimas</string>
     <string name="settings_ondemand">Riboti pagal reikalavimą</string>
     <string name="settings_blacklist">Vartotojų, programų, kontaktų juodasis sąrašas</string>
     <string name="settings_log">DEBUG žurnalas (perkrauti prietaisą)</string>
@@ -221,7 +221,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_aosp">AOSP mode (reikia perkrauti)</string>
     <string name="help_check_restrict">First check box: restrict category or function</string>
     <string name="help_check_ondemand">Second check box: restrict on demand</string>
-    <string name="help_switch">Įjungti/išjungti: įjungti arba išjungti visus apribojimus</string>
+    <string name="help_switch">Išjungta/Įjungta: įjungti arba išjungti visus apribojimus</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>
     <string name="help_ondemand">apribojimai bus paprašyti</string>
     <string name="help_application">Programa</string>
@@ -235,7 +235,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="help_attention">Leidimams reikia dėmesio</string>
     <string name="help_restricted">Leidimai yra pakeisti</string>
     <string name="help_shared">Leidimai yra pateikti</string>
-    <string name="help_settings">Programa turi netikrus duomenis</string>
+    <string name="help_settings">Programa naudoja atsitiktinius duomenis</string>
     <string name="tutorial_mainheader">Pasirinkite kategoriją ribojimui</string>
     <string name="tutorial_mainlist">Bakstelėkite žymės langelį apriboti pasirinktą kategoriją\n
 \nProgramos bus įtrauktos ribojimų kategorijas\n
