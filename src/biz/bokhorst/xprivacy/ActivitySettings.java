@@ -518,6 +518,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 
 				// Refresh main UI
 				Intent intent = new Intent(ActivitySettings.this, ActivityMain.class);
+				intent.putExtra(ActivityMain.cAction, ActivityMain.cActionRefresh);
 				startActivity(intent);
 			}
 		});
@@ -723,7 +724,6 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		// Refresh view
 		if (uid == userId) {
 			Intent intent = new Intent(ActivitySettings.this, ActivityMain.class);
-			intent.putExtra(ActivityMain.cRefreshUI, true);
 			startActivity(intent);
 		} else {
 			Intent intent = new Intent(ActivitySettings.this, ActivityApp.class);
