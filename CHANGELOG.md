@@ -45,6 +45,8 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 
 **Next release**
 
+* Improved settings layout ([pull request](/../../issues/1946))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.0.2 BETA**
