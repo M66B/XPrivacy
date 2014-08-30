@@ -84,7 +84,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return listApp;
 	}
 
-	public List<String> getApplicationName() {
+	public ArrayList<String> getApplicationName() {
 		return new ArrayList<String>(mMapAppInfo.navigableKeySet());
 	}
 

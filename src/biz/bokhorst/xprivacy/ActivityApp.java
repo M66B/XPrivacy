@@ -679,7 +679,10 @@ public class ActivityApp extends ActivityBase {
 	}
 
 	private void optionSettings() {
-		SettingsDialog.edit(ActivityApp.this, mAppInfo);
+		Intent intent = new Intent(ActivityApp.this, ActivitySettings.class);
+		intent.putExtra(ActivitySettings.cAppUid, mAppInfo.getUid());
+		intent.putStringArrayListExtra(ActivitySettings.cAppName, mAppInfo.getApplicationName());
+		startActivity(intent);
 	}
 
 	private void optionDump() {

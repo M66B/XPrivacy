@@ -101,6 +101,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
 	public static final Uri cProUri = Uri.parse("http://www.xprivacy.eu/");
+	public static final String cRefreshUI = "RefreshUI";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -360,6 +361,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		if (Intent.ACTION_VIEW.equals(intent.getAction()))
 			Util.importProLicense(new File(intent.getData().getPath()));
+
+		// Handle clear XPrivacy data (needs UI refresh)
+		if (intent.hasExtra(cRefreshUI)) {
+			((EditText) findViewById(R.id.etFilter)).setText("");
+			recreate();
+		}
 	}
 
 	@Override
@@ -597,7 +604,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				optionSwitchTheme();
 				return true;
 			case R.id.menu_settings:
-				SettingsDialog.edit(ActivityMain.this, null);
+				optionSettings();
 				return true;
 			case R.id.menu_dump:
 				optionDump();
@@ -987,6 +994,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		themeName = (themeName.equals("Dark") ? "Light" : "Dark");
 		PrivacyManager.setSetting(userId, PrivacyManager.cSettingTheme, themeName);
 		this.recreate();
+	}
+
+	private void optionSettings() {
+		Intent intent = new Intent(this, ActivitySettings.class);
+		startActivity(intent);
 	}
 
 	private void optionDump() {
