@@ -1783,24 +1783,22 @@ public class ActivityApp extends ActivityBase {
 		dlgHelp.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, context.getThemed(R.attr.icon_launcher));
 		dlgHelp.setCancelable(true);
 
-		// Set text title
+		// Set title
 		TextView tvTitle = (TextView) dlgHelp.findViewById(R.id.tvTitle);
 		tvTitle.setText(hook.getName());
 
-		// Set text content
-		String text = hook.getAnnotation();
-		String[] permissions = hook.getPermissions();
-		if (permissions != null && permissions.length > 0) {
-			text += "<br /><br /><b>" + context.getString(R.string.title_permissions) + "</b><br /><br />";
-			if (permissions[0].equals(""))
-				text += "-";
-			else
-				text += TextUtils.join("<br />", permissions);
-		}
-
+		// Set info
 		TextView tvInfo = (TextView) dlgHelp.findViewById(R.id.tvInfo);
-		tvInfo.setText(Html.fromHtml(text));
+		tvInfo.setText(Html.fromHtml(hook.getAnnotation()));
 		tvInfo.setMovementMethod(LinkMovementMethod.getInstance());
+
+		// Set permissions
+		String[] permissions = hook.getPermissions();
+		if (permissions != null && permissions.length > 0)
+			if (!permissions[0].equals("")) {
+				TextView tvPermissions = (TextView) dlgHelp.findViewById(R.id.tvPermissions);
+				tvPermissions.setText(Html.fromHtml(TextUtils.join("<br />", permissions)));
+			}
 
 		dlgHelp.show();
 	}

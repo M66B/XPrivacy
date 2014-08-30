@@ -46,7 +46,7 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 **Next release**
 
 * Improved settings layout ([pull request](/../../issues/1946))
-* Show function help in a dialog ([pull request](/../../issues/1947))
+* Improved function help layout ([pull request](/../../issues/1947))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
