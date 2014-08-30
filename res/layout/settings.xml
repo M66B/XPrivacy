@@ -150,8 +150,15 @@
         </LinearLayout>
 
         <Button
+            android:id="@+id/btnFlush"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:text="@string/menu_flush" />
+
+        <Button
             android:id="@+id/btnClearDb"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
             android:text="@string/menu_clear_db" />
@@ -187,12 +194,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/menu_clear" />
-
-        <Button
-            android:id="@+id/btnFlush"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/menu_flush" />
 
         <TableLayout
             android:layout_width="match_parent"

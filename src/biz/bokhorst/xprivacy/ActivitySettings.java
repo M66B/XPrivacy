@@ -48,6 +48,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 	private CheckBox cbAOSP;
 	private EditText etConfidence;
 	private EditText etQuirks;
+	private Button btnFlush;
 	private Button btnClearDb;
 	private CheckBox cbRandom;
 	private EditText etSerial;
@@ -112,27 +113,27 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		cbParameters = (CheckBox) findViewById(R.id.cbParameters);
 		cbLog = (CheckBox) findViewById(R.id.cbLog);
 
-		final CheckBox cbExpert = (CheckBox) findViewById(R.id.cbExpert);
+		CheckBox cbExpert = (CheckBox) findViewById(R.id.cbExpert);
 		cbSystem = (CheckBox) findViewById(R.id.cbSystem);
 		cbExperimental = (CheckBox) findViewById(R.id.cbExperimental);
 		cbHttps = (CheckBox) findViewById(R.id.cbHttps);
 		cbAOSP = (CheckBox) findViewById(R.id.cbAOSP);
-		final LinearLayout llConfidence = (LinearLayout) findViewById(R.id.llConfidence);
+		LinearLayout llConfidence = (LinearLayout) findViewById(R.id.llConfidence);
 		etConfidence = (EditText) findViewById(R.id.etConfidence);
 		etQuirks = (EditText) findViewById(R.id.etQuirks);
+		btnFlush = (Button) findViewById(R.id.btnFlush);
 		btnClearDb = (Button) findViewById(R.id.btnClearDb);
 
 		cbRandom = (CheckBox) findViewById(R.id.cbRandom);
-		final Button btnRandom = (Button) findViewById(R.id.btnRandom);
-		final Button btnClear = (Button) findViewById(R.id.btnClear);
-		final Button btnFlush = (Button) findViewById(R.id.btnFlush);
+		Button btnRandom = (Button) findViewById(R.id.btnRandom);
+		Button btnClear = (Button) findViewById(R.id.btnClear);
 
 		etSerial = (EditText) findViewById(R.id.etSerial);
 		etLat = (EditText) findViewById(R.id.etLat);
 		etLon = (EditText) findViewById(R.id.etLon);
 		etAlt = (EditText) findViewById(R.id.etAlt);
 		etSearch = (EditText) findViewById(R.id.etSearch);
-		final Button btnSearch = (Button) findViewById(R.id.btnSearch);
+		Button btnSearch = (Button) findViewById(R.id.btnSearch);
 		etMac = (EditText) findViewById(R.id.etMac);
 		etIP = (EditText) findViewById(R.id.etIP);
 		etImei = (EditText) findViewById(R.id.etImei);
@@ -256,6 +257,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 				cbLog.setChecked(log);
 			else {
 				cbLog.setVisibility(View.GONE);
+				btnFlush.setVisibility(View.GONE);
 				btnClearDb.setVisibility(View.GONE);
 			}
 			cbExpert.setChecked(expert);
@@ -279,6 +281,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 				cbAOSP.setChecked(false);
 				etConfidence.setEnabled(false);
 				etQuirks.setEnabled(false);
+				btnFlush.setEnabled(false);
 				btnClearDb.setEnabled(false);
 			}
 		} else {
@@ -295,6 +298,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			cbHttps.setVisibility(View.GONE);
 			cbAOSP.setVisibility(View.GONE);
 			llConfidence.setVisibility(View.GONE);
+			btnFlush.setVisibility(View.GONE);
 			btnClearDb.setVisibility(View.GONE);
 
 			cbExpert.setChecked(expert);
@@ -385,16 +389,11 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		etLac.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLac, ""));
 		etUa.setText(PrivacyManager.getSetting(-uid, PrivacyManager.cSettingUa, ""));
 
+		btnFlush.setOnClickListener(this);
 		btnClearDb.setOnClickListener(this);
 		btnRandom.setOnClickListener(this);
 		btnClear.setOnClickListener(this);
 		btnSearch.setOnClickListener(this);
-
-		// Handle flush
-		if (uid == 0)
-			btnFlush.setOnClickListener(this);
-		else
-			btnFlush.setVisibility(View.GONE);
 	}
 
 	@Override
@@ -470,6 +469,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			cbAOSP.setEnabled(isChecked);
 			etConfidence.setEnabled(isChecked);
 			etQuirks.setEnabled(isChecked);
+			btnFlush.setEnabled(isChecked);
 			btnClearDb.setEnabled(isChecked);
 			if (!isChecked) {
 				cbSystem.setChecked(false);
@@ -486,6 +486,9 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
+		case R.id.btnFlush:
+			flush();
+			break;
 		case R.id.btnClearDb:
 			clearDB();
 			break;
@@ -497,9 +500,6 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			break;
 		case R.id.btnSearch:
 			search();
-			break;
-		case R.id.btnFlush:
-			flush();
 			break;
 		}
 	}

@@ -47,6 +47,7 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 
 * Improved database locking ([pull request](/../../issues/1939))
 * Changed settings dialog to settings activity ([pull request](/../../issues/1938))
+* Moved flush button to expert mode section ([issue](/../../issues/1934))
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
