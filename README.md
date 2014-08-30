@@ -359,6 +359,8 @@ and is reported to work with most Android variants, including stock ROMs.
 
 **XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231))
 
+**XPrivacy is incompatible with the security center of MIUI ([issue](https://github.com/M66B/XPrivacy/issues/1940))
+
 You need to use the quirk "noresolve" when using [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
 ([issue](https://github.com/M66B/XPrivacy/issues/1751)).
 
@@ -408,7 +410,7 @@ Upgrading
 
 * **Make a backup**
 * **Do not remove the previous version** (or else your settings will get lost)
-* Download the new version
+* Download the new version (with a [pro license](http://www.xprivacy.eu/) you can use the menu *Help ...* > *Check for updates*)
 * Install the new version over the previous version
 * Wait until the Xposed installer recognizes the update (else XPrivacy might not be enabled)
 * Start the new version once (else Android will not send the boot completed event)
@@ -1161,6 +1163,10 @@ You can force XPrivacy 3 into AOSP mode by creating this file:
 From version 2.99.35 AOSP mode can be enabled from the main settings (which will in fact create the trigger file).
 
 There is no need to force AOSP mode if XPrivacy recognizes your ROM as a compatible ROM.
+
+If you force AOSP mode, privacy sensitive data may leak.
+XPrivacy has lots of internal checks, so if something is going wrong,
+you will probably sooner or later get a debug info popup.
 
 For the benefit of others, please report if XPrivacy 3 works for the ROM you are using
 (also post a screenshot of the *About* of XPrivacy so I can see how the ROM can be recognized).
