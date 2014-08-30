@@ -143,7 +143,7 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin_list"
             android:layout_marginTop="6dip"
             android:choiceMode="none"
-            android:paddingRight="12dip"
+            android:paddingRight="6dip"
             android:scrollbarStyle="insideInset" />
 
         <ScrollView
