@@ -1288,6 +1288,7 @@ Similar solutions
 * [Per App Settings Module](http://forum.xda-developers.com/showthread.php?t=2072081)
 * [Android 4.3+ Permission Manager](http://www.androidpolice.com/2013/07/25/app-ops-android-4-3s-hidden-app-permission-manager-control-permissions-for-individual-apps/)
 * [SRT AppGuard](http://www.srt-appguard.com/en/)
+* [DonkeyGuard](http://forum.xda-developers.com/showthread.php?t=2831556)
 
 The *PDroid* family provides fake or no data, more or less in the same way as XPrivacy does.
 A difference is that you need to patch Android and that there is (therefore) only limited stock ROM support.
@@ -1311,6 +1312,9 @@ The *Android 4.3+ Permission Manager* is like *CyanogenMod Incognito Mode*.
 and reinstalling a modified version. Without a backup, application data will be lost in this process.
 Compared to XPrivacy, permission control is not as fine grained and comprehensive.
 System applications cannot be restricted.
+
+After over a year of sudden silence the author of PDroid 2.0 released *DonkeyGuard*.
+*DonkeyGuard* is not open source.
 
 XPrivacy can restrict more data than any of the above solutions,
 also for closed source applications and libraries, like Google Play services.
