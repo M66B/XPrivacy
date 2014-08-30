@@ -45,6 +45,9 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 
 **Next release**
 
+* Fixed tutorial header
+* Fixed Indonesian translation
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.0.1 BETA**

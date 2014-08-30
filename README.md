@@ -1367,7 +1367,7 @@ Current translations:
 1. Hebrew (he/iw)
 1. Hindi (hi)
 1. Hungarian (hu)
-1. Indonesian (id)
+1. Indonesian (in)
 1. Irish (ga)
 1. Italian (it)
 1. Japanese (ja)
