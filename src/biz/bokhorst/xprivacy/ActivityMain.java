@@ -274,7 +274,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFirstRun, true)) {
 			showChangelog = false;
 			optionAbout();
-			PrivacyManager.setSetting(userId, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
 		}
 
 		// Tutorial
@@ -1126,20 +1125,29 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		((TextView) dlgAbout.findViewById(R.id.build_id)).setText(Build.ID);
 
 		dlgAbout.setCancelable(true);
-		dlgAbout.show();
-		dlgAbout.setOnDismissListener(new DialogInterface.OnDismissListener() {
 
-			@Override
-			public void onDismiss(DialogInterface dialog) {
-				Dialog dlgUsage = new Dialog(ActivityMain.this);
-				dlgUsage.requestWindowFeature(Window.FEATURE_LEFT_ICON);
-				dlgUsage.setTitle(R.string.app_name);
-				dlgUsage.setContentView(R.layout.usage);
-				dlgUsage.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
-				dlgUsage.setCancelable(true);
-				dlgUsage.show();
-			}
-		});
+		final int userId = Util.getUserId(Process.myUid());
+		if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFirstRun, true))
+			dlgAbout.setOnDismissListener(new DialogInterface.OnDismissListener() {
+				@Override
+				public void onDismiss(DialogInterface dialog) {
+					Dialog dlgUsage = new Dialog(ActivityMain.this);
+					dlgUsage.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+					dlgUsage.setTitle(R.string.app_name);
+					dlgUsage.setContentView(R.layout.usage);
+					dlgUsage.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+					dlgUsage.setCancelable(true);
+					dlgUsage.setOnDismissListener(new DialogInterface.OnDismissListener() {
+						@Override
+						public void onDismiss(DialogInterface dialog) {
+							PrivacyManager.setSetting(userId, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
+						}
+					});
+					dlgUsage.show();
+				}
+			});
+
+		dlgAbout.show();
 	}
 
 	// Tasks
