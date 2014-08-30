@@ -605,8 +605,13 @@ public class PrivacyManager {
 
 			// Apply
 			if (canRestrict(uid, Process.myUid(), rRestrictionName, null, true))
-				listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentMerge.restricted
-						|| parentRestricted, parentMerge.asked && parentAsked));
+				if (invert && ((parentRestricted && parentMerge.restricted) || (!parentAsked && !parentMerge.asked))) {
+					listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentRestricted ? false
+							: parentMerge.restricted, !parentAsked ? true : parentMerge.asked));
+					continue; // leave functions
+				} else
+					listPRestriction.add(new PRestriction(uid, rRestrictionName, null, parentMerge.restricted
+							|| parentRestricted, parentMerge.asked && parentAsked));
 
 			// Childs
 			if (methods)
