@@ -47,17 +47,15 @@ import android.text.format.DateUtils;
 import android.text.method.LinkMovementMethod;
 import android.view.ContextMenu;
 import android.view.ContextMenu.ContextMenuInfo;
-import android.view.View.OnClickListener;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -69,7 +67,6 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -1778,12 +1775,19 @@ public class ActivityApp extends ActivityBase {
 
 	@SuppressLint("InflateParams")
 	public static void showHelp(ActivityBase context, View parent, Hook hook) {
-		LayoutInflater inflator = LayoutInflater.from(context);
-		View layout = inflator.inflate(R.layout.popup, null);
+		// Build dialog
+		Dialog dlgHelp = new Dialog(context);
+		dlgHelp.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+		dlgHelp.setTitle(R.string.app_name);
+		dlgHelp.setContentView(R.layout.popup);
+		dlgHelp.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, context.getThemed(R.attr.icon_launcher));
+		dlgHelp.setCancelable(true);
 
-		TextView tvTitle = (TextView) layout.findViewById(R.id.tvTitle);
+		// Set text title
+		TextView tvTitle = (TextView) dlgHelp.findViewById(R.id.tvTitle);
 		tvTitle.setText(hook.getName());
 
+		// Set text content
 		String text = hook.getAnnotation();
 		String[] permissions = hook.getPermissions();
 		if (permissions != null && permissions.length > 0) {
@@ -1794,23 +1798,10 @@ public class ActivityApp extends ActivityBase {
 				text += TextUtils.join("<br />", permissions);
 		}
 
-		TextView tvInfo = (TextView) layout.findViewById(R.id.tvInfo);
+		TextView tvInfo = (TextView) dlgHelp.findViewById(R.id.tvInfo);
 		tvInfo.setText(Html.fromHtml(text));
 		tvInfo.setMovementMethod(LinkMovementMethod.getInstance());
 
-		final PopupWindow popup = new PopupWindow(layout);
-		popup.setHeight(WindowManager.LayoutParams.WRAP_CONTENT);
-		popup.setWidth(90 * parent.getWidth() / 100);
-
-		Button btnOk = (Button) layout.findViewById(R.id.btnOk);
-		btnOk.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				if (popup.isShowing())
-					popup.dismiss();
-			}
-		});
-
-		popup.showAtLocation(parent, Gravity.CENTER, 0, 0);
+		dlgHelp.show();
 	}
 }
