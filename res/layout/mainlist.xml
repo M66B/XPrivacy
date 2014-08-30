@@ -51,38 +51,31 @@
             android:id="@+id/svTutorialHeader"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/llHeader"
             android:layout_alignTop="@id/llHeader"
             android:orientation="vertical"
             android:visibility="gone" >
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="?background_tutorial" >
+                android:background="?background_tutorial"
+                android:orientation="horizontal" >
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal"
-                    tools:ignore="UselessParent" >
+                <TextView
+                    android:layout_width="0dip"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/tutorial_mainheader"
+                    android:textAppearance="?android:attr/textAppearanceMedium" />
 
-                    <TextView
-                        android:layout_width="0dip"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/tutorial_mainheader"
-                        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                    <Button
-                        android:id="@+id/btnTutorialHeader"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="@android:string/ok" />
-                </LinearLayout>
-            </RelativeLayout>
+                <Button
+                    android:id="@+id/btnTutorialHeader"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="@android:string/ok" />
+            </LinearLayout>
         </ScrollView>
     </RelativeLayout>
 
