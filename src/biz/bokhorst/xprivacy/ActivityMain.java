@@ -100,6 +100,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int ERROR_INVALID_PACKAGE_NAME = 0x102;
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
+	public static final String cRefreshUI = "RefreshUI";
+
 	public static final Uri cProUri = Uri.parse("http://www.xprivacy.eu/");
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
@@ -332,6 +334,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Import pro license
 		if (Intent.ACTION_VIEW.equals(intent.getAction()))
 			Util.importProLicense(new File(intent.getData().getPath()));
+
+		// Handle clear XPrivacy data (needs UI refresh)
+		if (intent.hasExtra(cRefreshUI))
+			recreate();
 	}
 
 	@Override
