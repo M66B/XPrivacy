@@ -13,8 +13,6 @@
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_dark</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
         <item name="icon_restricted">@drawable/check_holo_dark</item>
-        <item name="icon_clear">@drawable/cross_holo_dark</item>
-        <item name="icon_clear_grayed">@drawable/cross_grayed_out_holo_dark</item>
         <item name="icon_frozen">@drawable/frozen_holo_dark</item>
         <item name="icon_unsafe">@drawable/padlock_question_dark</item>
         <item name="drawable_background">@android:color/black</item>
@@ -41,8 +39,6 @@
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_light</item>
         <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
         <item name="icon_restricted">@drawable/check_holo_light</item>
-        <item name="icon_clear">@drawable/cross_holo_light</item>
-        <item name="icon_clear_grayed">@drawable/cross_grayed_out_holo_light</item>
         <item name="icon_frozen">@drawable/frozen_holo_light</item>
         <item name="icon_unsafe">@drawable/padlock_question_light</item>
         <item name="drawable_background">@color/color_home_background_light</item>

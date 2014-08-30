@@ -22,74 +22,29 @@
             android:layout_marginBottom="3dip"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:background="?attr/drawable_card"
-            android:orientation="vertical"
+            android:orientation="horizontal"
             android:paddingBottom="6dip"
             android:paddingLeft="6dip"
             android:paddingRight="6dip"
             android:paddingTop="6dip" >
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <Spinner
+                android:id="@+id/spRestriction"
+                android:layout_width="0dip"
+                android:layout_height="37dip"
                 android:layout_marginLeft="3dip"
+                android:layout_weight="1" />
+
+            <ImageView
+                android:id="@+id/imgInfo"
+                android:layout_width="32dip"
+                android:layout_height="32dip"
+                android:layout_gravity="center_vertical"
                 android:layout_marginRight="3dip"
-                android:orientation="horizontal" >
-
-                <Spinner
-                    android:id="@+id/spRestriction"
-                    android:layout_width="0dip"
-                    android:layout_height="37dip"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/imgInfo"
-                    android:layout_width="32dip"
-                    android:layout_height="32dip"
-                    android:layout_gravity="center_vertical"
-                    android:clickable="true"
-                    android:contentDescription="@string/help_application"
-                    android:focusable="true"
-                    android:src="?attr/icon_info" />
-            </LinearLayout>
-
-            <!-- Filters -->
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="3dip"
-                android:layout_marginRight="3dip"
-                android:orientation="horizontal" >
-
-                <LinearLayout
-                    android:layout_width="0px"
-                    android:layout_height="0px"
-                    android:focusable="true"
-                    android:focusableInTouchMode="true" >
-
-                    <requestFocus />
-                </LinearLayout>
-
-                <EditText
-                    android:id="@+id/etFilter"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/help_application"
-                    android:inputType="textNoSuggestions"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <ImageView
-                    android:id="@+id/imgClear"
-                    android:layout_width="24dip"
-                    android:layout_height="24dip"
-                    android:layout_alignRight="@id/etFilter"
-                    android:layout_centerVertical="true"
-                    android:clickable="true"
-                    android:contentDescription="@string/help_application"
-                    android:focusable="true"
-                    android:src="?attr/icon_clear_grayed" />
-            </RelativeLayout>
+                android:clickable="true"
+                android:contentDescription="@string/help_application"
+                android:focusable="true"
+                android:src="?attr/icon_info" />
         </LinearLayout>
 
         <ScrollView

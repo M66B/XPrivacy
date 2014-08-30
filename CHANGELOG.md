@@ -50,6 +50,7 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 * Moved flush button to expert mode section ([issue](/../../issues/1934))
 * Added category merge/reset ([issue](/../../issues/1909))
 * Display introductory tutorial only on first run after *About* ([issue](/../../issues/1942))
+* Moved search to action bar ([issue](/../../issues/1918))
 * Updated simplified Chinese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

@@ -3,6 +3,13 @@
     xmlns:tools="http://schemas.android.com/tools" >
 
     <item
+        android:id="@+id/menu_search"
+        android:actionViewClass="android.widget.SearchView"
+        android:icon="@android:drawable/ic_menu_search"
+        android:queryHint="@string/help_application"
+        android:showAsAction="collapseActionView|always"
+        android:title="@android:string/search_go"/>
+    <item
         android:id="@+id/menu_sort"
         android:icon="@drawable/icon_sort"
         android:showAsAction="always"

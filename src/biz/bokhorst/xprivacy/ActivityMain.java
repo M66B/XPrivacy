@@ -37,8 +37,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -60,7 +58,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -70,6 +67,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -77,6 +75,8 @@ import android.widget.Toast;
 public class ActivityMain extends ActivityBase implements OnItemSelectedListener {
 	private Spinner spRestriction = null;
 	private AppListAdapter mAppAdapter = null;
+
+	private String searchQuery = "";
 	private int mSortMode;
 	private boolean mSortInvert;
 	private int mProgressWidth = 0;
@@ -101,7 +101,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	private static final int ERROR_NON_MATCHING_UID = 0x103;
 
 	public static final Uri cProUri = Uri.parse("http://www.xprivacy.eu/");
-	public static final String cRefreshUI = "RefreshUI";
 
 	private static ExecutorService mExecutor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors(),
 			new PriorityThreadFactory());
@@ -221,35 +220,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		mSortMode = Integer.parseInt(PrivacyManager.getSetting(userId, PrivacyManager.cSettingSortMode, "0"));
 		mSortInvert = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingSortInverted, false);
 
-		// Setup name filter
-		final EditText etFilter = (EditText) findViewById(R.id.etFilter);
-		etFilter.addTextChangedListener(new TextWatcher() {
-			@Override
-			public void onTextChanged(CharSequence s, int start, int before, int count) {
-				String text = etFilter.getText().toString();
-				ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
-				imgClear.setImageDrawable(getResources().getDrawable(
-						getThemed(text.equals("") ? R.attr.icon_clear_grayed : R.attr.icon_clear)));
-				applyFilter();
-			}
-
-			@Override
-			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-			}
-
-			@Override
-			public void afterTextChanged(Editable s) {
-			}
-		});
-
-		ImageView imgClear = (ImageView) findViewById(R.id.imgClear);
-		imgClear.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				etFilter.setText("");
-			}
-		});
-
 		// Start task to get app list
 		AppListTask appListTask = new AppListTask();
 		appListTask.executeOnExecutor(mExecutor, (Object) null);
@@ -355,17 +325,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	@Override
 	protected void onNewIntent(Intent intent) {
+		// Refresh application list
 		if (mAppAdapter != null)
 			mAppAdapter.notifyDataSetChanged();
 
+		// Import pro license
 		if (Intent.ACTION_VIEW.equals(intent.getAction()))
 			Util.importProLicense(new File(intent.getData().getPath()));
-
-		// Handle clear XPrivacy data (needs UI refresh)
-		if (intent.hasExtra(cRefreshUI)) {
-			((EditText) findViewById(R.id.etFilter)).setText("");
-			recreate();
-		}
 	}
 
 	@Override
@@ -448,7 +414,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	private void applyFilter() {
 		if (mAppAdapter != null) {
-			EditText etFilter = (EditText) findViewById(R.id.etFilter);
 			ProgressBar pbFilter = (ProgressBar) findViewById(R.id.pbFilter);
 			TextView tvStats = (TextView) findViewById(R.id.tvStats);
 			TextView tvState = (TextView) findViewById(R.id.tvState);
@@ -466,9 +431,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			boolean fUser = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFUser, true);
 			boolean fSystem = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingFSystem, false);
 
-			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b\n%b\n%b", etFilter.getText().toString(),
-					fUsed, fInternet, fRestriction, fRestrictionNot, fPermission, fOnDemand, fOnDemandNot, fUser,
-					fSystem);
+			String filter = String.format("%s\n%b\n%b\n%b\n%b\n%b\n%b\n%b\n%b\n%b", searchQuery, fUsed, fInternet,
+					fRestriction, fRestrictionNot, fPermission, fOnDemand, fOnDemandNot, fUser, fSystem);
 			pbFilter.setVisibility(ProgressBar.VISIBLE);
 			tvStats.setVisibility(TextView.GONE);
 
@@ -477,8 +441,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			tvStateLayout.addRule(RelativeLayout.LEFT_OF, R.id.pbFilter);
 
 			mAppAdapter.getFilter().filter(filter);
-
-			invalidateOptionsMenu();
 		}
 	}
 
@@ -493,7 +455,35 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
 		if (inflater != null && PrivacyService.checkClient()) {
+			// Inflate menu
 			inflater.inflate(R.menu.main, menu);
+
+			// Searchable
+			SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+			searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+				@Override
+				public boolean onQueryTextChange(String newText) {
+					searchQuery = newText;
+					applyFilter();
+					return true;
+				}
+
+				@Override
+				public boolean onQueryTextSubmit(String query) {
+					searchQuery = query;
+					applyFilter();
+					return true;
+				}
+			});
+			searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+				@Override
+				public boolean onClose() {
+					searchQuery = "";
+					applyFilter();
+					return true;
+				}
+			});
+
 			return true;
 		} else
 			return false;
@@ -820,6 +810,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						PrivacyManager.setSetting(userId, PrivacyManager.cSettingFSystem,
 								Boolean.toString(cbFSystem.isChecked()));
 
+						invalidateOptionsMenu();
 						applyFilter();
 					}
 				});
