@@ -55,6 +55,7 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 * Added category merge/reset ([issue](/../../issues/1909))
 * Display introductory tutorial only on first run after *About* ([issue](/../../issues/1942))
 * Moved search to action bar ([issue](/../../issues/1918))
+* Added Indonesian translation
 * Updated simplified Chinese translation
 
 **Version 3.0 STABLE**

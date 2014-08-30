@@ -1,0 +1,248 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <string name="app_notenabled">XPrivacy tidak diaktifkan di Xposed installer</string>
+    <string name="app_wrongandroid">Hanya untuk Android versi 4.0.3+</string>
+    <string name="app_incompatible">XPrivacy tidak kompatibel dengan %1$s</string>
+    <string name="app_version">Versi XPrivacy: %1$s (%2$d)</string>
+    <string name="app_description">Pengelola privasi terbaik</string>
+    <string name="app_copyright">Hak cipta \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">Berjalan dalam modus kompatibilitas</string>
+    <string name="app_licensed">Berlisensi, terima kasih atas dukungan Anda!</string>
+    <string name="menu_usage">Data penggunaan</string>
+    <string name="menu_refresh">Segarkan</string>
+    <string name="menu_settings">Pengaturan</string>
+    <string name="menu_template">Kerangka</string>
+    <string name="menu_report">Laporkan masalah</string>
+    <string name="menu_export">Ekspor</string>
+    <string name="menu_import">Impor</string>
+    <string name="menu_submit">Kirim pembatasan</string>
+    <string name="menu_fetch">Ambil pembatasan</string>
+    <string name="menu_theme">Ganti tema</string>
+    <string name="menu_pro">Versi Pro</string>
+    <string name="menu_about">Tentang</string>
+    <string name="menu_help">Bantuan &#8230;</string>
+    <string name="menu_select_all">Pilih semua</string>
+    <string name="menu_sort">Sortir</string>
+    <string name="menu_filter">Saring</string>
+    <string name="menu_all">Semua</string>
+    <string name="menu_toggle">Ganti pembatasan</string>
+    <string name="menu_clear_all">Bersihkan semua</string>
+    <string name="menu_clear_usage">Bersihkan</string>
+    <string name="menu_clear_db">Bersihkan semua data XPrivacy</string>
+    <string name="menu_usage_all">Ganti saringan</string>
+    <string name="menu_apply">Terapkan kerangka</string>
+    <string name="menu_clear">Bersihkan</string>
+    <string name="menu_app_launch">Luncurkan</string>
+    <string name="menu_app_settings">Pengaturan</string>
+    <string name="menu_app_store">Play Store</string>
+    <string name="menu_app_kill">Matikan</string>
+    <string name="menu_accounts">Pilih akun untuk ijinkan</string>
+    <string name="menu_applications">Pilih aplikasi untuk ijinkan</string>
+    <string name="menu_contacts">Pilih kontak untuk ijinkan</string>
+    <string name="menu_whitelists">Kelola daftar putih</string>
+    <string name="menu_tutorial">Tutorial</string>
+    <string name="menu_changelog">Log perubahan</string>
+    <string name="menu_flush">Bilas cache</string>
+    <string name="menu_update">Periksa pembaharuan</string>
+    <string name="menu_batch">Operasi &#8230;</string>
+    <string name="menu_legend">Legenda</string>
+    <string name="msg_abort">Membatalkan</string>
+    <string name="msg_aborted">Dibatalkan</string>
+    <string name="msg_new">Baru</string>
+    <string name="msg_update">Pembaharuan</string>
+    <string name="msg_loading">Memuat &#8230;</string>
+    <string name="msg_applying">Menerapkan &#8230;</string>
+    <string name="msg_applied">Kerangka diterapkan</string>
+    <string name="msg_saved_to">Disimpan ke %1$s</string>
+    <string name="msg_no_restrictions">Tidak ditemukan pembatasan</string>
+    <string name="msg_sure">Apakah Anda yakin?</string>
+    <string name="msg_select">Harap pilih beberapa aplikasi</string>
+    <string name="msg_limit">Harap pilih setidaknya kurang dari %1$d aplikasi</string>
+    <string name="msg_done">Selesai</string>
+    <string name="msg_reboot">Diperlukan mulai ulang perangkat</string>
+    <string name="msg_random_now">Acak sekarang</string>
+    <string name="msg_random_access">Acak pada waktu akses</string>
+    <string name="msg_random_boot">Acak pada waktu boot</string>
+    <string name="msg_restart">Diperlukan mulai ulang aplikasi</string>
+    <string name="msg_register">Mohon daftarkan perangkat Anda</string>
+    <string name="msg_email">Mohon masukkan alamat e-mail Anda:</string>
+    <string name="msg_registered">Periksa e-mail Anda untuk mengaktifkan perangkat Anda</string>
+    <string name="msg_service">Layanan pembaharuan sedang berjalan</string>
+    <string name="msg_migrating">Sedang memindah %1$s</string>
+    <string name="msg_randomizing">Mengacak %1$s</string>
+    <string name="msg_upgrading">Peningkatan %1$s</string>
+    <string name="msg_support_info">Pemeriksaan internal gagal, apakah Anda ingin mengirim info dukungan?</string>
+    <string name="msg_restrictedby">Dibatasi oleh XPrivacy</string>
+    <string name="msg_service_missing">Layanan privasi tidak ditemukan; sudahkah Anda mengaktifkan XPrivacy di Xposed installer dan boot ulang perangkat Anda?</string>
+    <string name="msg_service_version">Versi layanan privasi tidak cocok; sudahkah Anda boot ulang perangkat setelah memperbaharui XPrivacy?</string>
+    <string name="msg_service_updating">Harap tunggu sampai layanan pembaharuan selesai</string>
+    <string name="msg_first"><b>Perhatian yang sangat besar telah dilakukan untuk mengembangkan dan menguji XPrivacy,
+Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan untuk setiap aplikasi.
+\n\nGunakan sepenuhnya dengan resiko Anda sendiri.</b>\n\nLihat juga lisensinya:</string>
+    <string name="restrict_accounts" tools:ignore="UnusedResources">Accounts</string>
+    <string name="restrict_browser" tools:ignore="UnusedResources">Browser</string>
+    <string name="restrict_calendar" tools:ignore="UnusedResources">Calendar</string>
+    <string name="restrict_calling" tools:ignore="UnusedResources">Calling</string>
+    <string name="restrict_clipboard" tools:ignore="UnusedResources">Clipboard</string>
+    <string name="restrict_contacts" tools:ignore="UnusedResources">Contacts</string>
+    <string name="restrict_dictionary" tools:ignore="UnusedResources">Dictionary</string>
+    <string name="restrict_email" tools:ignore="UnusedResources">E-mail</string>
+    <string name="restrict_identification" tools:ignore="UnusedResources">Identification</string>
+    <string name="restrict_internet" tools:ignore="UnusedResources">Internet</string>
+    <string name="restrict_location" tools:ignore="UnusedResources">Location</string>
+    <string name="restrict_media" tools:ignore="UnusedResources">Media</string>
+    <string name="restrict_messages" tools:ignore="UnusedResources">Messages</string>
+    <string name="restrict_network" tools:ignore="UnusedResources">Network</string>
+    <string name="restrict_notifications" tools:ignore="UnusedResources">Notifications</string>
+    <string name="restrict_overlay" tools:ignore="UnusedResources">Overlay</string>
+    <string name="restrict_phone" tools:ignore="UnusedResources">Phone</string>
+    <string name="restrict_sensors" tools:ignore="UnusedResources">Sensors</string>
+    <string name="restrict_storage" tools:ignore="UnusedResources">Storage</string>
+    <string name="restrict_shell" tools:ignore="UnusedResources">Shell</string>
+    <string name="restrict_system" tools:ignore="UnusedResources">System</string>
+    <string name="restrict_view" tools:ignore="UnusedResources">View</string>
+    <string name="restrict_help_view" tools:ignore="UnusedResources">Will restrict access to view actions and information</string>
+    <string name="restrict_help_system" tools:ignore="UnusedResources">Will restrict access to system information, like installed applications</string>
+    <string name="restrict_help_shell" tools:ignore="UnusedResources">Will restrict access to shell commands, including superuser commands</string>
+    <string name="restrict_help_storage" tools:ignore="UnusedResources">Will restrict access to the storage, like files on your SD card or the internal storage</string>
+    <string name="restrict_help_sensors" tools:ignore="UnusedResources">Will restrict access to the sensors, like the motion sensor</string>
+    <string name="restrict_help_phone" tools:ignore="UnusedResources">Will restrict access to phone information, like your phone number</string>
+    <string name="restrict_help_overlay" tools:ignore="UnusedResources">Will restrict overlay windows to prevent phishing</string>
+    <string name="restrict_help_notifications" tools:ignore="UnusedResources">Will restrict access to system and application notifications and Google cloud messaging</string>
+    <string name="restrict_help_nfc" tools:ignore="UnusedResources">Will restrict access to near field communication</string>
+    <string name="restrict_help_network" tools:ignore="UnusedResources">Will restrict access to network information, like IP and MAC addresses and Wi-Fi network information</string>
+    <string name="restrict_help_messages" tools:ignore="UnusedResources">Will restrict access to stored and received messages (SMS/MMS) and voicemail</string>
+    <string name="restrict_help_media" tools:ignore="UnusedResources">Will restrict access to the camera (photos and videos) and the microphone</string>
+    <string name="restrict_help_location" tools:ignore="UnusedResources">Will restrict access to your coarse and fine location</string>
+    <string name="restrict_help_ipc" tools:ignore="UnusedResources">Will restrict inter-process communication, when used to circumvent other restrictions</string>
+    <string name="restrict_help_internet" tools:ignore="UnusedResources">Will restrict access to the Internet</string>
+    <string name="restrict_help_identification" tools:ignore="UnusedResources">Will restrict information which can identify you, like the serial number of your device</string>
+    <string name="restrict_help_email" tools:ignore="UnusedResources">Will restrict access to e-mail information, like addresses and messages (standard and G-mail application only)</string>
+    <string name="restrict_help_dictionary" tools:ignore="UnusedResources">Will restrict access to the user dictionary</string>
+    <string name="restrict_help_contacts" tools:ignore="UnusedResources">Will restrict access to information about your contacts</string>
+    <string name="restrict_help_clipboard" tools:ignore="UnusedResources">Will restrict access to information on the clipboard</string>
+    <string name="restrict_help_calling" tools:ignore="UnusedResources">Will restrict calling phone numbers, sending messages (SMS/MMS) and access to your calling history</string>
+    <string name="restrict_help_calendar" tools:ignore="UnusedResources">Will restrict access to your calendar information, like your appointments</string>
+    <string name="restrict_help_browser" tools:ignore="UnusedResources">Will restrict access to browser information, like your bookmarks and the download history</string>
+    <string name="restrict_help_accounts" tools:ignore="UnusedResources">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
+    <string name="whitelist_address" tools:ignore="UnusedResources">Addresses</string>
+    <string name="whitelist_action" tools:ignore="UnusedResources">Action</string>
+    <string name="whitelist_ipaddress" tools:ignore="UnusedResources">IP addresses</string>
+    <string name="whitelist_library" tools:ignore="UnusedResources">Native libraries</string>
+    <string name="whitelist_method" tools:ignore="UnusedResources">Method names</string>
+    <string name="whitelist_filename" tools:ignore="UnusedResources">File names</string>
+    <string name="whitelist_command" tools:ignore="UnusedResources">Shell commands</string>
+    <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>
+    <string name="whitelist_transaction" tools:ignore="UnusedResources">Transactions</string>
+    <string name="whitelist_permission" tools:ignore="UnusedResources">Permissions</string>
+    <string name="title_restrict">Centang untuk membatasi:</string>
+    <string name="title_check_whitelist">Centang untuk mengijinkan:</string>
+    <string name="title_fused">Saring pada penggunaan data</string>
+    <string name="title_finternet">Saring pada akses internet</string>
+    <string name="title_fpermission">Saring pada perijinan</string>
+    <string name="title_frestricted">Saring pada pembatasan</string>
+    <string name="title_fuser">Saring pada aplikasi pengguna</string>
+    <string name="title_fondemand">Saring berdasarkan sesuai permintaan</string>
+    <string name="title_fsystem">Saring pada aplikasi sistem</string>
+    <string name="title_fnot">Tiadakan</string>
+    <string name="title_sname">Berdasarkan nama</string>
+    <string name="title_suid">Berdasarkan uid</string>
+    <string name="title_sinstalled">Berdasarkan tanggal terinstal</string>
+    <string name="title_supdated">Berdasarkan tanggal pembaharuan</string>
+    <string name="title_smodified">Berdasarkan tanggal diubah (XPrivacy)</string>
+    <string name="title_sstate">Berdasarkan keadaan (XPrivacy)</string>
+    <string name="title_sinvert">Balik urutan</string>
+    <string name="title_attempt">Upaya penggunaan:</string>
+    <string name="title_category">Kategori:</string>
+    <string name="title_function">Fungsi:</string>
+    <string name="title_parameters">Parameter:</string>
+    <string name="title_applycat">Terapkan ke seluruh kategori</string>
+    <string name="title_once">Sekali untuk</string>
+    <string name="title_whitelist">Daftar hitam/putih &#8216;%1$s&#8217;</string>
+    <string name="title_allow">Ijinkan</string>
+    <string name="title_deny">Tolak</string>
+    <string name="title_dontknow">Tidak tahu</string>
+    <string name="title_pleasesubmit">harap kirim pembatasan Anda untuk menolong yang lain</string>
+    <string name="title_permissions">Perijinan</string>
+    <string name="title_set_restrict">Batasi (kategori)</string>
+    <string name="title_template_category">Terapkan kerangka (kategori)</string>
+    <string name="title_template_full">Terapkan kerangka (kategori+fungsi)</string>
+    <string name="title_template_merge">Terapkan kerangka (gabungkan aturan)</string>
+    <string name="title_template_merge_reset">Terapkan kerangka (gabungkan atur ulang)</string>
+    <string name="title_enable_ondemand">Aktifkan pembatasan berdasarkan permintaan</string>
+    <string name="title_disable_ondemand">Non-aktifkan pembatasan berdasarkan permintaan</string>
+    <string name="title_ondemand_default">Waktu habis akan:</string>
+    <string name="title_ondemand_reset">Set ulang</string>
+    <string name="title_default">Standar</string>
+    <string name="title_alternate">Alternatif</string>
+    <string name="title_usage_header">Penggunaan</string>
+    <string name="title_usage_text_1">1. Cari aplikasi yang akan dibatasi dalam daftar aplikasi utama</string>
+    <string name="title_usage_text_2">2. Sentuh pada ikon aplikasi atau pada nama aplikasi</string>
+    <string name="title_usage_text_3">3. Sentuh kotak centang pertama dalam kategori apapun yang ingin Anda batasi</string>
+    <string name="title_usage_footer">Gunakan logika ketika membatasi, jangan mengharapkan akses internet jika Anda membatasi kategori internet, dll</string>
+    <string name="title_toggle_dangerous">Tekan agak lama pada judul untuk mengaktifkan fungsi yang berbahaya</string>
+    <string name="title_ondemand_category">Menerapkan ke kategori akan mengatur ulang fungsi pengecualian untuk nilai standar</string>
+    <string name="title_function_help">Dokumentasi fungsi</string>
+    <string name="title_unsafe">tidak aman, dapat dielakkan</string>
+    <string name="title_update_checking">Memeriksa pembaharuan</string>
+    <string name="title_update_downloading">Mengunduh pembaharuan</string>
+    <string name="title_update_install">Sentuh untuk menginstal pembaharuan</string>
+    <string name="title_update_none">Pembaharuan tidak tersedia</string>
+    <string name="title_update_legacy">XPrivacy 2 tidak didukung lagi, silahkan mempertimbangkan untuk mengupgrade ke XPrivacy 3</string>
+    <string name="settings_serial">Serial#</string>
+    <string name="settings_lat">Lintang</string>
+    <string name="settings_lon">Bujur</string>
+    <string name="settings_alt">Ketinggian</string>
+    <string name="settings_mac">Alamat MAC</string>
+    <string name="settings_ip">Alamat IP</string>
+    <string name="settings_phone">Nomor telepon</string>
+    <string name="settings_id">ID Android</string>
+    <string name="settings_adid">ID Iklan</string>
+    <string name="settings_country">Negara</string>
+    <string name="settings_operator">Operator</string>
+    <string name="settings_subscriber">ID Pelanggan</string>
+    <string name="settings_ua">Agen pengguna</string>
+    <string name="settings_general">Umum</string>
+    <string name="settings_fake_data">Data palsu</string>
+    <string name="settings_notify">Notifikasi pembaharuan</string>
+    <string name="settings_ondemand">Batasi sesuai permintaan</string>
+    <string name="settings_blacklist">Masukkan daftar hitam akun, aplikasi dan kontak</string>
+    <string name="settings_log">Log debug (memerlukan boot ulang)</string>
+    <string name="settings_expert">Mode ahli</string>
+    <string name="settings_confidence">Tingkat kepercayaan ambil maksimum</string>
+    <string name="settings_experimental">Fungsi percobaan (memerlukan boot ulang)</string>
+    <string name="settings_https">Gunakan sambungan aman</string>
+    <string name="settings_syscomponents">Batasi komponen sistem (Android)</string>
+    <string name="settings_usagedata">Tunjukkan penggunaan data aplikasi</string>
+    <string name="settings_parameters">Tunjukkan parameter penggunaan data</string>
+    <string name="settings_cid">ID Cell GSM</string>
+    <string name="settings_lac">GSM LAC</string>
+    <string name="settings_quirks">Kebiasaan</string>
+    <string name="settings_aosp">Mode AOSP (memerlukan boot ulang)</string>
+    <string name="help_check_restrict">Kotak centang pertama: membatasi kategori atau fungsi</string>
+    <string name="help_check_ondemand">Kotak centang kedua: membatasi sesuai permintaan</string>
+    <string name="help_switch">Tombol on/off: mengaktifkan atau menonaktifkan semua pembatasan</string>
+    <string name="help_longpress">Tekan agak lama pada nama aplikasi untuk memilih</string>
+    <string name="help_ondemand">pembatasan akan ditanyakan</string>
+    <string name="help_application">Aplikasi</string>
+    <string name="help_internet">mempunyai izin internet</string>
+    <string name="help_granted">mempunyai izin Android</string>
+    <string name="help_used">telah menggunakan data ini</string>
+    <string name="help_used_grayed">tidak ada data penggunaan tersedia</string>
+    <string name="help_frozen">dinonaktifkan</string>
+    <string name="help_dangerous">berbahaya, membatasi dapat menyebabkan masalah</string>
+    <string name="help_half">dibatasai sebagian</string>
+    <string name="help_attention">pembatasan membutuhkan perhatian</string>
+    <string name="help_restricted">pembatasan berubah</string>
+    <string name="help_shared">pembatasan dikirimkan</string>
+    <string name="help_settings">Aplikasi memiliki aturan palsu yang spesifik</string>
+    <string name="tutorial_mainheader">Pilih kategori untuk pembatasan</string>
+    <string name="tutorial_mainlist">Sentuh kotak centang untuk membatasi kategori yang dipilih untuk sebuah aplikasi\n
+\nAplikasi akan diberi data kosong atau palsu untuk kategori yang dibatasi\n
+\nSentuh ikon aplikasi untuk pembatasan lebih rinci dan pengaturan</string>
+    <string name="tutorial_detailsheader">Tekan ikon aplikasi untuk aksi lebih</string>
+    <string name="tutorial_detailslist">Sentuh panah ke bawah untuk melihat fungsi pengecualian suatu kategori pembatasan</string>
+    <string name="permission_manage">Kelola aplikasi, termasuk mematikan</string>
+    <string name="permission_restrictions">Kelola pembatasan dan pengaturan XPrivacy</string>
+
+</resources>
