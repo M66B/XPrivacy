@@ -680,8 +680,7 @@ public class ActivityApp extends ActivityBase {
 
 	private void optionSettings() {
 		Intent intent = new Intent(ActivityApp.this, ActivitySettings.class);
-		intent.putExtra(ActivitySettings.cAppUid, mAppInfo.getUid());
-		intent.putStringArrayListExtra(ActivitySettings.cAppName, mAppInfo.getApplicationName());
+		intent.putExtra(ActivitySettings.cUid, mAppInfo.getUid());
 		startActivity(intent);
 	}
 

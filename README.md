@@ -1062,7 +1062,14 @@ See [question #5](#FAQ5) for how to start an export and for details on Tasker.
 
 Similarly you can start other activities:
 
-* Application settings
+* Settings
+
+```
+am start -a biz.bokhorst.xprivacy.action.SETTINGS
+am start -a biz.bokhorst.xprivacy.action.SETTINGS --ei Uid 10123
+```
+
+* Application details view
 
 ```
 am start -a biz.bokhorst.xprivacy.action.APPLICATION --ei Uid 10123

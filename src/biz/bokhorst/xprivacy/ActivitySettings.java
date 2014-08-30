@@ -87,20 +87,20 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 	private CheckBox cbSSID;
 
 	public static final String ACTION_SETTINGS = "biz.bokhorst.xprivacy.action.SETTINGS";
-	public static final String cAppUid = "AppUid";
-	public static final String cAppName = "AppName";
+	public static final String cUid = "Uid";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+
 		setContentView(R.layout.settings);
 		setTitle(R.string.menu_settings);
 
-		final Bundle extras = getIntent().getExtras();
 		userId = Util.getUserId(Process.myUid());
 
-		if (extras != null && extras.containsKey(cAppUid))
-			uid = extras.getInt(cAppUid);
+		final Bundle extras = getIntent().getExtras();
+		if (extras != null && extras.containsKey(cUid))
+			uid = extras.getInt(cUid);
 		else
 			uid = userId;
 
@@ -181,16 +181,6 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		cbSubscriber.setOnCheckedChangeListener(this);
 		cbSSID.setOnCheckedChangeListener(this);
 
-		// Display app name
-		if (extras != null) {
-			String subtitle;
-			if (extras.containsKey(cAppName))
-				subtitle = TextUtils.join(", ", extras.getIntegerArrayList(cAppName));
-			else // Should never happen
-				subtitle = "-";
-			getActionBar().setSubtitle(subtitle);
-		}
-
 		// Get current values
 		boolean usage = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingUsage, true);
 		boolean parameters = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingParameters, false);
@@ -242,7 +232,6 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 
 		// Common
 		boolean random = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingRandom, false);
-
 		String serial = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingSerial, "");
 		String lat = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLatitude, "");
 		String lon = PrivacyManager.getSetting(-uid, PrivacyManager.cSettingLongitude, "");
@@ -293,6 +282,10 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 				btnClearDb.setEnabled(false);
 			}
 		} else {
+			// Display application names
+			ApplicationInfoEx appInfo = new ApplicationInfoEx(this, uid);
+			getActionBar().setSubtitle(TextUtils.join(",  ", appInfo.getApplicationName()));
+
 			// Disable global settings
 			cbUsage.setVisibility(View.GONE);
 			cbParameters.setVisibility(View.GONE);
@@ -516,27 +509,24 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		alertDialogBuilder.setTitle(R.string.menu_clear_db);
 		alertDialogBuilder.setMessage(R.string.msg_sure);
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-						PrivacyManager.clear();
-						Toast.makeText(ActivitySettings.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG)
-								.show();
-						finish();
+		alertDialogBuilder.setPositiveButton(getString(android.R.string.ok), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+				PrivacyManager.clear();
+				Toast.makeText(ActivitySettings.this, getString(R.string.msg_reboot), Toast.LENGTH_LONG).show();
+				finish();
 
-						// Refresh main UI
-						Intent intent = new Intent(ActivitySettings.this, ActivityMain.class);
-						intent.putExtra(ActivityMain.cRefreshUI, true);
-						startActivity(intent);
-					}
-				});
-		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-				new DialogInterface.OnClickListener() {
-					@Override
-					public void onClick(DialogInterface dialog, int which) {
-					}
-				});
+				// Refresh main UI
+				Intent intent = new Intent(ActivitySettings.this, ActivityMain.class);
+				intent.putExtra(ActivityMain.cRefreshUI, true);
+				startActivity(intent);
+			}
+		});
+		alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel), new DialogInterface.OnClickListener() {
+			@Override
+			public void onClick(DialogInterface dialog, int which) {
+			}
+		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
@@ -617,28 +607,24 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 					Boolean.toString(cbParameters.isChecked()));
 			if (userId == 0)
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingLog, Boolean.toString(cbLog.isChecked()));
-			PrivacyManager.setSetting(uid, PrivacyManager.cSettingSystem,
-					Boolean.toString(cbSystem.isChecked()));
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingSystem, Boolean.toString(cbSystem.isChecked()));
 			PrivacyManager.setSetting(uid, PrivacyManager.cSettingExperimental,
 					Boolean.toString(cbExperimental.isChecked()));
 			PrivacyManager.setSetting(uid, PrivacyManager.cSettingHttps, Boolean.toString(cbHttps.isChecked()));
-			PrivacyManager.setSetting(uid, PrivacyManager.cSettingAOSPMode,
-					Boolean.toString(cbAOSP.isChecked()));
-			PrivacyManager
-					.setSetting(uid, PrivacyManager.cSettingConfidence, etConfidence.getText().toString());
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingAOSPMode, Boolean.toString(cbAOSP.isChecked()));
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingConfidence, etConfidence.getText().toString());
 		}
 
 		// Quirks
-		List<String> listQuirks = Arrays.asList(etQuirks.getText().toString().toLowerCase().replace(" ", "")
-				.split(","));
-		PrivacyManager.setSetting(uid, PrivacyManager.cSettingFreeze,
-				Boolean.toString(listQuirks.contains("freeze")));
-		PrivacyManager.setSetting(uid, PrivacyManager.cSettingResolve,
-				Boolean.toString(listQuirks.contains("resolve")));
+		List<String> listQuirks = Arrays
+				.asList(etQuirks.getText().toString().toLowerCase().replace(" ", "").split(","));
+		PrivacyManager.setSetting(uid, PrivacyManager.cSettingFreeze, Boolean.toString(listQuirks.contains("freeze")));
+		PrivacyManager
+				.setSetting(uid, PrivacyManager.cSettingResolve, Boolean.toString(listQuirks.contains("resolve")));
 		PrivacyManager.setSetting(uid, PrivacyManager.cSettingNoResolve,
 				Boolean.toString(listQuirks.contains("noresolve")));
-		PrivacyManager.setSetting(uid, PrivacyManager.cSettingPermMan,
-				Boolean.toString(listQuirks.contains("permman")));
+		PrivacyManager
+				.setSetting(uid, PrivacyManager.cSettingPermMan, Boolean.toString(listQuirks.contains("permman")));
 		PrivacyManager.setSetting(uid, PrivacyManager.cSettingIntentWall,
 				Boolean.toString(listQuirks.contains("iwall")));
 		PrivacyManager.setSetting(uid, PrivacyManager.cSettingSafeMode,
@@ -653,16 +639,14 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 
 		// On demand restricting
 		if (uid == userId || (isApp || odSystem))
-			PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand,
-					Boolean.toString(cbOnDemand.isChecked()));
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemand, Boolean.toString(cbOnDemand.isChecked()));
 
 		if (uid != userId)
-			PrivacyManager.setSetting(uid, PrivacyManager.cSettingBlacklist,
-					Boolean.toString(cbBlacklist.isChecked()));
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingBlacklist, Boolean.toString(cbBlacklist.isChecked()));
 
 		// Random at boot
-		PrivacyManager.setSetting(uid, PrivacyManager.cSettingRandom,
-				cbRandom.isChecked() ? Boolean.toString(true) : null);
+		PrivacyManager.setSetting(uid, PrivacyManager.cSettingRandom, cbRandom.isChecked() ? Boolean.toString(true)
+				: null);
 
 		// Serial#
 		PrivacyManager.setSetting(uid, PrivacyManager.cSettingSerial, getValue(cbSerial, etSerial));
