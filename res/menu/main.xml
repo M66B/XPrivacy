@@ -73,7 +73,9 @@
                 android:title="@string/menu_changelog"/>
             <item
                 android:id="@+id/menu_update"
-                android:title="@string/menu_update"/>
+                android:enabled="false"
+                android:title="@string/menu_update"
+                android:visible="false"/>
             <item
                 android:id="@+id/menu_report"
                 android:title="@string/menu_report"/>
