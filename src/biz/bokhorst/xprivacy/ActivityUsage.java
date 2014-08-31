@@ -394,22 +394,25 @@ public class ActivityUsage extends ActivityBase {
 	// Helpers
 
 	private void updateTitle() {
-		// Get statistics
-		long count = 0;
-		long restricted = 0;
-		double persec = 0;
-		try {
-			@SuppressWarnings("rawtypes")
-			Map statistics = PrivacyService.getClient().getStatistics();
-			count = (Long) statistics.get("restriction_count");
-			restricted = (Long) statistics.get("restriction_restricted");
-			long uptime = (Long) statistics.get("uptime_milliseconds");
-			persec = (double) count / (uptime / 1000);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
+		if (mUid == 0) {
+			// Get statistics
+			long count = 0;
+			long restricted = 0;
+			double persec = 0;
+			try {
+				@SuppressWarnings("rawtypes")
+				Map statistics = PrivacyService.getClient().getStatistics();
+				count = (Long) statistics.get("restriction_count");
+				restricted = (Long) statistics.get("restriction_restricted");
+				long uptime = (Long) statistics.get("uptime_milliseconds");
+				persec = (double) count / (uptime / 1000);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
-		// Set sub title
-		getActionBar().setSubtitle(String.format("%d/%d %.2f/s", restricted, count, persec));
+			// Set sub title
+			getActionBar().setSubtitle(String.format("%d/%d %.2f/s", restricted, count, persec));
+		} else
+			getActionBar().setSubtitle(TextUtils.join(", ", new ApplicationInfoEx(this, mUid).getApplicationName()));
 	}
 }

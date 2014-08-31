@@ -45,6 +45,8 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 
 **Next release**
 
+* Show application name above usage data ([issue](/../../issues/1949))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.0.3 BETA**
