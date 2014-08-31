@@ -48,6 +48,7 @@ Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only
 * Showing appropriate main and details help ([issue](/../../issues/1921))
 * Showing application name above usage data ([issue](/../../issues/1949))
 * Showing category help in web view ([issue](/../../issues/1943))
+* Removed menu *Check for updates*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
