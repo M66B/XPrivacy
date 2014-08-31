@@ -1430,20 +1430,10 @@ public class ActivityApp extends ActivityBase {
 			// Check if permission
 			holder.imgGranted.setVisibility(View.INVISIBLE);
 
-			// Handle info
-			holder.imgInfo.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					int stringId = getResources().getIdentifier("restrict_help_" + restrictionName, "string",
-							getPackageName());
-					Toast.makeText(mContext, stringId, Toast.LENGTH_SHORT).show();
-				}
-			});
-
 			// Display localized name
 			TreeMap<String, String> tmRestriction = PrivacyManager.getRestrictions(mContext);
 			int index = new ArrayList<String>(tmRestriction.values()).indexOf(restrictionName);
-			String title = (String) tmRestriction.navigableKeySet().toArray()[index];
+			final String title = (String) tmRestriction.navigableKeySet().toArray()[index];
 			holder.tvName.setText(title);
 			holder.imgWhitelist.setVisibility(View.GONE);
 
@@ -1453,6 +1443,30 @@ public class ActivityApp extends ActivityBase {
 
 			// Async update
 			new GroupHolderTask(groupPosition, holder, restrictionName).executeOnExecutor(mExecutor, (Object) null);
+
+			// Handle info
+			holder.imgInfo.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					int stringId = getResources().getIdentifier("restrict_help_" + restrictionName, "string",
+							getPackageName());
+
+					// Build dialog
+					Dialog dlgHelp = new Dialog(mContext);
+					dlgHelp.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+					dlgHelp.setTitle(title);
+					dlgHelp.setContentView(R.layout.helpcat);
+					dlgHelp.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON,
+							ActivityApp.this.getThemed(R.attr.icon_launcher));
+					dlgHelp.setCancelable(true);
+
+					// Set info
+					TextView tvInfo = (TextView) dlgHelp.findViewById(R.id.tvInfo);
+					tvInfo.setText(stringId);
+
+					dlgHelp.show();
+				}
+			});
 
 			return convertView;
 		}
@@ -1785,7 +1799,7 @@ public class ActivityApp extends ActivityBase {
 		Dialog dlgHelp = new Dialog(context);
 		dlgHelp.requestWindowFeature(Window.FEATURE_LEFT_ICON);
 		dlgHelp.setTitle(R.string.app_name);
-		dlgHelp.setContentView(R.layout.help);
+		dlgHelp.setContentView(R.layout.helpfunc);
 		dlgHelp.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, context.getThemed(R.attr.icon_launcher));
 		dlgHelp.setCancelable(true);
 
