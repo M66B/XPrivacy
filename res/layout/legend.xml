@@ -34,6 +34,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dip"
+            android:tag="details"
             android:text="@string/help_switch"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -42,6 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="6dip"
+            android:tag="main"
             android:text="@string/help_longpress"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -165,6 +167,7 @@
             android:drawableLeft="?attr/icon_info_book"
             android:drawablePadding="6dip"
             android:gravity="center_vertical"
+            android:tag="details"
             android:text="@string/title_function_help"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -175,6 +178,7 @@
             android:drawableLeft="?attr/icon_whitelist"
             android:drawablePadding="6dip"
             android:gravity="center_vertical"
+            android:tag="details"
             android:text="@string/menu_whitelists"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textIsSelectable="false" />
@@ -186,6 +190,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:tag="details"
             android:visibility="gone" >
 
             <LinearLayout
@@ -216,7 +221,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:tag="main" >
 
             <LinearLayout
                 android:layout_width="48dip"
@@ -270,7 +276,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="2dip" >
+            android:paddingTop="2dip"
+            android:tag="main" >
 
             <View
                 android:layout_width="12dip"
@@ -293,7 +300,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="2dip" >
+            android:paddingTop="2dip"
+            android:tag="main" >
 
             <View
                 android:layout_width="12dip"
@@ -316,7 +324,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="2dip" >
+            android:paddingTop="2dip"
+            android:tag="main" >
 
             <View
                 android:layout_width="12dip"

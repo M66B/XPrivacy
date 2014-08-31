@@ -696,10 +696,16 @@ public class ActivityApp extends ActivityBase {
 		dialog.setTitle(R.string.menu_legend);
 		dialog.setContentView(R.layout.legend);
 		dialog.setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, getThemed(R.attr.icon_launcher));
+
 		((ImageView) dialog.findViewById(R.id.imgHelpHalf)).setImageBitmap(getHalfCheckBox());
 		((ImageView) dialog.findViewById(R.id.imgHelpOnDemand)).setImageBitmap(getOnDemandCheckBox());
+
+		for (View child : Util.getViewsByTag((ViewGroup) dialog.findViewById(android.R.id.content), "main"))
+			child.setVisibility(View.GONE);
+
 		((LinearLayout) dialog.findViewById(R.id.llUnsafe)).setVisibility(PrivacyManager.cVersion3 ? View.VISIBLE
 				: View.GONE);
+
 		dialog.setCancelable(true);
 		dialog.show();
 	}
