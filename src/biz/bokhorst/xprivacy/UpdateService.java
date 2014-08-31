@@ -54,7 +54,7 @@ public class UpdateService extends Service {
 		// Update
 		if (cUpdate.equals(intent.getAction())) {
 			if (Util.hasProLicense(this) != null)
-				new ActivityShare.UpdateTask(this).execute();
+				; // new ActivityShare.UpdateTask(this).execute();
 			stopSelf();
 			return 0;
 		}
