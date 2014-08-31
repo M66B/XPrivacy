@@ -201,13 +201,27 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		// Handle info
 		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
 		imgInfo.setOnClickListener(new View.OnClickListener() {
+			@SuppressLint("SetJavaScriptEnabled")
 			@Override
 			public void onClick(View view) {
 				int position = spRestriction.getSelectedItemPosition();
 				if (position != AdapterView.INVALID_POSITION) {
 					String query = (position == 0 ? "restrictions" : (String) PrivacyManager
 							.getRestrictions(ActivityMain.this).values().toArray()[position - 1]);
-					Util.viewUri(ActivityMain.this, Uri.parse("https://github.com/M66B/XPrivacy#" + query));
+
+					WebView webview = new WebView(ActivityMain.this);
+					webview.getSettings().setUserAgentString("Mozilla/5.0");
+					// needed for hashtag
+					webview.getSettings().setJavaScriptEnabled(true);
+					webview.loadUrl("https://github.com/M66B/XPrivacy#" + query);
+
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityMain.this);
+					alertDialogBuilder.setTitle((String) spRestriction.getSelectedItem());
+					alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+					alertDialogBuilder.setView(webview);
+					alertDialogBuilder.setCancelable(true);
+					AlertDialog alertDialog = alertDialogBuilder.create();
+					alertDialog.show();
 				}
 			}
 		});
@@ -1054,15 +1068,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			}
 		});
 		webview.loadUrl("https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md");
+
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(R.string.menu_changelog);
 		alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
 		alertDialogBuilder.setView(webview);
-		alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-			@Override
-			public void onClick(DialogInterface dialog, int which) {
-			}
-		});
 		AlertDialog alertDialog = alertDialogBuilder.create();
 		alertDialog.show();
 	}
