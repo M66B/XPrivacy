@@ -295,4 +295,4 @@ Other changes:
 * Updated Slovak translation
 
 <a name="xprivacy2"></a>
-[Older changes](CHANGELOG-LEGACY.md)
+For XPrivacy version 2.x, see the [older changelogs](CHANGELOG-LEGACY.md)
