@@ -84,6 +84,7 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
@@ -190,6 +191,7 @@ public class ActivityShare extends ActivityBase {
 
 		// Reference controls
 		final TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
+		final ScrollView svToggle = (ScrollView) findViewById(R.id.svToggle);
 		final RadioGroup rgToggle = (RadioGroup) findViewById(R.id.rgToggle);
 		final Spinner spRestriction = (Spinner) findViewById(R.id.spRestriction);
 		RadioButton rbClear = (RadioButton) findViewById(R.id.rbClear);
@@ -292,7 +294,7 @@ public class ActivityShare extends ActivityBase {
 		} else if (action.equals(ACTION_TOGGLE)) {
 			tvDescription.setText(R.string.menu_toggle);
 			spRestriction.setVisibility(View.VISIBLE);
-			rgToggle.setVisibility(View.VISIBLE);
+			svToggle.setVisibility(View.VISIBLE);
 
 			// Listen for radio button
 			rgToggle.setOnCheckedChangeListener(new OnCheckedChangeListener() {

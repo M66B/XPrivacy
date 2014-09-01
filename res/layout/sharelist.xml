@@ -9,175 +9,170 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityShare" >
 
-    <ScrollView
+    <!-- Header -->
+
+    <TextView
+        android:id="@+id/tvDescription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:autoLink="web"
+        android:ellipsize="start"
+        android:singleLine="true"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textStyle="bold" />
 
-        <LinearLayout
+    <Spinner
+        android:id="@+id/spRestriction"
+        android:layout_width="wrap_content"
+        android:layout_height="37dip"
+        android:visibility="gone" />
+
+    <CheckBox
+        android:id="@+id/cbClear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:checked="true"
+        android:text="@string/menu_clear"
+        android:visibility="gone" />
+
+    <ScrollView
+        android:id="@+id/svToggle"
+        android:layout_width="match_parent"
+        android:layout_height="192dip"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <RadioGroup
+            android:id="@+id/rgToggle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <!-- Header -->
-
-            <TextView
-                android:id="@+id/tvDescription"
+            <RadioButton
+                android:id="@+id/rbClear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:autoLink="web"
-                android:ellipsize="start"
-                android:singleLine="true"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/spRestriction"
-                android:layout_width="wrap_content"
-                android:layout_height="37dip"
-                android:visibility="gone" />
-
-            <CheckBox
-                android:id="@+id/cbClear"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:checked="true"
                 android:text="@string/menu_clear"
-                android:visibility="gone" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-            <RadioGroup
-                android:id="@+id/rgToggle"
+            <RadioButton
+                android:id="@+id/rbRestrict"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone" >
+                android:text="@string/title_set_restrict"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <RadioButton
-                    android:id="@+id/rbClear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/menu_clear"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <RadioButton
-                    android:id="@+id/rbRestrict"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_set_restrict"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <RadioButton
-                    android:id="@+id/rbTemplateCategory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_template_category"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <RadioButton
-                    android:id="@+id/rbTemplateFull"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_template_full"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <RadioButton
-                    android:id="@+id/rbTemplateMergeSet"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_template_merge"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <RadioButton
-                    android:id="@+id/rbTemplateMergeReset"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/title_template_merge_reset"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <RadioButton
-                    android:id="@+id/rbEnableOndemand"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/color_dangerous"
-                    android:text="@string/title_enable_ondemand"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-
-                <RadioButton
-                    android:id="@+id/rbDisableOndemand"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="?attr/color_dangerous"
-                    android:text="@string/title_disable_ondemand"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
-            </RadioGroup>
-
-            <Spinner
-                android:id="@+id/spTemplate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right"
-                android:visibility="gone" />
-
-            <!-- Footer -->
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dip"
-                android:background="@android:color/darker_gray" />
-
-            <LinearLayout
-                style="?android:attr/buttonBarButtonStyle"
+            <RadioButton
+                android:id="@+id/rbTemplateCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal" >
+                android:text="@string/title_template_category"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <Button
-                    android:id="@+id/btnCancel"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:text="@android:string/cancel" />
-
-                <View
-                    android:layout_width="1dip"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/darker_gray" />
-
-                <Button
-                    android:id="@+id/btnOk"
-                    style="?android:attr/buttonBarButtonStyle"
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_weight="1"
-                    android:enabled="false"
-                    android:persistent="true"
-                    android:text="@android:string/ok" />
-            </LinearLayout>
-
-            <!-- Progress -->
-
-            <RelativeLayout
+            <RadioButton
+                android:id="@+id/rbTemplateFull"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" >
+                android:layout_height="wrap_content"
+                android:text="@string/title_template_full"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <View
-                    android:id="@+id/vShareProgressEmpty"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dip"
-                    android:background="@android:color/darker_gray"
-                    android:paddingBottom="2dip" />
+            <RadioButton
+                android:id="@+id/rbTemplateMergeSet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_template_merge"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
-                <View
-                    android:id="@+id/vShareProgressFull"
-                    android:layout_width="0dip"
-                    android:layout_height="3dip"
-                    android:background="?android:attr/colorActivatedHighlight" />
-            </RelativeLayout>
-        </LinearLayout>
+            <RadioButton
+                android:id="@+id/rbTemplateMergeReset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/title_template_merge_reset"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbEnableOndemand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/color_dangerous"
+                android:text="@string/title_enable_ondemand"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <RadioButton
+                android:id="@+id/rbDisableOndemand"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/color_dangerous"
+                android:text="@string/title_disable_ondemand"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </RadioGroup>
     </ScrollView>
+
+    <Spinner
+        android:id="@+id/spTemplate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:visibility="gone" />
+
+    <!-- Footer -->
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        style="?android:attr/buttonBarButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/btnCancel"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:text="@android:string/cancel" />
+
+        <View
+            android:layout_width="1dip"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray" />
+
+        <Button
+            android:id="@+id/btnOk"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="1"
+            android:enabled="false"
+            android:persistent="true"
+            android:text="@android:string/ok" />
+    </LinearLayout>
+
+    <!-- Progress -->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+
+        <View
+            android:id="@+id/vShareProgressEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:background="@android:color/darker_gray"
+            android:paddingBottom="2dip" />
+
+        <View
+            android:id="@+id/vShareProgressFull"
+            android:layout_width="0dip"
+            android:layout_height="3dip"
+            android:background="?android:attr/colorActivatedHighlight" />
+    </RelativeLayout>
 
     <!-- What it is all about -->
 
