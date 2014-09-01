@@ -36,6 +36,8 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 	private int uid;
 	private boolean isApp;
 	private boolean odSystem;
+	private boolean expert;
+
 	private CheckBox cbNotify;
 	private CheckBox cbOnDemand;
 	private CheckBox cbBlacklist;
@@ -225,8 +227,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		Collections.sort(listQuirks);
 		String quirks = TextUtils.join(",", listQuirks.toArray());
 
-		final boolean expert = (components || experimental || !https || aosp || !"".equals(confidence) || listQuirks
-				.size() > 0);
+		expert = (components || experimental || !https || aosp || !"".equals(confidence) || listQuirks.size() > 0);
 
 		// Application specific
 		boolean notify = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingNotify, true);
@@ -474,9 +475,10 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			etQuirks.setEnabled(isChecked);
 			btnFlush.setEnabled(isChecked);
 			btnClearDb.setEnabled(isChecked);
-			if (isChecked)
-				Toast.makeText(this, getString(R.string.msg_expert), Toast.LENGTH_LONG).show();
-			else {
+			if (isChecked) {
+				if (!expert)
+					Toast.makeText(this, getString(R.string.msg_expert), Toast.LENGTH_LONG).show();
+			} else {
 				cbSystem.setChecked(false);
 				cbExperimental.setChecked(false);
 				cbHttps.setChecked(true);
