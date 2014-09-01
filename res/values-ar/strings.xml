@@ -76,6 +76,7 @@
     <string name="msg_service_missing">لم يتم العثور على خدمة الخصوصية; هل قمت بتمكين XPrivacy  في مثبت إكسبوسيد وقمت بإعادة تشغيل جهازك ؟</string>
     <string name="msg_service_version">عدم تطابق إصدار خدمة الخصوصية؛ هل يمكنك إعادة تشغيل الجهاز بعد ترقية إكسبريفاسي؟</string>
     <string name="msg_service_updating">يرجى الانتظار حتى يتم الانتهاء من خدمة التحديث </string>
+    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
 \n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>

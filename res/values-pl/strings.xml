@@ -76,6 +76,7 @@
     <string name="msg_service_missing">Usługa prywatności nie została znaleziona; czy włączyłeś XPrivacy w instalatorze Xposed oraz uruchomiłeś ponownie urządzenie?</string>
     <string name="msg_service_version">Inna wersja usługi prywatności; czy uruchomiłeś ponownie urządzenie po aktualizacji XPrivacy?</string>
     <string name="msg_service_updating">Please wait until the update service has been completed</string>
+    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
     <string name="msg_first"><b>Dołożyliśmy wszelkich starań podczas programowania i testów XPrivacy.
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.
 \n\nUżywasz go całkowicie na własne ryzyko.</b>\n\nZobacz też licencję:</string>

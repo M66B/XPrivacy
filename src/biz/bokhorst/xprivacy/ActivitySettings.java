@@ -474,7 +474,9 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			etQuirks.setEnabled(isChecked);
 			btnFlush.setEnabled(isChecked);
 			btnClearDb.setEnabled(isChecked);
-			if (!isChecked) {
+			if (isChecked)
+				Toast.makeText(this, getString(R.string.msg_expert), Toast.LENGTH_LONG).show();
+			else {
 				cbSystem.setChecked(false);
 				cbExperimental.setChecked(false);
 				cbHttps.setChecked(true);

@@ -76,6 +76,7 @@
     <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
     <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
     <string name="msg_service_updating">Please wait until the update service has been completed</string>
+    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
     <string name="msg_first"><b>Xprivacy on tehty ja testattu huolellisesti, mutta on kuitenkin mahdotonta antaa takeita että se toimii virheettömästi kaikissa laitteissa ja jokaisessa applikaatiossa.
 \n\nKäyttö on täysin omalla vastuullasi.</b>\n\nKatso myös lisenssi:</string>
     <string name="restrict_accounts">Tilit (Google, Facebook, jne)</string>

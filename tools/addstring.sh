@@ -1,8 +1,8 @@
 #!/bin/bash
-grep -RIl "\<string name=\"menu_legend" res | xargs sed -i -e '/menu_legend/d'
+grep -RIl "\<string name=\"msg_expert" res | xargs sed -i -e '/msg_expert/d'
 
-grep -RIl "\<string name=\"menu_batch" res | xargs sed -i -e '/menu_batch/a \
-\ \ \ \ <string name=\"menu_legend\">Legend</string>'
+grep -RIl "\<string name=\"msg_service_updating" res | xargs sed -i -e '/msg_service_updating/a \
+\ \ \ \ <string name=\"msg_expert\">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>'
 
 #grep -RIl "\<string name=\"title_template_merge" res | xargs sed -i -e 's/Apply template (merge)/Apply template (merge set)/g'
 
