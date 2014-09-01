@@ -11,20 +11,12 @@ Changelog
 **Downloads**
 
 * [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
-* [GitHub releases](https://github.com/M66B/XPrivacy/releases)
-* Main menu *Check for updates*, available with a [pro license](http://www.xprivacy.eu/) only
 
 **Important**
 
 * Xposed version 2.6+ is required
-* Updating from a version prior to 2.0.35 the main template will be reset to default
-* Updating from a version prior to 2.1.5 on demand restricting will be disabled until the update is completed
-* Updating from a version prior to 2.1.8 you will need to setup the IPC restrictions again
-* Updating from a version prior to 2.1.21 you will need to setup the IPC restrictions again, except for *Reflection*
-* From version 2.0.29 dangerous functions need to be restricted manually (manually includes the template, if defined to do so)
 * From version 2.1.20 batch operations (toggle restrictions for multiple applications) require a pro license
-	* I have put about 2000 hours into developing and supporting XPrivacy so far. The reason for [accepting donations](http://www.xprivacy.eu/) is to keep myself motivated to keep doing this. Unfortunately the number of donations is quite low and thus not very motivating. So, don't start complaining about this change, but instead think about supporting this huge project. You can still fully protect your privacy with all the free features of XPrivacy. I have made a promise that you will always be able to do so and I intent to keep this promise.
-* From version 2.1.21-5 *I don't know* will allow dangerous functions once (other functions are still denied once)
+	* I have put more than 2000 hours into developing and supporting XPrivacy so far. The reason for [accepting donations](http://www.xprivacy.eu/) is to keep myself motivated to keep doing this. Unfortunately the number of donations is quite low and thus not very motivating. So, don't start complaining about this change, but instead think about supporting this huge project. You can still fully protect your privacy with all the free features of XPrivacy. I have made a promise that you will always be able to do so and I intent to keep this promise.
 * **Please send the support info when XPrivacy asks for it**
 
 <a name="xprivacy3"></a>
@@ -33,25 +25,17 @@ XPrivacy 3
 
 See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPrivacy#FAQ68).
 
-You can install XPrivacy 3.x by following these steps:
-
-* Make a full backup, preferable a [NANDroid](http://forum.xda-developers.com/wiki/NANDroid)
-* Update to stable version 2.3
-* If you want to receive test/beta versions: enter the quirk *test* into the main settings
-* Use the main menu *Check for updates* (in the *Help ...* menu in the most recent versions)
-* Make sure notifications are not suppressed by another Xposed module or an application manager
-
-Version 3.x will be available with a [pro license](http://www.xprivacy.eu/) only for some time.
-
 **Next release**
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.1 STABLE**
 
 * Showing appropriate main and details help ([issue](/../../issues/1921))
 * Showing application name above usage data ([issue](/../../issues/1949))
 * Showing category help ("i"-icon application list) in web view ([issue](/../../issues/1943))
 * Showing category help ("i"-icon application details) in dialog
 * Removed menu *Check for updates*
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.0.3 BETA**
 
@@ -318,6 +302,18 @@ XPrivacy 2
 
 XPrivacy 2 will not be maintained anymore.
 See for more information about XPrivacy 3 [here](#xprivacy3).
+
+**Important**
+
+* Xposed version 2.6+ is required
+* Updating from a version prior to 2.0.35 the main template will be reset to default
+* Updating from a version prior to 2.1.5 on demand restricting will be disabled until the update is completed
+* Updating from a version prior to 2.1.8 you will need to setup the IPC restrictions again
+* Updating from a version prior to 2.1.21 you will need to setup the IPC restrictions again, except for *Reflection*
+* From version 2.0.29 dangerous functions need to be restricted manually (manually includes the template, if defined to do so)
+* From version 2.1.20 batch operations (toggle restrictions for multiple applications) require a pro license
+	* I have put about 2000 hours into developing and supporting XPrivacy so far. The reason for [accepting donations](http://www.xprivacy.eu/) is to keep myself motivated to keep doing this. Unfortunately the number of donations is quite low and thus not very motivating. So, don't start complaining about this change, but instead think about supporting this huge project. You can still fully protect your privacy with all the free features of XPrivacy. I have made a promise that you will always be able to do so and I intent to keep this promise.
+* From version 2.1.21-5 *I don't know* will allow dangerous functions once (other functions are still denied once)
 
 **Version 2.3 STABLE**
 
