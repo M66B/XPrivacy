@@ -135,6 +135,8 @@ public class PrivacyManager {
 	public final static String cSettingLegacy = "Legacy";
 	public final static String cSettingAOSPMode = "AOSPMode";
 	public final static String cSettingChangelog = "Changelog";
+	public final static String cSettingUpdates = "Updates";
+
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";

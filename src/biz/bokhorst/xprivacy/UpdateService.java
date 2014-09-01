@@ -53,8 +53,12 @@ public class UpdateService extends Service {
 
 		// Update
 		if (cUpdate.equals(intent.getAction())) {
-			if (Util.hasProLicense(this) != null)
-				; // new ActivityShare.UpdateTask(this).execute();
+			if (Util.hasProLicense(this) != null) {
+				int userId = Util.getUserId(Process.myUid());
+				boolean updates = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingUpdates, false);
+				if (updates)
+					new ActivityShare.UpdateTask(this).execute();
+			}
 			stopSelf();
 			return 0;
 		}

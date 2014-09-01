@@ -516,6 +516,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 	public boolean onPrepareOptionsMenu(Menu menu) {
 		int userId = Util.getUserId(Process.myUid());
 		boolean mounted = Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState());
+		boolean updates = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingUpdates, false);
 
 		menu.findItem(R.id.menu_export).setEnabled(mounted);
 		menu.findItem(R.id.menu_import).setEnabled(mounted);
@@ -523,7 +524,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		menu.findItem(R.id.menu_pro).setVisible(!Util.isProEnabled() && Util.hasProLicense(this) == null);
 
 		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
-		// menu.findItem(R.id.menu_update).setVisible(mounted);
+
+		menu.findItem(R.id.menu_update).setVisible(updates);
+		menu.findItem(R.id.menu_update).setEnabled(mounted);
 
 		// Update filter count
 

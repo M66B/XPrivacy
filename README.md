@@ -1102,6 +1102,8 @@ am start -a biz.bokhorst.xprivacy.action.TOGGLE --eia UidList 10123,10124 --ez I
 
 * Flush cache, check for updates
 
+These actions require root or the permission *biz.bokhorst.xprivacy.MANAGE_XPRIVACY*.
+
 ```
 am startservice -a biz.bokhorst.xprivacy.action.FLUSH
 am startservice -a biz.bokhorst.xprivacy.action.UPDATE
