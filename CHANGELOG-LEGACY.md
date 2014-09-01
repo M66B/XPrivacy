@@ -1,8 +1,9 @@
 Legacy changelog
 ================
 
-XPrivacy 2 will not be maintained anymore.
-See for more information about XPrivacy 3 [here](#xprivacy3).
+**XPrivacy 2 will not be maintained anymore.**
+
+See for more information about XPrivacy 3 [here](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md).
 
 **Important**
 
