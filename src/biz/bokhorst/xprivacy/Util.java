@@ -100,29 +100,31 @@ public class Util {
 
 	public static void bug(XHook hook, Throwable ex) {
 		int priority;
-		if (ex instanceof RuntimeException)
-			priority = Log.WARN;
-		else if (ex instanceof OutOfMemoryError)
-			priority = Log.WARN;
-		else if (ex instanceof ActivityShare.AbortException)
+		if (ex instanceof ActivityShare.AbortException)
 			priority = Log.WARN;
 		else if (ex instanceof ActivityShare.ServerException)
 			priority = Log.WARN;
+		else if (ex instanceof ConnectTimeoutException)
+			priority = Log.WARN;
+		else if (ex instanceof FileNotFoundException)
+			priority = Log.WARN;
+		else if (ex instanceof HttpHostConnectException)
+			priority = Log.WARN;
 		else if (ex instanceof NoClassDefFoundError)
 			priority = Log.WARN;
+		else if (ex instanceof OutOfMemoryError)
+			priority = Log.WARN;
+		else if (ex instanceof RuntimeException)
+			priority = Log.WARN;
 		else if (ex instanceof SecurityException)
+			priority = Log.WARN;
+		else if (ex instanceof SocketTimeoutException)
+			priority = Log.WARN;
+		else if (ex instanceof SSLPeerUnverifiedException)
 			priority = Log.WARN;
 		else if (ex instanceof TransactionTooLargeException)
 			priority = Log.WARN;
 		else if (ex instanceof UnknownHostException)
-			priority = Log.WARN;
-		else if (ex instanceof ConnectTimeoutException)
-			priority = Log.WARN;
-		else if (ex instanceof HttpHostConnectException)
-			priority = Log.WARN;
-		else if (ex instanceof SSLPeerUnverifiedException)
-			priority = Log.WARN;
-		else if (ex instanceof SocketTimeoutException)
 			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
