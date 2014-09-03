@@ -27,6 +27,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 * Showing message when expert mode enabled
 * Scroll view for toggle restrictions radio buttons
+* Updated Indonesian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
