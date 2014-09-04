@@ -77,6 +77,7 @@
     <string name="msg_service_version">Phiên bản của dịch vụ bảo mật không trùng khớp; bạn đã khởi động lại thiết bị sau khi cập nhật XPrivacy?</string>
     <string name="msg_service_updating">Please wait until the update service has been completed</string>
     <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
+    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
     <string name="msg_first"><b>XPrivacy đã được lập trình và kiểm tra một cách cẩn trọng nhất, tuy nhiên, không thể đảm bảo chắc chắn XPrivacy sẽ hoạt động trơn tru trên mọi thiết bị cũng như với mọi ứng dụng.
 \n\nBạn tự chịu trách nhiệm khi sử dụng ứng dụng này.</b>\n\nXem thêm về bản quyền:</string>
     <string name="restrict_accounts">Các tài khoản (Google, Facebook, ...)</string>

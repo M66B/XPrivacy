@@ -77,6 +77,7 @@
     <string name="msg_service_version">Privacy Service Versionsunterschied festgestellt. Haben Sie nach dem Upgrade von XPrivacy Ihr Gerät neu gestartet?</string>
     <string name="msg_service_updating">Bitte warten Sie, bis der Update-Dienst beendet worden ist</string>
     <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
+    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
     <string name="msg_first"><b>XPrivacy wurde mit größter Sorgfalt entwickelt und getestet.\nDennoch kann nicht gewährleistet werden, 
 dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nSie verwenden XPrivacy ausschließlich auf eigenes Risiko!</b>\n\nBitte beachten Sie auch die Lizenz:</string>

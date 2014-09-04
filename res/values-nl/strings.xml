@@ -77,6 +77,7 @@
     <string name="msg_service_version">Privacy service versie verkeerd; heeft u uw apparaat opnieuw gestart na het bijwerken van XPrivacy?</string>
     <string name="msg_service_updating">Wacht a.u.b. tot het bijwerken voltooid is</string>
     <string name="msg_expert">Van ervaren gebruikers wordt verwacht dat zij waar mogelijk hun eigen problemen oplossen en dat zij het XDA XPrivacy forum volgen en anderen helpen waar mogelijk</string>
+    <string name="msg_method_expert">Functie beperkingen zijn bedoeld voor experts. Bent u een expert?</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>

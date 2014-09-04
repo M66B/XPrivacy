@@ -64,6 +64,7 @@ import android.widget.Button;
 import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
+import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -244,22 +245,56 @@ public class ActivityApp extends ActivityBase {
 		TextView tvPackageName = (TextView) findViewById(R.id.tvPackageName);
 		tvPackageName.setText(TextUtils.join(", ", mAppInfo.getPackageName()));
 
-		// Fill privacy list view adapter
-		final ExpandableListView lvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
-		lvRestriction.setGroupIndicator(null);
+		// Fill privacy expandable list view adapter
+		final ExpandableListView elvRestriction = (ExpandableListView) findViewById(R.id.elvRestriction);
+		elvRestriction.setGroupIndicator(null);
 		mPrivacyListAdapter = new RestrictionAdapter(this, R.layout.restrictionentry, mAppInfo, restrictionName,
 				methodName);
-		lvRestriction.setAdapter(mPrivacyListAdapter);
+		elvRestriction.setAdapter(mPrivacyListAdapter);
+
+		// Listen for group expand
+		elvRestriction.setOnGroupExpandListener(new OnGroupExpandListener() {
+			@Override
+			public void onGroupExpand(final int groupPosition) {
+				if (!PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingMethodExpert, false)) {
+					AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
+					alertDialogBuilder.setTitle(R.string.app_name);
+					alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
+					alertDialogBuilder.setMessage(R.string.msg_method_expert);
+					alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							PrivacyManager.setSetting(userId, PrivacyManager.cSettingMethodExpert,
+									Boolean.toString(true));
+						}
+					});
+					alertDialogBuilder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							elvRestriction.collapseGroup(groupPosition);
+						}
+					});
+
+					AlertDialog alertDialog = alertDialogBuilder.create();
+					alertDialog.show();
+
+				}
+			}
+		});
+
+		// Go to method
 		if (restrictionName != null) {
 			int groupPosition = new ArrayList<String>(PrivacyManager.getRestrictions(this).values())
 					.indexOf(restrictionName);
-			lvRestriction.expandGroup(groupPosition);
-			lvRestriction.setSelectedGroup(groupPosition);
-			if (methodName != null) {
-				Version version = new Version(Util.getSelfVersionName(this));
-				int childPosition = PrivacyManager.getHooks(restrictionName, version).indexOf(
-						new Hook(restrictionName, methodName));
-				lvRestriction.setSelectedChild(groupPosition, childPosition, true);
+			elvRestriction.setSelectedGroup(groupPosition);
+			if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingMethodExpert, false)) {
+				elvRestriction.expandGroup(groupPosition);
+				if (methodName != null) {
+					Version version = new Version(Util.getSelfVersionName(this));
+					int childPosition = PrivacyManager.getHooks(restrictionName, version).indexOf(
+							new Hook(restrictionName, methodName));
+					elvRestriction.setSelectedChild(groupPosition, childPosition, true);
+				}
 			}
 		}
 
