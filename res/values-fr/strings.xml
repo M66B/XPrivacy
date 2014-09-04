@@ -76,8 +76,8 @@
     <string name="msg_service_missing">Service Privacy non trouvé : avez-vous activé XPrivacy dans l\'installateur Xposed et redémarré votre appareil ?</string>
     <string name="msg_service_version">Décalage de la version du service Privacy : avez-vous redémarré votre appareil après la mise à niveau de XPrivacy ?</string>
     <string name="msg_service_updating">Veuillez patienter le temps que le service de mise à jour termine son travail.</string>
-    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
-    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
+    <string name="msg_expert">Les utilisateurs expérimentés sont sensés résoudre leurs problèmes par eux-mêmes, de suivre le forum de XPrivacy sur XDA et d'aider les autres si possible</string>
+    <string name="msg_method_expert">La restriction des fonctions est destinée aux utilisateurs expérimentés. Êtes-vous un expert ?</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
@@ -216,7 +216,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_https">Utiliser des connexions sécurisée</string>
     <string name="settings_syscomponents">Restreindre composants système (Android) (redémarrage requis)</string>
     <string name="settings_usagedata">Montrer les données d\'usage pour chaque application (redémarrage requis)</string>
-    <string name="settings_parameters">Montrer les paramètres de données d\'usage</string>
+    <string name="settings_parameters">Montrer les paramètres fournis aux fonctions dans les données d\'usage</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
