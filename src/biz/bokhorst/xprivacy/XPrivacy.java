@@ -493,22 +493,29 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			List<Member> listMember = new ArrayList<Member>();
 			// TODO: enable/disable superclass traversal
 			Class<?> clazz = hookClass;
-			while (clazz != null && !"android.content.ContentProvider".equals(clazz.getName())) {
-				if (hook.getMethodName() == null) {
-					for (Constructor<?> constructor : clazz.getDeclaredConstructors())
-						if (!Modifier.isAbstract(constructor.getModifiers())
-								&& Modifier.isPublic(constructor.getModifiers()) ? hook.isVisible() : !hook.isVisible())
-							listMember.add(constructor);
-					break;
-				} else {
-					for (Method method : clazz.getDeclaredMethods())
-						if (method.getName().equals(hook.getMethodName())
-								&& !Modifier.isAbstract(method.getModifiers())
-								&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
-							listMember.add(method);
+			while (clazz != null && !"android.content.ContentProvider".equals(clazz.getName()))
+				try {
+					if (hook.getMethodName() == null) {
+						for (Constructor<?> constructor : clazz.getDeclaredConstructors())
+							if (!Modifier.isAbstract(constructor.getModifiers())
+									&& Modifier.isPublic(constructor.getModifiers()) ? hook.isVisible() : !hook
+									.isVisible())
+								listMember.add(constructor);
+						break;
+					} else {
+						for (Method method : clazz.getDeclaredMethods())
+							if (method.getName().equals(hook.getMethodName())
+									&& !Modifier.isAbstract(method.getModifiers())
+									&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
+								listMember.add(method);
+					}
+					clazz = clazz.getSuperclass();
+				} catch (Throwable ex) {
+					if (ex.getClass().equals(ClassNotFoundException.class))
+						break;
+					else
+						throw ex;
 				}
-				clazz = clazz.getSuperclass();
-			}
 
 			// Hook members
 			for (Member member : listMember)
