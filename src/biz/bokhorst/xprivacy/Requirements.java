@@ -297,13 +297,15 @@ public class Requirements {
 		}
 
 		// Check context services
-		checkService(context, Context.ACCOUNT_SERVICE, new String[] { "android.accounts.AccountManager",
-				"com.intel.arkham.ExtendAccountManager" /* Asus */});
+		checkService(context, Context.ACCOUNT_SERVICE,
+				new String[] { "android.accounts.AccountManager", "com.intel.arkham.ExtendAccountManager" /* Asus */,
+						"android.privacy.surrogate.PrivacyAccountManager" /* PDroid */});
 		checkService(context, Context.ACTIVITY_SERVICE, new String[] { "android.app.ActivityManager",
 				"android.app.ActivityManagerEx" });
 		checkService(context, Context.CLIPBOARD_SERVICE, new String[] { "android.content.ClipboardManager" });
-		checkService(context, Context.CONNECTIVITY_SERVICE, new String[] { "android.net.ConnectivityManager",
-				"android.net.MultiSimConnectivityManager" });
+		checkService(context, Context.CONNECTIVITY_SERVICE,
+				new String[] { "android.net.ConnectivityManager", "android.net.MultiSimConnectivityManager",
+						"android.privacy.surrogate.PrivacyConnectivityManager" /* PDroid */});
 		checkService(context, Context.LOCATION_SERVICE,
 				new String[] { "android.location.LocationManager", "android.location.ZTEPrivacyLocationManager",
 						"android.privacy.surrogate.PrivacyLocationManager" /* PDroid */});
