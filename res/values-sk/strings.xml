@@ -76,9 +76,9 @@
     <string name="msg_service_missing">Nenájdená služba súkromia; povolili ste XPrivacy v Xposed Installeri a vykonali reštart vášho zariadenia?</string>
     <string name="msg_service_version">Verzia služby súkromia sa nezhoduje; vykonali ste reštart vášho zariadenia po aktualizovaní XPrivacy?</string>
     <string name="msg_service_updating">Prosím, počkajte, kým nebude dokončená aktualizačná služba</string>
-    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
-    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
+    <string name="msg_expert">Skusení používatelia dokážu vyriešiť svoje problémy vo väčšine prípadov a nasledovať tému XPrivacy na XDA fóre a pomáhať ostatným, ak je to možné</string>
+    <string name="msg_method_expert">Obmedzenia funkcií sú určené pre skúsených užívateľov. Ste skúsený používateľ?</string>
+    <string name="msg_longpress_whitelist">Dlho stlačte názov funkcie pre umiestnenie parametra na bielu alebo čiernu listinu</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
