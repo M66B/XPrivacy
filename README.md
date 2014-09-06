@@ -1431,6 +1431,9 @@ Setting data (in contrary to getting data) should never be restricted, this is o
 
 Application specific code is undesirable.
 
+XPrivacy is intended to restrict applications, but is not intended to restrict Android
+(although this is often possible as a side effect).
+
 See [here](https://www.openhub.net/p/xprivacy/) for XPrivacy code metrics.
 
 Please note that you agree to the license below by contributing, including the copyright.
