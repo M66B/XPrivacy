@@ -25,6 +25,10 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.1.2 BETA**
+
 * Fixed all problems reported through the debug info
 * Added usage data white/black list help text
 * Mark application as changed / update last modification time when white/black listing
@@ -33,8 +37,6 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Updated German translation
 * Updated Indonesian translation
 * Updated Japanese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.1.1 STABLE**
 
