@@ -1175,12 +1175,6 @@ you will probably sooner or later get a debug info popup.
 For the benefit of others, please report if XPrivacy 3 works for the ROM you are using
 (also post a screenshot of the *About* of XPrivacy so I can see how the ROM can be recognized).
 
-Although XPrivacy cannot automatically recognize the following ROMs, AOSP mode works fine when manually enabled:
-
-* Stock ROM HTC One Max Sense 6
-* Sony Xperia Z - firmware version 10.5.A.0.230
-* Stock ROM S4 GT-I9505
-
 <a name="FAQ69"></a>
 **(69) When do the state colors change?**
 
