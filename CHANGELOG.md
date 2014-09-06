@@ -27,6 +27,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 * Fixed all problems reported through the debug info
 * Added usage data white/black list help text
+* Mark application as changed / update last modification time when white/black listing
 * Updated Dutch translation
 * Updated French translation
 * Updated German translation

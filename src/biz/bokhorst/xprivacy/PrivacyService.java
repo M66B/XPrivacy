@@ -2008,8 +2008,17 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 			oResult.whitelist = true;
 
+			// Set white/black list
 			setSettingInternal(new PSetting(restriction.uid, hook.whitelist(), (xextra == null ? restriction.extra
 					: xextra), Boolean.toString(!result.restricted)));
+
+			// Mark state as changed
+			setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingState,
+					Integer.toString(ApplicationInfoEx.STATE_CHANGED)));
+
+			// Update modification time
+			setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingModifyTime,
+					Long.toString(System.currentTimeMillis())));
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}

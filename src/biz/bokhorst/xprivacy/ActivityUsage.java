@@ -315,16 +315,20 @@ public class ActivityUsage extends ActivityBase {
 											new DialogInterface.OnClickListener() {
 												@Override
 												public void onClick(DialogInterface dialog, int which) {
+													// Deny
 													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
 															usageData.extra, Boolean.toString(false));
+													PrivacyManager.updateState(usageData.uid);
 												}
 											});
 									alertDialogBuilder.setNeutralButton(getString(R.string.title_allow),
 											new DialogInterface.OnClickListener() {
 												@Override
 												public void onClick(DialogInterface dialog, int which) {
+													// Allow
 													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
 															usageData.extra, Boolean.toString(true));
+													PrivacyManager.updateState(usageData.uid);
 												}
 											});
 									alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
