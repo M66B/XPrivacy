@@ -78,6 +78,7 @@
     <string name="msg_service_updating">Vennligst vent inntil oppdateringstjenesten er ferdig</string>
     <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
     <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
+    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>

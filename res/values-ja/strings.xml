@@ -78,6 +78,7 @@
     <string name="msg_service_updating">更新サービスが完了するまでお待ちください</string>
     <string name="msg_expert">上級者は、なるべく自分自身で問題を解決すること、XDA フォーラムの XPrivacy スレッドを購読すること、そして他の利用者をできるだけ助けることが求められます</string>
     <string name="msg_method_expert">機能別の制限の設定は上級者向けです。あなたは上級者ですか?</string>
+    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
     <string name="msg_first"><b>XPrivacy の開発およびテストには細心の注意を払いましたが、
 すべての端末のあらゆるアプリで完璧な動作を保証することは不可能です。
 \n\n完全に自己責任のうえでご利用ください。</b>\n\nライセンスについて :</string>

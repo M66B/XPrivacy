@@ -78,6 +78,7 @@
     <string name="msg_service_updating">Prašome palaukti, kol atnaujinimas bus baigtas</string>
     <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
     <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
+    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>
