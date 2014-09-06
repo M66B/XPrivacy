@@ -287,14 +287,12 @@ public class ActivityApp extends ActivityBase {
 			int groupPosition = new ArrayList<String>(PrivacyManager.getRestrictions(this).values())
 					.indexOf(restrictionName);
 			elvRestriction.setSelectedGroup(groupPosition);
-			if (PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingMethodExpert, false)) {
-				elvRestriction.expandGroup(groupPosition);
-				if (methodName != null) {
-					Version version = new Version(Util.getSelfVersionName(this));
-					int childPosition = PrivacyManager.getHooks(restrictionName, version).indexOf(
-							new Hook(restrictionName, methodName));
-					elvRestriction.setSelectedChild(groupPosition, childPosition, true);
-				}
+			elvRestriction.expandGroup(groupPosition);
+			if (methodName != null) {
+				Version version = new Version(Util.getSelfVersionName(this));
+				int childPosition = PrivacyManager.getHooks(restrictionName, version).indexOf(
+						new Hook(restrictionName, methodName));
+				elvRestriction.setSelectedChild(groupPosition, childPosition, true);
 			}
 		}
 
