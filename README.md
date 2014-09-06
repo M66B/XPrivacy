@@ -1231,6 +1231,8 @@ Limited support means I will try to fix bugs, but only if it doesn't take much t
 
 **There is no support for anything other than privacy, so not for game cheating, root cloaking, etc.**
 
+Please check [the limitations](#limitations) before reporting a bug, requesting a feature or asking a question.
+
 ### Bugs
 
 **First ask if more people encountered the same bug!** (see questions below)
