@@ -1177,7 +1177,8 @@ For the benefit of others, please report if XPrivacy 3 works for the ROM you are
 
 Although XPrivacy cannot automatically recognize the following ROMs, AOSP mode works fine when manually enabled:
 
-*  HTC One Max Sense 6
+* HTC One Max Sense 6
+* Sony Xperia Z - firmware version 10.5.A.0.230
 
 <a name="FAQ69"></a>
 **(69) When do the state colors change?**
