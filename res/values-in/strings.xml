@@ -78,7 +78,7 @@
     <string name="msg_service_updating">Harap tunggu sampai layanan pembaharuan selesai</string>
     <string name="msg_expert">Pengguna ahli diharapkan untuk memecahkan masalah mereka sendiri jika mungkin dan mengikuti forum XDA XPrivacy serta membantu yang lain jika memungkinkan</string>
     <string name="msg_method_expert">Fungsi pembatasan ditujukan untuk pengguna ahli. Apakah Anda pengguna ahli?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
+    <string name="msg_longpress_whitelist">Tekan agak lama nama fungsi untuk parameter daftar hitam atau putih</string>
     <string name="msg_first"><b>Perhatian yang sangat besar telah dilakukan untuk mengembangkan dan menguji XPrivacy,
 Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan untuk setiap aplikasi.
 \n\nGunakan sepenuhnya dengan resiko Anda sendiri.</b>\n\nLihat juga lisensinya:</string>
