@@ -1220,6 +1220,11 @@ It is okay to use my personal or XDA e-mail for things that cannot be shared in 
 
 It is already enough work to support the official versions from the last stable version.
 
+There is limited support for XPrivacy on Ice cream sandwich
+and support for Ice cream sandwich will be dropped altogether after Android "L" has been released.
+XPrivacy on Jelly Bean will be supported until Android "L" has been released and will get limited support thereafter.
+Limited support means I will try to fix bugs, but only if it doesn't take much time.
+
 **I will not look into issues of applications that have to be paid for.**
 
 **I will not look into issues of applications that have root access.**
