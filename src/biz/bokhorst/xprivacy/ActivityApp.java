@@ -274,6 +274,7 @@ public class ActivityApp extends ActivityBase {
 							elvRestriction.collapseGroup(groupPosition);
 						}
 					});
+					alertDialogBuilder.setCancelable(false);
 
 					AlertDialog alertDialog = alertDialogBuilder.create();
 					alertDialog.show();
