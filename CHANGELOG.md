@@ -25,6 +25,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Mark application as changed / update last modification time when white/black listing
 * Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

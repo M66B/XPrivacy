@@ -1151,6 +1151,7 @@ public class ActivityApp extends ActivityBase {
 					boolean isChecked = holder.ctvName.isChecked();
 					mMapWhitelists.get(mSelectedType).put(name, isChecked);
 					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, Boolean.toString(isChecked));
+					PrivacyManager.updateState(mAppInfo.getUid());
 				}
 			});
 
@@ -1161,6 +1162,7 @@ public class ActivityApp extends ActivityBase {
 					WhitelistAdapter.this.remove(name);
 					mMapWhitelists.get(mSelectedType).remove(name);
 					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, null);
+					PrivacyManager.updateState(mAppInfo.getUid());
 				}
 			});
 
