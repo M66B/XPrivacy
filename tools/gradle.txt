@@ -1,0 +1,9 @@
+In case someone wants to build with gradle 1.12 (do not use 2.0) here's an initial build script to get you started. Builds are ~80KB smaller in size than with old ANT build system. You also get a nice html 'Lint report' (code analysis).
+
+- Put 'build.gradle' in XPrivacy root.
+- Add '-ignorewarnings' to 'proguard-project.txt' (or resolve warnings manually).
+- Build with 'gradle build' or 'gradle --daemon build' (faster, but needs more memory).
+- Stop the daemon with 'gradle --stop' (if you don't need it anymore).
+- Output in '/build/outputs/apk'.
+
+http://forum.xda-developers.com/showpost.php?p=55288139&postcount=11944
