@@ -66,6 +66,9 @@ public class PrivacyManager {
 			cClipboard, cContacts, cDictionary, cEMail, cIdentification, cInternet, cIPC, cLocation, cMedia, cMessages,
 			cNetwork, cNfc, cNotifications, cOverlay, cPhone, cSensors, cShell, cStorage, cSystem, cView };
 
+	public static List<String> cMethodNoState = Arrays.asList(new String[] { "IntentFirewall", "checkPermission",
+			"checkUidPermission" });
+
 	// Setting names
 	public final static String cSettingSerial = "Serial";
 	public final static String cSettingLatitude = "Latitude";

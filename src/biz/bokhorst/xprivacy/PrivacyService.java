@@ -2012,13 +2012,15 @@ public class PrivacyService extends IPrivacyService.Stub {
 			setSettingInternal(new PSetting(restriction.uid, hook.whitelist(), (xextra == null ? restriction.extra
 					: xextra), Boolean.toString(!result.restricted)));
 
-			// Mark state as changed
-			setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingState,
-					Integer.toString(ApplicationInfoEx.STATE_CHANGED)));
+			if (restriction.methodName == null || !PrivacyManager.cMethodNoState.contains(restriction.methodName)) {
+				// Mark state as changed
+				setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingState,
+						Integer.toString(ApplicationInfoEx.STATE_CHANGED)));
 
-			// Update modification time
-			setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingModifyTime,
-					Long.toString(System.currentTimeMillis())));
+				// Update modification time
+				setSettingInternal(new PSetting(restriction.uid, "", PrivacyManager.cSettingModifyTime,
+						Long.toString(System.currentTimeMillis())));
+			}
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
