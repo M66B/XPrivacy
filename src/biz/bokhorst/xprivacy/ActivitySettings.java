@@ -427,6 +427,27 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		switch (buttonView.getId()) {
+		case R.id.cbExpert:
+			cbSystem.setEnabled(isChecked);
+			cbExperimental.setEnabled(isChecked);
+			cbHttps.setEnabled(isChecked);
+			cbAOSP.setEnabled(isChecked);
+			etConfidence.setEnabled(isChecked);
+			etQuirks.setEnabled(isChecked);
+			btnFlush.setEnabled(isChecked);
+			btnClearDb.setEnabled(isChecked);
+			if (isChecked) {
+				if (!expert)
+					Toast.makeText(this, getString(R.string.msg_expert), Toast.LENGTH_LONG).show();
+			} else {
+				cbSystem.setChecked(false);
+				cbExperimental.setChecked(false);
+				cbHttps.setChecked(true);
+				cbAOSP.setChecked(false);
+				etConfidence.setText("");
+				etQuirks.setText("");
+			}
+			break;
 		case R.id.cbSerial:
 			etSerial.setEnabled(!isChecked);
 			break;
@@ -465,27 +486,6 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			break;
 		case R.id.cbSSID:
 			etSSID.setEnabled(!isChecked);
-			break;
-		case R.id.cbExpert:
-			cbSystem.setEnabled(isChecked);
-			cbExperimental.setEnabled(isChecked);
-			cbHttps.setEnabled(isChecked);
-			cbAOSP.setEnabled(isChecked);
-			etConfidence.setEnabled(isChecked);
-			etQuirks.setEnabled(isChecked);
-			btnFlush.setEnabled(isChecked);
-			btnClearDb.setEnabled(isChecked);
-			if (isChecked) {
-				if (!expert)
-					Toast.makeText(this, getString(R.string.msg_expert), Toast.LENGTH_LONG).show();
-			} else {
-				cbSystem.setChecked(false);
-				cbExperimental.setChecked(false);
-				cbHttps.setChecked(true);
-				cbAOSP.setChecked(false);
-				etConfidence.setText("");
-				etQuirks.setText("");
-			}
 			break;
 		}
 	}
