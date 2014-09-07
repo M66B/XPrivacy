@@ -1198,6 +1198,17 @@ Please note that I will not make exceptions to this, because the limit is there 
 Make sure you have an internet connection and that XPrivacy has internet access (check your firewall).
 The changelog is an in application display of [this page](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md)
 
+<a name="FAQ72"></a>
+**(72) Can you make XPrivacy available on F-Droid, Amazon, etc?**
+
+I don't want to publish XPrivacy in dozens of places, because it is extra work, which doesn't add any value.
+The current download locations,
+the [Xposed repo](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
+and [GitHub](https://github.com/M66B/XPrivacy/releases),
+should be accessible to almost everybody.
+
+[F-Droid](https://f-droid.org/) also doesn't allow me to sign the APK with my own signature.
+
 Support
 -------
 
