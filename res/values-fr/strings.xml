@@ -79,6 +79,7 @@
     <string name="msg_expert">Les utilisateurs expérimentés sont sensés résoudre leurs problèmes par eux-mêmes, de suivre le forum de XPrivacy sur XDA et d\'aider les autres si possible</string>
     <string name="msg_method_expert">La restriction des fonctions est destinée aux utilisateurs expérimentés. Êtes-vous un expert ?</string>
     <string name="msg_longpress_whitelist">Faites un appui long sur le nom d\'une fonction pour mettre les paramètres en liste blanche/noire</string>
+    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>

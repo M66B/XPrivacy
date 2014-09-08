@@ -1,8 +1,8 @@
 #!/bin/bash
-grep -RIl "\<string name=\"msg_longpress_whitelist" res | xargs sed -i -e '/msg_longpress_whitelist/d'
+grep -RIl "\<string name=\"msg_settings_specific" res | xargs sed -i -e '/msg_settings_specific/d'
 
-grep -RIl "\<string name=\"msg_method_expert" res | xargs sed -i -e '/msg_method_expert/a \
-\ \ \ \ <string name=\"msg_longpress_whitelist\">Long press function name to white or black list parameter</string>'
+grep -RIl "\<string name=\"msg_longpress_whitelist" res | xargs sed -i -e '/msg_longpress_whitelist/a \
+\ \ \ \ <string name=\"msg_settings_specific\">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>'
 
 #grep -RIl "\<string name=\"title_template_merge" res | xargs sed -i -e 's/Apply template (merge)/Apply template (merge set)/g'
 

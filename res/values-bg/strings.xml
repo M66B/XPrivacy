@@ -79,6 +79,7 @@
     <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
     <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
     <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
+    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
     <string name="msg_first"><b>XPrivacy е разработен и тестван с голямо внимание,
 но е невъзможно да се гарантира безпроблемна работа на всякакви устройства при всякакви приложения.
 \n\nИзползвате го на свой собствен риск.</b>\n\nВижте и лиценза:</string>

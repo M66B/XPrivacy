@@ -25,6 +25,8 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Added help text to application specific settings ([issue](/../../issues/1968))
+* Updated Dutch translation
 * Updated French translation
 * Updated German translation
 

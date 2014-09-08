@@ -29,6 +29,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivitySettings extends ActivityBase implements OnCheckedChangeListener, OnClickListener {
@@ -108,6 +109,8 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			uid = userId;
 
 		// Reference controls
+		TextView tvInfo = (TextView) findViewById(R.id.tvInfo);
+
 		cbNotify = (CheckBox) findViewById(R.id.cbNotify);
 		cbOnDemand = (CheckBox) findViewById(R.id.cbOnDemand);
 		cbBlacklist = (CheckBox) findViewById(R.id.cbBlacklist);
@@ -254,6 +257,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		// Set current values
 		if (uid == userId) {
 			// Global settings
+			tvInfo.setVisibility(View.GONE);
 			cbUsage.setChecked(usage);
 			cbParameters.setChecked(parameters);
 			cbParameters.setEnabled(Util.hasProLicense(this) != null);

@@ -17,8 +17,18 @@
         android:orientation="vertical" >
 
         <TextView
+            android:id="@+id/tvInfo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="6dip"
+            android:text="@string/msg_settings_specific"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="italic" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dip"
             android:text="@string/settings_general"
             android:textAllCaps="true"
             android:textStyle="bold" />
