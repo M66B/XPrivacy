@@ -42,7 +42,7 @@
     <string name="menu_whitelists">Kelola daftar putih</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_changelog">Log perubahan</string>
-    <string name="menu_flush">Bilas cache</string>
+    <string name="menu_flush">Bilas tembolok</string>
     <string name="menu_update">Periksa pembaharuan</string>
     <string name="menu_batch">Operasi &#8230;</string>
     <string name="menu_legend">Legenda</string>
@@ -79,7 +79,7 @@
     <string name="msg_expert">Pengguna ahli diharapkan untuk memecahkan masalah mereka sendiri jika mungkin dan mengikuti forum XDA XPrivacy serta membantu yang lain jika memungkinkan</string>
     <string name="msg_method_expert">Fungsi pembatasan ditujukan untuk pengguna ahli. Apakah Anda pengguna ahli?</string>
     <string name="msg_longpress_whitelist">Tekan agak lama nama fungsi untuk parameter daftar hitam atau putih</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_settings_specific">Tanda centang beserta nilai lebih diutamakan daripada tanda centang global dan nilai; kotak centang kosong beserta nilai tidak diutamakan</string>
     <string name="msg_first"><b>Perhatian yang sangat besar telah dilakukan untuk mengembangkan dan menguji XPrivacy,
 Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan untuk setiap aplikasi.
 \n\nGunakan sepenuhnya dengan resiko Anda sendiri.</b>\n\nLihat juga lisensinya:</string>
@@ -222,7 +222,7 @@ Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan unt
     <string name="settings_cid">ID Cell GSM</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Kebiasaan</string>
-    <string name="settings_aosp">Mode AOSP (memerlukan boot ulang)</string>
+    <string name="settings_aosp">Modus AOSP (memerlukan boot ulang)</string>
     <string name="help_check_restrict">Kotak centang pertama: membatasi kategori atau fungsi</string>
     <string name="help_check_ondemand">Kotak centang kedua: membatasi sesuai permintaan</string>
     <string name="help_switch">Tombol on/off: mengaktifkan atau menonaktifkan semua pembatasan</string>
