@@ -33,6 +33,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Updated Dutch translation
 * Updated French translation
 * Updated German translation
+* Updated Indonesian translation
 
 **Version 3.1.3 BETA**
 
