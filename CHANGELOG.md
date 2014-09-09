@@ -25,12 +25,14 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.1.4 BETA**
+
 * Added help text to application specific settings ([issue](/../../issues/1968))
 * Updated Dutch translation
 * Updated French translation
 * Updated German translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.1.3 BETA**
 
