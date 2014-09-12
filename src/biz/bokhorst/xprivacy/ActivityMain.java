@@ -1579,20 +1579,31 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		}
 
 		public void selectAllVisible() {
-			// Look through the visible apps to figure out what to do
+			// Look through the visible, enabled apps to figure out what to do
 			mSelecting = false;
 			for (int i = 0; i < this.getCount(); i++) {
-				if (!mListAppSelected.contains(this.getItem(i))) {
-					mSelecting = true;
-					break;
+				ApplicationInfoEx appInfo = this.getItem(i);
+				if (!mListAppSelected.contains(appInfo)) {
+					boolean enabled = PrivacyManager.getSettingBool(appInfo.getUid(),
+							PrivacyManager.cSettingRestricted, true);
+					if (enabled) {
+						mSelecting = true;
+						break;
+					}
 				}
 			}
 
 			if (mSelecting) {
-				// Add the visible apps not already selected
-				for (int i = 0; i < this.getCount(); i++)
-					if (!mListAppSelected.contains(this.getItem(i)))
-						mListAppSelected.add(this.getItem(i));
+				// Add the visible, enabled apps not already selected
+				for (int i = 0; i < this.getCount(); i++) {
+					ApplicationInfoEx appInfo = this.getItem(i);
+					if (!mListAppSelected.contains(appInfo)) {
+						boolean enabled = PrivacyManager.getSettingBool(appInfo.getUid(),
+								PrivacyManager.cSettingRestricted, true);
+						if (enabled)
+							mListAppSelected.add(this.getItem(i));
+					}
+				}
 			} else
 				mListAppSelected.clear();
 
