@@ -251,6 +251,16 @@
 				exit();
 			}
 
+			// Check expiry
+			$needle = '@faircode.eu';
+			if (substr($data->email, -strlen($needle)) === $needle) {
+				$timestamp = explode('.', $data->email)[0];
+				if ($timestamp < time()) {
+					echo json_encode(array('ok' => false, 'errno' => 301, 'error' => 'License expired'));
+					exit();
+				}
+			}
+
 			// Validate
 			if (empty($data->package_name)) {
 				//log_error('fetch: package name missing', $my_email, $data);
