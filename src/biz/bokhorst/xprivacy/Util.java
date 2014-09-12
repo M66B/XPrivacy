@@ -277,8 +277,20 @@ public class Util {
 				String signature = iniFile.get("signature", "");
 				if (name == null || email == null || signature == null)
 					return null;
-				else
+				else {
+					// Check expiry
+					if (email.endsWith("@faircode.eu")) {
+						long expiry = Long.parseLong(email.split("\\.")[0]);
+						long time = System.currentTimeMillis() / 1000L;
+						if (time > expiry) {
+							Util.log(null, Log.WARN, "Licensing: expired");
+							return null;
+						}
+					}
+
+					// Valid
 					return new String[] { name, email, signature };
+				}
 			} catch (FileNotFoundException ex) {
 				return null;
 			} catch (Throwable ex) {
