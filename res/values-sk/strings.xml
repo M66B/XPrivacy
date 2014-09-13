@@ -79,7 +79,7 @@
     <string name="msg_expert">Skusení používatelia dokážu vyriešiť svoje problémy vo väčšine prípadov a nasledovať tému XPrivacy na XDA fóre a pomáhať ostatným, ak je to možné</string>
     <string name="msg_method_expert">Obmedzenia funkcií sú určené pre skúsených užívateľov. Ste skúsený používateľ?</string>
     <string name="msg_longpress_whitelist">Dlho stlačte názov funkcie pre umiestnenie parametra na bielu alebo čiernu listinu</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_settings_specific">Zaškrtávacie polia a hodnoty majú prednosť pred globálnymi zaškrtávacími poliami a hodnotami; prázdne zaškrtávacie polia a hodnoty nemajú prednosť</string>
     <string name="msg_first"><b>Veľká starostlivosť bola venovaná vývoju a testovaniu XPrivacy,
 avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zariadení a na každú aplikáciu.
 \n\nPoužitie je plne na vlastné riziko.</b>\n\nPozrite tiež licenciu:</string>
