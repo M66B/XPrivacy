@@ -25,9 +25,11 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
-* Select all enabled applications ([issue](/../../issues/1977))
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.1.5 BETA**
+
+* Select all enabled applications ([issue](/../../issues/1977))
 
 **Version 3.1.4 BETA**
 
