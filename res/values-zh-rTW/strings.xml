@@ -187,7 +187,7 @@
     <string name="title_toggle_dangerous">欲選取不建議限制的項目時，需要長按項目名稱。</string>
     <string name="title_ondemand_category">套用到整個分類時會覆寫預設限制列表的設定。</string>
     <string name="title_function_help">功能說明</string>
-    <string name="title_unsafe">就算封鎖了還是有可能被繞開的功能/string>
+    <string name="title_unsafe">就算封鎖了還是有可能被繞開的功能</string>
     <string name="title_update_checking">檢查更新</string>
     <string name="title_update_downloading">下載更新中....</string>
     <string name="title_update_install">按下安裝更新</string>
