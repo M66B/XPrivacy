@@ -1209,11 +1209,6 @@ should be accessible to almost everybody.
 
 [F-Droid](https://f-droid.org/) also doesn't allow me to sign the APK with my own signature.
 
-<a name="FAQ73"></a>
-**(73) Why is the minimum PayPal donation lower than the Pro license fetcher application price?**
-
-The Google transaction fee is 30%, while the PayPal transaction fee is 5-10%.
-
 Support
 -------
 
