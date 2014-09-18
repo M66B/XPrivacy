@@ -25,6 +25,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Fixed details view tutorial header
 * Updated German translation
 * Updated traditional Chinese translation
 
