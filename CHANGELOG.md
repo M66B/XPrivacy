@@ -25,6 +25,10 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.2.1 BETA**
+
 * Fixed details view tutorial header
 * Made disabled main list entries clickable
 * Show half check box only to expert users
@@ -32,8 +36,6 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Updated Dutch translation
 * Updated German translation
 * Updated traditional Chinese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.2 STABLE**
 
