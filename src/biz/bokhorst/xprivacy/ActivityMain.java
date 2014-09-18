@@ -1803,6 +1803,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			public ImageView imgInternet;
 			public ImageView imgFrozen;
 			public ImageView imgSettings;
+			public LinearLayout llName;
 			public TextView tvName;
 			public ImageView imgCbRestricted;
 			public ProgressBar pbRunning;
@@ -1819,6 +1820,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 				imgInternet = (ImageView) row.findViewById(R.id.imgInternet);
 				imgFrozen = (ImageView) row.findViewById(R.id.imgFrozen);
 				imgSettings = (ImageView) row.findViewById(R.id.imgSettings);
+				llName = (LinearLayout) row.findViewById(R.id.llName);
 				tvName = (TextView) row.findViewById(R.id.tvName);
 				imgCbRestricted = (ImageView) row.findViewById(R.id.imgCbRestricted);
 				pbRunning = (ProgressBar) row.findViewById(R.id.pbRunning);
@@ -1959,7 +1961,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						holder.row.setBackgroundColor(Color.TRANSPARENT);
 
 					// Listen for multiple select
-					holder.tvName.setOnLongClickListener(new View.OnLongClickListener() {
+					holder.llName.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
 							if (mListAppSelected.contains(xAppInfo)) {
@@ -1977,7 +1979,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					});
 
 					// Listen for application selection
-					holder.tvName.setOnClickListener(new View.OnClickListener() {
+					holder.llName.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(final View view) {
 							if (mSelecting) {

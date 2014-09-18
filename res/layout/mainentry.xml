@@ -70,8 +70,8 @@
                 android:src="?attr/icon_frozen" />
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/tvName"
+        <LinearLayout
+            android:id="@+id/llName"
             android:layout_width="0dip"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
@@ -79,8 +79,15 @@
             android:background="@drawable/list_item_pressed"
             android:gravity="center_vertical"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
-            android:paddingLeft="3dip"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+            android:orientation="horizontal"
+            android:paddingLeft="3dip" >
+
+            <TextView
+                android:id="@+id/tvName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/imgSettings"
