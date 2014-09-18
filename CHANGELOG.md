@@ -27,6 +27,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 * Fixed details view tutorial header
 * Made disabled main list entries clickable
+* Show half check box only to expert users
 * Updated German translation
 * Updated traditional Chinese translation
 

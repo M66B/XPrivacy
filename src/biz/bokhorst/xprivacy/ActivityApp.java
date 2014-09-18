@@ -266,6 +266,8 @@ public class ActivityApp extends ActivityBase {
 						public void onClick(DialogInterface dialog, int which) {
 							PrivacyManager.setSetting(userId, PrivacyManager.cSettingMethodExpert,
 									Boolean.toString(true));
+							if (mPrivacyListAdapter != null)
+								mPrivacyListAdapter.notifyDataSetChanged();
 						}
 					});
 					alertDialogBuilder.setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
@@ -1262,6 +1264,7 @@ public class ActivityApp extends ActivityBase {
 			private boolean whitelist;
 			private boolean enabled;
 			private boolean can;
+			private boolean methodExpert;
 
 			public GroupHolderTask(int thePosition, GroupViewHolder theHolder, String theRestrictionName) {
 				position = thePosition;
@@ -1317,6 +1320,7 @@ public class ActivityApp extends ActivityBase {
 
 					enabled = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
 					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName, null, true);
+					methodExpert = PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingMethodExpert, false);
 
 					return holder;
 				}
@@ -1349,10 +1353,10 @@ public class ActivityApp extends ActivityBase {
 						holder.imgWhitelist.setClickable(false);
 
 					// Display restriction
-					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
+					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate, methodExpert));
 					holder.imgCbRestricted.setVisibility(View.VISIBLE);
 					if (ondemand) {
-						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate, methodExpert));
 						holder.imgCbAsk.setVisibility(View.VISIBLE);
 					} else
 						holder.imgCbAsk.setVisibility(View.GONE);
@@ -1669,12 +1673,12 @@ public class ActivityApp extends ActivityBase {
 						holder.imgMethodWhitelist.setClickable(false);
 
 					// Display restriction
-					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate));
+					holder.imgCbMethodRestricted.setImageBitmap(getCheckBoxImage(rstate, true));
 					holder.imgCbMethodRestricted.setVisibility(View.VISIBLE);
 
 					// Show asked state
 					if (ondemand) {
-						holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate));
+						holder.imgCbMethodAsk.setImageBitmap(getAskBoxImage(rstate, true));
 						holder.imgCbMethodAsk.setVisibility(md.canOnDemand() ? View.VISIBLE : View.INVISIBLE);
 					} else
 						holder.imgCbMethodAsk.setVisibility(View.GONE);

@@ -93,18 +93,24 @@ public class ActivityBase extends Activity {
 		return mCheck[3];
 	}
 
-	protected Bitmap getCheckBoxImage(RState state) {
+	protected Bitmap getCheckBoxImage(RState state, boolean expert) {
 		if (state.partialRestricted)
-			return getHalfCheckBox();
+			if (expert)
+				return getHalfCheckBox();
+			else
+				return getFullCheckBox();
 		else if (state.restricted)
 			return getFullCheckBox();
 		else
 			return getOffCheckBox();
 	}
 
-	protected Bitmap getAskBoxImage(RState state) {
+	protected Bitmap getAskBoxImage(RState state, boolean expert) {
 		if (state.partialAsk)
-			return getHalfCheckBox();
+			if (expert)
+				return getHalfCheckBox();
+			else
+				return getOnDemandCheckBox();
 		else if (state.asked)
 			return getOffCheckBox();
 		else

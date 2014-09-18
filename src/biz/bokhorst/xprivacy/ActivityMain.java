@@ -1841,6 +1841,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			private boolean gondemand;
 			private boolean ondemand;
 			private boolean can;
+			private boolean methodExpert;
 
 			public HolderTask(int thePosition, ViewHolder theHolder, ApplicationInfoEx theAppInfo) {
 				position = thePosition;
@@ -1887,6 +1888,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Get can restrict
 					can = PrivacyManager.canRestrict(rstate.mUid, Process.myUid(), rstate.mRestrictionName,
 							rstate.mMethodName, true);
+					methodExpert = (mRestrictionName == null || PrivacyManager.getSettingBool(userId,
+							PrivacyManager.cSettingMethodExpert, false));
 
 					return holder;
 				}
@@ -1920,7 +1923,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					// Display on demand
 					if (gondemand) {
 						if (ondemand) {
-							holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+							holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate, methodExpert));
 							holder.imgCbAsk.setVisibility(View.VISIBLE);
 						} else
 							holder.imgCbAsk.setVisibility(View.INVISIBLE);
@@ -1946,7 +1949,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					holder.imgSettings.setVisibility(settings ? View.VISIBLE : View.GONE);
 
 					// Display restriction
-					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
+					holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate, methodExpert));
 					holder.imgCbRestricted.setVisibility(View.VISIBLE);
 
 					// Display enabled state
@@ -2049,7 +2052,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 									@Override
 									protected void onPostExecute(Object result) {
-										holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+										holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate, methodExpert));
 										holder.pbRunning.setVisibility(View.GONE);
 										holder.imgCbAsk.setVisibility(View.VISIBLE);
 									}
@@ -2086,8 +2089,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 						// Update stored state
 						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
-						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate, methodExpert));
+						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate, methodExpert));
 
 						// Notify restart
 						if (oldState.contains(true))
@@ -2124,8 +2127,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					protected void onPostExecute(Object result) {
 						// Update restriction display
 						rstate = new RState(xAppInfo.getUid(), mRestrictionName, null, mVersion);
-						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate));
-						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate));
+						holder.imgCbRestricted.setImageBitmap(getCheckBoxImage(rstate, methodExpert));
+						holder.imgCbAsk.setImageBitmap(getAskBoxImage(rstate, methodExpert));
 
 						// Notify restart
 						if (!newState.equals(oldState))
