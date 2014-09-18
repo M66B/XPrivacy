@@ -224,7 +224,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">AOSP modus (herstart vereist)</string>
     <string name="help_check_restrict">Eerste vinkje: beperk categorie of functie</string>
-    <string name="help_check_ondemand">Tweede vinkje: beperk op aanvraag</string>
+    <string name="help_check_ondemand">Tweede vinkje: beperk op aanvraag; eerste vinkje is standaardwaarde</string>
     <string name="help_switch">Aan/uit schakelaar: zet alle beperkingen aan of uit</string>
     <string name="help_longpress">Druk lang op een applicatienaam om te selecteren</string>
     <string name="help_ondemand">beperkingen worden gevraagd</string>
