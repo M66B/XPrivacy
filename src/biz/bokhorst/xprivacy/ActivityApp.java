@@ -362,10 +362,9 @@ public class ActivityApp extends ActivityBase {
 		super.onResume();
 
 		// Update switch
-		if (swEnabled != null) {
-			boolean enabled = PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true);
-			swEnabled.setChecked(enabled);
-		}
+		if (swEnabled != null)
+			swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted,
+					true));
 
 		// Update on demand check box
 		int userId = Util.getUserId(Process.myUid());
