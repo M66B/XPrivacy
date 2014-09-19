@@ -905,6 +905,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		btnRename.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				if (Util.hasProLicense(ActivityMain.this) == null) {
+					// Redirect to pro page
+					Util.viewUri(ActivityMain.this, cProUri);
+					return;
+				}
+
 				final int templateId = spTemplate.getSelectedItemPosition();
 				if (templateId == AdapterView.INVALID_POSITION)
 					return;
