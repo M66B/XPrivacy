@@ -179,6 +179,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Standaard</string>
     <string name="title_alternate">Alternatief</string>
+    <string name="title_rename">Hernoemen</string>
     <string name="title_usage_header">Gebruik</string>
     <string name="title_usage_text_1">1. Zoek de te beperken applicatie op in de lijst met applicaties</string>
     <string name="title_usage_text_2">2. Klik op het icoon of de naam van de applicatie</string>

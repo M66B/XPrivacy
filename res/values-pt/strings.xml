@@ -179,6 +179,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Alternate</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Usage</string>
     <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
     <string name="title_usage_text_2">2. Tap on the application icon</string>

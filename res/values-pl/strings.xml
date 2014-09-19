@@ -179,6 +179,7 @@
     <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Domyślnie</string>
     <string name="title_alternate">Alternate</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Użycie</string>
     <string name="title_usage_text_1">1. Znajdź aplikację którą chcesz ograniczyć na głównej liście aplikacji</string>
     <string name="title_usage_text_2">2. Tapnij na ikonie aplikacji</string>

@@ -22,6 +22,7 @@ public class Meta {
 	public final static String cTypeApplication = "Application";
 	public final static String cTypeContact = "Contact";
 	public final static String cTypeTemplate = "Template";
+	public final static String cTypeTemplateName = "TemplateName";
 
 	public final static String cTypeAddress = "Address";
 	public final static String cTypeAction = "Action";

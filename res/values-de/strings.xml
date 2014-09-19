@@ -179,6 +179,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_ondemand_reset">Zurücksetzen</string>
     <string name="title_default">Standard</string>
     <string name="title_alternate">Alternativ</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Anleitung</string>
     <string name="title_usage_text_1">1. Suchen Sie in der Liste die App, die Sie beschränken möchten</string>
     <string name="title_usage_text_2">2. Tippen Sie auf das App Icon</string>

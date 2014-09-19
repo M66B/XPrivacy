@@ -248,9 +248,14 @@ public class ActivityShare extends ActivityBase {
 		// Build template adapter
 		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
 		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spAdapter.add(getString(R.string.title_default));
-		for (int i = 1; i <= 4; i++)
-			spAdapter.add(getString(R.string.title_alternate) + " " + i);
+		String defaultName = PrivacyManager.getSetting(userId, Meta.cTypeTemplateName, "0",
+				getString(R.string.title_default));
+		spAdapter.add(defaultName);
+		for (int i = 1; i <= 4; i++) {
+			String alternateName = PrivacyManager.getSetting(userId, Meta.cTypeTemplateName, Integer.toString(i),
+					getString(R.string.title_alternate) + " " + i);
+			spAdapter.add(alternateName);
+		}
 		spTemplate.setAdapter(spAdapter);
 
 		// Build application list

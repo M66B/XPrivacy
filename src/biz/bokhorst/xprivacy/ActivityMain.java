@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -58,6 +59,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.Filter;
 import android.widget.ImageView;
@@ -861,18 +863,26 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 	@SuppressLint("InflateParams")
 	private void optionTemplate() {
+		final int userId = Util.getUserId(Process.myUid());
+
 		// Build view
 		LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View view = inflater.inflate(R.layout.template, null);
-		Spinner spTemplate = (Spinner) view.findViewById(R.id.spTemplate);
+		final Spinner spTemplate = (Spinner) view.findViewById(R.id.spTemplate);
+		Button btnRename = (Button) view.findViewById(R.id.btnRename);
 		ExpandableListView elvTemplate = (ExpandableListView) view.findViewById(R.id.elvTemplate);
 
 		// Template selector
-		SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
+		final SpinnerAdapter spAdapter = new SpinnerAdapter(this, android.R.layout.simple_spinner_item);
 		spAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		spAdapter.add(getString(R.string.title_default));
-		for (int i = 1; i <= 4; i++)
-			spAdapter.add(getString(R.string.title_alternate) + " " + i);
+		String defaultName = PrivacyManager.getSetting(userId, Meta.cTypeTemplateName, "0",
+				getString(R.string.title_default));
+		spAdapter.add(defaultName);
+		for (int i = 1; i <= 4; i++) {
+			String alternateName = PrivacyManager.getSetting(userId, Meta.cTypeTemplateName, Integer.toString(i),
+					getString(R.string.title_alternate) + " " + i);
+			spAdapter.add(alternateName);
+		}
 		spTemplate.setAdapter(spAdapter);
 
 		// Template definition
@@ -889,6 +899,50 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			@Override
 			public void onNothingSelected(AdapterView<?> arg0) {
 				templateAdapter.notifyDataSetChanged();
+			}
+		});
+
+		btnRename.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				final int templateId = spTemplate.getSelectedItemPosition();
+				if (templateId == AdapterView.INVALID_POSITION)
+					return;
+
+				AlertDialog.Builder dlgRename = new AlertDialog.Builder(spTemplate.getContext());
+				dlgRename.setTitle(R.string.title_rename);
+
+				final String original = (templateId == 0 ? getString(R.string.title_default)
+						: getString(R.string.title_alternate) + " " + templateId);
+				dlgRename.setMessage(original);
+
+				final EditText input = new EditText(spTemplate.getContext());
+				dlgRename.setView(input);
+
+				dlgRename.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						String name = input.getText().toString();
+						if (TextUtils.isEmpty(name)) {
+							PrivacyManager.setSetting(userId, Meta.cTypeTemplateName, Integer.toString(templateId),
+									null);
+							name = original;
+						} else {
+							PrivacyManager.setSetting(userId, Meta.cTypeTemplateName, Integer.toString(templateId),
+									name);
+						}
+						spAdapter.remove(spAdapter.getItem(templateId));
+						spAdapter.insert(name, templateId);
+						spAdapter.notifyDataSetChanged();
+					}
+				});
+
+				dlgRename.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+						// Do nothing
+					}
+				});
+
+				dlgRename.create().show();
 			}
 		});
 

@@ -177,6 +177,7 @@
     <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Alternativ</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Anvendelse</string>
     <string name="title_usage_text_1">1. Find applikationen du vil begrænse i applikationslisten</string>
     <string name="title_usage_text_2">2. Tryk på applikations ikonet</string>

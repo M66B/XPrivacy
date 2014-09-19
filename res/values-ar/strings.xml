@@ -179,6 +179,7 @@
     <string name="title_ondemand_reset">إعادة تعيين</string>
     <string name="title_default">الافتراضي</string>
     <string name="title_alternate">البديل</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">الاستخدام</string>
     <string name="title_usage_text_1">1. أعثر على التطبيق في قائمة التطبيقات الرئيسية لتقييده</string>
     <string name="title_usage_text_2">2. اضغط على أيقونة التطبيق</string>

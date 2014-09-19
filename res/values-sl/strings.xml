@@ -179,6 +179,7 @@
     <string name="title_ondemand_reset">Ponastavi</string>
     <string name="title_default">Privzeto</string>
     <string name="title_alternate">Nadomestno</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Uporaba</string>
     <string name="title_usage_text_1">1. Na seznamu programov poiščite program, ki mu želite pravice omejiti</string>
     <string name="title_usage_text_2">2. Dotaknite se njegove ikone</string>

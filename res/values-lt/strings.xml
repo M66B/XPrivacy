@@ -179,6 +179,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_ondemand_reset">Atstatyti</string>
     <string name="title_default">Numatytasis</string>
     <string name="title_alternate">Atsarginis</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Naudojimas</string>
     <string name="title_usage_text_1">1. Rastite norimą riboti programą pagrindiniame sąraše</string>
     <string name="title_usage_text_2">2. Bakstelėkite programos piktogramą</string>

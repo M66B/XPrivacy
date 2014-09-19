@@ -179,6 +179,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_ondemand_reset">Resetta</string>
     <string name="title_default">Default</string>
     <string name="title_alternate">Opzione</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Utilizzo</string>
     <string name="title_usage_text_1">1. Cerca l\'applicazione da restringere nella lista principale</string>
     <string name="title_usage_text_2">2. Tocca l\'icona dell\'applicazione</string>

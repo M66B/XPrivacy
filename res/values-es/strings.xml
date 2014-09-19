@@ -179,6 +179,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_ondemand_reset">Reiniciará</string>
     <string name="title_default">Restablecerá por defecto</string>
     <string name="title_alternate">Alternará</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Uso</string>
     <string name="title_usage_text_1">1. Busca la aplicación a restringir en la lista principal de aplicaciones</string>
     <string name="title_usage_text_2">2. Pulsa en el icono de la aplicación</string>

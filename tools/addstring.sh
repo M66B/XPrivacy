@@ -1,8 +1,8 @@
 #!/bin/bash
-grep -RIl "\<string name=\"msg_settings_specific" res | xargs sed -i -e '/msg_settings_specific/d'
+grep -RIl "\<string name=\"title_rename" res | xargs sed -i -e '/title_rename/d'
 
-grep -RIl "\<string name=\"msg_longpress_whitelist" res | xargs sed -i -e '/msg_longpress_whitelist/a \
-\ \ \ \ <string name=\"msg_settings_specific\">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>'
+grep -RIl "\<string name=\"title_alternate" res | xargs sed -i -e '/title_alternate/a \
+\ \ \ \ <string name=\"title_rename\">Rename</string>'
 
 #grep -RIl "\<string name=\"title_template_merge" res | xargs sed -i -e 's/Apply template (merge)/Apply template (merge set)/g'
 

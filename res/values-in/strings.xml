@@ -179,6 +179,7 @@ Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan unt
     <string name="title_ondemand_reset">Set ulang</string>
     <string name="title_default">Standar</string>
     <string name="title_alternate">Alternatif</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Penggunaan</string>
     <string name="title_usage_text_1">1. Cari aplikasi yang akan dibatasi dalam daftar aplikasi utama</string>
     <string name="title_usage_text_2">2. Sentuh pada ikon aplikasi atau pada nama aplikasi</string>

@@ -178,6 +178,7 @@
     <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Mặc định</string>
     <string name="title_alternate">Thay thế</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Sử dụng</string>
     <string name="title_usage_text_1">1. Tìm ứng dụng để hạn chế từ danh sách các ứng dụng</string>
     <string name="title_usage_text_2">2. Chạm vào biểu tượng của ứng dụng</string>

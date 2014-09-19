@@ -179,6 +179,7 @@
     <string name="title_ondemand_reset">复位</string>
     <string name="title_default">默认</string>
     <string name="title_alternate">备用</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">用户指南</string>
     <string name="title_usage_text_1">1. 找到应用程序的主应用程序列表中以限制</string>
     <string name="title_usage_text_2">2. 点击应用程序图标</string>

@@ -179,6 +179,7 @@
     <string name="title_ondemand_reset">重設</string>
     <string name="title_default">預設</string>
     <string name="title_alternate">其他</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">使用方法</string>
     <string name="title_usage_text_1">1. 從應用程式清單中找出欲限制的APP</string>
     <string name="title_usage_text_2">2. 點選該APP圖示</string>

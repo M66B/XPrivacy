@@ -178,6 +178,7 @@
     <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Početne vrijednosti</string>
     <string name="title_alternate">Izmjeni</string>
+    <string name="title_rename">Rename</string>
     <string name="title_usage_header">Korištenje</string>
     <string name="title_usage_text_1">1. Nađite aplikaciju koju želite ograničiti u listi aplikacija</string>
     <string name="title_usage_text_2">2. Dodirnite ikonu aplikacije</string>
