@@ -29,7 +29,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Version 3.2.3 TEST**
 
-* Persist/show original values ([pro license](http://www.xprivacy.eu/) only)
+* Persist/show original values ([pro license](http://www.xprivacy.eu/) only)  ([issue](/../../issues/1297))
 	* Persisting/showing fake values would require an extra call to the privacy service, which would impact performance
 	* Proof of concept with *SERIAL*
 * Flush local application caches too
