@@ -77,9 +77,9 @@
     <string name="msg_service_version">Privacy service のバージョンが違います。XPrivacy を更新した後で端末を再起動しましたか?</string>
     <string name="msg_service_updating">更新サービスが完了するまでお待ちください</string>
     <string name="msg_expert">上級者は、なるべく自分自身で問題を解決すること、XDA フォーラムの XPrivacy スレッドを購読すること、そして他の利用者をできるだけ助けることが求められます</string>
-    <string name="msg_method_expert">機能別の制限の設定は上級者向けです。あなたは上級者ですか?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_method_expert">機能毎の制限の設定は上級者向けです。あなたは上級者ですか?</string>
+    <string name="msg_longpress_whitelist">機能名を長押しするとパラメーターのホワイト/ブラックリストを設定できます</string>
+    <string name="msg_settings_specific">アプリ固有のチェックマークや設定値は全体設定よりも優先されます。チェックマークや設定値のない項目は優先されません</string>
     <string name="msg_first"><b>XPrivacy の開発およびテストには細心の注意を払いましたが、
 すべての端末のあらゆるアプリで完璧な動作を保証することは不可能です。
 \n\n完全に自己責任のうえでご利用ください。</b>\n\nライセンスについて :</string>
@@ -179,13 +179,13 @@
     <string name="title_ondemand_reset">リセット</string>
     <string name="title_default">既定</string>
     <string name="title_alternate">代替</string>
-    <string name="title_rename">Rename</string>
+    <string name="title_rename">名称の変更</string>
     <string name="title_usage_header">使い方</string>
     <string name="title_usage_text_1">1. 制限を設定したいアプリをアプリリストで見つけます</string>
     <string name="title_usage_text_2">2. アプリアイコンまたはアプリ名をタップします</string>
     <string name="title_usage_text_3">3. 各カテゴリの一番上のチェックボックスをタップすると制限が設定されます</string>
     <string name="title_usage_footer">制限は常識的に判断して設定してください。インターネットアクセスを制限したらインターネットに接続できることを期待してはいけません。</string>
-    <string name="title_toggle_dangerous">危険性のある機能をトグルするには機能名を長押しします</string>
+    <string name="title_toggle_dangerous">機能名を長押しすると危険性あり/なしをトグルできます</string>
     <string name="title_ondemand_category">カテゴリ全体に設定すると機能の除外項目の設定が初期化されます</string>
     <string name="title_function_help">機能のドキュメント</string>
     <string name="title_unsafe">安全でない : 回避されるおそれがあります</string>
@@ -224,9 +224,9 @@
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirk 設定</string>
     <string name="settings_aosp">AOSP モード (要再起動)</string>
-    <string name="help_check_restrict">チェック1 : カテゴリや機能を制限します</string>
-    <string name="help_check_ondemand">チェック2 : オンデマンドで制限します</string>
-    <string name="help_switch">スイッチ : 全制限を有効または無効にします</string>
+    <string name="help_check_restrict">チェックボックス1 : カテゴリや機能を制限します</string>
+    <string name="help_check_ondemand">チェックボックス2 : オンデマンドで制限します(チェックボックス1は既定値になります)</string>
+    <string name="help_switch">スイッチ : 全制限の有効/無効を切り替えます</string>
     <string name="help_longpress">アプリ名の長押しでアプリが選択されます</string>
     <string name="help_ondemand">制限するか尋ねます</string>
     <string name="help_application">アプリ</string>
