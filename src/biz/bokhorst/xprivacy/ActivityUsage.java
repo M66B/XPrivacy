@@ -229,6 +229,8 @@ public class ActivityUsage extends ActivityBase {
 			public TextView tvApp;
 			public TextView tvRestriction;
 			public TextView tvParameter;
+			public TextView tvOriginal;
+			public TextView tvFake;
 
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
@@ -240,6 +242,8 @@ public class ActivityUsage extends ActivityBase {
 				tvApp = (TextView) row.findViewById(R.id.tvApp);
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
 				tvParameter = (TextView) row.findViewById(R.id.tvParameter);
+				tvOriginal = (TextView) row.findViewById(R.id.tvOriginal);
+				tvFake = (TextView) row.findViewById(R.id.tvFake);
 			}
 		}
 
@@ -387,6 +391,17 @@ public class ActivityUsage extends ActivityBase {
 				holder.tvParameter.setVisibility(View.VISIBLE);
 			} else
 				holder.tvParameter.setVisibility(View.GONE);
+
+			if (!(TextUtils.isEmpty(usageData.originalValue) || !TextUtils.isEmpty(usageData.fakeValue))
+					&& mHasProLicense) {
+				holder.tvOriginal.setText(usageData.originalValue);
+				holder.tvFake.setText(usageData.fakeValue);
+				holder.tvOriginal.setVisibility(View.VISIBLE);
+				holder.tvFake.setVisibility(View.VISIBLE);
+			} else {
+				holder.tvOriginal.setVisibility(View.GONE);
+				holder.tvFake.setVisibility(View.GONE);
+			}
 
 			// Async update
 			new HolderTask(position, holder, usageData).executeOnExecutor(mExecutor, (Object) null);
