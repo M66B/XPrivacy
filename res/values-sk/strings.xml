@@ -220,6 +220,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_syscomponents">Obmedziť systémové komponenty (Android) (vyžadovaný reštart)</string>
     <string name="settings_usagedata">Zobraziť využitie dát aplikáciou (vyžadovaný reštart)</string>
     <string name="settings_parameters">Zobraziť parametre využitia dát</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">Identifikátor bunky GSM</string>
     <string name="settings_lac">Kód lokality GSM</string>
     <string name="settings_quirks">Quirky</string>

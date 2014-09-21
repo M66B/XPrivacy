@@ -220,6 +220,7 @@
     <string name="settings_syscomponents">Ogranicz komponenty systemowe (Android) (wymaga restartu)</string>
     <string name="settings_usagedata">Pokaż użycie danych przez aplikacje (wymaga restartu)</string>
     <string name="settings_parameters">Pokaż parametry odczytu danych</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

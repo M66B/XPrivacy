@@ -220,6 +220,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="settings_syscomponents">Restringi componenti di sistema (Android)</string>
     <string name="settings_usagedata">Mostra utilizzo dati dell\'applicazione</string>
     <string name="settings_parameters">Mostra parametri dei dati utilizzati</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Anomalie</string>

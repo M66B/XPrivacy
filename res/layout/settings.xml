@@ -72,6 +72,11 @@
                 android:text="@string/settings_parameters" />
 
             <CheckBox
+                android:id="@+id/cbValues"
+                style="@style/PreferenceLine"
+                android:text="@string/settings_values" />
+
+            <CheckBox
                 android:id="@+id/cbLog"
                 style="@style/PreferenceLine"
                 android:text="@string/settings_log" />

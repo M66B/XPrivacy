@@ -44,6 +44,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 	private CheckBox cbBlacklist;
 	private CheckBox cbUsage;
 	private CheckBox cbParameters;
+	private CheckBox cbValues;
 	private CheckBox cbLog;
 	private CheckBox cbSystem;
 	private CheckBox cbExperimental;
@@ -116,6 +117,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		cbBlacklist = (CheckBox) findViewById(R.id.cbBlacklist);
 		cbUsage = (CheckBox) findViewById(R.id.cbUsage);
 		cbParameters = (CheckBox) findViewById(R.id.cbParameters);
+		cbValues = (CheckBox) findViewById(R.id.cbValues);
 		cbLog = (CheckBox) findViewById(R.id.cbLog);
 
 		CheckBox cbExpert = (CheckBox) findViewById(R.id.cbExpert);
@@ -190,6 +192,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		// Get current values
 		boolean usage = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingUsage, true);
 		boolean parameters = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingParameters, false);
+		boolean values = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingValues, false);
 		boolean log = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingLog, false);
 
 		boolean components = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingSystem, false);
@@ -261,6 +264,8 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			cbUsage.setChecked(usage);
 			cbParameters.setChecked(parameters);
 			cbParameters.setEnabled(Util.hasProLicense(this) != null);
+			cbValues.setChecked(values);
+			cbValues.setEnabled(Util.hasProLicense(this) != null);
 			if (userId == 0)
 				cbLog.setChecked(log);
 			else {
@@ -300,6 +305,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			// Disable global settings
 			cbUsage.setVisibility(View.GONE);
 			cbParameters.setVisibility(View.GONE);
+			cbValues.setVisibility(View.GONE);
 			cbLog.setVisibility(View.GONE);
 			cbSystem.setVisibility(View.GONE);
 			cbExperimental.setVisibility(View.GONE);
@@ -616,6 +622,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			PrivacyManager.setSetting(uid, PrivacyManager.cSettingUsage, Boolean.toString(cbUsage.isChecked()));
 			PrivacyManager.setSetting(uid, PrivacyManager.cSettingParameters,
 					Boolean.toString(cbParameters.isChecked()));
+			PrivacyManager.setSetting(uid, PrivacyManager.cSettingValues, Boolean.toString(cbValues.isChecked()));
 			if (userId == 0)
 				PrivacyManager.setSetting(uid, PrivacyManager.cSettingLog, Boolean.toString(cbLog.isChecked()));
 			PrivacyManager.setSetting(uid, PrivacyManager.cSettingSystem, Boolean.toString(cbSystem.isChecked()));

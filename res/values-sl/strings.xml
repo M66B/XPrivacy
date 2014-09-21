@@ -220,6 +220,7 @@
     <string name="settings_syscomponents">Omeji sistemske komponente (Android) (zahtevan ponovni zagon)</string>
     <string name="settings_usagedata">Prikaži uporabo podatkov aplikacije (zahtevan ponovni zagon)</string>
     <string name="settings_parameters">Prikaži parametre za uporabo podatkov</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">ID GSM telefona</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

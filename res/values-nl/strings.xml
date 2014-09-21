@@ -220,6 +220,7 @@ maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke app
     <string name="settings_syscomponents">Beperk systemcomponenten (Android)</string>
     <string name="settings_usagedata">Toon gebruiksgegevens</string>
     <string name="settings_parameters">Toon parameters bij gebruiksgegevens</string>
+    <string name="settings_values">Toon waarden bij gebruiksgegevens</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

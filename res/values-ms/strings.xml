@@ -220,6 +220,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="settings_syscomponents">Sekat komponen sistem (Android)</string>
     <string name="settings_usagedata">Tunjuk penggunaan data aplikasi</string>
     <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

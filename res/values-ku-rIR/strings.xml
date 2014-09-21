@@ -219,6 +219,7 @@
     <string name="settings_syscomponents">سنوردار کردنی شته بنچینه یه کانی سیسته مه که ت (موبایله که ت)</string>
     <string name="settings_usagedata">پیشاندنی ئه و زانياريانه ى به كارهينراون</string>
     <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

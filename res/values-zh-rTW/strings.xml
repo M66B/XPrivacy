@@ -220,6 +220,7 @@
     <string name="settings_syscomponents">可限制安卓系統元件</string>
     <string name="settings_usagedata">開啟操作記錄</string>
     <string name="settings_parameters">顯示細部操作紀錄參數</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

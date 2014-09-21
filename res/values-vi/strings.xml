@@ -219,6 +219,7 @@
     <string name="settings_syscomponents">Hạn chế các thành phần hệ thống (Android) (yêu cầu khởi động lại ứng dụng)</string>
     <string name="settings_usagedata">Hiển thị dữ liệu sử dụng bởi ứng dụng (yêu cầu khởi động lại ứng dụng)</string>
     <string name="settings_parameters">Hiển thị các thông số của dữ liệu được sử dụng</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

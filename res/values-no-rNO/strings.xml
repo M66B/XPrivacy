@@ -218,6 +218,7 @@
     <string name="settings_syscomponents">Blokker systemkomponenter (Android) (omstart nødvendig)</string>
     <string name="settings_usagedata">Vis brukerdata til apper (omstart nødvendig)</string>
     <string name="settings_parameters">Vis brukerdata-parametere</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM celle ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Særegenheter</string>

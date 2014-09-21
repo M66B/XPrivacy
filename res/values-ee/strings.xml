@@ -220,6 +220,7 @@ kuid on võimatu garanteerida, et see töötab igal seadmel ja iga rakendusega.
     <string name="settings_syscomponents">Restrict system components (Android) (requires reboot)</string>
     <string name="settings_usagedata">Show application usage data (requires reboot)</string>
     <string name="settings_parameters">Show parameters of usage data</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

@@ -220,6 +220,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_syscomponents">Restreindre composants système (Android) (redémarrage requis)</string>
     <string name="settings_usagedata">Montrer les données d\'usage pour chaque application (redémarrage requis)</string>
     <string name="settings_parameters">Montrer les paramètres fournis aux fonctions dans les données d\'usage</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>

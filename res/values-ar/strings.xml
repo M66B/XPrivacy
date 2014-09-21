@@ -220,6 +220,7 @@
     <string name="settings_syscomponents">تقييد مكونات نظام (أندرويد) (يتطلب إعادة التشغيل)</string>
     <string name="settings_usagedata">إظهار بيانات استخدام التطبيق (يتطلب إعادة التشغيل)</string>
     <string name="settings_parameters">إظهار الباراميترات لبيانات الإستخدام</string>
+    <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">معرف الخليوي جي إس أم</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">المراوغات</string>
