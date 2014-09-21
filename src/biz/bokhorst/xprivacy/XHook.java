@@ -69,9 +69,17 @@ public abstract class XHook {
 		return PrivacyManager.getRestrictionExtra(this, uid, restrictionName, methodName, extra, mSecret);
 	}
 
-	protected boolean isRestrictedParameter(int uid, String restrictionName, String methodName, String extra,
-			String value) throws Throwable {
-		return PrivacyManager.getRestrictionExtra(this, uid, restrictionName, methodName, extra, value, mSecret);
+	protected boolean isRestrictedValue(int uid, String value) throws Throwable {
+		return PrivacyManager.getRestrictionExtra(this, uid, mRestrictionName, getSpecifier(), null, value, mSecret);
+	}
+
+	protected boolean isRestrictedValue(int uid, String methodName, String value) throws Throwable {
+		return PrivacyManager.getRestrictionExtra(this, uid, mRestrictionName, methodName, null, value, mSecret);
+	}
+
+	protected boolean isRestrictedValue(int uid, String restrictionName, String methodName, String value)
+			throws Throwable {
+		return PrivacyManager.getRestrictionExtra(this, uid, restrictionName, methodName, null, value, mSecret);
 	}
 
 	protected boolean isRestricted(XParam param, String methodName) throws Throwable {
