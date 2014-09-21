@@ -179,7 +179,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_ondemand_reset">Remettre</string>
     <string name="title_default">Défaut</string>
     <string name="title_alternate">Alternative</string>
-    <string name="title_rename">Rename</string>
+    <string name="title_rename">Renommer</string>
     <string name="title_usage_header">Usage</string>
     <string name="title_usage_text_1">1. Trouvez l\'appli à restreindre dans la liste principale des applis</string>
     <string name="title_usage_text_2">2. Appuyez sur l\'icône de l\'appli</string>
@@ -225,7 +225,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">Mode AOSP (redémarrage requis)</string>
     <string name="help_check_restrict">Première case : restreindre la catégorie ou la fonction</string>
-    <string name="help_check_ondemand">Deuxième case : restreindre sur demande</string>
+    <string name="help_check_ondemand">Deuxième case : restreindre sur demande ; la première case détermine la valeur par défaut</string>
     <string name="help_switch">Interrupteur marche / arrêt : activer ou désactiver toutes les restrictions</string>
     <string name="help_longpress">Maintenez appuyé le nom de l\'appli pour la sélectionner</string>
     <string name="help_ondemand">Détermination des restrictions sur demande</string>
