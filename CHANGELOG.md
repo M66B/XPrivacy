@@ -25,7 +25,11 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
-* Persist/show original values
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.2.3 TEST**
+
+* Persist/show original values ([pro license](http://www.xprivacy.eu/) only)
 	* Persisting/showing fake values would require an extra call to the privacy service, which would impact performance
 	* Proof of concept with *SERIAL*
 * Flush local application caches too
@@ -35,8 +39,6 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Updated Indonesian translation
 * Updated Japanese translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.2.2 BETA**
 
