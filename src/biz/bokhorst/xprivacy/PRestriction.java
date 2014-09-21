@@ -11,6 +11,8 @@ public class PRestriction implements Parcelable {
 	public String extra;
 	public boolean restricted;
 	public boolean asked;
+	public String originalValue;
+	public String fakeValue;
 	public long time;
 	public boolean debug;
 
@@ -26,6 +28,8 @@ public class PRestriction implements Parcelable {
 		extra = null;
 		restricted = other.restricted;
 		asked = other.asked;
+		originalValue = other.originalValue;
+		fakeValue = other.fakeValue;
 		time = other.time;
 		debug = other.debug;
 	}
@@ -37,6 +41,8 @@ public class PRestriction implements Parcelable {
 		extra = null;
 		restricted = false;
 		asked = false;
+		originalValue = null;
+		fakeValue = null;
 		time = 0;
 		debug = false;
 	}
@@ -48,6 +54,8 @@ public class PRestriction implements Parcelable {
 		extra = null;
 		restricted = _restricted;
 		asked = false;
+		originalValue = null;
+		fakeValue = null;
 		time = 0;
 		debug = false;
 	}
@@ -80,17 +88,30 @@ public class PRestriction implements Parcelable {
 	@Override
 	public void writeToParcel(Parcel out, int flags) {
 		out.writeInt(uid);
+
 		out.writeInt(restrictionName == null ? 1 : 0);
 		if (restrictionName != null)
 			out.writeString(restrictionName);
+
 		out.writeInt(methodName == null ? 1 : 0);
 		if (methodName != null)
 			out.writeString(methodName);
+
 		out.writeInt(extra == null ? 1 : 0);
 		if (extra != null)
 			out.writeString(extra);
+
 		out.writeInt(restricted ? 1 : 0);
 		out.writeInt(asked ? 1 : 0);
+
+		out.writeInt(originalValue == null ? 1 : 0);
+		if (originalValue != null)
+			out.writeString(originalValue);
+
+		out.writeInt(fakeValue == null ? 1 : 0);
+		if (fakeValue != null)
+			out.writeString(fakeValue);
+
 		out.writeLong(time);
 		out.writeInt(debug ? 1 : 0);
 	}
@@ -102,6 +123,8 @@ public class PRestriction implements Parcelable {
 		extra = (in.readInt() > 0 ? null : in.readString());
 		restricted = (in.readInt() > 0 ? true : false);
 		asked = (in.readInt() > 0 ? true : false);
+		originalValue = (in.readInt() > 0 ? null : in.readString());
+		fakeValue = (in.readInt() > 0 ? null : in.readString());
 		time = in.readLong();
 		debug = (in.readInt() > 0 ? true : false);
 	}
