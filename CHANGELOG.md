@@ -25,6 +25,9 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Persist/show original values
+	* Persisting/showing fake values would require an extra call to the privacy service, which would impact performance
+	* Proof of concept with *SERIAL*
 * Flush local application caches too
 * Updated Dutch translation
 * Updated French translation
