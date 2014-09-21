@@ -671,19 +671,16 @@ public class PrivacyService extends IPrivacyService.Stub {
 								if (dbUsage == null)
 									return;
 
-								// Parameters
+								// Parameter
 								String extra = "";
 								if (restriction.extra != null)
 									if (getSettingBool(userId, PrivacyManager.cSettingParameters, false))
 										extra = restriction.extra;
 
-								// Values
-								if (!TextUtils.isEmpty(restriction.originalValue)
-										|| !TextUtils.isEmpty(restriction.fakeValue))
-									if (!getSettingBool(userId, PrivacyManager.cSettingValues, false)) {
-										restriction.originalValue = null;
-										restriction.fakeValue = null;
-									}
+								// Value
+								if (restriction.value != null)
+									if (!getSettingBool(userId, PrivacyManager.cSettingValues, false))
+										restriction.value = null;
 
 								mLockUsage.writeLock().lock();
 								try {
@@ -696,14 +693,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 										values.put("restricted", mresult.restricted);
 										values.put("time", new Date().getTime());
 										values.put("extra", extra);
-										if (restriction.originalValue == null)
-											values.putNull("original");
+										if (restriction.value == null)
+											values.putNull("value");
 										else
-											values.put("original", restriction.originalValue);
-										if (restriction.fakeValue == null)
-											values.putNull("fake");
-										else
-											values.put("fake", restriction.fakeValue);
+											values.put("value", restriction.value);
 										dbUsage.insertWithOnConflict(cTableUsage, null, values,
 												SQLiteDatabase.CONFLICT_REPLACE);
 
@@ -929,22 +922,22 @@ public class PrivacyService extends IPrivacyService.Stub {
 					if (uid == 0) {
 						if ("".equals(restrictionName))
 							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra", "original", "fake" }, "time>?",
-									new String[] { sFrom }, null, null, "time DESC");
+									"restricted", "time", "extra", "value" }, "time>?", new String[] { sFrom }, null,
+									null, "time DESC");
 						else
 							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra", "original", "fake" }, "restriction=? AND time>?",
-									new String[] { restrictionName, sFrom }, null, null, "time DESC");
+									"restricted", "time", "extra", "value" }, "restriction=? AND time>?", new String[] {
+									restrictionName, sFrom }, null, null, "time DESC");
 					} else {
 						if ("".equals(restrictionName))
 							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra", "original", "fake" }, "uid=? AND time>?",
-									new String[] { Integer.toString(uid), sFrom }, null, null, "time DESC");
+									"restricted", "time", "extra", "value" }, "uid=? AND time>?", new String[] {
+									Integer.toString(uid), sFrom }, null, null, "time DESC");
 						else
 							cursor = dbUsage.query(cTableUsage, new String[] { "uid", "restriction", "method",
-									"restricted", "time", "extra", "original", "fake" },
-									"uid=? AND restriction=? AND time>?", new String[] { Integer.toString(uid),
-											restrictionName, sFrom }, null, null, "time DESC");
+									"restricted", "time", "extra", "value" }, "uid=? AND restriction=? AND time>?",
+									new String[] { Integer.toString(uid), restrictionName, sFrom }, null, null,
+									"time DESC");
 					}
 
 					if (cursor == null)
@@ -961,13 +954,9 @@ public class PrivacyService extends IPrivacyService.Stub {
 								data.time = cursor.getLong(4);
 								data.extra = cursor.getString(5);
 								if (cursor.isNull(6))
-									data.originalValue = null;
+									data.value = null;
 								else
-									data.originalValue = cursor.getString(6);
-								if (cursor.isNull(7))
-									data.fakeValue = null;
-								else
-									data.fakeValue = cursor.getString(7);
+									data.value = cursor.getString(6);
 								if (userId == 0 || Util.getUserId(data.uid) == userId)
 									result.add(data);
 							}
@@ -2744,8 +2733,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 						try {
 							dbUsage.beginTransaction();
 							try {
-								dbUsage.execSQL("ALTER TABLE usage ADD COLUMN original TEXT");
-								dbUsage.execSQL("ALTER TABLE usage ADD COLUMN fake TEXT");
+								dbUsage.execSQL("ALTER TABLE usage ADD COLUMN value TEXT");
 								dbUsage.setVersion(2);
 								dbUsage.setTransactionSuccessful();
 							} finally {

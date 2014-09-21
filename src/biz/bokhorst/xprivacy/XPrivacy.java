@@ -352,7 +352,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Build SERIAL
 		if (PrivacyManager.getRestrictionExtra(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", null,
-				Build.SERIAL, null, secret))
+				Build.SERIAL, secret))
 			try {
 				Field serial = Build.class.getField("SERIAL");
 				serial.setAccessible(true);

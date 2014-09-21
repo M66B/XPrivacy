@@ -74,15 +74,7 @@
             android:visibility="gone" />
 
         <TextView
-            android:id="@+id/tvOriginal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="true"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/tvFake"
+            android:id="@+id/tvValue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"

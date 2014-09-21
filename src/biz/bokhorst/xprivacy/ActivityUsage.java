@@ -229,8 +229,7 @@ public class ActivityUsage extends ActivityBase {
 			public TextView tvApp;
 			public TextView tvRestriction;
 			public TextView tvParameter;
-			public TextView tvOriginal;
-			public TextView tvFake;
+			public TextView tvValue;
 
 			public ViewHolder(View theRow, int thePosition) {
 				row = theRow;
@@ -242,8 +241,7 @@ public class ActivityUsage extends ActivityBase {
 				tvApp = (TextView) row.findViewById(R.id.tvApp);
 				tvRestriction = (TextView) row.findViewById(R.id.tvRestriction);
 				tvParameter = (TextView) row.findViewById(R.id.tvParameter);
-				tvOriginal = (TextView) row.findViewById(R.id.tvOriginal);
-				tvFake = (TextView) row.findViewById(R.id.tvFake);
+				tvValue = (TextView) row.findViewById(R.id.tvValue);
 			}
 		}
 
@@ -392,16 +390,11 @@ public class ActivityUsage extends ActivityBase {
 			} else
 				holder.tvParameter.setVisibility(View.GONE);
 
-			if (!(TextUtils.isEmpty(usageData.originalValue) || !TextUtils.isEmpty(usageData.fakeValue))
-					&& mHasProLicense) {
-				holder.tvOriginal.setText(usageData.originalValue);
-				holder.tvFake.setText(usageData.fakeValue);
-				holder.tvOriginal.setVisibility(View.VISIBLE);
-				holder.tvFake.setVisibility(View.VISIBLE);
-			} else {
-				holder.tvOriginal.setVisibility(View.GONE);
-				holder.tvFake.setVisibility(View.GONE);
-			}
+			if (usageData.value != null && mHasProLicense) {
+				holder.tvValue.setText(usageData.value);
+				holder.tvValue.setVisibility(View.VISIBLE);
+			} else
+				holder.tvValue.setVisibility(View.GONE);
 
 			// Async update
 			new HolderTask(position, holder, usageData).executeOnExecutor(mExecutor, (Object) null);
