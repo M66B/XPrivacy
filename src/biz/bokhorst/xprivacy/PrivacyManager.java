@@ -321,11 +321,16 @@ public class PrivacyManager {
 
 	public static boolean getRestriction(final XHook hook, int uid, String restrictionName, String methodName,
 			String secret) {
-		return getRestrictionExtra(hook, uid, restrictionName, methodName, null, secret);
+		return getRestrictionExtra(hook, uid, restrictionName, methodName, null, null, null, secret);
 	}
 
 	public static boolean getRestrictionExtra(final XHook hook, int uid, String restrictionName, String methodName,
 			String extra, String secret) {
+		return getRestrictionExtra(hook, uid, restrictionName, methodName, extra, null, null, secret);
+	}
+
+	public static boolean getRestrictionExtra(final XHook hook, int uid, String restrictionName, String methodName,
+			String extra, String originalValue, String fakeValue, String secret) {
 		long start = System.currentTimeMillis();
 		PRestriction result = new PRestriction(uid, restrictionName, methodName, false, true);
 
@@ -378,6 +383,8 @@ public class PrivacyManager {
 			try {
 				PRestriction query = new PRestriction(uid, restrictionName, methodName, false);
 				query.extra = extra;
+				query.originalValue = originalValue;
+				query.fakeValue = fakeValue;
 				PRestriction restriction = PrivacyService.getRestrictionProxy(query, true, secret);
 				result.restricted = restriction.restricted;
 				if (restriction.debug)
