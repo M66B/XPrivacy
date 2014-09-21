@@ -926,21 +926,24 @@ public class PrivacyManager {
 
 		try {
 			PrivacyService.getClient().clear();
-
-			synchronized (mSettingsCache) {
-				mSettingsCache.clear();
-			}
-			synchronized (mRestrictionCache) {
-				mRestrictionCache.clear();
-			}
-			synchronized (mPermissionRestrictionCache) {
-				mPermissionRestrictionCache.clear();
-			}
-			synchronized (mPermissionHookCache) {
-				mPermissionHookCache.clear();
-			}
+			flush();
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+		}
+	}
+
+	public static void flush() {
+		synchronized (mSettingsCache) {
+			mSettingsCache.clear();
+		}
+		synchronized (mRestrictionCache) {
+			mRestrictionCache.clear();
+		}
+		synchronized (mPermissionRestrictionCache) {
+			mPermissionRestrictionCache.clear();
+		}
+		synchronized (mPermissionHookCache) {
+			mPermissionHookCache.clear();
 		}
 	}
 

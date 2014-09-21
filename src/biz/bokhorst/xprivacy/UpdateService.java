@@ -44,6 +44,7 @@ public class UpdateService extends Service {
 		if (cFlush.equals(intent.getAction())) {
 			try {
 				PrivacyService.getClient().flush();
+				XApplication.manage(this, 0, XApplication.cActionFlush);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
