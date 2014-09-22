@@ -47,9 +47,12 @@ public class XSettingsSecure extends XHook {
 	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getString) {
 			String name = (param.args.length > 1 ? (String) param.args[1] : null);
-			if (Settings.Secure.ANDROID_ID.equals(name))
-				if (param.getResult() != null && isRestricted(param))
-					param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "ANDROID_ID"));
+			if (Settings.Secure.ANDROID_ID.equals(name)) {
+				String id = (String) param.getResult();
+				if (id != null)
+					if (isRestrictedValue(param, id))
+						param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "ANDROID_ID"));
+			}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
