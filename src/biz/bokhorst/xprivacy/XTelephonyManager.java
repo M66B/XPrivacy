@@ -355,9 +355,6 @@ public class XTelephonyManager extends XHook {
 		case getIsimDomain:
 		case getIsimImpi:
 		case getIsimImpu:
-		case getLine1AlphaTag:
-		case getLine1Number:
-		case getMsisdn:
 		case getNetworkCountryIso:
 		case getNetworkOperator:
 		case getNetworkOperatorName:
@@ -366,10 +363,19 @@ public class XTelephonyManager extends XHook {
 		case getSimOperatorName:
 		case getSimSerialNumber:
 		case getSubscriberId:
-		case getVoiceMailAlphaTag:
-		case getVoiceMailNumber:
 			if (param.getResult() != null)
 				if (isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name()));
+			break;
+
+		case getLine1AlphaTag:
+		case getLine1Number:
+		case getMsisdn:
+		case getVoiceMailAlphaTag:
+		case getVoiceMailNumber:
+			String phoneNumber = (String) param.getResult();
+			if (phoneNumber != null)
+				if (isRestrictedValue(param, phoneNumber))
 					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name()));
 			break;
 
@@ -379,15 +385,21 @@ public class XTelephonyManager extends XHook {
 		case Srv_getIsimDomain:
 		case Srv_getIsimImpi:
 		case Srv_getIsimImpu:
+		case Srv_getSubscriberId:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name().replace("Srv_", "")));
+			break;
+
 		case Srv_getLine1AlphaTag:
 		case Srv_getLine1Number:
 		case Srv_getMsisdn:
-		case Srv_getSubscriberId:
 		case Srv_getCompleteVoiceMailNumber:
 		case Srv_getVoiceMailNumber:
 		case Srv_getVoiceMailAlphaTag:
-			if (param.getResult() != null)
-				if (isRestricted(param))
+			String srvPhoneNumber = (String) param.getResult();
+			if (srvPhoneNumber != null)
+				if (isRestrictedValue(param, srvPhoneNumber))
 					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name().replace("Srv_", "")));
 			break;
 		}

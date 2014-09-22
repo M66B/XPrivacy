@@ -26,6 +26,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 **Next release**
 
 * Persist original advertisement ID
+* Persist original phone number
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
