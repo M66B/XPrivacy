@@ -25,6 +25,8 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Persist original advertisement ID
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.2.3 TEST**

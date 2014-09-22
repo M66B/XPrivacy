@@ -38,8 +38,8 @@ public class XAdvertisingIdClientInfo extends XHook {
 	@Override
 	protected void before(XParam param) throws Throwable {
 		if (mMethod == Methods.getId) {
-			Object id = param.getResult();
-			if (id != null && isRestrictedValue(param, id.toString()))
+			String adid = (String) param.getResult();
+			if (adid != null && isRestrictedValue(param, adid))
 				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "AdvertisingId"));
 
 		} else
