@@ -220,7 +220,7 @@ Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan unt
     <string name="settings_syscomponents">Batasi komponen sistem (Android)</string>
     <string name="settings_usagedata">Tunjukkan penggunaan data aplikasi</string>
     <string name="settings_parameters">Tunjukkan parameter penggunaan data</string>
-    <string name="settings_values">Show values of usage data</string>
+    <string name="settings_values">Tampilkan nilai penggunaan data</string>
     <string name="settings_cid">ID Cell GSM</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Kebiasaan</string>
