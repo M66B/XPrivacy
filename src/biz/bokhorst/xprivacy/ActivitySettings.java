@@ -174,6 +174,8 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		cbSSID = (CheckBox) findViewById(R.id.cbSSID);
 
 		// Listen for changes
+		cbParameters.setOnCheckedChangeListener(this);
+		cbValues.setOnCheckedChangeListener(this);
 		cbExpert.setOnCheckedChangeListener(this);
 		cbSerial.setOnCheckedChangeListener(this);
 		cbLat.setOnCheckedChangeListener(this);
@@ -263,9 +265,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			tvInfo.setVisibility(View.GONE);
 			cbUsage.setChecked(usage);
 			cbParameters.setChecked(parameters);
-			cbParameters.setEnabled(Util.hasProLicense(this) != null);
 			cbValues.setChecked(values);
-			cbValues.setEnabled(Util.hasProLicense(this) != null);
 			if (userId == 0)
 				cbLog.setChecked(log);
 			else {
@@ -437,6 +437,13 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 	@Override
 	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 		switch (buttonView.getId()) {
+		case R.id.cbParameters:
+		case R.id.cbValues:
+			if (isChecked && Util.hasProLicense(this) == null) {
+				buttonView.setChecked(false);
+				Util.viewUri(this, ActivityMain.cProUri);
+			}
+			break;
 		case R.id.cbExpert:
 			cbSystem.setEnabled(isChecked);
 			cbExperimental.setEnabled(isChecked);
