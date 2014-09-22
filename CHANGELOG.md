@@ -17,7 +17,7 @@ Changelog
 
 * Xposed version 2.6+ is required
 * From version 2.1.20 batch operations (toggle restrictions for multiple applications) require a pro license
-	* I have put more than 2000 hours into developing and supporting XPrivacy so far. The reason for [accepting donations](http://www.xprivacy.eu/) is to keep myself motivated to keep doing this. Unfortunately the number of donations is quite low and thus not very motivating. So, don't start complaining about this change, but instead think about supporting this huge project. You can still fully protect your privacy with all the free features of XPrivacy. I have made a promise that you will always be able to do so and I intent to keep this promise.
+	* I have put more than 2000 hours into developing and supporting XPrivacy so far. The reason for [accepting donations](http://www.xprivacy.eu/) is to keep myself motivated to keep doing this. Unfortunately the number of donations is quite low and thus not very motivating. So, don't start complaining about this change, but instead think about supporting this huge project. You can still fully protect your privacy with all the free features of XPrivacy. I have made a promise that you will always be able to do so and I intend to keep this promise.
 * **Please send the support info when XPrivacy asks for it**
 
 <a name="xprivacy3"></a>
