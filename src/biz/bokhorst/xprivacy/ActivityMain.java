@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
+import android.support.v7.widget.CardView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -190,6 +191,12 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Annotate
 		Meta.annotate(this.getResources());
+
+		// Hack
+		if (isDarkTheme()) {
+			CardView card = (CardView) findViewById(R.id.cvHeader);
+			card.setBackgroundColor(Color.parseColor("#30404040"));
+		}
 
 		// Get localized restriction name
 		List<String> listRestrictionName = new ArrayList<String>(PrivacyManager.getRestrictions(this).navigableKeySet());

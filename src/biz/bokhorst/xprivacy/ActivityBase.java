@@ -61,6 +61,10 @@ public class ActivityBase extends Activity {
 		}
 	}
 
+	public boolean isDarkTheme() {
+		return (mThemeId == R.style.CustomTheme);
+	}
+
 	private boolean isUpdating() {
 		ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
 		for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE))

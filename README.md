@@ -1434,6 +1434,11 @@ Testing:
 * [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 
+Material design:
+
+* [How to use the v21 support libs on older versions ...](http://www.reddit.com/r/androiddev/comments/297xli/howto_use_the_v21_support_libs_on_older_versions/)
+* [CardView library project](https://github.com/yongjhih/CardView)
+
 Serious contributors do not have to donate for the [pro version](http://www.xprivacy.eu/).
 New translations are considered as a serious contribution, but translating a few lines of text is not.
 

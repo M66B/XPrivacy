@@ -15,8 +15,6 @@
         <item name="icon_restricted">@drawable/check_holo_dark</item>
         <item name="icon_frozen">@drawable/frozen_holo_dark</item>
         <item name="icon_unsafe">@drawable/padlock_question_dark</item>
-        <item name="drawable_background">@android:color/black</item>
-        <item name="drawable_card">@drawable/card_dark</item>
         <item name="color_dangerous">@color/color_dangerous_dark</item>
         <item name="color_dangerous_off">@color/color_dangerous_off_dark</item>
         <item name="color_dangerous_user">@color/color_dangerous_user_dark</item>
@@ -41,8 +39,6 @@
         <item name="icon_restricted">@drawable/check_holo_light</item>
         <item name="icon_frozen">@drawable/frozen_holo_light</item>
         <item name="icon_unsafe">@drawable/padlock_question_light</item>
-        <item name="drawable_background">@color/color_home_background_light</item>
-        <item name="drawable_card">@drawable/card_light</item>
         <item name="color_dangerous">@color/color_dangerous_light</item>
         <item name="color_dangerous_off">@color/color_dangerous_off_light</item>
         <item name="color_dangerous_user">@color/color_dangerous_user_light</item>
