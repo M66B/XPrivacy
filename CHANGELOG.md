@@ -25,6 +25,10 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.2.4 TEST**
+
 * Persist/show original values for: ([pro license](http://www.xprivacy.eu/) only) ([issue](/../../issues/1297))
 	* advertisement ID
 	* phone number
@@ -34,8 +38,6 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Using [CardView library](https://github.com/yongjhih/CardView)
 	* There are no rounded corners when using the dark theme
 * Added [Material Design](https://developer.android.com/preview/material/index.html) styles (this will **not** work on Android KitKat and before)
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.2.3 TEST**
 
