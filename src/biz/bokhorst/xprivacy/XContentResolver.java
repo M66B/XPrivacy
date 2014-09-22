@@ -345,7 +345,7 @@ public class XContentResolver extends XHook {
 							if (ikey == 0 && ivalue == 1 && cursor.getColumnCount() == 2) {
 								MatrixCursor result = new MatrixCursor(cursor.getColumnNames());
 								while (cursor.moveToNext()) {
-									if ("android_id".equals(cursor.getString(ikey)))
+									if ("android_id".equals(cursor.getString(ikey)) && cursor.getString(ivalue) != null)
 										result.addRow(new Object[] { "android_id",
 												PrivacyManager.getDefacedProp(Binder.getCallingUid(), "GSF_ID") });
 									else
