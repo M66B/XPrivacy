@@ -132,6 +132,11 @@ public class ActivityUsage extends ActivityBase {
 			usageTask.executeOnExecutor(mExecutor, (Object) null);
 			return true;
 
+		case R.id.menu_settings:
+			Intent intent = new Intent(this, ActivitySettings.class);
+			startActivity(intent);
+			return true;
+
 		default:
 			return super.onOptionsItemSelected(item);
 		}

@@ -28,6 +28,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Persist original advertisement ID
 * Persist original phone number
 * Persist original Android ID
+* Added settings menu to usage data view
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
