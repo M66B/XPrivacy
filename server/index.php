@@ -255,6 +255,10 @@
 			$needle = '@faircode.eu';
 			if (substr($data->email, -strlen($needle)) === $needle) {
 				$timestamp = explode('.', $data->email)[0];
+				if ($timestamp < strtotime('2024-1-1')) {
+					echo json_encode(array('ok' => false, 'errno' => 301, 'error' => 'Permanent license required'));
+					exit();
+				}
 				if ($timestamp < time()) {
 					echo json_encode(array('ok' => false, 'errno' => 301, 'error' => 'License expired'));
 					exit();
