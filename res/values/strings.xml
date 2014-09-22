@@ -257,9 +257,10 @@ however it is impossible to guarantee it will work flawlessly on each and every 
     <string name="help_shared">restrictions are submitted</string>
     <string name="help_settings">has application specific fake values</string>
     <string name="tutorial_mainheader">Select the category to restrict</string>
-    <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
+    <string name="tutorial_mainlist">Tap the first check box to restrict the selected category for an app\n
+\nTap the second check box to restrict on demand\n
 \nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
+\nTap the app icon or name for detailed restrictions and settings</string>
     <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
     <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
     <string name="permission_manage">Manage applications, including killing</string>
