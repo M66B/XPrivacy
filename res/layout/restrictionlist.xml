@@ -43,8 +43,8 @@
                     android:layout_width="32dip"
                     android:layout_height="32dip"
                     android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="6dip"
                     android:contentDescription="@string/help_application"
-                    android:paddingLeft="6dip"
                     android:src="?attr/icon_info" />
             </LinearLayout>
 

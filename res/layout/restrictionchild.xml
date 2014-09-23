@@ -34,8 +34,8 @@
         android:layout_width="32dip"
         android:layout_height="32dip"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="3dip"
         android:contentDescription="@string/help_application"
-        android:paddingLeft="3dip"
         android:src="?attr/icon_info_book"
         android:visibility="gone" />
 
@@ -88,8 +88,8 @@
             android:layout_width="32dip"
             android:layout_height="32dip"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="3dip"
             android:contentDescription="@string/title_restrict"
-            android:paddingLeft="3dip"
             android:visibility="invisible" />
 
         <ProgressBar
@@ -98,7 +98,7 @@
             android:layout_width="32dip"
             android:layout_height="32dip"
             android:layout_gravity="center_vertical"
-            android:paddingLeft="3dip"
+            android:layout_marginLeft="3dip"
             android:visibility="gone" />
     </LinearLayout>
 
@@ -107,8 +107,8 @@
         android:layout_width="32dip"
         android:layout_height="32dip"
         android:layout_gravity="center_vertical"
+        android:layout_marginLeft="3dip"
         android:contentDescription="@string/title_restrict"
-        android:paddingLeft="3dip"
         android:visibility="invisible" />
 
 </LinearLayout>
