@@ -243,7 +243,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="help_shared">les restrictions sont envoyées</string>
     <string name="help_settings">a de fausses données définies spécifiquement</string>
     <string name="tutorial_mainheader">Sélectionnez la catégorie à restreindre.</string>
-    <string name="tutorial_mainlist">Cocher la première case pour restreindre la catégorie choisie pour l’appli.\n
+    <string name="tutorial_mainlist">Cocher la première case pour restreindre la catégorie choisie pour l\’appli.\n
 \nCochez la seconde case pour restreindre à la demande.\n
 \nL’appli sera dupée par des données vides ou modifiées.\n
 \nAppuyez sur l\'icône ou le nom de l’appli pour les restrictions détaillées et les paramètres.</string>
