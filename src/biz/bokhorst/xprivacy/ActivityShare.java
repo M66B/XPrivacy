@@ -91,6 +91,7 @@ import android.widget.TextView;
 import android.widget.EditText;
 import android.widget.Toast;
 
+@SuppressLint("Wakelock")
 public class ActivityShare extends ActivityBase {
 	private int mActionId;
 	private AppListAdapter mAppAdapter;

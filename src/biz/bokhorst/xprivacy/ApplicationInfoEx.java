@@ -191,6 +191,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return mUid;
 	}
 
+	@SuppressLint("FieldGetter")
 	public int getState(Context context) {
 		return Integer.parseInt(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingState,
 				Integer.toString(STATE_CHANGED)));
@@ -230,6 +231,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		return mUpdateTime;
 	}
 
+	@SuppressLint("FieldGetter")
 	public long getModificationTime(Context context) {
 		return Long.parseLong(PrivacyManager.getSetting(-getUid(), PrivacyManager.cSettingModifyTime, "0"));
 	}
@@ -260,6 +262,7 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	@Override
+	@SuppressLint("FieldGetter")
 	public String toString() {
 		return String.format("%d %s", getUid(), TextUtils.join(", ", getApplicationName()));
 	}

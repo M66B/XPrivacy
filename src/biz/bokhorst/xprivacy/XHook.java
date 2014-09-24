@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.annotation.SuppressLint;
 import android.os.Binder;
 
 public abstract class XHook {
@@ -115,6 +116,7 @@ public abstract class XHook {
 	}
 
 	@Override
+	@SuppressLint("FieldGetter")
 	public String toString() {
 		return getRestrictionName() + "/" + getSpecifier() + " (" + getClassName() + ")";
 	}

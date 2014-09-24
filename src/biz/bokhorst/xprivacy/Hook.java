@@ -1,5 +1,6 @@
 package biz.bokhorst.xprivacy;
 
+import android.annotation.SuppressLint;
 import android.os.Build;
 
 public class Hook implements Comparable<Hook> {
@@ -61,6 +62,7 @@ public class Hook implements Comparable<Hook> {
 		return this;
 	}
 
+	@SuppressLint("FieldGetter")
 	public void toggleDangerous() {
 		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
 				this.getName());
