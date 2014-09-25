@@ -220,7 +220,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="settings_syscomponents">Obmedziť systémové komponenty (Android) (vyžadovaný reštart)</string>
     <string name="settings_usagedata">Zobraziť využitie dát aplikáciou (vyžadovaný reštart)</string>
     <string name="settings_parameters">Zobraziť parametre využitia dát</string>
-    <string name="settings_values">Show values of usage data</string>
+    <string name="settings_values">Zobraziť hodnoty využitia dát</string>
     <string name="settings_cid">Identifikátor bunky GSM</string>
     <string name="settings_lac">Kód lokality GSM</string>
     <string name="settings_quirks">Quirky</string>
@@ -245,7 +245,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="tutorial_mainheader">Vyberte kategóriu na obmedzenie</string>
     <string name="tutorial_mainlist">Kliknite na zaškrtávacie pole pre obmedzenie vybranej kategórie pre aplikáciu\n
 \nPri obmedzených kategóriách budú aplikáciám poskytované prázdne, alebo falošné údaje\n
-\nKliknite na ikonu aplikácie pre podrobné obmedzenia a nastavenia</string>
+\nKliknite na ikonu alebo na názov aplikácie pre podrobné obmedzenia a nastavenia</string>
     <string name="tutorial_detailsheader">Kliknite na ikonu aplikácie pre viac akcií</string>
     <string name="tutorial_detailslist">Kliknite na šípku nadol pre zobrazenie funkčných výnimiek pre kategóriu obmedzení</string>
     <string name="permission_manage">Spravovať aplikácie, vrátane ich ukončenia</string>
