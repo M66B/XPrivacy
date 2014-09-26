@@ -486,6 +486,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				String message = "Class not found hook=" + hook;
 				mListHookError.add(message);
 				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
+				if ("isXposedEnabled".equals(hook.getMethodName()))
+					level = Log.WARN;
 				Util.log(hook, level, message);
 				Util.logStack(hook, level);
 			}
