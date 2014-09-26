@@ -138,6 +138,10 @@ public class Util {
 		if (!xprivacy)
 			priority = Log.WARN;
 
+		// java.lang.NoClassDefFoundError
+		if ("htc_europe".equals(Build.MODEL))
+			priority = Log.WARN;
+
 		log(hook, priority, ex.toString() + " uid=" + Process.myUid() + "\n" + Log.getStackTraceString(ex));
 	}
 
