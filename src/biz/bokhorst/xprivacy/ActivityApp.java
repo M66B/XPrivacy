@@ -555,6 +555,8 @@ public class ActivityApp extends ActivityBase {
 		menu.findItem(R.id.menu_export).setEnabled(mounted);
 		menu.findItem(R.id.menu_import).setEnabled(mounted);
 
+		menu.findItem(R.id.menu_submit).setEnabled(Util.hasValidFingerPrint(this));
+
 		menu.findItem(R.id.menu_dump).setVisible(Util.isDebuggable(this));
 
 		return super.onPrepareOptionsMenu(menu);
