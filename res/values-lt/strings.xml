@@ -77,8 +77,8 @@
     <string name="msg_service_version">Privacy procesas veikia netinkamai. Ar perkrovėte prietaisą po XPrivacy atnaujinimo?</string>
     <string name="msg_service_updating">Prašome palaukti, kol atnaujinimas bus baigtas</string>
     <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
-    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
+    <string name="msg_method_expert">Funkcijų ribojimai yra skirti patyrusiems naudotojams. Ar esate ekspertas?</string>
+    <string name="msg_longpress_whitelist">Ilgai paspauskite ant funkcijos, norint itraukti į baltą arba juodą sąrašą</string>
     <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
@@ -220,13 +220,13 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="settings_syscomponents">Riboti sistemos komponentus (Android) (reikia perkrauti)</string>
     <string name="settings_usagedata">Rodyti programos duomenų naudojimą (reikia perkrauti)</string>
     <string name="settings_parameters">Rodyti duomenų naudojimo parametrus</string>
-    <string name="settings_values">Show values of usage data</string>
+    <string name="settings_values">Rodyti duomenų naudojimo kiekį</string>
     <string name="settings_cid">GSM stoties ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">AOSP mode (reikia perkrauti)</string>
-    <string name="help_check_restrict">First check box: restrict category or function</string>
-    <string name="help_check_ondemand">Second check box: restrict on demand</string>
+    <string name="help_check_restrict">Pirmas langelis: apriboti kategoriją arba funkciją</string>
+    <string name="help_check_ondemand">Antras langelis: apriboti pagal reikalavimą</string>
     <string name="help_switch">Išjungta/Įjungta: įjungti arba išjungti visus apribojimus</string>
     <string name="help_longpress">Ilgai spausti ant programos pavadinimo, norint ją pasirinti</string>
     <string name="help_ondemand">apribojimai bus paprašyti</string>
