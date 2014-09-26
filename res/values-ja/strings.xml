@@ -220,7 +220,7 @@
     <string name="settings_syscomponents">システム構成要素を制限可能にする (アンドロイド)</string>
     <string name="settings_usagedata">アプリから要求されたデータを表示する</string>
     <string name="settings_parameters">要求されたデータのパラメーターを表示する</string>
-    <string name="settings_values">Show values of usage data</string>
+    <string name="settings_values">データの値を表示する</string>
     <string name="settings_cid">GSM セル ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirk 設定</string>
@@ -243,9 +243,10 @@
     <string name="help_shared">投稿しました</string>
     <string name="help_settings">アプリ固有の偽装データが設定されています</string>
     <string name="tutorial_mainheader">制限を設定したいカテゴリを選択します</string>
-    <string name="tutorial_mainlist">アプリのチェックボックスをタップすると、選択したカテゴリに対して制限が設定されます\n
+    <string name="tutorial_mainlist">アプリのチェックボックス1をタップすると選択したカテゴリに対して制限が設定されます\n
+\nチェックボックス2をタップするとオンデマンドで制限を設定できます\n
 \n制限が設定されたアプリは、そのカテゴリについて空データまたは偽装データを受け取るようになります\n
-\n制限を詳細に設定するにはアプリアイコンをタップしてください</string>
+\n制限を詳細に設定するにはアプリアイコンまたはアプリ名をタップしてください</string>
     <string name="tutorial_detailsheader">アプリアイコンをタップすると様々な機能を実行することができます</string>
     <string name="tutorial_detailslist">下向き矢印ボタンをタップするとカテゴリ内の機能の除外項目を確認できます</string>
     <string name="permission_manage">アプリの強制終了を含むアプリ管理</string>
