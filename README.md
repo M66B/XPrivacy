@@ -791,6 +791,8 @@ Restrict and unrestrict one by one until you have found which one causes the app
 Wait 15 seconds after each change to let the XPrivacy cache time-out.
 Help others by submitting your working set of restrictions.
 
+See also [this FAQ](#FAQ63).
+
 <a name="FAQ31"></a>
 **(31) Can XPrivacy handle non-Java applications?**
 
@@ -858,12 +860,14 @@ No, the pro license can be used independently.
 **(36) Is PayPal or Bitcoin the only way to donate?**
 
 Yes, it is not feasible to add other donation methods at the moment.
+The only other way to get a pro license is to use the [XPrivacy Pro license fetcher](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.license).
 
 <a name="FAQ37"></a>
 **(37) Do I need to have the Play store/services installed for the pro version?**
 
 Only for the pro enabler, not for the pro license.
 See [here](http://www.xprivacy.eu/) for the differences between the pro enabler and pro license.
+The [XPrivacy Pro license fetcher](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.license) needs the Play store/services for fetching a pro license, but not for using a pro license.
 
 <a name="FAQ38"></a>
 **(38) What does the update service do?**
@@ -973,6 +977,8 @@ Expert mode has the following sub-options which can be toggled individually:
 		* *resolve*, *noresolve*: enabled/disables resolving IP addresses to names for usage data / on demand restricting
 		* *test*: let check for updates check for test versions
 		* *safemode*: hide unsafe function restrictions
+* *Clear cache* will clear settings and restrictions caches for all applications and the privacy service
+* *Clear all data* will erase all settings and restrictions; use with care
 
 <a name="FAQ58"></a>
 **(58) Can I write a thesis about XPrivacy?**
@@ -1213,6 +1219,17 @@ should be accessible to almost everybody.
 **(73) Why is the minimum PayPal donation lower than the Pro license fetcher application price?**
 
 The Google transaction fee is 30%, while the PayPal transaction fee is 5-10%.
+
+<a name="FAQ74"></a>
+**(74) I miss an application in the application list!**
+
+Tap the filter icon to check if the application list isn't filtered.
+By default system applications and applications without permissions for the selected category are filtered.
+
+Some applications (components) share data, which mean they share the same uid.
+These applications are shown once only in XPrivacy (this cannot be changed).
+An example is Dolphin browser and its plugins/addons.
+Another example is GoLauncherEx and its language packs.
 
 Support
 -------
