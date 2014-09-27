@@ -362,7 +362,7 @@ and is reported to work with most Android variants, including stock ROMs.
 **XPrivacy is incompatible with the security center of MIUI** ([issue](https://github.com/M66B/XPrivacy/issues/1940))
 
 You need to use the quirk "noresolve" when using [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
-([issue](https://github.com/M66B/XPrivacy/issues/1751)).
+and some other wireless camera's, like the Sony QX1/10/30/100 ([issue](https://github.com/M66B/XPrivacy/issues/1751)).
 
 Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
 
