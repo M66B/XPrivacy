@@ -25,6 +25,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Display legend on first run
 * Updated Japanese translation
 * Updated Lithuanian translation
 

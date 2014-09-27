@@ -1222,6 +1222,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						@Override
 						public void onDismiss(DialogInterface dialog) {
 							PrivacyManager.setSetting(userId, PrivacyManager.cSettingFirstRun, Boolean.FALSE.toString());
+							optionLegend();
 						}
 					});
 					dlgUsage.show();
