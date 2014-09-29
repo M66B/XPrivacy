@@ -224,10 +224,10 @@
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
-    <string name="settings_aosp">Trub AOSP (wymaga restartu)</string>
+    <string name="settings_aosp">Tryb AOSP (wymaga restartu)</string>
     <string name="help_check_restrict">Pierwszy check box: ogranicz kategorię lub funkcję</string>
     <string name="help_check_ondemand">Drugi check box: ogranicz na żądanie</string>
-    <string name="help_switch">Przełącznik On/off: włącz lib wyłącz wszystkie ograniczenia</string>
+    <string name="help_switch">Przełącznik On/off: włącz lub wyłącz wszystkie ograniczenia</string>
     <string name="help_longpress">Przytrzymaj na nazwie aby wybrać</string>
     <string name="help_ondemand">będą pytania o ograniczenia</string>
     <string name="help_application">Aplikacja</string>
