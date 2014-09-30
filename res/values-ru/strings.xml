@@ -44,8 +44,8 @@
     <string name="menu_changelog">Список изменений</string>
     <string name="menu_flush">Очистить кэш</string>
     <string name="menu_update">Проверка обновлений</string>
-    <string name="menu_batch">Operations &#8230;</string>
-    <string name="menu_legend">Legend</string>
+    <string name="menu_batch">Операции &#8230;</string>
+    <string name="menu_legend">Легенда</string>
     <string name="msg_abort">Прерывается</string>
     <string name="msg_aborted">Прервано</string>
     <string name="msg_new">Новое</string>
@@ -76,10 +76,10 @@
     <string name="msg_service_missing">Сервис Privacy не найден; Вы включили XPrivacy в Xposed и перезагрузили своё устройство?</string>
     <string name="msg_service_version">Версия сервиса Privacy не совпадает; Вы перезагрузили своё устройство после обновления XPrivacy?</string>
     <string name="msg_service_updating">Пожалуйста, подождите завершения обновления</string>
-    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
-    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_expert">Предполагается, что эксперты решают проблемы самостоятельно, следят за темой XPrivacy на XDA и помогают другим по возможности</string>
+    <string name="msg_method_expert">Данные ограничения предназначены для экспертов. Вы уверены?</string>
+    <string name="msg_longpress_whitelist">Зажмите имя функции для добавления параметра в белый или черный список</string>
+    <string name="msg_settings_specific">Введенные значения и проставленные галочки имеют приоритет перед глобальными настройками</string>
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
 \n\nИспользуйте исключительно на свой страх и риск.</b>\n\nСм. также лицензию:</string>
@@ -223,7 +223,7 @@
     <string name="settings_values">Show values of usage data</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
-    <string name="settings_quirks">Quirks</string>
+    <string name="settings_quirks">Модификации</string>
     <string name="settings_aosp">Режим AOSP (требует перезапуска)</string>
     <string name="help_check_restrict">Первая галочка: ограничить категорию или функцию</string>
     <string name="help_check_ondemand">Вторая галочка: ограничить при запросе</string>
