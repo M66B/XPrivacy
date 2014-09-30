@@ -198,11 +198,13 @@ public class XTelephonyManager extends XHook {
 
 	public static List<XHook> getPhoneInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XTelephonyManager(Methods.Srv_enableLocationUpdates, PrivacyManager.cLocation, Srv.Phone));
-		listHook.add(new XTelephonyManager(Methods.Srv_disableLocationUpdates, null, Srv.Phone));
-		listHook.add(new XTelephonyManager(Methods.Srv_getAllCellInfo, PrivacyManager.cLocation, Srv.Phone));
-		listHook.add(new XTelephonyManager(Methods.Srv_getCellLocation, PrivacyManager.cLocation, Srv.Phone));
-		listHook.add(new XTelephonyManager(Methods.Srv_getNeighboringCellInfo, PrivacyManager.cLocation, Srv.Phone));
+		if (Hook.isAOSP(19)) {
+			listHook.add(new XTelephonyManager(Methods.Srv_enableLocationUpdates, PrivacyManager.cLocation, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_disableLocationUpdates, null, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_getAllCellInfo, PrivacyManager.cLocation, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_getCellLocation, PrivacyManager.cLocation, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_getNeighboringCellInfo, PrivacyManager.cLocation, Srv.Phone));
+		}
 		return listHook;
 	}
 
