@@ -6,7 +6,7 @@
     <string name="app_version" formatted="false">Wersja XPrivacy: %s (%d)</string>
     <string name="app_description">Kompleksowy menadżer prywatności</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
-    <string name="app_compatibility">Uruchomiono w trybie kompatybilności/string>
+    <string name="app_compatibility">Uruchomiono w trybie kompatybilności</string>
     <string name="app_licensed">Zarejestrowana, dziekuję za wsparcie!</string>
     <string name="menu_usage">Dostęp do danych</string>
     <string name="menu_refresh">Odśwież</string>
