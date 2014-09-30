@@ -107,11 +107,11 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="restrict_view" tools:ignore="UnusedResources">Tinjauan (pelayar)</string>
     <string name="restrict_help_view">Akan mengehadkan akses kepada penglihatan aksi dan maklumat</string>
     <string name="restrict_help_system">Akan mengehadkan akses kepada informasi sistem, seperti aplikasi yang dipasang</string>
-    <string name="restrict_help_shell">Akan mengehadkan akses kepada arahan 'shell', termasuk arahan 'superuser'</string>
+    <string name="restrict_help_shell">Akan mengehadkan akses kepada arahan \'shell\', termasuk arahan \'superuser\'</string>
     <string name="restrict_help_storage">Akan mengehadkan akses kepada penyimpanan, seperti fail di atas kad SD atau penyimpanan dalaman</string>
     <string name="restrict_help_sensors">Akan mengehadkan akses kepada sensor, seperti sensor pergerakan</string>
     <string name="restrict_help_phone">Akan mengehadkan akses kepada informasi telefon, seperti nombor telefon</string>
-    <string name="restrict_help_overlay">Akan mengehadkan lapisan jendela untuk menghalang 'phishing'</string>
+    <string name="restrict_help_overlay">Akan mengehadkan lapisan jendela untuk menghalang \'phishing\'</string>
     <string name="restrict_help_notifications">Akan mengehadkan akses kepada sistem dan notifikasi aplikasi and sistem mesej awan Google</string>
     <string name="restrict_help_nfc">Akan mengehadkan akses kepada komunikasi jarak dekat</string>
     <string name="restrict_help_network">Akan mengehadkan akses kepada informasi rangkaian, seperti IP dan alamat MAC dan rangkaian informasi Wi-Fi</string>
@@ -135,7 +135,7 @@ namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap pera
     <string name="whitelist_library">Pusaka Ibunda</string>
     <string name="whitelist_method">Nam kaedah</string>
     <string name="whitelist_filename">Nama fail</string>
-    <string name="whitelist_command">Arahan 'Shell'</string>
+    <string name="whitelist_command">Arahan \'Shell\'</string>
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transaksi</string>
     <string name="whitelist_permission">Keizinan</string>
