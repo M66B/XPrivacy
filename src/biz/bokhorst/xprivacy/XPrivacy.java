@@ -484,10 +484,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
 				String message = "Class not found hook=" + hook;
-				mListHookError.add(message);
 				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
 				if ("isXposedEnabled".equals(hook.getMethodName()))
 					level = Log.WARN;
+				if (level == Log.ERROR)
+					mListHookError.add(message);
 				Util.log(hook, level, message);
 				Util.logStack(hook, level);
 			}
@@ -541,9 +542,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Check if members found
 			if (listMember.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
 				String message = "Method not found hook=" + hook;
-				if (md == null || !md.isOptional())
+				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
+				if ("isXposedEnabled".equals(hook.getMethodName()))
+					level = Log.WARN;
+				if (level == Log.ERROR)
 					mListHookError.add(message);
-				Util.log(hook, md != null && md.isOptional() ? Log.WARN : Log.ERROR, message);
+				Util.log(hook, level, message);
+				Util.logStack(hook, level);
 			}
 		} catch (Throwable ex) {
 			mListHookError.add(ex.toString());
