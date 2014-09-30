@@ -956,7 +956,7 @@ and to select these applications using the action bar *select all* (first icon) 
 <a name="FAQ56"></a>
 **(56) How can I recover from a bootloop?**
 
-For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler-Recovery.zip](http://forum.xda-developers.com/attachment.php?attachmentid=2568891&d=1391958634). Alternatively (on most devices) press the volume down button 5 times during boot (there will a vibration with each press when done correctly).
+For devices with a custom recovery (TWRP/CWM) you can flash the [Xposed-Disabler-Recovery.zip](http://forum.xda-developers.com/attachment.php?attachmentid=2568891&d=1391958634). Alternatively (on most devices) press the volume down button 5 times during boot (there will be a vibration with each press when done correctly).
 
 See [here](https://github.com/M66B/XPrivacy/blob/master/DATABASE.md#xprivacydb) on how to enable debug logging without XPrivacy activated in Xposed.
 
