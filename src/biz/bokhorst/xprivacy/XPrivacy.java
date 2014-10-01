@@ -97,27 +97,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		});
 
 		// TODO: Cydia: Build.SERIAL
-		// TODO: Cydia: android.provider.Settings.Secure
-		// TODO: Cydia: Phone instances
 
-		// Providers
-		for (final String className : XContentResolver.cProviderClassName)
-			MS.hookClassLoad(className, new MS.ClassLoadHook() {
-				@Override
-				public void classLoaded(Class<?> clazz) {
-					hookAll(XContentResolver.getInstances(className), clazz.getClassLoader(), mSecret);
-				}
-			});
-
-		// Advertising Id
-		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XAdvertisingIdClientInfo.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// User activity
+		// Activity recognition
 		MS.hookClassLoad("com.google.android.gms.location.ActivityRecognitionClient", new MS.ClassLoadHook() {
 			@Override
 			public void classLoaded(Class<?> clazz) {
@@ -125,11 +106,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		});
 
-		// GoogleApiClient.Builder
-		MS.hookClassLoad("com.google.android.gms.common.api.GoogleApiClient", new MS.ClassLoadHook() {
+		// Advertising Id
+		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient", new MS.ClassLoadHook() {
 			@Override
 			public void classLoaded(Class<?> clazz) {
-				hookAll(XGoogleApiClient.getInstances(), clazz.getClassLoader(), mSecret);
+				hookAll(XAdvertisingIdClientInfo.getInstances(), clazz.getClassLoader(), mSecret);
 			}
 		});
 
@@ -141,11 +122,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 		});
 
-		// Location client
-		MS.hookClassLoad("com.google.android.gms.location.LocationClient", new MS.ClassLoadHook() {
+		// GoogleApiClient.Builder
+		MS.hookClassLoad("com.google.android.gms.common.api.GoogleApiClient", new MS.ClassLoadHook() {
 			@Override
 			public void classLoaded(Class<?> clazz) {
-				hookAll(XLocationClient.getInstances(), clazz.getClassLoader(), mSecret);
+				hookAll(XGoogleApiClient.getInstances(), clazz.getClassLoader(), mSecret);
 			}
 		});
 
@@ -164,6 +145,31 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				hookAll(XGoogleMapV2.getInstances(), clazz.getClassLoader(), mSecret);
 			}
 		});
+
+		// Location client
+		MS.hookClassLoad("com.google.android.gms.location.LocationClient", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XLocationClient.getInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
+
+		// Phone interface manager
+		MS.hookClassLoad("com.android.phone.PhoneInterfaceManager", new MS.ClassLoadHook() {
+			@Override
+			public void classLoaded(Class<?> clazz) {
+				hookAll(XTelephonyManager.getPhoneInstances(), clazz.getClassLoader(), mSecret);
+			}
+		});
+
+		// Providers
+		for (final String className : XContentResolver.cProviderClassName)
+			MS.hookClassLoad(className, new MS.ClassLoadHook() {
+				@Override
+				public void classLoaded(Class<?> clazz) {
+					hookAll(XContentResolver.getInstances(className), clazz.getClassLoader(), mSecret);
+				}
+			});
 	}
 
 	// Common
@@ -306,6 +312,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XSensorManager.getInstances(null), null, mSecret);
 
 		// Settings secure
+		// TODO: Cydia: android.provider.Settings.Secure
 		if (!mCydia)
 			hookAll(XSettingsSecure.getInstances(), null, mSecret);
 

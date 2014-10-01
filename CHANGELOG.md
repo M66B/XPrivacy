@@ -25,8 +25,9 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
-* Strip leading slash from IP address for improved wildcards
 * Fixed all problems reported through the debug info
+* Strip leading slash from IP address for improved wildcards
+* Better [Cydia Substrate](http://www.xda-developers.com/android/cydia-substrate-released-by-saurik-for-android/) support
 * Updated Malay translation
 * Updated Polish translation
 * Updated Russian translation
