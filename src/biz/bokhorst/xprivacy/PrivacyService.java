@@ -1976,8 +1976,13 @@ public class PrivacyService extends IPrivacyService.Stub {
 				// sub-domain or sub-net
 				int colon = restriction.extra.lastIndexOf(':');
 				String address = (colon >= 0 ? restriction.extra.substring(0, colon) : restriction.extra);
-				if (address.startsWith("/"))
-					address = address.substring(1);
+
+				int slash = address.indexOf('/');
+				if (slash == 0)
+					address = address.substring(slash + 1); // IP address
+				else if (slash > 0)
+					address = address.substring(0, slash); // domain name
+
 				if (Patterns.IP_ADDRESS.matcher(address).matches()) {
 					int dot = address.lastIndexOf('.');
 					listResult.add(address.substring(0, dot) + ".*"
