@@ -2294,7 +2294,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			if (dbFile.getParentFile().isDirectory())
 				Util.log(null, Log.WARN, "Database folder=" + dbFile.getParentFile());
 			else
-				Util.log(null, Log.ERROR, "Does not exist folder=" + dbFile.getParentFile());
+				Util.log(null, Log.WARN, "Does not exist folder=" + dbFile.getParentFile());
 
 			// Move database from data/xprivacy folder
 			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
