@@ -65,7 +65,7 @@ If an application has requested Android permissions to access data, XPrivacy dis
 XPrivacy also displays an internet icon if an application has internet access,
 which clarifies that the application poses a risk of sharing data with an external server.
 
-XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401),
+XPrivacy is built using the [Xposed framework](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053),
 which it uses to tap into a vast number of carefully selected Android functions.
 Depending on the function, XPrivacy skips execution of the original function
 (for example when an application tries to set a proximity alert)
@@ -380,7 +380,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
-1. Install the [Xposed framework](http://forum.xda-developers.com/showthread.php?t=1574401)
+1. Install the [Xposed framework](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053)
 	* Be sure to install [the latest version](http://dl.xposed.info/latest.apk)
 	* The Xposed fix is not needed anymore
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
@@ -1230,6 +1230,16 @@ Some applications (components) share data, which mean they share the same uid.
 These applications are shown once only in XPrivacy (this cannot be changed).
 An example is Dolphin browser and its plugins/addons.
 Another example is GoLauncherEx and its language packs.
+
+<a name="FAQ75"></a>
+**(75) Will XPrivacy work with ART?**
+
+XPrivacy will work when either [Xposed](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053)
+or [Cydia Substrate](http://www.xda-developers.com/android/cydia-substrate-released-by-saurik-for-android/) is working.
+
+Note that XPrivacy with Cydia Substrate has received limited testing
+and that a few restrictions cannot be made to work with Cydia Substrate
+(because Cydia Substrate does not allow hooking from the boot class loader).
 
 Support
 -------
