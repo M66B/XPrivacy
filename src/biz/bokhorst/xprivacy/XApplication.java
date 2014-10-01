@@ -54,7 +54,8 @@ public class XApplication extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.onCreate) {
+		switch (mMethod) {
+		case onCreate:
 			// Install receiver for package management
 			if (PrivacyManager.isApplication(Process.myUid()) && !mReceiverInstalled)
 				try {
@@ -69,8 +70,8 @@ public class XApplication extends XHook {
 				} catch (Throwable ex) {
 					Util.bug(this, ex);
 				}
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	public static void manage(Context context, int uid, String action) {
