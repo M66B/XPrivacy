@@ -1234,8 +1234,11 @@ Another example is GoLauncherEx and its language packs.
 <a name="FAQ75"></a>
 **(75) Will XPrivacy work with ART?**
 
-XPrivacy will work when either [Xposed](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053)
+XPrivacy will work if either [Xposed](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053)
 or [Cydia Substrate](http://www.xda-developers.com/android/cydia-substrate-released-by-saurik-for-android/) is working.
+
+Xposed has no ART support currently.
+It is unknown to me if Cydia Substrate supports or will support ART.
 
 Android "L" supports [ART](https://source.android.com/devices/tech/dalvik/art.html) only,
 which means that developing/testing XPrivacy for Android "L" can only be done
