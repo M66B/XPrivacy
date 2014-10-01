@@ -25,6 +25,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Strip leading slash from IP address for improved wildcards
 * Fixed all problems reported through the debug info
 * Updated Malay translation
 * Updated Polish translation
