@@ -8,6 +8,8 @@ public class ApplicationEx extends Application {
 
 	@Override
 	public void onCreate() {
+		super.onCreate();
+
 		Util.log(null, Log.WARN, "UI started");
 		mPrevHandler = Thread.getDefaultUncaughtExceptionHandler();
 		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
