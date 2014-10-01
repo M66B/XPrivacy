@@ -25,14 +25,16 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.3.1 BETA**
+
 * Fixed all problems reported through the debug info
 * Strip leading slash from IP address for improved wildcards
 * Better [Cydia Substrate](http://www.xda-developers.com/android/cydia-substrate-released-by-saurik-for-android/) support
 * Updated Malay translation
 * Updated Polish translation
 * Updated Russian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.3 STABLE**
 
