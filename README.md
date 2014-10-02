@@ -1229,7 +1229,6 @@ By default system applications and applications without permissions for the sele
 Some applications (components) share data, which mean they share the same uid.
 These applications are shown once only in XPrivacy (this cannot be changed).
 An example is Dolphin browser and its plugins/addons.
-Another example is GoLauncherEx and its language packs.
 
 <a name="FAQ75"></a>
 **(75) Will XPrivacy work with ART?**

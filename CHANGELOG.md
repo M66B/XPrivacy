@@ -25,6 +25,8 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Fixed displaying applications with the same name once in select to allow list ([issue](/../../issues/2013))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.3.2 BETA**

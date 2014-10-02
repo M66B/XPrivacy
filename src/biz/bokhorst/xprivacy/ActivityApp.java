@@ -828,10 +828,21 @@ public class ActivityApp extends ActivityBase {
 		@Override
 		protected Object doInBackground(Object... params) {
 			// Get applications
-			Map<String, String> mapApp = new HashMap<String, String>();
+			int count = 0;
+			Map<String, List<String>> mapApp = new HashMap<String, List<String>>();
 			for (ApplicationInfoEx appInfo : ApplicationInfoEx.getXApplicationList(ActivityApp.this, null))
-				for (int p = 0; p < appInfo.getPackageName().size(); p++)
-					mapApp.put(appInfo.getApplicationName().get(p), appInfo.getPackageName().get(p));
+				for (int p = 0; p < appInfo.getPackageName().size(); p++) {
+					String appName = appInfo.getApplicationName().get(p);
+					List<String> listPkg;
+					if (mapApp.containsKey(appName))
+						listPkg = mapApp.get(appName);
+					else {
+						listPkg = new ArrayList<String>();
+						mapApp.put(appName, listPkg);
+					}
+					listPkg.add(appInfo.getPackageName().get(p));
+					count++;
+				}
 
 			// Sort applications
 			List<String> listApp = new ArrayList<String>(mapApp.keySet());
@@ -840,20 +851,20 @@ public class ActivityApp extends ActivityBase {
 
 			// Build selection arrays
 			int i = 0;
-			mApp = new CharSequence[mapApp.size()];
-			mPackage = new String[mapApp.size()];
-			mSelection = new boolean[mapApp.size()];
-			for (String appName : listApp)
-				try {
-					String pkgName = mapApp.get(appName);
+			mApp = new CharSequence[count];
+			mPackage = new String[count];
+			mSelection = new boolean[count];
+			for (String appName : listApp) {
+				List<String> listPkg = mapApp.get(appName);
+				Collections.sort(listPkg, collator);
+				for (String pkgName : listPkg) {
 					mApp[i] = (pkgName.equals(appName) ? appName : String.format("%s (%s)", appName, pkgName));
 					mPackage[i] = pkgName;
 					mSelection[i] = PrivacyManager.getSettingBool(-mAppInfo.getUid(), Meta.cTypeApplication, pkgName,
 							false);
 					i++;
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
 				}
+			}
 
 			return null;
 		}
