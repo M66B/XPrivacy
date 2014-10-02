@@ -1159,6 +1159,9 @@ public class ActivityApp extends ActivityBase {
 			holder.ctvName.setText(name);
 			holder.ctvName.setChecked(mMapWhitelists.get(mSelectedType).get(name));
 
+			final boolean wnomod = PrivacyManager.getSettingBool(mAppInfo.getUid(),
+					PrivacyManager.cSettingWhitelistNoModify, false);
+
 			holder.ctvName.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View view) {
@@ -1167,7 +1170,8 @@ public class ActivityApp extends ActivityBase {
 					boolean isChecked = holder.ctvName.isChecked();
 					mMapWhitelists.get(mSelectedType).put(name, isChecked);
 					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, Boolean.toString(isChecked));
-					PrivacyManager.updateState(mAppInfo.getUid());
+					if (!wnomod)
+						PrivacyManager.updateState(mAppInfo.getUid());
 				}
 			});
 
@@ -1178,7 +1182,8 @@ public class ActivityApp extends ActivityBase {
 					WhitelistAdapter.this.remove(name);
 					mMapWhitelists.get(mSelectedType).remove(name);
 					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, null);
-					PrivacyManager.updateState(mAppInfo.getUid());
+					if (!wnomod)
+						PrivacyManager.updateState(mAppInfo.getUid());
 				}
 			});
 

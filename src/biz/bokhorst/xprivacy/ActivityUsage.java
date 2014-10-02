@@ -308,6 +308,9 @@ public class ActivityUsage extends ActivityBase {
 							boolean isApp = PrivacyManager.isApplication(usageData.uid);
 							boolean odSystem = PrivacyManager.getSettingBool(userId,
 									PrivacyManager.cSettingOnDemandSystem, false);
+							final boolean wnomod = PrivacyManager.getSettingBool(usageData.uid,
+									PrivacyManager.cSettingWhitelistNoModify, false);
+
 							if ((isApp || odSystem) && hook != null && hook.whitelist() != null
 									&& usageData.extra != null) {
 								if (Util.hasProLicense(ActivityUsage.this) == null)
@@ -325,7 +328,8 @@ public class ActivityUsage extends ActivityBase {
 													// Deny
 													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
 															usageData.extra, Boolean.toString(false));
-													PrivacyManager.updateState(usageData.uid);
+													if (!wnomod)
+														PrivacyManager.updateState(usageData.uid);
 												}
 											});
 									alertDialogBuilder.setNeutralButton(getString(R.string.title_allow),
@@ -335,7 +339,8 @@ public class ActivityUsage extends ActivityBase {
 													// Allow
 													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
 															usageData.extra, Boolean.toString(true));
-													PrivacyManager.updateState(usageData.uid);
+													if (!wnomod)
+														PrivacyManager.updateState(usageData.uid);
 												}
 											});
 									alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),

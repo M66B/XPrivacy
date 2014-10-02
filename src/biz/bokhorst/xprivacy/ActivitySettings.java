@@ -213,6 +213,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		boolean test = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingTestVersions, false);
 		boolean updates = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingUpdates, false);
 		boolean odsystem = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingOnDemandSystem, false);
+		boolean wnomod = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingWhitelistNoModify, false);
 		List<String> listQuirks = new ArrayList<String>();
 		if (freeze)
 			listQuirks.add("freeze");
@@ -232,6 +233,8 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			listQuirks.add("updates");
 		if (odsystem)
 			listQuirks.add("odsystem");
+		if (wnomod)
+			listQuirks.add("wnomod");
 		Collections.sort(listQuirks);
 		String quirks = TextUtils.join(",", listQuirks.toArray());
 
@@ -660,6 +663,8 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 				.setSetting(uid, PrivacyManager.cSettingUpdates, Boolean.toString(listQuirks.contains("updates")));
 		PrivacyManager.setSetting(uid, PrivacyManager.cSettingOnDemandSystem,
 				Boolean.toString(listQuirks.contains("odsystem")));
+		PrivacyManager.setSetting(uid, PrivacyManager.cSettingWhitelistNoModify,
+				Boolean.toString(listQuirks.contains("wnomod")));
 
 		// Notifications
 		PrivacyManager.setSetting(uid, PrivacyManager.cSettingNotify, Boolean.toString(cbNotify.isChecked()));

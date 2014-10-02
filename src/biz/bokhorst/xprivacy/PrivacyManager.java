@@ -141,6 +141,7 @@ public class PrivacyManager {
 	public final static String cSettingChangelog = "Changelog";
 	public final static String cSettingUpdates = "Updates";
 	public final static String cSettingMethodExpert = "MethodExpert";
+	public final static String cSettingWhitelistNoModify = "WhitelistNoModify";
 
 	public final static String cSettingODExpert = "ODExpert";
 	public final static String cSettingODCategory = "ODCategory";
