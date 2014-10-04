@@ -338,6 +338,7 @@ Limitations
 * It is possible to unhook methods in user space using native libraries, see for more details [FAQ 68](#FAQ68)
 * In some situations the on demand restricting dialog freezes, notably when using volume keys. This cannot be fixed due too limitations of Android.
 * In some situations the on demand restricting dialog is overlayed by other windows, notably notifications. This cannot be fixed due too limitations of Android.
+* Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
 
 *XPrivacy*
 
@@ -357,14 +358,13 @@ Compatibility
 XPrivacy has been tested with Android version 4.0.3 - 4.4.4 (ICS, JellyBean, KitKat)
 and is reported to work with most Android variants, including stock ROMs.
 
-**XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231))
+**XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231)).
 
-**XPrivacy is incompatible with the security center of MIUI** ([issue](https://github.com/M66B/XPrivacy/issues/1940))
+**XPrivacy is incompatible with the security center of MIUI** ([issue](https://github.com/M66B/XPrivacy/issues/1940)).
+See [here](http://forum.xda-developers.com/showpost.php?p=55810186&postcount=12178) for a solution.
 
 You need to use the quirk "noresolve" when using [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
 and some other wireless camera's, like the Sony QX1/10/30/100 ([issue](https://github.com/M66B/XPrivacy/issues/1751)).
-
-Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
 
 Installation
 ------------
