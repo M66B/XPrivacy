@@ -216,6 +216,7 @@ public class Hook implements Comparable<Hook> {
 		return mReplacedMethod;
 	}
 
+	@SuppressLint("FieldGetter")
 	public boolean isDangerous() {
 		String name = String.format("%s.%s.%s", PrivacyManager.cSettingDangerous, this.getRestrictionName(),
 				this.getName());
