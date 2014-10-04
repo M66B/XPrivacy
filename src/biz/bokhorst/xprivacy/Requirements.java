@@ -393,7 +393,7 @@ public class Requirements {
 	public static void sendSupportInfo(final String text, final ActivityBase context) {
 		Util.log(null, Log.WARN, text);
 
-		if (Util.hasValidFingerPrint(context) || Util.isDebuggable(context)) {
+		if (Util.hasValidFingerPrint(context) && !"true".equals(System.getenv("XPrivacy.AOSP"))) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(R.string.app_name);
 			alertDialogBuilder.setMessage(R.string.msg_support_info);
@@ -405,7 +405,6 @@ public class Requirements {
 							String ourVersion = Util.getSelfVersionName(context);
 							StringBuilder sb = new StringBuilder(text);
 							sb.insert(0, "\r\n");
-							sb.insert(0, String.format("Override: %s\r\n", System.getenv("XPrivacy.AOSP")));
 							sb.insert(0, String.format("Id: %s\r\n", Build.ID));
 							sb.insert(0, String.format("Display: %s\r\n", Build.DISPLAY));
 							sb.insert(0, String.format("Host: %s\r\n", Build.HOST));
