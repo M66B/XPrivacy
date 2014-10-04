@@ -443,6 +443,19 @@ public class PrivacyService extends IPrivacyService.Stub {
 				}
 			}
 
+			// Process IP address
+			if (restriction.extra != null && Meta.cTypeIPAddress.equals(hook.whitelist())) {
+				int colon = restriction.extra.lastIndexOf(':');
+				String address = (colon >= 0 ? restriction.extra.substring(0, colon) : restriction.extra);
+				String port = (colon >= 0 ? restriction.extra.substring(colon) : "");
+
+				int slash = address.indexOf('/');
+				if (slash == 0) // IP address
+					restriction.extra = address.substring(slash + 1) + port;
+				else if (slash > 0) // Domain name
+					restriction.extra = address.substring(0, slash) + port;
+			}
+
 			// Check for system component
 			if (!PrivacyManager.isApplication(restriction.uid))
 				if (!getSettingBool(userId, PrivacyManager.cSettingSystem, false))
@@ -1976,13 +1989,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 				// sub-domain or sub-net
 				int colon = restriction.extra.lastIndexOf(':');
 				String address = (colon >= 0 ? restriction.extra.substring(0, colon) : restriction.extra);
-
-				int slash = address.indexOf('/');
-				if (slash == 0)
-					address = address.substring(slash + 1); // IP address
-				else if (slash > 0)
-					address = address.substring(0, slash); // domain name
-
 				if (Patterns.IP_ADDRESS.matcher(address).matches()) {
 					int dot = address.lastIndexOf('.');
 					listResult.add(address.substring(0, dot) + ".*"
