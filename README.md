@@ -1448,6 +1448,7 @@ Current translations:
 1. Turkish (tr)
 1. Ukrainian (ua)
 1. Vietnamese (vi)
+1. Welsh (cy-rGB)
 
 Restrict new data:
 
