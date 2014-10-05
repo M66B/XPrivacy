@@ -25,10 +25,12 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.3.4 BETA**
+
 * Strip IP address from IP address / domain name pair for better wildcards ([issue](/../../issues/2014))
 * Added Welsh translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.3.3 BETA**
 
