@@ -220,7 +220,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="settings_syscomponents">Beschränke Systemkomponenten (Android) (erfordert Geräteneustart)</string>
     <string name="settings_usagedata">App Nutzungsdaten zeigen\n (erfordert Geräteneustart)</string>
     <string name="settings_parameters">Parameter der Nutzungsdaten zeigen</string>
-    <string name="settings_values">Show values of usage data</string>
+    <string name="settings_values">Werte der Nutzungsdaten zeigen</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
