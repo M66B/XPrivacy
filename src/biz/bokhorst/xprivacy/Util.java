@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.lang.StackOverflowError;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
 import java.lang.RuntimeException;
@@ -121,6 +122,8 @@ public class Util {
 		else if (ex instanceof SocketTimeoutException)
 			priority = Log.WARN;
 		else if (ex instanceof SSLPeerUnverifiedException)
+			priority = Log.WARN;
+		else if (ex instanceof StackOverflowError)
 			priority = Log.WARN;
 		else if (ex instanceof TransactionTooLargeException)
 			priority = Log.WARN;
