@@ -56,7 +56,7 @@ public class Util {
 	private static boolean mLogDetermined = false;
 	private static Boolean mHasLBE = null;
 
-	private static Version MIN_PRO_VERSION = new Version("1.12");
+	private static Version MIN_PRO_VERSION = new Version("1.20");
 	private static String LICENSE_FILE_NAME = "XPrivacy_license.txt";
 
 	public static int NOTIFY_RESTART = 0;
