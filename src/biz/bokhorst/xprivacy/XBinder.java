@@ -97,8 +97,6 @@ public class XBinder extends XHook {
 	});
 	// @formatter:on
 
-	// TODO: audio/media record
-
 	// @formatter:off
 	public static List<String> cServiceOptional = Arrays.asList(new String[] {
 		"<noname>",

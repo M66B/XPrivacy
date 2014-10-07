@@ -52,7 +52,6 @@ public class XConnectivityManager extends XHook {
 		switch (mMethod) {
 		case getActiveNetworkInfo:
 		case getNetworkInfo:
-			// TODO: network info extra
 			if (param.getResult() != null && isRestricted(param))
 				param.setResult(null);
 			break;

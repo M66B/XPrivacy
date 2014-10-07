@@ -843,7 +843,6 @@ public class ActivityShare extends ActivityBase {
 							// Process restrictions
 							for (String restrictionName : PrivacyManager.getRestrictions()) {
 								// Category
-								// TODO: use getRestrictionList
 								PRestriction crestricted = PrivacyManager.getRestrictionEx(uid, restrictionName, null);
 								serializer.startTag(null, "Restriction");
 								serializer.attribute(null, "Id", Integer.toString(uid));
@@ -1520,7 +1519,6 @@ public class ActivityShare extends ActivityBase {
 						// Encode restrictions
 						JSONArray jSettings = new JSONArray();
 						for (String restrictionName : PrivacyManager.getRestrictions()) {
-							// TODO: use getRestrictionList
 							boolean restricted = PrivacyManager.getRestrictionEx(appInfo.getUid(), restrictionName,
 									null).restricted;
 							// Category

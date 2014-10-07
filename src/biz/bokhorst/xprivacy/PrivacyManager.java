@@ -495,7 +495,6 @@ public class PrivacyManager {
 				PrivacyService.getClient().setRestrictionList(listRestriction);
 
 				// Clear cache
-				// TODO: selective clear
 				synchronized (mRestrictionCache) {
 					mRestrictionCache.clear();
 				}
@@ -539,7 +538,6 @@ public class PrivacyManager {
 			}
 
 			// Clear cache
-			// TODO: selective clear
 			synchronized (mRestrictionCache) {
 				mRestrictionCache.clear();
 			}
@@ -858,7 +856,6 @@ public class PrivacyManager {
 				PrivacyService.getClient().setSettingList(listSetting);
 
 				// Clear cache
-				// TODO: selective clear
 				synchronized (mSettingsCache) {
 					mSettingsCache.clear();
 				}
@@ -957,7 +954,6 @@ public class PrivacyManager {
 
 	// Defacing
 
-	// TODO: change name to integer parameter
 	@SuppressLint("DefaultLocale")
 	public static Object getDefacedProp(int uid, String name) {
 		// Serial number
@@ -1313,7 +1309,6 @@ public class PrivacyManager {
 		}
 	}
 
-	// TODO: Waiting for SDK 20 ...
 	public static final int FIRST_ISOLATED_UID = 99000;
 	public static final int LAST_ISOLATED_UID = 99999;
 	public static final int FIRST_SHARED_APPLICATION_GID = 50000;

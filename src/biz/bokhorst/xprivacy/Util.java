@@ -222,7 +222,6 @@ public class Util {
 	public static int getAppId(int uid) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 			try {
-				// TODO: update by method in SDK 20
 				// UserHandle: public static final int getAppId(int uid)
 				Method method = (Method) UserHandle.class.getDeclaredMethod("getAppId", int.class);
 				uid = (Integer) method.invoke(null, uid);
@@ -238,7 +237,6 @@ public class Util {
 		if (uid > 99) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1)
 				try {
-					// TODO: update by method in SDK 20
 					// UserHandle: public static final int getUserId(int uid)
 					Method method = (Method) UserHandle.class.getDeclaredMethod("getUserId", int.class);
 					userId = (Integer) method.invoke(null, uid);
