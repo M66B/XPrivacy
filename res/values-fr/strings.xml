@@ -4,7 +4,7 @@
     <string name="app_wrongandroid">Uniquement pour Android 4.0.3 et ultérieur</string>
     <string name="app_incompatible">XPrivacy est incompatible avec %1$s</string>
     <string name="app_version">Version XPrivacy : %1$s (%2$d)</string>
-    <string name="app_description">Le gestionnaire de vie privée ultime</string>
+    <string name="app_description">L\'ultime gestionnaire de vie privée</string>
     <string name="app_copyright">Droits d\'auteur : M. Bokhorst (M66B) \u00A9 2013–2014</string>
     <string name="app_compatibility">XPrivacy est exécuté en mode de compatibilité</string>
     <string name="app_licensed">Licence trouvée, merci pour votre soutien !</string>
