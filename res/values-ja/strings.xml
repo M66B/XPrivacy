@@ -8,7 +8,7 @@
     <string name="app_copyright">コピーライト \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
     <string name="app_compatibility">互換モードで動作しています</string>
     <string name="app_licensed">使用許諾されました。協力ありがとう!</string>
-    <string name="menu_usage">要求されたデータの表示</string>
+    <string name="menu_usage">データの使用状況</string>
     <string name="menu_refresh">再読み込み</string>
     <string name="menu_settings">設定</string>
     <string name="menu_template">テンプレート</string>
@@ -77,8 +77,8 @@
     <string name="msg_service_version">Privacy service のバージョンが違います。XPrivacy を更新した後で端末を再起動しましたか?</string>
     <string name="msg_service_updating">更新サービスが完了するまでお待ちください</string>
     <string name="msg_expert">上級者は、なるべく自分自身で問題を解決すること、XDA フォーラムの XPrivacy スレッドを購読すること、そして他の利用者をできるだけ助けることが求められます</string>
-    <string name="msg_method_expert">機能毎の制限の設定は上級者向けです。あなたは上級者ですか?</string>
-    <string name="msg_longpress_whitelist">機能名を長押しするとパラメーターのホワイト/ブラックリストを設定できます</string>
+    <string name="msg_method_expert">関数毎の制限の設定は上級者向けです。あなたは上級者ですか?</string>
+    <string name="msg_longpress_whitelist">関数名を長押しするとパラメーターのホワイト/ブラックリストを設定できます</string>
     <string name="msg_settings_specific">アプリ固有のチェックマークや設定値は全体設定よりも優先されます。チェックマークや設定値のない項目は優先されません</string>
     <string name="msg_first"><b>XPrivacy の開発およびテストには細心の注意を払いましたが、
 すべての端末のあらゆるアプリで完璧な動作を保証することは不可能です。
@@ -91,7 +91,7 @@
     <string name="restrict_contacts">連絡先</string>
     <string name="restrict_dictionary">ユーザー辞書</string>
     <string name="restrict_email">電子メール</string>
-    <string name="restrict_identification">端末ID</string>
+    <string name="restrict_identification">識別情報</string>
     <string name="restrict_internet">インターネット</string>
     <string name="restrict_location">位置情報</string>
     <string name="restrict_media">メディア</string>
@@ -141,7 +141,7 @@
     <string name="whitelist_permission">パーミッション</string>
     <string name="title_restrict">チェックして制限します :</string>
     <string name="title_check_whitelist">チェックして許可します :</string>
-    <string name="title_fused">データの要求あり</string>
+    <string name="title_fused">データの使用あり</string>
     <string name="title_finternet">インターネットアクセスあり</string>
     <string name="title_fpermission">アンドロイドの権限あり</string>
     <string name="title_frestricted">制限を設定済み</string>
@@ -158,7 +158,7 @@
     <string name="title_sinvert">並べ替え順の反転</string>
     <string name="title_attempt">データを要求しています :</string>
     <string name="title_category">カテゴリ :</string>
-    <string name="title_function">機能 :</string>
+    <string name="title_function">関数 :</string>
     <string name="title_parameters">パラメーター :</string>
     <string name="title_applycat">カテゴリ全体に設定する</string>
     <string name="title_once">今回のみ設定する</string>
@@ -170,7 +170,7 @@
     <string name="title_permissions">パーミッション</string>
     <string name="title_set_restrict">制限を設定する (カテゴリ)</string>
     <string name="title_template_category">テンプレートを適用する (カテゴリ)</string>
-    <string name="title_template_full">テンプレートを適用する (カテゴリと機能)</string>
+    <string name="title_template_full">テンプレートを適用する (カテゴリと関数)</string>
     <string name="title_template_merge">テンプレートを適用する (統合 セット)</string>
     <string name="title_template_merge_reset">テンプレートを適用する (統合 リセット)</string>
     <string name="title_enable_ondemand">オンデマンド制限を有効にする</string>
@@ -183,11 +183,11 @@
     <string name="title_usage_header">使い方</string>
     <string name="title_usage_text_1">1. 制限を設定したいアプリをアプリリストで見つけます</string>
     <string name="title_usage_text_2">2. アプリアイコンまたはアプリ名をタップします</string>
-    <string name="title_usage_text_3">3. 各カテゴリの一番上のチェックボックスをタップすると制限が設定されます</string>
-    <string name="title_usage_footer">制限は常識的に判断して設定してください。インターネットアクセスを制限したらインターネットに接続できることを期待してはいけません。</string>
-    <string name="title_toggle_dangerous">機能名を長押しすると危険性あり/なしをトグルできます</string>
-    <string name="title_ondemand_category">カテゴリ全体に設定すると機能の除外項目の設定が初期化されます</string>
-    <string name="title_function_help">機能のドキュメント</string>
+    <string name="title_usage_text_3">3. 各カテゴリのチェックボックス&#9312;にチェックマークを付けると制限が設定されます</string>
+    <string name="title_usage_footer">制限は常識的に判断して設定してください。インターネットアクセスを制限したらインターネットに接続できることを期待してはいけません</string>
+    <string name="title_toggle_dangerous">関数名を長押しすると危険性あり/なしをトグルできます</string>
+    <string name="title_ondemand_category">カテゴリ全体に設定すると関数の除外項目の設定が初期化されます</string>
+    <string name="title_function_help">関数のドキュメント</string>
     <string name="title_unsafe">安全でない : 回避されるおそれがあります</string>
     <string name="title_update_checking">更新を確認しています</string>
     <string name="title_update_downloading">更新をダウンロードしています</string>
@@ -218,23 +218,23 @@
     <string name="settings_experimental">実験的な機能 (要再起動)</string>
     <string name="settings_https">セキュリティ保護された接続を使用する</string>
     <string name="settings_syscomponents">システム構成要素を制限可能にする (アンドロイド)</string>
-    <string name="settings_usagedata">アプリから要求されたデータを表示する</string>
-    <string name="settings_parameters">要求されたデータのパラメーターを表示する</string>
+    <string name="settings_usagedata">アプリのデータ使用状況を表示する</string>
+    <string name="settings_parameters">データのパラメーターを表示する</string>
     <string name="settings_values">データの値を表示する</string>
     <string name="settings_cid">GSM セル ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirk 設定</string>
     <string name="settings_aosp">AOSP モード (要再起動)</string>
-    <string name="help_check_restrict">チェックボックス1 : カテゴリや機能を制限します</string>
-    <string name="help_check_ondemand">チェックボックス2 : オンデマンドで制限します(チェックボックス1は既定値になります)</string>
-    <string name="help_switch">スイッチ : 全制限の有効/無効を切り替えます</string>
+    <string name="help_check_restrict">チェックボックス&#9312; : カテゴリや関数を制限します</string>
+    <string name="help_check_ondemand">チェックボックス&#9313; : オンデマンドで制限します(チェックボックス&#9312;は既定値になります)</string>
+    <string name="help_switch">On/Off スイッチ : 全制限の有効/無効を切り替えます</string>
     <string name="help_longpress">アプリ名の長押しでアプリが選択されます</string>
     <string name="help_ondemand">制限するか尋ねます</string>
     <string name="help_application">アプリ</string>
     <string name="help_internet">インターネットアクセス権限があります</string>
     <string name="help_granted">アンドロイドの権限があります</string>
-    <string name="help_used">データの要求がありました</string>
-    <string name="help_used_grayed">データの要求は検知できません</string>
+    <string name="help_used">データが使用されました</string>
+    <string name="help_used_grayed">データの使用状況は利用できません</string>
     <string name="help_frozen">無効化されています</string>
     <string name="help_dangerous">危険 : 制限すると問題が発生するおそれがあります</string>
     <string name="help_half">部分的に制限しています</string>
@@ -243,12 +243,12 @@
     <string name="help_shared">投稿しました</string>
     <string name="help_settings">アプリ固有の偽装データが設定されています</string>
     <string name="tutorial_mainheader">制限を設定したいカテゴリを選択します</string>
-    <string name="tutorial_mainlist">アプリのチェックボックス1をタップすると選択したカテゴリに対して制限が設定されます\n
-\nチェックボックス2をタップするとオンデマンドで制限を設定できます\n
+    <string name="tutorial_mainlist">アプリのチェックボックス&#9312;にチェックマークを付けると選択したカテゴリに対して制限が設定されます\n
+\nアプリのチェックボックス&#9313;にチェックマークを付けるとオンデマンドで制限を設定できるようになります\n
 \n制限が設定されたアプリは、そのカテゴリについて空データまたは偽装データを受け取るようになります\n
 \n制限を詳細に設定するにはアプリアイコンまたはアプリ名をタップしてください</string>
     <string name="tutorial_detailsheader">アプリアイコンをタップすると様々な機能を実行することができます</string>
-    <string name="tutorial_detailslist">下向き矢印ボタンをタップするとカテゴリ内の機能の除外項目を確認できます</string>
+    <string name="tutorial_detailslist">下向き矢印ボタンをタップするとカテゴリ内の関数の除外項目を確認できます</string>
     <string name="permission_manage">アプリの強制終了を含むアプリ管理</string>
     <string name="permission_restrictions">XPrivacy の制限および設定の管理</string>
 
