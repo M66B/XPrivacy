@@ -25,6 +25,8 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Fixed warning *Native call method*
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.4 STABLE**
