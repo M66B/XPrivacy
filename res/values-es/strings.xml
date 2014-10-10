@@ -194,6 +194,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_update_install">Pulsa para instalar la actualización</string>
     <string name="title_update_none">No hay actualizaciones disponibles</string>
     <string name="title_update_legacy">XPrivacy 2 está desactualizado, por favor considere actualizar a XPrivacy 3</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial"># de serie</string>
     <string name="settings_lat">Latitud</string>
     <string name="settings_lon">Longitud</string>

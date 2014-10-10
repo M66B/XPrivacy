@@ -401,7 +401,7 @@ public class ActivityUsage extends ActivityBase {
 				holder.tvParameter.setVisibility(View.GONE);
 
 			if (usageData.value != null && mHasProLicense) {
-				holder.tvValue.setText(usageData.value);
+				holder.tvValue.setText(getString(R.string.title_original) + ": " + usageData.value);
 				holder.tvValue.setVisibility(View.VISIBLE);
 			} else
 				holder.tvValue.setVisibility(View.GONE);

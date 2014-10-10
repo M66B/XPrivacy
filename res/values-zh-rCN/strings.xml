@@ -194,6 +194,7 @@
     <string name="title_update_install">点击安装更新</string>
     <string name="title_update_none">没有可用更新</string>
     <string name="title_update_legacy">XPrivacy2已经不支持，请考虑升级到XPrivacy3</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>

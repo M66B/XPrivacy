@@ -194,6 +194,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_update_install">Bestätigen Sie, um das Update zu installieren</string>
     <string name="title_update_none">Keine Updates verfügbar</string>
     <string name="title_update_legacy">XPrivacy 2 wird nicht mehr länger unterstützt, bitte machen Sie ein Upgrade auf XPrivacy 3</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial">Seriennummer</string>
     <string name="settings_lat">Breitengrad</string>
     <string name="settings_lon">Längengrad</string>

@@ -194,6 +194,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_update_install">Bakstelėkite, jei norite įdiegti atnaujinimą</string>
     <string name="title_update_none">Nėra atnaujinimų</string>
     <string name="title_update_legacy">XPrivacy 2 nebe nepalaikomas, prašome apsvarstyti galimybę atnaujinti į XPrivacy 3</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Platuma</string>
     <string name="settings_lon">Ilguma</string>

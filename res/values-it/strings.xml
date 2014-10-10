@@ -194,6 +194,7 @@ tuttavia non è possibile garantire che funzioni perfettamente su qualunque disp
     <string name="title_update_install">Tocca per installare aggiornamento</string>
     <string name="title_update_none">Nessun aggiornamento disponibile</string>
     <string name="title_update_legacy">XPrivacy 2 non è più supportato, per favore valuta l\'aggiornamento a XPrivacy 3</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial">Seriale#</string>
     <string name="settings_lat">Latitudine</string>
     <string name="settings_lon">Longitudine</string>

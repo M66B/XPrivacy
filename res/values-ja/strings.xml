@@ -194,6 +194,7 @@
     <string name="title_update_install">タップして更新をインストールします</string>
     <string name="title_update_none">更新はありません</string>
     <string name="title_update_legacy">XPrivacy 2 は今後サポートされません。XPrivacy 3 にアップグレードすることを検討してください</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial">シリアル番号</string>
     <string name="settings_lat">緯度</string>
     <string name="settings_lon">経度</string>
