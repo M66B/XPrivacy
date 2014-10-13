@@ -61,6 +61,8 @@ public class XConnectionCallbacks extends XHook {
 				Util.log(this, Log.WARN, ex.toString());
 			} catch (NoSuchFieldException ex) {
 				Util.log(this, Log.WARN, ex.toString());
+			} catch (ExceptionInInitializerError ex) {
+				Util.log(this, Log.WARN, ex.toString());
 			}
 
 			// ActivityRecognitionApi
@@ -78,6 +80,8 @@ public class XConnectionCallbacks extends XHook {
 				Util.log(this, Log.WARN, ex.toString());
 			} catch (NoSuchFieldException ex) {
 				Util.log(this, Log.WARN, ex.toString());
+			} catch (ExceptionInInitializerError ex) {
+				Util.log(this, Log.WARN, ex.toString());
 			}
 
 			// AppIndexApi
@@ -93,6 +97,8 @@ public class XConnectionCallbacks extends XHook {
 			} catch (ClassNotFoundException ex) {
 				Util.log(this, Log.WARN, ex.toString());
 			} catch (NoSuchFieldException ex) {
+				Util.log(this, Log.WARN, ex.toString());
+			} catch (ExceptionInInitializerError ex) {
 				Util.log(this, Log.WARN, ex.toString());
 			}
 
