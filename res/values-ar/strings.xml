@@ -194,6 +194,7 @@
     <string name="title_update_install">انقر لتثبيت التحديث</string>
     <string name="title_update_none">لا توجد تحديثات متوفرة</string>
     <string name="title_update_legacy">إكسبريفاسي2 غير مدعومة بعد الآن، يرجى النظر في الترقية إلى إكسبريفاسي3</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>

@@ -194,6 +194,7 @@ Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan unt
     <string name="title_update_install">Sentuh untuk menginstal pembaharuan</string>
     <string name="title_update_none">Pembaharuan tidak tersedia</string>
     <string name="title_update_legacy">XPrivacy 2 tidak didukung lagi, silahkan mempertimbangkan untuk mengupgrade ke XPrivacy 3</string>
+    <string name="title_original">Orisinil</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Lintang</string>
     <string name="settings_lon">Bujur</string>

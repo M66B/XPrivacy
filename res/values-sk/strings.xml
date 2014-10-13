@@ -194,6 +194,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_update_install">Dotykom nainštalujete aktualizáciu</string>
     <string name="title_update_none">Žiadne aktualizácie k dispozícii</string>
     <string name="title_update_legacy">Aplikácia XPrivacy 2 už nie je podporovaná, prosím, zvážte aktualizáciu na XPrivacy 3</string>
+    <string name="title_original">Pôvodná hodnota</string>
     <string name="settings_serial">Sériové číslo</string>
     <string name="settings_lat">Zemepisná šírka</string>
     <string name="settings_lon">Zemepisná dĺžka</string>

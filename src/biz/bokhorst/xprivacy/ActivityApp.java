@@ -128,6 +128,9 @@ public class ActivityApp extends ActivityBase {
 		// Set layout
 		setContentView(R.layout.restrictionlist);
 
+		// Annotate
+		Meta.annotate(this.getResources());
+
 		// Get arguments
 		Bundle extras = getIntent().getExtras();
 		if (extras == null) {

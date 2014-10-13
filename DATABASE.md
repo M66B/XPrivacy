@@ -3,7 +3,7 @@
 <h2>Introduction</h2>
 
 <p>XPrivacy utilizes 2 databases (<em>xprivacy.db</em> and <em>usage.db</em>), both are located in <em>/data/system/xprivacy</em>. Making a file backup of the database cannot safely be done in a running system and should be done from recovery!</p>
-<p>XPrivacy checks both the xprivacy database and usage database at system boot for integrity (using 'PRAGMA integrity_check'). If a database is found to be corrupt, the database is deleted, because repairing an sqlite database is mostly not possible (and Android doesn't have the tools for it installed). This can happen to the database of any application, but for XPrivacy it is of course a greater concern. Given the support info I receive, this fortunately happens rarely to the xprivacy database, but more to the usage database. The cause for this difference is that usage database is set to asynchronous mode for speed reasons (using 'PRAGMA synchronous=OFF').</p>
+<p>XPrivacy checks both the xprivacy database and usage database at system boot for integrity (using 'PRAGMA integrity_check'). If a database is found to be corrupt, the database is deleted, because repairing an sqlite database is mostly not possible (and Android doesn't have the tools for it installed). This can happen to the database of any application, but for XPrivacy it is of course a greater concern. Given the support info I receive, this fortunately happens rarely to the xprivacy database, but more to the usage database. The cause for this difference is that the usage database is set to asynchronous mode for speed reasons (using 'PRAGMA synchronous=OFF').</p>
 <p>The usage database is just an aid and not critical for the operation of XPrivacy. Both the xprivacy and usage database are compacted at boot (using 'VACUUM'). This saves space and is good for performance, but the disadvantage is that twice the size of the database on disk space is temporarily needed.</p>
 <p>A full disk (/data/system is mounted on internal memory) is fatal for XPrivacy, because the database will become corrupt in this situation. Again looking at the support info, this also rarely happens.</p>
 <p>All mentioned sqlite commands are properly documented on the <a href="http://www.sqlite.org">SQLite website</a></p>
@@ -20,8 +20,6 @@
 
 <p><code>su</code></p>
 </p><code>sqlite3 /data/system/xprivacy/xprivacy.db</code></p>
-
-
 <p>*Note: You may need to install sqlite3 binaries</p>
 
 <h2><em>xprivacy.db</em> consists of two relevant tables</h2>
@@ -100,6 +98,7 @@
 | extra       | TEXT    | NOT NULL |
 | restricted  | INTEGER | NOT NULL |
 | time        | INTEGER | NOT NULL |
+| value       | TEXT    | NOT NULL |
 
 <p>NOTE: Although the 'extra' field doesn't always contain data, it is still NOT NULL. To query empty entries: <code>WHERE extra=''</code></p>
 
@@ -160,6 +159,10 @@
 <code>UPDATE setting SET value='false' WHERE name LIKE 'Dangerous%';</code>
 
 <p>This will remove all 'dangerous restrictions' from the template</p>
+
+<code>UPDATE setting SET value='false' WHERE name = 'RestrictSystem';</code>
+
+<p>This will disable restricting of system components</p>
 
 <h3><em>usage.db</em></h3>
 

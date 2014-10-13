@@ -26,9 +26,21 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 **Next release**
 
 * Fixed all problems reported through the debug info
-* Updated German translation
+* Fixed warning *Native call method*
+* Fixed documentation icons not appearing when opening from notification ([issue](/../../issues/2025))
+* Added title to original value in usage data
+* Added support for [Omega ROM](http://omegadroid.co/omega-roms/)
+* Updated Indonesian translation
+* Updated Slovak translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.4 STABLE**
+
+* Fixed all problems reported through the debug info
+* Updated French translation
+* Updated German translation
+* Updated Japanese translation
 
 **Version 3.3.4 BETA**
 

@@ -194,6 +194,7 @@ sin embargo, es imposible garantizar que funcionará sin problemas en todas y ca
     <string name="title_update_install">Tap i osod diweddariad</string>
     <string name="title_update_none">Dim diweddariadau sydd ar gael</string>
     <string name="title_update_legacy">Nid XPrivacy 2 yn cael ei gefnogi anymore, os gwelwch yn dda ystyried uwchraddio i XPrivacy 3</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial">cyfresol#</string>
     <string name="settings_lat">IL</string>
     <string name="settings_lon">hydred</string>

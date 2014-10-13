@@ -194,6 +194,7 @@
     <string name="title_update_install">Нажмите для установки обновления</string>
     <string name="title_update_none">Нет доступных обновлений</string>
     <string name="title_update_legacy">XPrivacy 2 больше не поддерживается, обновитесь, пожалуйста, до XPrivacy 3</string>
+    <string name="title_original">Original</string>
     <string name="settings_serial">Серийный номер</string>
     <string name="settings_lat">Широта</string>
     <string name="settings_lon">Долгота</string>
