@@ -32,6 +32,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Added support for [Omega ROM](http://omegadroid.co/omega-roms/)
 * Updated Indonesian translation
 * Updated Slovak translation
+* Updated Vietnamese translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
