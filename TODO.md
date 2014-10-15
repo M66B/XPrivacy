@@ -12,3 +12,5 @@ Android source code
 
 git clone https://android.googlesource.com/platform/libcore -b master
 git clone https://android.googlesource.com/platform/frameworks/base -b l-preview
+
+cd ./adt/sdk/docs/reference/android && grep -Rls "<div class=\"jd-details api apilevel-\"" .
