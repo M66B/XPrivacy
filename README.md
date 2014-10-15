@@ -1492,7 +1492,7 @@ Empty values (*null*) will not be replaced by fake values to prevent misuse.
 There is no need to apply restrictions in situations where the user is presented a dialog first (for example to pick an account).
 Setting data (in contrary to getting data) should never be restricted, this is outside the goal of XPrivacy.
 
-Application specific code is undesirable.
+Application specific code is undesirable, because it could result in maintenance and support problems.
 
 XPrivacy is intended to restrict applications, but is not intended to restrict Android
 (although this is often possible as a side effect).
