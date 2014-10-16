@@ -25,6 +25,10 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.4.1 BETA**
+
 * Fixed all problems reported through the debug info
 * Fixed warning *Native call method*
 * Fixed documentation icons not appearing when opening from notification ([issue](/../../issues/2025))
@@ -34,8 +38,6 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Updated Russian translation
 * Updated Slovak translation
 * Updated Vietnamese translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.4 STABLE**
 
