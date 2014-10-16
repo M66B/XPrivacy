@@ -387,6 +387,8 @@ public class XPackageManager extends XHook {
 		boolean blacklist = PrivacyManager.getSettingBool(-uid, PrivacyManager.cSettingBlacklist, false);
 		if (blacklist)
 			allowed = !allowed;
+		if (allowed)
+			Util.log(null, Log.INFO, "Allowing package=" + packageName);
 		return allowed;
 	}
 }
