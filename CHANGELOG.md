@@ -31,6 +31,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Added title to original value in usage data
 * Added support for [Omega ROM](http://omegadroid.co/omega-roms/)
 * Updated Indonesian translation
+* Updated Russian translation
 * Updated Slovak translation
 * Updated Vietnamese translation
 
