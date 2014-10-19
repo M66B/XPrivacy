@@ -39,10 +39,10 @@
     <string name="menu_accounts">Velg konto som skal tillates</string>
     <string name="menu_applications">Velg apper som skal tillates</string>
     <string name="menu_contacts">Velg kontakter som skal tillates</string>
-    <string name="menu_whitelists">Behandel positivlister</string>
+    <string name="menu_whitelists">Behandle positivlister</string>
     <string name="menu_tutorial">Innføring</string>
     <string name="menu_changelog">Endringsliste</string>
-    <string name="menu_flush">Tømm hurtiglager</string>
+    <string name="menu_flush">Tøm hurtiglager</string>
     <string name="menu_update">Sjekk for oppdateringer</string>
     <string name="menu_batch">Handlinger &#8230;</string>
     <string name="menu_legend">Tegnforklaring</string>
@@ -76,11 +76,11 @@
     <string name="msg_service_missing">Personvernservice fantes ikke; har du aktivert XPrivacy i Xposed appen og omstartet enheten din?</string>
     <string name="msg_service_version">Personvernservice uoverensstemmelse; har du omstartet enheten din etter oppdatering av XPrivacy?</string>
     <string name="msg_service_updating">Vennligst vent inntil oppdateringstjenesten er ferdig</string>
-    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
-    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
-    <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at Appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
+    <string name="msg_expert">Ekspert-brukere skal takle sine problemer selvstendig (hvis mulig), følge med i XDA XPrivacy forumet og hjelpe andre så godt som mulig</string>
+    <string name="msg_method_expert">Restriksjon av funksjoner er kun for ekspert-brukere. Er du en ekspert-bruker?</string>
+    <string name="msg_longpress_whitelist">Trykk lenge på navnet til en funksjon for å hvit- eller svart-liste en parameterHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</string>
+    <string name="msg_settings_specific">Haker og verdier prioriteres foran globale haker og verdier; tomme avkryssingsbokser og verdier prioriteres ikke foran noen ting</string>
+    <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
     <string name="restrict_browser">Nettleser (bokmerker/historikk)</string>
     <string name="restrict_calendar">Kalender</string>
@@ -97,7 +97,7 @@
     <string name="restrict_network">Nettverk (adresser)</string>
     <string name="restrict_notifications">Varslinger</string>
     <string name="restrict_overlay">Overlay (overlapping)</string>
-    <string name="restrict_phone">Telefon (ID, nummere, oppringninger)</string>
+    <string name="restrict_phone">Telefon (ID, numre, oppringninger)</string>
     <string name="restrict_sensors">Sensorer</string>
     <string name="restrict_storage">Minne (medier, SD kort)</string>
     <string name="restrict_shell">Shell (kommandoer, superbruker)</string>
@@ -112,7 +112,7 @@
     <string name="restrict_help_overlay">Blokkerer overlay-vinduer for å hindre phishing</string>
     <string name="restrict_help_notifications">Blokkerer tilgang til system og app varslinger og Google Cloud meldingstjeneste</string>
     <string name="restrict_help_nfc">Blokkerer tilgang til nærfeltskommunikasjon</string>
-    <string name="restrict_help_network">Blokkerer tilgang til nettverkinformasjon, som IP og MAC adresser og Wi-Fi nettverk informasjon</string>
+    <string name="restrict_help_network">Blokkerer tilgang til nettverkinformasjon, som IP og MAC adresser og WiFi nettverk informasjon</string>
     <string name="restrict_help_messages">Blokkerer tilgang til lagrede og mottatte meldinger (SMS/MMS) og mobilsvar</string>
     <string name="restrict_help_media">Blokkerer tilgang til kameraet (foto og video) og mikrofonen</string>
     <string name="restrict_help_location">Blokkerer tilgang til posisjonen (fin/grov)</string>
@@ -145,7 +145,7 @@
     <string name="title_frestricted">Filtrer etter restriksjon</string>
     <string name="title_fuser">Filtrer etter vanlige apper</string>
     <string name="title_fondemand">Filtrer etter blokkering på forespørsel</string>
-    <string name="title_fsystem">Filtrer etter systemapper</string>
+    <string name="title_fsystem">Filtrer etter system-apper</string>
     <string name="title_fnot">Inverter</string>
     <string name="title_sname">Etter navn</string>
     <string name="title_suid">Etter uid</string>
@@ -177,7 +177,7 @@
     <string name="title_ondemand_reset">Nullstille</string>
     <string name="title_default">Standard</string>
     <string name="title_alternate">Alternere</string>
-    <string name="title_rename">Rename</string>
+    <string name="title_rename">Gi nytt navn</string>
     <string name="title_usage_header">Veiledning</string>
     <string name="title_usage_text_1">1. Finn appen som skal blokkeres i app-hovedlisten</string>
     <string name="title_usage_text_2">2. Trykk på ikonen til appen</string>
@@ -186,7 +186,7 @@
     <string name="title_toggle_dangerous">Trykk lenge på tittelen til en farlig funksjon for å skifte mellom farlig/ufarlig</string>
     <string name="title_ondemand_category">Bruk på en kategori vil nullstille unntakelser av funksjoner til standardverdier</string>
     <string name="title_function_help">Dokumentasjon av funksjoner</string>
-    <string name="title_unsafe">er utrugg og kan omgås</string>
+    <string name="title_unsafe">er utrygg og kan omgås</string>
     <string name="title_update_checking">Sjekker for oppdatering</string>
     <string name="title_update_downloading">Laster ned oppdatering</string>
     <string name="title_update_install">Trykk for å installere oppdatering</string>
@@ -219,7 +219,7 @@
     <string name="settings_syscomponents">Blokker systemkomponenter (Android) (omstart nødvendig)</string>
     <string name="settings_usagedata">Vis brukerdata til apper (omstart nødvendig)</string>
     <string name="settings_parameters">Vis brukerdata-parametere</string>
-    <string name="settings_values">Show values of usage data</string>
+    <string name="settings_values">Vis verdier til brukerdata</string>
     <string name="settings_cid">GSM celle ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Særegenheter</string>
@@ -244,9 +244,9 @@
     <string name="tutorial_mainheader">Marker kategori som skal blokkeres</string>
     <string name="tutorial_mainlist">Sett hake for å blokkere kategorien som er valgt for en app\n
 \nApper får tom eller forfalsket data for kategorier som er blokkert\n
-\nTrykk på app ikonet for å se detaljerte restriksjoner og innstillinger</string>
+\nTrykk på ikonet eller navnet til appen for å se detaljerte restriksjoner og innstillinger</string>
     <string name="tutorial_detailsheader">Trykk på app ikonet for å få flere valg/aksjoner</string>
-    <string name="tutorial_detailslist">Trykk på pilene som viser ned for å se funksjonene innen en kategorie</string>
+    <string name="tutorial_detailslist">Trykk på pilene som viser ned for å se funksjonene innen en kategori</string>
     <string name="permission_manage">Behandle apper, inklusive avslutting</string>
     <string name="permission_restrictions">Behandle XPrivacy restriksjoner og innstillinger</string>
 
