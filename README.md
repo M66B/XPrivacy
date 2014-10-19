@@ -358,6 +358,8 @@ Compatibility
 XPrivacy has been tested with Android version 4.0.3 - 4.4.4 (ICS, JellyBean, KitKat)
 and is reported to work with most Android variants, including stock ROMs.
 
+Android 5.0 (Lollipop) support [is in development](https://github.com/M66B/XPrivacy/issues/1757), see also [this FAQ](#FAQ75).
+
 **XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231)).
 
 **XPrivacy is incompatible with the security center of MIUI** ([issue](https://github.com/M66B/XPrivacy/issues/1940)).
@@ -1243,8 +1245,8 @@ or [Cydia Substrate](http://www.xda-developers.com/android/cydia-substrate-relea
 Xposed has no ART support currently.
 It is unknown to me if Cydia Substrate supports or will support ART.
 
-Android "L" supports [ART](https://source.android.com/devices/tech/dalvik/art.html) only,
-which means that developing/testing XPrivacy for Android "L" can only be done
+Android 5.0 (Lollipop) supports [ART](https://source.android.com/devices/tech/dalvik/art.html) only,
+which means that developing/testing XPrivacy for Android 5.0 can only be done
 if either Xposed or Cydia Substrate is available for ART.
 
 Note that XPrivacy with Cydia Substrate has received limited testing
@@ -1255,6 +1257,8 @@ and that a few restrictions cannot be made to work with Cydia Substrate
 * Settings.Secure.ANDROID_ID
 
 Note that Cydia Substrate is not open source and seems not to be [supported](http://forum.xda-developers.com/showthread.php?t=2466101) very activily.
+
+Note that I have started the preparations for Android 5.0 [quite some time ago](https://github.com/M66B/XPrivacy/issues/1757).
 
 Support
 -------
@@ -1274,8 +1278,8 @@ It is okay to use my personal or XDA e-mail for things that cannot be shared in 
 It is already enough work to support the official versions from the last stable version.
 
 There is limited support for XPrivacy on Ice cream sandwich
-and support for Ice cream sandwich will be dropped altogether after Android "L" has been released.
-XPrivacy on Jelly Bean will be supported until Android "L" has been released and will get limited support thereafter.
+and support for Ice cream sandwich will be dropped altogether after Android Lollipop has been released.
+XPrivacy on Jelly Bean will be supported until Android Lollipop has been released and will get limited support thereafter.
 Limited support means I will try to fix bugs, but only if it doesn't take much time.
 
 **I will not look into issues of applications that have to be paid for.**
