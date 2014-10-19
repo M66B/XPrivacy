@@ -27,14 +27,13 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-// TODO: fix link error when using Cydia Substrate
+// TODO: fix link error when using Cydia Substrate only
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
+	private static boolean mXposed = false;
 	private static boolean mCydia = false;
 	private static String mSecret = null;
 	private static List<String> mListHookError = new ArrayList<String>();
 	private static List<CRestriction> mListDisabled = new ArrayList<CRestriction>();
-
-	// http://developer.android.com/reference/android/Manifest.permission.html
 
 	static {
 		if (mListDisabled.size() == 0) {
@@ -66,6 +65,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	// Xposed
 	public void initZygote(StartupParam startupParam) throws Throwable {
+		if (mCydia)
+			return;
+		mXposed = true;
+
 		// Check for LBE security master
 		if (Util.hasLBE()) {
 			Util.log(null, Log.ERROR, "LBE installed");
@@ -75,7 +78,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		init(startupParam.modulePath);
 	}
 
+	// Xposed
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
+		if (mCydia)
+			return;
+
 		// Check for LBE security master
 		if (Util.hasLBE())
 			return;
@@ -83,9 +90,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		handleLoadPackage(lpparam.packageName, lpparam.classLoader, mSecret);
 	}
 
-	// Cydia
+	// Cydia substrate
 	public static void initialize() {
+		if (mXposed)
+			return;
 		mCydia = true;
+
 		init(null);
 
 		// Self
@@ -179,6 +189,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
+		// Get AOSP override
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
 			try {
 				Class<?> libcore = Class.forName("libcore.io.Libcore");

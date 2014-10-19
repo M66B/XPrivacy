@@ -28,6 +28,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Fixed all problems reported through the debug info
 * Updated Android support library
 * Using Android SDK CardView library
+* Use either Cydia Substrate or Xposed, but not both
 * Updated Norwegian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
