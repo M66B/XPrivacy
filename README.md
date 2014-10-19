@@ -1159,7 +1159,7 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 
 * AOSP mode = vanilla (Google) Android KitKat or:
 	* [OmniROM](http://omnirom.org/)
-	* [CyanogenMod](http://www.cyanogenmod.org/)
+	* [CyanogenMod](http://www.cyanogenmod.org/) (based)
 	* [MIUI](http://en.miui.com/)
 	* [SlimKat](http://www.slimroms.net/)
 	* [Carbon ROM](https://carbonrom.org/)
@@ -1168,6 +1168,7 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 	* [Paranoid Android](http://paranoidandroid.co/)
 	* [Android Revolution HD](http://forum.xda-developers.com/showthread.php?t=1925402)
 	* [Mahdi ROM](https://plus.google.com/u/0/communities/116540622179206449806)
+	* [Omega ROM](http://omegadroid.co/omega-roms/)
 * Compatibility mode = all other Android versions/variants
 
 *About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivay 2.
