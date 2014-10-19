@@ -265,20 +265,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 			}
 		}
 
-		File dbFile = getDbFile();
-		if (!dbFile.exists())
-			listError.add("Database does not exists");
-		if (!dbFile.canRead())
-			listError.add("Database not readable");
-		if (!dbFile.canWrite())
-			listError.add("Database not writable");
-
-		SQLiteDatabase db = getDb();
-		if (db == null)
-			listError.add("Database not available");
-		else if (!db.isOpen())
-			listError.add("Database not open");
-
 		return listError;
 	}
 
