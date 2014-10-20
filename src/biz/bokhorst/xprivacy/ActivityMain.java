@@ -726,6 +726,13 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						applySort();
 					}
 				});
+		alertDialogBuilder.setNegativeButton(ActivityMain.this.getString(android.R.string.cancel),
+				new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						// Do nothing
+					}
+				});
 
 		// Show dialog
 		AlertDialog alertDialog = alertDialogBuilder.create();
