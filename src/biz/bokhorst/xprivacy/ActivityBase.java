@@ -121,11 +121,6 @@ public class ActivityBase extends ActionBarActivity {
 	private void buildCheckBoxes() {
 		mCheck = new Bitmap[4];
 
-		// Get highlight color
-		TypedArray ta1 = getTheme().obtainStyledAttributes(new int[] { android.R.attr.colorActivatedHighlight });
-		int highlightColor = ta1.getColor(0, 0xFF00FF);
-		ta1.recycle();
-
 		// Get off check box
 		TypedArray ta2 = getTheme().obtainStyledAttributes(new int[] { android.R.attr.listChoiceIndicatorMultiple });
 		Drawable off = ta2.getDrawable(0);
@@ -135,7 +130,7 @@ public class ActivityBase extends ActionBarActivity {
 		// Get check mark
 		Drawable checkmark = getResources().getDrawable(R.drawable.checkmark);
 		checkmark.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
-		checkmark.setColorFilter(highlightColor, Mode.SRC_ATOP);
+		checkmark.setColorFilter(getResources().getColor(R.color.color_accent), Mode.SRC_ATOP);
 
 		// Get check mark outline
 		Drawable checkmarkOutline = getResources().getDrawable(R.drawable.checkmark_outline);
@@ -152,7 +147,7 @@ public class ActivityBase extends ActionBarActivity {
 		off.draw(canvas1);
 		Paint paint1 = new Paint();
 		paint1.setStyle(Paint.Style.FILL);
-		paint1.setColor(highlightColor);
+		paint1.setColor(getResources().getColor(R.color.color_accent));
 		float wborder = off.getIntrinsicWidth() / 3f;
 		float hborder = off.getIntrinsicHeight() / 3f;
 		canvas1.drawRect(wborder, hborder, off.getIntrinsicWidth() - wborder, off.getIntrinsicHeight() - hborder,
@@ -168,7 +163,7 @@ public class ActivityBase extends ActionBarActivity {
 		// Get question mark
 		Drawable questionmark = getResources().getDrawable(R.drawable.ondemand);
 		questionmark.setBounds(0, 0, off.getIntrinsicWidth(), off.getIntrinsicHeight());
-		questionmark.setColorFilter(highlightColor, Mode.SRC_ATOP);
+		questionmark.setColorFilter(getResources().getColor(R.color.color_accent), Mode.SRC_ATOP);
 
 		// Get question mark outline
 		Drawable questionmarkOutline = getResources().getDrawable(R.drawable.questionmark_outline);
