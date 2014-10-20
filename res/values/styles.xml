@@ -1,6 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <style name="CustomTheme" parent="Theme.AppCompat">
+        <item name="icon_granted">@drawable/granted_holo_dark</item>
+        <item name="icon_info">@drawable/info_holo_dark</item>
+        <item name="icon_info_book">@drawable/info_book_holo_dark</item>
+        <item name="icon_whitelist">@drawable/whitelist_holo_dark</item>
+        <item name="icon_internet">@drawable/internet_holo_dark</item>
+        <item name="icon_used">@drawable/used_holo_dark</item>
+        <item name="icon_used_grayed">@drawable/used_holo_dark_grayed</item>
+        <item name="icon_system">@drawable/system_holo_dark</item>
+        <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_dark</item>
+        <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_dark</item>
+        <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
+        <item name="icon_restricted">@drawable/check_holo_dark</item>
+        <item name="icon_frozen">@drawable/frozen_holo_dark</item>
+        <item name="icon_unsafe">@drawable/padlock_question_dark</item>
+        <item name="color_dangerous">@color/color_dangerous_dark</item>
+        <item name="color_dangerous_off">@color/color_dangerous_off_dark</item>
+        <item name="color_dangerous_user">@color/color_dangerous_user_dark</item>
+        <item name="color_state_attention">@color/color_state_attention_dark</item>
+        <item name="color_state_restricted">@color/color_state_restricted_dark</item>
+        <item name="color_state_shared">@color/color_state_shared_dark</item>
+        <item name="background_tutorial">@drawable/tutorial_background_dark</item>
+        <item name="cardStyle">@style/CardView.Dark</item>
+    </style>
 
+    <style name="CustomTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="icon_granted">@drawable/granted_holo_light</item>
+        <item name="icon_info">@drawable/info_holo_light</item>
+        <item name="icon_info_book">@drawable/info_book_holo_light</item>
+        <item name="icon_whitelist">@drawable/whitelist_holo_light</item>
+        <item name="icon_internet">@drawable/internet_holo_light</item>
+        <item name="icon_used">@drawable/used_holo_light</item>
+        <item name="icon_used_grayed">@drawable/used_holo_light_grayed</item>
+        <item name="icon_system">@drawable/system_holo_light</item>
+        <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_light</item>
+        <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_light</item>
+        <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
+        <item name="icon_restricted">@drawable/check_holo_light</item>
+        <item name="icon_frozen">@drawable/frozen_holo_light</item>
+        <item name="icon_unsafe">@drawable/padlock_question_light</item>
+        <item name="color_dangerous">@color/color_dangerous_light</item>
+        <item name="color_dangerous_off">@color/color_dangerous_off_light</item>
+        <item name="color_dangerous_user">@color/color_dangerous_user_light</item>
+        <item name="color_state_attention">@color/color_state_attention_light</item>
+        <item name="color_state_restricted">@color/color_state_restricted_light</item>
+        <item name="color_state_shared">@color/color_state_shared_light</item>
+        <item name="background_tutorial">@drawable/tutorial_background_light</item>
+        <item name="cardStyle">@style/CardView.Light</item>
+    </style>
+
+    <style name="CustomTheme.Light.Dialog" parent="Theme.AppCompat.Light">
+        <item name="android:windowSoftInputMode">stateHidden|adjustResize</item>
+        <!-- Allows window to resize when keyboard shows, but also makes the window fullscreen and the titlebar small -->
+        <item name="android:windowIsFloating">false</item>
+        <!-- Seems to make the window still appear like a dialog, not totally fullscreen but still wider than before -->
+        <item name="android:windowActionBar">true</item>
+    </style>
+
+    <style name="CustomTheme.Dialog" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowSoftInputMode">stateHidden|adjustResize</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowActionBar">true</item>
+    </style>
+    
     <style name="PreferenceLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
