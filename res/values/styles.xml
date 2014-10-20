@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="CustomTheme" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
         <item name="icon_granted">@drawable/granted_holo_dark</item>
         <item name="icon_info">@drawable/info_holo_dark</item>
         <item name="icon_info_book">@drawable/info_book_holo_dark</item>
@@ -26,6 +30,9 @@
     </style>
 
     <style name="CustomTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/color_primary</item>
+        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorAccent">@color/color_accent</item>
         <item name="icon_granted">@drawable/granted_holo_light</item>
         <item name="icon_info">@drawable/info_holo_light</item>
         <item name="icon_info_book">@drawable/info_book_holo_light</item>
@@ -63,7 +70,7 @@
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowActionBar">true</item>
     </style>
-    
+
     <style name="PreferenceLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

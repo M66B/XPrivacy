@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <color name="color_primary">#8bc34a</color>
+    <color name="color_primary_dark">#689f38</color>
+    <color name="color_accent">#ff5177</color>
     <color name="color_dangerous_light">#3CF83A3A</color>
     <color name="color_dangerous_dark">#50F83A3A</color>
     <color name="color_dangerous_dialog">#801D1D</color>
