@@ -26,9 +26,11 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
-* Using teal as accent color
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.4.7 TEST**
+
+* Using teal as accent color
 
 **Version 3.4.6 TEST**
 
