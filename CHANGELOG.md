@@ -26,9 +26,11 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
-* Use accent color for custom check boxes and list item press
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.4.6 TEST**
+
+* Use accent color for custom check boxes and list item press
 
 **Version 3.4.5 TEST**
 
