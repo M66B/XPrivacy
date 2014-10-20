@@ -172,7 +172,7 @@
             android:textAppearance="?android:attr/textAppearanceSmall"
             android:textIsSelectable="false" />
 
-        <Switch
+        <android.support.v7.widget.SwitchCompat
             android:id="@+id/swEnable"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

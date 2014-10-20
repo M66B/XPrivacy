@@ -41,6 +41,7 @@ import android.provider.ContactsContract.CommonDataKinds.GroupMembership;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.widget.SwitchCompat;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -71,13 +72,12 @@ import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 public class ActivityApp extends ActivityBase {
 	private ApplicationInfoEx mAppInfo = null;
-	private Switch swEnabled = null;
+	private SwitchCompat swEnabled = null;
 	private RestrictionAdapter mPrivacyListAdapter = null;
 
 	public static final String cUid = "Uid";
@@ -211,7 +211,7 @@ public class ActivityApp extends ActivityBase {
 			imgCbOnDemand.setVisibility(View.GONE);
 
 		// Display restriction state
-		swEnabled = (Switch) findViewById(R.id.swEnable);
+		swEnabled = (SwitchCompat) findViewById(R.id.swEnable);
 		swEnabled.setChecked(PrivacyManager.getSettingBool(mAppInfo.getUid(), PrivacyManager.cSettingRestricted, true));
 		swEnabled.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 			@Override
