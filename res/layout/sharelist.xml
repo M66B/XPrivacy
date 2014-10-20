@@ -171,7 +171,7 @@
             android:id="@+id/vShareProgressFull"
             android:layout_width="0dip"
             android:layout_height="3dip"
-            android:background="?android:attr/colorActivatedHighlight" />
+            android:background="@color/color_accent" />
     </RelativeLayout>
 
     <!-- What it is all about -->
