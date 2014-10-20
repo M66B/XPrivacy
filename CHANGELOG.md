@@ -30,6 +30,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Updated Android support library project
 * Using Android SDK CardView library
 * Material design
+* Use subtitle for operation name
 * Updated Norwegian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

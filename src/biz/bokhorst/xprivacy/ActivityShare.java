@@ -207,19 +207,19 @@ public class ActivityShare extends ActivityBase {
 		// Set title
 		if (action.equals(ACTION_TOGGLE)) {
 			mActionId = R.string.menu_toggle;
-			setTitle(R.string.menu_toggle);
+			getSupportActionBar().setSubtitle(R.string.menu_toggle);
 		} else if (action.equals(ACTION_IMPORT)) {
 			mActionId = R.string.menu_import;
-			setTitle(R.string.menu_import);
+			getSupportActionBar().setSubtitle(R.string.menu_import);
 		} else if (action.equals(ACTION_EXPORT)) {
 			mActionId = R.string.menu_export;
-			setTitle(R.string.menu_export);
+			getSupportActionBar().setSubtitle(R.string.menu_export);
 		} else if (action.equals(ACTION_FETCH)) {
 			mActionId = R.string.menu_fetch;
-			setTitle(R.string.menu_fetch);
+			getSupportActionBar().setSubtitle(R.string.menu_fetch);
 		} else if (action.equals(ACTION_SUBMIT)) {
 			mActionId = R.string.menu_submit;
-			setTitle(R.string.menu_submit);
+			getSupportActionBar().setSubtitle(R.string.menu_submit);
 		} else {
 			finish();
 			return;
