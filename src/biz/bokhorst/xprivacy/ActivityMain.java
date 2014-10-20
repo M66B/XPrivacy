@@ -485,29 +485,31 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			// Searchable
 			SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-			searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-				@Override
-				public boolean onQueryTextChange(String newText) {
-					searchQuery = newText;
-					applyFilter();
-					return true;
-				}
+			if (searchView != null) {
+				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+					@Override
+					public boolean onQueryTextChange(String newText) {
+						searchQuery = newText;
+						applyFilter();
+						return true;
+					}
 
-				@Override
-				public boolean onQueryTextSubmit(String query) {
-					searchQuery = query;
-					applyFilter();
-					return true;
-				}
-			});
-			searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-				@Override
-				public boolean onClose() {
-					searchQuery = "";
-					applyFilter();
-					return true;
-				}
-			});
+					@Override
+					public boolean onQueryTextSubmit(String query) {
+						searchQuery = query;
+						applyFilter();
+						return true;
+					}
+				});
+				searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+					@Override
+					public boolean onClose() {
+						searchQuery = "";
+						applyFilter();
+						return true;
+					}
+				});
+			}
 
 			return true;
 		} else
