@@ -30,7 +30,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Version 3.4.7 TEST**
 
-* Using teal as accent color
+* Using teal as material design colors
 
 **Version 3.4.6 TEST**
 
