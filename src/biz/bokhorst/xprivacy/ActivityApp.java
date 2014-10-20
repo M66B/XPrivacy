@@ -150,7 +150,7 @@ public class ActivityApp extends ActivityBase {
 		}
 
 		// Set sub title
-		getActionBar().setSubtitle(TextUtils.join(", ", mAppInfo.getApplicationName()));
+		getSupportActionBar().setSubtitle(TextUtils.join(", ", mAppInfo.getApplicationName()));
 
 		// Handle info click
 		ImageView imgInfo = (ImageView) findViewById(R.id.imgInfo);
@@ -310,7 +310,7 @@ public class ActivityApp extends ActivityBase {
 		mPackageChangeReceiverRegistered = true;
 
 		// Up navigation
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
 		// Tutorial
 		if (!PrivacyManager.getSettingBool(userId, PrivacyManager.cSettingTutorialDetails, false)) {

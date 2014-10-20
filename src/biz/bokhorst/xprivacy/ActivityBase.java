@@ -1,7 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.ActivityManager.RunningServiceInfo;
 import android.content.pm.PackageInfo;
@@ -14,28 +13,30 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Process;
+import android.support.v7.app.ActionBarActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
 @SuppressLint("Registered")
-public class ActivityBase extends Activity {
+public class ActivityBase extends ActionBarActivity {
 	private int mThemeId;
 	private Bitmap[] mCheck = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-
-		// Check if Privacy client available
 		if (PrivacyService.checkClient()) {
 			// Set theme
 			int userId = Util.getUserId(Process.myUid());
 			String themeName = PrivacyManager.getSetting(userId, PrivacyManager.cSettingTheme, "");
 			mThemeId = (themeName.equals("Dark") ? R.style.CustomTheme : R.style.CustomTheme_Light);
 			setTheme(mThemeId);
-		} else {
-			// Privacy client not available
+		}
+
+		super.onCreate(savedInstanceState);
+
+		// Check if Privacy client available
+		if (!PrivacyService.checkClient()) {
 			setContentView(R.layout.reboot);
 
 			try {

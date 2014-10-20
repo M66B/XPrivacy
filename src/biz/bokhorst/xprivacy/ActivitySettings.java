@@ -303,7 +303,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		} else {
 			// Display application names
 			ApplicationInfoEx appInfo = new ApplicationInfoEx(this, uid);
-			getActionBar().setSubtitle(TextUtils.join(",  ", appInfo.getApplicationName()));
+			getSupportActionBar().setSubtitle(TextUtils.join(",  ", appInfo.getApplicationName()));
 
 			// Disable global settings
 			cbUsage.setVisibility(View.GONE);

@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
+import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -69,7 +70,6 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
-import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -186,7 +186,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Set sub title
 		if (Util.hasProLicense(this) != null)
-			getActionBar().setSubtitle(R.string.menu_pro);
+			getSupportActionBar().setSubtitle(R.string.menu_pro);
 
 		// Annotate
 		Meta.annotate(this.getResources());

@@ -81,7 +81,7 @@ public class ActivityUsage extends ActivityBase {
 		usageTask.executeOnExecutor(mExecutor, (Object) null);
 
 		// Up navigation
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 	}
 
 	@Override
@@ -433,8 +433,8 @@ public class ActivityUsage extends ActivityBase {
 			}
 
 			// Set sub title
-			getActionBar().setSubtitle(String.format("%d/%d %.2f/s", restricted, count, persec));
+			getSupportActionBar().setSubtitle(String.format("%d/%d %.2f/s", restricted, count, persec));
 		} else
-			getActionBar().setSubtitle(TextUtils.join(", ", new ApplicationInfoEx(this, mUid).getApplicationName()));
+			getSupportActionBar().setSubtitle(TextUtils.join(", ", new ApplicationInfoEx(this, mUid).getApplicationName()));
 	}
 }
