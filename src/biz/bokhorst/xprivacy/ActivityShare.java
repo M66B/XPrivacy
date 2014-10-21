@@ -637,6 +637,7 @@ public class ActivityShare extends ActivityBase {
 			mProgressDialog = new ProgressDialog(ActivityShare.this);
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+			mProgressDialog.setProgressDrawable(getResources().getDrawable(R.drawable.progress_horizontal));
 			mProgressDialog.setProgressNumberFormat(null);
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);
