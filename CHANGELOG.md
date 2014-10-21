@@ -28,6 +28,10 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3.4.9 BETA**
+
+* Changed accent color to orange
+
 **Version 3.4.8 TEST**
 
 * Use material design switch in application details view
