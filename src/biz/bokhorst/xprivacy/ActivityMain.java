@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -486,7 +487,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			inflater.inflate(R.menu.main, menu);
 
 			// Searchable
-			SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+			SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_search));
 			if (searchView != null) {
 				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 					@Override
