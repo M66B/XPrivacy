@@ -68,6 +68,7 @@ import android.os.Process;
 import android.provider.ContactsContract;
 import android.provider.Settings.Secure;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -189,6 +190,7 @@ public class ActivityShare extends ActivityBase {
 
 		// Set layout
 		setContentView(R.layout.sharelist);
+		setSupportActionBar((Toolbar) findViewById(R.id.widgetToolbar));
 
 		// Reference controls
 		final TextView tvDescription = (TextView) findViewById(R.id.tvDescription);
@@ -298,7 +300,7 @@ public class ActivityShare extends ActivityBase {
 			cbClear.setVisibility(View.VISIBLE);
 
 		} else if (action.equals(ACTION_TOGGLE)) {
-			tvDescription.setText(R.string.menu_toggle);
+			tvDescription.setVisibility(View.GONE);
 			spRestriction.setVisibility(View.VISIBLE);
 			svToggle.setVisibility(View.VISIBLE);
 

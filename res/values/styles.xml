@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="CustomTheme" parent="Theme.AppCompat">
+    <style name="CustomTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>
@@ -29,7 +29,7 @@
         <item name="cardStyle">@style/CardView.Dark</item>
     </style>
 
-    <style name="CustomTheme.Light" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="CustomTheme.Light" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryDark">@color/color_primary_dark</item>
         <item name="colorAccent">@color/color_accent</item>

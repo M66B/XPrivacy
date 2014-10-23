@@ -37,6 +37,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -182,6 +183,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Set layout
 		setContentView(R.layout.mainlist);
+		setSupportActionBar((Toolbar) findViewById(R.id.widgetToolbar));
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
 		// Set sub title

@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Process;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -67,6 +68,7 @@ public class ActivityUsage extends ActivityBase {
 
 		// Set layout
 		setContentView(R.layout.usagelist);
+		setSupportActionBar((Toolbar) findViewById(R.id.widgetToolbar));
 
 		// Get uid
 		Bundle extras = getIntent().getExtras();
@@ -435,6 +437,7 @@ public class ActivityUsage extends ActivityBase {
 			// Set sub title
 			getSupportActionBar().setSubtitle(String.format("%d/%d %.2f/s", restricted, count, persec));
 		} else
-			getSupportActionBar().setSubtitle(TextUtils.join(", ", new ApplicationInfoEx(this, mUid).getApplicationName()));
+			getSupportActionBar().setSubtitle(
+					TextUtils.join(", ", new ApplicationInfoEx(this, mUid).getApplicationName()));
 	}
 }

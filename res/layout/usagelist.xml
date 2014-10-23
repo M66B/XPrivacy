@@ -5,6 +5,13 @@
     android:layout_height="wrap_content"
     android:orientation="vertical" >
 
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/widgetToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

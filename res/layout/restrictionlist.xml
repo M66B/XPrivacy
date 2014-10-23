@@ -2,246 +2,258 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin" >
+    android:orientation="vertical" >
 
-    <!-- Title & help -->
-
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/widgetToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
 
-        <LinearLayout
-            android:id="@+id/llHeader"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
+
+        <!-- Title & help -->
+
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" >
+			android:paddingRight="@dimen/activity_horizontal_margin" >
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="32dip"
-                android:orientation="horizontal" >
-
-                <ScrollView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1" >
-
-                    <TextView
-                        android:id="@+id/tvApp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textStyle="bold" />
-                </ScrollView>
-
-                <ImageView
-                    android:id="@+id/imgInfo"
-                    android:layout_width="32dip"
-                    android:layout_height="32dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="6dip"
-                    android:contentDescription="@string/help_application"
-                    android:src="?attr/icon_info" />
-            </LinearLayout>
-
-            <!-- Thick divider -->
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2dip"
-                android:layout_marginTop="6dip"
-                android:background="@android:color/darker_gray" />
-
-            <!-- Info -->
-
-            <LinearLayout
-                android:id="@+id/llInfo"
+                android:id="@+id/llHeader"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dip"
-                android:orientation="horizontal" >
-
-                <ImageView
-                    android:id="@+id/imgIcon"
-                    android:layout_width="?android:attr/listPreferredItemHeightSmall"
-                    android:layout_height="?android:attr/listPreferredItemHeightSmall"
-                    android:contentDescription="@string/help_application" />
+                android:orientation="vertical" >
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="vertical" >
+                    android:layout_width="match_parent"
+                    android:layout_height="32dip"
+                    android:orientation="horizontal" >
+
+                    <ScrollView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1" >
+
+                        <TextView
+                            android:id="@+id/tvApp"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold" />
+                    </ScrollView>
 
                     <ImageView
-                        android:id="@+id/imgInternet"
-                        android:layout_width="24dip"
-                        android:layout_height="24dip"
-                        android:contentDescription="@string/help_internet"
-                        android:src="?attr/icon_internet" />
-
-                    <ImageView
-                        android:id="@+id/imgFrozen"
-                        android:layout_width="24dip"
-                        android:layout_height="24dip"
+                        android:id="@+id/imgInfo"
+                        android:layout_width="32dip"
+                        android:layout_height="32dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="6dip"
                         android:contentDescription="@string/help_application"
-                        android:src="?attr/icon_frozen" />
+                        android:src="?attr/icon_info" />
                 </LinearLayout>
 
-                <!-- Version / package name -->
+                <!-- Thick divider -->
 
-                <ScrollView
+                <View
                     android:layout_width="match_parent"
-                    android:layout_height="?android:attr/listPreferredItemHeightSmall"
-                    android:layout_marginLeft="6dip" >
+                    android:layout_height="2dip"
+                    android:layout_marginTop="6dip"
+                    android:background="@android:color/darker_gray" />
+
+                <!-- Info -->
+
+                <LinearLayout
+                    android:id="@+id/llInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="6dip"
+                    android:orientation="horizontal" >
+
+                    <ImageView
+                        android:id="@+id/imgIcon"
+                        android:layout_width="?android:attr/listPreferredItemHeightSmall"
+                        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+                        android:contentDescription="@string/help_application" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
                         android:orientation="vertical" >
 
-                        <TextView
-                            android:id="@+id/tvVersion"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textIsSelectable="false" />
+                        <ImageView
+                            android:id="@+id/imgInternet"
+                            android:layout_width="24dip"
+                            android:layout_height="24dip"
+                            android:contentDescription="@string/help_internet"
+                            android:src="?attr/icon_internet" />
 
-                        <TextView
-                            android:id="@+id/tvPackageName"
+                        <ImageView
+                            android:id="@+id/imgFrozen"
+                            android:layout_width="24dip"
+                            android:layout_height="24dip"
+                            android:contentDescription="@string/help_application"
+                            android:src="?attr/icon_frozen" />
+                    </LinearLayout>
+
+                    <!-- Version / package name -->
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="?android:attr/listPreferredItemHeightSmall"
+                        android:layout_marginLeft="6dip" >
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceSmall"
-                            android:textIsSelectable="false" />
-                    </LinearLayout>
-                </ScrollView>
+                            android:orientation="vertical" >
+
+                            <TextView
+                                android:id="@+id/tvVersion"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textIsSelectable="false" />
+
+                            <TextView
+                                android:id="@+id/tvPackageName"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textIsSelectable="false" />
+                        </LinearLayout>
+                    </ScrollView>
+                </LinearLayout>
             </LinearLayout>
+
+            <ScrollView
+                android:id="@+id/svTutorialHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/llHeader"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?background_tutorial"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tutorial_detailsheader"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/btnTutorialHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="@android:string/ok" />
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+        <!-- Title -->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+			android:paddingRight="@dimen/activity_horizontal_margin" >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_weight="1"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/title_restrict"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false" />
+
+            <android.support.v7.widget.SwitchCompat
+                android:id="@+id/swEnable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical" />
+
+            <ImageView
+                android:id="@+id/imgCbOnDemand"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="3dip"
+                android:contentDescription="@string/title_restrict" />
         </LinearLayout>
 
-        <ScrollView
-            android:id="@+id/svTutorialHeader"
+        <!-- Thin divider -->
+
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/llHeader"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?background_tutorial"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/tutorial_detailsheader"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
-                    android:id="@+id/btnTutorialHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="@android:string/ok" />
-            </LinearLayout>
-        </ScrollView>
-    </RelativeLayout>
-
-    <!-- Title -->
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal" >
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="bottom"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="@string/title_restrict"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="false" />
-
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/swEnable"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical" />
-
-        <ImageView
-            android:id="@+id/imgCbOnDemand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="3dip"
-            android:contentDescription="@string/title_restrict" />
-    </LinearLayout>
-
-    <!-- Thin divider -->
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@android:color/darker_gray" />
-
-    <!-- What it is all about -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <ExpandableListView
-            android:id="@+id/elvRestriction"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_list"
-            android:layout_marginTop="6dip"
-            android:choiceMode="none"
-            android:paddingRight="6dip"
-            android:scrollbarStyle="insideInset" />
-
-        <ScrollView
-            android:id="@+id/svTutorialDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/elvRestriction"
+            android:layout_height="1dip"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:orientation="vertical"
-            android:visibility="gone" >
+            android:background="@android:color/darker_gray" />
 
-            <RelativeLayout
+        <!-- What it is all about -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ExpandableListView
+                android:id="@+id/elvRestriction"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="?background_tutorial" >
+                android:layout_marginRight="@dimen/activity_horizontal_margin_list"
+                android:layout_marginTop="6dip"
+                android:choiceMode="none"
+                android:paddingRight="6dip"
+                android:scrollbarStyle="insideInset" />
 
-                <TextView
-                    android:id="@+id/tvTutorialDetails"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tutorial_detailslist"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+            <ScrollView
+                android:id="@+id/svTutorialDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/elvRestriction"
+                android:orientation="vertical"
+                android:visibility="gone" >
 
-                <Button
-                    android:id="@+id/btnTutorialDetails"
-                    android:layout_width="wrap_content"
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/tvTutorialDetails"
-                    android:layout_marginTop="6dip"
-                    android:text="@android:string/ok" />
-            </RelativeLayout>
-        </ScrollView>
-    </RelativeLayout>
+                    android:background="?background_tutorial" >
+
+                    <TextView
+                        android:id="@+id/tvTutorialDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tutorial_detailslist"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/btnTutorialDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/tvTutorialDetails"
+                        android:layout_marginTop="6dip"
+                        android:text="@android:string/ok" />
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

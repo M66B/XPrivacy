@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Process;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -99,6 +100,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.settings);
+		setSupportActionBar((Toolbar) findViewById(R.id.widgetToolbar));
 		setTitle(R.string.menu_settings);
 
 		userId = Util.getUserId(Process.myUid());

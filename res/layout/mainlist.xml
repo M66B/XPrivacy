@@ -4,184 +4,198 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ActivityMain" >
 
-    <!-- Filter frame -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <android.support.v7.widget.CardView
-            xmlns:card_view="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/cvHeader"
-            style="?attr/cardStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="6dip"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            card_view:cardCornerRadius="6dip" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:orientation="horizontal" >
-
-                <Spinner
-                    android:id="@+id/spRestriction"
-                    android:layout_width="0dip"
-                    android:layout_height="37dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/imgInfo"
-                    android:layout_width="32dip"
-                    android:layout_height="32dip"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="3dip"
-                    android:layout_marginRight="3dip"
-                    android:clickable="true"
-                    android:contentDescription="@string/help_application"
-                    android:focusable="true"
-                    android:src="?attr/icon_info" />
-            </LinearLayout>
-        </android.support.v7.widget.CardView>
-
-        <ScrollView
-            android:id="@+id/svTutorialHeader"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/cvHeader"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="?background_tutorial"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/tutorial_mainheader"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
-
-                <Button
-                    android:id="@+id/btnTutorialHeader"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:text="@android:string/ok" />
-            </LinearLayout>
-        </ScrollView>
-    </RelativeLayout>
-
-    <!-- Title -->
-
-    <RelativeLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/widgetToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/activity_horizontal_margin" >
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
 
-        <TextView
-            android:id="@+id/tvStats"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
-
-        <TextView
-            android:id="@+id/tvState"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_toLeftOf="@id/tvStats"
-            android:ellipsize="end"
-            android:singleLine="true"
-            android:text="@string/title_restrict"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textIsSelectable="false" />
-
-        <ProgressBar
-            android:id="@+id/pbFilter"
-            style="?android:attr/progressBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:visibility="gone" />
-    </RelativeLayout>
-
-    <!-- Progress -->
-
-    <View
-        android:id="@+id/vProgressEmpty"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dip"
-        android:layout_marginBottom="-3dip"
-        android:layout_marginRight="@dimen/activity_horizontal_margin"
-        android:background="@android:color/darker_gray" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin" >
 
-    <View
-        android:id="@+id/vProgressFull"
-        android:layout_width="0dip"
-        android:layout_height="3dip"
-        android:background="@color/color_accent" />
+        <!-- Filter frame -->
 
-    <!-- What it is all about -->
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-
-        <ListView
-            android:id="@+id/lvApp"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_list"
-            android:layout_marginTop="6dip"
-            android:choiceMode="none"
-            android:paddingRight="6dip"
-            android:scrollbarStyle="insideInset" />
+            android:layout_height="wrap_content" >
 
-        <ScrollView
-            android:id="@+id/svTutorialDetails"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@id/lvApp"
-            android:orientation="vertical"
-            android:visibility="gone" >
-
-            <RelativeLayout
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/cvHeader"
+                style="?attr/cardStyle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="6dip"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:background="?background_tutorial" >
+                card_view:cardCornerRadius="6dip" >
 
-                <TextView
-                    android:id="@+id/tvTutorialDetails"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/tutorial_mainlist"
-                    android:textAppearance="?android:attr/textAppearanceMedium" />
+                    android:layout_margin="6dp"
+                    android:orientation="horizontal" >
 
-                <Button
-                    android:id="@+id/btnTutorialDetails"
-                    android:layout_width="wrap_content"
+                    <Spinner
+                        android:id="@+id/spRestriction"
+                        android:layout_width="0dip"
+                        android:layout_height="37dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/imgInfo"
+                        android:layout_width="32dip"
+                        android:layout_height="32dip"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="3dip"
+                        android:layout_marginRight="3dip"
+                        android:clickable="true"
+                        android:contentDescription="@string/help_application"
+                        android:focusable="true"
+                        android:src="?attr/icon_info" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <ScrollView
+                android:id="@+id/svTutorialHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/cvHeader"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_below="@id/tvTutorialDetails"
-                    android:layout_marginTop="6dip"
-                    android:text="@android:string/ok" />
-            </RelativeLayout>
-        </ScrollView>
-    </RelativeLayout>
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="?background_tutorial"
+                    android:orientation="horizontal" >
+
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/tutorial_mainheader"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/btnTutorialHeader"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="bottom"
+                        android:text="@android:string/ok" />
+                </LinearLayout>
+            </ScrollView>
+        </RelativeLayout>
+
+        <!-- Title -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/activity_horizontal_margin" >
+
+            <TextView
+                android:id="@+id/tvStats"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <TextView
+                android:id="@+id/tvState"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@id/tvStats"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="@string/title_restrict"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textIsSelectable="false" />
+
+            <ProgressBar
+                android:id="@+id/pbFilter"
+                style="?android:attr/progressBarStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:visibility="gone" />
+        </RelativeLayout>
+
+        <!-- Progress -->
+
+        <View
+            android:id="@+id/vProgressEmpty"
+            android:layout_width="match_parent"
+            android:layout_height="1dip"
+            android:layout_marginBottom="-3dip"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@android:color/darker_gray" />
+
+        <View
+            android:id="@+id/vProgressFull"
+            android:layout_width="0dip"
+            android:layout_height="3dip"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:background="@color/color_accent" />
+
+        <!-- What it is all about -->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ListView
+                android:id="@+id/lvApp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/activity_horizontal_margin_list"
+                android:layout_marginTop="6dip"
+                android:choiceMode="none"
+                android:paddingRight="6dip"
+                android:scrollbarStyle="insideInset" />
+
+            <ScrollView
+                android:id="@+id/svTutorialDetails"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@id/lvApp"
+                android:orientation="vertical"
+                android:visibility="gone" >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin"
+                    android:background="?background_tutorial" >
+
+                    <TextView
+                        android:id="@+id/tvTutorialDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/tutorial_mainlist"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/btnTutorialDetails"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@id/tvTutorialDetails"
+                        android:layout_marginTop="6dip"
+                        android:text="@android:string/ok" />
+                </RelativeLayout>
+            </ScrollView>
+        </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

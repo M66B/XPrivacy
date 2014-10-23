@@ -42,6 +42,7 @@ import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.support.v4.app.NavUtils;
 import android.support.v4.app.TaskStackBuilder;
 import android.support.v7.widget.SwitchCompat;
+import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.format.DateUtils;
@@ -127,6 +128,7 @@ public class ActivityApp extends ActivityBase {
 
 		// Set layout
 		setContentView(R.layout.restrictionlist);
+		setSupportActionBar((Toolbar) findViewById(R.id.widgetToolbar));
 
 		// Annotate
 		Meta.annotate(this.getResources());

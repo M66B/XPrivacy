@@ -1,608 +1,621 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:scrollbarStyle="outsideOverlay"
     tools:ignore="HardcodedText,TooManyViews,Overdraw" >
 
-    <LinearLayout
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/widgetToolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical" >
+        android:background="?attr/colorPrimary"
+        android:minHeight="?attr/actionBarSize" />
 
-        <TextView
-            android:id="@+id/tvInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="6dip"
-            android:text="@string/msg_settings_specific"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textStyle="italic" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dip"
-            android:text="@string/settings_general"
-            android:textAllCaps="true"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_marginBottom="6dp"
-            android:background="#888888" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:scrollbarStyle="outsideOverlay" >
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="?android:attr/listDivider"
-            android:orientation="vertical"
-            android:showDividers="middle" >
+            android:orientation="vertical" >
 
-            <CheckBox
-                android:id="@+id/cbNotify"
-                style="@style/PreferenceLine"
-                android:text="@string/settings_notify" />
+            <TextView
+                android:id="@+id/tvInfo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="6dip"
+                android:text="@string/msg_settings_specific"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textStyle="italic" />
 
-            <CheckBox
-                android:id="@+id/cbOnDemand"
-                style="@style/PreferenceLine"
-                android:text="@string/settings_ondemand" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dip"
+                android:text="@string/settings_general"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
 
-            <CheckBox
-                android:id="@+id/cbBlacklist"
-                style="@style/PreferenceLine"
-                android:text="@string/settings_blacklist" />
-
-            <CheckBox
-                android:id="@+id/cbUsage"
-                style="@style/PreferenceLine"
-                android:text="@string/settings_usagedata" />
-
-            <CheckBox
-                android:id="@+id/cbParameters"
-                style="@style/PreferenceLine"
-                android:text="@string/settings_parameters" />
-
-            <CheckBox
-                android:id="@+id/cbValues"
-                style="@style/PreferenceLine"
-                android:text="@string/settings_values" />
-
-            <CheckBox
-                android:id="@+id/cbLog"
-                style="@style/PreferenceLine"
-                android:text="@string/settings_log" />
-
-            <CheckBox
-                android:id="@+id/cbExpert"
-                style="@style/PreferenceLine"
-                android:text="@string/settings_expert" />
-
-            <CheckBox
-                android:id="@+id/cbSystem"
-                style="@style/PreferenceLine"
-                android:layout_marginLeft="30dip"
-                android:background="?attr/color_dangerous"
-                android:text="@string/settings_syscomponents" />
-
-            <CheckBox
-                android:id="@+id/cbExperimental"
-                style="@style/PreferenceLine"
-                android:layout_marginLeft="30dip"
-                android:text="@string/settings_experimental"
-                android:visibility="gone" />
-
-            <CheckBox
-                android:id="@+id/cbHttps"
-                style="@style/PreferenceLine"
-                android:layout_marginLeft="30dip"
-                android:text="@string/settings_https" />
-
-            <CheckBox
-                android:id="@+id/cbAOSP"
-                style="@style/PreferenceLine"
-                android:layout_marginLeft="30dip"
-                android:text="@string/settings_aosp"
-                android:visibility="gone" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginBottom="6dp"
+                android:background="#888888" />
 
             <LinearLayout
-                android:id="@+id/llConfidence"
-                style="@style/PreferenceLine"
-                android:layout_marginLeft="30dip"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="0dip"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/settings_confidence"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etConfidence"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:hint="35"
-                    android:inputType="numberDecimal"
-                    android:maxLength="2"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-            <LinearLayout
-                style="@style/PreferenceLine"
-                android:layout_marginLeft="30dip"
-                android:orientation="horizontal" >
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/settings_quirks"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etQuirks"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="freeze,resolve,test,updates"
-                    android:inputType="text"
-                    tools:ignore="HardcodedText" />
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btnFlush"
-                style="@style/PreferenceLine"
-                android:layout_marginLeft="30dip"
-                android:gravity="center"
-                android:text="@string/menu_flush" />
-
-            <Button
-                android:id="@+id/btnClearDb"
-                style="@style/PreferenceLine"
-                android:layout_marginLeft="30dip"
-                android:gravity="center"
-                android:text="@string/menu_clear_db" />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dip"
-            android:text="@string/settings_fake_data"
-            android:textAllCaps="true"
-            android:textStyle="bold" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:layout_marginBottom="6dp"
-            android:background="#888888" />
-
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:divider="?android:attr/listDivider"
-            android:showDividers="middle"
-            android:shrinkColumns="2"
-            android:stretchColumns="2" >
-
-            <TableRow style="@style/PreferenceLine" >
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="?android:attr/listDivider"
+                android:orientation="vertical"
+                android:showDividers="middle" >
 
                 <CheckBox
-                    android:id="@+id/cbRandom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="3"
-                    android:text="@string/msg_random_boot" />
-            </TableRow>
+                    android:id="@+id/cbNotify"
+                    style="@style/PreferenceLine"
+                    android:text="@string/settings_notify" />
 
-            <TableRow style="@style/PreferenceLine" >
+                <CheckBox
+                    android:id="@+id/cbOnDemand"
+                    style="@style/PreferenceLine"
+                    android:text="@string/settings_ondemand" />
 
-                <Button
-                    android:id="@+id/btnClear"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="3"
-                    android:text="@string/menu_clear" />
-            </TableRow>
+                <CheckBox
+                    android:id="@+id/cbBlacklist"
+                    style="@style/PreferenceLine"
+                    android:text="@string/settings_blacklist" />
 
-            <TableRow style="@style/PreferenceLine" >
+                <CheckBox
+                    android:id="@+id/cbUsage"
+                    style="@style/PreferenceLine"
+                    android:text="@string/settings_usagedata" />
 
-                <Button
-                    android:id="@+id/btnRandom"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_span="3"
-                    android:text="@string/msg_random_now" />
-            </TableRow>
+                <CheckBox
+                    android:id="@+id/cbParameters"
+                    style="@style/PreferenceLine"
+                    android:text="@string/settings_parameters" />
 
-            <TableRow style="@style/PreferenceLine" >
+                <CheckBox
+                    android:id="@+id/cbValues"
+                    style="@style/PreferenceLine"
+                    android:text="@string/settings_values" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:adjustViewBounds="true"
-                    android:maxHeight="20sp"
-                    android:src="@drawable/ic_arrow"
-                    tools:ignore="ContentDescription" />
+                <CheckBox
+                    android:id="@+id/cbLog"
+                    style="@style/PreferenceLine"
+                    android:text="@string/settings_log" />
 
-                <TextView
-                    android:layout_span="2"
-                    android:text="@string/msg_random_access"
-                    android:textIsSelectable="false" />
-            </TableRow>
+                <CheckBox
+                    android:id="@+id/cbExpert"
+                    style="@style/PreferenceLine"
+                    android:text="@string/settings_expert" />
 
-            <TableRow style="@style/PreferenceLine" >
+                <CheckBox
+                    android:id="@+id/cbSystem"
+                    style="@style/PreferenceLine"
+                    android:layout_marginLeft="30dip"
+                    android:background="?attr/color_dangerous"
+                    android:text="@string/settings_syscomponents" />
 
-                <CheckBox android:id="@+id/cbSerial" />
+                <CheckBox
+                    android:id="@+id/cbExperimental"
+                    style="@style/PreferenceLine"
+                    android:layout_marginLeft="30dip"
+                    android:text="@string/settings_experimental"
+                    android:visibility="gone" />
 
-                <TextView
-                    android:text="@string/settings_serial"
-                    android:textIsSelectable="false" />
+                <CheckBox
+                    android:id="@+id/cbHttps"
+                    style="@style/PreferenceLine"
+                    android:layout_marginLeft="30dip"
+                    android:text="@string/settings_https" />
 
-                <EditText
-                    android:id="@+id/etSerial"
-                    android:hint="DEFACE"
-                    android:inputType="textNoSuggestions"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
+                <CheckBox
+                    android:id="@+id/cbAOSP"
+                    style="@style/PreferenceLine"
+                    android:layout_marginLeft="30dip"
+                    android:text="@string/settings_aosp"
+                    android:visibility="gone" />
 
-            <TableRow style="@style/PreferenceLine" >
+                <LinearLayout
+                    android:id="@+id/llConfidence"
+                    style="@style/PreferenceLine"
+                    android:layout_marginLeft="30dip"
+                    android:orientation="horizontal" >
 
-                <CheckBox android:id="@+id/cbLat" />
+                    <TextView
+                        android:layout_width="0dip"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/settings_confidence"
+                        android:textIsSelectable="false" />
 
-                <TextView
-                    android:text="@string/settings_lat"
-                    android:textIsSelectable="false" />
+                    <EditText
+                        android:id="@+id/etConfidence"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="35"
+                        android:inputType="numberDecimal"
+                        android:maxLength="2"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
 
-                <EditText
-                    android:id="@+id/etLat"
-                    android:hint="-10.5"
-                    android:inputType="numberDecimal|numberSigned"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
+                <LinearLayout
+                    style="@style/PreferenceLine"
+                    android:layout_marginLeft="30dip"
+                    android:orientation="horizontal" >
 
-            <TableRow style="@style/PreferenceLine" >
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/settings_quirks"
+                        android:textIsSelectable="false" />
 
-                <CheckBox android:id="@+id/cbLon" />
-
-                <TextView
-                    android:text="@string/settings_lon"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etLon"
-                    android:hint="105.667"
-                    android:inputType="numberDecimal|numberSigned"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbAlt" />
-
-                <TextView
-                    android:text="@string/settings_alt"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etAlt"
-                    android:hint="686"
-                    android:inputType="numberDecimal|numberSigned"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
+                    <EditText
+                        android:id="@+id/etQuirks"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="freeze,resolve,test,updates"
+                        android:inputType="text"
+                        tools:ignore="HardcodedText" />
+                </LinearLayout>
 
                 <Button
-                    android:id="@+id/btnSearch"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@android:string/search_go" />
-
-                <EditText
-                    android:id="@+id/etSearch"
-                    android:hint="Christmas Island"
-                    android:inputType="textNoSuggestions"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbMac" />
-
-                <TextView
-                    android:text="@string/settings_mac"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etMac"
-                    android:digits="0123456789ABCDEF:"
-                    android:hint="DE:FA:CE:DE:FA:CE"
-                    android:inputType="textCapCharacters|textNoSuggestions"
-                    android:maxLength="18"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
-
-                <TextView
-                    android:text="@string/settings_ip"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etIP"
-                    android:digits="0123456789ABCDEF.:"
-                    android:hint="0.0.0.0"
-                    android:inputType="textCapCharacters|textNoSuggestions"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbImei" />
-
-                <TextView
-                    android:text="@string/settings_imei"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etImei"
-                    android:digits="0123456789ABCDEF"
-                    android:hint="000000000000000"
-                    android:inputType="textCapCharacters|textNoSuggestions"
-                    android:maxLength="16"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbPhone" />
-
-                <TextView
-                    android:text="@string/settings_phone"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etPhone"
-                    android:hint="DEFACE"
-                    android:inputType="textNoSuggestions|phone"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbId" />
-
-                <TextView
-                    android:text="@string/settings_id"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etId"
-                    android:digits="0123456789abcdef"
-                    android:hint="deface"
-                    android:inputType="textNoSuggestions"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbGsfId" />
-
-                <TextView
-                    android:text="@string/settings_gsfid"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etGsfId"
-                    android:digits="0123456789ABCDEF"
-                    android:hint="DEFACE"
-                    android:inputType="textCapCharacters|textNoSuggestions"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbAdId" />
-
-                <TextView
-                    android:text="@string/settings_adid"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etAdId"
-                    android:digits="0123456789ABCDEF-"
-                    android:hint="DEFACE00-0000-0000-0000-000000000000"
-                    android:inputType="textCapCharacters|textNoSuggestions"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
-
-                <TextView
-                    android:text="@string/settings_mcc"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etMcc"
-                    android:hint="001"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="3"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
-
-                <TextView
-                    android:text="@string/settings_mnc"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etMnc"
-                    android:hint="01"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="3"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbCountry" />
-
-                <TextView
-                    android:text="@string/settings_country"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etCountry"
-                    android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    android:hint="XX"
-                    android:inputType="textCapCharacters|textNoSuggestions"
-                    android:maxLength="2"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
-
-                <TextView
-                    android:text="@string/settings_operator"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etOperator"
-                    android:hint="DEFACED"
-                    android:inputType="text|textNoSuggestions"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
-
-                <TextView
-                    android:text="@string/settings_iccid"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etIccId"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="20"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
-
-                <TextView
-                    android:text="@string/settings_cid"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etCid"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="5"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
-
-                <TextView
-                    android:text="@string/settings_lac"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etLac"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="5"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbSubscriber" />
-
-                <TextView
-                    android:text="@string/settings_subscriber"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etSubscriber"
-                    android:inputType="numberDecimal|textNoSuggestions"
-                    android:maxLength="15"
-                    android:singleLine="true" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <CheckBox android:id="@+id/cbSSID" />
-
-                <TextView
-                    android:text="@string/settings_ssid"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etSSID"
-                    android:inputType="text|textNoSuggestions"
-                    android:singleLine="true" />
-            </TableRow>
-
-            <TableRow style="@style/PreferenceLine" >
-
-                <View />
-
-                <TextView
-                    android:text="@string/settings_ua"
-                    android:textIsSelectable="false" />
-
-                <EditText
-                    android:id="@+id/etUa"
-                    android:hint="Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9"
-                    android:inputType="text|textNoSuggestions"
-                    android:singleLine="true"
-                    tools:ignore="HardcodedText" />
-            </TableRow>
-        </TableLayout>
-    </LinearLayout>
-
-</ScrollView>
+                    android:id="@+id/btnFlush"
+                    style="@style/PreferenceLine"
+                    android:layout_marginLeft="30dip"
+                    android:gravity="center"
+                    android:text="@string/menu_flush" />
+
+                <Button
+                    android:id="@+id/btnClearDb"
+                    style="@style/PreferenceLine"
+                    android:layout_marginLeft="30dip"
+                    android:gravity="center"
+                    android:text="@string/menu_clear_db" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:text="@string/settings_fake_data"
+                android:textAllCaps="true"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:layout_marginBottom="6dp"
+                android:background="#888888" />
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="?android:attr/listDivider"
+                android:showDividers="middle"
+                android:shrinkColumns="2"
+                android:stretchColumns="2" >
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox
+                        android:id="@+id/cbRandom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_span="3"
+                        android:text="@string/msg_random_boot" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <Button
+                        android:id="@+id/btnClear"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_span="3"
+                        android:text="@string/menu_clear" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <Button
+                        android:id="@+id/btnRandom"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_span="3"
+                        android:text="@string/msg_random_now" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        android:maxHeight="20sp"
+                        android:src="@drawable/ic_arrow"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_span="2"
+                        android:text="@string/msg_random_access"
+                        android:textIsSelectable="false" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbSerial" />
+
+                    <TextView
+                        android:text="@string/settings_serial"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etSerial"
+                        android:hint="DEFACE"
+                        android:inputType="textNoSuggestions"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbLat" />
+
+                    <TextView
+                        android:text="@string/settings_lat"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etLat"
+                        android:hint="-10.5"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbLon" />
+
+                    <TextView
+                        android:text="@string/settings_lon"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etLon"
+                        android:hint="105.667"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbAlt" />
+
+                    <TextView
+                        android:text="@string/settings_alt"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etAlt"
+                        android:hint="686"
+                        android:inputType="numberDecimal|numberSigned"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <Button
+                        android:id="@+id/btnSearch"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@android:string/search_go" />
+
+                    <EditText
+                        android:id="@+id/etSearch"
+                        android:hint="Christmas Island"
+                        android:inputType="textNoSuggestions"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbMac" />
+
+                    <TextView
+                        android:text="@string/settings_mac"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etMac"
+                        android:digits="0123456789ABCDEF:"
+                        android:hint="DE:FA:CE:DE:FA:CE"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:maxLength="18"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_ip"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etIP"
+                        android:digits="0123456789ABCDEF.:"
+                        android:hint="0.0.0.0"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbImei" />
+
+                    <TextView
+                        android:text="@string/settings_imei"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etImei"
+                        android:digits="0123456789ABCDEF"
+                        android:hint="000000000000000"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:maxLength="16"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbPhone" />
+
+                    <TextView
+                        android:text="@string/settings_phone"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etPhone"
+                        android:hint="DEFACE"
+                        android:inputType="textNoSuggestions|phone"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbId" />
+
+                    <TextView
+                        android:text="@string/settings_id"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etId"
+                        android:digits="0123456789abcdef"
+                        android:hint="deface"
+                        android:inputType="textNoSuggestions"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbGsfId" />
+
+                    <TextView
+                        android:text="@string/settings_gsfid"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etGsfId"
+                        android:digits="0123456789ABCDEF"
+                        android:hint="DEFACE"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbAdId" />
+
+                    <TextView
+                        android:text="@string/settings_adid"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etAdId"
+                        android:digits="0123456789ABCDEF-"
+                        android:hint="DEFACE00-0000-0000-0000-000000000000"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_mcc"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etMcc"
+                        android:hint="001"
+                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:maxLength="3"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_mnc"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etMnc"
+                        android:hint="01"
+                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:maxLength="3"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbCountry" />
+
+                    <TextView
+                        android:text="@string/settings_country"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etCountry"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                        android:hint="XX"
+                        android:inputType="textCapCharacters|textNoSuggestions"
+                        android:maxLength="2"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_operator"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etOperator"
+                        android:hint="DEFACED"
+                        android:inputType="text|textNoSuggestions"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_iccid"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etIccId"
+                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:maxLength="20"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_cid"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etCid"
+                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:maxLength="5"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_lac"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etLac"
+                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:maxLength="5"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbSubscriber" />
+
+                    <TextView
+                        android:text="@string/settings_subscriber"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etSubscriber"
+                        android:inputType="numberDecimal|textNoSuggestions"
+                        android:maxLength="15"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <CheckBox android:id="@+id/cbSSID" />
+
+                    <TextView
+                        android:text="@string/settings_ssid"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etSSID"
+                        android:inputType="text|textNoSuggestions"
+                        android:singleLine="true" />
+                </TableRow>
+
+                <TableRow style="@style/PreferenceLine" >
+
+                    <View />
+
+                    <TextView
+                        android:text="@string/settings_ua"
+                        android:textIsSelectable="false" />
+
+                    <EditText
+                        android:id="@+id/etUa"
+                        android:hint="Mozilla/5.0 (Linux; U; Android; en-us) AppleWebKit/999+ (KHTML, like Gecko) Safari/999.9"
+                        android:inputType="text|textNoSuggestions"
+                        android:singleLine="true"
+                        tools:ignore="HardcodedText" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
