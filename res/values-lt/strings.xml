@@ -132,7 +132,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="restrict_help_browser">Galima riboti prieigą prie naršyklės informacijos (pvz: žymos, parsisiuntimų istorija</string>
     <string name="restrict_help_accounts">Galima riboti prieigą prie paskyros informacijos</string>
     <string name="whitelist_ipaddress">IP adresai</string>
-    <string name="whitelist_library">Native libraries</string>
+    <string name="whitelist_library">Gimtosios bibliotekos</string>
     <string name="whitelist_method">Metodų pavadinimai</string>
     <string name="whitelist_filename">failų vardai</string>
     <string name="whitelist_command">Vykdymo komandos</string>
