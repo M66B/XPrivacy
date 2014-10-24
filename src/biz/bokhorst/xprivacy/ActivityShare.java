@@ -56,6 +56,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager.NameNotFoundException;
+import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
@@ -635,11 +636,15 @@ public class ActivityShare extends ActivityBase {
 		protected void onPreExecute() {
 			super.onPreExecute();
 
+			TypedArray ta = getTheme().obtainStyledAttributes(new int[] { R.attr.progress_horizontal });
+			int progress_horizontal = ta.getResourceId(0, 0);
+			ta.recycle();
+
 			// Show progress dialog
 			mProgressDialog = new ProgressDialog(ActivityShare.this);
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			mProgressDialog.setProgressDrawable(getResources().getDrawable(R.drawable.progress_horizontal));
+			mProgressDialog.setProgressDrawable(getResources().getDrawable(progress_horizontal));
 			mProgressDialog.setProgressNumberFormat(null);
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);

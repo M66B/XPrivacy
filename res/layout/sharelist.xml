@@ -183,7 +183,7 @@
                 android:id="@+id/vShareProgressFull"
                 android:layout_width="0dip"
                 android:layout_height="3dip"
-                android:background="@color/color_accent" />
+                android:background="?attr/colorPrimary" />
         </RelativeLayout>
 
         <!-- What it is all about -->

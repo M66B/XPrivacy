@@ -1262,11 +1262,15 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 		protected void onPreExecute() {
 			super.onPreExecute();
 
+			TypedArray ta = getTheme().obtainStyledAttributes(new int[] { R.attr.progress_horizontal });
+			int progress_horizontal = ta.getResourceId(0, 0);
+			ta.recycle();
+
 			// Show progress dialog
 			mProgressDialog = new ProgressDialog(ActivityMain.this);
 			mProgressDialog.setMessage(getString(R.string.msg_loading));
 			mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-			mProgressDialog.setProgressDrawable(getResources().getDrawable(R.drawable.progress_horizontal));
+			mProgressDialog.setProgressDrawable(getResources().getDrawable(progress_horizontal));
 			mProgressDialog.setProgressNumberFormat(null);
 			mProgressDialog.setCancelable(false);
 			mProgressDialog.setCanceledOnTouchOutside(false);

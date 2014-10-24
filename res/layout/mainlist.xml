@@ -146,7 +146,7 @@
             android:layout_width="0dip"
             android:layout_height="3dip"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:background="@color/color_accent" />
+            android:background="?attr/colorPrimary" />
 
         <!-- What it is all about -->
 

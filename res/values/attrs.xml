@@ -26,6 +26,8 @@
     <attr name="color_state_restricted" format="reference" />
     <attr name="color_state_shared" format="reference" />
     <attr name="background_tutorial" format="reference" />
+    <attr name="progress_horizontal" format="reference" />
     <attr name="cardStyle" format="reference" />
+    <attr name="list_item_pressed" format="reference" />
 
 </resources>

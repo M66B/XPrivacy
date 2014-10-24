@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:background="@drawable/list_item_pressed"
+        android:background="?list_item_pressed"
         android:clickable="true"
         android:orientation="horizontal" >
 

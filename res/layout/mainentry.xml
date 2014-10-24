@@ -23,7 +23,7 @@
             android:layout_width="?android:attr/listPreferredItemHeightSmall"
             android:layout_height="?android:attr/listPreferredItemHeightSmall"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/list_item_pressed"
+            android:background="?list_item_pressed"
             android:contentDescription="@string/help_application"
             android:paddingLeft="3dip"
             android:paddingRight="3dip" />
@@ -76,7 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:background="@drawable/list_item_pressed"
+            android:background="?list_item_pressed"
             android:gravity="center_vertical"
             android:minHeight="?android:attr/listPreferredItemHeightSmall"
             android:orientation="horizontal"

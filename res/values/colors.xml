@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <color name="color_primary">#009688</color>
-    <color name="color_primary_dark">#00796b</color>
-    <color name="color_accent">#ff6e40</color>
+    <color name="color_primary1_light">#80cbc4</color>
+    <color name="color_primary1_dark">#009688</color>
+    <color name="color_primary2_light">#26a69a</color>
+    <color name="color_primary2_dark">#00796b</color>
+    <color name="color_accent_light">#ff6e40</color>
+    <color name="color_accent_dark">#ff6e40</color>
     <color name="color_dangerous_light">#3CF83A3A</color>
     <color name="color_dangerous_dark">#50F83A3A</color>
     <color name="color_dangerous_dialog">#801D1D</color>
