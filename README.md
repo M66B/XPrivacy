@@ -342,13 +342,13 @@ Limitations
 
 *XPrivacy*
 
-* You cannot restrict *identification* for XPrivacy, because it is used for submitting restrictions
+* You cannot restrict some functions in the *Identification* category, because it is used for submitting restrictions
 	* The Android ID is salted with the serial number and MD5 hashed before communicating with the crowd sourced restrictions server
 	* This means that the crowd sourced restrictions server never gets the serial number nor the Android ID
-* You cannot restrict *IPC* for XPrivacy because it is needed for internal checks
-* You cannot restrict *storage* for XPrivacy because it is needed to read the XPrivacy Pro license file
-* You cannot restrict *system* for XPrivacy because it is needed to get an application list
-* You cannot restrict *view* for XPrivacy because it is needed to open links to the [crowd sourced restrictions](http://crowd.xprivacy.eu/)
+* You cannot restrict *IPC* because it is needed for internal checks
+* You cannot restrict *Storage* because it is needed to read the XPrivacy Pro license file
+* You cannot restrict *System* because it is needed to get an application list
+* You cannot restrict *View* because it is needed to open links to the [crowd sourced restrictions](http://crowd.xprivacy.eu/)
 
 You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
 

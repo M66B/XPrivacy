@@ -446,176 +446,176 @@ public class PrivacyService extends IPrivacyService.Stub {
 				if (!getSettingBool(userId, PrivacyManager.cSettingSystem, false))
 					return mresult;
 
-			// Check if can be restricted
-			if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
-					restriction.methodName, false)) {
-				mresult.asked = true;
-				return mresult;
-			}
-
 			// Check if restrictions enabled
 			if (usage && !getSettingBool(restriction.uid, PrivacyManager.cSettingRestricted, true))
 				return mresult;
 
-			// Check cache for method
-			CRestriction key = new CRestriction(restriction, restriction.extra);
-			synchronized (mRestrictionCache) {
-				if (mRestrictionCache.containsKey(key)) {
-					mcached = true;
-					CRestriction cache = mRestrictionCache.get(key);
-					mresult.restricted = cache.restricted;
-					mresult.asked = cache.asked;
-				}
-			}
-
-			if (!mcached) {
-				boolean methodFound = false;
-				PRestriction cresult = new PRestriction(restriction.uid, restriction.restrictionName, null);
-
-				// Check cache for category
-				CRestriction ckey = new CRestriction(cresult, null);
+			// Check if can be restricted
+			if (!PrivacyManager.canRestrict(restriction.uid, getXUid(), restriction.restrictionName,
+					restriction.methodName, false))
+				mresult.asked = true;
+			else {
+				// Check cache for method
+				CRestriction key = new CRestriction(restriction, restriction.extra);
 				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(ckey)) {
-						ccached = true;
-						CRestriction crestriction = mRestrictionCache.get(ckey);
-						cresult.restricted = crestriction.restricted;
-						cresult.asked = crestriction.asked;
-						mresult.restricted = cresult.restricted;
-						mresult.asked = cresult.asked;
+					if (mRestrictionCache.containsKey(key)) {
+						mcached = true;
+						CRestriction cache = mRestrictionCache.get(key);
+						mresult.restricted = cache.restricted;
+						mresult.asked = cache.asked;
 					}
 				}
 
-				// Get database reference
-				SQLiteDatabase db = getDb();
-				if (db == null)
-					return mresult;
+				if (!mcached) {
+					boolean methodFound = false;
+					PRestriction cresult = new PRestriction(restriction.uid, restriction.restrictionName, null);
 
-				// Precompile statement when needed
-				if (stmtGetRestriction == null) {
-					String sql = "SELECT restricted FROM " + cTableRestriction
-							+ " WHERE uid=? AND restriction=? AND method=?";
-					stmtGetRestriction = db.compileStatement(sql);
-				}
-
-				// Execute statement
-				mLock.readLock().lock();
-				try {
-					db.beginTransaction();
-					try {
-						if (!ccached)
-							try {
-								synchronized (stmtGetRestriction) {
-									stmtGetRestriction.clearBindings();
-									stmtGetRestriction.bindLong(1, restriction.uid);
-									stmtGetRestriction.bindString(2, restriction.restrictionName);
-									stmtGetRestriction.bindString(3, "");
-									long state = stmtGetRestriction.simpleQueryForLong();
-									cresult.restricted = ((state & 1) != 0);
-									cresult.asked = ((state & 2) != 0);
-									mresult.restricted = cresult.restricted;
-									mresult.asked = cresult.asked;
-								}
-							} catch (SQLiteDoneException ignored) {
-							}
-
-						if (restriction.methodName != null)
-							try {
-								synchronized (stmtGetRestriction) {
-									stmtGetRestriction.clearBindings();
-									stmtGetRestriction.bindLong(1, restriction.uid);
-									stmtGetRestriction.bindString(2, restriction.restrictionName);
-									stmtGetRestriction.bindString(3, restriction.methodName);
-									long state = stmtGetRestriction.simpleQueryForLong();
-									// Method can be excepted
-									if (mresult.restricted)
-										mresult.restricted = ((state & 1) == 0);
-									// Category asked=true takes precedence
-									if (!mresult.asked)
-										mresult.asked = ((state & 2) != 0);
-									methodFound = true;
-								}
-							} catch (SQLiteDoneException ignored) {
-							}
-
-						db.setTransactionSuccessful();
-					} finally {
-						db.endTransaction();
-					}
-				} finally {
-					mLock.readLock().unlock();
-				}
-
-				// Default dangerous
-				if (!methodFound && hook != null && hook.isDangerous())
-					if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
-						if (mresult.restricted)
-							mresult.restricted = false;
-						if (!mresult.asked)
-							mresult.asked = (hook.whitelist() == null);
-					}
-
-				// Check whitelist
-				if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
-					String value = getSetting(new PSetting(restriction.uid, hook.whitelist(), restriction.extra, null)).value;
-					if (value == null) {
-						for (String xextra : getXExtra(restriction, hook)) {
-							value = getSetting(new PSetting(restriction.uid, hook.whitelist(), xextra, null)).value;
-							if (value != null)
-								break;
+					// Check cache for category
+					CRestriction ckey = new CRestriction(cresult, null);
+					synchronized (mRestrictionCache) {
+						if (mRestrictionCache.containsKey(ckey)) {
+							ccached = true;
+							CRestriction crestriction = mRestrictionCache.get(ckey);
+							cresult.restricted = crestriction.restricted;
+							cresult.asked = crestriction.asked;
+							mresult.restricted = cresult.restricted;
+							mresult.asked = cresult.asked;
 						}
 					}
-					if (value != null) {
-						// true means allow, false means block
-						mresult.restricted = !Boolean.parseBoolean(value);
-						mresult.asked = true;
+
+					// Get database reference
+					SQLiteDatabase db = getDb();
+					if (db == null)
+						return mresult;
+
+					// Precompile statement when needed
+					if (stmtGetRestriction == null) {
+						String sql = "SELECT restricted FROM " + cTableRestriction
+								+ " WHERE uid=? AND restriction=? AND method=?";
+						stmtGetRestriction = db.compileStatement(sql);
 					}
-				}
 
-				// Fallback
-				if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
-						&& !getSettingBool(userId, PrivacyManager.cSettingMigrated, false)) {
-					if (hook != null && !hook.isDangerous()) {
-						mresult.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
-								restriction.restrictionName, restriction.methodName);
-						Util.log(null, Log.WARN, "Fallback " + mresult);
+					// Execute statement
+					mLock.readLock().lock();
+					try {
+						db.beginTransaction();
+						try {
+							if (!ccached)
+								try {
+									synchronized (stmtGetRestriction) {
+										stmtGetRestriction.clearBindings();
+										stmtGetRestriction.bindLong(1, restriction.uid);
+										stmtGetRestriction.bindString(2, restriction.restrictionName);
+										stmtGetRestriction.bindString(3, "");
+										long state = stmtGetRestriction.simpleQueryForLong();
+										cresult.restricted = ((state & 1) != 0);
+										cresult.asked = ((state & 2) != 0);
+										mresult.restricted = cresult.restricted;
+										mresult.asked = cresult.asked;
+									}
+								} catch (SQLiteDoneException ignored) {
+								}
+
+							if (restriction.methodName != null)
+								try {
+									synchronized (stmtGetRestriction) {
+										stmtGetRestriction.clearBindings();
+										stmtGetRestriction.bindLong(1, restriction.uid);
+										stmtGetRestriction.bindString(2, restriction.restrictionName);
+										stmtGetRestriction.bindString(3, restriction.methodName);
+										long state = stmtGetRestriction.simpleQueryForLong();
+										// Method can be excepted
+										if (mresult.restricted)
+											mresult.restricted = ((state & 1) == 0);
+										// Category asked=true takes precedence
+										if (!mresult.asked)
+											mresult.asked = ((state & 2) != 0);
+										methodFound = true;
+									}
+								} catch (SQLiteDoneException ignored) {
+								}
+
+							db.setTransactionSuccessful();
+						} finally {
+							db.endTransaction();
+						}
+					} finally {
+						mLock.readLock().unlock();
 					}
-				}
 
-				// Update cache
-				CRestriction cukey = new CRestriction(cresult, null);
-				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(cukey))
-						mRestrictionCache.remove(cukey);
-					mRestrictionCache.put(cukey, cukey);
-				}
-				CRestriction ukey = new CRestriction(mresult, restriction.extra);
-				synchronized (mRestrictionCache) {
-					if (mRestrictionCache.containsKey(ukey))
-						mRestrictionCache.remove(ukey);
-					mRestrictionCache.put(ukey, ukey);
-				}
-			}
+					// Default dangerous
+					if (!methodFound && hook != null && hook.isDangerous())
+						if (!getSettingBool(userId, PrivacyManager.cSettingDangerous, false)) {
+							if (mresult.restricted)
+								mresult.restricted = false;
+							if (!mresult.asked)
+								mresult.asked = (hook.whitelist() == null);
+						}
 
-			// Ask to restrict
-			OnDemandResult oResult = new OnDemandResult();
-			if (!mresult.asked && usage) {
-				oResult = onDemandDialog(hook, restriction, mresult);
+					// Check whitelist
+					if (usage && hook != null && hook.whitelist() != null && restriction.extra != null) {
+						String value = getSetting(new PSetting(restriction.uid, hook.whitelist(), restriction.extra,
+								null)).value;
+						if (value == null) {
+							for (String xextra : getXExtra(restriction, hook)) {
+								value = getSetting(new PSetting(restriction.uid, hook.whitelist(), xextra, null)).value;
+								if (value != null)
+									break;
+							}
+						}
+						if (value != null) {
+							// true means allow, false means block
+							mresult.restricted = !Boolean.parseBoolean(value);
+							mresult.asked = true;
+						}
+					}
 
-				// Update cache
-				if (oResult.ondemand && !oResult.once) {
-					CRestriction okey = new CRestriction(mresult, oResult.whitelist ? restriction.extra : null);
+					// Fallback
+					if (!mresult.restricted && usage && PrivacyManager.isApplication(restriction.uid)
+							&& !getSettingBool(userId, PrivacyManager.cSettingMigrated, false)) {
+						if (hook != null && !hook.isDangerous()) {
+							mresult.restricted = PrivacyProvider.getRestrictedFallback(null, restriction.uid,
+									restriction.restrictionName, restriction.methodName);
+							Util.log(null, Log.WARN, "Fallback " + mresult);
+						}
+					}
+
+					// Update cache
+					CRestriction cukey = new CRestriction(cresult, null);
 					synchronized (mRestrictionCache) {
-						if (mRestrictionCache.containsKey(okey))
-							mRestrictionCache.remove(okey);
-						mRestrictionCache.put(okey, okey);
+						if (mRestrictionCache.containsKey(cukey))
+							mRestrictionCache.remove(cukey);
+						mRestrictionCache.put(cukey, cukey);
+					}
+					CRestriction ukey = new CRestriction(mresult, restriction.extra);
+					synchronized (mRestrictionCache) {
+						if (mRestrictionCache.containsKey(ukey))
+							mRestrictionCache.remove(ukey);
+						mRestrictionCache.put(ukey, ukey);
 					}
 				}
-			}
 
-			// Notify user
-			if (!oResult.ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify()) {
-				notifyRestricted(restriction);
-				mresult.time = new Date().getTime();
+				// Ask to restrict
+				OnDemandResult oResult = new OnDemandResult();
+				if (!mresult.asked && usage) {
+					oResult = onDemandDialog(hook, restriction, mresult);
+
+					// Update cache
+					if (oResult.ondemand && !oResult.once) {
+						CRestriction okey = new CRestriction(mresult, oResult.whitelist ? restriction.extra : null);
+						synchronized (mRestrictionCache) {
+							if (mRestrictionCache.containsKey(okey))
+								mRestrictionCache.remove(okey);
+							mRestrictionCache.put(okey, okey);
+						}
+					}
+				}
+
+				// Notify user
+				if (!oResult.ondemand && mresult.restricted && usage && hook != null && hook.shouldNotify()) {
+					notifyRestricted(restriction);
+					mresult.time = new Date().getTime();
+				}
 			}
 
 			// Store usage data
