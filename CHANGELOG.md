@@ -32,6 +32,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 * Usage data for functions which cannot be restricted
 * Fixed double tap search
+* Allow more identification functions to be restricted for XPrivacy itself
 * Updated French translation
 
 **Version 3.4.11 BETA**
