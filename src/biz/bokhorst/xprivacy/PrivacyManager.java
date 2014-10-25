@@ -452,6 +452,9 @@ public class PrivacyManager {
 		setRestrictionList(listPRestriction);
 	}
 
+	public static List<String> cIDCant = Arrays.asList(new String[] { "getString", "Srv_Android_ID", "%serialno",
+			"SERIAL" });
+
 	public static boolean canRestrict(int uid, int xuid, String restrictionName, String methodName, boolean system) {
 		int _uid = Util.getAppId(uid);
 		int userId = Util.getUserId(uid);
@@ -466,13 +469,7 @@ public class PrivacyManager {
 
 		// @formatter:off
 		if (_uid == Util.getAppId(xuid) &&
-			((PrivacyManager.cIdentification.equals(restrictionName) &&
-					("getString".equals(methodName) ||
-					"Srv_Android_ID".equals(methodName) ||
-					"/proc".equals(methodName) ||
-					"/system/build.prop".equals(methodName) ||
-					"%serialno".equals(methodName) ||
-					"SERIAL".equals(methodName)))
+			((PrivacyManager.cIdentification.equals(restrictionName) && cIDCant.contains(methodName))
 			|| PrivacyManager.cIPC.equals(restrictionName)
 			|| PrivacyManager.cStorage.equals(restrictionName)
 			|| PrivacyManager.cSystem.equals(restrictionName)
