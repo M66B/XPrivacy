@@ -35,13 +35,6 @@
     <uses-permission android:name="biz.bokhorst.xprivacy.pro.CHECK" />
     <uses-permission android:name="cydia.permission.SUBSTRATE" />
 
-    <supports-screens
-        android:anyDensity="true"
-        android:largeScreens="true"
-        android:normalScreens="true"
-        android:smallScreens="true"
-        android:xlargeScreens="true" />
-
     <application
         android:name="ApplicationEx"
         android:allowBackup="false"
