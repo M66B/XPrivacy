@@ -38,7 +38,6 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Process;
 import android.support.v4.view.MenuItemCompat;
-import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
@@ -72,6 +71,7 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -490,6 +490,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			SearchView searchView = (SearchView) MenuItemCompat.getActionView(menu.findItem(R.id.menu_search));
 			if (searchView != null) {
 				searchView.setIconifiedByDefault(false);
+
 				searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 					@Override
 					public boolean onQueryTextChange(String newText) {
