@@ -26,9 +26,11 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
-* Fixed search by reverting to holo search
-
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.4.13 BETA**
+
+* Fixed search by reverting to holo search
 
 **Version 3.4.12 BETA**
 
