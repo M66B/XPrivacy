@@ -310,7 +310,8 @@ public class Requirements {
 				new String[] { "android.location.LocationManager", "android.location.ZTEPrivacyLocationManager",
 						"android.privacy.surrogate.PrivacyLocationManager" /* PDroid */});
 		Class<?> serviceClass = context.getPackageManager().getClass();
-		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName()))
+		if (!"android.app.ApplicationPackageManager".equals(serviceClass.getName())
+				&& !"amazon.content.pm.AmazonPackageManagerImpl".equals(serviceClass.getName()))
 			reportClass(serviceClass, context);
 		checkService(context, Context.SENSOR_SERVICE, new String[] { "android.hardware.SensorManager",
 				"android.hardware.SystemSensorManager" });
