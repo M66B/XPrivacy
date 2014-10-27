@@ -78,7 +78,7 @@
     <string name="msg_service_updating">Vennligst vent inntil oppdateringstjenesten er ferdig</string>
     <string name="msg_expert">Ekspert-brukere skal takle sine problemer selvstendig (hvis mulig), følge med i XDA XPrivacy forumet og hjelpe andre så godt som mulig</string>
     <string name="msg_method_expert">Restriksjon av funksjoner er kun for ekspert-brukere. Er du en ekspert-bruker?</string>
-    <string name="msg_longpress_whitelist">Trykk lenge på navnet til en funksjon for å hvit- eller svart-liste en parameterHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH</string>
+    <string name="msg_longpress_whitelist">Trykk lenge på navnet til en funksjon for å sette en parameter på negativ- eller positivlisten</string>
     <string name="msg_settings_specific">Haker og verdier prioriteres foran globale haker og verdier; tomme avkryssingsbokser og verdier prioriteres ikke foran noen ting</string>
     <string name="msg_first"><b>XPrivacy er grundig utviklet og testet, men det er umulig å garantere at appen fungerer feilfritt på alle enheter og for alle applikasjoner.\n\nAppen brukes på egen risiko.</b>\n\nSe også lisensen:</string>
     <string name="restrict_accounts">Konto (Google, Facebook, osv.)</string>
