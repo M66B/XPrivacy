@@ -61,20 +61,6 @@
         <item name="list_item_pressed">@drawable/list_item_pressed_light</item>
     </style>
 
-    <style name="CustomTheme.Light.Dialog" parent="Theme.AppCompat.Light">
-        <item name="android:windowSoftInputMode">stateHidden|adjustResize</item>
-        <!-- Allows window to resize when keyboard shows, but also makes the window fullscreen and the titlebar small -->
-        <item name="android:windowIsFloating">false</item>
-        <!-- Seems to make the window still appear like a dialog, not totally fullscreen but still wider than before -->
-        <item name="android:windowActionBar">true</item>
-    </style>
-
-    <style name="CustomTheme.Dialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowSoftInputMode">stateHidden|adjustResize</item>
-        <item name="android:windowIsFloating">false</item>
-        <item name="android:windowActionBar">true</item>
-    </style>
-
     <style name="PreferenceLine">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
