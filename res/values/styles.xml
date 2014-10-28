@@ -15,7 +15,7 @@
         <item name="icon_system">@drawable/system_holo_dark</item>
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_dark</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_dark</item>
-        <item name="icon_launcher">@drawable/ic_launcher_holo_dark</item>
+        <item name="icon_launcher">@drawable/ic_launcher</item>
         <item name="icon_restricted">@drawable/check_holo_dark</item>
         <item name="icon_frozen">@drawable/frozen_holo_dark</item>
         <item name="icon_unsafe">@drawable/padlock_question_dark</item>
@@ -45,7 +45,7 @@
         <item name="icon_system">@drawable/system_holo_light</item>
         <item name="icon_expander_minimized">@drawable/expander_ic_minimized_holo_light</item>
         <item name="icon_expander_maximized">@drawable/expander_ic_maximized_holo_light</item>
-        <item name="icon_launcher">@drawable/ic_launcher_holo_light</item>
+        <item name="icon_launcher">@drawable/ic_launcher</item>
         <item name="icon_restricted">@drawable/check_holo_light</item>
         <item name="icon_frozen">@drawable/frozen_holo_light</item>
         <item name="icon_unsafe">@drawable/padlock_question_light</item>
