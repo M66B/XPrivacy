@@ -28,6 +28,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 * Fixed all problems reported through the debug info
 * Added support for Android TV
+* Using accent color for in view progress bar
 * Updated Norwegian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
