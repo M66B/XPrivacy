@@ -29,6 +29,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 * Fixed all problems reported through the debug info
 * Added support for Android TV
 * Using accent color for in view progress bar
+* New icon, thanks @[daniel_m](http://forum.xda-developers.com/member.php?u=4885896)
 * Added Korean translation
 * Updated Arabic translation
 * Updated Norwegian translation
