@@ -44,7 +44,7 @@
     <string name="menu_changelog">Changelog</string>
     <string name="menu_flush">مسح ذاكرة التخزين المؤقت</string>
     <string name="menu_update">فحص التحديثات</string>
-    <string name="menu_batch">Operations &#8230;</string>
+    <string name="menu_batch">العمليات &#8230;</string>
     <string name="menu_legend">Legend</string>
     <string name="msg_abort">إيقاف</string>
     <string name="msg_aborted">تم الإيقاف</string>
@@ -76,10 +76,10 @@
     <string name="msg_service_missing">لم يتم العثور على خدمة الخصوصية; هل قمت بتمكين XPrivacy  في مثبت إكسبوسيد وقمت بإعادة تشغيل جهازك ؟</string>
     <string name="msg_service_version">عدم تطابق إصدار خدمة الخصوصية؛ هل يمكنك إعادة تشغيل الجهاز بعد ترقية إكسبريفاسي؟</string>
     <string name="msg_service_updating">يرجى الانتظار حتى يتم الانتهاء من خدمة التحديث </string>
-    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
-    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_expert">المستخدمين الخبراء من المفترض أن يستطيعوا حل مشاكلهم الخاصة حيثما كان ذلك ممكناً ومتابعة موضوع إكسبرايفاسي على منتدي إكس دي ايه ومساعدة الآخرين متى ما كان ذلك ممكناً</string>
+    <string name="msg_method_expert">المقصود من تقييد الوظائف هم المستخدمين الخبراء. هل أنت مستخدم خبير؟</string>
+    <string name="msg_longpress_whitelist">الضغط لمدة طويلة على إسم الوظيفة لقيم القائمة البيضاء أو القائمة السوداء</string>
+    <string name="msg_settings_specific">علامات الإختيار والقيم تأخذ أسبقية على علامات الإختيار العامة وقيمتها; خانات الإختيار الفارغة وقيمها لا تأخذ أسبقية</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
 \n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>
@@ -130,7 +130,7 @@
     <string name="restrict_help_browser">سيتم تقييد الوصول إلى معلومات المتصفح، مثل الإشارات المرجعية الخاصة بك وتاريخ التنزيل</string>
     <string name="restrict_help_accounts">سيتم تقييد الوصول إلى معلومات الحساب، مثل حساب Google الخاص بك، الذي يتضمن عنوان بريد جي ميل الخاص بك</string>
     <string name="whitelist_address">عناوين</string>
-    <string name="whitelist_action">Action</string>
+    <string name="whitelist_action">الحدث</string>
     <string name="whitelist_ipaddress">عناوين الآيبي</string>
     <string name="whitelist_library">المكتبات الأصلية</string>
     <string name="whitelist_method">أسماء الأسلوب</string>
@@ -179,7 +179,7 @@
     <string name="title_ondemand_reset">إعادة تعيين</string>
     <string name="title_default">الافتراضي</string>
     <string name="title_alternate">البديل</string>
-    <string name="title_rename">Rename</string>
+    <string name="title_rename">إعادة تسمية</string>
     <string name="title_usage_header">الاستخدام</string>
     <string name="title_usage_text_1">1. أعثر على التطبيق في قائمة التطبيقات الرئيسية لتقييده</string>
     <string name="title_usage_text_2">2. اضغط على أيقونة التطبيق</string>
@@ -194,7 +194,7 @@
     <string name="title_update_install">انقر لتثبيت التحديث</string>
     <string name="title_update_none">لا توجد تحديثات متوفرة</string>
     <string name="title_update_legacy">إكسبريفاسي2 غير مدعومة بعد الآن، يرجى النظر في الترقية إلى إكسبريفاسي3</string>
-    <string name="title_original">Original</string>
+    <string name="title_original">أصلي</string>
     <string name="settings_serial">السيريال#</string>
     <string name="settings_lat">خط العرض</string>
     <string name="settings_lon">خط الطول</string>
@@ -221,7 +221,7 @@
     <string name="settings_syscomponents">تقييد مكونات نظام (أندرويد) (يتطلب إعادة التشغيل)</string>
     <string name="settings_usagedata">إظهار بيانات استخدام التطبيق (يتطلب إعادة التشغيل)</string>
     <string name="settings_parameters">إظهار الباراميترات لبيانات الإستخدام</string>
-    <string name="settings_values">Show values of usage data</string>
+    <string name="settings_values">عرض قيم بيانات الاستخدام</string>
     <string name="settings_cid">معرف الخليوي جي إس أم</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">المراوغات</string>
