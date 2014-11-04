@@ -1438,6 +1438,7 @@ Current translations:
 1. Irish (ga)
 1. Italian (it)
 1. Japanese (ja)
+1. Korean (ko)
 1. Kurdish (ku-rIR, ku-rIQ)
 1. Lithuanian (lt)
 1. Malay (ms)
