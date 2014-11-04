@@ -1482,21 +1482,18 @@ Testing:
 * [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 
-Material design:
-
-* [How to use the v21 support libs on older versions ...](http://www.reddit.com/r/androiddev/comments/297xli/howto_use_the_v21_support_libs_on_older_versions/)
-* [CardView library project](https://github.com/yongjhih/CardView)
-
 Serious contributors do not have to donate for the [pro version](http://www.xprivacy.eu/).
 New translations are considered as a serious contribution, but translating a few lines of text is not.
 
 The goal of the project is to provide a decent, free and open source privacy solution for Android to as many as possible people.
 
 To keep XPrivacy maintainable hooking into private/internal classes and methods is undesirable,
-since these vary considerably in different Android versions and are often customized/modified by manufacturers and custom ROM builders.
+since these vary considerably in different Android versions
+and are often customized/modified by manufacturers and custom ROM builders.
 
 To prevent applications from crashing fake data should be returned whenever possible.
-Empty values (*null*) will not be replaced by fake values to prevent misuse.
+Empty values (*null*) should not be replaced by fake values to prevent misuse.
+The same applies to creating new fake data, like for example an account.
 There is no need to apply restrictions in situations where the user is presented a dialog first (for example to pick an account).
 Setting data (in contrary to getting data) should never be restricted, this is outside the goal of XPrivacy.
 
