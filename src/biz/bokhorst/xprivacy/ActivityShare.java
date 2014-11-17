@@ -2117,6 +2117,7 @@ public class ActivityShare extends ActivityBase {
 			// 'errno' => 204, 'error' => 'Too many packages for application'
 			// 'errno' => 205, 'error' => 'Error storing restrictions'
 			// 'errno' => 206, 'error' => 'Device not activated'
+			// 'errno' => 207, 'error' => 'Unknown category'
 
 			// fetch:
 			// 'errno' => 301, 'error' => 'Not authorized'

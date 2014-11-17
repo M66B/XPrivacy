@@ -4,7 +4,7 @@
 
 	$min_diff = 0.50;
 	$max_confidence = 0.35;
-	$max_packages = 72;
+	$max_packages = 75;
 
 	function confidence($restricted, $not_restricted) {
 		// Agresti-Coull Interval
@@ -174,7 +174,8 @@
 							$name = $restriction->restriction;
 						else
 							$name = $restriction->restriction . '/' . $restriction->method;
-						log_error('submit: restriction unknown: ' . $name , $my_email, $data);
+						echo json_encode(array('ok' => false, 'errno' => 207, 'error' => 'Unknown category'));
+						exit();
 					}
 				}
 			}
