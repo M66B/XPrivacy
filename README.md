@@ -835,17 +835,14 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 	* On demand restricting is enabled in the application settings
 	* The category and the function are marked with question marks
 	* However a few functions are exempted from prompting (only *Phone/Configuration.MCC/MNC*)
-	* Prompts will not be shown for dangerous functions unless *Restrict dangerous functions* is enabled
+	* Prompts will not be shown for dangerous functions
 		* An exception are functions with white/black lists
-	* Prompts will not be shown for System applications unless *Restrict dangerous functions* is enabled
+	* Prompts will not be shown for System applications
 * *Apply to entire category* will:
 	* Set the entire category definitively according to your choice (deny/allow)
 	* Existing settings for individual functions are forgotten
 * When applying to a function only (*Apply to entire category* not checked):
 	* The function is set definitively according to your choice
-* If *Restrict dangerous functions* is disabled (the default):
-	* You will never be asked whether to restrict dangerous functions, except for functions with a white/black list
-	* Setting any category to restricted will not restrict any of its dangerous functions
 * The default after dialog timeout is taken from the current restriction settings
 * There are four possibilities for the restriction / on demand checkboxes:
 	* a. [&#8194;] [&#8194;] You will not receive an on demand popup, the permission will always be allowed
