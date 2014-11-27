@@ -533,7 +533,7 @@
 				// Display titles
 				if (empty($package_name)) {
 ?>
-					<h1>XPrivacy</h1>
+					<h1><img src="ic_launcher.png" alt="XPrivacy" /> XPrivacy</h1>
 					<p>Crowd sourced restrictions</p>
 <?php
 				} else {
