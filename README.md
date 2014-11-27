@@ -1258,6 +1258,11 @@ Note that Cydia Substrate is not open source and seems not to be [supported](htt
 
 Note that I have started the preparations for Android 5.0 [quite some time ago](https://github.com/M66B/XPrivacy/issues/1757).
 
+<a name="FAQ76"></a>
+**(76) What happened with the import/export enabler?**
+
+Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783/page1281#post57091458).
+
 Support
 -------
 
