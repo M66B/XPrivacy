@@ -736,7 +736,7 @@ No, because it's too difficult to implement something like XPrivacy on these OS'
 * vibration
 * checks for root
 * lockscreen
-* time(zone)
+* time(zone), alarm
 * nag-screens, popups
 * statusbar notifications
 * installing shortcuts
@@ -1257,6 +1257,11 @@ and that a few restrictions cannot be made to work with Cydia Substrate
 Note that Cydia Substrate is not open source and seems not to be [supported](http://forum.xda-developers.com/showthread.php?t=2466101) very activily.
 
 Note that I have started the preparations for Android 5.0 [quite some time ago](https://github.com/M66B/XPrivacy/issues/1757).
+
+Some people have asked me to make XPrivacy independent of Xposed.
+This would mean integration of the Xposed features into XPrivacy.
+Apart from the amount of work, this is not a logical step, since there are quite some other useful Xposed modules.
+Therefore it is better to get Xposed working for ART.
 
 <a name="FAQ76"></a>
 **(76) What happened with the import/export enabler?**
