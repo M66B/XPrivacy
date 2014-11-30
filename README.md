@@ -1130,12 +1130,12 @@ With Tasker, you can create shortcuts on your homescreen:
 <a name="FAQ67"></a>
 **(67) I get 'refused', 'forbidden' or an error while submitting/fetching/navigating to the crowd sourced restrictions!**
 
-This probably means your IP address has been black listed.
+This probably means your IP address has been blacklisted.
 Mostly this is because of spamming or other kind of abuses.
 TOR exit nodes and VPS servers are often black listed.
 Maybe your PC is infected and sending spam without your knowledge.
 
-You can check if [your IP address](http://www.whatismyip.com/) is black listed by checking if it is mentioned on one of these lists:
+You can check if [your IP address](http://www.whatismyip.com/) is blacklisted by checking if it is mentioned on one of these lists:
 
 * [Spamhaus DROP List](http://www.spamhaus.org/drop/drop.lasso)
 * [Spamhaus EDROP List](http://www.spamhaus.org/drop/edrop.lasso)
@@ -1229,7 +1229,12 @@ The Google transaction fee is 30%, while the PayPal transaction fee is 5-10%.
 <a name="FAQ74"></a>
 **(74) I miss an application in the application list!**
 
-Tap the filter icon to check if the application list isn't filtered.
+First of all, XPrivacy allows you to restrict each and every application,
+including XPrivacy itself as well as core Android system components, although there are a few [limitations](#limitations).
+Howewver, these are for your own safety, for example to prevent a bootloop or to keep XPrivacy usable in all circumstances.
+
+The application you are searching for is most probably filtered, for example because it is a system application.
+You can change the filters by using the main menu *Filter*.
 By default system applications and applications without permissions for the selected category are filtered.
 
 Some applications (components) share data, which mean they share the same uid.
@@ -1269,16 +1274,6 @@ Therefore it is better to get Xposed working for ART.
 **(76) What happened with the import/export enabler?**
 
 Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783/page1281#post57091458).
-
-<a name="FAQ77"></a>
-**(77) I cannot find an application!**
-
-First of all, XPrivacy allows you to restrict each and every application,
-even XPrivacy itself and even the Android system components, although there are a few [limitations](#limitations),
-but most of these are for your own safety, for example to prevent a bootloop or to keep XPrivacy usable in all circumstances.
-
-The application you are searching for is most probably filtered, for example because it is a system application.
-You can change the filters by using the main menu *Filter*.
 
 Support
 -------
