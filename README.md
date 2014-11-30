@@ -1231,7 +1231,7 @@ The Google transaction fee is 30%, while the PayPal transaction fee is 5-10%.
 
 First of all, XPrivacy allows you to restrict each and every application,
 including XPrivacy itself as well as core Android system components, although there are a few [limitations](#limitations).
-Howewver, these are for your own safety, for example to prevent a bootloop or to keep XPrivacy usable in all circumstances.
+However, these are for your own safety, for example to prevent a bootloop or to keep XPrivacy usable in all circumstances.
 
 The application you are searching for is most probably filtered, for example because it is a system application.
 You can change the filters by using the main menu *Filter*.
