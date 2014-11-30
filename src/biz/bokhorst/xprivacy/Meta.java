@@ -525,7 +525,7 @@ public class Meta {
 
 		// ClipboardManager/Service
 		mListHook.add(new Hook(null, "removePrimaryClipChangedListener", "", 11, null, null).notAOSP(19));
-		mListHook.add(new Hook(null, "Srv_removePrimaryClipChangedListener", "", 11, null, null));
+		mListHook.add(new Hook(null, "Srv_removePrimaryClipChangedListener", "", 11, null, null).AOSP(19));
 
 		// Content resolvers
 		mListHook.add(new Hook(null, "query", "", 1, null, null).notAOSP(19));
@@ -559,9 +559,9 @@ public class Meta {
 
 		// LocationManager/Service
 		mListHook.add(new Hook(null, "removeUpdates", "", 3, null, null).notAOSP(19));
-		mListHook.add(new Hook(null, "Srv_removeUpdates", "", 19, null, null));
-		mListHook.add(new Hook(null, "Srv_removeGeofence", "", 19, null, null));
-		mListHook.add(new Hook(null, "Srv_removeGpsStatusListener", "", 19, null, null));
+		mListHook.add(new Hook(null, "Srv_removeUpdates", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_removeGeofence", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_removeGpsStatusListener", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "MapV1.disableMyLocation", "", 1, null, null).optional());
 
 		// MediaRecorder
@@ -573,7 +573,7 @@ public class Meta {
 
 		// TelephonyManager
 		mListHook.add(new Hook(null, "disableLocationUpdates", "", 10, null, null).notAOSP(19));
-		mListHook.add(new Hook(null, "Srv_disableLocationUpdates", "", 19, null, null));
+		mListHook.add(new Hook(null, "Srv_disableLocationUpdates", "", 19, null, null).AOSP(19));
 
 		// UtilHook
 		mListHook.add(new Hook(null, "isXposedEnabled", "", 15, null, null));
