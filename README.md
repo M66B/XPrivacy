@@ -947,8 +947,10 @@ This ensures that other applications cannot uninstall XPrivacy without your know
 <a name="FAQ54"></a>
 **(54) Exporting and importing takes a long time**
 
-There are about 250 restrictions and additionally there can be quite some settings, for example when you use white/black lists.
-So, yes, exporting and importing can take quite some time.
+There are more than 400 restrictions per application
+and additionally there can be quite some application specific settings,
+for example when you use white/black lists.
+So, yes, exporting and importing restrictions and settings can take quite some time.
 The default is to export everything, since the export is meant to be a full backup.
 However, it is possible to filter the applications you want to export using the filter icon in the action bar,
 for example only user applications with restrictions,
@@ -1267,6 +1269,16 @@ Therefore it is better to get Xposed working for ART.
 **(76) What happened with the import/export enabler?**
 
 Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783/page1281#post57091458).
+
+<a name="FAQ77"></a>
+**(77) I cannot find an application!**
+
+First of all, XPrivacy allows you to restrict each and every application,
+even XPrivacy itself and even the Android system components, although there are a few [limitations](#limitations),
+but most of these are for your own safety, for example to prevent a bootloop or to keep XPrivacy usable in all circumstances.
+
+The application you are searching for is most probably filtered, for example because it is a system application.
+You can change the filters by using the main menu *Filter*.
 
 Support
 -------
