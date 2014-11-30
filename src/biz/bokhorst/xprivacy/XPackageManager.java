@@ -207,7 +207,7 @@ public class XPackageManager extends XHook {
 			if (param.args.length > 0 && param.args[0] instanceof Integer && param.getResult() != null) {
 				int uid = (Integer) param.args[0];
 				if (uid != Binder.getCallingUid())
-					if (isRestricted(param))
+					if (isRestrictedExtra(param, Integer.toString(uid)))
 						param.setResult(null);
 			}
 			break;
@@ -241,8 +241,12 @@ public class XPackageManager extends XHook {
 			break;
 
 		case getPackagesForUid:
-			if (isRestricted(param))
-				param.setResult(null);
+			if (param.args.length > 0 && param.args[0] instanceof Integer && param.getResult() != null) {
+				int uid = (Integer) param.args[0];
+				if (uid != Binder.getCallingUid())
+					if (isRestrictedExtra(param, Integer.toString(uid)))
+						param.setResult(null);
+			}
 			break;
 
 		case getPreferredActivities:
