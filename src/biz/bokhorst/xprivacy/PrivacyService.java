@@ -1468,7 +1468,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 					return oResult;
 
 				// Check if activity manager locked
-				if (isAMLocked()) {
+				if (isAMLocked(restriction.uid)) {
 					Util.log(null, Log.WARN, "On demand locked " + restriction);
 					return oResult;
 				}
@@ -1482,7 +1482,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 						return oResult;
 
 					// Check if activity manager locked now
-					if (isAMLocked()) {
+					if (isAMLocked(restriction.uid)) {
 						Util.log(null, Log.WARN, "On demand acquired locked " + restriction);
 						return oResult;
 					}
@@ -1614,7 +1614,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 											}
 
 											// Check if activity manager locked
-											if (isAMLocked()) {
+											if (isAMLocked(restriction.uid)) {
 												Util.log(null, Log.WARN, "On demand dialog locked " + restriction);
 												((Button) holder.dialog.findViewById(R.id.btnDontKnow)).callOnClick();
 											}
@@ -2197,13 +2197,13 @@ public class PrivacyService extends IPrivacyService.Stub {
 			throw new SecurityException("xuid=" + mXUid + " calling=" + Binder.getCallingUid());
 	}
 
-	private boolean isAMLocked() {
+	private boolean isAMLocked(int uid) {
 		try {
 			Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
 			Object am = cam.getMethod("self").invoke(null);
 			boolean locked = Thread.holdsLock(am);
 			if (locked) {
-				boolean freeze = getSettingBool(0, PrivacyManager.cSettingFreeze, false);
+				boolean freeze = getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
 				if (freeze)
 					return false;
 			}
