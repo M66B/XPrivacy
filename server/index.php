@@ -4,7 +4,7 @@
 
 	$min_diff = 0.50;
 	$max_confidence = 0.35;
-	$max_packages = 75;
+	$max_packages = 100;
 
 	function confidence($restricted, $not_restricted) {
 		// Agresti-Coull Interval
