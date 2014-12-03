@@ -26,6 +26,10 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.5.1 BETA**
+
 * Show parameter to *getPackagesForUid*/*Srv_getPackagesForUid*
 * Fixed renaming long template names ([issue](/../../issues/2052))
 * Fixed using *Srv_requestLocationUpdates* in compatibility mode ([issue](/../../issues/2050))
@@ -34,6 +38,7 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.5 STABLE**
+
 * Material design
 * New icon, thanks @[Primokorn](http://forum.xda-developers.com/member.php?u=4958579)
 
