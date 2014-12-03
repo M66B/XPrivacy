@@ -2204,6 +2204,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 			boolean locked = Thread.holdsLock(am);
 			if (locked) {
 				boolean freeze = getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
+				if (!freeze)
+					freeze = getSettingBool(0, PrivacyManager.cSettingFreeze, false);
 				if (freeze)
 					return false;
 			}
