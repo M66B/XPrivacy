@@ -26,6 +26,8 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* Restart notification for *requestLocationUpdates*, *requestSingleUpdate* and *Srv_requestLocationUpdates*
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.5.2 BETA**
