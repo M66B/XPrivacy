@@ -26,10 +26,14 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
-* Restart notification for *requestLocationUpdates*, *requestSingleUpdate* and *Srv_requestLocationUpdates*
-* Notify and do not send the intent *biz.bokhorst.xprivacy.action.ACTIVE* when the privacy database was corrupt (discussed on XDA)
+* ...
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.5.3 BETA**
+
+* Restart notification for *requestLocationUpdates*, *requestSingleUpdate* and *Srv_requestLocationUpdates*
+* Notify and do not send the intent *biz.bokhorst.xprivacy.action.ACTIVE* when the privacy database was corrupt (discussed on XDA)
 
 **Version 3.5.2 BETA**
 
