@@ -20,8 +20,11 @@ import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import android.annotation.SuppressLint;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
@@ -44,6 +47,7 @@ import android.os.RemoteException;
 import android.os.StrictMode;
 import android.os.SystemClock;
 import android.os.StrictMode.ThreadPolicy;
+import android.support.v4.app.NotificationCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -82,6 +86,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cServiceName = "xprivacy453";
 
 	private boolean mCorrupt = false;
+	private boolean mNotified = false;
 	private SQLiteDatabase mDb = null;
 	private SQLiteDatabase mDbUsage = null;
 	private SQLiteStatement stmtGetRestriction = null;
@@ -628,6 +633,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 			if (usage && hook != null)
 				storeUsageData(restriction, secret, mresult);
 
+		} catch (SQLiteException ex) {
+			notifyException(ex);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		} finally {
@@ -1208,6 +1215,9 @@ public class PrivacyService extends IPrivacyService.Stub {
 			// Default value
 			if (result.value == null)
 				result.value = setting.value;
+
+		} catch (SQLiteException ex) {
+			notifyException(ex);
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		} finally {
@@ -2174,6 +2184,42 @@ public class PrivacyService extends IPrivacyService.Stub {
 					}
 				}
 			});
+	}
+
+	private void notifyException(Throwable ex) {
+		Util.bug(null, ex);
+
+		if (mNotified)
+			return;
+
+		Context context = getContext();
+		if (context == null)
+			return;
+
+		try {
+			Intent intent = new Intent("biz.bokhorst.xprivacy.action.EXCEPTION");
+			intent.putExtra("Message", ex.toString());
+			context.sendBroadcast(intent);
+
+			NotificationManager notificationManager = (NotificationManager) context
+					.getSystemService(Context.NOTIFICATION_SERVICE);
+
+			// Build notification
+			NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(context);
+			notificationBuilder.setSmallIcon(R.drawable.ic_launcher);
+			notificationBuilder.setContentTitle(context.getString(R.string.app_name));
+			notificationBuilder.setContentText(ex.toString());
+			notificationBuilder.setWhen(System.currentTimeMillis());
+			notificationBuilder.setAutoCancel(true);
+			Notification notification = notificationBuilder.build();
+
+			// Display notification
+			notificationManager.notify(Util.NOTIFY_CORRUPT, notification);
+
+			mNotified = true;
+		} catch (Throwable exex) {
+			Util.bug(null, exex);
+		}
 	}
 
 	private boolean getSettingBool(int uid, String name, boolean defaultValue) throws RemoteException {
