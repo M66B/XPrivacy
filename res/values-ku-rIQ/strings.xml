@@ -80,6 +80,7 @@
     <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
     <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
     <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>هه ول و ماندو بوونیکی زور دراوه بو دروستکردن و تاقیکردنه وه ی ئه م به رنامه يه به لام له گه ل ئه وه شدا ناتوانين دلنياتان بكه ين له وه ىكه ئه م به رنامه يه بى هه له يه و له سه ر هه موو موبايليك ياخود بو هه ر به رنامه يه ك كار ده كات.
 \n\nته نيا خوت به رپرسیاریت له به کارهینانی ئه م به رنامه يه.</b>\n\nهه روه ها سه يريكى موله تى ريپیدان بکه:</string>
     <string name="restrict_accounts" tools:ignore="UnusedResources">حیسابه کان (گوگل, فه یسبوک, هتد)</string>

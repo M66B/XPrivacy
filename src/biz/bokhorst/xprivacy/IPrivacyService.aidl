@@ -6,6 +6,7 @@ import biz.bokhorst.xprivacy.PSetting;
 interface IPrivacyService {
 	int getVersion();
 	List /* String */ check();
+	boolean databaseCorrupt();
 	void reportError(String message);
 	Map getStatistics();
 

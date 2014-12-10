@@ -80,6 +80,7 @@
     <string name="msg_method_expert">関数毎の制限の設定は上級者向けです。あなたは上級者ですか?</string>
     <string name="msg_longpress_whitelist">関数名を長押しするとパラメーターのホワイト/ブラックリストを設定できます</string>
     <string name="msg_settings_specific">アプリ固有のチェックマークや設定値は全体設定よりも優先されます。チェックマークや設定値のない項目は優先されません</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>XPrivacy の開発およびテストには細心の注意を払いましたが、
 すべての端末のあらゆるアプリで完璧な動作を保証することは不可能です。
 \n\n完全に自己責任のうえでご利用ください。</b>\n\nライセンスについて :</string>

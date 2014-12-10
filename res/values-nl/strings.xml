@@ -80,6 +80,7 @@
     <string name="msg_method_expert">Functie beperkingen zijn bedoeld voor experts. Bent u een expert?</string>
     <string name="msg_longpress_whitelist">Druk lang op een functienaam om een parameter op de witte of zwarte lijst te zetten</string>
     <string name="msg_settings_specific">Vinkjes en waarden gaan voor globale vinkjes en waarden; lege vinkjes en waarden gaan niet voor</string>
+    <string name="msg_corrupt">De privacy database werd opnieuw ingesteld, omdat hij beschadigd was</string>
     <string name="msg_first"><b>XPrivacy is zorgvuldig ontwikkeld en getest,
 maar het is onmogelijk om te garanderen dat het op elk apparaat en voor elke applicatie foutloos werkt.
 \n\nGebruik is geheel op eigen risico.</b>\n\nZie ook de licentie:</string>

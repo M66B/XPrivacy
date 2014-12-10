@@ -80,6 +80,7 @@
     <string name="msg_method_expert">المقصود من تقييد الوظائف هم المستخدمين الخبراء. هل أنت مستخدم خبير؟</string>
     <string name="msg_longpress_whitelist">الضغط لمدة طويلة على إسم الوظيفة لقيم القائمة البيضاء أو القائمة السوداء</string>
     <string name="msg_settings_specific">علامات الإختيار والقيم تأخذ أسبقية على علامات الإختيار العامة وقيمتها; خانات الإختيار الفارغة وقيمها لا تأخذ أسبقية</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>بُذلت عناية كبيرة لتطوير وإختبار XPrivacy,
 ومع ذلك فإنه من المستحيل ضمان أنه سيعمل خالياً من العيوب على كل جهاز ولكل تطبيق.
 \n\nالإستخدام على مسئوليتك الخاصة.</b>\n\nراجع أيضاً الترخيص:</string>

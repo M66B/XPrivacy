@@ -80,6 +80,7 @@
     <string name="msg_method_expert">Restricciones de swyddogaeth destinados a usuarios expertos. ¿Eres un usuario experto?</string>
     <string name="msg_longpress_whitelist">cyffwrdd larga nombre de la swyddogaeth a la lista de paramedrau de color blanco o negro</string>
     <string name="msg_settings_specific">Las marcas de verificación y los valores tienen prioridad sobre las marcas y los valores de verificación a nivel mundial; casillas vacías y los valores no tienen prioridad</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>Gran cuidado se ha tomado para desarrollar y XPrivacy prueba, 
 sin embargo, es imposible garantizar que funcionará sin problemas en todas y cada dispositivo y para cada cais. 
 \n\nes bajo su propio riesgo.</b>\n\nConsulte también la licencia:</string>

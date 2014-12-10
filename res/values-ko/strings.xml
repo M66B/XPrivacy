@@ -80,6 +80,7 @@
     <string name="msg_method_expert">이 차단기능은 파워유저전용입니다, 파워유저입니까?</string>
     <string name="msg_longpress_whitelist">기능이름을 길게 눌러, 블랙/화이트리스트를 설정하세요</string>
     <string name="msg_settings_specific">앱의 체크박스정보는 전체 카데고리정보보다 우선시 적용됩니다; 박스가 체크되지 않았으면 카데고리정보를 따릅니다</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>XPrivacy의 개발에 열과 성을 다하였으나,
 각각 다르고 수많은 기기에서 문제없이 완벽하게 돌아가는 것을 장담할 수는 없습니다.
 \n\n기기의 문제 발생시 책임은 사용자에게 있습니다.</b>\n\n라이센스 사항 보기:</string>

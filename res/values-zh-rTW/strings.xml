@@ -80,6 +80,7 @@
     <string name="msg_method_expert">功能限制主要供進階使用者使用，確定要這麼做嗎?</string>
     <string name="msg_longpress_whitelist">長按功能項目來設定黑/白名單參數</string>
     <string name="msg_settings_specific">打勾後會用app專屬偽造資訊取代全域設定；反之則套用全域設定的偽造資訊</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>儘管 XPrivacy 在開發過程中經過詳細測試，但仍無法保證可以在所有裝置/安卓版本/各app上正常使用
     \n\n請自行承擔使用XPrivacy的可能風險。</b>
     \n\n請參閱說明文件：</string>

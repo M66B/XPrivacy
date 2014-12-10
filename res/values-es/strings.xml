@@ -80,6 +80,7 @@
     <string name="msg_method_expert">Las restricciones de las funciones avanzadas van dirigidas a usuarios expertos. ¿Eres un usuario experto?</string>
     <string name="msg_longpress_whitelist">Mantén pulsado el nombre de la función para añadir a la lista blanca o negra los parámetros</string>
     <string name="msg_settings_specific">Las casillas de verificación y los valores configurados tienen preferencia sobre las casillas y valores globales; las cajas y valores vacíos no tienen preferencia</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>Se ha puesto mucho cuidado en el desarrollo y pruebas de XPrivacy,
 sin embargo no puedo garantizar que funcione sin ningún fallo para cada dispositivo y aplicación.
 \n\nÚselo bajo su responsabilidad.</b>\n\nVéase también el permiso:</string>

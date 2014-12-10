@@ -80,6 +80,7 @@
     <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
     <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
     <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>A aplicação XPrivacy foi desenvolvida e testada com todo o cuidado, 
 porém é impossível garantir que irá funcionar sem problemas em todos os dispositivos e com todas as aplicações.
 \n\nO uso desta aplicação é inteiramente por sua conta e risco.</b>\n\nVer também a licença:</string>

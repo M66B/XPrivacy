@@ -80,6 +80,7 @@
     <string name="msg_method_expert">Fungsi sekatan adalah untuk pengguna pakar. Adakah anda pengguna pakar?</string>
     <string name="msg_longpress_whitelist">Tekan dengan lama nama fungsi untuk menyenarai putih atau menyenarai hitam senarai parameter</string>
     <string name="msg_settings_specific">Tanda semak dan nilai mengambil keutamaan daripada tanda semak global dan nilai; kotak tanda semak dan nilai yang kosong tidak diutamakan</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>Penjagaan rapi telah diambil untuk membangunkan dan menguji XPrivacy,
 namun ia adalah mustahil untuk menjaminkan penggunaan sempurna untuk setiap peranti dan untuk semua applikasi.
 \n\nPenggunaan adalah sepenuhnya di atas risiko sendiri.</b>\n\nLihat juga lesen:</string>

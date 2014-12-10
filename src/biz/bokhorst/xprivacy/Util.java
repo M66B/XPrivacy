@@ -66,6 +66,7 @@ public class Util {
 	public static int NOTIFY_RANDOMIZE = 4;
 	public static int NOTIFY_UPGRADE = 5;
 	public static int NOTIFY_UPDATE = 6;
+	public static int NOTIFY_CORRUPT = 7;
 
 	public static void log(XHook hook, int priority, String msg) {
 		// Check if logging enabled

@@ -80,6 +80,7 @@
     <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
     <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
     <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>Unatoč velikoj pažnji koja je bila potrebna da bi se razvio i testirao Xprivacy, nemoguće je garantirati da će raditi savršeno na svakom uređaju i/ili za svaku aplikaciju.
 \n\nKoristiti isključivo na vlastitu odgovornost.</b>\n\nTakođer pogledati licencu:</string>
     <string name="restrict_accounts" tools:ignore="UnusedResources">Korisnički računi</string>

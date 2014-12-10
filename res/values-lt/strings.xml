@@ -80,6 +80,7 @@
     <string name="msg_method_expert">Funkcijų ribojimai yra skirti patyrusiems naudotojams. Ar esate ekspertas?</string>
     <string name="msg_longpress_whitelist">Ilgai paspauskite ant funkcijos, norint itraukti į baltą arba juodą sąrašą</string>
     <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
     <string name="msg_first"><b>Puiku, kad sutikote išbandyti XPrivacy.
 Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietaisu.
 \n\nTodėl naudokite visiškai savo pačių rizika.</b>\n\nTaip pat žiūrėkite licenciją:</string>

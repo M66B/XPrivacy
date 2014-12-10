@@ -78,9 +78,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 450;
-	private static final String cServiceName = "xprivacy386";
+	private static final int cCurrentVersion = 452;
+	private static final String cServiceName = "xprivacy452";
 
+	private boolean mCorrupt = false;
 	private SQLiteDatabase mDb = null;
 	private SQLiteDatabase mDbUsage = null;
 	private SQLiteStatement stmtGetRestriction = null;
@@ -266,6 +267,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 		}
 
 		return listError;
+	}
+
+	@Override
+	public boolean databaseCorrupt() {
+		return mCorrupt;
 	}
 
 	@Override
@@ -2362,6 +2368,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 						Util.log(null, Log.WARN, "Database integrity ok");
 					else {
 						// http://www.sqlite.org/howtocorrupt.html
+						mCorrupt = true;
 						Util.log(null, Log.ERROR, "Database corrupt");
 						Cursor cursor = db.rawQuery("PRAGMA integrity_check", null);
 						try {
