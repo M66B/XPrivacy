@@ -80,7 +80,7 @@
     <string name="msg_method_expert">Fungsi pembatasan ditujukan untuk pengguna ahli. Apakah Anda pengguna ahli?</string>
     <string name="msg_longpress_whitelist">Tekan agak lama nama fungsi untuk parameter daftar hitam atau putih</string>
     <string name="msg_settings_specific">Tanda centang beserta nilai lebih diutamakan daripada tanda centang global dan nilai; kotak centang kosong beserta nilai tidak diutamakan</string>
-    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
+    <string name="msg_corrupt">Basis data privasi diatur ulang, karena sudah korup</string>
     <string name="msg_first"><b>Perhatian yang sangat besar telah dilakukan untuk mengembangkan dan menguji XPrivacy,
 Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan untuk setiap aplikasi.
 \n\nGunakan sepenuhnya dengan resiko Anda sendiri.</b>\n\nLihat juga lisensinya:</string>
