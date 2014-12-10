@@ -80,7 +80,7 @@
     <string name="msg_method_expert">La restriction des fonctions est destinée aux utilisateurs expérimentés. Êtes-vous un expert ?</string>
     <string name="msg_longpress_whitelist">Faites un appui long sur le nom d\'une fonction pour mettre les paramètres en liste blanche/noire</string>
     <string name="msg_settings_specific">À partir du moment où une option est cochée ou une valeur est définie, celle-ci remplacera l\'option ou la valeur globale correspondante</string>
-    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
+    <string name="msg_corrupt">La base de données a été réinitialisée car elle était endommagée</string>
     <string name="msg_first"><b>Un grand soin est apporté au développement et aux tests de XPrivacy. Toutefois,
 il est impossible de garantir un fonctionnement parfait sur chaque appareil et pour chaque application.
 \nSon utilisation est à vos risques et périls !</b>\n\nVeuillez prendre connaissance de la licence :</string>
