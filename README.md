@@ -676,6 +676,8 @@ Also see the above FAQ about what to do when updating your ROM.
 
 That is correct. XPrivacy only replaces the real location with a fake location. It even uses the real location to randomize the fake location. The idea is that everything should appear as normal as possible to an application.
 
+See [here](http://forum.xda-developers.com/showpost.php?p=57417209&postcount=13097) for some addtional information.
+
 <a name="FAQ19"></a>
 **(19) How about multi-user support?**
 
