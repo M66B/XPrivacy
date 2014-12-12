@@ -79,8 +79,8 @@
     <string name="msg_expert">Eksperci powinni sami rozwiązywać swoje problemy w miarę możliwości, śledzić forum XDA XPrivacy oraz pomagać innym o ile to możliwe</string>
     <string name="msg_method_expert">Restrykcje funkcji są przeznaczone dla ekspertów. Czy jesteś ekspertem?</string>
     <string name="msg_longpress_whitelist">Przytrzymaj długo nazwę funkcji aby dodać do białej lub czarnej listy parametr</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
-    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
+    <string name="msg_settings_specific">"Ptaszki" i wartości mają pierwszeństwo nad globalnymi "ptaszkami" i wartościami; puste "ptaszki" i wartości nie mają pierwszeństwa</string>
+    <string name="msg_corrupt">Baza danych XPrivacy została zresetowana, ponieważ była uszkodzona</string>
     <string name="msg_first"><b>Dołożyliśmy wszelkich starań podczas programowania i testów XPrivacy.
     Jednak nie możemy zagwarantować, że będzie on działać bezbłędnie na każdym urządzeniu oraz z każdą aplikacją.
 \n\nUżywasz go całkowicie na własne ryzyko.</b>\n\nZobacz też licencję:</string>
@@ -106,32 +106,32 @@
     <string name="restrict_shell">Powłoka (polecenia, superuser)</string>
     <string name="restrict_system">System (zainstalowane aplikacje)</string>
     <string name="restrict_view">Widok (przeglądarka)</string>
-    <string name="restrict_help_view">Zablokuje to dostęp do akcji view oraz informacji</string>
-    <string name="restrict_help_system">Zablokuje to dostęp do informacji o systemie, np. listy zainstalowanych aplikacji</string>
-    <string name="restrict_help_shell">Zablokuje to dostęp do polecen powłoki, łącznie z poleceniem superuser</string>
-    <string name="restrict_help_storage">Zablokuje to dostęp do storage, np. pliki na twojej karcie SD albo w pamięci telefonu</string>
-    <string name="restrict_help_sensors">Zablokuje to dostęp do czujników, np. czujnika ruchu</string>
-    <string name="restrict_help_phone">Zablokuje to dostęp do informacji o telefonie, np. twój numer telefonu</string>
-    <string name="restrict_help_overlay">Zablokuje to okienka typu overlay aby zapobiec phishingowi</string>
-    <string name="restrict_help_notifications">Zablokuje to dostęp do systemowych i aplikacyjnych powiadomień oraz Google cloud messaging</string>
-    <string name="restrict_help_nfc">Zablokuje to dostęp do near field communication</string>
-    <string name="restrict_help_network">Zablokuje to dostęp do informacji o sieci, np. adres IP oraz MAC oraz informacje o sieci WiFi</string>
-    <string name="restrict_help_messages">Zablokuje to dostęp do otrzymanych i zapisanych wiadomości (SMS/MMS) oraz do poczty głosowej</string>
-    <string name="restrict_help_media">Zablokuje to dostęp do aparatu (zdjęcia i filmy) oraz mikrofonu</string>
-    <string name="restrict_help_location">Zablokuje to dostęp do twojej przybliżonej i dokładnej lokalizacji</string>
-    <string name="restrict_help_ipc">Will restrict inter-process communication, when used to circumvent other restrictions</string>
-    <string name="restrict_help_internet">Zablokuje to dostęp do internetu</string>
-    <string name="restrict_help_identification">Zablokuje to informacje które mogą posłużyć do twojej identyfikacji, np. numer seryjny twojego urządzenia</string>
-    <string name="restrict_help_email">Zablokuje to dostęp do informacji e-mail, np. adresy oraz wiadomości (tylko standardowa aplikacja oraz Gmail)</string>
-    <string name="restrict_help_dictionary">Zablokuje to dostęp do słownika użytkownika</string>
-    <string name="restrict_help_contacts">Zablokuje to dostęp do informacji o twoich kontaktach</string>
-    <string name="restrict_help_clipboard">Zablokuje to dostęp do informacji w schowku</string>
-    <string name="restrict_help_calling">Zablokuje to możliwość dzwonienia na numery telefonów, wysyania wiadomości (SMS/MMS) orad dostępu do historii połączeń</string>
-    <string name="restrict_help_calendar">Zablokuje to dostęp do twojego kalendarza, np. twoich spotkań</string>
-    <string name="restrict_help_browser">Zablokuje to dostęp do twojej przeglądarki, np. zakładek oraz historii pobierania plików</string>
-    <string name="restrict_help_accounts">Zablokuje to dostęp do informacji o twoim koncie, np. konice Google, które zawiera również twój adres e-mail</string>
+    <string name="restrict_help_view">Ograniczy dostęp do akcji view oraz informacji</string>
+    <string name="restrict_help_system">Ograniczy dostęp do informacji o systemie, np. listy zainstalowanych aplikacji</string>
+    <string name="restrict_help_shell">Ograniczy dostęp do polecen powłoki, łącznie z poleceniem superuser</string>
+    <string name="restrict_help_storage">Ograniczy dostęp do storage, np. pliki na twojej karcie SD albo w pamięci telefonu</string>
+    <string name="restrict_help_sensors">Ograniczy dostęp do czujników, np. czujnika ruchu</string>
+    <string name="restrict_help_phone">Ograniczy dostęp do informacji o telefonie, np. twój numer telefonu</string>
+    <string name="restrict_help_overlay">Ograniczy okienka typu overlay aby zapobiec phishingowi</string>
+    <string name="restrict_help_notifications">Ograniczy dostęp do systemowych i aplikacyjnych powiadomień oraz Google cloud messaging</string>
+    <string name="restrict_help_nfc">Ograniczy dostęp do near field communication</string>
+    <string name="restrict_help_network">Ograniczy dostęp do informacji o sieci, np. adres IP oraz MAC oraz informacje o sieci WiFi</string>
+    <string name="restrict_help_messages">Ograniczy dostęp do otrzymanych i zapisanych wiadomości (SMS/MMS) oraz do poczty głosowej</string>
+    <string name="restrict_help_media">Ograniczy dostęp do aparatu (zdjęcia i filmy) oraz mikrofonu</string>
+    <string name="restrict_help_location">Ograniczy dostęp do twojej przybliżonej i dokładnej lokalizacji</string>
+    <string name="restrict_help_ipc">Ograniczy międzyprocesową komunikację, gdy jest używana do omijania innych ograniczeń</string>
+    <string name="restrict_help_internet">Ograniczy dostęp do internetu</string>
+    <string name="restrict_help_identification">Ograniczy informacje które mogą posłużyć do twojej identyfikacji, np. numer seryjny twojego urządzenia</string>
+    <string name="restrict_help_email">Ograniczy dostęp do informacji e-mail, np. adresy oraz wiadomości (tylko standardowa aplikacja oraz Gmail)</string>
+    <string name="restrict_help_dictionary">Ograniczy dostęp do słownika użytkownika</string>
+    <string name="restrict_help_contacts">Ograniczy dostęp do informacji o twoich kontaktach</string>
+    <string name="restrict_help_clipboard">Ograniczy dostęp do informacji w schowku</string>
+    <string name="restrict_help_calling">Ograniczy możliwość dzwonienia na numery telefonów, wysyłania wiadomości (SMS/MMS) orad dostępu do historii połączeń</string>
+    <string name="restrict_help_calendar">Ograniczy dostęp do twojego kalendarza, np. twoich spotkań</string>
+    <string name="restrict_help_browser">Ograniczy dostęp do twojej przeglądarki, np. zakładek oraz historii pobierania plików</string>
+    <string name="restrict_help_accounts">Ograniczy dostęp do informacji o twoim koncie, np. konice Google, które zawiera również twój adres e-mail</string>
     <string name="whitelist_address">Adresy</string>
-    <string name="whitelist_action">Action</string>
+    <string name="whitelist_action">Akcje</string>
     <string name="whitelist_ipaddress">Adresy IP</string>
     <string name="whitelist_library">Biblioteki natywne</string>
     <string name="whitelist_method">Nazwy metod</string>
@@ -174,8 +174,8 @@
     <string name="title_template_full">Zastosuj szablon (kategorie+funkcje)</string>
     <string name="title_template_merge">Zastosuj szablon (scalenie)</string>
     <string name="title_template_merge_reset">Zastosuj szablon (merge reset)</string>
-    <string name="title_enable_ondemand">Włącz restrykcje na żądanie</string>
-    <string name="title_disable_ondemand">Wyłącz restrykcje na żądanie</string>
+    <string name="title_enable_ondemand">Włącz ograniczanie na żądanie</string>
+    <string name="title_disable_ondemand">Wyłącz ograniczanie na żądanie</string>
     <string name="title_ondemand_default">Timeout spowoduje:</string>
     <string name="title_ondemand_reset">Reset</string>
     <string name="title_default">Domyślnie</string>
@@ -185,7 +185,7 @@
     <string name="title_usage_text_1">1. Znajdź aplikację którą chcesz ograniczyć na głównej liście aplikacji</string>
     <string name="title_usage_text_2">2. Tapnij na ikonie aplikacji</string>
     <string name="title_usage_text_3">3. Tapnij na pierwszym checkboksie z danej kategorii, którą chcesz ograniczyć</string>
-    <string name="title_usage_footer">Używaj zdrowego rozsądku podczas ograniczania, nie spodziewaj się dostępu do internetu jeśli ograniczyłeś kategorię Internet itp.</string>
+    <string name="title_usage_footer">Zachowaj zdrowy rozsądek podczas ograniczania, nie spodziewaj się dostępu do internetu jeśli ograniczyłeś kategorię Internet itp.</string>
     <string name="title_toggle_dangerous">Przytrzymaj dużej na tytule aby przełączyć niebezpieczne funkcje</string>
     <string name="title_ondemand_category">Zastosowanie kategorii zresetuje wyjątki funkcji do wartości domyślnych</string>
     <string name="title_function_help">Dokumentacja funkcji</string>
@@ -228,7 +228,7 @@
     <string name="settings_quirks">Quirks</string>
     <string name="settings_aosp">Tryb AOSP (wymaga restartu)</string>
     <string name="help_check_restrict">Pierwszy check box: ogranicz kategorię lub funkcję</string>
-    <string name="help_check_ondemand">Drugi check box: ogranicz na żądanie</string>
+    <string name="help_check_ondemand">Drugi "ptaszek": ogranicz na żądanie</string>
     <string name="help_switch">Przełącznik On/off: włącz lub wyłącz wszystkie ograniczenia</string>
     <string name="help_longpress">Przytrzymaj na nazwie aby wybrać</string>
     <string name="help_ondemand">będą pytania o ograniczenia</string>
@@ -243,14 +243,14 @@
     <string name="help_attention">restrykcje wymagają sprawdzenia</string>
     <string name="help_restricted">restrykcje się zmieniły</string>
     <string name="help_shared">restrykcje zostały wysłane</string>
-    <string name="help_settings">has application specific fake values</string>
+    <string name="help_settings">aplikacja ma specyficzne sfałszowane wartości</string>
     <string name="tutorial_mainheader">Wybierz kategorię do ograniczenia</string>
-    <string name="tutorial_mainlist">Tapnij checkbox aby ograniczyć wybraną kategorię dla danej aplikacji\n
-\nDla ograniczonych kategorii aplikacjom będą podawane puste albo sfałszowane dane\n
+    <string name="tutorial_mainlist">Tapnij "checkbox"ptaszka" aby ograniczyć wybraną kategorię dla danej aplikacji\n
+\nDla ograniczonych kategorii aplikacjom będą podawane puste albo sfałszowane wartości\n
 \nTapnij ikonę aplikacji aby uzyskać dostęp do szczegółowych ograniczeń i ustawień</string>
     <string name="tutorial_detailsheader">Tapnij na ikone aplikacji po więcej akcji</string>
     <string name="tutorial_detailslist">Tapnij na strzałkę w dół aby zobaczyć wyjątki ograniczeń w danej kategorii</string>
     <string name="permission_manage">Zarządzaj aplikacjami, włącznie z zabijaniem</string>
-    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
+    <string name="permission_restrictions">Zarządzaj ograniczeniami i ustawieniami XPrivacy</string>
 
 </resources>
