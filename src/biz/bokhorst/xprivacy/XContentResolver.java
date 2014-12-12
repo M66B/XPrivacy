@@ -138,7 +138,8 @@ public class XContentResolver extends XHook {
 					return new ArrayList<XHook>();
 				}
 			}
-		else if (packageName.startsWith("com.android.email.provider")) {
+
+		else if (packageName.startsWith("com.android.email.provider"))
 			try {
 				Class.forName("com.android.email.provider.EmailProvider", false, loader);
 				return getInstances("com.android.email.provider.EmailProvider");
@@ -146,7 +147,17 @@ public class XContentResolver extends XHook {
 				Util.log(null, Log.WARN, "E-mail provider not found, package=" + packageName);
 				return new ArrayList<XHook>();
 			}
-		} else {
+
+		else if (packageName.startsWith("com.google.android.gm.provider"))
+			try {
+				Class.forName("com.google.android.gm.provider.PublicContentProvider", false, loader);
+				return getInstances("com.google.android.gm.provider.PublicContentProvider");
+			} catch (ClassNotFoundException ignored) {
+				Util.log(null, Log.WARN, "G-mail provider not found, package=" + packageName);
+				return new ArrayList<XHook>();
+			}
+
+		else {
 			List<XHook> listHook = new ArrayList<XHook>();
 			for (String className : cProviderClassName)
 				if (className.startsWith(packageName))
