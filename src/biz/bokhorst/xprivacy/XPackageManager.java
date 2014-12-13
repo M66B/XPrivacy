@@ -169,10 +169,11 @@ public class XPackageManager extends XHook {
 					ApplicationInfo aInfo = (ApplicationInfo) param.getResult();
 					uid = aInfo.uid;
 				}
-
-				String packageName = (String) param.args[0];
+				if (uid == Binder.getCallingUid())
+					return;
 
 				// Prevent recursion
+				String packageName = (String) param.args[0];
 				if (!XPackageManager.class.getPackage().getName().equals(packageName))
 					if (isRestrictedExtra(param, packageName))
 						if (!isPackageAllowed(uid, packageName))

@@ -25,6 +25,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3.5.5 BETA**
+
+* Silently allow *Srv_getPackageInfo*/*Srv_getApplicationInfo* for own packages again
+
 **Version 3.5.4 BETA**
 
 * Broadcast *biz.bokhorst.xprivacy.action.EXCEPTION* if the database could not be read ([issue](/../../issues/2081))
