@@ -23,14 +23,18 @@ See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPr
 
 **Next release**
 
+* ...
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.5.4 BETA**
+
 * Broadcast *biz.bokhorst.xprivacy.action.EXCEPTION* if the database could not be read ([issue](/../../issues/2081))
 * Fixed all problems reported through the debug info
 * Allow querying information about own package in most cases ([issue](/../../issues/2079))
 * Updated French translation
 * Updated Indonesian translation
 * Updated Polish translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.5.3 BETA**
 
