@@ -148,7 +148,7 @@ public class XIntentFirewall extends XHook {
 					else
 						packageNames = new String[] { intent.getData().getSchemeSpecificPart() };
 					for (String packageName : packageNames)
-						if (!XPackageManager.isPackageAllowed(packageName))
+						if (!XPackageManager.isPackageAllowed(0, packageName))
 							return true;
 				}
 

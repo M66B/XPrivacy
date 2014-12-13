@@ -344,7 +344,7 @@ public class XContentResolver extends XHook {
 					while (cursor.moveToNext()) {
 						int colPackage = cursor.getColumnIndex("package");
 						String packageName = (colPackage < 0 ? null : cursor.getString(colPackage));
-						if (packageName != null && XPackageManager.isPackageAllowed(packageName))
+						if (packageName != null && XPackageManager.isPackageAllowed(0, packageName))
 							copyColumns(cursor, result);
 					}
 					result.respond(cursor.getExtras());
