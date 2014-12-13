@@ -130,6 +130,8 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof UnknownHostException)
 			priority = Log.WARN;
+		else if (ex instanceof UnsatisfiedLinkError)
+			priority = Log.WARN;
 		else
 			priority = Log.ERROR;
 
