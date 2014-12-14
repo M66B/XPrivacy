@@ -70,6 +70,7 @@ public class Meta {
 		mListHook.add(new Hook("accounts", "Srv_getAccounts", "GET_ACCOUNTS", 19, "2.99", "getAccounts").AOSP(19));
 		mListHook.add(new Hook("accounts", "Srv_getAccountsAsUser", "GET_ACCOUNTS", 19, "2.99", null).AOSP(19));
 		mListHook.add(new Hook("accounts", "Srv_getAccountsByFeatures", "GET_ACCOUNTS", 19, "2.99", "getAccountsByTypeAndFeatures").AOSP(19));
+		mListHook.add(new Hook("accounts", "Srv_getAccountsForPackage", "GET_ACCOUNTS", 19, "3.5.6", null).AOSP(19));
 		mListHook.add(new Hook("accounts", "Srv_getSharedAccountsAsUser", "GET_ACCOUNTS", 19, "2.99", null).AOSP(19));
 		mListHook.add(new Hook("accounts", "Srv_getCurrentSyncs", "READ_SYNC_SETTINGS", 19, "2.99", "getCurrentSyncs").AOSP(19));
 

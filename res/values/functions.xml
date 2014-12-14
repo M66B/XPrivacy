@@ -19,6 +19,7 @@
     <string name="accounts_Srv_getAccounts" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccounts()">Google documentation</a>]]></string>
     <string name="accounts_Srv_getAccountsAsUser" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccounts()">Google documentation</a>]]></string>
     <string name="accounts_Srv_getAccountsByFeatures" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccountsByTypeAndFeatures(java.lang.String,%20java.lang.String[],%20android.accounts.AccountManagerCallback&lt;android.accounts.Account[]&gt;,%20android.os.Handler)">Google documentation</a>]]></string>
+    <string name="accounts_Srv_getAccountsForPackage" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccountsByTypeForPackage(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
     <string name="accounts_Srv_getSharedAccountsAsUser" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccounts()">Google documentation</a>]]></string>
     <string name="accounts_Srv_getCurrentSyncs" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#getCurrentSyncs()">Google documentation</a>]]></string>
 
