@@ -24,6 +24,7 @@ Changelog
 * Added restriction *Srv_startActivityAsCaller* ([issue](/../../issues/1757))
 * Added restriction *Srv_getAccountsForPackage*
 * Added account type parameter for *Srv_getAccounts* and *Srv_getAccountsAsUser*
+* Check external storage directory for *open* restriction ([issue](/../../issues/1757))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

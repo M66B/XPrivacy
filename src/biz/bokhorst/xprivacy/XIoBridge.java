@@ -20,6 +20,7 @@ public class XIoBridge extends XHook {
 	private static String mEmulatedSource = null;
 	private static String mEmulatedTarget = null;
 	private static String mMediaStorage = null;
+	private static String mSecondaryStorage = null;
 
 	private XIoBridge(Methods method, String restrictionName) {
 		super(restrictionName, method.name(), null);
@@ -44,6 +45,7 @@ public class XIoBridge extends XHook {
 	// public static FileDescriptor open(String path, int flags) throws FileNotFoundException
 	// public static FileDescriptor socket(boolean stream) throws SocketException
 	// libcore/luni/src/main/java/libcore/io/IoBridge.java
+	// https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/Environment.java
 
 	// @formatter:on
 
@@ -97,15 +99,18 @@ public class XIoBridge extends XHook {
 						mEmulatedSource = System.getenv("EMULATED_STORAGE_SOURCE");
 						mEmulatedTarget = System.getenv("EMULATED_STORAGE_TARGET");
 						mMediaStorage = System.getenv("MEDIA_STORAGE");
+						mSecondaryStorage = System.getenv("SECONDARY_STORAGE");
 						if (TextUtils.isEmpty(mMediaStorage))
 							mMediaStorage = "/data/media";
 					}
 
 					// Check storage folders
-					if (fileName.startsWith("/sdcard") || (mMediaStorage != null && fileName.startsWith(mMediaStorage))
+					if (fileName.startsWith("/sdcard")
 							|| (mExternalStorage != null && fileName.startsWith(mExternalStorage))
 							|| (mEmulatedSource != null && fileName.startsWith(mEmulatedSource))
-							|| (mEmulatedTarget != null && fileName.startsWith(mEmulatedTarget)))
+							|| (mEmulatedTarget != null && fileName.startsWith(mEmulatedTarget))
+							|| (mMediaStorage != null && fileName.startsWith(mMediaStorage))
+							|| (mSecondaryStorage != null && fileName.startsWith(mSecondaryStorage)))
 						if (isRestrictedExtra(param, fileName))
 							param.setThrowable(new FileNotFoundException("XPrivacy"));
 
