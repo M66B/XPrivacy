@@ -498,6 +498,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "Srv_startActivities", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_startActivity", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_startActivityAsUser", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_startActivityAsCaller", "", 21, null, null).AOSP(21));
 		mListHook.add(new Hook(null, "Srv_startActivityAndWait", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_startActivityWithConfig", "", 19, null, null).AOSP(19));
 

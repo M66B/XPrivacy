@@ -53,8 +53,9 @@ public class XActivityManager extends XHook {
 	// public int startActivityAsUser(IApplicationThread caller, String callingPackage, Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode, int flags, String profileFile,ParcelFileDescriptor profileFd, Bundle options, int userId)
 	// public WaitResult startActivityAndWait(IApplicationThread caller, String callingPackage, Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode, int flags, String profileFile, ParcelFileDescriptor profileFd, Bundle options, int userId)
 	// public int startActivityWithConfig(IApplicationThread caller, String callingPackage, Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode, int startFlags, Configuration newConfig, Bundle options, int userId)
-
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/am/ActivityManagerService.java
+	// public int startActivityAsCaller(IApplicationThread caller, String callingPackage, Intent intent, String resolvedType, IBinder resultTo, String resultWho, int requestCode, int flags, ProfilerInfo profilerInfo, Bundle options, int userId)
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/android/accounts/IAccountManager.java/
 
 	// @formatter:on
 
@@ -62,7 +63,7 @@ public class XActivityManager extends XHook {
 	private enum Methods {
 		getRecentTasks, getRunningAppProcesses, getRunningServices, getRunningTasks,
 		Srv_getRecentTasks, Srv_getRunningAppProcesses, Srv_getServices, Srv_getTasks,
-		Srv_startActivities, Srv_startActivity, Srv_startActivityAsUser, Srv_startActivityAndWait, Srv_startActivityWithConfig
+		Srv_startActivities, Srv_startActivity, Srv_startActivityAsCaller, Srv_startActivityAsUser, Srv_startActivityAndWait, Srv_startActivityWithConfig
 	};
 	// @formatter:on
 
@@ -111,6 +112,7 @@ public class XActivityManager extends XHook {
 			break;
 
 		case Srv_startActivity:
+		case Srv_startActivityAsCaller:
 		case Srv_startActivityAsUser:
 		case Srv_startActivityWithConfig:
 			if (param.args.length > 2 && param.args[2] instanceof Intent) {
@@ -167,6 +169,7 @@ public class XActivityManager extends XHook {
 
 		case Srv_startActivities:
 		case Srv_startActivity:
+		case Srv_startActivityAsCaller:
 		case Srv_startActivityAsUser:
 		case Srv_startActivityAndWait:
 		case Srv_startActivityWithConfig:

@@ -21,7 +21,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Added restriction *Srv_startActivityAsCaller* ([issue](/../../issues/1757))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
