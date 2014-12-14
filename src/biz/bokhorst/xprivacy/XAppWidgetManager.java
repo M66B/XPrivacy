@@ -25,6 +25,7 @@ public class XAppWidgetManager extends XHook {
 	// @formatter:off
 
 	// public List<AppWidgetProviderInfo> getInstalledProviders()
+	// public List<AppWidgetProviderInfo> getInstalledProvidersForProfile(UserHandle profile)
 	// frameworks/base/core/java/android/appwidget/AppWidgetManager.java
 	// http://developer.android.com/reference/android/appwidget/AppWidgetManager.html
 
@@ -34,12 +35,13 @@ public class XAppWidgetManager extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		getInstalledProviders, Srv_getInstalledProviders
+		getInstalledProviders, getInstalledProvidersForProfile, Srv_getInstalledProviders
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XAppWidgetManager(Methods.getInstalledProviders, PrivacyManager.cSystem));
+		listHook.add(new XAppWidgetManager(Methods.getInstalledProvidersForProfile, PrivacyManager.cSystem));
 		listHook.add(new XAppWidgetManager(Methods.Srv_getInstalledProviders, PrivacyManager.cSystem));
 		return listHook;
 	}
@@ -53,6 +55,7 @@ public class XAppWidgetManager extends XHook {
 	protected void after(XParam param) throws Throwable {
 		switch (mMethod) {
 		case getInstalledProviders:
+		case getInstalledProvidersForProfile:
 		case Srv_getInstalledProviders:
 			if (param.getResult() != null)
 				if (isRestricted(param))
