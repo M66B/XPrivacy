@@ -44,8 +44,8 @@ public class XIoBridge extends XHook {
 	// public static void connect(FileDescriptor fd, InetAddress inetAddress, int port, int timeoutMs) throws SocketException, SocketTimeoutException
 	// public static FileDescriptor open(String path, int flags) throws FileNotFoundException
 	// public static FileDescriptor socket(boolean stream) throws SocketException
-	// libcore/luni/src/main/java/libcore/io/IoBridge.java
 	// https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/Environment.java
+	// https://android.googlesource.com/platform/libcore/+/android-5.0.1_r1/luni/src/main/java/libcore/io/IoBridge.java
 
 	// @formatter:on
 
