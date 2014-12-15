@@ -37,6 +37,7 @@ Changelog
 * Added restrictions *getCarrierConfigValues* and *sendMultimediaMessage* ([issue](/../../issues/1757))
 * Added restrictions *Srv_getImei*, *Srv_getIsimIst* and *Srv_getIsimPcscf* ([issue](/../../issues/1757))
 * Added restrictions *Srv_enableLocationUpdatesForSubscriber*, *Srv_getCdmaMdn*, *Srv_getCdmaMin*, *getLine1AlphaTagForDisplay* and *Srv_getLine1NumberForDisplay* ([issue](/../../issues/1757))
+* Updated Catalan translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
