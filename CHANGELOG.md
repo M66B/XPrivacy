@@ -33,6 +33,7 @@ KitKat or before:
 * Added account type parameter for *Srv_getAccounts* and *Srv_getAccountsAsUser*
 * Added restrictions for [LinkProperties](http://developer.android.com/reference/android/net/LinkProperties.html)
 * Added quirk *nousage* to disable usage data for specific applications ([issue](/../../issues/2085))
+* Updated support library
 * Updated Catalan translation
 * Updated Slovak translation
 
