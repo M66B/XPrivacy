@@ -30,6 +30,7 @@ Changelog
 * Added quirk *nousage* to disable usage data for specific applications ([issue](/../../issues/2085))
 * Added restrictions for [UsageStatsManager](https://developer.android.com/reference/android/app/usage/UsageStatsManager.html) ([issue](/../../issues/1757))
 * Added restrictions *IpPrefix.getAddress* and *IpPrefix.getRawAddress* ([issue](/../../issues/1757))
+* Added restrictions for [LinkProperties](http://developer.android.com/reference/android/net/LinkProperties.html)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

@@ -181,8 +181,15 @@ public class Meta {
 		mListHook.add(new Hook("internet", "InetAddress.getByName", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		// android.net.IpPrefix
-		mListHook.add(new Hook("internet", "IpPrefix.getAddress", null, 21, "3.5.6", null).unsafe());
-		mListHook.add(new Hook("internet", "IpPrefix.getRawAddress", null, 21, "3.5.6", null).unsafe());
+		mListHook.add(new Hook("internet", "IpPrefix.getAddress", null, 21, "3.5.6", null).dangerous().unsafe());
+		mListHook.add(new Hook("internet", "IpPrefix.getRawAddress", null, 21, "3.5.6", null).dangerous().unsafe());
+
+		// android.net.LinkProperties
+		mListHook.add(new Hook("internet", "LinkProperties.getAddresses", null, 19, "3.5.6", null).dangerous().unsafe());
+		mListHook.add(new Hook("internet", "LinkProperties.getAllAddresses", null, 19, "3.5.6", null).dangerous().unsafe());
+		mListHook.add(new Hook("internet", "LinkProperties.getAllLinkAddresses", null, 19, "3.5.6", null).dangerous().unsafe());
+		mListHook.add(new Hook("internet", "LinkProperties.getLinkAddresses", null, 19, "3.5.6", null).dangerous().unsafe());
+		mListHook.add(new Hook("internet", "LinkProperties.getStackedLinks", null, 19, "3.5.6", null).dangerous().unsafe());
 
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
