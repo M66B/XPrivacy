@@ -467,6 +467,14 @@ public class Meta {
 
 		mListHook.add(new Hook("system", "IntentFirewall", "", 19, "2.2.2", null).AOSP(19).dangerous().whitelist(cTypeAction));
 
+		mListHook.add(new Hook("system", "queryAndAggregateUsageStats", null, 21, "3.5.6", null).notAOSP(21));
+		mListHook.add(new Hook("system", "queryConfigurations", null, 21, "3.5.6", null).notAOSP(21));
+		mListHook.add(new Hook("system", "queryEvents", null, 21, "3.5.6", null).notAOSP(21));
+		mListHook.add(new Hook("system", "queryUsageStats", null, 21, "3.5.6", null).notAOSP(21));
+		mListHook.add(new Hook("system", "Srv_queryConfigurationStats", null, 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("system", "Srv_queryEvents", null, 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("system", "Srv_queryUsageStats", null, 21, "3.5.6", null).AOSP(21));
+
 		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).unsafe().whitelist(cTypeUrl));
 		mListHook.add(new Hook("view", "WebView", "", 1, null, null).unsafe());
 		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null).unsafe());

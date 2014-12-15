@@ -395,6 +395,13 @@
     <string name="system_checkPermission" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
     <string name="system_checkUidPermission" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/pm/PackageManager.html#checkPermission(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
     <string name="system_IntentFirewall" translatable="false"><![CDATA[<a href="http://www.cis.syr.edu/~wedu/android/IntentFirewall/">Documentation</a>]]></string>
+    <string name="system_queryAndAggregateUsageStats" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/app/usage/UsageStatsManager.html#queryAndAggregateUsageStats(long, long)">Documentation</a>]]></string>
+    <string name="system_queryConfigurations" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/app/usage/UsageStatsManager.html#queryConfigurations(int, long, long)">Documentation</a>]]></string>
+    <string name="system_queryEvents" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/app/usage/UsageStatsManager.html#queryEvents(long, long)">Documentation</a>]]></string>
+    <string name="system_queryUsageStats" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/app/usage/UsageStatsManager.html#queryUsageStats(int, long, long)">Documentation</a>]]></string>
+    <string name="system_Srv_queryConfigurationStats" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/app/usage/UsageStatsManager.html#queryConfigurations(int, long, long)">Documentation</a>]]></string>
+    <string name="system_Srv_queryEvents" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/app/usage/UsageStatsManager.html#queryEvents(long, long)">Documentation</a>]]></string>
+    <string name="system_Srv_queryUsageStats" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/app/usage/UsageStatsManager.html#queryUsageStats(int, long, long)">Documentation</a>]]></string>
 
     <!-- view -->
     <string name="view_loadUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>

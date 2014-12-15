@@ -28,6 +28,7 @@ Changelog
 * Added restriction *getInstalledProvidersForProfile* ([issue](/../../issues/1757))
 * Allow white listing / show parameter of *getExternalStorageState* ([issue](/../../issues/1757))
 * Added quirk *nousage* to disable usage data for specific applications ([issue](/../../issues/2085))
+* Added restrictions for [UsageStatsManager](https://developer.android.com/reference/android/app/usage/UsageStatsManager.html) ([issue](/../../issues/1757))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
