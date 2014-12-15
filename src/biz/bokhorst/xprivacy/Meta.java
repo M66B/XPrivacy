@@ -231,6 +231,7 @@ public class Meta {
 		mListHook.add(new Hook("location", "getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, null, null).notAOSP(19));
 
 		mListHook.add(new Hook("location", "Srv_enableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, "2.99", "enableLocationUpdates").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_enableLocationUpdatesForSubscriber", "CONTROL_LOCATION_UPDATES", 21, "3.5.6", null).AOSP(21));
 		mListHook.add(new Hook("location", "Srv_getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, "2.99", "getAllCellInfo").AOSP(19));
 		mListHook.add(new Hook("location", "Srv_getCellLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "getCellLocation").AOSP(19));
 		mListHook.add(new Hook("location", "Srv_getNeighboringCellInfo", "ACCESS_COARSE_UPDATES", 3, "2.99", "getNeighboringCellInfo").AOSP(19));
@@ -368,9 +369,15 @@ public class Meta {
 		mListHook.add(new Hook("phone", "Srv_getVoiceMailAlphaTag", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailAlphaTag").AOSP(19));
 		mListHook.add(new Hook("phone", "Srv_getVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailNumber").AOSP(19));
 		mListHook.add(new Hook("phone", "Srv_getCompleteVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", null).AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getImei", "READ_PHONE_STATE", 21, "3.5.6", null));
-		mListHook.add(new Hook("phone", "Srv_getIsimIst", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null));
-		mListHook.add(new Hook("phone", "Srv_getIsimPcscf", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null));
+
+		mListHook.add(new Hook("phone", "Srv_getImei", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("phone", "Srv_getIsimIst", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("phone", "Srv_getIsimPcscf", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
+
+		mListHook.add(new Hook("phone", "Srv_getCdmaMdn", "MODIFY_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("phone", "Srv_getCdmaMin", "MODIFY_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("phone", "Srv_getLine1AlphaTagForDisplay", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("phone", "Srv_getLine1NumberForDisplay", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
 
 		mListHook.add(new Hook("phone", "listen", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("phone", "Srv_listen", "READ_PHONE_STATE", 10, null, null).AOSP(19));
@@ -608,6 +615,7 @@ public class Meta {
 		// TelephonyManager
 		mListHook.add(new Hook(null, "disableLocationUpdates", "", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook(null, "Srv_disableLocationUpdates", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_disableLocationUpdatesForSubscriber", "", 21, null, null).AOSP(21));
 
 		// UtilHook
 		mListHook.add(new Hook(null, "isXposedEnabled", "", 15, null, null));

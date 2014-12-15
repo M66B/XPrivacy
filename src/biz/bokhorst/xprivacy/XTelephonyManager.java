@@ -101,10 +101,17 @@ public class XTelephonyManager extends XHook {
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/com/android/server/TelephonyRegistry.java
 
 	// public void enableLocationUpdates()
+	// public void enableLocationUpdatesForSubscriber(long subId)
 	// public void disableLocationUpdates()
-	// public java.util.List<android.telephony.CellInfo> getAllCellInfo()
+	// public void disableLocationUpdatesForSubscriber(long subId)
+	// public List<android.telephony.CellInfo> getAllCellInfo()
 	// public android.os.Bundle getCellLocation()
-	// public java.util.List<android.telephony.NeighboringCellInfo> getNeighboringCellInfo()
+	// public String getCdmaMdn(long subId)
+	// public String getCdmaMin(long subId)
+	// public String getLine1AlphaTagForDisplay(long subId)
+	// public String getLine1NumberForDisplay(long subId)
+	// public List<android.telephony.NeighboringCellInfo> getNeighboringCellInfo()
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/com/android/internal/telephony/ITelephony.java
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android-apps/5.0.0_r1/com/android/phone/PhoneInterfaceManager.java
 
 	// @formatter:on
@@ -135,7 +142,11 @@ public class XTelephonyManager extends XHook {
 		Srv_listen,
 
 		Srv_enableLocationUpdates, Srv_disableLocationUpdates,
-		Srv_getAllCellInfo, Srv_getCellLocation, Srv_getNeighboringCellInfo
+		Srv_getAllCellInfo, Srv_getCellLocation, Srv_getNeighboringCellInfo,
+
+		Srv_enableLocationUpdatesForSubscriber, Srv_disableLocationUpdatesForSubscriber,
+		Srv_getCdmaMdn, Srv_getCdmaMin,
+		Srv_getLine1AlphaTagForDisplay, Srv_getLine1NumberForDisplay
 	};
 	// @formatter:on
 
@@ -211,6 +222,14 @@ public class XTelephonyManager extends XHook {
 			listHook.add(new XTelephonyManager(Methods.Srv_getAllCellInfo, PrivacyManager.cLocation, Srv.Phone));
 			listHook.add(new XTelephonyManager(Methods.Srv_getCellLocation, PrivacyManager.cLocation, Srv.Phone));
 			listHook.add(new XTelephonyManager(Methods.Srv_getNeighboringCellInfo, PrivacyManager.cLocation, Srv.Phone));
+
+			listHook.add(new XTelephonyManager(Methods.Srv_enableLocationUpdatesForSubscriber,
+					PrivacyManager.cLocation, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_disableLocationUpdatesForSubscriber, null, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_getCdmaMdn, PrivacyManager.cPhone, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_getCdmaMin, PrivacyManager.cPhone, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTagForDisplay, PrivacyManager.cPhone, Srv.Phone));
+			listHook.add(new XTelephonyManager(Methods.Srv_getLine1NumberForDisplay, PrivacyManager.cPhone, Srv.Phone));
 		}
 		return listHook;
 	}
@@ -228,8 +247,14 @@ public class XTelephonyManager extends XHook {
 				param.setResult(null);
 			break;
 
+		case Srv_disableLocationUpdatesForSubscriber:
+			if (isRestricted(param, PrivacyManager.cLocation, "Srv_enableLocationUpdatesForSubscriber"))
+				param.setResult(null);
+			break;
+
 		case enableLocationUpdates:
 		case Srv_enableLocationUpdates:
+		case Srv_enableLocationUpdatesForSubscriber:
 			if (isRestricted(param))
 				param.setResult(null);
 			break;
@@ -318,6 +343,10 @@ public class XTelephonyManager extends XHook {
 		case Srv_getImei:
 		case Srv_getIsimIst:
 		case Srv_getIsimPcscf:
+		case Srv_getCdmaMdn:
+		case Srv_getCdmaMin:
+		case Srv_getLine1AlphaTagForDisplay:
+		case Srv_getLine1NumberForDisplay:
 			break;
 		}
 	}
@@ -331,6 +360,8 @@ public class XTelephonyManager extends XHook {
 		case enableLocationUpdates:
 		case Srv_disableLocationUpdates:
 		case Srv_enableLocationUpdates:
+		case Srv_disableLocationUpdatesForSubscriber:
+		case Srv_enableLocationUpdatesForSubscriber:
 			break;
 
 		case getAllCellInfo:
@@ -410,14 +441,19 @@ public class XTelephonyManager extends XHook {
 		case Srv_getCompleteVoiceMailNumber:
 		case Srv_getVoiceMailNumber:
 		case Srv_getVoiceMailAlphaTag:
+		case Srv_getLine1AlphaTagForDisplay:
+		case Srv_getLine1NumberForDisplay:
 			String srvPhoneNumber = (String) param.getResult();
 			if (srvPhoneNumber != null)
 				if (isRestrictedValue(param, srvPhoneNumber))
-					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name().replace("Srv_", "")));
+					param.setResult(PrivacyManager.getDefacedProp(uid,
+							mMethod.name().replace("Srv_", "").replace("ForDisplay", "")));
 			break;
 
 		case Srv_getIsimIst:
 		case Srv_getIsimPcscf:
+		case Srv_getCdmaMdn:
+		case Srv_getCdmaMin:
 			if (param.getResult() != null)
 				if (isRestricted(param))
 					param.setResult(null);
