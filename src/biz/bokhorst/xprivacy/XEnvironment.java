@@ -6,7 +6,6 @@ import java.util.List;
 
 import android.os.Build;
 import android.os.Environment;
-import android.util.Log;
 
 import biz.bokhorst.xprivacy.XHook;
 
@@ -43,7 +42,8 @@ public class XEnvironment extends XHook {
 
 	@Override
 	protected void after(XParam param) throws Throwable {
-		if (mMethod == Methods.getExternalStorageState) {
+		switch (mMethod) {
+		case getExternalStorageState:
 			if (param.getResult() != null) {
 				String extra = null;
 				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
@@ -53,8 +53,7 @@ public class XEnvironment extends XHook {
 				if (isRestrictedExtra(param, extra))
 					param.setResult(Environment.MEDIA_UNMOUNTED);
 			}
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 }
