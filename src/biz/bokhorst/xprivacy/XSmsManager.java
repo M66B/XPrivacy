@@ -3,6 +3,7 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Bundle;
 import android.telephony.SmsMessage;
 
 public class XSmsManager extends XHook {
@@ -23,8 +24,10 @@ public class XSmsManager extends XHook {
 	// @formatter:off
 
 	// public static ArrayList<SmsMessage> getAllMessagesFromIcc()
+	// public Bundle getCarrierConfigValues()
 	// public void sendDataMessage(String destinationAddress, String scAddress, short destinationPort, byte[] data, PendingIntent sentIntent, PendingIntent deliveryIntent)
 	// public void sendMultipartTextMessage(String destinationAddress, String scAddress, ArrayList<String> parts, ArrayList<PendingIntent> sentIntents, ArrayList<PendingIntent> deliveryIntents)
+	// public void sendMultimediaMessage(Context context, Uri contentUri, String locationUrl, Bundle configOverrides, PendingIntent sentIntent)
 	// public void sendTextMessage(String destinationAddress, String scAddress, String text, PendingIntent sentIntent, PendingIntent deliveryIntent)
 	// frameworks/base/telephony/java/android/telephony/SmsManager.java
 	// http://developer.android.com/reference/android/telephony/SmsManager.html
@@ -39,7 +42,7 @@ public class XSmsManager extends XHook {
 
 	// @formatter:off
 	private enum Methods {
-		getAllMessagesFromIcc, sendDataMessage, sendMultipartTextMessage, sendTextMessage,
+		getAllMessagesFromIcc, getCarrierConfigValues, sendDataMessage, sendMultipartTextMessage, sendMultimediaMessage, sendTextMessage,
 		Srv_getAllMessagesFromIccEf, Srv_sendData, Srv_sendMultipartText, Srv_sendText
 	};
 	// @formatter:on
@@ -47,7 +50,9 @@ public class XSmsManager extends XHook {
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XSmsManager(Methods.getAllMessagesFromIcc, PrivacyManager.cMessages));
+		listHook.add(new XSmsManager(Methods.getCarrierConfigValues, PrivacyManager.cMessages));
 		listHook.add(new XSmsManager(Methods.sendDataMessage, PrivacyManager.cCalling));
+		listHook.add(new XSmsManager(Methods.sendMultimediaMessage, PrivacyManager.cCalling));
 		listHook.add(new XSmsManager(Methods.sendMultipartTextMessage, PrivacyManager.cCalling));
 		listHook.add(new XSmsManager(Methods.sendTextMessage, PrivacyManager.cCalling));
 
@@ -62,6 +67,7 @@ public class XSmsManager extends XHook {
 	protected void before(XParam param) throws Throwable {
 		switch (mMethod) {
 		case getAllMessagesFromIcc:
+		case getCarrierConfigValues:
 			// Do nothing
 			break;
 
@@ -71,6 +77,11 @@ public class XSmsManager extends XHook {
 			if (param.args.length > 0 && param.args[0] instanceof String)
 				if (isRestrictedExtra(param, (String) param.args[0]))
 					param.setResult(null);
+			break;
+
+		case sendMultimediaMessage:
+			if (isRestricted(param))
+				param.setResult(null);
 			break;
 
 		case Srv_getAllMessagesFromIccEf:
@@ -96,7 +107,13 @@ public class XSmsManager extends XHook {
 				param.setResult(new ArrayList<SmsMessage>());
 			break;
 
+		case getCarrierConfigValues:
+			if (param.getResult() != null && isRestricted(param))
+				param.setResult(new Bundle());
+			break;
+
 		case sendDataMessage:
+		case sendMultimediaMessage:
 		case sendMultipartTextMessage:
 		case sendTextMessage:
 			// Do nothing
