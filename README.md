@@ -1277,6 +1277,16 @@ Therefore it is better to get Xposed working for ART.
 
 Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783/page1281#post57091458).
 
+<a name="FAQ77"></a>
+**(77) My pro license does not work!**
+
+* Make sure that the license file name and contents were not altered while downloading the file, for example by a virus scanner or simply by your e-mail client (the most common problem is that some e-mail clients rename the file)
+* Make sure that you have put the license file into the root folder of the SD-card (this is the folder you will see when you connect your device to a PC)
+* After starting XPrivacy, the license file will be imported, which means the license file will be removed from the root folder of the SD-card and that the about dialog will show *Licensed*
+
+If your device doesn't have an SD-card, you will need to put the license file into the root folder of the external storage folder.
+This is the folder you will see if you connect your device to a PC. When in doubt, you can use the menu *Help*, *About* to see the correct folder name.
+
 Support
 -------
 
