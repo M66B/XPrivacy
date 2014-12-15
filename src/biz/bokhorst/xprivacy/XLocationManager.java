@@ -74,6 +74,11 @@ public class XLocationManager extends XHook {
 	// public boolean isProviderEnabled(java.lang.String provider)
 	// public boolean sendExtraCommand(java.lang.String provider, java.lang.String command, android.os.Bundle extras)
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/server/LocationManagerService.java
+	// public boolean addGpsMeasurementsListener(IGpsMeasurementsListener listener, String packageName)
+	// public boolean addGpsNavigationMessageListener(IGpsNavigationMessageListener listener, String packageName)
+	// public boolean removeGpsMeasurementsListener(IGpsMeasurementsListener listener)
+	// public boolean removeGpsNavigationMessageListener(IGpsNavigationMessageListener listener)
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/com/android/server/LocationManagerService.java
 
 	// @formatter:on
 
@@ -92,7 +97,9 @@ public class XLocationManager extends XHook {
 		Srv_getLastLocation,
 		Srv_addGpsStatusListener, Srv_removeGpsStatusListener,
 		Srv_getAllProviders, Srv_getProviders, Srv_getBestProvider, Srv_isProviderEnabled,
-		Srv_sendExtraCommand
+		Srv_sendExtraCommand,
+
+		Srv_addGpsMeasurementsListener, Srv_addGpsNavigationMessageListener, Srv_removeGpsMeasurementsListener, Srv_removeGpsNavigationMessageListener
 	};
 	// @formatter:on
 
@@ -134,12 +141,24 @@ public class XLocationManager extends XHook {
 		case addGpsStatusListener:
 		case addNmeaListener:
 		case Srv_addGpsStatusListener:
+		case Srv_addGpsMeasurementsListener:
+		case Srv_addGpsNavigationMessageListener:
 			if (isRestricted(param))
 				param.setResult(false);
 			break;
 
 		case Srv_removeGpsStatusListener:
 			if (isRestricted(param, PrivacyManager.cLocation, "Srv_addGpsStatusListener"))
+				param.setResult(null);
+			break;
+
+		case Srv_removeGpsMeasurementsListener:
+			if (isRestricted(param, PrivacyManager.cLocation, "Srv_addGpsMeasurementsListener"))
+				param.setResult(null);
+			break;
+
+		case Srv_removeGpsNavigationMessageListener:
+			if (isRestricted(param, PrivacyManager.cLocation, "Srv_addGpsNavigationMessageListener"))
 				param.setResult(null);
 			break;
 
@@ -216,8 +235,12 @@ public class XLocationManager extends XHook {
 		case addProximityAlert:
 		case Srv_requestGeofence:
 		case Srv_addGpsStatusListener:
+		case Srv_addGpsMeasurementsListener:
+		case Srv_addGpsNavigationMessageListener:
 		case Srv_removeGeofence:
 		case Srv_removeGpsStatusListener:
+		case Srv_removeGpsMeasurementsListener:
+		case Srv_removeGpsNavigationMessageListener:
 			// Do nothing
 			break;
 

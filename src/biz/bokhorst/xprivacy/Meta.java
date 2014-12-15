@@ -221,6 +221,8 @@ public class Meta {
 		mListHook.add(new Hook("location", "Srv_getLastLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "getLastKnownLocation").AOSP(19));
 		mListHook.add(new Hook("location", "Srv_requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99", "requestLocationUpdates").restart().AOSP(19));
 		mListHook.add(new Hook("location", "Srv_sendExtraCommand", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 3, "2.99", "sendExtraCommand").AOSP(19));
+		mListHook.add(new Hook("location", "Srv_addGpsMeasurementsListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("location", "Srv_addGpsNavigationMessageListener", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 21, "3.5.6", null).AOSP(21));
 
 		mListHook.add(new Hook("location", "enableLocationUpdates", "CONTROL_LOCATION_UPDATES", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("location", "getAllCellInfo", "ACCESS_COARSE_UPDATES", 17, null, null).notAOSP(19));
@@ -587,6 +589,8 @@ public class Meta {
 		mListHook.add(new Hook(null, "Srv_removeUpdates", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_removeGeofence", "", 19, null, null).AOSP(19));
 		mListHook.add(new Hook(null, "Srv_removeGpsStatusListener", "", 19, null, null).AOSP(19));
+		mListHook.add(new Hook(null, "Srv_removeGpsMeasurementsListener", "", 21, null, null).AOSP(21));
+		mListHook.add(new Hook(null, "Srv_removeGpsNavigationMessageListener", "", 21, null, null).AOSP(21));
 		mListHook.add(new Hook(null, "MapV1.disableMyLocation", "", 1, null, null).optional());
 
 		// MediaRecorder
