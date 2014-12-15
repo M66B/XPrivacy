@@ -88,6 +88,8 @@ public class XContentResolver extends XHook {
 	// public void registerContentObserver(android.net.Uri uri, boolean notifyForDescendants, android.database.IContentObserver observer, int userHandle)
 	// public void unregisterContentObserver(android.database.IContentObserver observer)
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.2.2_r1/android/content/ContentService.java
+	// public List<android.content.SyncInfo> getCurrentSyncsAsUser(int userId)
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/android/content/IContentService.java
 
 	// public Bundle call(String method, String request, Bundle args)
 	// http://developer.android.com/reference/android/provider/Settings.html
@@ -103,7 +105,7 @@ public class XContentResolver extends XHook {
 		getCurrentSync, getCurrentSyncs, getSyncAdapterTypes,
 		openAssetFile, openFile, openAssetFileDescriptor, openFileDescriptor, openInputStream, openOutputStream, openTypedAssetFileDescriptor,
 		query, Srv_call, Srv_query,
-		Srv_getCurrentSyncs
+		Srv_getCurrentSyncs, Srv_getCurrentSyncsAsUser
 	};
 	// @formatter:on
 
@@ -189,6 +191,7 @@ public class XContentResolver extends XHook {
 			listHook.add(new XContentResolver(Methods.Srv_query, null, "com.android.internal.telephony.IccProvider"));
 
 			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts, null));
+			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncsAsUser, PrivacyManager.cAccounts, null));
 		} else {
 			if ("com.android.providers.settings.SettingsProvider".equals(className))
 				listHook.add(new XContentResolver(Methods.Srv_call, null, className));
@@ -224,6 +227,7 @@ public class XContentResolver extends XHook {
 			break;
 
 		case Srv_getCurrentSyncs:
+		case Srv_getCurrentSyncsAsUser:
 			// Do nothing
 			break;
 		}
@@ -271,6 +275,7 @@ public class XContentResolver extends XHook {
 			break;
 
 		case Srv_getCurrentSyncs:
+		case Srv_getCurrentSyncsAsUser:
 			if (param.getResult() != null)
 				if (isRestricted(param)) {
 					int uid = Binder.getCallingUid();

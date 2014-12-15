@@ -32,6 +32,7 @@ Changelog
 * Added restrictions *IpPrefix.getAddress* and *IpPrefix.getRawAddress* ([issue](/../../issues/1757))
 * Added restrictions for [LinkProperties](http://developer.android.com/reference/android/net/LinkProperties.html)
 * Added restrictions *InetAddress.getAllByNameOnNet* and *InetAddress.getByNameOnNet* ([issue](/../../issues/1757))
+* Added restriction *Srv_getCurrentSyncsAsUser* ([issue](/../../issues/1757))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

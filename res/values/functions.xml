@@ -22,6 +22,7 @@
     <string name="accounts_Srv_getAccountsForPackage" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccountsByTypeForPackage(java.lang.String,%20java.lang.String)">Google documentation</a>]]></string>
     <string name="accounts_Srv_getSharedAccountsAsUser" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/accounts/AccountManager.html#getAccounts()">Google documentation</a>]]></string>
     <string name="accounts_Srv_getCurrentSyncs" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#getCurrentSyncs()">Google documentation</a>]]></string>
+    <string name="accounts_Srv_getCurrentSyncsAsUser" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/content/ContentResolver.html#getCurrentSyncs()">Google documentation</a>]]></string>
 
     <!-- browser -->
     <string name="browser_BrowserProvider2" translatable="false"><![CDATA[Will restrict access to the browser bookmarks and browser history]]></string>
