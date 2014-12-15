@@ -2,12 +2,12 @@
 
     <string name="app_notenabled">XPrivacy no està habilitat a l\'instal·lador d\'Xposed</string>
     <string name="app_wrongandroid">Només per a Android versió 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">XPrivacy és incompatible amb %s</string>
     <string name="app_version" formatted="false">Versió d\'XPrivacy: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">El gestor de privacitat definitiu</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 per M. Bokhorst (M66B)</string>
     <string name="app_compatibility">Running in compatibility mode</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_licensed">Llicenciat, gràcies pel teu suport!</string>
     <string name="menu_usage">Usos</string>
     <string name="menu_refresh">Refresca</string>
     <string name="menu_settings">Configuració</string>
@@ -21,56 +21,56 @@
     <string name="menu_pro">Versió Pro</string>
     <string name="menu_about">Quant a</string>
     <string name="menu_help">Ajuda</string>
-    <string name="menu_select_all">Select all</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_select_all">Sel·leccionar tots</string>
+    <string name="menu_sort">Ordenar</string>
+    <string name="menu_filter">Filtrar</string>
     <string name="menu_all">Totes</string>
-    <string name="menu_toggle">Toggle restrictions</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_clear_usage">Clear</string>
-    <string name="menu_clear_db">Clear all data</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_toggle">Alternar restrictions</string>
+    <string name="menu_clear_all">Borrar totes</string>
+    <string name="menu_clear_usage">Borrar</string>
+    <string name="menu_clear_db">Borrar totes les dades</string>
+    <string name="menu_usage_all">Alternar filtre</string>
     <string name="menu_apply">Aplica plantilla</string>
     <string name="menu_clear">Neteja</string>
     <string name="menu_app_launch">Executa</string>
     <string name="menu_app_settings">Configuració</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Matar</string>
     <string name="menu_accounts">Selecciona comptes a permetre</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">Selecciona aplicacions a permetre</string>
     <string name="menu_contacts">Selecciona contactes a permetre</string>
-    <string name="menu_whitelists">Manage whitelists</string>
+    <string name="menu_whitelists">Gestionar llistes blanques</string>
     <string name="menu_tutorial">Tutorial</string>
     <string name="menu_changelog">Changelog</string>
-    <string name="menu_flush">Flush cache</string>
+    <string name="menu_flush">Buidar memoria cau</string>
     <string name="menu_update">Check for updates</string>
     <string name="menu_batch">Operations &#8230;</string>
     <string name="menu_legend">Legend</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
+    <string name="msg_abort">Abortant</string>
+    <string name="msg_aborted">Abortat</string>
     <string name="msg_new">Nou</string>
     <string name="msg_update">Actualitza</string>
     <string name="msg_loading">Carregant</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_applied">Template applied</string>
-    <string name="msg_saved_to" formatted="false">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">Aplicant</string>
+    <string name="msg_applied">Plantilla aplicada</string>
+    <string name="msg_saved_to" formatted="false">Desat a %s</string>
+    <string name="msg_no_restrictions">No s\'han trobat restriccions</string>
     <string name="msg_sure">Esteu segur?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Si us plau, sel·leccioneu algunes aplicacions</string>
+    <string name="msg_limit">Si us plau, sel·leccioneu menys de %d aplicacions</string>
     <string name="msg_done">Fet</string>
     <string name="msg_reboot">Cal reiniciar</string>
     <string name="msg_random_now">Genera aleatòriament</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Aleatoritzar en cada accés</string>
     <string name="msg_random_boot">Genera aleatòriament després d\'arrencar</string>
-    <string name="msg_restart">Application restart required</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
-    <string name="msg_migrating" formatted="false">Migrating %s</string>
-    <string name="msg_randomizing" formatted="false">Randomizing %s</string>
-    <string name="msg_upgrading" formatted="false">Upgrading %s</string>
+    <string name="msg_restart">És necessari reiniciar l\'aplicació</string>
+    <string name="msg_register">Si us plau, registra el teu dispositiu</string>
+    <string name="msg_email">Si us plau, entra la teva adreça de correu electrònic</string>
+    <string name="msg_registered">Comprova el teu correu electronic per a activar el teu dispositiu</string>
+    <string name="msg_service">Servei d\'actualització en execució</string>
+    <string name="msg_migrating" formatted="false">Migrant a %s</string>
+    <string name="msg_randomizing" formatted="false">Aleatoritzant %s</string>
+    <string name="msg_upgrading" formatted="false">Actualitzant %s</string>
     <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
     <string name="msg_restrictedby">Restricted by XPrivacy</string>
     <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
