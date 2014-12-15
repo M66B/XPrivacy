@@ -1348,6 +1348,9 @@ See [here](http://forum.xda-developers.com/showpost.php?p=51574315&postcount=877
 
 Please [read this](http://forum.xda-developers.com/showpost.php?p=52644313&postcount=9241) before voting.
 
+Implementation of new features is depending on contributions to the XPrivacy project.
+Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783/post57469136#post57469136) for more information.
+
 **One feature request per issue please!**
 
 ### Questions
