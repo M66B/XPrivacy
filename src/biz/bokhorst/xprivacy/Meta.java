@@ -394,7 +394,7 @@ public class Meta {
 		mListHook.add(new Hook("storage", "media", "WRITE_MEDIA_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "sdcard", "READ_EXTERNAL_STORAGE,WRITE_EXTERNAL_STORAGE,ACCESS_ALL_EXTERNAL_STORAGE", 10, null, null).dangerous().restart().noUsageData());
 		mListHook.add(new Hook("storage", "mtp", "ACCESS_MTP", 10, "2.1.1", null).dangerous().restart().noUsageData());
-		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null).unsafe());
+		mListHook.add(new Hook("storage", "getExternalStorageState", null, 10, null, null).unsafe().whitelist(cTypeFilename));
 		mListHook.add(new Hook("storage", "open", null, 1, "1.99.46", null).unsafe().dangerous().whitelist(cTypeFilename));
 
 		mListHook.add(new Hook("storage", "openAssetFileDescriptor", null, 3, "2.1.17", null).unsafe().dangerous().whitelist(cTypeFilename));

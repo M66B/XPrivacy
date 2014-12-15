@@ -26,6 +26,7 @@ Changelog
 * Added account type parameter for *Srv_getAccounts* and *Srv_getAccountsAsUser*
 * Check external storage directory for *open* restriction ([issue](/../../issues/1757))
 * Added restriction *getInstalledProvidersForProfile* ([issue](/../../issues/1757))
+* Allow white listing / show parameter of *getExternalStorageState* ([issue](/../../issues/1757))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

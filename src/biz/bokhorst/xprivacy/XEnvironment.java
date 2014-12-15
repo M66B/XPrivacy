@@ -1,8 +1,10 @@
 package biz.bokhorst.xprivacy;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 
@@ -42,8 +44,15 @@ public class XEnvironment extends XHook {
 	@Override
 	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getExternalStorageState) {
-			if (param.getResult() != null && isRestricted(param))
-				param.setResult(Environment.MEDIA_UNMOUNTED);
+			if (param.getResult() != null) {
+				String extra = null;
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+					if (param.args.length > 0 && param.args[0] instanceof File)
+						extra = ((File) param.args[0]).getAbsolutePath();
+
+				if (isRestrictedExtra(param, extra))
+					param.setResult(Environment.MEDIA_UNMOUNTED);
+			}
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
