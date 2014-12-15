@@ -25,7 +25,7 @@ public class XSystemProperties extends XHook {
 	// public static boolean getBoolean(String key, boolean def)
 	// public static int getInt(String key, int def)
 	// public static long getLong(String key, long def)
-	// frameworks/base/core/java/android/os/SystemProperties.java
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/android/os/SystemProperties.java/
 
 	private enum Methods {
 		get, getBoolean, getInt, getLong
