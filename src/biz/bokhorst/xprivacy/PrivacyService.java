@@ -663,7 +663,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 			throws RemoteException {
 		// Check if enabled
 		final int userId = Util.getUserId(restriction.uid);
-		if (getSettingBool(userId, PrivacyManager.cSettingUsage, true)) {
+		if (getSettingBool(userId, PrivacyManager.cSettingUsage, true)
+				&& !getSettingBool(restriction.uid, PrivacyManager.cSettingNoUsageData, false)) {
 			// Check secret
 			boolean allowed = true;
 			if (Util.getAppId(Binder.getCallingUid()) != getXUid()) {
