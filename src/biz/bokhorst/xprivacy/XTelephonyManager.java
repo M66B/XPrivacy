@@ -79,31 +79,33 @@ public class XTelephonyManager extends XHook {
 	// frameworks/base/telephony/java/android/telephony/TelephonyManager.java
 	// http://developer.android.com/reference/android/telephony/TelephonyManager.html
 
-	// public java.lang.String getDeviceId()
-	// public java.lang.String getDeviceSvn()
-	// public java.lang.String getSubscriberId()
-	// public java.lang.String getGroupIdLevel1()
-	// public java.lang.String getIccSerialNumber()
-	// public java.lang.String getLine1Number()
-	// public java.lang.String getLine1AlphaTag()
-	// public java.lang.String getMsisdn()
-	// public java.lang.String getVoiceMailNumber()
-	// public java.lang.String getCompleteVoiceMailNumber()
-	// public java.lang.String getVoiceMailAlphaTag()
-	// public java.lang.String getIsimImpi()
-	// public java.lang.String getIsimDomain()
-	// public java.lang.String[] getIsimImpu()
-	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/internal/telephony/PhoneSubInfo.java
+	// public String getDeviceId()
+	// public String getSubscriberId()
+	// public String getGroupIdLevel1()
+	// public String getIccSerialNumber()
+	// public String getImei()
+	// public String getLine1Number()
+	// public String getLine1AlphaTag()
+	// public String getMsisdn()
+	// public String getVoiceMailNumber()
+	// public String getVoiceMailAlphaTag()
+	// public String getCompleteVoiceMailNumber()
+	// public String getIsimImpi()
+	// public String getIsimDomain()
+	// public String[] getIsimImpu()
+	// public String getIsimIst()
+	// public String[] getIsimPcscf()
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/com/android/internal/telephony/PhoneSubInfo.java
 
 	// public void listen(java.lang.String pkg, IPhoneStateListener callback, int events, boolean notifyNow)
-	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/server/TelephonyRegistry.java
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/com/android/server/TelephonyRegistry.java
 
 	// public void enableLocationUpdates()
 	// public void disableLocationUpdates()
 	// public java.util.List<android.telephony.CellInfo> getAllCellInfo()
 	// public android.os.Bundle getCellLocation()
 	// public java.util.List<android.telephony.NeighboringCellInfo> getNeighboringCellInfo()
-	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android-apps/4.4.4_r1/com/android/phone/PhoneInterfaceManager.java#PhoneInterfaceManager
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android-apps/5.0.0_r1/com/android/phone/PhoneInterfaceManager.java
 
 	// @formatter:on
 
@@ -128,6 +130,7 @@ public class XTelephonyManager extends XHook {
 		Srv_getMsisdn,
 		Srv_getSubscriberId,
 		Srv_getCompleteVoiceMailNumber, Srv_getVoiceMailNumber, Srv_getVoiceMailAlphaTag,
+		Srv_getImei, Srv_getIsimIst, Srv_getIsimPcscf,
 
 		Srv_listen,
 
@@ -189,6 +192,10 @@ public class XTelephonyManager extends XHook {
 					Srv.SubInfo));
 			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
 			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumber, PrivacyManager.cPhone, Srv.SubInfo));
+
+			listHook.add(new XTelephonyManager(Methods.Srv_getImei, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIsimIst, PrivacyManager.cPhone, Srv.SubInfo));
+			listHook.add(new XTelephonyManager(Methods.Srv_getIsimPcscf, PrivacyManager.cPhone, Srv.SubInfo));
 
 			listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cLocation, Srv.Registry));
 			listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cPhone, Srv.Registry));
@@ -308,6 +315,9 @@ public class XTelephonyManager extends XHook {
 		case Srv_getCompleteVoiceMailNumber:
 		case Srv_getVoiceMailNumber:
 		case Srv_getVoiceMailAlphaTag:
+		case Srv_getImei:
+		case Srv_getIsimIst:
+		case Srv_getIsimPcscf:
 			break;
 		}
 	}
@@ -388,6 +398,7 @@ public class XTelephonyManager extends XHook {
 		case Srv_getIsimImpi:
 		case Srv_getIsimImpu:
 		case Srv_getSubscriberId:
+		case Srv_getImei:
 			if (param.getResult() != null)
 				if (isRestricted(param))
 					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name().replace("Srv_", "")));
@@ -403,6 +414,13 @@ public class XTelephonyManager extends XHook {
 			if (srvPhoneNumber != null)
 				if (isRestrictedValue(param, srvPhoneNumber))
 					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name().replace("Srv_", "")));
+			break;
+
+		case Srv_getIsimIst:
+		case Srv_getIsimPcscf:
+			if (param.getResult() != null)
+				if (isRestricted(param))
+					param.setResult(null);
 			break;
 		}
 	}

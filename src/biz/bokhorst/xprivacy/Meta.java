@@ -368,6 +368,9 @@ public class Meta {
 		mListHook.add(new Hook("phone", "Srv_getVoiceMailAlphaTag", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailAlphaTag").AOSP(19));
 		mListHook.add(new Hook("phone", "Srv_getVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailNumber").AOSP(19));
 		mListHook.add(new Hook("phone", "Srv_getCompleteVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getImei", "READ_PHONE_STATE", 21, "3.5.6", null));
+		mListHook.add(new Hook("phone", "Srv_getIsimIst", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null));
+		mListHook.add(new Hook("phone", "Srv_getIsimPcscf", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null));
 
 		mListHook.add(new Hook("phone", "listen", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("phone", "Srv_listen", "READ_PHONE_STATE", 10, null, null).AOSP(19));

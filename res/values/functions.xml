@@ -314,6 +314,9 @@
     <string name="phone_Srv_getVoiceMailNumber" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getVoiceMailNumber()">Google documentation</a>]]></string>
     <string name="phone_Srv_getCompleteVoiceMailNumber" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getVoiceMailNumber()">Google documentation</a>]]></string>
     <string name="phone_Srv_listen" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#listen(android.telephony.PhoneStateListener,%20int)">Google documentation</a>]]></string>
+    <string name="phone_Srv_getImei" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getDeviceId()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getIsimIst" translatable="false"><![CDATA[Will restrict access to the IMS Service Table (IST) that was loaded from the ISIM]]></string>
+    <string name="phone_Srv_getIsimPcscf" translatable="false"><![CDATA[Will restrict access to the IMS Proxy Call Session Control Function(PCSCF) that were loaded from the ISIM]]></string>
 
     <!-- sensors -->
     <string name="sensors_getDefaultSensor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/SensorManager.html#getDefaultSensor(int)">Google documentation</a>]]></string>
