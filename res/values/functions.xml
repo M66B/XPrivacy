@@ -120,6 +120,8 @@
     <string name="internet_InetAddress_getAllByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getAllByName(java.lang.String)">Google documentation</a>]]></string>
     <string name="internet_InetAddress_getByAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByAddress(java.lang.String,%20byte[])">Google documentation</a>]]></string>
     <string name="internet_InetAddress_getByName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/InetAddress.html#getByName(java.lang.String)">Google documentation</a>]]></string>
+    <string name="internet_IpPrefix_getAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/IpPrefix.html#getAddress()">Google documentation</a>]]></string>
+    <string name="internet_IpPrefix_getRawAddress" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/net/IpPrefix.html#getRawAddress()">Google documentation</a>]]></string>
     <string name="internet_connect" translatable="false"><![CDATA[Will restrict access to the internet]]></string>
 
     <!-- ipc -->

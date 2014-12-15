@@ -278,6 +278,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// IO bridge
 		hookAll(XIoBridge.getInstances(), null, mSecret);
 
+		// IP prefix
+		hookAll(XIpPrefix.getInstances(), null, mSecret);
+
 		// Location manager
 		hookAll(XLocationManager.getInstances(null), null, mSecret);
 

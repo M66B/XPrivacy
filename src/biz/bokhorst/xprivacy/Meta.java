@@ -180,6 +180,10 @@ public class Meta {
 		mListHook.add(new Hook("internet", "InetAddress.getByAddress", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
 		mListHook.add(new Hook("internet", "InetAddress.getByName", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
+		// android.net.IpPrefix
+		mListHook.add(new Hook("internet", "IpPrefix.getAddress", null, 21, "3.5.6", null).unsafe());
+		mListHook.add(new Hook("internet", "IpPrefix.getRawAddress", null, 21, "3.5.6", null).unsafe());
+
 		mListHook.add(new Hook("internet", "connect", null, 1, "1.99.45", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		mListHook.add(new Hook("ipc", "Binder", "", 1, "2.1.21", null).notAOSP(19).dangerous().whitelist(cTypeTransaction));
