@@ -46,6 +46,7 @@ public class XWifiManager extends XHook {
 	// public java.util.List<android.net.wifi.ScanResult> getScanResults(java.lang.String callingPackage)
 	// public android.net.wifi.WifiConfiguration getWifiApConfiguration()
 	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/com/android/server/wifi/WifiService.java
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/com/android/server/wifi/WifiServiceImpl.java
 
 	// @formatter:on
 
