@@ -19,14 +19,17 @@ public class XInetAddress extends XHook {
 	}
 
 	// public static InetAddress[] getAllByName(String host)
+	// public static InetAddress[] getAllByNameOnNet(String host, int netId)
 	// public static InetAddress getByAddress(byte[] ipAddress)
 	// public static InetAddress getByAddress(String hostName, byte[] ipAddress)
 	// public static InetAddress getByName(String host)
+	// public static InetAddress getByNameOnNet(String host, int netId)
 	// libcore/luni/src/main/java/java/net/InetAddress.java
 	// http://developer.android.com/reference/java/net/InetAddress.html
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/android/net/Network.java
 
 	private enum Methods {
-		getAllByName, getByAddress, getByName
+		getAllByName, getAllByNameOnNet, getByAddress, getByName, getByNameOnNet
 	};
 
 	public static List<XHook> getInstances() {

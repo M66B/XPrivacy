@@ -177,8 +177,10 @@ public class Meta {
 
 		// java.net.InetAddress
 		mListHook.add(new Hook("internet", "InetAddress.getAllByName", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "InetAddress.getAllByNameOnNet", "INTERNET", 21, "3.5.6", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 		mListHook.add(new Hook("internet", "InetAddress.getByAddress", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
 		mListHook.add(new Hook("internet", "InetAddress.getByName", "INTERNET", 1, null, null).unsafe().dangerous().whitelist(cTypeIPAddress));
+		mListHook.add(new Hook("internet", "InetAddress.getByNameOnNet", "INTERNET", 21, "3.5.6", null).unsafe().dangerous().whitelist(cTypeIPAddress));
 
 		// android.net.IpPrefix
 		mListHook.add(new Hook("internet", "IpPrefix.getAddress", null, 21, "3.5.6", null).dangerous().unsafe());
