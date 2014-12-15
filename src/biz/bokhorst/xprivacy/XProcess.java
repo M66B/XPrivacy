@@ -34,7 +34,7 @@ public class XProcess extends XHook {
 	// private static ProcessStartResult startViaZygote(
 	//     final String processClass, final String niceName,
 	//     final int uid, final int gid, final int[] gids, ...
-	// http://grepcode.com/file_/repository.grepcode.com/java/ext/com.google.android/android/4.4.4_r1/android/os/Process.java
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.0_r1/android/os/Process.java
 
 	// @formatter:on
 
@@ -68,8 +68,8 @@ public class XProcess extends XHook {
 	final static int inet_vpn = 1016;
 	final static int inet_mesh = 1030;
 
-	// system/core/include/private/android_filesystem_config.h
 	// frameworks/base/data/etc/platform.xml
+	// https://android.googlesource.com/platform/system/core/+/master/include/private/android_filesystem_config.h
 
 	// http://www.doubleencore.com/2014/03/android-external-storage/
 	// http://www.chainfire.eu/articles/113/Is_Google_blocking_apps_writing_to_SD_cards_/
