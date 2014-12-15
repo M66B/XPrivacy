@@ -34,6 +34,7 @@ KitKat or before:
 * Added restrictions for [LinkProperties](http://developer.android.com/reference/android/net/LinkProperties.html)
 * Added quirk *nousage* to disable usage data for specific applications ([issue](/../../issues/2085))
 * Updated Catalan translation
+* Updated Slovak translation
 
 Lollipop:
 
