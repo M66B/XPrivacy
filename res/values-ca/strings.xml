@@ -6,7 +6,7 @@
     <string name="app_version" formatted="false">Versió d\'XPrivacy: %s (%d)</string>
     <string name="app_description">El gestor de privacitat definitiu</string>
     <string name="app_copyright">Copyright \u00A9 2013–2014 per M. Bokhorst (M66B)</string>
-    <string name="app_compatibility">Running in compatibility mode</string>
+    <string name="app_compatibility">Corrent en mode de compatibilitat</string>
     <string name="app_licensed">Llicenciat, gràcies pel teu suport!</string>
     <string name="menu_usage">Usos</string>
     <string name="menu_refresh">Refresca</string>
@@ -41,11 +41,11 @@
     <string name="menu_contacts">Selecciona contactes a permetre</string>
     <string name="menu_whitelists">Gestionar llistes blanques</string>
     <string name="menu_tutorial">Tutorial</string>
-    <string name="menu_changelog">Changelog</string>
+    <string name="menu_changelog">Llistat de canvis</string>
     <string name="menu_flush">Buidar memoria cau</string>
-    <string name="menu_update">Check for updates</string>
-    <string name="menu_batch">Operations &#8230;</string>
-    <string name="menu_legend">Legend</string>
+    <string name="menu_update">Buscar actualitzacions</string>
+    <string name="menu_batch">Operacions &#8230;</string>
+    <string name="menu_legend">LLegenda</string>
     <string name="msg_abort">Abortant</string>
     <string name="msg_aborted">Abortat</string>
     <string name="msg_new">Nou</string>
@@ -71,16 +71,16 @@
     <string name="msg_migrating" formatted="false">Migrant a %s</string>
     <string name="msg_randomizing" formatted="false">Aleatoritzant %s</string>
     <string name="msg_upgrading" formatted="false">Actualitzant %s</string>
-    <string name="msg_support_info">An internal check failed, do you want to send the support info?</string>
-    <string name="msg_restrictedby">Restricted by XPrivacy</string>
-    <string name="msg_service_missing">Privacy service not found; did you enable XPrivacy in the Xposed installer and reboot your device?</string>
-    <string name="msg_service_version">Privacy service version mismatch; did you reboot your device after upgrading XPrivacy?</string>
-    <string name="msg_service_updating">Please wait until the update service has been completed</string>
-    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
-    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
-    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
+    <string name="msg_support_info">Una comprovació interna ha fallat, desitjes enviar la informació de suport?</string>
+    <string name="msg_restrictedby">Restringit per XPrivacy</string>
+    <string name="msg_service_missing">Servei de privacitat no trobat; has habilitat XPrivacy a l'instaŀlador de Xposed i reiniciat el dispositiu?</string>
+    <string name="msg_service_version">Discrepancia a la versió del servei de privacitat; has reiniciat el dispositiu després d'actualitzar XPrivacy?</string>
+    <string name="msg_service_updating">Si us plau esperi a que el servei d'actualització hagi completat</string>
+    <string name="msg_expert">Els usuaris experts haurien de ser capaços de solventar els seus propis problemes quan possible i seguir el forum de XPrivacy a XDA i ajudar a d'altres quan sigui possible</string>
+    <string name="msg_method_expert">Les restriccions de funció estàn pensades per a usuaris experts. Ets un usuari expert?</string>
+    <string name="msg_longpress_whitelist">Fés pulsació llarga al nom de la funció per a posar a la llista blanca/negra</string>
+    <string name="msg_settings_specific">Les marques de verificació i valors tenen precedència sobre marques de verificació i valors globals; les marques de verificació buides no tenen precedencia</string>
+    <string name="msg_corrupt">La base de dades de privacitat ha sigut borrada perqué era corrupte</string>
     <string name="msg_first"><b>S\'ha tingut molta cura desenvolupant i provant XPrivacy, però és impossible garantir que funcionarà perfectament a tots els dispositius i per a totes les aplicacions.\n\nUtilitzeu-lo sota el vostre propi risc.</b>\n\nVegeu també la llicència:</string>
     <string name="restrict_accounts">Comptes (Google, Facebook, etc.)</string>
     <string name="restrict_browser">Navegador (marcadors/historial)</string>
@@ -97,7 +97,7 @@
     <string name="restrict_messages">Missatges (SMS, MMS)</string>
     <string name="restrict_network">Xarxa (adreces)</string>
     <string name="restrict_notifications">Notificacions</string>
-    <string name="restrict_overlay">Overlay</string>
+    <string name="restrict_overlay">Superposició</string>
     <string name="restrict_phone">Telèfon (ID, números, trucades)</string>
     <string name="restrict_sensors">Sensors</string>
     <string name="restrict_storage">Emmagatzematge (mitjans, targeta SD)</string>
