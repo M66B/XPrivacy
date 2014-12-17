@@ -73,10 +73,10 @@
     <string name="msg_upgrading" formatted="false">Actualitzant %s</string>
     <string name="msg_support_info">Una comprovació interna ha fallat, desitjes enviar la informació de suport?</string>
     <string name="msg_restrictedby">Restringit per XPrivacy</string>
-    <string name="msg_service_missing">Servei de privacitat no trobat; has habilitat XPrivacy a l'instaŀlador de Xposed i reiniciat el dispositiu?</string>
-    <string name="msg_service_version">Discrepancia a la versió del servei de privacitat; has reiniciat el dispositiu després d'actualitzar XPrivacy?</string>
-    <string name="msg_service_updating">Si us plau esperi a que el servei d'actualització hagi completat</string>
-    <string name="msg_expert">Els usuaris experts haurien de ser capaços de solventar els seus propis problemes quan possible i seguir el forum de XPrivacy a XDA i ajudar a d'altres quan sigui possible</string>
+    <string name="msg_service_missing">Servei de privacitat no trobat; has habilitat XPrivacy a l\'instaŀlador de Xposed i reiniciat el dispositiu?</string>
+    <string name="msg_service_version">Discrepancia a la versió del servei de privacitat; has reiniciat el dispositiu després d\'actualitzar XPrivacy?</string>
+    <string name="msg_service_updating">Si us plau esperi a que el servei d\'actualització hagi completat</string>
+    <string name="msg_expert">Els usuaris experts haurien de ser capaços de solventar els seus propis problemes quan possible i seguir el forum de XPrivacy a XDA i ajudar a d\'altres quan sigui possible</string>
     <string name="msg_method_expert">Les restriccions de funció estàn pensades per a usuaris experts. Ets un usuari expert?</string>
     <string name="msg_longpress_whitelist">Fés pulsació llarga al nom de la funció per a posar a la llista blanca/negra</string>
     <string name="msg_settings_specific">Les marques de verificació i valors tenen precedència sobre marques de verificació i valors globals; les marques de verificació buides no tenen precedencia</string>
