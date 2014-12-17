@@ -379,8 +379,9 @@ public class XPackageManager extends XHook {
 		return result;
 	}
 
-	public static boolean isPackageAllowed(int uid, String packageName) {
-		if (uid == Binder.getCallingUid())
+	public static boolean isPackageAllowed(int puid, String packageName) {
+		int uid = Binder.getCallingUid();
+		if (puid == uid)
 			return true;
 
 		if (packageName == null) {

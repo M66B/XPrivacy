@@ -21,6 +21,7 @@ Changelog
 
 **Next release**
 
+* Fixed allowing applications
 * Updated Catalan translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
