@@ -21,10 +21,14 @@ Changelog
 
 **Next release**
 
-* Fixed allowing applications
-* Updated Catalan translation
+* ...
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.5.7 BETA**
+
+* Fixed allowing applications
+* Updated Catalan translation
 
 **Version 3.5.6 TEST**
 
