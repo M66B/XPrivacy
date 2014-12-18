@@ -33,7 +33,6 @@
     <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_PACKAGES" />
     <uses-permission android:name="biz.bokhorst.xprivacy.MANAGE_XPRIVACY" />
     <uses-permission android:name="biz.bokhorst.xprivacy.pro.CHECK" />
-    <uses-permission android:name="cydia.permission.SUBSTRATE" />
 
     <supports-screens
         android:anyDensity="true"

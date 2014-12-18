@@ -27,9 +27,7 @@ import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XC_MethodHook;
 import static de.robv.android.xposed.XposedHelpers.findClass;
 
-// TODO: fix link error when using Cydia Substrate
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
-	private static boolean mCydia = false;
 	private static String mSecret = null;
 	private static List<String> mListHookError = new ArrayList<String>();
 	private static List<CRestriction> mListDisabled = new ArrayList<CRestriction>();
@@ -83,95 +81,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		handleLoadPackage(lpparam.packageName, lpparam.classLoader, mSecret);
 	}
 
-	// Cydia
-	public static void initialize() {
-		mCydia = true;
-		init(null);
-
-		// Self
-		MS.hookClassLoad(Util.class.getName(), new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XUtilHook.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// TODO: Cydia: Build.SERIAL
-
-		// Activity recognition
-		MS.hookClassLoad("com.google.android.gms.location.ActivityRecognitionClient", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XActivityRecognitionClient.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// Advertising Id
-		MS.hookClassLoad("com.google.android.gms.ads.identifier.AdvertisingIdClient", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XAdvertisingIdClientInfo.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// Google auth
-		MS.hookClassLoad("com.google.android.gms.auth.GoogleAuthUtil", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XGoogleAuthUtil.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// GoogleApiClient.Builder
-		MS.hookClassLoad("com.google.android.gms.common.api.GoogleApiClient", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XGoogleApiClient.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// Google Map V1
-		MS.hookClassLoad("com.google.android.maps.GeoPoint", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XGoogleMapV1.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// Google Map V2
-		MS.hookClassLoad("com.google.android.gms.maps.GoogleMap", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XGoogleMapV2.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// Location client
-		MS.hookClassLoad("com.google.android.gms.location.LocationClient", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XLocationClient.getInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// Phone interface manager
-		MS.hookClassLoad("com.android.phone.PhoneInterfaceManager", new MS.ClassLoadHook() {
-			@Override
-			public void classLoaded(Class<?> clazz) {
-				hookAll(XTelephonyManager.getPhoneInstances(), clazz.getClassLoader(), mSecret);
-			}
-		});
-
-		// Providers
-		for (final String className : XContentResolver.cProviderClassName)
-			MS.hookClassLoad(className, new MS.ClassLoadHook() {
-				@Override
-				public void classLoaded(Class<?> clazz) {
-					hookAll(XContentResolver.getInstances(className), clazz.getClassLoader(), mSecret);
-				}
-			});
-	}
-
 	// Common
 	private static void init(String path) {
 		Util.log(null, Log.WARN, "Init path=" + path);
@@ -199,21 +108,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// frameworks/base/services/java/com/android/server/SystemServer.java
 			Class<?> cSystemServer = Class.forName("com.android.server.SystemServer");
 			Method mMain = cSystemServer.getDeclaredMethod("main", String[].class);
-			if (mCydia)
-				MS.hookMethod(cSystemServer, mMain, new MS.MethodAlteration<Object, Void>() {
-					@Override
-					public Void invoked(Object thiz, Object... args) throws Throwable {
-						PrivacyService.register(mListHookError, mSecret);
-						return invoke(thiz, args);
-					}
-				});
-			else
-				XposedBridge.hookMethod(mMain, new XC_MethodHook() {
-					@Override
-					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-						PrivacyService.register(mListHookError, mSecret);
-					}
-				});
+			XposedBridge.hookMethod(mMain, new XC_MethodHook() {
+				@Override
+				protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+					PrivacyService.register(mListHookError, mSecret);
+				}
+			});
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
 		}
@@ -318,9 +218,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XSensorManager.getInstances(null), null, mSecret);
 
 		// Settings secure
-		// TODO: Cydia: android.provider.Settings.Secure
-		if (!mCydia)
-			hookAll(XSettingsSecure.getInstances(), null, mSecret);
+		hookAll(XSettingsSecure.getInstances(), null, mSecret);
 
 		// SIP manager
 		hookAll(XSipManager.getInstances(), null, mSecret);
@@ -494,10 +392,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Find class
 			Class<?> hookClass = null;
 			try {
-				if (mCydia)
-					hookClass = Class.forName(hook.getClassName(), false, classLoader);
-				else
-					hookClass = findClass(hook.getClassName(), classLoader);
+				hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
 				String message = "Class not found hook=" + hook;
 				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
@@ -540,14 +435,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Hook members
 			for (Member member : listMember)
 				try {
-					if (mCydia) {
-						XMethodAlteration alteration = new XMethodAlteration(hook, member);
-						if (member instanceof Method)
-							MS.hookMethod(member.getDeclaringClass(), (Method) member, alteration);
-						else
-							MS.hookMethod(member.getDeclaringClass(), (Constructor<?>) member, alteration);
-					} else
-						XposedBridge.hookMethod(member, new XMethodHook(hook));
+					XposedBridge.hookMethod(member, new XMethodHook(hook));
 				} catch (NoSuchFieldError ex) {
 					Util.log(hook, Log.WARN, ex.toString());
 				} catch (Throwable ex) {
@@ -642,38 +530,4 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				}
 		}
 	};
-
-	private static class XMethodAlteration extends MS.MethodAlteration<Object, Object> {
-		private XHook mHook;
-		private Member mMember;
-
-		public XMethodAlteration(XHook hook, Member member) {
-			mHook = hook;
-			mMember = member;
-		}
-
-		@Override
-		public Object invoked(Object thiz, Object... args) throws Throwable {
-			if (Process.myUid() <= 0)
-				return invoke(thiz, args);
-
-			XParam xparam = XParam.fromCydia(mMember, thiz, args);
-			mHook.before(xparam);
-
-			if (!xparam.hasResult() || xparam.hasThrowable()) {
-				try {
-					Object result = invoke(thiz, args);
-					xparam.setResult(result);
-				} catch (Throwable ex) {
-					xparam.setThrowable(ex);
-				}
-
-				mHook.after(xparam);
-			}
-
-			if (xparam.hasThrowable())
-				throw xparam.getThrowable();
-			return xparam.getResult();
-		}
-	}
 }

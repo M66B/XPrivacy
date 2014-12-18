@@ -32,14 +32,6 @@ public class XParam {
 		return xparam;
 	}
 
-	public static XParam fromCydia(Member method, Object thiz, Object[] args) {
-		XParam param = new XParam();
-		param.method = method;
-		param.thisObject = thiz;
-		param.args = args;
-		return param;
-	}
-
 	public boolean doesReturn(Class<?> result) {
 		if (this.method instanceof Method)
 			return (((Method) this.method).getReturnType().equals(result));
