@@ -12,6 +12,7 @@ import java.io.OutputStream;
 import java.lang.StackOverflowError;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.RuntimeException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
@@ -101,6 +102,12 @@ public class Util {
 	}
 
 	public static void bug(XHook hook, Throwable ex) {
+		if (ex instanceof InvocationTargetException) {
+			InvocationTargetException exex = (InvocationTargetException) ex;
+			if (exex.getTargetException() != null)
+				ex = exex.getTargetException();
+		}
+
 		int priority;
 		if (ex instanceof ActivityShare.AbortException)
 			priority = Log.WARN;
