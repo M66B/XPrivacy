@@ -10,8 +10,8 @@ Changelog
 
 **Downloads**
 
-* [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
-* [GitHub releases](https://github.com/M66B/XPrivacy/releases)
+* [Xposed module repository](http://repo.xposed.info/module/biz.bokhorst.xprivacy) (stable versions)
+* [GitHub releases](https://github.com/M66B/XPrivacy/releases) (test and beta versions)
 
 **Important**
 
