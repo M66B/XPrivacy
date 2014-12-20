@@ -1247,23 +1247,14 @@ An example is Dolphin browser and its plugins/addons.
 **(75) Will XPrivacy work with ART?**
 
 XPrivacy will work if either [Xposed](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053)
-or [Cydia Substrate](http://www.xda-developers.com/android/cydia-substrate-released-by-saurik-for-android/) is working.
+or a similar hooking framework is working.
 
 Xposed has no ART support currently.
 It is unknown to me if Cydia Substrate supports or will support ART.
 
 Android 5.0 (Lollipop) supports [ART](https://source.android.com/devices/tech/dalvik/art.html) only,
 which means that developing/testing XPrivacy for Android 5.0 can only be done
-if either Xposed or Cydia Substrate is available for ART.
-
-Note that XPrivacy with Cydia Substrate has received limited testing
-and that a few restrictions cannot be made to work with Cydia Substrate
-(because Cydia Substrate does not support hooking from the boot class loader):
-
-* Build.SERIAL
-* Settings.Secure.ANDROID_ID
-
-Note that Cydia Substrate is not open source and seems not to be [supported](http://forum.xda-developers.com/showthread.php?t=2466101) very activily.
+if either Xposed or a similar hooking framework is available for ART.
 
 Note that I have started the preparations for Android 5.0 [quite some time ago](https://github.com/M66B/XPrivacy/issues/1757).
 
