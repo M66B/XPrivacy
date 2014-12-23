@@ -21,6 +21,7 @@ Changelog
 
 **Next release**
 
+* Disabled application icon caching ([issue](/../../issues/2094))
 * Removed Cydia Substrate support ([issue](/../../issues/2087))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

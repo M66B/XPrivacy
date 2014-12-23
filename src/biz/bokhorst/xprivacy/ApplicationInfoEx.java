@@ -31,7 +31,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	private Map<String, PackageInfo> mMapPkgInfo = new HashMap<String, PackageInfo>();
 
 	// Cache
-	private Drawable mIcon = null;
 	private Boolean mInternet = null;
 	private Boolean mFrozen = null;
 	private long mInstallTime = -1;
@@ -149,11 +148,11 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 	}
 
 	public Drawable getIcon(Context context) {
-		if (mIcon == null)
-			// Pick first icon
-			if (mMapAppInfo.size() > 0)
-				mIcon = mMapAppInfo.firstEntry().getValue().loadIcon(context.getPackageManager());
-		return (mIcon == null ? new ColorDrawable(Color.TRANSPARENT) : mIcon);
+		// Pick first icon
+		if (mMapAppInfo.size() > 0)
+			return mMapAppInfo.firstEntry().getValue().loadIcon(context.getPackageManager());
+		else
+			return new ColorDrawable(Color.TRANSPARENT);
 	}
 
 	public boolean hasInternet(Context context) {
