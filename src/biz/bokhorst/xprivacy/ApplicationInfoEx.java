@@ -164,6 +164,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 		if (mMapAppInfo.size() > 0) {
 			try {
 				final ApplicationInfo appInfo = mMapAppInfo.firstEntry().getValue();
+				if (appInfo.icon == 0)
+					appInfo.icon = android.R.drawable.sym_def_app_icon;
 				final Resources resources = context.getPackageManager().getResourcesForApplication(appInfo);
 
 				final BitmapFactory.Options options = new BitmapFactory.Options();

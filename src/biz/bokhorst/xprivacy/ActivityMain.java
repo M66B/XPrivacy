@@ -1988,11 +1988,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								getThemed(R.attr.color_state_restricted)));
 
 					// Display icon
-					Bitmap bm = xAppInfo.getIconBitmap(ActivityMain.this);
-					if (bm == null)
-						holder.imgIcon.setImageDrawable(xAppInfo.getIcon(ActivityMain.this));
-					else
-						holder.imgIcon.setImageBitmap(bm);
+					holder.imgIcon.setImageBitmap(xAppInfo.getIconBitmap(ActivityMain.this));
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
 					// Display on demand
