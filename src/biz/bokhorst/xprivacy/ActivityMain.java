@@ -2034,6 +2034,17 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 					else
 						holder.row.setBackgroundColor(Color.TRANSPARENT);
 
+					// Handle details click
+					holder.imgIcon.setOnClickListener(new View.OnClickListener() {
+						@Override
+						public void onClick(View view) {
+							Intent intentSettings = new Intent(ActivityMain.this, ActivityApp.class);
+							intentSettings.putExtra(ActivityApp.cUid, xAppInfo.getUid());
+							intentSettings.putExtra(ActivityApp.cRestrictionName, mRestrictionName);
+							ActivityMain.this.startActivity(intentSettings);
+						}
+					});
+
 					// Listen for multiple select
 					holder.llName.setOnLongClickListener(new View.OnLongClickListener() {
 						@Override
@@ -2243,17 +2254,6 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			// Get info
 			final ApplicationInfoEx xAppInfo = getItem(holder.position);
 
-			// Handle details click
-			holder.imgIcon.setOnClickListener(new View.OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					Intent intentSettings = new Intent(ActivityMain.this, ActivityApp.class);
-					intentSettings.putExtra(ActivityApp.cUid, xAppInfo.getUid());
-					intentSettings.putExtra(ActivityApp.cRestrictionName, mRestrictionName);
-					ActivityMain.this.startActivity(intentSettings);
-				}
-			});
-
 			// Set data
 			holder.row.setBackgroundColor(Color.TRANSPARENT);
 			holder.vwState.setBackgroundColor(Color.TRANSPARENT);
@@ -2270,6 +2270,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			holder.imgCbAsk.setVisibility(View.INVISIBLE);
 			holder.tvName.setEnabled(false);
 			holder.imgCbRestricted.setEnabled(false);
+
+			holder.imgIcon.setClickable(false);
+			holder.llName.setClickable(false);
+			holder.imgCbRestricted.setClickable(false);
+			holder.imgCbAsk.setClickable(false);
 
 			// Async update
 			new HolderTask(position, holder, xAppInfo).executeOnExecutor(mExecutor, (Object) null);
