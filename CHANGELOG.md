@@ -21,6 +21,9 @@ Changelog
 
 **Next release**
 
+* Prevent accidental application icon/name clicks ([issue](/../../issues/2095))
+* Scale application icons ([issue](/../../issues/2095))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.5.8 BETA**
