@@ -2143,6 +2143,9 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 						});
 					else
 						holder.imgCbAsk.setClickable(false);
+				} else {
+					holder.imgIcon.setImageDrawable(null);
+					holder.imgIcon.destroyDrawingCache();
 				}
 			}
 
