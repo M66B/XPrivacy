@@ -30,6 +30,7 @@ import android.graphics.Paint;
 import android.graphics.Paint.Style;
 import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -1904,6 +1905,8 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			private ViewHolder holder;
 			private ApplicationInfoEx xAppInfo = null;
 			private int state;
+			private Bitmap bicon;
+			private Drawable dicon;
 			private boolean used;
 			private boolean enabled;
 			private boolean granted;
@@ -1927,6 +1930,11 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 					// Get state
 					state = xAppInfo.getState(ActivityMain.this);
+
+					// Get icon
+					bicon = xAppInfo.getIconBitmap(ActivityMain.this);
+					if (bicon == null)
+						dicon = xAppInfo.getIcon(ActivityMain.this);
 
 					// Get if used
 					used = (PrivacyManager.getUsage(xAppInfo.getUid(), mRestrictionName, null) != 0);
@@ -1988,7 +1996,10 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 								getThemed(R.attr.color_state_restricted)));
 
 					// Display icon
-					holder.imgIcon.setImageBitmap(xAppInfo.getIconBitmap(ActivityMain.this));
+					if (bicon == null)
+						holder.imgIcon.setImageDrawable(dicon);
+					else
+						holder.imgIcon.setImageBitmap(bicon);
 					holder.imgIcon.setVisibility(View.VISIBLE);
 
 					// Display on demand
