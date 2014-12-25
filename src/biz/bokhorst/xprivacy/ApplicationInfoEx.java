@@ -24,10 +24,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.SparseArray;
-import android.util.TypedValue;
 
 @SuppressLint("DefaultLocale")
 public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
@@ -172,8 +170,8 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 				options.inJustDecodeBounds = true;
 				BitmapFactory.decodeResource(resources, appInfo.icon, options);
 
-				final int pixels = Math.round(dipToPixels(context, 48));
-				options.inSampleSize = calculateInSampleSize(options, pixels, pixels);
+				final int pixels = Math.round(Util.dipToPixels(context, 48));
+				options.inSampleSize = Util.calculateInSampleSize(options, pixels, pixels);
 				options.inJustDecodeBounds = false;
 				return BitmapFactory.decodeResource(resources, appInfo.icon, options);
 			} catch (NameNotFoundException ex) {
@@ -182,26 +180,6 @@ public class ApplicationInfoEx implements Comparable<ApplicationInfoEx> {
 			}
 		} else
 			return null;
-	}
-
-	private static float dipToPixels(Context context, float dipValue) {
-		DisplayMetrics metrics = context.getResources().getDisplayMetrics();
-		return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics);
-	}
-
-	private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
-		final int height = options.outHeight;
-		final int width = options.outWidth;
-		int inSampleSize = 1;
-
-		if (height > reqHeight || width > reqWidth) {
-			final int halfHeight = height / 2;
-			final int halfWidth = width / 2;
-			while ((halfHeight / inSampleSize) > reqHeight && (halfWidth / inSampleSize) > reqWidth)
-				inSampleSize *= 2;
-		}
-
-		return inSampleSize;
 	}
 
 	public boolean hasInternet(Context context) {
