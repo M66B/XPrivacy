@@ -1430,8 +1430,9 @@ Contributing
 
 Translations:
 
-* Translate the strings in [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml)
-* Omit lines with **translatable="false"**
+* Check if the language is supported by Android and find its locale
+* Copy [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml) to the correct locale folder
+* Translate the texts in the copied file and omit all lines with **translatable="false"**
 * Create a [pull request](https://help.github.com/articles/using-pull-requests) for the new/updated translation
 * If you really don't know how to create a pull request, you can send the translated file [via XDA PM](http://forum.xda-developers.com/member.php?u=2799345)
 
