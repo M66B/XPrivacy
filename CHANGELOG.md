@@ -21,7 +21,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Removed Cydia Substrate library
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
