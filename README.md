@@ -1430,7 +1430,7 @@ Contributing
 
 Translations:
 
-* Check if the language is supported by Android and find its locale
+* Check if the language [is supported by Android](http://stackoverflow.com/questions/7973023/what-is-the-list-of-supported-languages-locales-on-android) and find its locale
 * Copy [this file](https://github.com/M66B/XPrivacy/blob/master/res/values/strings.xml) to the correct locale folder
 * Translate the texts in the copied file and omit all lines with **translatable="false"**
 * Create a [pull request](https://help.github.com/articles/using-pull-requests) for the new/updated translation
