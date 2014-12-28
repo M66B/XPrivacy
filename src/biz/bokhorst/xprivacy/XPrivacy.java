@@ -18,8 +18,6 @@ import android.os.Build;
 import android.os.Process;
 import android.util.Log;
 
-import com.saurik.substrate.MS;
-
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
