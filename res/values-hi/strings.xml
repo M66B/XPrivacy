@@ -25,7 +25,7 @@
     <string name="menu_sort">प्रकार</string>
     <string name="menu_filter">फ़िल्टर</string>
     <string name="menu_all">प्रत्येक</string>
-    <string name="menu_toggle">प्रतिबटोग्लgle करे</string>
+    <string name="menu_toggle">प्रतिle करे</string>
     <string name="menu_clear_all">सब साफ करे</string>
     <string name="menu_clear_usage">साफ</string>
     <string name="menu_clear_db">सभी डेटा साफ़</string>
@@ -35,7 +35,7 @@
     <string name="menu_app_launch">चालू करे</string>
     <string name="menu_app_settings">App का विवरण</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">मार</string>
     <string name="menu_accounts">अनुमति के लिए खातों को चुने</string>
     <string name="menu_applications">अनुमति के लिए applications को चुने</string>
     <string name="menu_contacts">अनुमति के लिए संपर्क को चुने</string>
@@ -56,18 +56,18 @@
     <string name="msg_saved_to" formatted="false">%s मे सेव हो गया</string>
     <string name="msg_no_restrictions">कोई प्रतिबंध नहीं मिला</string>
     <string name="msg_sure">क्या आप निश्चित हैं?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">कुछ अनुप्रयोगों का चयन करें</string>
+    <string name="msg_limit">%d आवेदनों की तुलना में कम का चयन करें</string>
     <string name="msg_done">हो गया</string>
     <string name="msg_reboot">साधन पुनरारंभ करना आवश्यक</string>
     <string name="msg_random_now">अटपटा करे</string>
     <string name="msg_random_access">उपयोग पर अटपटा करें</string>
     <string name="msg_random_boot">रिबूट के पश्चात अटपटा करे</string>
-    <string name="msg_restart">application पुनःप्रारंभ जरुरी</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
-    <string name="msg_service">Update service running</string>
+    <string name="msg_restart">आवेदन पुनःप्रारंभ जरुरी</string>
+    <string name="msg_register">आपके डिवाइस रजिस्टर कृपयाया</string>
+    <string name="msg_email">अपने ई-मेल पता दर्ज करें:</string>
+    <string name="msg_registered">अपने डिवाइस को सक्रिय करने के लिए अपने ई-मेल की जाँच करें</string>
+    <string name="msg_service">अद्यतन सेवा चल रहा है</string>
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
     <string name="msg_upgrading" formatted="false">Upgrading %s</string>
