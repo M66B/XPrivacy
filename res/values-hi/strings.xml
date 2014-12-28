@@ -47,7 +47,7 @@
     <string name="menu_batch">संचालन &#8230;</string>
     <string name="menu_legend">किंवदंती</string>
     <string name="msg_abort">छोड़ रहा हैै</string>
-    <string name="msg_aborted">छोड </string></string>
+    <string name="msg_aborted">छोड </string>
     <string name="msg_new">नया</string>
     <string name="msg_update">अद्यतन</string>
     <string name="msg_loading">लोडिंग</string>
