@@ -2,12 +2,12 @@
 
     <string name="app_notenabled">Xposed इनस्टॉलर मैं XPrivacy इनेबल नहीं हैं</string>
     <string name="app_wrongandroid">सिर्फ Android वर्शन 4.0.3+ के लिये</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
+    <string name="app_incompatible" formatted="false">XPrivacy के साथ असंगत है %s</string>
     <string name="app_version" formatted="false">XPrivacy वर्शन: %s (%d)</string>
-    <string name="app_description">The ultimate privacy manager</string>
+    <string name="app_description">Tपरम गोपनीयता प्रबंधक</string>
     <string name="app_copyright">सर्वाधिकार \u00A9 2013–2014 द्वारा M. Bokhorst (M66B)</string>
-    <string name="app_compatibility">Running in compatibility mode</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_compatibility">संगतता मोड में चल रहा है</string>
+    <string name="app_licensed">अपने समर्थन के लिए लाइसेंस, धन्यवाद!</string>
     <string name="menu_usage">उपयोग</string>
     <string name="menu_refresh">पुन: करे</string>
     <string name="menu_settings">सेटिंग्स</string>
@@ -21,14 +21,14 @@
     <string name="menu_pro">उन्नत वर्शन</string>
     <string name="menu_about">जानकारी</string>
     <string name="menu_help">मदद</string>
-    <string name="menu_select_all">Select all</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_select_all">सभी का चयन करें</string>
+    <string name="menu_sort">प्रकार</string>
+    <string name="menu_filter">फ़िल्टर</string>
     <string name="menu_all">प्रत्येक</string>
-    <string name="menu_toggle">प्रतिबंध toggle करे</string>
-    <string name="menu_clear_all">सब clear करे</string>
-    <string name="menu_clear_usage">Clear</string>
-    <string name="menu_clear_db">Clear all data</string>
+    <string name="menu_toggle">प्रतिबटोग्लgle करे</string>
+    <string name="menu_clear_all">सब साफ करे</string>
+    <string name="menu_clear_usage">साफ</string>
+    <string name="menu_clear_db">सभी डेटा साफ़</string>
     <string name="menu_usage_all">फिल्टर toggle करे</string>
     <string name="menu_apply">टेम्पलेट लागू करें</string>
     <string name="menu_clear">साफ़ करे</string>
