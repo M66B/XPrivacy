@@ -145,7 +145,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_fused">Filtrovať využitie dát</string>
     <string name="title_finternet">Filtrovať prístup k internetu</string>
     <string name="title_fpermission">Filtrovať povolenie</string>
-    <string name="title_frestricted">Filtrovať na obmedzené</string>
+    <string name="title_frestricted">Filtrovať obmedzené</string>
     <string name="title_fuser">Filtrovať používateľské aplikácie</string>
     <string name="title_fondemand">Filtrovať podľa požiadavkov</string>
     <string name="title_fsystem">Filtrovať systémové aplikácie</string>
