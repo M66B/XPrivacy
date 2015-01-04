@@ -13,6 +13,7 @@ import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
 import android.os.IInterface;
+import android.util.Log;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.LocationListener;
@@ -337,6 +338,7 @@ public class XLocationManager extends XHook {
 				// Use proxy
 				synchronized (mMapProxy) {
 					mMapProxy.put(key, proxy);
+					Util.log(this, Log.INFO, "proxyLocationListener uid=" + Binder.getCallingUid());
 				}
 				param.args[arg] = proxy;
 			}
@@ -353,8 +355,10 @@ public class XLocationManager extends XHook {
 					key = ((IInterface) key).asBinder();
 
 				synchronized (mMapProxy) {
-					if (mMapProxy.containsKey(key))
+					if (mMapProxy.containsKey(key)) {
 						param.args[arg] = mMapProxy.get(key);
+						Util.log(this, Log.INFO, "unproxyLocationListener uid=" + Binder.getCallingUid());
+					}
 				}
 			}
 	}
