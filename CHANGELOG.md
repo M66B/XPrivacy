@@ -21,12 +21,16 @@ Changelog
 
 **Next release**
 
+* ...
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.5.10 BETA**
+
 * Fixed disabling location updates in compatibility mode ([issue](/../../issues/2105))
 * Removed Cydia Substrate library
 * Updated Hindi translation
 * Updated Slovak translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.5.9 BETA**
 
