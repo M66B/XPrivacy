@@ -1,9 +1,6 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +9,7 @@ import java.util.WeakHashMap;
 import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
-import android.os.IInterface;
-import android.util.Log;
+import android.os.Bundle;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.LocationListener;
@@ -326,19 +322,25 @@ public class XLocationManager extends XHook {
 				param.setResult(null);
 
 			else if (param.args[arg] != null && param.thisObject != null) {
-				// Create proxy
-				ClassLoader cl = param.thisObject.getClass().getClassLoader();
-				InvocationHandler ih = new OnLocationChangedHandler(Binder.getCallingUid(), param.args[arg]);
-				Object proxy = Proxy.newProxyInstance(cl, new Class<?>[] { interfaze }, ih);
-
 				Object key = param.args[arg];
-				if (key instanceof IInterface)
-					key = ((IInterface) key).asBinder();
+				synchronized (mMapProxy) {
+					// Reuse existing proxy
+					if (mMapProxy.containsKey(key)) {
+						param.args[arg] = mMapProxy.get(key);
+						return;
+					}
+
+					// Already proxied
+					if (mMapProxy.containsValue(key))
+						return;
+				}
+
+				// Create proxy
+				Object proxy = new ProxyLocationListener(Binder.getCallingUid(), (LocationListener) param.args[arg]);
 
 				// Use proxy
 				synchronized (mMapProxy) {
 					mMapProxy.put(key, proxy);
-					Util.log(this, Log.INFO, "proxyLocationListener uid=" + Binder.getCallingUid());
 				}
 				param.args[arg] = proxy;
 			}
@@ -351,31 +353,42 @@ public class XLocationManager extends XHook {
 
 			else if (param.args[arg] != null) {
 				Object key = param.args[arg];
-				if (key instanceof IInterface)
-					key = ((IInterface) key).asBinder();
-
 				synchronized (mMapProxy) {
 					if (mMapProxy.containsKey(key)) {
 						param.args[arg] = mMapProxy.get(key);
-						Util.log(this, Log.INFO, "unproxyLocationListener uid=" + Binder.getCallingUid());
 					}
 				}
 			}
 	}
 
-	private class OnLocationChangedHandler implements InvocationHandler {
+	private static class ProxyLocationListener implements LocationListener {
 		private int mUid;
-		private Object mTarget;
+		private LocationListener mListener;
 
-		public OnLocationChangedHandler(int uid, Object target) {
+		public ProxyLocationListener(int uid, LocationListener listener) {
 			mUid = uid;
-			mTarget = target;
+			mListener = listener;
 		}
 
-		public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-			if ("onLocationChanged".equals(method.getName()))
-				args[0] = PrivacyManager.getDefacedLocation(mUid, (Location) args[0]);
-			return method.invoke(mTarget, args);
+		@Override
+		public void onLocationChanged(Location location) {
+			Location fakeLocation = PrivacyManager.getDefacedLocation(mUid, location);
+			mListener.onLocationChanged(fakeLocation);
+		}
+
+		@Override
+		public void onProviderDisabled(String provider) {
+			mListener.onProviderDisabled(provider);
+		}
+
+		@Override
+		public void onProviderEnabled(String provider) {
+			mListener.onProviderEnabled(provider);
+		}
+
+		@Override
+		public void onStatusChanged(String provider, int status, Bundle extras) {
+			mListener.onStatusChanged(provider, status, extras);
 		}
 	}
 }

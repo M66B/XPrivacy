@@ -21,6 +21,7 @@ Changelog
 
 **Next release**
 
+* Fixed disabling location updates in compatibility mode ([issue](/../../issues/2105))
 * Removed Cydia Substrate library
 * Updated Hindi translation
 * Updated Slovak translation
