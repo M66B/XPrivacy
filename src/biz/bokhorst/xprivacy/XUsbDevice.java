@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.os.Binder;
-import android.util.Log;
 import biz.bokhorst.xprivacy.XHook;
 
 public class XUsbDevice extends XHook {
@@ -40,7 +39,13 @@ public class XUsbDevice extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.getDeviceId) {
+		// Do nothing
+	}
+
+	@Override
+	protected void after(XParam param) throws Throwable {
+		switch (mMethod) {
+		case getDeviceId:
 			if (param.args.length > 0 && param.args[0] instanceof String) {
 				if (isRestrictedExtra(param, (String) param.args[0]))
 					param.setResult(0);
@@ -48,17 +53,13 @@ public class XUsbDevice extends XHook {
 				if (isRestricted(param))
 					param.setResult(0);
 			}
+			break;
 
-		} else if (mMethod == Methods.getDeviceName) {
-			if (isRestricted(param))
+		case getDeviceName:
+		case getSerialNumber:
+			if (param.getResult() != null && isRestricted(param))
 				param.setResult(PrivacyManager.getDefacedProp(Binder.getCallingUid(), "USB"));
-
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
-	}
-
-	@Override
-	protected void after(XParam param) throws Throwable {
-		// Do nothing
+			break;
+		}
 	}
 }

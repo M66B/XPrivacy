@@ -22,6 +22,7 @@ Changelog
 **Next release**
 
 * Prevent accidental application name clicks ([issue](/../../issues/2109))
+* Fixed restriction *USB.getSerialNumber*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
