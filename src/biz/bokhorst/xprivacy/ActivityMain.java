@@ -2284,6 +2284,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 			holder.imgIcon.setClickable(false);
 			holder.llName.setClickable(false);
+			holder.llName.setOnClickListener(null);
 			holder.imgCbRestricted.setClickable(false);
 			holder.imgCbAsk.setClickable(false);
 
