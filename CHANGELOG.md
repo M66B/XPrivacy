@@ -21,7 +21,7 @@ Changelog
 
 **Next release**
 
-* Prevent accidental application name clicks ([issue](/../../issues/2109))
+* Prevent opening wrong application details ([issue](/../../issues/2109))
 * Fixed restriction *USB.getSerialNumber*
 * Added restriction *Cast.getDeviceId* and *Cast.getIpAddress* ([issue](/../../issues/2108))
 
