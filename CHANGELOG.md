@@ -23,6 +23,7 @@ Changelog
 
 * Prevent accidental application name clicks ([issue](/../../issues/2109))
 * Fixed restriction *USB.getSerialNumber*
+* Added restriction *Cast.getDeviceId* and *Cast.getIpAddress* ([issue](/../../issues/2108))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

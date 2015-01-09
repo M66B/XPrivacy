@@ -150,6 +150,9 @@ public class Meta {
 
 		mListHook.add(new Hook("identification", "Srv_Android_ID", "", 19, "2.99", "getString").AOSP(19));
 
+		mListHook.add(new Hook("identification", "Cast.getDeviceId", "", 1, "3.5.11", null).unsafe());
+		mListHook.add(new Hook("identification", "Cast.getIpAddress", "", 1, "3.5.11", null).unsafe());
+
 		// java.net.NetworkInterface
 		mListHook.add(new Hook("internet", "NetworkInterface.getByIndex", "INTERNET", 19, "2.2.2", null).unsafe());
 		mListHook.add(new Hook("internet", "NetworkInterface.getByInetAddress", "INTERNET", 1, "2.2.2", "getByInetAddress").unsafe());

@@ -1155,6 +1155,9 @@ public class PrivacyManager {
 		if (name.equals("BTName"))
 			return cDeface;
 
+		if (name.equals("CastID"))
+			return cDeface;
+
 		// Fallback
 		Util.log(null, Log.ERROR, "Fallback value name=" + name);
 		Util.logStack(null, Log.ERROR);

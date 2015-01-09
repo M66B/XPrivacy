@@ -99,6 +99,8 @@
     <string name="identification_USB_getDeviceName" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/usb/UsbDevice.html#getDeviceName()">Google documentation</a>]]></string>
     <string name="identification_USB_getSerialNumber" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/usb/UsbDevice.html#getSerialNumber()">Google documentation</a>]]></string>
     <string name="identification_Srv_Android_ID" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/provider/Settings.Secure.html#ANDROID_ID">Google documentation</a>]]></string>
+    <string name="identification_Cast_getDeviceId" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/cast/CastDevice.html#getDeviceId()">Google documentation</a>]]></string>
+    <string name="identification_Cast_getIpAddress" translatable="false"><![CDATA[<a href="http://developer.android.com/reference/com/google/android/gms/cast/CastDevice.html#getIpAddress()">Google documentation</a>]]></string>
 
     <!-- internet -->
     <string name="internet_NetworkInterface_getByIndex" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/java/net/NetworkInterface.html#getByIndex(int)">Google documentation</a>]]></string>
