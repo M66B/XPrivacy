@@ -21,11 +21,15 @@ Changelog
 
 **Next release**
 
+* ...
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.5.11 BETA**
+
 * Prevent opening wrong application details ([issue](/../../issues/2109))
 * Fixed restriction *USB.getSerialNumber*
 * Added restriction *Cast.getDeviceId* and *Cast.getIpAddress* ([issue](/../../issues/2108))
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.5.10 BETA**
 
