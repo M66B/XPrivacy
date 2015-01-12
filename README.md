@@ -178,6 +178,7 @@ For easy usage, data is restricted by category:
 	* return file not found for /sys/class/.../cid
 	* return a fake input device descriptor
 	* return a fake USB id/name/number
+	* return a fake Cast device ID / IP address
 <a name="internet"></a>
 * Internet
 	* revoke permission to internet access
