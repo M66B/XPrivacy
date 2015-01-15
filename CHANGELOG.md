@@ -17,7 +17,6 @@ Changelog
 
 * See [here](https://github.com/M66B/XPrivacy#compatibility) about Android 5.0 (Lollipop) compatibility
 * **Please send the support info when XPrivacy asks for it**
-* See for more information about XPrivacy 3 [this FAQ](https://github.com/M66B/XPrivacy#FAQ68)
 
 **Next release**
 
