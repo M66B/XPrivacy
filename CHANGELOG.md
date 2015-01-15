@@ -25,6 +25,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3.6 STABLE**
+
+* Stable re-release of version 3.5.11
+
 **Version 3.5.11 BETA**
 
 * Prevent opening wrong application details ([issue](/../../issues/2109))
