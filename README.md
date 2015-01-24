@@ -1356,6 +1356,8 @@ If you have any question, please leave a message in the [XDA XPrivacy forum thre
 More people are following the support forum than the GitHub issue tracker, which increases your chance to get a helpful answer.
 Moreover, the answers given might be beneficial to more people than you alone.
 
+For question about Xposed you should use [this XDA forum](http://forum.xda-developers.com/xposed).
+
 **Please do not ask questions on GitHub!**
 
 GitHub issues are for bug reports and feature requests.
