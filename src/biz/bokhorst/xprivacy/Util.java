@@ -122,6 +122,8 @@ public class Util {
 			priority = Log.WARN;
 		else if (ex instanceof HttpHostConnectException)
 			priority = Log.WARN;
+		else if (ex instanceof NameNotFoundException)
+			priority = Log.WARN;
 		else if (ex instanceof NoClassDefFoundError)
 			priority = Log.WARN;
 		else if (ex instanceof OutOfMemoryError)
