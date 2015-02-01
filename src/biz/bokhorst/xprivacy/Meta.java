@@ -344,7 +344,7 @@ public class Meta {
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.REGISTRATION", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
 		mListHook.add(new Hook("notifications", "com.google.android.c2dm.intent.RECEIVE", "com.google.android.c2dm.permission.RECEIVE", 10, null, null).dangerous());
 
-		mListHook.add(new Hook("overlay", "addView", "SYSTEM_ALERT_WINDOW", 1, null, null).unsafe());
+		mListHook.add(new Hook("overlay", "addView", "SYSTEM_ALERT_WINDOW", 1, null, null).unsafe().optional());
 
 		mListHook.add(new Hook("phone", "getDeviceId", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("phone", "getGroupIdLevel1", "READ_PHONE_STATE", 18, null, null).notAOSP(19));
@@ -627,8 +627,8 @@ public class Meta {
 		mListHook.add(new Hook(null, "getSettings", "", 1, null, null));
 
 		// WindowManagerImpl
-		mListHook.add(new Hook(null, "removeView", "", 1, null, null));
-		mListHook.add(new Hook(null, "updateViewLayout", "", 1, null, null));
+		mListHook.add(new Hook(null, "removeView", "", 1, null, null).optional());
+		mListHook.add(new Hook(null, "updateViewLayout", "", 1, null, null).optional());
 
 		// @formatter:on
 		return mListHook;
