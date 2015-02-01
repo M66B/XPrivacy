@@ -10,6 +10,7 @@ import android.app.PendingIntent;
 import android.location.Location;
 import android.os.Binder;
 import android.os.Bundle;
+import android.util.Log;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
 import android.location.LocationListener;
@@ -326,16 +327,20 @@ public class XLocationManager extends XHook {
 				synchronized (mMapProxy) {
 					// Reuse existing proxy
 					if (mMapProxy.containsKey(key)) {
+						Util.log(this, Log.INFO, "Reuse existing proxy uid=" + Binder.getCallingUid());
 						param.args[arg] = mMapProxy.get(key);
 						return;
 					}
 
 					// Already proxied
-					if (mMapProxy.containsValue(key))
+					if (mMapProxy.containsValue(key)) {
+						Util.log(this, Log.INFO, "Already proxied uid=" + Binder.getCallingUid());
 						return;
+					}
 				}
 
 				// Create proxy
+				Util.log(this, Log.INFO, "Creating proxy uid=" + Binder.getCallingUid());
 				Object proxy = new ProxyLocationListener(Binder.getCallingUid(), (LocationListener) param.args[arg]);
 
 				// Use proxy
@@ -355,6 +360,7 @@ public class XLocationManager extends XHook {
 				Object key = param.args[arg];
 				synchronized (mMapProxy) {
 					if (mMapProxy.containsKey(key)) {
+						Util.log(this, Log.INFO, "Removing proxy uid=" + Binder.getCallingUid());
 						param.args[arg] = mMapProxy.get(key);
 					}
 				}
@@ -372,6 +378,7 @@ public class XLocationManager extends XHook {
 
 		@Override
 		public void onLocationChanged(Location location) {
+			Util.log(null, Log.INFO, "Location changed uid=" + Binder.getCallingUid());
 			Location fakeLocation = PrivacyManager.getDefacedLocation(mUid, location);
 			mListener.onLocationChanged(fakeLocation);
 		}
