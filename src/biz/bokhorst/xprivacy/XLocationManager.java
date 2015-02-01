@@ -341,7 +341,7 @@ public class XLocationManager extends XHook {
 
 				// Create proxy
 				Util.log(this, Log.INFO, "Creating proxy uid=" + Binder.getCallingUid());
-				Object proxy = new ProxyLocationListener(Binder.getCallingUid(), (LocationListener) param.args[arg]);
+				Object proxy = new ProxyLocationListener(Binder.getCallingUid(), param.args[arg]);
 
 				// Use proxy
 				synchronized (mMapProxy) {
@@ -369,9 +369,9 @@ public class XLocationManager extends XHook {
 
 	private static class ProxyLocationListener implements LocationListener {
 		private int mUid;
-		private LocationListener mListener;
+		private Object mListener;
 
-		public ProxyLocationListener(int uid, LocationListener listener) {
+		public ProxyLocationListener(int uid, Object listener) {
 			mUid = uid;
 			mListener = listener;
 		}
@@ -379,23 +379,40 @@ public class XLocationManager extends XHook {
 		@Override
 		public void onLocationChanged(Location location) {
 			Util.log(null, Log.INFO, "Location changed uid=" + Binder.getCallingUid());
-			Location fakeLocation = PrivacyManager.getDefacedLocation(mUid, location);
-			mListener.onLocationChanged(fakeLocation);
+			try {
+				Location fakeLocation = PrivacyManager.getDefacedLocation(mUid, location);
+				mListener.getClass().getMethod("onLocationChanged", Location.class).invoke(mListener, fakeLocation);
+			} catch (Exception ex) {
+				Util.bug(null, ex);
+			}
 		}
 
 		@Override
 		public void onProviderDisabled(String provider) {
-			mListener.onProviderDisabled(provider);
+			try {
+				mListener.getClass().getMethod("onProviderDisabled", String.class).invoke(mListener, provider);
+			} catch (Exception ex) {
+				Util.bug(null, ex);
+			}
 		}
 
 		@Override
 		public void onProviderEnabled(String provider) {
-			mListener.onProviderEnabled(provider);
+			try {
+				mListener.getClass().getMethod("onProviderEnabled", String.class).invoke(mListener, provider);
+			} catch (Exception ex) {
+				Util.bug(null, ex);
+			}
 		}
 
 		@Override
 		public void onStatusChanged(String provider, int status, Bundle extras) {
-			mListener.onStatusChanged(provider, status, extras);
+			try {
+				mListener.getClass().getMethod("onStatusChanged", String.class, int.class, Bundle.class)
+						.invoke(mListener, provider);
+			} catch (Exception ex) {
+				Util.bug(null, ex);
+			}
 		}
 	}
 }
