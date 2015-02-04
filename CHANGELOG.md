@@ -22,7 +22,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 3.6.1 BETA**
+**Version 3.6.1 STABLE**
 
 * Fixed location restriction in AOSP mode ([issue](/../../issues/2129))
 
