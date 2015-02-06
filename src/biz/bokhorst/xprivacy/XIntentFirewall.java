@@ -71,7 +71,7 @@ public class XIntentFirewall extends XHook {
 	// @formatter:off
 
 	// public boolean checkIntent(FirewallIntentResolver resolver, ComponentName resolvedComponent, int intentType, Intent intent, int callerUid, int callerPid, String resolvedType, int receivingUid)
-	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/4.4.2_r1/com/android/server/firewall/IntentFirewall.java
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.2_r1/com/android/server/firewall/IntentFirewall.java
 
 	// @formatter:on
 
@@ -123,19 +123,16 @@ public class XIntentFirewall extends XHook {
 					String phoneNumber = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);
 					if (phoneNumber != null)
 						if (isRestrictedExtraValue(uid, restrictionName, action, phoneNumber, phoneNumber))
-							intent.putExtra(Intent.EXTRA_PHONE_NUMBER,
-									(String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
+							return true;
 				}
 
 			} else if (TelephonyManager.ACTION_PHONE_STATE_CHANGED.equals(action)) {
 				// Incoming call
 				if (intent.hasExtra(TelephonyManager.EXTRA_INCOMING_NUMBER)) {
 					String phoneNumber = intent.getStringExtra(TelephonyManager.EXTRA_INCOMING_NUMBER);
-					if (phoneNumber != null) {
+					if (phoneNumber != null)
 						if (isRestrictedExtraValue(uid, restrictionName, action, phoneNumber, phoneNumber))
-							intent.putExtra(TelephonyManager.EXTRA_INCOMING_NUMBER,
-									(String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "PhoneNumber"));
-					}
+							return true;
 				}
 
 			} else if (PrivacyManager.cSystem.equals(restrictionName)) {

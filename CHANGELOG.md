@@ -20,6 +20,8 @@ Changelog
 
 **Next release**
 
+* Block *ACTION_NEW_OUTGOING_CALL* and *ACTION_PHONE_STATE_CHANGED* instead of changing phone number ([issue](/../../issues/2132))
+
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.6.1 STABLE**
