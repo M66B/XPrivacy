@@ -25,8 +25,8 @@ public class XWebSettings extends XHook {
 	// public synchronized String getUserAgentString()
 	// public synchronized void setUserAgent(int ua)
 	// public synchronized void setUserAgentString (String ua)
-	// frameworks/base/core/java/android/webkit/WebSettings.java
 	// http://developer.android.com/reference/android/webkit/WebSettings.html
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.2_r1/android/webkit/WebSettings.java
 
 	private enum Methods {
 		getDefaultUserAgent, getUserAgent, getUserAgentString, setUserAgent, setUserAgentString

@@ -428,8 +428,9 @@
     <string name="system_Srv_queryUsageStats" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/app/usage/UsageStatsManager.html#queryUsageStats(int, long, long)">Documentation</a>]]></string>
 
     <!-- view -->
-    <string name="view_loadUrl" translatable="false"><![CDATA[Will restrict access to the user agent]]></string>
-    <string name="view_WebView" translatable="false"><![CDATA[Will restrict access to the user agent]]></string>
+    <string name="view_loadUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#loadUrl(java.lang.String)">Google documentation</a>]]></string>
+    <string name="view_postUrl" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebView.html#postUrl(java.lang.String,%20byte[])">Google documentation</a>]]></string>
+    <string name="view_initUserAgentString" translatable="false"><![CDATA[Will restrict access to the user agent string]]></string>
     <string name="view_getDefaultUserAgent" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebSettings.html#getDefaultUserAgent(android.content.Context)">Google documentation</a>]]></string>
     <string name="view_getUserAgent" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebSettings.html#getUserAgentString()">Google documentation</a>]]></string>
     <string name="view_getUserAgentString" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/webkit/WebSettings.html#getUserAgentString()">Google documentation</a>]]></string>

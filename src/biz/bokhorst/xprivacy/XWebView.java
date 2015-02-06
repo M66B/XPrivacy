@@ -30,19 +30,21 @@ public class XWebView extends XHook {
 	// public WebSettings getSettings()
 	// public void loadUrl(String url)
 	// public void loadUrl(String url, Map<String, String> additionalHttpHeaders)
-	// frameworks/base/core/java/android/webkit/WebView.java
+	// public postUrl(String url, byte[] postData)
 	// http://developer.android.com/reference/android/webkit/WebView.html
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.2_r1/android/webkit/WebView.java/
 
 	// @formatter:on
 
 	private enum Methods {
-		WebView, loadUrl, getSettings
+		WebView, loadUrl, postUrl, getSettings
 	};
 
 	public static List<XHook> getInstances() {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XWebView(Methods.WebView, PrivacyManager.cView));
+		listHook.add(new XWebView(Methods.WebView, null));
 		listHook.add(new XWebView(Methods.loadUrl, PrivacyManager.cView));
+		listHook.add(new XWebView(Methods.postUrl, PrivacyManager.cView));
 		listHook.add(new XWebView(Methods.getSettings, null));
 		return listHook;
 	}
@@ -56,14 +58,11 @@ public class XWebView extends XHook {
 			break;
 
 		case loadUrl:
+		case postUrl:
 			if (param.args.length > 0 && param.thisObject instanceof WebView) {
 				String extra = (param.args[0] instanceof String ? (String) param.args[0] : null);
-				if (isRestrictedExtra(param, extra)) {
-					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
-					WebView webView = (WebView) param.thisObject;
-					if (webView.getSettings() != null)
-						webView.getSettings().setUserAgentString(ua);
-				}
+				if (isRestrictedExtra(param, extra))
+					param.setResult(null);
 			}
 			break;
 		}
@@ -74,8 +73,7 @@ public class XWebView extends XHook {
 		switch (mMethod) {
 		case WebView:
 			if (param.args.length > 0 && param.thisObject instanceof WebView) {
-				int uid = Binder.getCallingUid();
-				if (getRestricted(uid)) {
+				if (isRestricted(param, PrivacyManager.cView, "initUserAgentString")) {
 					String ua = (String) PrivacyManager.getDefacedProp(Binder.getCallingUid(), "UA");
 					WebView webView = (WebView) param.thisObject;
 					if (webView.getSettings() != null)
@@ -85,6 +83,7 @@ public class XWebView extends XHook {
 			break;
 
 		case loadUrl:
+		case postUrl:
 			// Do nothing
 			break;
 

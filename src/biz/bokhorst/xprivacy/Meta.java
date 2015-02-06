@@ -506,8 +506,9 @@ public class Meta {
 		mListHook.add(new Hook("system", "Srv_queryEvents", null, 21, "3.5.6", null).AOSP(21));
 		mListHook.add(new Hook("system", "Srv_queryUsageStats", null, 21, "3.5.6", null).AOSP(21));
 
-		mListHook.add(new Hook("view", "loadUrl", "", 1, null, null).unsafe().whitelist(cTypeUrl));
-		mListHook.add(new Hook("view", "WebView", "", 1, null, null).unsafe());
+		mListHook.add(new Hook("view", "loadUrl", "", 1, "3.6.2", "false").unsafe().whitelist(cTypeUrl));
+		mListHook.add(new Hook("view", "postUrl", "", 1, "3.6.2", null).unsafe().whitelist(cTypeUrl));
+		mListHook.add(new Hook("view", "initUserAgentString", "", 3, "3.6.2", null).unsafe());
 		mListHook.add(new Hook("view", "getDefaultUserAgent", "", 17, null, null).unsafe());
 		mListHook.add(new Hook("view", "getUserAgent", "", 3, null, null).unsafe());
 		mListHook.add(new Hook("view", "getUserAgentString", "", 3, null, null).unsafe());
@@ -624,6 +625,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "isXposedEnabled", "", 15, null, null));
 
 		// WebView
+		mListHook.add(new Hook(null, "WebView", "", 1, null, null));
 		mListHook.add(new Hook(null, "getSettings", "", 1, null, null));
 
 		// WindowManagerImpl

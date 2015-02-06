@@ -20,7 +20,11 @@ Changelog
 
 **Next release**
 
-* Block *ACTION_NEW_OUTGOING_CALL* and *ACTION_PHONE_STATE_CHANGED* instead of changing phone number ([issue](/../../issues/2132))
+* Block *ACTION_NEW_OUTGOING_CALL* and *ACTION_PHONE_STATE_CHANGED* instead of faking phone number ([issue](/../../issues/2132))
+* Renamed restriction *View.WebView* into *View.initUserAgentString*
+* Added restriction *View.postUrl*
+* Changed restriction *View.loadUrl* to restrict loading URLs instead of restriction the user agent string ([issue](/../../issues/2123))
+	* Existing *loadUrl* restrictions will be reset and set to ask
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
