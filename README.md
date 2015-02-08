@@ -926,6 +926,7 @@ IMHO you should at least install an ad blocker and a firewall.
 * [CrappaLinks](http://forum.xda-developers.com/showthread.php?t=2603868) ([source code](https://github.com/GermainZ/CrappaLinks))
 * [PlayPermissionsExposed](http://forum.xda-developers.com/xposed/modules/playpermissionsexposed-fix-play-store-t2783076) ([source code](https://github.com/GermainZ/PlayPermissionsExposed))
 * [Xabber](https://play.google.com/store/apps/details?id=com.xabber.android) ([source code](https://github.com/redsolution/xabber-android))
+* [Wi-Fi Privacy Police](https://play.google.com/store/apps/details?id=be.uhasselt.privacypolice)
 
 Please note that these applications are not written by me
 and that you should contact the author for support questions.
