@@ -944,8 +944,6 @@ but I am asking you to properly document your issue.
 *It doesn't work* or *it crashes* is insufficient.
 So, please describe the exact steps to reproduce the problem and/or provide a logcat.
 
-If you requested a new feature: there is a feature stop since version 2.x.
-
 See [here](#support) for more details.
 
 <a name="FAQ53"></a>
@@ -1326,7 +1324,9 @@ and include information about your device type, Android and XPrivacy version.
 To increase the chance I can find and fix the bug, please read [this](http://www.chiark.greenend.org.uk/~sgtatham/bugs.html).
 
 Include a [logcat](#FAQ14) when relevant (use [gist](https://gist.github.com/) or a similar service).
-Try to keep the logcat as brief as possible, searching in large logcats is no fun and not useful.
+Try to keep the logcat as brief as possible, include just the crash/problem and a few dozen lines around it.
+I have looked into a lot of long logcats in the past, too often without any result.
+Therefore I will not look into long logcats anymore.
 
 **One bug report per issue please!**
 
