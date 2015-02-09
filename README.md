@@ -365,6 +365,8 @@ See [here](http://forum.xda-developers.com/showpost.php?p=55810186&postcount=121
 You need to use the quirk "noresolve" when using [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
 and some other wireless camera's, like the Sony QX1/10/30/100 ([issue](https://github.com/M66B/XPrivacy/issues/1751)).
 
+Candy Crush is known to crash on some ROMs, see [here](http://forum.xda-developers.com/showpost.php?p=58722199&postcount=13666).
+
 Installation
 ------------
 
