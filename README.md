@@ -1285,6 +1285,18 @@ Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultim
 If your device doesn't have an SD-card, you will need to put the license file into the root folder of the external storage folder.
 This is the folder you will see if you connect your device to a PC. When in doubt, you can use the menu *Help*, *About* to see the correct folder name.
 
+<a name="FAQ78"></a>
+**(78) I get "The Play store says not licensed" when I tried to fetch a license**
+
+This message basically means that the Play stores thinks you didn't pay for the [pro license fetcher](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.license).
+
+Please make sure you are using the original Play store application and that the Play store has internet access (mind firewall applications).
+Also make sure you don't use *Lucky Patcher*, *Freedom* or similar applications.
+
+Start the Play store and wait a minute or so, so that the Play store can synchronize with the Google servers.
+
+Try to fetch a license again. If you keep having this problem, please contact me (again).
+
 Support
 -------
 
