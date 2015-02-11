@@ -8,7 +8,6 @@ import java.util.Map;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.nfc.NfcAdapter;
-import android.os.Binder;
 import android.provider.Telephony;
 import android.service.notification.NotificationListenerService;
 import android.telephony.TelephonyManager;
