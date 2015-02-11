@@ -1290,8 +1290,9 @@ This is the folder you will see if you connect your device to a PC. When in doub
 
 This message basically means that the Play stores thinks you didn't pay for the [pro license fetcher](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.license).
 
-Please make sure you are using the original Play store application and that the Play store has internet access (mind firewall applications).
-Also make sure you don't use *Lucky Patcher*, *Freedom* or similar applications.
+Please make sure you are using the original Play store application and that the Play store and the Play services have internet access (mind firewall applications).
+Make sure you are not using *Lucky Patcher*, *Freedom* or similar applications.
+Also make sure you didn't restrict the Play store, the Play services and the pro license fetcher using XPrivacy.
 
 Start the Play store and wait a minute or so, so that the Play store can synchronize with the Google servers.
 
