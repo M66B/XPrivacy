@@ -1,6 +1,6 @@
 #!/bin/bash
-grep -RIl "\<string name=\"msg_settings_specific" res | xargs sed -i -e '/msg_settings_specific/a \
-\ \ \ \ <string name=\"msg_corrupt\">The privacy database was reset, because it was corrupt</string>'
+grep -RIl "\<string name=\"title_once" res | xargs sed -i -e '/title_once/a \
+\ \ \ \ <string name=\"title_whilevisible\">While visible</string>'
 
 #grep -RIl "\<string name=\"title_template_merge" res | xargs sed -i -e 's/Apply template (merge)/Apply template (merge set)/g'
 

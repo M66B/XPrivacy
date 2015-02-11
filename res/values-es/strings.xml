@@ -163,6 +163,7 @@ sin embargo no puedo garantizar que funcione sin ningún fallo para cada disposi
     <string name="title_parameters">Parámetros:</string>
     <string name="title_applycat">Aplicar a toda la categoría</string>
     <string name="title_once">Una vez para</string>
+    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">Lista blanca/negra \'%s\'</string>
     <string name="title_allow">Permitir</string>
     <string name="title_deny">Denegar</string>

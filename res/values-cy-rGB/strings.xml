@@ -163,6 +163,7 @@ sin embargo, es imposible garantizar que funcionará sin problemas en todas y ca
     <string name="title_parameters">paramedrau:</string>
     <string name="title_applycat">Gwneud cais i gategori cyfan</string>
     <string name="title_once">unwaith ar gyfer</string>
+    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">Gwyn/rhestr ddu &#8216;%1$s&#8217;</string>
     <string name="title_allow">caniatáu</string>
     <string name="title_deny">gwrthod</string>

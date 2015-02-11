@@ -148,6 +148,7 @@ public class PrivacyManager {
 	public final static String cSettingODCategory = "ODCategory";
 	public final static String cSettingODOnce = "ODOnce";
 	public final static String cSettingODOnceDuration = "ODOnceDuration";
+	public final static String cSettingODWhileVisible = "ODWhileVisible";
 
 	// Special value names
 	public final static String cValueRandom = "#Random#";

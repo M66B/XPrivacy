@@ -163,6 +163,7 @@ il est impossible de garantir un fonctionnement parfait sur chaque appareil et p
     <string name="title_parameters">Paramètres :</string>
     <string name="title_applycat">Appliquer à toute la catégorie</string>
     <string name="title_once">Une fois pendant</string>
+    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">Se souvenir de &#8216;%1$s&#8217;</string>
     <string name="title_allow">Autoriser</string>
     <string name="title_deny">Bloquer</string>

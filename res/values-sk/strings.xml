@@ -163,6 +163,7 @@ avšak nie je nemožné zaručiť, že bude fungovať bezchybne na každom zaria
     <string name="title_parameters">Parametre:</string>
     <string name="title_applycat">Použiť na celú kategóriu</string>
     <string name="title_once">Raz za</string>
+    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">Biela/čierna listina \'%1$s\'</string>
     <string name="title_allow">Povoliť</string>
     <string name="title_deny">Odmietnuť</string>

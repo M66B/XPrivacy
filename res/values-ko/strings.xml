@@ -163,6 +163,7 @@
     <string name="title_parameters">매개변수:</string>
     <string name="title_applycat">모두 적용</string>
     <string name="title_once">한번만 적용</string>
+    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">화이트/블랙리스트 &#8216;%1$s&#8217;</string>
     <string name="title_allow">허용</string>
     <string name="title_deny">차단</string>

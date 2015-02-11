@@ -163,6 +163,7 @@ Tačiau neįmanoma garantuoti, kad dirbs nepriekaištingai su kiekvienu prietais
     <string name="title_parameters">Parameterai:</string>
     <string name="title_applycat">Taikyti visą kategoriją</string>
     <string name="title_once">Kartą</string>
+    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">Baltasis sąrašas \'%s\'</string>
     <string name="title_allow">Leisti</string>
     <string name="title_deny">Drausti</string>
