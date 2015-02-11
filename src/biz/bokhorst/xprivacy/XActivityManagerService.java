@@ -1,11 +1,13 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import android.annotation.SuppressLint;
+import android.os.IBinder;
 import android.util.Log;
 
 @SuppressLint("InlinedApi")
@@ -17,6 +19,7 @@ public class XActivityManagerService extends XHook {
 	private static boolean mLockScreen = false;
 	private static boolean mSleeping = false;
 	private static boolean mShutdown = false;
+	private static int mResumed = -1;
 
 	private XActivityManagerService(Methods method) {
 		super(null, method.name(), null);
@@ -43,14 +46,18 @@ public class XActivityManagerService extends XHook {
 	// 4.0.3+ public void goingToSleep()
 	// 4.0.3+ public void wakingUp()
 	// 4.0.3+ public boolean shutdown(int timeout)
-	// frameworks/base/services/java/com/android/server/am/ActivityManagerService.java
+	// 4.2+ public final void activityResumed(IBinder token)
+	// public final void activityPaused(IBinder token)
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.2_r1/com/android/server/am/ActivityManagerService.java/
+	// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.0.2_r1/com/android/server/am/ActivityRecord.java/
 
 	// @formatter:on
 
 	// @formatter:off
 	private enum Methods {
 		inputDispatchingTimedOut, appNotResponding,
-		systemReady, finishBooting, setLockScreenShown, goingToSleep, wakingUp, shutdown
+		systemReady, finishBooting, setLockScreenShown, goingToSleep, wakingUp, shutdown,
+		activityResumed, activityPaused
 	};
 	// @formatter:on
 
@@ -60,11 +67,13 @@ public class XActivityManagerService extends XHook {
 		listHook.add(new XActivityManagerService(Methods.appNotResponding));
 		listHook.add(new XActivityManagerService(Methods.systemReady));
 		listHook.add(new XActivityManagerService(Methods.finishBooting));
-		// setLockScreenShown appears not to be present in some 4.2.2 ROMs
+		// setLockScreenShown appears to be not present in some 4.2.2 ROMs
 		listHook.add(new XActivityManagerService(Methods.setLockScreenShown));
 		listHook.add(new XActivityManagerService(Methods.goingToSleep));
 		listHook.add(new XActivityManagerService(Methods.wakingUp));
 		listHook.add(new XActivityManagerService(Methods.shutdown));
+		listHook.add(new XActivityManagerService(Methods.activityResumed));
+		listHook.add(new XActivityManagerService(Methods.activityPaused));
 		return listHook;
 	}
 
@@ -78,6 +87,10 @@ public class XActivityManagerService extends XHook {
 
 	public static boolean canWriteUsageData() {
 		return !mShutdown;
+	}
+
+	public static boolean isVisible(int uid) {
+		return (mResumed == uid);
 	}
 
 	@Override
@@ -132,6 +145,16 @@ public class XActivityManagerService extends XHook {
 			mShutdown = true;
 			Util.log(this, Log.WARN, "Shutdown");
 			break;
+
+		case activityResumed:
+			mResumed = getUidForToken(param.args[0]);
+			Util.log(this, Log.WARN, "Resumed uid=" + mResumed);
+			break;
+
+		case activityPaused:
+			mResumed = -1;
+			Util.log(this, Log.WARN, "Paused uid=" + getUidForToken(param.args[0]));
+			break;
 		}
 	}
 
@@ -143,6 +166,7 @@ public class XActivityManagerService extends XHook {
 			break;
 
 		case systemReady:
+			// Do nothing
 			Util.log(this, Log.WARN, "System ready");
 			break;
 
@@ -160,6 +184,7 @@ public class XActivityManagerService extends XHook {
 			break;
 
 		case goingToSleep:
+			// Do nothing
 			break;
 
 		case wakingUp:
@@ -168,6 +193,12 @@ public class XActivityManagerService extends XHook {
 			break;
 
 		case shutdown:
+			// Do nothing
+			break;
+
+		case activityResumed:
+		case activityPaused:
+			// Do nothing
 			break;
 		}
 	}
@@ -189,5 +220,33 @@ public class XActivityManagerService extends XHook {
 			Util.bug(this, ex);
 		}
 		return uid;
+	}
+
+	private int getUidForToken(Object token) {
+		Class<?> cActivityRecord;
+		try {
+			cActivityRecord = Class.forName("com.android.server.am.ActivityRecord");
+			Method mForToken = cActivityRecord.getDeclaredMethod("forToken", IBinder.class);
+			mForToken.setAccessible(true);
+			Object activityRecord = mForToken.invoke(null, token);
+			if (activityRecord != null) {
+				// Get ActivityRecord.app (ProcessRecord)
+				Field fApp = cActivityRecord.getDeclaredField("app");
+				fApp.setAccessible(true);
+				Object processRecord = fApp.get(activityRecord);
+
+				// Get ProcessRecord.uid (int)
+				Class<?> cProcessRecord = Class.forName("com.android.server.am.ProcessRecord");
+				Field fUid = cProcessRecord.getDeclaredField("uid");
+				fUid.setAccessible(true);
+				return (Integer) fUid.get(processRecord);
+			}
+		} catch (ClassNotFoundException ignored) {
+		} catch (NoSuchMethodException ignored) {
+		} catch (NoSuchFieldException ignored) {
+		} catch (Throwable ex) {
+			Util.bug(this, ex);
+		}
+		return -1;
 	}
 }

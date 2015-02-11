@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.provider.Telephony;
 import android.telephony.TelephonyManager;
@@ -552,6 +553,8 @@ public class Meta {
 		mListHook.add(new Hook(null, "goingToSleep", "", 16, null, null));
 		mListHook.add(new Hook(null, "wakingUp", "", 16, null, null));
 		mListHook.add(new Hook(null, "shutdown", "", 15, null, null));
+		mListHook.add(new Hook(null, "activityResumed", "", Build.VERSION_CODES.JELLY_BEAN_MR1, null, null));
+		mListHook.add(new Hook(null, "activityPaused", "", Build.VERSION_CODES.JELLY_BEAN_MR1, null, null));
 
 		// AppIndexApi
 		mListHook.add(new Hook(null, "GMS5.viewEnd", "", 1, null, null));
