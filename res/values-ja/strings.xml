@@ -163,7 +163,6 @@
     <string name="title_parameters">パラメーター :</string>
     <string name="title_applycat">カテゴリ全体に設定する</string>
     <string name="title_once">今回のみ設定する</string>
-    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">ホワイト/ブラックリスト &#8216;%1$s&#8217;</string>
     <string name="title_allow">許可</string>
     <string name="title_deny">拒否</string>

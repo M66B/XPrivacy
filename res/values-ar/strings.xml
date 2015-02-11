@@ -163,7 +163,6 @@
     <string name="title_parameters">مدخلات:</string>
     <string name="title_applycat">تطبيق على الفئة بأكملها</string>
     <string name="title_once">لمرة واحدة فقط</string>
-    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">القائمة البيضاء \'%s\'</string>
     <string name="title_allow">تمكين</string>
     <string name="title_deny">منع</string>

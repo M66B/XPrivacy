@@ -163,7 +163,6 @@
     <string name="title_parameters">参数:</string>
     <string name="title_applycat">应用到整个权限类别</string>
     <string name="title_once">Once for</string>
-    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">白名单/黑名单&#8216;%1$s&#8217;</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>

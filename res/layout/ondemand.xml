@@ -206,15 +206,6 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <CheckBox
-                android:id="@+id/cbWhileVisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:tag="details"
-                android:text="@string/title_whilevisible"
-                android:visibility="gone" >
-            </CheckBox>
-
             <LinearLayout
                 android:id="@+id/llWhiteList"
                 android:layout_width="wrap_content"

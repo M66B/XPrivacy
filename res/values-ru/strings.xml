@@ -163,7 +163,6 @@
     <string name="title_parameters">Параметры:</string>
     <string name="title_applycat">Применить ко всей категории</string>
     <string name="title_once">Один раз</string>
-    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">Белый список &#8216;%1$s&#8217;</string>
     <string name="title_allow">Разрешить</string>
     <string name="title_deny">Запретить</string>

@@ -163,7 +163,6 @@ Namun mustahil untuk menjamin akan berjalan lancar pada setiap perangkat dan unt
     <string name="title_parameters">Parameter:</string>
     <string name="title_applycat">Terapkan ke seluruh kategori</string>
     <string name="title_once">Sekali untuk</string>
-    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">Daftar hitam/putih &#8216;%1$s&#8217;</string>
     <string name="title_allow">Ijinkan</string>
     <string name="title_deny">Tolak</string>

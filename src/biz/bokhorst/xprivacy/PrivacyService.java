@@ -102,7 +102,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private Map<CSetting, CSetting> mSettingCache = new HashMap<CSetting, CSetting>();
 	private Map<CRestriction, CRestriction> mAskedOnceCache = new HashMap<CRestriction, CRestriction>();
 	private Map<CRestriction, CRestriction> mRestrictionCache = new HashMap<CRestriction, CRestriction>();
-	private Map<CRestriction, CRestriction> mRestrictionVisible = new HashMap<CRestriction, CRestriction>();
 
 	private final long cMaxUsageDataHours = 12;
 	private final int cMaxUsageDataCount = 700;
@@ -476,30 +475,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 						mresult.restricted = cache.restricted;
 						mresult.asked = cache.asked;
 					}
-				}
-
-				// Check for method while visible
-				synchronized (mRestrictionVisible) {
-					if (XActivityManagerService.isVisible(restriction.uid)) {
-						CRestriction wkey = new CRestriction(restriction, null);
-						if (mRestrictionVisible.containsKey(wkey)) {
-							mcached = true;
-							CRestriction wrestriction = mRestrictionVisible.get(wkey);
-							mresult.restricted = wrestriction.restricted;
-							mresult.asked = true;
-							Util.log(null, Log.WARN, "While visible " + mresult);
-						} else {
-							wkey.setMethodName(null);
-							if (mRestrictionVisible.containsKey(wkey)) {
-								mcached = true;
-								CRestriction wrestriction = mRestrictionVisible.get(wkey);
-								mresult.restricted = wrestriction.restricted;
-								mresult.asked = true;
-								Util.log(null, Log.WARN, "While visible " + mresult);
-							}
-						}
-					} else
-						mRestrictionVisible.clear();
 				}
 
 				if (!mcached) {
@@ -1746,7 +1721,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 		final CheckBox cbCategory = (CheckBox) view.findViewById(R.id.cbCategory);
 		final CheckBox cbOnce = (CheckBox) view.findViewById(R.id.cbOnce);
 		final Spinner spOnce = (Spinner) view.findViewById(R.id.spOnce);
-		final CheckBox cbWhileVisible = (CheckBox) view.findViewById(R.id.cbWhileVisible);
 		final LinearLayout llWhiteList = (LinearLayout) view.findViewById(R.id.llWhiteList);
 		final CheckBox cbWhitelist = (CheckBox) view.findViewById(R.id.cbWhitelist);
 		final CheckBox cbWhitelistExtra1 = (CheckBox) view.findViewById(R.id.cbWhitelistExtra1);
@@ -1761,9 +1735,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 		boolean expert = getSettingBool(userId, PrivacyManager.cSettingODExpert, false);
 		boolean category = getSettingBool(userId, PrivacyManager.cSettingODCategory, true);
 		boolean once = getSettingBool(userId, PrivacyManager.cSettingODOnce, false);
-		boolean whilevisible = getSettingBool(userId, PrivacyManager.cSettingODWhileVisible, false);
-		whilevisible = whilevisible && XActivityManagerService.isVisible(restriction.uid);
-		expert = expert || !category || once || whilevisible;
+		expert = expert || !category || once;
 		final boolean whitelistDangerous = (hook != null && hook.isDangerous() && hook.whitelist() != null);
 
 		// Set values
@@ -1812,11 +1784,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 				.parseInt(getSetting(new PSetting(userId, "", PrivacyManager.cSettingODOnceDuration, "0")).value);
 		spOnce.setSelection(osel);
 
-		// While visible
-		cbWhileVisible.setChecked(whilevisible);
-		if (!XActivityManagerService.isVisible(restriction.uid))
-			cbWhileVisible.setEnabled(false);
-
 		// Whitelisting
 		if (hook != null && hook.whitelist() != null && restriction.extra != null) {
 			cbWhitelist.setText(resources.getString(R.string.title_whitelist, restriction.extra));
@@ -1843,10 +1810,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 				if (!isChecked) {
 					setSettingBool(userId, "", PrivacyManager.cSettingODCategory, true);
 					setSettingBool(userId, "", PrivacyManager.cSettingODOnce, false);
-					setSettingBool(userId, "", PrivacyManager.cSettingODWhileVisible, false);
 					cbCategory.setChecked(true);
 					cbOnce.setChecked(false);
-					cbWhileVisible.setChecked(false);
 					cbWhitelist.setChecked(false);
 					cbWhitelistExtra1.setChecked(false);
 					cbWhitelistExtra2.setChecked(false);
@@ -1879,19 +1844,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 			@Override
 			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 				if (isChecked) {
-					cbWhileVisible.setChecked(false);
-					cbWhitelist.setChecked(false);
-					cbWhitelistExtra1.setChecked(false);
-					cbWhitelistExtra2.setChecked(false);
-					cbWhitelistExtra3.setChecked(false);
-				}
-			}
-		});
-		cbWhileVisible.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (isChecked) {
-					cbOnce.setChecked(false);
 					cbWhitelist.setChecked(false);
 					cbWhitelistExtra1.setChecked(false);
 					cbWhitelistExtra2.setChecked(false);
@@ -1905,7 +1857,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 				if (isChecked) {
 					cbCategory.setChecked(false);
 					cbOnce.setChecked(false);
-					cbWhileVisible.setChecked(false);
 					cbWhitelistExtra1.setChecked(false);
 					cbWhitelistExtra2.setChecked(false);
 					cbWhitelistExtra3.setChecked(false);
@@ -1918,7 +1869,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 				if (isChecked) {
 					cbCategory.setChecked(false);
 					cbOnce.setChecked(false);
-					cbWhileVisible.setChecked(false);
 					cbWhitelist.setChecked(false);
 					cbWhitelistExtra2.setChecked(false);
 					cbWhitelistExtra3.setChecked(false);
@@ -1931,7 +1881,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 				if (isChecked) {
 					cbCategory.setChecked(false);
 					cbOnce.setChecked(false);
-					cbWhileVisible.setChecked(false);
 					cbWhitelist.setChecked(false);
 					cbWhitelistExtra1.setChecked(false);
 					cbWhitelistExtra3.setChecked(false);
@@ -1944,7 +1893,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 				if (isChecked) {
 					cbCategory.setChecked(false);
 					cbOnce.setChecked(false);
-					cbWhileVisible.setChecked(false);
 					cbWhitelist.setChecked(false);
 					cbWhitelistExtra1.setChecked(false);
 					cbWhitelistExtra2.setChecked(false);
@@ -1974,12 +1922,9 @@ public class PrivacyService extends IPrivacyService.Stub {
 				else {
 					setSettingBool(userId, "", PrivacyManager.cSettingODCategory, cbCategory.isChecked());
 					setSettingBool(userId, "", PrivacyManager.cSettingODOnce, cbOnce.isChecked());
-					setSettingBool(userId, "", PrivacyManager.cSettingODWhileVisible, cbWhileVisible.isChecked());
 
 					if (cbOnce.isChecked())
 						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult, spOnce);
-					else if (cbWhileVisible.isChecked())
-						onDemandWhileVisible(restriction, cbCategory.isChecked(), result, oResult);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), false);
 				}
@@ -2016,12 +1961,9 @@ public class PrivacyService extends IPrivacyService.Stub {
 				else {
 					setSettingBool(userId, "", PrivacyManager.cSettingODCategory, cbCategory.isChecked());
 					setSettingBool(userId, "", PrivacyManager.cSettingODOnce, cbOnce.isChecked());
-					setSettingBool(userId, "", PrivacyManager.cSettingODWhileVisible, cbWhileVisible.isChecked());
 
 					if (cbOnce.isChecked())
 						onDemandOnce(restriction, cbCategory.isChecked(), result, oResult, spOnce);
-					else if (cbWhileVisible.isChecked())
-						onDemandWhileVisible(restriction, cbCategory.isChecked(), result, oResult);
 					else
 						onDemandChoice(restriction, cbCategory.isChecked(), true);
 				}
@@ -2154,23 +2096,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 			if (mAskedOnceCache.containsKey(key))
 				mAskedOnceCache.remove(key);
 			mAskedOnceCache.put(key, key);
-		}
-	}
-
-	private void onDemandWhileVisible(PRestriction restriction, boolean category, PRestriction result,
-			OnDemandResult oResult) {
-		result.time = new Date().getTime() + PrivacyManager.cRestrictionCacheTimeoutMs;
-		Util.log(null, Log.WARN, (result.restricted ? "Deny" : "Allow") + " while visible " + restriction
-				+ " category=" + category);
-
-		CRestriction key = new CRestriction(result, null);
-		if (category) {
-			key.setMethodName(null);
-			key.setExtra(null);
-		}
-
-		synchronized (mRestrictionVisible) {
-			mRestrictionVisible.put(key, key);
 		}
 	}
 

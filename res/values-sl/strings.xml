@@ -163,7 +163,6 @@
     <string name="title_parameters">Parametri:</string>
     <string name="title_applycat">Uveljavi za celotno kategorijo</string>
     <string name="title_once">Enkrat za</string>
-    <string name="title_whilevisible">While visible</string>
     <string name="title_whitelist">Dodaj \'%1$s\' na belo listo</string>
     <string name="title_allow">Dovoli</string>
     <string name="title_deny">Zavrni</string>
