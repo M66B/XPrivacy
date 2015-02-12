@@ -20,7 +20,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Use application whitelist for *getPackagesForUid* and *Srv_getPackagesForUid* ([issue](/../../issues/2116))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
