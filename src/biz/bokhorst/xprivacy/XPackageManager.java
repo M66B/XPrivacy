@@ -211,7 +211,7 @@ public class XPackageManager extends XHook {
 						List<String> lstResult = new ArrayList<String>();
 						if (param.getResult() instanceof String[])
 							for (String packageName : (String[]) param.getResult())
-								if (isPackageAllowed(uid, packageName))
+								if (isPackageAllowed(Binder.getCallingUid(), packageName))
 									lstResult.add(packageName);
 						if (lstResult.size() == 0)
 							param.setResult(null);

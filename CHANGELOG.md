@@ -24,7 +24,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 3.6.3 BETA**
+**Version 3.6.4 BETA**
 
 * Use application whitelist for *getPackagesForUid* and *Srv_getPackagesForUid* ([issue](/../../issues/2116))
 * Manage white/black lists from usage data (long press uid) ([issue](/../../issues/2093))
