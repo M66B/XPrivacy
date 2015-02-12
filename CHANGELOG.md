@@ -20,12 +20,16 @@ Changelog
 
 **Next release**
 
-* Use application whitelist for *getPackagesForUid* and *Srv_getPackagesForUid* ([issue](/../../issues/2116))
-* Manage white/black lists from usage data (long press uid) ([issue](/../../issues/2093))
+* ...
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 3.6.2 BETA**
+**Version 3.6.3 BETA**
+
+* Use application whitelist for *getPackagesForUid* and *Srv_getPackagesForUid* ([issue](/../../issues/2116))
+* Manage white/black lists from usage data (long press uid) ([issue](/../../issues/2093))
+
+**Version 3.6.2 STABLE**
 
 * Block *ACTION_NEW_OUTGOING_CALL* and *ACTION_PHONE_STATE_CHANGED* instead of faking phone number ([issue](/../../issues/2132))
 * Renamed restriction *View.WebView* into *View.initUserAgentString*
