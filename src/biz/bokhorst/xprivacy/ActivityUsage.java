@@ -11,9 +11,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -310,49 +308,15 @@ public class ActivityUsage extends ActivityBase {
 							boolean isApp = PrivacyManager.isApplication(usageData.uid);
 							boolean odSystem = PrivacyManager.getSettingBool(userId,
 									PrivacyManager.cSettingOnDemandSystem, false);
-							final boolean wnomod = PrivacyManager.getSettingBool(usageData.uid,
-									PrivacyManager.cSettingWhitelistNoModify, false);
 
 							if ((isApp || odSystem) && hook != null && hook.whitelist() != null
 									&& usageData.extra != null) {
 								if (Util.hasProLicense(ActivityUsage.this) == null)
 									Util.viewUri(ActivityUsage.this, ActivityMain.cProUri);
 								else {
-									AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityUsage.this);
-									alertDialogBuilder.setTitle(R.string.menu_whitelists);
-									alertDialogBuilder.setMessage(usageData.restrictionName + "/"
-											+ usageData.methodName + "(" + usageData.extra + ")");
-									alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-									alertDialogBuilder.setPositiveButton(getString(R.string.title_deny),
-											new DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(DialogInterface dialog, int which) {
-													// Deny
-													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
-															usageData.extra, Boolean.toString(false));
-													if (!wnomod)
-														PrivacyManager.updateState(usageData.uid);
-												}
-											});
-									alertDialogBuilder.setNeutralButton(getString(R.string.title_allow),
-											new DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(DialogInterface dialog, int which) {
-													// Allow
-													PrivacyManager.setSetting(usageData.uid, hook.whitelist(),
-															usageData.extra, Boolean.toString(true));
-													if (!wnomod)
-														PrivacyManager.updateState(usageData.uid);
-												}
-											});
-									alertDialogBuilder.setNegativeButton(getString(android.R.string.cancel),
-											new DialogInterface.OnClickListener() {
-												@Override
-												public void onClick(DialogInterface dialog, int which) {
-												}
-											});
-									AlertDialog alertDialog = alertDialogBuilder.create();
-									alertDialog.show();
+									WhitelistTask whitelistsTask = new WhitelistTask(usageData.uid, hook.whitelist(),
+											ActivityUsage.this);
+									whitelistsTask.executeOnExecutor(mExecutor, (Object) null);
 								}
 								return true;
 							} else
