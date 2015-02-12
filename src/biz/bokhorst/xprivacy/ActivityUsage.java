@@ -301,12 +301,12 @@ public class ActivityUsage extends ActivityBase {
 					View.OnLongClickListener longClickListener = new View.OnLongClickListener() {
 						@Override
 						public boolean onLongClick(View view) {
-							int userId = Util.getUserId(Process.myUid());
+							final int userId = Util.getUserId(Process.myUid());
 							final PRestriction usageData = mUsageAdapter.getItem(position);
 							final Hook hook = PrivacyManager.getHook(usageData.restrictionName, usageData.methodName);
 
-							boolean isApp = PrivacyManager.isApplication(usageData.uid);
-							boolean odSystem = PrivacyManager.getSettingBool(userId,
+							final boolean isApp = PrivacyManager.isApplication(usageData.uid);
+							final boolean odSystem = PrivacyManager.getSettingBool(userId,
 									PrivacyManager.cSettingOnDemandSystem, false);
 
 							if ((isApp || odSystem) && hook != null && hook.whitelist() != null
@@ -314,6 +314,17 @@ public class ActivityUsage extends ActivityBase {
 								if (Util.hasProLicense(ActivityUsage.this) == null)
 									Util.viewUri(ActivityUsage.this, ActivityMain.cProUri);
 								else {
+									// Toggle whitelist entry
+									Boolean current = PrivacyManager.getSettingBool(usageData.uid, hook.whitelist(),
+											usageData.extra, false);
+									PrivacyManager.setSetting(usageData.uid, hook.whitelist(), usageData.extra,
+											Boolean.toString(!current));
+									final boolean wnomod = PrivacyManager.getSettingBool(usageData.uid,
+											PrivacyManager.cSettingWhitelistNoModify, false);
+									if (!wnomod)
+										PrivacyManager.updateState(usageData.uid);
+
+									// Show whitelist manager
 									WhitelistTask whitelistsTask = new WhitelistTask(usageData.uid, hook.whitelist(),
 											ActivityUsage.this);
 									whitelistsTask.executeOnExecutor(mExecutor, (Object) null);
