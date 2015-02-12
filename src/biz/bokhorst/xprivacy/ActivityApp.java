@@ -54,25 +54,18 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.view.Window;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemSelectedListener;
-import android.widget.ArrayAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
-import android.widget.CheckedTextView;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.ExpandableListView.OnGroupExpandListener;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.ScrollView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -667,7 +660,7 @@ public class ActivityApp extends ActivityBase {
 			// Redirect to pro page
 			Util.viewUri(this, ActivityMain.cProUri);
 		} else {
-			WhitelistsTask whitelistsTask = new WhitelistsTask(type);
+			WhitelistTask whitelistsTask = new WhitelistTask(mAppInfo.getUid(), type, this);
 			whitelistsTask.executeOnExecutor(mExecutor, (Object) null);
 		}
 	}
@@ -1025,176 +1018,7 @@ public class ActivityApp extends ActivityBase {
 		}
 	}
 
-	private class WhitelistsTask extends AsyncTask<Object, Object, Object> {
-		private String mType;
-		private WhitelistAdapter mWhitelistAdapter;
-		private Map<String, TreeMap<String, Boolean>> mListWhitelist;
-
-		public WhitelistsTask(String type) {
-			mType = type;
-		}
-
-		@Override
-		protected Object doInBackground(Object... params) {
-			// Get whitelisted elements
-			mListWhitelist = PrivacyManager.listWhitelisted(mAppInfo.getUid(), null);
-			mWhitelistAdapter = new WhitelistAdapter(ActivityApp.this, R.layout.whitelistentry, mListWhitelist);
-
-			// Build dialog data
-			return null;
-		}
-
-		@Override
-		@SuppressLint({ "DefaultLocale", "InflateParams" })
-		protected void onPostExecute(Object result) {
-			if (!ActivityApp.this.isFinishing()) {
-				// Build dialog
-				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(ActivityApp.this);
-				alertDialogBuilder.setTitle(R.string.menu_whitelists);
-				alertDialogBuilder.setIcon(getThemed(R.attr.icon_launcher));
-
-				if (mListWhitelist.keySet().size() > 0) {
-					LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-					View llWhitelists = inflater.inflate(R.layout.whitelists, null);
-
-					int index = 0;
-					int selected = -1;
-					final List<String> localizedType = new ArrayList<String>();
-					for (String type : mListWhitelist.keySet()) {
-						String name = "whitelist_" + type.toLowerCase().replace("/", "");
-						int id = getResources().getIdentifier(name, "string", ActivityApp.this.getPackageName());
-						if (id == 0)
-							localizedType.add(name);
-						else
-							localizedType.add(getResources().getString(id));
-
-						if (type.equals(mType))
-							selected = index;
-						index++;
-					}
-
-					Spinner spWhitelistType = (Spinner) llWhitelists.findViewById(R.id.spWhitelistType);
-					ArrayAdapter<String> whitelistTypeAdapter = new ArrayAdapter<String>(ActivityApp.this,
-							android.R.layout.simple_spinner_dropdown_item, localizedType);
-					spWhitelistType.setAdapter(whitelistTypeAdapter);
-					spWhitelistType.setOnItemSelectedListener(new OnItemSelectedListener() {
-						@Override
-						public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-							mWhitelistAdapter.setType(mListWhitelist.keySet().toArray(new String[0])[position]);
-						}
-
-						@Override
-						public void onNothingSelected(AdapterView<?> view) {
-						}
-					});
-					if (selected >= 0)
-						spWhitelistType.setSelection(selected);
-
-					ListView lvWhitelist = (ListView) llWhitelists.findViewById(R.id.lvWhitelist);
-					lvWhitelist.setAdapter(mWhitelistAdapter);
-					int position = spWhitelistType.getSelectedItemPosition();
-					if (position != AdapterView.INVALID_POSITION)
-						mWhitelistAdapter.setType(mListWhitelist.keySet().toArray(new String[0])[position]);
-
-					alertDialogBuilder.setView(llWhitelists);
-				}
-
-				alertDialogBuilder.setPositiveButton(getString(R.string.msg_done),
-						new DialogInterface.OnClickListener() {
-							@Override
-							public void onClick(DialogInterface dialog, int which) {
-								// Do nothing
-							}
-						});
-
-				// Show dialog
-				AlertDialog alertDialog = alertDialogBuilder.create();
-				alertDialog.show();
-			}
-
-			super.onPostExecute(result);
-		}
-	}
-
 	// Adapters
-
-	@SuppressLint("DefaultLocale")
-	private class WhitelistAdapter extends ArrayAdapter<String> {
-		private String mSelectedType;
-		private Map<String, TreeMap<String, Boolean>> mMapWhitelists;
-		private LayoutInflater mInflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-		public WhitelistAdapter(Context context, int resource, Map<String, TreeMap<String, Boolean>> mapWhitelists) {
-			super(context, resource, new ArrayList<String>());
-			mMapWhitelists = mapWhitelists;
-		}
-
-		public void setType(String selectedType) {
-			mSelectedType = selectedType;
-			this.clear();
-			if (mMapWhitelists.containsKey(selectedType))
-				this.addAll(mMapWhitelists.get(selectedType).keySet());
-		}
-
-		private class ViewHolder {
-			private View row;
-			public CheckedTextView ctvName;
-			public ImageView imgDelete;
-
-			public ViewHolder(View theRow, int thePosition) {
-				row = theRow;
-				ctvName = (CheckedTextView) row.findViewById(R.id.cbName);
-				imgDelete = (ImageView) row.findViewById(R.id.imgDelete);
-			}
-		}
-
-		@Override
-		@SuppressLint("InflateParams")
-		public View getView(int position, View convertView, ViewGroup parent) {
-			final ViewHolder holder;
-			if (convertView == null) {
-				convertView = mInflater.inflate(R.layout.whitelistentry, null);
-				holder = new ViewHolder(convertView, position);
-				convertView.setTag(holder);
-			} else
-				holder = (ViewHolder) convertView.getTag();
-
-			// Set data
-			final String name = this.getItem(position);
-			holder.ctvName.setText(name);
-			holder.ctvName.setChecked(mMapWhitelists.get(mSelectedType).get(name));
-
-			final boolean wnomod = PrivacyManager.getSettingBool(mAppInfo.getUid(),
-					PrivacyManager.cSettingWhitelistNoModify, false);
-
-			holder.ctvName.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					// Toggle white/black list entry
-					holder.ctvName.toggle();
-					boolean isChecked = holder.ctvName.isChecked();
-					mMapWhitelists.get(mSelectedType).put(name, isChecked);
-					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, Boolean.toString(isChecked));
-					if (!wnomod)
-						PrivacyManager.updateState(mAppInfo.getUid());
-				}
-			});
-
-			holder.imgDelete.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View view) {
-					// Delete white/black list entry
-					WhitelistAdapter.this.remove(name);
-					mMapWhitelists.get(mSelectedType).remove(name);
-					PrivacyManager.setSetting(mAppInfo.getUid(), mSelectedType, name, null);
-					if (!wnomod)
-						PrivacyManager.updateState(mAppInfo.getUid());
-				}
-			});
-
-			return convertView;
-		}
-	}
 
 	private class RestrictionAdapter extends BaseExpandableListAdapter {
 		private Context mContext;
