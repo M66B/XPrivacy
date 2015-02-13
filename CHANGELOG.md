@@ -20,6 +20,8 @@ Changelog
 
 **Next release**
 
+* Reverted "Manage white/black lists from usage data" ([issue](/../../issues/2093))
+* Added menu *Manage whitelists* to usage data view for a single application ([issue](/../../issues/2093))
 * Updated Czech translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

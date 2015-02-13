@@ -11,6 +11,9 @@
         android:id="@+id/menu_clear"
         android:title="@string/menu_clear_usage"/>
     <item
+        android:id="@+id/menu_whitelists"
+        android:title="@string/menu_whitelists"/>
+    <item
         android:id="@+id/menu_settings"
         android:title="@string/menu_settings"/>
 
