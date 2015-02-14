@@ -5,7 +5,7 @@
     <string name="app_incompatible" formatted="false">XPrivacy yra nesuderinama su %s</string>
     <string name="app_version" formatted="false">XPrivacy programos versija: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2015 by M. Bokhorst (M66B)</string>
     <string name="app_compatibility">Veikia suderinamumo režimu</string>
     <string name="app_licensed">Licenzijuota, ačiū už Jūsų paramą!</string>
     <string name="menu_usage">Duomenų naudojimas</string>

@@ -5,7 +5,7 @@
     <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
     <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014 M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2015 M. Bokhorst (M66B)</string>
     <string name="app_compatibility">Running in compatibility mode</string>
     <string name="app_licensed">Licensed, thanks for your support!</string>
     <string name="menu_usage">Användning</string>

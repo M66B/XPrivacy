@@ -5,7 +5,7 @@
     <string name="app_incompatible">XPrivacy ist mit %1$s nicht kompatibel</string>
     <string name="app_version">XPrivacy Version: %1$s (%2$d)</string>
     <string name="app_description">Der ultimative Privacy Manager</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014\n\t by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2015\n\t by M. Bokhorst (M66B)</string>
     <string name="app_compatibility">Läuft im Kompatibilitätsmodus</string>
     <string name="app_licensed">Lizenz vorhanden, vielen Dank für Ihre Unterstützung!</string>
     <string name="menu_usage">Aktivitätslog</string>

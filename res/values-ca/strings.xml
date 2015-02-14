@@ -5,7 +5,7 @@
     <string name="app_incompatible" formatted="false">XPrivacy és incompatible amb %s</string>
     <string name="app_version" formatted="false">Versió d\'XPrivacy: %s (%d)</string>
     <string name="app_description">El gestor de privacitat definitiu</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014 per M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2015 per M. Bokhorst (M66B)</string>
     <string name="app_compatibility">Corrent en mode de compatibilitat</string>
     <string name="app_licensed">Llicenciat, gràcies pel teu suport!</string>
     <string name="menu_usage">Usos</string>

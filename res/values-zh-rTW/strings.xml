@@ -5,7 +5,7 @@
     <string name="app_incompatible" formatted="false">%s 與XPrivacy不相容</string>
     <string name="app_version" formatted="false">XPrivacy 版本: %s (%d)</string>
     <string name="app_description">超強隱私及權限管理工具，絕讚好評發售中!!</string>
-    <string name="app_copyright">版權所有 \u00A9 2013–2014 by M. Bokhorst (M66B)</string>
+    <string name="app_copyright">版權所有 \u00A9 2013–2015 by M. Bokhorst (M66B)</string>
     <string name="app_compatibility">相容模式 Compatibility Mode</string>
     <string name="app_licensed">授權成功，感謝您贊助 XPrivacy!!</string>
     <string name="menu_usage">操作記錄</string>

@@ -5,7 +5,7 @@
     <string name="app_incompatible" formatted="false">XPrivacy غير متوافق مع %s</string>
     <string name="app_version" formatted="false">نسخة XPrivacy\u200F : %s (%d)</string>
     <string name="app_description">مدير الخصوصية الرئيسي</string>
-    <string name="app_copyright">حقوق الطبع \u00A9 2013–2014 ل M. Bokhorst (M66B)\u200E</string>
+    <string name="app_copyright">حقوق الطبع \u00A9 2013–2015 ل M. Bokhorst (M66B)\u200E</string>
     <string name="app_compatibility">يعمل في وضع التوافق</string>
     <string name="app_licensed">الترخيص موجود، شكرا لدعمكم!</string>
     <string name="menu_usage">الإستخدام</string>

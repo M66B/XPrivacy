@@ -5,7 +5,7 @@
     <string name="app_incompatible" formatted="false">XPrivacy no es compatible con %s</string>
     <string name="app_version" formatted="false">Versión de XPrivacy: %s (%d)</string>
     <string name="app_description">El administrador de permisos definitivo</string>
-    <string name="app_copyright">Copyright \u00A9 2013–2014 por M. Bokhorst (M66B)</string>
+    <string name="app_copyright">Copyright \u00A9 2013–2015 por M. Bokhorst (M66B)</string>
     <string name="app_compatibility">Funcionando en modo compatibilidad</string>
     <string name="app_licensed">Activado, ¡gracias por su apoyo!</string>
     <string name="menu_usage">Uso</string>
