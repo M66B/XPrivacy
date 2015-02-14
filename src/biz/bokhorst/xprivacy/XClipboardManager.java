@@ -3,6 +3,8 @@ package biz.bokhorst.xprivacy;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Build;
+
 public class XClipboardManager extends XHook {
 	private Methods mMethod;
 	private String mClassName;
@@ -11,7 +13,10 @@ public class XClipboardManager extends XHook {
 	private XClipboardManager(Methods method, String restrictionName) {
 		super(restrictionName, method.name().replace("Srv_", ""), method.name());
 		mMethod = method;
-		mClassName = "com.android.server.ClipboardService";
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+			mClassName = "com.android.server.clipboard.ClipboardService";
+		else
+			mClassName = "com.android.server.ClipboardService";
 	}
 
 	private XClipboardManager(Methods method, String restrictionName, String className) {
