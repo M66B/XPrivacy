@@ -467,7 +467,8 @@ public class Meta {
 
 		mListHook.add(new Hook("system", "getInstalledProviders", "", 3, null, null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("system", "getInstalledProvidersForProfile", "", 21, "3.5.6", null).notAOSP(21).dangerous());
-		mListHook.add(new Hook("system", "Srv_getInstalledProviders", "", 3, "2.99", "getInstalledProviders").AOSP(19).dangerous());
+		mListHook.add(new Hook("system", "Srv_getInstalledProviders", "", 3, "2.99", "getInstalledProviders").AOSP(19).to(19).dangerous());
+		mListHook.add(new Hook("system", "Srv_getInstalledProvidersForProfile", "", 3, "3.6.6", null).AOSP(21).dangerous());
 
 		mListHook.add(new Hook("system", "getRecentTasks", "GET_TASKS", 1, null, null).notAOSP(19).dangerous());
 		mListHook.add(new Hook("system", "getRunningAppProcesses", "", 3, null, null).notAOSP(19).dangerous());

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.appwidget.AppWidgetProviderInfo;
+import android.os.Build;
 
 public class XAppWidgetManager extends XHook {
 	private Methods mMethod;
@@ -13,7 +14,10 @@ public class XAppWidgetManager extends XHook {
 		super(restrictionName, method.name().replace("Srv_", ""), method.name());
 		mMethod = method;
 		if (method.name().startsWith("Srv_"))
-			mClassName = "com.android.server.AppWidgetService";
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+				mClassName = "com.android.server.appwidget.AppWidgetServiceImpl";
+			else
+				mClassName = "com.android.server.AppWidgetService";
 		else
 			mClassName = "android.appwidget.AppWidgetManager";
 	}
@@ -35,7 +39,7 @@ public class XAppWidgetManager extends XHook {
 	// @formatter:on
 
 	private enum Methods {
-		getInstalledProviders, getInstalledProvidersForProfile, Srv_getInstalledProviders
+		getInstalledProviders, getInstalledProvidersForProfile, Srv_getInstalledProviders, Srv_getInstalledProvidersForProfile
 	};
 
 	public static List<XHook> getInstances() {
@@ -43,6 +47,7 @@ public class XAppWidgetManager extends XHook {
 		listHook.add(new XAppWidgetManager(Methods.getInstalledProviders, PrivacyManager.cSystem));
 		listHook.add(new XAppWidgetManager(Methods.getInstalledProvidersForProfile, PrivacyManager.cSystem));
 		listHook.add(new XAppWidgetManager(Methods.Srv_getInstalledProviders, PrivacyManager.cSystem));
+		listHook.add(new XAppWidgetManager(Methods.Srv_getInstalledProvidersForProfile, PrivacyManager.cSystem));
 		return listHook;
 	}
 
@@ -57,6 +62,7 @@ public class XAppWidgetManager extends XHook {
 		case getInstalledProviders:
 		case getInstalledProvidersForProfile:
 		case Srv_getInstalledProviders:
+		case Srv_getInstalledProvidersForProfile:
 			if (param.getResult() != null)
 				if (isRestricted(param))
 					param.setResult(new ArrayList<AppWidgetProviderInfo>());
