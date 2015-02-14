@@ -166,6 +166,9 @@ public class XSensorManager extends XHook {
 		} else if (type == Sensor.TYPE_HEART_RATE) {
 			if (isRestricted(param, "heartrate"))
 				return true;
+		} else if (type == 23 || type == 24 || type == 25) {
+			// 23/24 This sensor is expected to only be used by the system ui
+			// 25 Expected to be used internally for always on display
 		} else
 			Util.log(this, Log.WARN, "Unknown sensor type=" + type);
 		return false;
