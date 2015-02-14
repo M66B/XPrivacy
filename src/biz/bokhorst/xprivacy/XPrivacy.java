@@ -114,6 +114,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			});
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
+			return;
 		}
 
 		// Account manager
