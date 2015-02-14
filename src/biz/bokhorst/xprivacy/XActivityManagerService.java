@@ -1,14 +1,12 @@
 package biz.bokhorst.xprivacy;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import android.annotation.SuppressLint;
 import android.os.Build;
-import android.os.IBinder;
 import android.util.Log;
 
 @SuppressLint("InlinedApi")
@@ -20,7 +18,6 @@ public class XActivityManagerService extends XHook {
 	private static boolean mLockScreen = false;
 	private static boolean mSleeping = false;
 	private static boolean mShutdown = false;
-	private static int mResumed = -1;
 
 	private XActivityManagerService(Methods method) {
 		super(null, method.name(), null);
@@ -61,8 +58,7 @@ public class XActivityManagerService extends XHook {
 	// @formatter:off
 	private enum Methods {
 		inputDispatchingTimedOut, appNotResponding,
-		systemReady, finishBooting, setLockScreenShown, goingToSleep, wakingUp, shutdown,
-		activityResumed, activityPaused
+		systemReady, finishBooting, setLockScreenShown, goingToSleep, wakingUp, shutdown
 	};
 	// @formatter:on
 
@@ -77,8 +73,6 @@ public class XActivityManagerService extends XHook {
 		listHook.add(new XActivityManagerService(Methods.goingToSleep));
 		listHook.add(new XActivityManagerService(Methods.wakingUp));
 		listHook.add(new XActivityManagerService(Methods.shutdown));
-		listHook.add(new XActivityManagerService(Methods.activityResumed));
-		listHook.add(new XActivityManagerService(Methods.activityPaused));
 		return listHook;
 	}
 
@@ -92,10 +86,6 @@ public class XActivityManagerService extends XHook {
 
 	public static boolean canWriteUsageData() {
 		return !mShutdown;
-	}
-
-	public static boolean isVisible(int uid) {
-		return (mResumed == uid);
 	}
 
 	@Override
@@ -150,16 +140,6 @@ public class XActivityManagerService extends XHook {
 			mShutdown = true;
 			Util.log(this, Log.WARN, "Shutdown");
 			break;
-
-		case activityResumed:
-			mResumed = getUidForToken(param.args[0]);
-			Util.log(this, Log.WARN, "Resumed uid=" + mResumed);
-			break;
-
-		case activityPaused:
-			mResumed = -1;
-			Util.log(this, Log.WARN, "Paused uid=" + getUidForToken(param.args[0]));
-			break;
 		}
 	}
 
@@ -200,11 +180,6 @@ public class XActivityManagerService extends XHook {
 		case shutdown:
 			// Do nothing
 			break;
-
-		case activityResumed:
-		case activityPaused:
-			// Do nothing
-			break;
 		}
 	}
 
@@ -225,33 +200,5 @@ public class XActivityManagerService extends XHook {
 			Util.bug(this, ex);
 		}
 		return uid;
-	}
-
-	private int getUidForToken(Object token) {
-		Class<?> cActivityRecord;
-		try {
-			cActivityRecord = Class.forName("com.android.server.am.ActivityRecord");
-			Method mForToken = cActivityRecord.getDeclaredMethod("forToken", IBinder.class);
-			mForToken.setAccessible(true);
-			Object activityRecord = mForToken.invoke(null, token);
-			if (activityRecord != null) {
-				// Get ActivityRecord.app (ProcessRecord)
-				Field fApp = cActivityRecord.getDeclaredField("app");
-				fApp.setAccessible(true);
-				Object processRecord = fApp.get(activityRecord);
-
-				// Get ProcessRecord.uid (int)
-				Class<?> cProcessRecord = Class.forName("com.android.server.am.ProcessRecord");
-				Field fUid = cProcessRecord.getDeclaredField("uid");
-				fUid.setAccessible(true);
-				return (Integer) fUid.get(processRecord);
-			}
-		} catch (ClassNotFoundException ignored) {
-		} catch (NoSuchMethodException ignored) {
-		} catch (NoSuchFieldException ignored) {
-		} catch (Throwable ex) {
-			Util.bug(this, ex);
-		}
-		return -1;
 	}
 }
