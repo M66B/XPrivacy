@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.concurrent.Semaphore;
 
 import android.annotation.SuppressLint;
+import android.os.Build;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -28,6 +29,10 @@ public class XActivityManagerService extends XHook {
 
 	@Override
 	public boolean isVisible() {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+			if (mMethod == Methods.goingToSleep || mMethod == Methods.wakingUp)
+				return false;
+
 		return (mMethod != Methods.appNotResponding && mMethod != Methods.finishBooting);
 	}
 
