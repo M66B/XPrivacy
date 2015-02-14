@@ -161,9 +161,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 			XActivityManagerService.setSemaphore(mOndemandSemaphore);
 
 			// Get context
-			Field fContext = am.getClass().getDeclaredField("mContext");
-			fContext.setAccessible(true);
-			mContext = (Context) fContext.get(am);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				Field fContext = am.getClass().getDeclaredField("mContext");
+				fContext.setAccessible(true);
+				mContext = (Context) fContext.get(am);
+			}
 
 			// Start a worker thread
 			mWorker = new Thread(new Runnable() {
@@ -2280,7 +2282,24 @@ public class PrivacyService extends IPrivacyService.Stub {
 	}
 
 	private Context getContext() {
-		return mContext;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+			return mContext;
+		else {
+			// public static ActivityManagerService self()
+			// frameworks/base/services/java/com/android/server/am/ActivityManagerService.java
+			try {
+				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
+				Object am = cam.getMethod("self").invoke(null);
+				if (am == null)
+					return null;
+				Field mContext = cam.getDeclaredField("mContext");
+				mContext.setAccessible(true);
+				return (Context) mContext.get(am);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return null;
+			}
+		}
 	}
 
 	private int getIsolatedUid(int uid) {
