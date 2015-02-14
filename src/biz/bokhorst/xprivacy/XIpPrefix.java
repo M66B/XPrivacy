@@ -10,7 +10,7 @@ public class XIpPrefix extends XHook {
 	private Methods mMethod;
 
 	private XIpPrefix(Methods method, String restrictionName) {
-		super(restrictionName, "IpPrefix." + method.name(), null);
+		super(restrictionName, method.name(), "IpPrefix." + method.name());
 		mMethod = method;
 	}
 
