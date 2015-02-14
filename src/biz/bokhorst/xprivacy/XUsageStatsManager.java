@@ -13,7 +13,7 @@ public class XUsageStatsManager extends XHook {
 	private Methods mMethod;
 
 	private XUsageStatsManager(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), null);
+		super(restrictionName, method.name().replace("Srv_", ""), null);
 		mMethod = method;
 	}
 
