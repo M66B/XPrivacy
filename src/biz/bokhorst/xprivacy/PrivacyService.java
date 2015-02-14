@@ -70,6 +70,7 @@ import android.widget.Toast;
 
 public class PrivacyService extends IPrivacyService.Stub {
 	private static int mXUid = -1;
+	private static Context mContext;
 	private static String mSecret = null;
 	private static Thread mWorker = null;
 	private static Handler mHandler = null;
@@ -126,7 +127,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 	private static PrivacyService mPrivacyService = null;
 
-	public static void register(List<String> listError, String secret) {
+	public static void register(List<String> listError, ClassLoader classLoader, String secret, Object am) {
 		// Store secret and errors
 		mSecret = secret;
 		mListError.addAll(listError);
@@ -139,7 +140,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 			// public static void addService(String name, IBinder service)
 			// public static void addService(String name, IBinder service, boolean allowIsolated)
 			// @formatter:on
-			Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
+
+			// Requires this in /service_contexts
+			// xprivacy453 u:object_r:system_server_service:s0
+
+			Class<?> cServiceManager = Class.forName("android.os.ServiceManager", false, classLoader);
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class,
 						boolean.class);
@@ -154,6 +159,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 			// Publish semaphore to activity manager service
 			XActivityManagerService.setSemaphore(mOndemandSemaphore);
+
+			// Get context
+			Field fContext = am.getClass().getDeclaredField("mContext");
+			fContext.setAccessible(true);
+			mContext = (Context) fContext.get(am);
 
 			// Start a worker thread
 			mWorker = new Thread(new Runnable() {
@@ -2270,20 +2280,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 	}
 
 	private Context getContext() {
-		// public static ActivityManagerService self()
-		// frameworks/base/services/java/com/android/server/am/ActivityManagerService.java
-		try {
-			Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
-			Object am = cam.getMethod("self").invoke(null);
-			if (am == null)
-				return null;
-			Field mContext = cam.getDeclaredField("mContext");
-			mContext.setAccessible(true);
-			return (Context) mContext.get(am);
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-			return null;
-		}
+		return mContext;
 	}
 
 	private int getIsolatedUid(int uid) {

@@ -212,7 +212,7 @@ public class PrivacyManager {
 							mPermission.get(aPermission).add(hook);
 					}
 		}
-		Util.log(null, Log.WARN, listHook.size() + " hooks");
+		//Util.log(null, Log.WARN, listHook.size() + " hooks");
 	}
 
 	public static List<String> getRestrictions() {
