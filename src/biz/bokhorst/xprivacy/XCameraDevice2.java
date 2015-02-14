@@ -14,7 +14,7 @@ public class XCameraDevice2 extends XHook {
 	}
 
 	public String getClassName() {
-		return "android.hardware.camera2.impl.CameraDevice";
+		return "android.hardware.camera2.impl.CameraDeviceImpl";
 	}
 
 	// @formatter:off
