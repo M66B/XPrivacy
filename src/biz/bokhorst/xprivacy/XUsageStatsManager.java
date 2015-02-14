@@ -13,13 +13,13 @@ public class XUsageStatsManager extends XHook {
 	private Methods mMethod;
 
 	private XUsageStatsManager(Methods method, String restrictionName) {
-		super(restrictionName, method.name(), method.name().replace("Srv_", ""));
+		super(restrictionName, method.name().replace("Srv_", ""), method.name());
 		mMethod = method;
 	}
 
 	@Override
 	public boolean isVisible() {
-		return (mMethod != Methods.Srv_queryConfigurationStats && mMethod != Methods.Srv_queryUsageStats);
+		return !mMethod.name().startsWith("Srv_");
 	}
 
 	public String getClassName() {
