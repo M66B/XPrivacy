@@ -144,8 +144,9 @@ public class PackageChange extends BroadcastReceiver {
 					String packageName = inputUri.getSchemeSpecificPart();
 					if (packageName.equals(context.getPackageName())) {
 						// Mark self as new/changed
-						PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
-								Integer.toString(ApplicationInfoEx.STATE_ATTENTION));
+						if (PrivacyService.getClient() != null)
+							PrivacyManager.setSetting(uid, PrivacyManager.cSettingState,
+									Integer.toString(ApplicationInfoEx.STATE_ATTENTION));
 
 						// Start package update
 						Intent changeIntent = new Intent();
