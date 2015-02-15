@@ -71,7 +71,7 @@ Depending on the function, XPrivacy skips execution of the original function
 (for example when an application tries to set a proximity alert)
 or alters the result of the original function (for example to return an empty message list).
 
-XPrivacy has been tested with Android version 4.0.3 - 4.4.4 (ICS, JellyBean, KitKat),
+XPrivacy has been tested with Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop),
 and is reported to work with most Android variants, including stock ROMs.
 Root access is needed to install the Xposed framework.
 
@@ -111,7 +111,7 @@ Features
 
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
-* For any (stock) variant of Android version 4.0.3 - 4.4.4 (ICS, JellyBean, KitKat)
+* For any (stock) variant of Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Option to restrict on demand
@@ -352,10 +352,8 @@ You can still restrict the XPrivacy app's access to accounts, contacts, and othe
 Compatibility
 -------------
 
-XPrivacy has been tested with Android version 4.0.3 - 4.4.4 (ICS, JellyBean, KitKat)
+XPrivacy has been tested with Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop)
 and is reported to work with most Android variants, including stock ROMs.
-
-Android 5.0 (Lollipop) support [is in development](https://github.com/M66B/XPrivacy/issues/1757), see also [this FAQ](#FAQ75).
 
 **XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231)).
 
@@ -370,14 +368,22 @@ Candy Crush is known to crash on some ROMs, see [here](http://forum.xda-develope
 Installation
 ------------
 
-**Instead of following the steps below, you can use the [XPrivacy Installer](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.installer).**
+**Instead of following the steps below, you can use the [XPrivacy Installer](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.installer), except for Android 5.x - Lollipop.**
 
 Installation may seem lengthy, but you can actually do it quickly:
 
 1. Requirements:
-	* Android version 4.0.3 - 4.4.4 (ICS, JellyBean, KitKat); check with *System Settings* > *About phone* > *Android version*
+	* Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop); check with *System Settings* > *About phone* > *Android version*
 	* Read about [compatibility](#compatibility) before installing
 1. **Make a backup**
+1. For Android 5.x (Lollipop): **This is not optional!**
+	* You need to be able to flash a kernel image
+		* Mostly this means the bootloader needs to be unlocked
+	* You need to have/obtain a kernel image (boot.img) for your device
+	* Edit the kernel image and add this line as the second to last to the file */service_contexts*:
+	* *xprivacy453 u:object_r:system_server_service:s0*
+	* Flash the edited kernel image
+		* Mostly this is done using the *fastboot* command
 1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
