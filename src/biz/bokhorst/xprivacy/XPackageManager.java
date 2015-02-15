@@ -101,26 +101,28 @@ public class XPackageManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)
 				className = cClassName;
 
-			listHook.add(new XPackageManager(Methods.Srv_getPackageInfo, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_getApplicationInfo, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_getInstalledApplications, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_getInstalledPackages, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_getPackagesForUid, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_getPackagesHoldingPermissions, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_getPersistentApplications, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_getPreferredPackages, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_queryContentProviders, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_queryIntentActivities, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_queryIntentActivityOptions, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_queryIntentContentProviders, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_queryIntentReceivers, PrivacyManager.cSystem));
-			listHook.add(new XPackageManager(Methods.Srv_queryIntentServices, PrivacyManager.cSystem));
+			if (server) {
+				listHook.add(new XPackageManager(Methods.Srv_getPackageInfo, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_getApplicationInfo, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_getInstalledApplications, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_getInstalledPackages, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_getPackagesForUid, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_getPackagesHoldingPermissions, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_getPersistentApplications, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_getPreferredPackages, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_queryContentProviders, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_queryIntentActivities, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_queryIntentActivityOptions, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_queryIntentContentProviders, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_queryIntentReceivers, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.Srv_queryIntentServices, PrivacyManager.cSystem));
+			}
 
 			listHook.add(new XPackageManager(Methods.getInstalledApplications, PrivacyManager.cSystem, className));
 			listHook.add(new XPackageManager(Methods.getInstalledPackages, PrivacyManager.cSystem, className));

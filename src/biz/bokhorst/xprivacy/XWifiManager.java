@@ -58,7 +58,7 @@ public class XWifiManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)
@@ -71,17 +71,20 @@ public class XWifiManager extends XHook {
 				srvClassName = "com.android.server.wifi.WifiService";
 
 			for (Methods wifi : Methods.values())
-				if (wifi.name().startsWith("Srv_"))
-					listHook.add(new XWifiManager(wifi, PrivacyManager.cNetwork, srvClassName));
-				else
+				if (wifi.name().startsWith("Srv_")) {
+					if (server)
+						listHook.add(new XWifiManager(wifi, PrivacyManager.cNetwork, srvClassName));
+				} else
 					listHook.add(new XWifiManager(wifi, PrivacyManager.cNetwork, className));
 
 			listHook.add(new XWifiManager(Methods.getScanResults, PrivacyManager.cLocation, className));
-			listHook.add(new XWifiManager(Methods.Srv_getScanResults, PrivacyManager.cLocation, srvClassName));
+			if (server)
+				listHook.add(new XWifiManager(Methods.Srv_getScanResults, PrivacyManager.cLocation, srvClassName));
 
 			// This is to fake "offline", no permission required
 			listHook.add(new XWifiManager(Methods.getConnectionInfo, PrivacyManager.cInternet, className));
-			listHook.add(new XWifiManager(Methods.Srv_getConnectionInfo, PrivacyManager.cInternet, srvClassName));
+			if (server)
+				listHook.add(new XWifiManager(Methods.Srv_getConnectionInfo, PrivacyManager.cInternet, srvClassName));
 		}
 
 		return listHook;

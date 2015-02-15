@@ -67,19 +67,20 @@ public class XActivityManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)
 				className = cClassName;
 
 			for (Methods act : Methods.values())
-				if (act.name().startsWith("Srv_"))
-					if (act.name().startsWith("Srv_start"))
-						listHook.add(new XActivityManager(act, null, null));
-					else
-						listHook.add(new XActivityManager(act, PrivacyManager.cSystem, null));
-				else
+				if (act.name().startsWith("Srv_")) {
+					if (server)
+						if (act.name().startsWith("Srv_start"))
+							listHook.add(new XActivityManager(act, null, null));
+						else
+							listHook.add(new XActivityManager(act, PrivacyManager.cSystem, null));
+				} else
 					listHook.add(new XActivityManager(act, PrivacyManager.cSystem, className));
 		}
 		return listHook;

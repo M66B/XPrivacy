@@ -105,7 +105,7 @@ public class XLocationManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)
@@ -114,12 +114,14 @@ public class XLocationManager extends XHook {
 			for (Methods loc : Methods.values())
 				if (loc == Methods.removeUpdates)
 					listHook.add(new XLocationManager(loc, null, className));
-				else if (loc.name().startsWith("Srv_remove"))
-					listHook.add(new XLocationManager(loc, null, "com.android.server.LocationManagerService"));
-				else if (loc.name().startsWith("Srv_"))
-					listHook.add(new XLocationManager(loc, PrivacyManager.cLocation,
-							"com.android.server.LocationManagerService"));
-				else
+				else if (loc.name().startsWith("Srv_remove")) {
+					if (server)
+						listHook.add(new XLocationManager(loc, null, "com.android.server.LocationManagerService"));
+				} else if (loc.name().startsWith("Srv_")) {
+					if (server)
+						listHook.add(new XLocationManager(loc, PrivacyManager.cLocation,
+								"com.android.server.LocationManagerService"));
+				} else
 					listHook.add(new XLocationManager(loc, PrivacyManager.cLocation, className));
 		}
 		return listHook;

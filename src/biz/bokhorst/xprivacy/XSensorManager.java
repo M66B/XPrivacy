@@ -42,7 +42,7 @@ public class XSensorManager extends XHook {
 		getDefaultSensor, getSensorList, registerListener
 	};
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)

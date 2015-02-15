@@ -90,17 +90,19 @@ public class XAccountManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)
 				className = cClassName;
 
-			listHook.add(new XAccountManager(Methods.Srv_getAccounts, PrivacyManager.cAccounts));
-			listHook.add(new XAccountManager(Methods.Srv_getAccountsAsUser, PrivacyManager.cAccounts));
-			listHook.add(new XAccountManager(Methods.Srv_getAccountsByFeatures, PrivacyManager.cAccounts));
-			listHook.add(new XAccountManager(Methods.Srv_getAccountsForPackage, PrivacyManager.cAccounts));
-			listHook.add(new XAccountManager(Methods.Srv_getSharedAccountsAsUser, PrivacyManager.cAccounts));
+			if (server) {
+				listHook.add(new XAccountManager(Methods.Srv_getAccounts, PrivacyManager.cAccounts));
+				listHook.add(new XAccountManager(Methods.Srv_getAccountsAsUser, PrivacyManager.cAccounts));
+				listHook.add(new XAccountManager(Methods.Srv_getAccountsByFeatures, PrivacyManager.cAccounts));
+				listHook.add(new XAccountManager(Methods.Srv_getAccountsForPackage, PrivacyManager.cAccounts));
+				listHook.add(new XAccountManager(Methods.Srv_getSharedAccountsAsUser, PrivacyManager.cAccounts));
+			}
 
 			listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
 			listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts, className));

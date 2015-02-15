@@ -30,7 +30,7 @@ public class XConnectivityManager extends XHook {
 		getActiveNetworkInfo, getAllNetworkInfo, getNetworkInfo
 	};
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)

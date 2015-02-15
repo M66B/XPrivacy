@@ -39,7 +39,7 @@ public class XWindowManager extends XHook {
 		addView, removeView, updateViewLayout
 	};
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)

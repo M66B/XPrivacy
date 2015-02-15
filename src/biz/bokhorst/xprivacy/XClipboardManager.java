@@ -62,7 +62,7 @@ public class XClipboardManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)
@@ -70,10 +70,11 @@ public class XClipboardManager extends XHook {
 
 			for (Methods clip : Methods.values())
 				if (clip.name().startsWith("Srv_")) {
-					if (clip == Methods.Srv_removePrimaryClipChangedListener)
-						listHook.add(new XClipboardManager(clip, null));
-					else
-						listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard));
+					if (server)
+						if (clip == Methods.Srv_removePrimaryClipChangedListener)
+							listHook.add(new XClipboardManager(clip, null));
+						else
+							listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard));
 				} else {
 					if (clip == Methods.removePrimaryClipChangedListener)
 						listHook.add(new XClipboardManager(clip, null, className));

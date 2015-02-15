@@ -150,7 +150,7 @@ public class XTelephonyManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(String className) {
+	public static List<XHook> getInstances(String className, boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 		if (!cClassName.equals(className)) {
 			if (className == null)
@@ -188,28 +188,30 @@ public class XTelephonyManager extends XHook {
 			listHook.add(new XTelephonyManager(Methods.getSimOperator, PrivacyManager.cPhone, className));
 			listHook.add(new XTelephonyManager(Methods.getSimOperatorName, PrivacyManager.cPhone, className));
 
-			// PhoneSubInfo
-			listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpi, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpu, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getLine1Number, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getMsisdn, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getSubscriberId, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getCompleteVoiceMailNumber, PrivacyManager.cPhone,
-					Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumber, PrivacyManager.cPhone, Srv.SubInfo));
+			if (server) {
+				// PhoneSubInfo
+				listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpi, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpu, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getLine1Number, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getMsisdn, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getSubscriberId, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getCompleteVoiceMailNumber, PrivacyManager.cPhone,
+						Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumber, PrivacyManager.cPhone, Srv.SubInfo));
 
-			listHook.add(new XTelephonyManager(Methods.Srv_getImei, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIsimIst, PrivacyManager.cPhone, Srv.SubInfo));
-			listHook.add(new XTelephonyManager(Methods.Srv_getIsimPcscf, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getImei, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getIsimIst, PrivacyManager.cPhone, Srv.SubInfo));
+				listHook.add(new XTelephonyManager(Methods.Srv_getIsimPcscf, PrivacyManager.cPhone, Srv.SubInfo));
 
-			listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cLocation, Srv.Registry));
-			listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cPhone, Srv.Registry));
+				listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cLocation, Srv.Registry));
+				listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cPhone, Srv.Registry));
+			}
 		}
 		return listHook;
 	}

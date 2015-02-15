@@ -76,7 +76,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (Util.hasLBE())
 			return;
 
-		handleLoadPackage(lpparam.packageName, lpparam.classLoader, mSecret);
+		handleLoadPackage(lpparam.packageName, lpparam.classLoader, lpparam.isFirstApplication, mSecret);
 	}
 
 	// Common
@@ -122,11 +122,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	private static void handleLoadPackage(String packageName, final ClassLoader classLoader, String secret) {
+	private static void handleLoadPackage(String packageName, final ClassLoader classLoader, boolean main, String secret) {
 		// Util.log(null, Log.INFO, "Load package=" + packageName + " uid=" +
 		// Process.myUid());
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && "android".equals(packageName))
+		if (main && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && "android".equals(packageName))
 			try {
 				Class<?> cSystemServer = Class.forName("com.android.server.am.ActivityManagerService", false,
 						classLoader);
@@ -227,10 +227,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	private static void hookAll(final ClassLoader classLoader) {
 		// Account manager
-		hookAll(XAccountManager.getInstances(null), classLoader, mSecret);
+		hookAll(XAccountManager.getInstances(null, true), classLoader, mSecret);
 
 		// Activity manager
-		hookAll(XActivityManager.getInstances(null), classLoader, mSecret);
+		hookAll(XActivityManager.getInstances(null, true), classLoader, mSecret);
 
 		// Activity manager service
 		hookAll(XActivityManagerService.getInstances(), classLoader, mSecret);
@@ -260,10 +260,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XCameraDevice2.getInstances(), classLoader, mSecret);
 
 		// Clipboard manager
-		hookAll(XClipboardManager.getInstances(null), classLoader, mSecret);
+		hookAll(XClipboardManager.getInstances(null, true), classLoader, mSecret);
 
 		// Connectivity manager
-		hookAll(XConnectivityManager.getInstances(null), classLoader, mSecret);
+		hookAll(XConnectivityManager.getInstances(null, true), classLoader, mSecret);
 
 		// Content resolver
 		hookAll(XContentResolver.getInstances(null), classLoader, mSecret);
@@ -293,7 +293,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XLinkProperties.getInstances(), classLoader, mSecret);
 
 		// Location manager
-		hookAll(XLocationManager.getInstances(null), classLoader, mSecret);
+		hookAll(XLocationManager.getInstances(null, true), classLoader, mSecret);
 
 		// Media recorder
 		hookAll(XMediaRecorder.getInstances(), classLoader, mSecret);
@@ -308,7 +308,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XNfcAdapter.getInstances(), classLoader, mSecret);
 
 		// Package manager service
-		hookAll(XPackageManager.getInstances(null), classLoader, mSecret);
+		hookAll(XPackageManager.getInstances(null, true), classLoader, mSecret);
 
 		// Process
 		hookAll(XProcess.getInstances(), classLoader, mSecret);
@@ -323,7 +323,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XRuntime.getInstances(), classLoader, mSecret);
 
 		// Sensor manager
-		hookAll(XSensorManager.getInstances(null), classLoader, mSecret);
+		hookAll(XSensorManager.getInstances(null, true), classLoader, mSecret);
 
 		// Settings secure
 		hookAll(XSettingsSecure.getInstances(), classLoader, mSecret);
@@ -338,7 +338,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XSystemProperties.getInstances(), classLoader, mSecret);
 
 		// Telephone service
-		hookAll(XTelephonyManager.getInstances(null), classLoader, mSecret);
+		hookAll(XTelephonyManager.getInstances(null, true), classLoader, mSecret);
 
 		// Usage statistics manager
 		hookAll(XUsageStatsManager.getInstances(), classLoader, mSecret);
@@ -350,10 +350,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XWebView.getInstances(), classLoader, mSecret);
 
 		// Window service
-		hookAll(XWindowManager.getInstances(null), classLoader, mSecret);
+		hookAll(XWindowManager.getInstances(null, true), classLoader, mSecret);
 
 		// Wi-Fi service
-		hookAll(XWifiManager.getInstances(null), classLoader, mSecret);
+		hookAll(XWifiManager.getInstances(null, true), classLoader, mSecret);
 
 		// Intent receive
 		hookAll(XActivityThread.getInstances(), classLoader, mSecret);
@@ -367,25 +367,25 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			PrivacyManager.setTransient(className, Boolean.toString(true));
 
 			if (name.equals(Context.ACCOUNT_SERVICE))
-				hookAll(XAccountManager.getInstances(className), null, secret);
+				hookAll(XAccountManager.getInstances(className, false), null, secret);
 			else if (name.equals(Context.ACTIVITY_SERVICE))
-				hookAll(XActivityManager.getInstances(className), null, secret);
+				hookAll(XActivityManager.getInstances(className, false), null, secret);
 			else if (name.equals(Context.CLIPBOARD_SERVICE))
-				hookAll(XClipboardManager.getInstances(className), null, secret);
+				hookAll(XClipboardManager.getInstances(className, false), null, secret);
 			else if (name.equals(Context.CONNECTIVITY_SERVICE))
-				hookAll(XConnectivityManager.getInstances(className), null, secret);
+				hookAll(XConnectivityManager.getInstances(className, false), null, secret);
 			else if (name.equals(Context.LOCATION_SERVICE))
-				hookAll(XLocationManager.getInstances(className), null, secret);
+				hookAll(XLocationManager.getInstances(className, false), null, secret);
 			else if (name.equals("PackageManager"))
-				hookAll(XPackageManager.getInstances(className), null, secret);
+				hookAll(XPackageManager.getInstances(className, false), null, secret);
 			else if (name.equals(Context.SENSOR_SERVICE))
-				hookAll(XSensorManager.getInstances(className), null, secret);
+				hookAll(XSensorManager.getInstances(className, false), null, secret);
 			else if (name.equals(Context.TELEPHONY_SERVICE))
-				hookAll(XTelephonyManager.getInstances(className), null, secret);
+				hookAll(XTelephonyManager.getInstances(className, false), null, secret);
 			else if (name.equals(Context.WINDOW_SERVICE))
-				hookAll(XWindowManager.getInstances(className), null, secret);
+				hookAll(XWindowManager.getInstances(className, false), null, secret);
 			else if (name.equals(Context.WIFI_SERVICE))
-				hookAll(XWifiManager.getInstances(className), null, secret);
+				hookAll(XWifiManager.getInstances(className, false), null, secret);
 		}
 	}
 
