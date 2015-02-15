@@ -70,6 +70,7 @@ import android.widget.Toast;
 
 public class PrivacyService extends IPrivacyService.Stub {
 	private static int mXUid = -1;
+	private static Object mAm;
 	private static Context mContext;
 	private static String mSecret = null;
 	private static Thread mWorker = null;
@@ -129,6 +130,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 	public static void register(List<String> listError, ClassLoader classLoader, String secret, Object am) {
 		// Store secret and errors
+		mAm = am;
 		mSecret = secret;
 		mListError.addAll(listError);
 
@@ -2264,8 +2266,13 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 	private boolean isAMLocked(int uid) {
 		try {
-			Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
-			Object am = cam.getMethod("self").invoke(null);
+			Object am;
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+				am = mAm;
+			else {
+				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
+				am = cam.getMethod("self").invoke(null);
+			}
 			boolean locked = Thread.holdsLock(am);
 			if (locked) {
 				boolean freeze = getSettingBool(uid, PrivacyManager.cSettingFreeze, false);
