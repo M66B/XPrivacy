@@ -15,16 +15,20 @@ Changelog
 
 **Important**
 
-* See [here](https://github.com/M66B/XPrivacy#compatibility) about Android 5.0 (Lollipop) compatibility
 * **Please send the support info when XPrivacy asks for it**
 
 **Next release**
 
+* ...
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.6.6 ALPHA**
+
+* Android 5.x (Lollipop) support **Please read the [installation instructions](https://github.com/M66B/XPrivacy/#installation)**
 * Reverted "Manage white/black lists from usage data" ([issue](/../../issues/2093))
 * Added menu *Manage whitelists* to usage data view for a single application ([issue](/../../issues/2093))
 * Updated Czech translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.6.5 BETA**
 
