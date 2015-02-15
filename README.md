@@ -380,10 +380,11 @@ Installation may seem lengthy, but you can actually do it quickly:
 	* You need to be able to flash a kernel image
 		* Mostly this means the bootloader needs to be unlocked
 	* You need to have/obtain a kernel image (boot.img) for your device
-	* Edit the kernel image and add this line as the second to last to the file */service_contexts*:
-	* *xprivacy453 u:object_r:system_server_service:s0*
+	* Edit the kernel image and add this line as the second to last to the file */service_contexts* (before the blank line):
+		* *xprivacy453 u:object_r:system_server_service:s0*
+		* You can do this with for example [Android Image Kitchen](http://forum.xda-developers.com/showthread.php?t=2073775)
 	* Flash the edited kernel image
-		* Mostly this is done using the *fastboot* command
+		* Mostly this is done using the [fastboot](http://forum.xda-developers.com/showthread.php?t=2277112) command
 1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
