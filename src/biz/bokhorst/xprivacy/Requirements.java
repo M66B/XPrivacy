@@ -150,20 +150,21 @@ public class Requirements {
 			reportClass(InterfaceAddress.class, context);
 
 		// Check package manager service
-		try {
-			Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService", false, null);
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
 			try {
+				Class<?> clazz = Class.forName("com.android.server.pm.PackageManagerService", false, null);
 				try {
-					clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
-				} catch (NoSuchMethodException ignored) {
-					clazz.getDeclaredMethod("getPackageUid", String.class);
+					try {
+						clazz.getDeclaredMethod("getPackageUid", String.class, int.class);
+					} catch (NoSuchMethodException ignored) {
+						clazz.getDeclaredMethod("getPackageUid", String.class);
+					}
+				} catch (NoSuchMethodException ex) {
+					reportClass(clazz, context);
 				}
-			} catch (NoSuchMethodException ex) {
-				reportClass(clazz, context);
+			} catch (ClassNotFoundException ex) {
+				sendSupportInfo(ex.toString(), context);
 			}
-		} catch (ClassNotFoundException ex) {
-			sendSupportInfo(ex.toString(), context);
-		}
 
 		// Check GPS status
 		if (!checkField(GpsStatus.class, "mSatellites"))
