@@ -376,7 +376,9 @@ Installation may seem lengthy, but you can actually do it quickly:
 	* Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop); check with *System Settings* > *About phone* > *Android version*
 	* Read about [compatibility](#compatibility) before installing
 1. **Make a backup**
-1. For Android 5.x (Lollipop): **This is not optional!**
+1. For Android 5.x (Lollipop):
+	* **This is not optional, unless you are using a custom ROM/kernel with SELinux disabled or in permissive mode!**
+		* Note that applications to set SELinux to permissive mode will probably not work, since this is probably done too late in the boot process
 	* You need to be able to flash a kernel image
 		* Mostly this means the bootloader needs to be unlocked
 	* You need to have/obtain a kernel image (boot.img) for your device
@@ -387,8 +389,6 @@ Installation may seem lengthy, but you can actually do it quickly:
 		* My advice is to use [Geany](http://www.geany.org/) to edit the file
 	* Flash the edited kernel image
 		* Mostly this is done using the [fastboot](http://forum.xda-developers.com/showthread.php?t=2277112) command
-	* You can skip above steps if your custom ROM has set SELinux to permissive
-		* Note that applications to set SELinux to permissive will not work, since this is done after boot
 1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
