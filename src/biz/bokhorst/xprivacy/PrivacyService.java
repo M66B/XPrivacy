@@ -2312,8 +2312,15 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private int getIsolatedUid(int uid) {
 		if (PrivacyManager.isIsolated(uid))
 			try {
-				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
-				Object am = cam.getMethod("self").invoke(null);
+				Class<?> cam;
+				Object am;
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+					cam = mAm.getClass();
+					am = mAm;
+				} else {
+					cam = Class.forName("com.android.server.am.ActivityManagerService");
+					am = cam.getMethod("self").invoke(null);
+				}
 				Field fmIsolatedProcesses = cam.getDeclaredField("mIsolatedProcesses");
 				fmIsolatedProcesses.setAccessible(true);
 				SparseArray<?> mIsolatedProcesses = (SparseArray<?>) fmIsolatedProcesses.get(am);
