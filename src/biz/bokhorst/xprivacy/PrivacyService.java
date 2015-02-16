@@ -41,6 +41,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
+import android.os.IServiceManager;
 import android.os.Looper;
 import android.os.Process;
 import android.os.RemoteException;
@@ -127,6 +128,47 @@ public class PrivacyService extends IPrivacyService.Stub {
 	}
 
 	private static PrivacyService mPrivacyService = null;
+
+	public static PrivacyService register(IServiceManager serviceManager, String secret) throws RemoteException {
+		mSecret = secret;
+		mPrivacyService = new PrivacyService();
+		serviceManager.addService(cServiceName, mPrivacyService, true);
+		Log.w("XPrivacy", "Service registered name=" + cServiceName + " version=" + cCurrentVersion);
+		return mPrivacyService;
+	}
+
+	public void start(List<String> listError, ClassLoader classLoader, Object am) {
+		// Store secret and errors
+		mAm = am;
+		mListError.addAll(listError);
+
+		try {
+			XActivityManagerService.setSemaphore(mOndemandSemaphore);
+
+			// Get am context
+			Field fContext = am.getClass().getDeclaredField("mContext");
+			fContext.setAccessible(true);
+			mContext = (Context) fContext.get(am);
+
+			// Start a worker thread
+			mWorker = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					try {
+						Looper.prepare();
+						mHandler = new Handler();
+						Looper.loop();
+					} catch (Throwable ex) {
+						Util.bug(null, ex);
+					}
+				}
+			});
+			mWorker.start();
+
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
 
 	public static void register(List<String> listError, ClassLoader classLoader, String secret, Object am) {
 		// Store secret and errors

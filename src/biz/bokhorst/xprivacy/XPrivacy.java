@@ -15,7 +15,10 @@ import java.util.Random;
 
 import android.content.Context;
 import android.os.Build;
+import android.os.IBinder;
+import android.os.IServiceManager;
 import android.os.Process;
+import android.os.ServiceManagerProxy;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -27,6 +30,7 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static String mSecret = null;
+	private static PrivacyService mPrivacyService = null;
 	private static List<String> mListHookError = new ArrayList<String>();
 	private static List<CRestriction> mListDisabled = new ArrayList<CRestriction>();
 
@@ -115,10 +119,20 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				});
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
-				return;
 			}
 
 			hookAll(null);
+		} else {
+			// Register privacy service
+			try {
+				Class<?> cBinderInternal = Class.forName("com.android.internal.os.BinderInternal");
+				Method mGetContextObject = cBinderInternal.getDeclaredMethod("getContextObject");
+				IBinder contextObject = (IBinder) mGetContextObject.invoke(null);
+				IServiceManager serviceManager = new ServiceManagerProxy(contextObject);
+				PrivacyService.register(serviceManager, mSecret);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 		}
 	}
 
@@ -134,8 +148,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				XposedBridge.hookMethod(mMain, new XC_MethodHook() {
 					@Override
 					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-						PrivacyService.register(mListHookError, classLoader, mSecret, param.thisObject);
-						hookAll(classLoader);
+						if (mPrivacyService != null) {
+							mPrivacyService.start(mListHookError, classLoader, param.thisObject);
+							hookAll(classLoader);
+						}
 					}
 				});
 			} catch (Throwable ex) {
