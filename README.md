@@ -1309,6 +1309,16 @@ Start the Play store and wait a minute or so, so that the Play store can synchro
 
 Try to fetch a license again. If you keep having this problem, please contact me (again).
 
+<a name="FAQ79"></a>
+**(79) How can I disable restrictions at boot (experts only)**
+
+By creating this file:
+
+*/data/system/xprivacy/disabled*
+
+Each line should either contain a category name or a category name and function name separated by a slash (/).
+See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/Meta.java#L47) for the correct category and function names.
+
 Support
 -------
 
