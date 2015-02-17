@@ -212,7 +212,7 @@ public class PrivacyManager {
 							mPermission.get(aPermission).add(hook);
 					}
 		}
-		//Util.log(null, Log.WARN, listHook.size() + " hooks");
+		// Util.log(null, Log.WARN, listHook.size() + " hooks");
 	}
 
 	public static List<String> getRestrictions() {
@@ -337,8 +337,10 @@ public class PrivacyManager {
 		PRestriction result = new PRestriction(uid, restrictionName, methodName, false, true);
 
 		// Check uid
-		if (uid <= 0)
+		if (uid <= 0 || uid == Process.SYSTEM_UID)
 			return false;
+
+		// Check secret
 		if (secret == null) {
 			Util.log(null, Log.ERROR, "Secret missing restriction=" + restrictionName + "/" + methodName);
 			Util.logStack(hook, Log.ERROR);
