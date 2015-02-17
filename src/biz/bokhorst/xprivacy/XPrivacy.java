@@ -16,9 +16,9 @@ import java.util.Random;
 import android.content.Context;
 import android.os.Build;
 import android.os.IBinder;
-import android.os.IServiceManager;
 import android.os.Process;
-import android.os.ServiceManagerProxy;
+import android.os.copy.IServiceManager;
+import android.os.copy.ServiceManagerProxy;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookZygoteInit;

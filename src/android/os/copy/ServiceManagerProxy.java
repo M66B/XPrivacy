@@ -14,9 +14,13 @@
  * limitations under the License.
  */
 
-package android.os;
+package android.os.copy;
 
 import java.util.ArrayList;
+
+import android.os.IBinder;
+import android.os.Parcel;
+import android.os.RemoteException;
 
 public class ServiceManagerProxy implements IServiceManager {
     public ServiceManagerProxy(IBinder remote) {

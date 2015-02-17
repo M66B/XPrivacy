@@ -2,33 +2,33 @@
  * This file is auto-generated.  DO NOT MODIFY.
  * Original file: frameworks/base/core/java/android/os/IPermissionController.aidl
  */
-package android.os;
+package android.os.copy;
 /** @hide */
 public interface IPermissionController extends android.os.IInterface
 {
 /** Local-side IPC implementation stub class. */
-public static abstract class Stub extends android.os.Binder implements android.os.IPermissionController
+public static abstract class Stub extends android.os.Binder implements android.os.copy.IPermissionController
 {
-private static final java.lang.String DESCRIPTOR = "android.os.IPermissionController";
+private static final java.lang.String DESCRIPTOR = "android.os.copy.IPermissionController";
 /** Construct the stub at attach it to the interface. */
 public Stub()
 {
 this.attachInterface(this, DESCRIPTOR);
 }
 /**
- * Cast an IBinder object into an android.os.IPermissionController interface,
+ * Cast an IBinder object into an android.os.copy.IPermissionController interface,
  * generating a proxy if needed.
  */
-public static android.os.IPermissionController asInterface(android.os.IBinder obj)
+public static android.os.copy.IPermissionController asInterface(android.os.IBinder obj)
 {
 if ((obj==null)) {
 return null;
 }
 android.os.IInterface iin = obj.queryLocalInterface(DESCRIPTOR);
-if (((iin!=null)&&(iin instanceof android.os.IPermissionController))) {
-return ((android.os.IPermissionController)iin);
+if (((iin!=null)&&(iin instanceof android.os.copy.IPermissionController))) {
+return ((android.os.copy.IPermissionController)iin);
 }
-return new android.os.IPermissionController.Stub.Proxy(obj);
+return new android.os.copy.IPermissionController.Stub.Proxy(obj);
 }
 @Override public android.os.IBinder asBinder()
 {
@@ -60,7 +60,7 @@ return true;
 }
 return super.onTransact(code, data, reply, flags);
 }
-private static class Proxy implements android.os.IPermissionController
+private static class Proxy implements android.os.copy.IPermissionController
 {
 private android.os.IBinder mRemote;
 Proxy(android.os.IBinder remote)

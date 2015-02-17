@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-package android.os;
+package android.os.copy;
+
+import android.os.IBinder;
+import android.os.IInterface;
+import android.os.RemoteException;
 
 /**
  * Basic interface for finding and publishing system services.
@@ -56,7 +60,7 @@ public interface IServiceManager extends IInterface {
 	 */
 	public void setPermissionController(IPermissionController controller) throws RemoteException;
 
-	static final String descriptor = "android.os.IServiceManager";
+	static final String descriptor = "android.os.copy.IServiceManager";
 
 	int GET_SERVICE_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION;
 	int CHECK_SERVICE_TRANSACTION = IBinder.FIRST_CALL_TRANSACTION + 1;
