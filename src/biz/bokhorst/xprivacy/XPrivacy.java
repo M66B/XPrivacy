@@ -125,11 +125,26 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		} else {
 			// Register privacy service
 			try {
+				// Prepare for context switch
+				Class<?> cSELinux = Class.forName("android.os.SELinux");
+				Method mGetFileContext = cSELinux.getDeclaredMethod("getFileContext", String.class);
+				Method mSetFileContext = cSELinux.getDeclaredMethod("setFileContext", String.class, String.class);
+
+				// Save currenc context
+				String prevContext = (String) mGetFileContext.invoke(null, path);
+
+				// Switch to system server context
+				mSetFileContext.invoke(null, path, "u:r:system_server:s0");
+
+				// Register the privacy service
 				Class<?> cBinderInternal = Class.forName("com.android.internal.os.BinderInternal");
 				Method mGetContextObject = cBinderInternal.getDeclaredMethod("getContextObject");
 				IBinder contextObject = (IBinder) mGetContextObject.invoke(null);
 				IServiceManager serviceManager = new ServiceManagerProxy(contextObject);
 				mPrivacyService = PrivacyService.register(serviceManager, mSecret);
+
+				// Restore original context
+				mSetFileContext.invoke(null, path, prevContext);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
