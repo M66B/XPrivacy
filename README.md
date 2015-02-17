@@ -389,6 +389,8 @@ Installation may seem lengthy, but you can actually do it quickly:
 		* My advice is to use [Geany](http://www.geany.org/) to edit the file
 	* Flash the edited kernel image
 		* Mostly this is done using the [fastboot](http://forum.xda-developers.com/showthread.php?t=2277112) command
+	* Download the latest release of XPrivacy [here](https://github.com/M66B/XPrivacy/releases)
+		* **The releases in the Xposed repository do not work on Android 5.x (Lollipop)**
 1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
