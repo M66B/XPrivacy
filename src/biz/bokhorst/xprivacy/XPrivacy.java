@@ -129,7 +129,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Method mGetContextObject = cBinderInternal.getDeclaredMethod("getContextObject");
 				IBinder contextObject = (IBinder) mGetContextObject.invoke(null);
 				IServiceManager serviceManager = new ServiceManagerProxy(contextObject);
-				PrivacyService.register(serviceManager, mSecret);
+				mPrivacyService = PrivacyService.register(serviceManager, mSecret);
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
