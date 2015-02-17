@@ -41,7 +41,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.IServiceManager;
+import android.os.copy.IServiceManager;
 import android.os.Looper;
 import android.os.Process;
 import android.os.RemoteException;
