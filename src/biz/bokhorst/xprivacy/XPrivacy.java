@@ -469,10 +469,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			for (Member member : listMember)
 				try {
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
-						if ((member.getModifiers() & Modifier.NATIVE) != 0) {
+						if ((member.getModifiers() & Modifier.NATIVE) != 0)
 							Util.log(hook, Log.WARN, "Native method=" + member);
-							continue;
-						}
 					XposedBridge.hookMethod(member, new XMethodHook(hook));
 				} catch (NoSuchFieldError ex) {
 					Util.log(hook, Log.WARN, ex.toString());
