@@ -41,7 +41,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.IBinder;
-import android.os.copy.IServiceManager;
 import android.os.Looper;
 import android.os.Process;
 import android.os.RemoteException;
@@ -129,47 +128,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 	private static PrivacyService mPrivacyService = null;
 
-	public static PrivacyService register(IServiceManager serviceManager, String secret) throws RemoteException {
-		mSecret = secret;
-		mPrivacyService = new PrivacyService();
-		serviceManager.addService(cServiceName, mPrivacyService, true);
-		Log.w("XPrivacy", "Service registered name=" + cServiceName + " version=" + cCurrentVersion);
-		return mPrivacyService;
-	}
-
-	public void start(List<String> listError, ClassLoader classLoader, Object am) {
-		// Store secret and errors
-		mAm = am;
-		mListError.addAll(listError);
-
-		try {
-			XActivityManagerService.setSemaphore(mOndemandSemaphore);
-
-			// Get am context
-			Field fContext = am.getClass().getDeclaredField("mContext");
-			fContext.setAccessible(true);
-			mContext = (Context) fContext.get(am);
-
-			// Start a worker thread
-			mWorker = new Thread(new Runnable() {
-				@Override
-				public void run() {
-					try {
-						Looper.prepare();
-						mHandler = new Handler();
-						Looper.loop();
-					} catch (Throwable ex) {
-						Util.bug(null, ex);
-					}
-				}
-			});
-			mWorker.start();
-
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
 	public static void register(List<String> listError, ClassLoader classLoader, String secret, Object am) {
 		// Store secret and errors
 		mAm = am;
@@ -192,7 +150,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class,
 						boolean.class);
-				mAddService.invoke(null, cServiceName, mPrivacyService, true);
+				mAddService.invoke(null, "user." + cServiceName, mPrivacyService, true);
 			} else {
 				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
 				mAddService.invoke(null, cServiceName, mPrivacyService);
@@ -2421,33 +2379,37 @@ public class PrivacyService extends IPrivacyService.Stub {
 			else
 				Util.log(null, Log.WARN, "Does not exist folder=" + dbFile.getParentFile());
 
-			// Move database from data/xprivacy folder
-			File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
-			if (folder.exists()) {
-				File[] oldFiles = folder.listFiles();
-				if (oldFiles != null)
-					for (File file : oldFiles)
-						if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db")) {
-							File target = new File(dbFile.getParentFile() + File.separator + file.getName());
-							boolean status = Util.move(file, target);
-							Util.log(null, Log.WARN, "Moved " + file + " to " + target + " ok=" + status);
-						}
-				folder.delete();
-			}
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+				// Move database from data/xprivacy folder
+				File folder = new File(Environment.getDataDirectory() + File.separator + "xprivacy");
+				if (folder.exists()) {
+					File[] oldFiles = folder.listFiles();
+					if (oldFiles != null)
+						for (File file : oldFiles)
+							if (file.getName().startsWith("xprivacy.db") || file.getName().startsWith("usage.db")) {
+								File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+								boolean status = Util.move(file, target);
+								Util.log(null, Log.WARN, "Moved " + file + " to " + target + " ok=" + status);
+							}
+					Util.log(null, Log.WARN, "Deleting folder=" + folder);
+					folder.delete();
+				}
 
-			// Move database from data/application folder
-			folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
-					+ PrivacyService.class.getPackage().getName());
-			if (folder.exists()) {
-				File[] oldFiles = folder.listFiles();
-				if (oldFiles != null)
-					for (File file : oldFiles)
-						if (file.getName().startsWith("xprivacy.db")) {
-							File target = new File(dbFile.getParentFile() + File.separator + file.getName());
-							boolean status = Util.move(file, target);
-							Util.log(null, Log.WARN, "Moved " + file + " to " + target + " ok=" + status);
-						}
-				folder.delete();
+				// Move database from data/application folder
+				folder = new File(Environment.getDataDirectory() + File.separator + "data" + File.separator
+						+ PrivacyService.class.getPackage().getName());
+				if (folder.exists()) {
+					File[] oldFiles = folder.listFiles();
+					if (oldFiles != null)
+						for (File file : oldFiles)
+							if (file.getName().startsWith("xprivacy.db")) {
+								File target = new File(dbFile.getParentFile() + File.separator + file.getName());
+								boolean status = Util.move(file, target);
+								Util.log(null, Log.WARN, "Moved " + file + " to " + target + " ok=" + status);
+							}
+					Util.log(null, Log.WARN, "Deleting folder=" + folder);
+					folder.delete();
+				}
 			}
 
 			// Set database file permissions

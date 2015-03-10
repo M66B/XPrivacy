@@ -632,4 +632,16 @@ public class Util {
 
 		return inSampleSize;
 	}
+
+	public static String getSEContext() {
+		try {
+			Class<?> cSELinux = Class.forName("android.os.SELinux");
+			Method mGetContext = cSELinux.getDeclaredMethod("getContext");
+			return (String) mGetContext.invoke(null);
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+			return null;
+		}
+
+	}
 }

@@ -15,10 +15,7 @@ import java.util.Random;
 
 import android.content.Context;
 import android.os.Build;
-import android.os.IBinder;
 import android.os.Process;
-import android.os.copy.IServiceManager;
-import android.os.copy.ServiceManagerProxy;
 import android.util.Log;
 
 import de.robv.android.xposed.IXposedHookZygoteInit;
@@ -30,7 +27,6 @@ import static de.robv.android.xposed.XposedHelpers.findClass;
 
 public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static String mSecret = null;
-	private static PrivacyService mPrivacyService = null;
 	private static List<String> mListHookError = new ArrayList<String>();
 	private static List<CRestriction> mListDisabled = new ArrayList<CRestriction>();
 
@@ -122,32 +118,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			}
 
 			hookAll(null);
-		} else {
-			// Register privacy service
-			try {
-				// Prepare for context switch
-				Class<?> cSELinux = Class.forName("android.os.SELinux");
-				Method mGetFileContext = cSELinux.getDeclaredMethod("getFileContext", String.class);
-				Method mSetFileContext = cSELinux.getDeclaredMethod("setFileContext", String.class, String.class);
-
-				// Save currenc context
-				String prevContext = (String) mGetFileContext.invoke(null, path);
-
-				// Switch to system server context
-				mSetFileContext.invoke(null, path, "u:r:system_server:s0");
-
-				// Register the privacy service
-				Class<?> cBinderInternal = Class.forName("com.android.internal.os.BinderInternal");
-				Method mGetContextObject = cBinderInternal.getDeclaredMethod("getContextObject");
-				IBinder contextObject = (IBinder) mGetContextObject.invoke(null);
-				IServiceManager serviceManager = new ServiceManagerProxy(contextObject);
-				mPrivacyService = PrivacyService.register(serviceManager, mSecret);
-
-				// Restore original context
-				mSetFileContext.invoke(null, path, prevContext);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
 		}
 	}
 
@@ -163,10 +133,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				XposedBridge.hookMethod(mMain, new XC_MethodHook() {
 					@Override
 					protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
-						if (mPrivacyService != null) {
-							mPrivacyService.start(mListHookError, classLoader, param.thisObject);
-							hookAll(classLoader);
-						}
+						PrivacyService.register(mListHookError, classLoader, mSecret, param.thisObject);
+						hookAll(classLoader);
 					}
 				});
 			} catch (Throwable ex) {
@@ -497,6 +465,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Hook members
 			for (Member member : listMember)
 				try {
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+						if ((member.getModifiers() & Modifier.NATIVE) != 0) {
+							Util.log(hook, Log.WARN, "Native method=" + member);
+							continue;
+						}
 					XposedBridge.hookMethod(member, new XMethodHook(hook));
 				} catch (NoSuchFieldError ex) {
 					Util.log(hook, Log.WARN, ex.toString());
