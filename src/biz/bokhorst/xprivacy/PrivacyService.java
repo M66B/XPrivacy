@@ -213,7 +213,11 @@ public class PrivacyService extends IPrivacyService.Stub {
 				// public static IBinder getService(String name)
 				Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 				Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);
-				mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, cServiceName));
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+					mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, cServiceName));
+				else
+					mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, "user."
+							+ cServiceName));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
