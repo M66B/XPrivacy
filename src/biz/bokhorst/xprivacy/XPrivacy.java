@@ -76,7 +76,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (Util.hasLBE())
 			return;
 
-		handleLoadPackage(lpparam.packageName, lpparam.classLoader, lpparam.isFirstApplication, mSecret);
+		handleLoadPackage(lpparam.packageName, lpparam.processName, lpparam.classLoader, lpparam.isFirstApplication,
+				mSecret);
 	}
 
 	// Common
@@ -121,11 +122,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 	}
 
-	private static void handleLoadPackage(String packageName, final ClassLoader classLoader, boolean main, String secret) {
+	private static void handleLoadPackage(String packageName, String processName, final ClassLoader classLoader,
+			boolean main, String secret) {
 		// Util.log(null, Log.INFO, "Load package=" + packageName + " uid=" +
 		// Process.myUid());
 
-		if (main && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && "android".equals(packageName))
+		if (main && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && "android".equals(packageName)
+				&& "android".equals(processName))
 			try {
 				Class<?> cSystemServer = Class.forName("com.android.server.am.ActivityManagerService", false,
 						classLoader);
