@@ -23,6 +23,16 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3.6.8 UNSUPPORTED**
+
+* Forced compatibility mode for Lollipop
+* Updated to SDK 22
+
+**Version 3.6.7 UNSUPPORTED**
+
+* Fixed need for editing kernel image
+* Fixed bootloop caused by accessing /data/data in SELinux restrictive mode
+
 **Version 3.6.6 ALPHA**
 
 * Android 5.x (Lollipop) support
