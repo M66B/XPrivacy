@@ -3,6 +3,7 @@ Changelog
 
 **Release types**
 
+* UNSUPPORTED: only install if you know how to fix things
 * EXPERIMENTAL: only install if you know how to fix things
 * TEST: new or updated features with a higher risk for bugs
 * BETA: new or updated features with a lower risk for bugs
@@ -25,13 +26,13 @@ Changelog
 
 **Version 3.6.8 UNSUPPORTED**
 
-* Forced compatibility mode for Lollipop
-* Updated to SDK 22
+* Running in compatibility mode on Lollipop
+* Updated to SDK 22 (Android 5.1)
 
 **Version 3.6.7 UNSUPPORTED**
 
-* Fixed need for editing kernel image
-* Fixed bootloop caused by accessing /data/data in SELinux restrictive mode
+* Fixed need for editing kernel image by using an SELinux loophole
+* Fixed bootloop caused by accessing */data/data* in SELinux restrictive mode
 
 **Version 3.6.6 ALPHA**
 
