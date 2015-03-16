@@ -17,7 +17,8 @@ Changelog
 **Important**
 
 * **Please send the support info when XPrivacy asks for it**
-* **Lollipop: XPrivacy will cause a bootloop on some ROMs due to a bug in Xposed** ([issue](https://github.com/M66B/XPrivacy/issues/2162))
+* **Android 5.0.x (lollipop): please read the [installation instructions](https://github.com/M66B/XPrivacy/#installation)**
+* **Android 5.0.x (Lollipop): XPrivacy will cause a bootloop on some ROMs due to a bug in Xposed** ([issue](https://github.com/M66B/XPrivacy/issues/2162))
 
 **Next release**
 
@@ -35,10 +36,9 @@ Changelog
 * Fixed need for editing kernel image by using an SELinux loophole
 * Fixed bootloop caused by accessing */data/data* in SELinux restrictive mode
 
-**Version 3.6.6 ALPHA**
+**Version 3.6.6 UNSUPPORTED**
 
 * Android 5.x (Lollipop) support
-	* **Please read the [installation instructions](https://github.com/M66B/XPrivacy/#installation)**
 * Reverted "Manage white/black lists from usage data" ([issue](/../../issues/2093))
 * Added menu *Manage whitelists* to usage data view for a single application ([issue](/../../issues/2093))
 * Updated Czech translation
