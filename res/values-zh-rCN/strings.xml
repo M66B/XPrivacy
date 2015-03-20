@@ -76,11 +76,11 @@
     <string name="msg_service_missing">没有找到Privacy服务，您是否在Xposed Installer中启用XPrivacy并重启设备？</string>
     <string name="msg_service_version">Privacy服务版本不对，您是否在升级XPrivacy后忘了重启？</string>
     <string name="msg_service_updating">更新服务已完成请等待</string>
-    <string name="msg_expert">Expert users are supposed to solve their own problems where possible and to follow the XDA XPrivacy forum and help others where possible</string>
-    <string name="msg_method_expert">Function restrictions are meant for expert users. Are you an expert user?</string>
-    <string name="msg_longpress_whitelist">Long press function name to white or black list parameter</string>
+    <string name="msg_expert">如果可能的话,专家用户都应该解决自己问题的同时关注 XDA XPrivacy 论坛并尽可能帮助他人解决问题</string>
+    <string name="msg_method_expert">函数限制专用于专家用户. 您是专家用户吗?</string>
+    <string name="msg_longpress_whitelist">长按函数名称将参数添加到黑/白名单</string>
     <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
-    <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
+    <string name="msg_corrupt">因为已损坏, 已经重置隐私数据库</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
 \n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
@@ -173,14 +173,14 @@
     <string name="title_template_category">应用模板(分类)</string>
     <string name="title_template_full">应用模板(分类和功能)</string>
     <string name="title_template_merge">应用模板(合并)</string>
-    <string name="title_template_merge_reset">Apply template (merge reset)</string>
+    <string name="title_template_merge_reset">应用模板 (合并重置)</string>
     <string name="title_enable_ondemand">开启按需权限限制</string>
     <string name="title_disable_ondemand">关闭按需权限限制</string>
     <string name="title_ondemand_default">超时将：</string>
     <string name="title_ondemand_reset">复位</string>
     <string name="title_default">默认</string>
     <string name="title_alternate">备用</string>
-    <string name="title_rename">Rename</string>
+    <string name="title_rename">重命名</string>
     <string name="title_usage_header">用户指南</string>
     <string name="title_usage_text_1">1. 找到应用程序的主应用程序列表中以限制</string>
     <string name="title_usage_text_2">2. 点击应用程序图标</string>
