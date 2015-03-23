@@ -78,12 +78,7 @@ Root access is needed to install the Xposed framework.
 
 **XPrivacy was a lot of work, so please support this project**
 
-Donate a few dollars for a [pro license](http://www.xprivacy.eu/)
-
-OR
-
-buy the [pro license fetcher](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.license) from the Google Play Store
-
+If you want to donate, see [here](http://www.xprivacy.eu/) for all options.
 
 **Using XPrivacy is entirely at your own risk**
 
@@ -797,21 +792,6 @@ The tri-state check box works this way:
 
 Note: by default, categories and functions are filtered by permission, so you may not see all of them. The check box state is independent of this.
 
-<a name="FAQ29"></a>
-**(29) Why doesn't the import/export enabler make all pro features available?**
-
-**The import/export enabler is not available anymore**
-
-The [import/export enabler](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.pro) is in the Play Store by request of some early XPrivacy users.
-In the beginning, there was just one pro feature: export and import all restrictions and settings.
-Later, fetching [crowd sourced restrictions](http://crowd.xprivacy.eu/) was added as a pro feature.
-Processing the crowd sourced restrictions requires a big server that has to be paid for.
-The import/export enabler's low price (don't forget Google takes 30%) prevented providing this feature for free.
-Looking back, I would never have added the import/export enabler to the Play Store,
-but I can no longer remove it because of the existing users.
-Moreover, not everybody has access to PayPal and not everybody needs all pro features,
-so for these people the import/export enabler is still of use.
-
 <a name="FAQ30"></a>
 **(30) What should I do if an application force closes (crashes) or something doesn't work?**
 
@@ -877,17 +857,6 @@ The same applies to the IMEI number, additionally complicated by legal issues in
 	* d. [V] [&#8194;] You will not receive an on demand popup, the permission will always be denied
 * Be aware that the on demand popups are global, which could be an issue if your device has multiple users. Unfortunately this cannot be changed.
 
-<a name="FAQ35"></a>
-**(35) Do I need the import/export enabler to use the pro license?**
-
-No, the pro license can be used independently.
-
-<a name="FAQ36"></a>
-**(36) Is PayPal the only way to donate?**
-
-Yes, it is not feasible to add other donation methods at the moment.
-The only other way to get a pro license is to use the [pro license fetcher](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.license).
-
 <a name="FAQ37"></a>
 **(37) Do I need to have the Play store/services installed for the pro version?**
 
@@ -929,7 +898,7 @@ Things to do / check:
 * Disable, wait a few seconds and then enable XPrivacy again in the Xposed installer and reboot
 * Clear the (Dalvik) cache using the recovery
 
-The most common problems seems to be the storage location of the applications.
+The most common problem seems to be the storage location of the applications.
 
 If these suggestions don't help, please create an issue and provide a logcat (see *Support* below).
 
@@ -1245,11 +1214,6 @@ should be accessible to almost everybody.
 
 [F-Droid](https://f-droid.org/) also doesn't allow me to sign the APK with my own signature.
 
-<a name="FAQ73"></a>
-**(73) Why is the minimum PayPal donation lower than the pro license fetcher application price?**
-
-The Google transaction fee is 30%, while the PayPal transaction fee is 5-10%.
-
 <a name="FAQ74"></a>
 **(74) I miss an application in the application list!**
 
@@ -1551,9 +1515,6 @@ Testing:
 * [XPrivacy Tester](https://github.com/M66B/XPrivacyTester) (developers only)
 * [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
-
-Serious contributors do not have to donate for a [pro license](http://www.xprivacy.eu/).
-New translations are considered as a serious contribution, but translating a few lines of text is not.
 
 The goal of the project is to provide a decent, free and open source privacy solution for Android to as many as possible people.
 
