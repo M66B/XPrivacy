@@ -22,7 +22,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Norwegian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
