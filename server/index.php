@@ -593,7 +593,7 @@
 				<p>This is a voting system for
 					<a href="https://github.com/M66B/XPrivacy#xprivacy">XPrivacy</a> restrictions.<br />
 					Everybody using XPrivacy can submit his/her restriction settings.<br />
-					With a <a href="http://www.xprivacy.eu/">Pro license</a> you can fetch submitted restriction settings.<br />
+					With an XPrivacy <a href="http://www.xprivacy.eu/">pro license</a> you can fetch submitted restriction settings.<br />
 					There are currently <?php echo number_format($total, 0, '.', ','); ?> rules
 					for <?php echo number_format($count, 0, '.', ',') ?> applications submitted.
 				</p>
@@ -624,7 +624,7 @@
 							<span class="glyphicon glyphicon-file"></span>
 							<a class="action" href="#" id="details">Show details</a>
 							<span class="glyphicon glyphicon-comment"></span>
-							<a class="action" href="http://forum.faircode.eu/forums/forum/android/xprivacy/applications/?package_name=<?php echo urlencode($package_name); ?>" target="_blank">Discussion</a>
+							<!--a class="action" href="http://forum.faircode.eu/forums/forum/android/xprivacy/applications/?package_name=<?php echo urlencode($package_name); ?>" target="_blank">Discussion</a-->
 							<a class="action" href="https://play.google.com/store/apps/details?id=<?php echo urlencode($package_name); ?>" target="_blank"><img src="play_logo_x2.png" style="width:95px; height:20px" alt="Play store" /></a>
 						</p>
 					</div>
