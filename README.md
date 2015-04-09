@@ -373,7 +373,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 	* Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop); check with *System Settings* > *About phone* > *Android version*
 	* Read about [compatibility](#compatibility) before installing
 1. **Make a backup**
-1. For Android 5.x (Lollipop) / XPrivacy version 3.6.6 (you can skip this step for later versions):
+1. For Android 5.x (Lollipop) / XPrivacy version 3.6.6 (you can skip this step for later XPrivacy versions):
 	* **This is not optional, unless you are using a custom ROM/kernel with SELinux disabled or in permissive mode!**
 		* Note that applications to set SELinux to permissive mode will probably not work, since this is probably done too late in the boot process
 	* You need to be able to flash a kernel image
