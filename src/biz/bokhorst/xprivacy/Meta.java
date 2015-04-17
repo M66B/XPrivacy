@@ -547,7 +547,7 @@ public class Meta {
 		mListHook.add(new Hook(null, "Srv_startActivityWithConfig", "", 19, null, null).AOSP(19));
 
 		mListHook.add(new Hook(null, "inputDispatchingTimedOut", "", 17, null, null));
-		mListHook.add(new Hook(null, "appNotResponding", "", 15, null, null));
+		mListHook.add(new Hook(null, "appNotResponding", "", 15, null, null).optional());
 		mListHook.add(new Hook(null, "systemReady", "", 15, null, null));
 		mListHook.add(new Hook(null, "finishBooting", "", 15, null, null));
 		mListHook.add(new Hook(null, "setLockScreenShown", "", 17, null, null).optional());
