@@ -36,7 +36,7 @@ public class XAppIndexApi extends XHook {
 
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
-		Util.log(null, Log.INFO, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
+		Util.log(null, Log.INFO, "Hooking AppIndex class=" + className + " uid=" + Binder.getCallingUid());
 
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XAppIndexApi(Methods.viewEnd, null, className));

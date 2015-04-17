@@ -35,7 +35,7 @@ public class XActivityRecognitionApi extends XHook {
 
 	public static List<XHook> getInstances(Object instance) {
 		String className = instance.getClass().getName();
-		Util.log(null, Log.INFO, "Hooking class=" + className + " uid=" + Binder.getCallingUid());
+		Util.log(null, Log.INFO, "Hooking ActivityRecognitionApi class=" + className + " uid=" + Binder.getCallingUid());
 
 		List<XHook> listHook = new ArrayList<XHook>();
 		listHook.add(new XActivityRecognitionApi(Methods.removeActivityUpdates, null, className));

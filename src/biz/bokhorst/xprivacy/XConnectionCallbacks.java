@@ -44,7 +44,7 @@ public class XConnectionCallbacks extends XHook {
 	protected void before(XParam param) throws Throwable {
 		switch (mMethod) {
 		case onConnected:
-			Util.log(this, Log.INFO, "onConnected uid=" + Binder.getCallingUid());
+			Util.log(this, Log.WARN, "GoogleApiClient onConnected uid=" + Binder.getCallingUid());
 			ClassLoader loader = param.thisObject.getClass().getClassLoader();
 
 			// FusedLocationApi
@@ -93,6 +93,24 @@ public class XConnectionCallbacks extends XHook {
 
 					if (appIndexApi != null)
 						XPrivacy.hookAll(XAppIndexApi.getInstances(appIndexApi), loader, getSecret());
+				}
+			} catch (ClassNotFoundException ex) {
+				Util.log(this, Log.WARN, ex.toString());
+			} catch (NoSuchFieldException ex) {
+				Util.log(this, Log.WARN, ex.toString());
+			} catch (ExceptionInInitializerError ex) {
+				Util.log(this, Log.WARN, ex.toString());
+			}
+
+			// PlaceDetectionApi
+			try {
+				Class<?> cPlaces = Class.forName("com.google.android.gms.location.places.Places", false, loader);
+				Object placeDetectionApi = cPlaces.getDeclaredField("PlaceDetectionApi").get(null);
+				if (PrivacyManager.getTransient(placeDetectionApi.getClass().getName(), null) == null) {
+					PrivacyManager.setTransient(placeDetectionApi.getClass().getName(), Boolean.toString(true));
+
+					if (placeDetectionApi != null)
+						XPrivacy.hookAll(XPlaceDetectionApi.getInstances(placeDetectionApi), loader, getSecret());
 				}
 			} catch (ClassNotFoundException ex) {
 				Util.log(this, Log.WARN, ex.toString());

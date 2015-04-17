@@ -25,6 +25,7 @@ Changelog
 * Fixed all problems reported through the debug info
 * Fixed restrictions *getToken* and *getTokenWithNotification* ([issue](/../../issues/2169))
 * Fixed restriction *AdvertisingId* ([issue](/../../issues/2166))
+* Added restriction *GMS5.getCurrentPlace*
 * Updated Norwegian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)

@@ -255,6 +255,8 @@ public class Meta {
 		mListHook.add(new Hook("location", "GMS5.requestLocationUpdates", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.99.26", null).unsafe().optional());
 		mListHook.add(new Hook("location", "GMS5.requestActivityUpdates", "com.google.android.gms.permission.ACTIVITY_RECOGNITION", 1, "2.99.26", null).unsafe());
 
+		mListHook.add(new Hook("location", "GMS5.getCurrentPlace", "ACCESS_FINE_LOCATION", 1, "3.6.8", null).unsafe());
+
 		mListHook.add(new Hook("location", "MapV1.enableMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
 
 		mListHook.add(new Hook("location", "MapV2.getMyLocation", "ACCESS_COARSE_LOCATION,ACCESS_FINE_LOCATION", 1, "2.1.25", null).unsafe().optional());
