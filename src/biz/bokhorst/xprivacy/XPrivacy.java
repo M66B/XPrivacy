@@ -459,7 +459,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					}
 					clazz = clazz.getSuperclass();
 				} catch (Throwable ex) {
-					if (ex.getClass().equals(ClassNotFoundException.class))
+					if (ex.getClass().equals(ClassNotFoundException.class)
+							|| ex.getClass().equals(NoClassDefFoundError.class))
 						break;
 					else
 						throw ex;
