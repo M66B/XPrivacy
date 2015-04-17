@@ -22,13 +22,19 @@ Changelog
 
 **Next release**
 
+* ...
+
+[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.6.9 STABLE**
+
+**This release does not fix anything for Android 5.x**
+
 * Fixed all problems reported through the debug info
 * Fixed restrictions *getToken* and *getTokenWithNotification* ([issue](/../../issues/2169))
 * Fixed restriction *AdvertisingId* ([issue](/../../issues/2166))
 * Added restriction *GMS5.getCurrentPlace*
 * Updated Norwegian translation
-
-[Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
 **Version 3.6.8 UNSUPPORTED**
 

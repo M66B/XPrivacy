@@ -84,8 +84,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private static final String cTableUsage = "usage";
 	private static final String cTableSetting = "setting";
 
-	private static final int cCurrentVersion = 470;
-	private static final String cServiceName = "xprivacy470";
+	private static final int cCurrentVersion = 471;
+	private static final String cServiceName = "xprivacy471";
 
 	private boolean mCorrupt = false;
 	private boolean mNotified = false;
