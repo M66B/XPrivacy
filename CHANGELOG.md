@@ -30,6 +30,8 @@ Changelog
 
 **This release does not fix anything for Android 5.x**
 
+**Please read the [release announcement](http://forum.xda-developers.com/showpost.php?p=60176107&postcount=14481)**
+
 * Fixed all problems reported through the debug info
 * Fixed restrictions *getToken* and *getTokenWithNotification* ([issue](/../../issues/2169))
 * Fixed restriction *AdvertisingId* ([issue](/../../issues/2166))
