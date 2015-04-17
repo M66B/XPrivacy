@@ -37,6 +37,11 @@ public class XAdvertisingIdClientInfo extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
+		// Do nothing
+	}
+
+	@Override
+	protected void after(XParam param) throws Throwable {
 		if (mMethod == Methods.getId) {
 			String adid = (String) param.getResult();
 			if (adid != null)
@@ -45,10 +50,5 @@ public class XAdvertisingIdClientInfo extends XHook {
 
 		} else
 			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
-	}
-
-	@Override
-	protected void after(XParam param) throws Throwable {
-		// Do nothing
 	}
 }
