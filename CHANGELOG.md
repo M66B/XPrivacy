@@ -23,6 +23,7 @@ Changelog
 **Next release**
 
 * Fixed all problems reported through the debug info
+* Fixed restrictions *getToken* and *getTokenWithNotification* ([issue](/../../issues/2169))
 * Updated Norwegian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
