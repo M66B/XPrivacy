@@ -128,6 +128,10 @@ public class PrivacyService extends IPrivacyService.Stub {
 
 	private static PrivacyService mPrivacyService = null;
 
+	private static String getServiceName() {
+		return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP ? "user." : "") + cServiceName;
+	}
+
 	public static void register(List<String> listError, ClassLoader classLoader, String secret, Object am) {
 		// Store secret and errors
 		mAm = am;
@@ -150,14 +154,14 @@ public class PrivacyService extends IPrivacyService.Stub {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class,
 						boolean.class);
-				mAddService.invoke(null, "user." + cServiceName, mPrivacyService, true);
+				mAddService.invoke(null, getServiceName(), mPrivacyService, true);
 			} else {
 				Method mAddService = cServiceManager.getDeclaredMethod("addService", String.class, IBinder.class);
-				mAddService.invoke(null, cServiceName, mPrivacyService);
+				mAddService.invoke(null, getServiceName(), mPrivacyService);
 			}
 
 			// This will and should open the database
-			Util.log(null, Log.WARN, "Service registered name=" + cServiceName + " version=" + cCurrentVersion);
+			Util.log(null, Log.WARN, "Service registered name=" + getServiceName() + " version=" + cCurrentVersion);
 
 			// Publish semaphore to activity manager service
 			XActivityManagerService.setSemaphore(mOndemandSemaphore);
@@ -213,11 +217,7 @@ public class PrivacyService extends IPrivacyService.Stub {
 				// public static IBinder getService(String name)
 				Class<?> cServiceManager = Class.forName("android.os.ServiceManager");
 				Method mGetService = cServiceManager.getDeclaredMethod("getService", String.class);
-				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-					mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, cServiceName));
-				else
-					mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, "user."
-							+ cServiceName));
+				mClient = IPrivacyService.Stub.asInterface((IBinder) mGetService.invoke(null, getServiceName()));
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
