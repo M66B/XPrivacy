@@ -49,9 +49,8 @@ public class XPlaceDetectionApi extends XHook {
 	protected void after(XParam param) throws Throwable {
 		switch (mMethod) {
 		case getCurrentPlace:
-			Object pi = param.getResult();
-			if (pi != null && isRestricted(param))
-				pi.getClass().getMethod("cancel").invoke(pi);
+			if (isRestricted(param))
+				param.setResult(XGoogleApiClient.getPendingResult(param.thisObject.getClass().getClassLoader()));
 			break;
 		}
 	}
