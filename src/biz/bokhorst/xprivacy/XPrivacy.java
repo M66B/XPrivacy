@@ -439,7 +439,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			// Get members
 			List<Member> listMember = new ArrayList<Member>();
-			// TODO: enable/disable superclass traversal
+			List<Class<?>[]> listParameters = new ArrayList<Class<?>[]>();
 			Class<?> clazz = hookClass;
 			while (clazz != null && !"android.content.ContentProvider".equals(clazz.getName()))
 				try {
@@ -454,8 +454,29 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						for (Method method : clazz.getDeclaredMethods())
 							if (method.getName().equals(hook.getMethodName())
 									&& !Modifier.isAbstract(method.getModifiers())
-									&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible()))
-								listMember.add(method);
+									&& (Modifier.isPublic(method.getModifiers()) ? hook.isVisible() : !hook.isVisible())) {
+
+								// Check for same function in sub class
+								boolean different = true;
+								for (Class<?>[] parameters : listParameters) {
+									boolean same = (parameters.length == method.getParameterTypes().length);
+									for (int p = 0; same && p < parameters.length; p++)
+										if (!parameters[p].equals(method.getParameterTypes()[p])) {
+											same = false;
+											break;
+										}
+									if (same) {
+										different = false;
+										break;
+									}
+								}
+
+								if (different) {
+									listMember.add(method);
+									listParameters.add(method.getParameterTypes());
+								} else
+									Util.log(hook, Log.WARN, "Already hooked " + method);
+							}
 					}
 					clazz = clazz.getSuperclass();
 				} catch (Throwable ex) {
