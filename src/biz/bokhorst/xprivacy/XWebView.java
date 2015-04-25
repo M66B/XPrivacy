@@ -92,7 +92,8 @@ public class XWebView extends XHook {
 				Class<?> clazz = param.getResult().getClass();
 				if (PrivacyManager.getTransient(clazz.getName(), null) == null) {
 					PrivacyManager.setTransient(clazz.getName(), Boolean.toString(true));
-					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()), clazz.getClassLoader(), getSecret());
+					XPrivacy.hookAll(XWebSettings.getInstances(param.getResult()), clazz.getClassLoader(), getSecret(),
+							true);
 				}
 			}
 			break;

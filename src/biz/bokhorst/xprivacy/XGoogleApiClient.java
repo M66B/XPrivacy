@@ -54,7 +54,7 @@ public class XGoogleApiClient extends XHook {
 					PrivacyManager.setTransient(clazz.getName(), Boolean.toString(true));
 
 					XPrivacy.hookAll(XConnectionCallbacks.getInstances(param.args[0]), clazz.getClassLoader(),
-							getSecret());
+							getSecret(), true);
 				}
 			}
 			break;
