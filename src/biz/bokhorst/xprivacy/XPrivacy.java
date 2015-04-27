@@ -125,9 +125,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	private static void handleLoadPackage(String packageName, String processName, final ClassLoader classLoader,
 			boolean main, String secret) {
-		// Util.log(null, Log.INFO, "Load package=" + packageName + " uid=" +
-		// Process.myUid());
-
 		if (main && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && "android".equals(packageName)
 				&& "android".equals(processName))
 			try {
