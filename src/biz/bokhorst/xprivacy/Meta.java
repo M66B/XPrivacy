@@ -553,8 +553,8 @@ public class Meta {
 		mListHook.add(new Hook(null, "systemReady", "", 15, null, null));
 		mListHook.add(new Hook(null, "finishBooting", "", 15, null, null));
 		mListHook.add(new Hook(null, "setLockScreenShown", "", 17, null, null).optional());
-		mListHook.add(new Hook(null, "goingToSleep", "", 16, null, null).to(Build.VERSION_CODES.LOLLIPOP_MR1));
-		mListHook.add(new Hook(null, "wakingUp", "", 16, null, null).to(Build.VERSION_CODES.LOLLIPOP_MR1));
+		mListHook.add(new Hook(null, "goingToSleep", "", 16, null, null).to(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook(null, "wakingUp", "", 16, null, null).to(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook(null, "shutdown", "", 15, null, null));
 		mListHook.add(new Hook(null, "activityResumed", "", Build.VERSION_CODES.JELLY_BEAN_MR1, null, null));
 		mListHook.add(new Hook(null, "activityPaused", "", Build.VERSION_CODES.JELLY_BEAN_MR1, null, null));
