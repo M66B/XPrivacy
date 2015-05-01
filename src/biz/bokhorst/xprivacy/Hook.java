@@ -149,6 +149,8 @@ public class Hook implements Comparable<Hook> {
 	public static boolean isAOSP(int sdk) {
 		if (!PrivacyManager.cVersion3)
 			return false;
+		if (sdk >= Build.VERSION_CODES.LOLLIPOP)
+			return true;
 		if (Build.VERSION.SDK_INT >= sdk) {
 			if ("true".equals(System.getenv("XPrivacy.AOSP")))
 				return true;
