@@ -318,7 +318,7 @@ public class Requirements {
 				"com.motorola.android.telephony.MotoTelephonyManager",
 				"android.privacy.surrogate.PrivacyTelephonyManager" /* PDroid */});
 		checkService(context, Context.WINDOW_SERVICE, new String[] { "android.view.WindowManagerImpl",
-				"android.view.Window$LocalWindowManager" });
+				"android.view.Window$LocalWindowManager", "amazon.view.AmazonWindowManagerImpl" });
 		checkService(context, Context.WIFI_SERVICE, new String[] { "android.net.wifi.WifiManager",
 				"com.amazon.net.AmazonWifiManager", "com.amazon.android.service.AmazonWifiManager",
 				"android.privacy.surrogate.PrivacyWifiManager" /* PDroid */});
