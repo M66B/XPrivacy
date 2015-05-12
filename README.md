@@ -893,7 +893,7 @@ Things to do / check:
 * Make sure the Xposed framework is (still) installed using the Xposed installer
 * Make sure the XPrivacy application is stored on the internal storage and not moved to the SD card or somewhere else
 	* Fairphone users, see [here](https://fairphone.zendesk.com/hc/en-us/articles/201154666-How-can-I-see-all-the-different-places-where-information-is-stored-on-my-phone-SD-Card-Internal-Storage-and-Phone-Storage-)
-* Make sure LBE Security Master is not installed
+* Make sure LBE Security Master is not installed (disabling is not enough)
 * Make sure the security center of MIUI is disabled (see [here](http://forum.xda-developers.com/showpost.php?p=55810186&postcount=12178))
 * Disable, wait a few seconds and then enable XPrivacy again in the Xposed installer and reboot
 * Clear the (Dalvik) cache using the recovery
