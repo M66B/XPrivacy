@@ -655,6 +655,12 @@ but logcats captured this way are not always sufficient. The best way to capture
 * Power on your device
 * Reproduce the problem
 
+If you need a logcat from system start, you can run this command on your device (this will force restart Android):
+
+```
+killall system_server; logcat | grep -i xprivacy
+```
+
 Upload the captured logcat somewhere, for example using Google Drive,
 and link to it from the issue you (should) have created.
 Don't forget to mention the *uid* of the application to look into when relevant.
