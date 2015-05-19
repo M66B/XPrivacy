@@ -33,7 +33,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	// http://developer.android.com/reference/android/Manifest.permission.html
 
 	static {
-		if (mListDisabled.size() == 0) {
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && mListDisabled.size() == 0) {
 			File disabled = new File("/data/system/xprivacy/disabled");
 			if (disabled.exists() && disabled.canRead())
 				try {
