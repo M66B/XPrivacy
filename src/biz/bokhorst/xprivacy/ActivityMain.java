@@ -1197,7 +1197,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			Util.bug(null, ex);
 		}
 
-		if (!PrivacyManager.cVersion3 || Hook.isAOSP(19))
+		if (!PrivacyManager.cVersion3 || Hook.isAOSP(19) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 			((TextView) dlgAbout.findViewById(R.id.tvCompatibility)).setVisibility(View.GONE);
 
 		// Show license
