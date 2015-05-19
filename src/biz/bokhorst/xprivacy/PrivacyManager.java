@@ -337,7 +337,7 @@ public class PrivacyManager {
 		PRestriction result = new PRestriction(uid, restrictionName, methodName, false, true);
 
 		// Check uid
-		if (uid <= 0 || uid == Process.SYSTEM_UID)
+		if (uid <= 0)
 			return false;
 
 		// Check secret
