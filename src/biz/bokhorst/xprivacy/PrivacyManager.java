@@ -217,7 +217,7 @@ public class PrivacyManager {
 
 	public static List<String> getRestrictions() {
 		List<String> listRestriction = new ArrayList<String>(Arrays.asList(cRestrictionNames));
-		if (Hook.isAOSP(19) || Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+		if (Hook.isAOSP(19))
 			listRestriction.remove(cIPC);
 		return listRestriction;
 	}
