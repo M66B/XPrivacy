@@ -102,19 +102,19 @@ public class XAccountManager extends XHook {
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsByFeatures, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getAccountsForPackage, PrivacyManager.cAccounts));
 				listHook.add(new XAccountManager(Methods.Srv_getSharedAccountsAsUser, PrivacyManager.cAccounts));
+			} else {
+				listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.getAccounts, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.getAccountsByType, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.getAuthenticatorTypes, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
+				listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className));
 			}
-
-			listHook.add(new XAccountManager(Methods.addOnAccountsUpdatedListener, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.blockingGetAuthToken, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.getAccounts, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.getAccountsByType, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.getAccountsByTypeForPackage, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.getAccountsByTypeAndFeatures, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.getAuthenticatorTypes, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.getAuthToken, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.getAuthTokenByFeatures, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.hasFeatures, PrivacyManager.cAccounts, className));
-			listHook.add(new XAccountManager(Methods.removeOnAccountsUpdatedListener, null, className));
 		}
 		return listHook;
 	}

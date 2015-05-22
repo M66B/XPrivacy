@@ -29,6 +29,11 @@ public class XParam {
 		xparam.args = param.args;
 		xparam.mResult = param.getResult();
 		xparam.mThrowable = param.getThrowable();
+		
+		if (xparam.args == null) {
+			xparam.args = new Object[]{};
+		}
+		
 		return xparam;
 	}
 

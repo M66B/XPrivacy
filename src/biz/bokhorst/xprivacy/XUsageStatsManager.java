@@ -49,16 +49,18 @@ public class XUsageStatsManager extends XHook {
 
 	// @formatter:on
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(boolean services) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XUsageStatsManager(Methods.queryAndAggregateUsageStats, PrivacyManager.cSystem));
-		listHook.add(new XUsageStatsManager(Methods.queryConfigurations, PrivacyManager.cSystem));
-		listHook.add(new XUsageStatsManager(Methods.queryEvents, PrivacyManager.cSystem));
-		listHook.add(new XUsageStatsManager(Methods.queryUsageStats, PrivacyManager.cSystem));
-
-		listHook.add(new XUsageStatsManager(Methods.Srv_queryConfigurationStats, PrivacyManager.cSystem));
-		listHook.add(new XUsageStatsManager(Methods.Srv_queryEvents, PrivacyManager.cSystem));
-		listHook.add(new XUsageStatsManager(Methods.Srv_queryUsageStats, PrivacyManager.cSystem));
+		if (!services) {
+			listHook.add(new XUsageStatsManager(Methods.queryAndAggregateUsageStats, PrivacyManager.cSystem));
+			listHook.add(new XUsageStatsManager(Methods.queryConfigurations, PrivacyManager.cSystem));
+			listHook.add(new XUsageStatsManager(Methods.queryEvents, PrivacyManager.cSystem));
+			listHook.add(new XUsageStatsManager(Methods.queryUsageStats, PrivacyManager.cSystem));
+		} else {
+			listHook.add(new XUsageStatsManager(Methods.Srv_queryConfigurationStats, PrivacyManager.cSystem));
+			listHook.add(new XUsageStatsManager(Methods.Srv_queryEvents, PrivacyManager.cSystem));
+			listHook.add(new XUsageStatsManager(Methods.Srv_queryUsageStats, PrivacyManager.cSystem));
+		}
 		return listHook;
 	}
 

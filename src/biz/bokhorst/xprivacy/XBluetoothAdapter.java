@@ -41,12 +41,15 @@ public class XBluetoothAdapter extends XHook {
 		getAddress, getBondedDevices, Srv_getAddress, Srv_getName
 	};
 
-	public static List<XHook> getInstances() {
+	public static List<XHook> getInstances(boolean services) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		listHook.add(new XBluetoothAdapter(Methods.getAddress, PrivacyManager.cNetwork));
-		listHook.add(new XBluetoothAdapter(Methods.getBondedDevices, PrivacyManager.cNetwork));
-		listHook.add(new XBluetoothAdapter(Methods.Srv_getAddress, PrivacyManager.cNetwork));
-		listHook.add(new XBluetoothAdapter(Methods.Srv_getName, PrivacyManager.cNetwork));
+		if (!services) {
+			listHook.add(new XBluetoothAdapter(Methods.getAddress, PrivacyManager.cNetwork));
+			listHook.add(new XBluetoothAdapter(Methods.getBondedDevices, PrivacyManager.cNetwork));
+		} else {
+			listHook.add(new XBluetoothAdapter(Methods.Srv_getAddress, PrivacyManager.cNetwork));
+			listHook.add(new XBluetoothAdapter(Methods.Srv_getName, PrivacyManager.cNetwork));
+		}
 		return listHook;
 	}
 
