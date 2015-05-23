@@ -40,70 +40,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			return;
 		}
 
-		/*
-		 * ActivityManagerService is the beginning of the main "android"
-		 * process. This is where the core java system is started, where the
-		 * system context is created and so on. In pre-lollipop we can access
-		 * this class directly, but in lollipop we have to visit ActivityThread
-		 * first, since this class is now responsible for creating a class
-		 * loader that can be used to access ActivityManagerService. It is no
-		 * longer possible to do so via the normal boot class loader. Doing it
-		 * like this will create a consistency between older and newer Android
-		 * versions.
-		 * 
-		 * Note that there is no need to handle arguments in this case. And we
-		 * don't need them so in case they change over time, we will simply use
-		 * the hookAll feature.
-		 */
-		try {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				Class<?> at = Class.forName("android.app.ActivityThread");
-				XposedBridge.hookAllMethods(at, "systemMain", new XC_MethodHook() {
-					@Override
-					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-						final ClassLoader loader = Thread.currentThread().getContextClassLoader();
-						try {
-							Class<?> ams = Class.forName("com.android.server.am.ActivityManagerService", false, loader);
-							XposedBridge.hookAllConstructors(ams, new XC_MethodHook() {
-								@Override
-								protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-									hookSystem(param.thisObject, loader);
-								}
-							});
-							mInitError = false;
-						} catch (Throwable ex) {
-							Util.bug(null, ex);
-						}
-					}
-				});
-
-			} else {
-				Class<?> am = Class.forName("com.android.server.am.ActivityManagerService");
-				XposedBridge.hookAllMethods(am, "startRunning", new XC_MethodHook() {
-					@Override
-					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-						hookSystem(param.thisObject, null);
-					}
-				});
-				mInitError = false;
-			}
-
-			hookZygote();
-
-		} catch (Throwable ex) {
-			Util.bug(null, ex);
-		}
-	}
-
-	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
-		// Check for LBE security master
-		if (Util.hasLBE() || mInitError)
-			return;
-
-		hookPackage(lpparam.packageName, lpparam.classLoader);
-	}
-
-	private void hookZygote() throws Throwable {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
@@ -149,6 +85,74 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
+
+		/*
+		 * ActivityManagerService is the beginning of the main "android"
+		 * process. This is where the core java system is started, where the
+		 * system context is created and so on. In pre-lollipop we can access
+		 * this class directly, but in lollipop we have to visit ActivityThread
+		 * first, since this class is now responsible for creating a class
+		 * loader that can be used to access ActivityManagerService. It is no
+		 * longer possible to do so via the normal boot class loader. Doing it
+		 * like this will create a consistency between older and newer Android
+		 * versions.
+		 * 
+		 * Note that there is no need to handle arguments in this case. And we
+		 * don't need them so in case they change over time, we will simply use
+		 * the hookAll feature.
+		 */
+		try {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				Class<?> at = Class.forName("android.app.ActivityThread");
+				XposedBridge.hookAllMethods(at, "systemMain", new XC_MethodHook() {
+					@Override
+					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+						final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+						try {
+							Class<?> ams = Class.forName("com.android.server.am.ActivityManagerService", false, loader);
+							XposedBridge.hookAllConstructors(ams, new XC_MethodHook() {
+								@Override
+								protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+									PrivacyService.register(mListHookError, loader, mSecret, param.thisObject);
+									hookSystem(param.thisObject, loader);
+								}
+							});
+							mInitError = false;
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+					}
+				});
+
+			} else {
+				Class<?> am = Class.forName("com.android.server.am.ActivityManagerService");
+				XposedBridge.hookAllMethods(am, "startRunning", new XC_MethodHook() {
+					@Override
+					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+						PrivacyService.register(mListHookError, null, mSecret, param.thisObject);
+						hookSystem(param.thisObject, null);
+					}
+				});
+				mInitError = false;
+			}
+
+			hookZygote();
+
+		} catch (Throwable ex) {
+			Util.bug(null, ex);
+		}
+	}
+
+	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
+		// Check for LBE security master
+		if (Util.hasLBE() || mInitError)
+			return;
+
+		hookPackage(lpparam.packageName, lpparam.classLoader);
+	}
+
+	private void hookZygote() throws Throwable {
+		Log.w("XPrivacy", "Hooking Zygote");
 
 		/*
 		 * Add nixed User Space / System Server hooks
@@ -289,11 +293,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	private void hookSystem(Object am, ClassLoader classLoader) throws Throwable {
-		/*
-		 * Register the XPrivacy service
-		 */
-
-		PrivacyService.register(mListHookError, classLoader, mSecret, am);
+		Log.w("XPrivacy", "Hooking system");
 
 		/*
 		 * Add nixed User Space / System Server hooks
@@ -341,6 +341,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	private void hookPackage(String packageName, ClassLoader classLoader) {
+		Log.w("XPrivacy", "Hooking package=" + packageName);
+
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
 		if (packageName.equals(self)) {
@@ -533,8 +535,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 								if (different) {
 									listMember.add(method);
 									listParameters.add(method.getParameterTypes());
-								} else
-									Util.log(hook, Log.WARN, "Already hooked " + method);
+								}
 							}
 					}
 					clazz = clazz.getSuperclass();
