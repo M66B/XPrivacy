@@ -57,36 +57,34 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		 */
 		try {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				XposedBridge.hookAllMethods(Class.forName("android.app.ActivityThread"), "systemMain",
-						new XC_MethodHook() {
-							@Override
-							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-								final ClassLoader loader = Thread.currentThread().getContextClassLoader();
-								try {
-									XposedBridge.hookAllConstructors(Class.forName(
-											"com.android.server.am.ActivityManagerService", false, loader),
-											new XC_MethodHook() {
-												@Override
-												protected void afterHookedMethod(MethodHookParam param)
-														throws Throwable {
-													bootstrapSystem(param.thisObject, loader);
-												}
-											});
-									mInitError = false;
-								} catch (Throwable ex) {
-									Util.bug(null, ex);
+				Class<?> at = Class.forName("android.app.ActivityThread");
+				XposedBridge.hookAllMethods(at, "systemMain", new XC_MethodHook() {
+					@Override
+					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+						final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+						try {
+							Class<?> ams = Class.forName("com.android.server.am.ActivityManagerService", false, loader);
+							XposedBridge.hookAllConstructors(ams, new XC_MethodHook() {
+								@Override
+								protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+									bootstrapSystem(param.thisObject, loader);
 								}
-							}
-						});
+							});
+							mInitError = false;
+						} catch (Throwable ex) {
+							Util.bug(null, ex);
+						}
+					}
+				});
 
 			} else {
-				XposedBridge.hookAllMethods(Class.forName("com.android.server.am.ActivityManagerService"),
-						"startRunning", new XC_MethodHook() {
-							@Override
-							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-								bootstrapSystem(param.thisObject, null);
-							}
-						});
+				Class<?> am = Class.forName("com.android.server.am.ActivityManagerService");
+				XposedBridge.hookAllMethods(am, "startRunning", new XC_MethodHook() {
+					@Override
+					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+						bootstrapSystem(param.thisObject, null);
+					}
+				});
 				mInitError = false;
 			}
 
