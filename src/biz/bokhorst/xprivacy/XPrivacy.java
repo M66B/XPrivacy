@@ -349,15 +349,16 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Build SERIAL
-		if (PrivacyManager.getRestrictionExtra(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", null,
-				Build.SERIAL, mSecret))
-			try {
-				Field serial = Build.class.getField("SERIAL");
-				serial.setAccessible(true);
-				serial.set(null, PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || Process.myUid() != Process.SYSTEM_UID)
+			if (PrivacyManager.getRestrictionExtra(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL",
+					null, Build.SERIAL, mSecret))
+				try {
+					Field serial = Build.class.getField("SERIAL");
+					serial.setAccessible(true);
+					serial.set(null, PrivacyManager.getDefacedProp(Process.myUid(), "SERIAL"));
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
 
 		// Activity recognition
 		try {

@@ -4,8 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Build;
+import android.os.Process;
 import android.text.TextUtils;
-import android.util.Log;
 
 public class XRuntime extends XHook {
 	private Methods mMethod;
@@ -53,7 +54,8 @@ public class XRuntime extends XHook {
 
 	@Override
 	protected void before(XParam param) throws Throwable {
-		if (mMethod == Methods.exec) {
+		switch (mMethod) {
+		case exec:
 			// Get programs
 			String[] progs = null;
 			if (param.args.length > 0 && param.args[0] != null)
@@ -68,16 +70,19 @@ public class XRuntime extends XHook {
 				if (matches(command, mCommand) && isRestrictedExtra(param, command))
 					param.setThrowable(new IOException("XPrivacy"));
 			}
+			break;
 
-		} else if (mMethod == Methods.load || mMethod == Methods.loadLibrary) {
-			if (param.args.length > 0) {
-				String libName = (String) param.args[0];
-				if (isRestrictedExtra(param, libName))
-					param.setThrowable(new UnsatisfiedLinkError("XPrivacy"));
-			}
+		case load:
+		case loadLibrary:
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP || Process.myUid() != Process.SYSTEM_UID)
+				if (param.args.length > 0) {
+					String libName = (String) param.args[0];
+					if (isRestrictedExtra(param, libName))
+						param.setThrowable(new UnsatisfiedLinkError("XPrivacy"));
+				}
 
-		} else
-			Util.log(this, Log.WARN, "Unknown method=" + param.method.getName());
+			break;
+		}
 	}
 
 	@Override

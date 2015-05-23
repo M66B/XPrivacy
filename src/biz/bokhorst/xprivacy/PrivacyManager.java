@@ -462,8 +462,14 @@ public class PrivacyManager {
 		int _uid = Util.getAppId(uid);
 		int userId = Util.getUserId(uid);
 
-		if (_uid == Process.SYSTEM_UID && PrivacyManager.cIdentification.equals(restrictionName))
-			return false;
+		if (_uid == Process.SYSTEM_UID) {
+			if (PrivacyManager.cIdentification.equals(restrictionName))
+				return false;
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				if (PrivacyManager.cShell.equals(restrictionName) && "loadLibrary".equals(methodName))
+					return false;
+			}
+		}
 
 		if (system)
 			if (!isApplication(_uid))
