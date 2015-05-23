@@ -326,6 +326,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Usage statistics manager
 		hookAll(XUsageStatsManager.getInstances(true), classLoader, mSecret, false);
 
+		// Wi-Fi service
+		hookAll(XWifiManager.getInstances(null, true), classLoader, mSecret, false);
 		/*
 		 * Add pure system server hooks
 		 */
