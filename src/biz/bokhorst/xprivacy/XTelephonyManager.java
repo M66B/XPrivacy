@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.WeakHashMap;
 
 import android.os.Binder;
+import android.os.Build;
 import android.os.Bundle;
 import android.telephony.CellLocation;
 import android.telephony.NeighboringCellInfo;
@@ -158,7 +159,10 @@ public class XTelephonyManager extends XHook {
 
 			if (server) {
 				// PhoneSubInfo
-				listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.SubInfo));
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.SubInfo));
+				else
+					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.Phone));
 				listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, Srv.SubInfo));
 				listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone, Srv.SubInfo));
 				listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, Srv.SubInfo));
