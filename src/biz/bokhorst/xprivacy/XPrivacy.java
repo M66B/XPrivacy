@@ -108,37 +108,33 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
-		/*
-		 * Zygote can access this file (Even with SELinux enabled) as it is
-		 * running as the outer root. Since Zygote is the process that starts
-		 * any other process, any sub-process will inherit the changes made to
-		 * this class. Including values stored from
-		 * /data/system/xprivacy/disabled.
-		 */
-		File disabled = new File("/data/system/xprivacy/disabled");
-		if (disabled.exists() && disabled.canRead())
-			try {
-				Log.w("XPrivacy", "Reading " + disabled.getAbsolutePath());
-				FileInputStream fis = new FileInputStream(disabled);
-				InputStreamReader ir = new InputStreamReader(fis);
-				BufferedReader br = new BufferedReader(ir);
-				String line;
-				while ((line = br.readLine()) != null)
-					if (line.length() > 0 && !line.startsWith("#")) {
-						String[] name = line.split("/");
-						if (name.length > 0) {
-							String methodName = (name.length > 1 ? name[1] : null);
-							CRestriction restriction = new CRestriction(0, name[0], methodName, null);
-							Log.w("XPrivacy", "Disabling " + restriction);
-							mListDisabled.add(restriction);
+		// Read list of disabled hooks
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && mListDisabled.size() == 0) {
+			File disabled = new File("/data/system/xprivacy/disabled");
+			if (disabled.exists() && disabled.canRead())
+				try {
+					Log.w("XPrivacy", "Reading " + disabled.getAbsolutePath());
+					FileInputStream fis = new FileInputStream(disabled);
+					InputStreamReader ir = new InputStreamReader(fis);
+					BufferedReader br = new BufferedReader(ir);
+					String line;
+					while ((line = br.readLine()) != null)
+						if (line.length() > 0 && !line.startsWith("#")) {
+							String[] name = line.split("/");
+							if (name.length > 0) {
+								String methodName = (name.length > 1 ? name[1] : null);
+								CRestriction restriction = new CRestriction(0, name[0], methodName, null);
+								Log.w("XPrivacy", "Disabling " + restriction);
+								mListDisabled.add(restriction);
+							}
 						}
-					}
-				br.close();
-				ir.close();
-				fis.close();
-			} catch (Throwable ex) {
-				Log.w("XPrivacy", ex.toString());
-			}
+					br.close();
+					ir.close();
+					fis.close();
+				} catch (Throwable ex) {
+					Log.w("XPrivacy", ex.toString());
+				}
+		}
 
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
 			try {
