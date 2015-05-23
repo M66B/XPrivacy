@@ -24,6 +24,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3.6.11 TEST**
+
+* Fixed Android 5.x restrictions ([issue](/../../issues/2195))
+
 **Version 3.6.10 TEST**
 
 * Android 5.x compatibility
