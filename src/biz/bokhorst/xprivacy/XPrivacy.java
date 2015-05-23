@@ -492,7 +492,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				if (level == Log.ERROR)
 					mListHookError.add(message);
 				Util.log(hook, level, message);
-				Util.logStack(hook, level);
 				return;
 			}
 
@@ -569,7 +568,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				if (level == Log.ERROR)
 					mListHookError.add(message);
 				Util.log(hook, level, message);
-				Util.logStack(hook, level);
 			}
 		} catch (Throwable ex) {
 			mListHookError.add(ex.toString());

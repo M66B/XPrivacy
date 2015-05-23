@@ -237,7 +237,6 @@ public class PrivacyService extends IPrivacyService.Stub {
 			IPrivacyService client = getClient();
 			if (client == null) {
 				Log.w("XPrivacy", "No client for " + restriction);
-				Log.w("XPrivacy", Log.getStackTraceString(new Exception("StackTrace")));
 				PRestriction result = new PRestriction(restriction);
 				result.restricted = false;
 				return result;
