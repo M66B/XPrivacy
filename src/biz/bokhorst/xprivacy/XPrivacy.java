@@ -70,6 +70,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				}
 		}
 
+		// AOSP mode override
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
 			try {
 				Class<?> libcore = Class.forName("libcore.io.Libcore");
@@ -100,6 +101,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		 * don't need them so in case they change over time, we will simply use
 		 * the hookAll feature.
 		 */
+
 		try {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 				Class<?> at = Class.forName("android.app.ActivityThread");
