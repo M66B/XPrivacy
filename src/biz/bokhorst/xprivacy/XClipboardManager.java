@@ -75,7 +75,7 @@ public class XClipboardManager extends XHook {
 							listHook.add(new XClipboardManager(clip, null));
 						else
 							listHook.add(new XClipboardManager(clip, PrivacyManager.cClipboard));
-				} else {
+				} else if (!server) {
 					if (clip == Methods.removePrimaryClipChangedListener)
 						listHook.add(new XClipboardManager(clip, null, className));
 					else

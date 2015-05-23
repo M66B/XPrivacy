@@ -80,7 +80,7 @@ public class XActivityManager extends XHook {
 							listHook.add(new XActivityManager(act, null, null));
 						else
 							listHook.add(new XActivityManager(act, PrivacyManager.cSystem, null));
-				} else
+				} else if (!server)
 					listHook.add(new XActivityManager(act, PrivacyManager.cSystem, className));
 		}
 		return listHook;
