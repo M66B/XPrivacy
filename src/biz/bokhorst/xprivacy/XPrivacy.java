@@ -32,6 +32,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static boolean mInitError = true;
 
 	public void initZygote(StartupParam startupParam) throws Throwable {
+		Util.log(null, Log.WARN, "Init path=" + startupParam.modulePath);
+
 		// Check for LBE security master
 		if (Util.hasLBE()) {
 			Util.log(null, Log.ERROR, "LBE installed");
@@ -465,23 +467,14 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	}
 
 	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
-		boolean doLog = PrivacyManager.cShell.equals(hook.getRestrictionName());
-
-		if (doLog)
-			Log.d("TESTING", "Core: Adding hook " + hook.getRestrictionName() + "[" + hook.getSpecifier() + "]");
-
 		// Get meta data
 		Hook md = PrivacyManager.getHook(hook.getRestrictionName(), hook.getSpecifier());
 		if (md == null) {
 			String message = "Not found hook=" + hook;
 			mListHookError.add(message);
 			Util.log(hook, Log.ERROR, message);
-		} else if (!md.isAvailable()) {
-			if (doLog)
-				Log.d("TESTING", "Core: Hook could not be applied!");
-
+		} else if (!md.isAvailable())
 			return;
-		}
 
 		// Provide secret
 		if (secret == null)
@@ -494,9 +487,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			try {
 				hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
-				if (doLog)
-					Log.d("TESTING", "Core: Class could not be found!");
-
 				String message = "Class not found hook=" + hook;
 				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
 				if ("isXposedEnabled".equals(hook.getMethodName()))
@@ -551,9 +541,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					}
 					clazz = clazz.getSuperclass();
 				} catch (Throwable ex) {
-					if (doLog)
-						Log.d("TESTING", "Core: Method could not be found!");
-
 					if (ex.getClass().equals(ClassNotFoundException.class)
 							|| ex.getClass().equals(NoClassDefFoundError.class))
 						break;
@@ -564,31 +551,19 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Hook members
 			for (Member member : listMember)
 				try {
-					if (doLog)
-						Log.d("TESTING", "Core: Hooking method '" + member.getName() + "'");
-
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 						if ((member.getModifiers() & Modifier.NATIVE) != 0)
 							Util.log(hook, Log.WARN, "Native method=" + member);
 					XposedBridge.hookMethod(member, new XMethodHook(hook));
 				} catch (NoSuchFieldError ex) {
-					if (doLog)
-						Log.d("TESTING", "Core: Method could not be hooked! '" + member.getName() + "'");
-
 					Util.log(hook, Log.WARN, ex.toString());
 				} catch (Throwable ex) {
-					if (doLog)
-						Log.d("TESTING", "Core: Method could not be hooked! '" + member.getName() + "'");
-
 					mListHookError.add(ex.toString());
 					Util.bug(hook, ex);
 				}
 
 			// Check if members found
 			if (listMember.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
-				if (doLog)
-					Log.d("TESTING", "Core: Method could not be hooked! (Empty method list)");
-
 				String message = "Method not found hook=" + hook;
 				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
 				if ("isXposedEnabled".equals(hook.getMethodName()))
@@ -599,9 +574,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Util.logStack(hook, level);
 			}
 		} catch (Throwable ex) {
-			if (doLog)
-				Log.d("TESTING", "Core: Hook could not be applied! (Exception ex)");
-
 			mListHookError.add(ex.toString());
 			Util.bug(hook, ex);
 		}
