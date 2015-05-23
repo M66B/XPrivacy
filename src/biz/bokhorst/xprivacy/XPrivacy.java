@@ -97,8 +97,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Check for LBE security master
-		int uid = Process.myUid();
-		if (Util.hasLBE() || mInitError || uid <= Process.SYSTEM_UID)
+		if (Util.hasLBE() || mInitError)
 			return;
 
 		bootstrapPackage(lpparam.packageName, lpparam.classLoader);
