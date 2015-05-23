@@ -167,22 +167,27 @@ public class XContentResolver extends XHook {
 			return listHook;
 		}
 	}
-	
+
 	private static List<XHook> getInstances(String className) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		
+
 		if ("com.android.providers.settings.SettingsProvider".equals(className))
 			listHook.add(new XContentResolver(Methods.Srv_call, null, className));
 		else
 			listHook.add(new XContentResolver(Methods.Srv_query, null, className));
-		
+
 		return listHook;
 	}
 
-	public static List<XHook> getInstances(boolean services) {
+	public static List<XHook> getInstances(boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
 
-		if (!services) {
+		if (server) {
+			listHook.add(new XContentResolver(Methods.Srv_query, null, "com.android.internal.telephony.IccProvider"));
+
+			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts, null));
+			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncsAsUser, PrivacyManager.cAccounts, null));
+		} else {
 			listHook.add(new XContentResolver(Methods.getCurrentSync, PrivacyManager.cAccounts, false));
 			listHook.add(new XContentResolver(Methods.getCurrentSyncs, PrivacyManager.cAccounts, false));
 			listHook.add(new XContentResolver(Methods.getSyncAdapterTypes, PrivacyManager.cAccounts, false));
@@ -199,11 +204,6 @@ public class XContentResolver extends XHook {
 
 			listHook.add(new XContentResolver(Methods.query, null, false));
 			listHook.add(new XContentResolver(Methods.query, null, true));
-		} else {
-			listHook.add(new XContentResolver(Methods.Srv_query, null, "com.android.internal.telephony.IccProvider"));
-
-			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncs, PrivacyManager.cAccounts, null));
-			listHook.add(new XContentResolver(Methods.Srv_getCurrentSyncsAsUser, PrivacyManager.cAccounts, null));
 		}
 
 		return listHook;

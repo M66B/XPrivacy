@@ -17,6 +17,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
+
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.IXposedHookLoadPackage;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
@@ -28,82 +29,91 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static String mSecret = null;
 	private static List<String> mListHookError = new ArrayList<String>();
 	private static List<CRestriction> mListDisabled = new ArrayList<CRestriction>();
-	private static boolean mHasErr = false;
-	
+	private static boolean mInitError = true;
+
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		// Check for LBE security master
 		if (Util.hasLBE()) {
 			Util.log(null, Log.ERROR, "LBE installed");
 			return;
 		}
-		
+
 		/*
-		 * ActivityManagerService is the beginning of the main "android" process. 
-		 * This is where the core java system is started, where the system context is created and so on. 
-		 * In pre-lollipop we can access this class directly, but in lollipop we have to visit ActivityThread first, 
-		 * since this class is now responsible for creating a class loader that can be used to access ActivityManagerService. 
-		 * It is no longer possible to do so via the normal boot class loader. Doing it like this will create a consistency between older and newer 
-		 * Android versions.
+		 * ActivityManagerService is the beginning of the main "android"
+		 * process. This is where the core java system is started, where the
+		 * system context is created and so on. In pre-lollipop we can access
+		 * this class directly, but in lollipop we have to visit ActivityThread
+		 * first, since this class is now responsible for creating a class
+		 * loader that can be used to access ActivityManagerService. It is no
+		 * longer possible to do so via the normal boot class loader. Doing it
+		 * like this will create a consistency between older and newer Android
+		 * versions.
 		 * 
-		 * Note that there is no need to handle arguments in this case. And we don't need them so in case they change over time, we will simply use 
-		 * the hookAll feature. 
+		 * Note that there is no need to handle arguments in this case. And we
+		 * don't need them so in case they change over time, we will simply use
+		 * the hookAll feature.
 		 */
 		try {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				XposedBridge.hookAllMethods(Class.forName("android.app.ActivityThread"), "systemMain", new XC_MethodHook() {
-					@Override
-					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-						final ClassLoader loader = Thread.currentThread().getContextClassLoader();
-						
-						try {
-							XposedBridge.hookAllConstructors(Class.forName("com.android.server.am.ActivityManagerService", false, loader), new XC_MethodHook() {
-								@Override
-								protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-									bootstrapSystem(param.thisObject, loader);
+				XposedBridge.hookAllMethods(Class.forName("android.app.ActivityThread"), "systemMain",
+						new XC_MethodHook() {
+							@Override
+							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+								final ClassLoader loader = Thread.currentThread().getContextClassLoader();
+								try {
+									XposedBridge.hookAllConstructors(Class.forName(
+											"com.android.server.am.ActivityManagerService", false, loader),
+											new XC_MethodHook() {
+												@Override
+												protected void afterHookedMethod(MethodHookParam param)
+														throws Throwable {
+													bootstrapSystem(param.thisObject, loader);
+												}
+											});
+									mInitError = false;
+								} catch (Throwable ex) {
+									Util.bug(null, ex);
 								}
-							});
-							
-						} catch (Throwable ex) {
-							Util.bug(null, ex); mHasErr = true;
-						}
-					}
-				});
-				
+							}
+						});
+
 			} else {
-				XposedBridge.hookAllMethods(Class.forName("com.android.server.am.ActivityManagerService"), "startRunning", new XC_MethodHook() {
-					@Override
-					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-						bootstrapSystem(param.thisObject, null);
-					}
-				});
+				XposedBridge.hookAllMethods(Class.forName("com.android.server.am.ActivityManagerService"),
+						"startRunning", new XC_MethodHook() {
+							@Override
+							protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+								bootstrapSystem(param.thisObject, null);
+							}
+						});
+				mInitError = false;
 			}
-			
+
 			bootstrapZygote();
 
 		} catch (Throwable ex) {
-			Util.bug(null, ex); mHasErr = true;
+			Util.bug(null, ex);
 		}
 	}
-	
+
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Check for LBE security master
 		int uid = Process.myUid();
-		
-		if (Util.hasLBE() || mHasErr || uid <= Process.SYSTEM_UID)
+		if (Util.hasLBE() || mInitError || uid <= Process.SYSTEM_UID)
 			return;
 
 		bootstrapPackage(lpparam.packageName, lpparam.classLoader);
 	}
-	
 
 	private void bootstrapZygote() throws Throwable {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
-		
+
 		/*
-		 * Zygote can access this file (Even with SELinux enabled) as it is running as the outer root. 
-		 * Since Zygote is the process that starts any other process, any sub-process will 
-		 * inherit the changes made to this class. Including values stored from /data/system/xprivacy/disabled.
+		 * Zygote can access this file (Even with SELinux enabled) as it is
+		 * running as the outer root. Since Zygote is the process that starts
+		 * any other process, any sub-process will inherit the changes made to
+		 * this class. Including values stored from
+		 * /data/system/xprivacy/disabled.
 		 */
 		File disabled = new File("/data/system/xprivacy/disabled");
 		if (disabled.exists() && disabled.canRead())
@@ -144,10 +154,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
-		
+
 		/*
 		 * Add nixed User Space / System Server hooks
 		 */
+
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances(false), null, mSecret, false);
 
@@ -165,26 +176,26 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// SMS manager
 		hookAll(XSmsManager.getInstances(false), null, mSecret, false);
-		
+
 		// Account manager
 		hookAll(XAccountManager.getInstances(null, false), null, mSecret, false);
-		
+
 		// Package manager service
 		hookAll(XPackageManager.getInstances(null, false), null, mSecret, false);
-		
+
 		// Activity manager
 		hookAll(XActivityManager.getInstances(null, false), null, mSecret, false);
-		
+
 		// Clipboard manager
 		hookAll(XClipboardManager.getInstances(null, false), null, mSecret, false);
-		
+
 		/*
 		 * Add pure user space hooks
 		 */
-		
+
 		// Intent receive
 		hookAll(XActivityThread.getInstances(), null, mSecret, false);
-		
+
 		// Runtime
 		hookAll(XRuntime.getInstances(), null, mSecret, false);
 
@@ -281,16 +292,18 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Intent send
 		hookAll(XActivity.getInstances(), null, mSecret, false);
 	}
-	
+
 	private void bootstrapSystem(Object am, ClassLoader classLoader) throws Throwable {
 		/*
 		 * Register the XPrivacy service
 		 */
+
 		PrivacyService.register(mListHookError, null, mSecret, am);
-		
+
 		/*
 		 * Add nixed User Space / System Server hooks
 		 */
+
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances(true), null, mSecret, false);
 
@@ -308,30 +321,30 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// SMS manager
 		hookAll(XSmsManager.getInstances(true), null, mSecret, false);
-		
+
 		// Account manager
 		hookAll(XAccountManager.getInstances(null, true), null, mSecret, false);
-		
+
 		// Package manager service
 		hookAll(XPackageManager.getInstances(null, true), null, mSecret, false);
-		
+
 		// Activity manager
 		hookAll(XActivityManager.getInstances(null, true), null, mSecret, false);
-		
+
 		// Clipboard manager
 		hookAll(XClipboardManager.getInstances(null, true), null, mSecret, false);
-		
+
 		/*
 		 * Add pure system server hooks
 		 */
 
 		// Activity manager service
 		hookAll(XActivityManagerService.getInstances(), null, mSecret, false);
-		
+
 		// Intent firewall
 		hookAll(XIntentFirewall.getInstances(), null, mSecret, false);
 	}
-	
+
 	private void bootstrapPackage(String packageName, ClassLoader classLoader) {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
@@ -339,10 +352,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			hookAll(XUtilHook.getInstances(), classLoader, mSecret, false);
 			return;
 		}
-		
+
 		// Build SERIAL
-		if (PrivacyManager.getRestrictionExtra(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL",
-						null, Build.SERIAL, mSecret))
+		if (PrivacyManager.getRestrictionExtra(null, Process.myUid(), PrivacyManager.cIdentification, "SERIAL", null,
+				Build.SERIAL, mSecret))
 			try {
 				Field serial = Build.class.getField("SERIAL");
 				serial.setAccessible(true);
@@ -350,7 +363,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			} catch (Throwable ex) {
 				Util.bug(null, ex);
 			}
-		
+
 		// Activity recognition
 		try {
 			Class.forName("com.google.android.gms.location.ActivityRecognitionClient", false, classLoader);
@@ -458,9 +471,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	private static void hook(final XHook hook, ClassLoader classLoader, String secret) {
 		boolean doLog = PrivacyManager.cShell.equals(hook.getRestrictionName());
-		
-		if(doLog)Log.d("TESTING", "Core: Adding hook " + hook.getRestrictionName() + "[" + hook.getSpecifier() + "]");
-		
+
+		if (doLog)
+			Log.d("TESTING", "Core: Adding hook " + hook.getRestrictionName() + "[" + hook.getSpecifier() + "]");
+
 		// Get meta data
 		Hook md = PrivacyManager.getHook(hook.getRestrictionName(), hook.getSpecifier());
 		if (md == null) {
@@ -468,8 +482,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			mListHookError.add(message);
 			Util.log(hook, Log.ERROR, message);
 		} else if (!md.isAvailable()) {
-			if(doLog)Log.d("TESTING", "Core: Hook could not be applied!");
-			
+			if (doLog)
+				Log.d("TESTING", "Core: Hook could not be applied!");
+
 			return;
 		}
 
@@ -484,8 +499,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			try {
 				hookClass = findClass(hook.getClassName(), classLoader);
 			} catch (Throwable ex) {
-				if(doLog)Log.d("TESTING", "Core: Class could not be found!");
-				
+				if (doLog)
+					Log.d("TESTING", "Core: Class could not be found!");
+
 				String message = "Class not found hook=" + hook;
 				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
 				if ("isXposedEnabled".equals(hook.getMethodName()))
@@ -540,8 +556,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					}
 					clazz = clazz.getSuperclass();
 				} catch (Throwable ex) {
-					if(doLog)Log.d("TESTING", "Core: Method could not be found!");
-					
+					if (doLog)
+						Log.d("TESTING", "Core: Method could not be found!");
+
 					if (ex.getClass().equals(ClassNotFoundException.class)
 							|| ex.getClass().equals(NoClassDefFoundError.class))
 						break;
@@ -552,27 +569,31 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 			// Hook members
 			for (Member member : listMember)
 				try {
-					if(doLog)Log.d("TESTING", "Core: Hooking method '" + member.getName() + "'");
-					
+					if (doLog)
+						Log.d("TESTING", "Core: Hooking method '" + member.getName() + "'");
+
 					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
 						if ((member.getModifiers() & Modifier.NATIVE) != 0)
 							Util.log(hook, Log.WARN, "Native method=" + member);
 					XposedBridge.hookMethod(member, new XMethodHook(hook));
 				} catch (NoSuchFieldError ex) {
-					if(doLog)Log.d("TESTING", "Core: Method could not be hooked! '" + member.getName() + "'");
-					
+					if (doLog)
+						Log.d("TESTING", "Core: Method could not be hooked! '" + member.getName() + "'");
+
 					Util.log(hook, Log.WARN, ex.toString());
 				} catch (Throwable ex) {
-					if(doLog)Log.d("TESTING", "Core: Method could not be hooked! '" + member.getName() + "'");
-					
+					if (doLog)
+						Log.d("TESTING", "Core: Method could not be hooked! '" + member.getName() + "'");
+
 					mListHookError.add(ex.toString());
 					Util.bug(hook, ex);
 				}
 
 			// Check if members found
 			if (listMember.isEmpty() && !hook.getClassName().startsWith("com.google.android.gms")) {
-				if(doLog)Log.d("TESTING", "Core: Method could not be hooked! (Empty method list)");
-				
+				if (doLog)
+					Log.d("TESTING", "Core: Method could not be hooked! (Empty method list)");
+
 				String message = "Method not found hook=" + hook;
 				int level = (md != null && md.isOptional() ? Log.WARN : Log.ERROR);
 				if ("isXposedEnabled".equals(hook.getMethodName()))
@@ -583,8 +604,9 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				Util.logStack(hook, level);
 			}
 		} catch (Throwable ex) {
-			if(doLog)Log.d("TESTING", "Core: Hook could not be applied! (Exception ex)");
-			
+			if (doLog)
+				Log.d("TESTING", "Core: Hook could not be applied! (Exception ex)");
+
 			mListHookError.add(ex.toString());
 			Util.bug(hook, ex);
 		}

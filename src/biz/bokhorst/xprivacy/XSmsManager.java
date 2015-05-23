@@ -47,20 +47,20 @@ public class XSmsManager extends XHook {
 	};
 	// @formatter:on
 
-	public static List<XHook> getInstances(boolean services) {
+	public static List<XHook> getInstances(boolean server) {
 		List<XHook> listHook = new ArrayList<XHook>();
-		if (!services) {
+		if (server) {
+			listHook.add(new XSmsManager(Methods.Srv_getAllMessagesFromIccEf, PrivacyManager.cMessages));
+			listHook.add(new XSmsManager(Methods.Srv_sendData, PrivacyManager.cCalling));
+			listHook.add(new XSmsManager(Methods.Srv_sendMultipartText, PrivacyManager.cCalling));
+			listHook.add(new XSmsManager(Methods.Srv_sendText, PrivacyManager.cCalling));
+		} else {
 			listHook.add(new XSmsManager(Methods.getAllMessagesFromIcc, PrivacyManager.cMessages));
 			listHook.add(new XSmsManager(Methods.getCarrierConfigValues, PrivacyManager.cMessages));
 			listHook.add(new XSmsManager(Methods.sendDataMessage, PrivacyManager.cCalling));
 			listHook.add(new XSmsManager(Methods.sendMultimediaMessage, PrivacyManager.cCalling));
 			listHook.add(new XSmsManager(Methods.sendMultipartTextMessage, PrivacyManager.cCalling));
 			listHook.add(new XSmsManager(Methods.sendTextMessage, PrivacyManager.cCalling));
-		} else {
-			listHook.add(new XSmsManager(Methods.Srv_getAllMessagesFromIccEf, PrivacyManager.cMessages));
-			listHook.add(new XSmsManager(Methods.Srv_sendData, PrivacyManager.cCalling));
-			listHook.add(new XSmsManager(Methods.Srv_sendMultipartText, PrivacyManager.cCalling));
-			listHook.add(new XSmsManager(Methods.Srv_sendText, PrivacyManager.cCalling));
 		}
 		return listHook;
 	}
