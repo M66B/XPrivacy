@@ -17,8 +17,6 @@ Changelog
 **Important**
 
 * **Please send the support info when XPrivacy asks for it**
-* **Android 5.0.x (lollipop): please read the [installation instructions](https://github.com/M66B/XPrivacy/#installation)**
-* **Android 5.0.x (Lollipop): XPrivacy will cause a bootloop on some ROMs due to a bug in Xposed** ([issue](https://github.com/M66B/XPrivacy/issues/2162))
 
 **Next release**
 
