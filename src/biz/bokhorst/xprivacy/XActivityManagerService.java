@@ -30,7 +30,7 @@ public class XActivityManagerService extends XHook {
 			if (mMethod == Methods.goingToSleep || mMethod == Methods.wakingUp)
 				return false;
 
-		return (mMethod != Methods.appNotResponding && mMethod != Methods.finishBooting);
+		return (mMethod != Methods.appNotResponding && mMethod != Methods.finishBooting && mMethod != Methods.updateSleepIfNeededLocked);
 	}
 
 	public String getClassName() {
@@ -58,7 +58,8 @@ public class XActivityManagerService extends XHook {
 	// @formatter:off
 	private enum Methods {
 		inputDispatchingTimedOut, appNotResponding,
-		systemReady, finishBooting, setLockScreenShown, goingToSleep, wakingUp, shutdown
+		systemReady, finishBooting, setLockScreenShown, goingToSleep, wakingUp, shutdown,
+		updateSleepIfNeededLocked
 	};
 	// @formatter:on
 
@@ -73,6 +74,7 @@ public class XActivityManagerService extends XHook {
 		listHook.add(new XActivityManagerService(Methods.goingToSleep));
 		listHook.add(new XActivityManagerService(Methods.wakingUp));
 		listHook.add(new XActivityManagerService(Methods.shutdown));
+		listHook.add(new XActivityManagerService(Methods.updateSleepIfNeededLocked));
 		return listHook;
 	}
 
@@ -140,6 +142,10 @@ public class XActivityManagerService extends XHook {
 			mShutdown = true;
 			Util.log(this, Log.WARN, "Shutdown");
 			break;
+
+		case updateSleepIfNeededLocked:
+			// Do nothing;
+			break;
 		}
 	}
 
@@ -179,6 +185,15 @@ public class XActivityManagerService extends XHook {
 
 		case shutdown:
 			// Do nothing
+			break;
+
+		case updateSleepIfNeededLocked:
+			if (param.thisObject != null) {
+				Field methodSleeping = param.thisObject.getClass().getDeclaredField("mSleeping");
+				methodSleeping.setAccessible(true);
+				mSleeping = (Boolean) methodSleeping.get(param.thisObject);
+				Util.log(this, Log.WARN, "Sleeping=" + mSleeping);
+			}
 			break;
 		}
 	}
