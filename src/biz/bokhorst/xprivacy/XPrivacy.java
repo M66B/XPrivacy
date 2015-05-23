@@ -67,7 +67,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 							XposedBridge.hookAllConstructors(ams, new XC_MethodHook() {
 								@Override
 								protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-									bootstrapSystem(param.thisObject, loader);
+									hookSystem(param.thisObject, loader);
 								}
 							});
 							mInitError = false;
@@ -82,13 +82,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				XposedBridge.hookAllMethods(am, "startRunning", new XC_MethodHook() {
 					@Override
 					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-						bootstrapSystem(param.thisObject, null);
+						hookSystem(param.thisObject, null);
 					}
 				});
 				mInitError = false;
 			}
 
-			bootstrapZygote();
+			hookZygote();
 
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -100,10 +100,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		if (Util.hasLBE() || mInitError)
 			return;
 
-		bootstrapPackage(lpparam.packageName, lpparam.classLoader);
+		hookPackage(lpparam.packageName, lpparam.classLoader);
 	}
 
-	private void bootstrapZygote() throws Throwable {
+	private void hookZygote() throws Throwable {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
@@ -133,22 +133,22 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				} catch (Throwable ex) {
 					Log.w("XPrivacy", ex.toString());
 				}
-
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-				try {
-					Class<?> libcore = Class.forName("libcore.io.Libcore");
-					Field fOs = libcore.getDeclaredField("os");
-					fOs.setAccessible(true);
-					Object os = fOs.get(null);
-					Method setenv = os.getClass().getMethod("setenv", String.class, String.class, boolean.class);
-					setenv.setAccessible(true);
-					boolean aosp = new File("/data/system/xprivacy/aosp").exists();
-					setenv.invoke(os, "XPrivacy.AOSP", Boolean.toString(aosp), false);
-					Util.log(null, Log.WARN, "AOSP mode forced=" + aosp);
-				} catch (Throwable ex) {
-					Util.bug(null, ex);
-				}
 		}
+
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+			try {
+				Class<?> libcore = Class.forName("libcore.io.Libcore");
+				Field fOs = libcore.getDeclaredField("os");
+				fOs.setAccessible(true);
+				Object os = fOs.get(null);
+				Method setenv = os.getClass().getMethod("setenv", String.class, String.class, boolean.class);
+				setenv.setAccessible(true);
+				boolean aosp = new File("/data/system/xprivacy/aosp").exists();
+				setenv.invoke(os, "XPrivacy.AOSP", Boolean.toString(aosp), false);
+				Util.log(null, Log.WARN, "AOSP mode forced=" + aosp);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+			}
 
 		/*
 		 * Add nixed User Space / System Server hooks
@@ -288,7 +288,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XActivity.getInstances(), null, mSecret, false);
 	}
 
-	private void bootstrapSystem(Object am, ClassLoader classLoader) throws Throwable {
+	private void hookSystem(Object am, ClassLoader classLoader) throws Throwable {
 		/*
 		 * Register the XPrivacy service
 		 */
@@ -340,7 +340,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XIntentFirewall.getInstances(), classLoader, mSecret, false);
 	}
 
-	private void bootstrapPackage(String packageName, ClassLoader classLoader) {
+	private void hookPackage(String packageName, ClassLoader classLoader) {
 		// Skip hooking self
 		String self = XPrivacy.class.getPackage().getName();
 		if (packageName.equals(self)) {
