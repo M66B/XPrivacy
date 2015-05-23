@@ -26,6 +26,12 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3.6.10 TEST**
+
+* Android 5.x compatibility
+
+Big thanks to [dk-zero-cool](https://github.com/dk-zero-cool) !
+
 **Version 3.6.9 STABLE**
 
 **This release does not fix anything for Android 5.x**
