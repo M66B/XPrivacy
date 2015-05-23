@@ -121,8 +121,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 			hookAll(null);
 		}
-		else
-			hookAll(XActivityThread.getInstances(), null, mSecret, false);
 	}
 
 	private static void handleLoadPackage(String packageName, String processName, final ClassLoader classLoader,
@@ -358,8 +356,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XWifiManager.getInstances(null, true), classLoader, mSecret, false);
 
 		// Intent receive
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
-			hookAll(XActivityThread.getInstances(), classLoader, mSecret, false);
+		hookAll(XActivityThread.getInstances(), classLoader, mSecret, false);
 
 		// Intent send
 		hookAll(XActivity.getInstances(), classLoader, mSecret, false);
