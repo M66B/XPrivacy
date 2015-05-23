@@ -323,6 +323,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Telephone service
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
 			hookAll(XTelephonyManager.getInstances(null, true), classLoader, mSecret, false);
+		hookAll(XTelephonyManager.getRegistryInstances(), classLoader, mSecret, false);
 
 		// Usage statistics manager
 		hookAll(XUsageStatsManager.getInstances(true), classLoader, mSecret, false);

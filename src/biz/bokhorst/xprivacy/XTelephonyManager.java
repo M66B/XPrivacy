@@ -163,6 +163,7 @@ public class XTelephonyManager extends XHook {
 					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.SubInfo));
 				else
 					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.Phone));
+
 				listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, Srv.SubInfo));
 				listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone, Srv.SubInfo));
 				listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, Srv.SubInfo));
@@ -180,10 +181,6 @@ public class XTelephonyManager extends XHook {
 				listHook.add(new XTelephonyManager(Methods.Srv_getImei, PrivacyManager.cPhone, Srv.SubInfo));
 				listHook.add(new XTelephonyManager(Methods.Srv_getIsimIst, PrivacyManager.cPhone, Srv.SubInfo));
 				listHook.add(new XTelephonyManager(Methods.Srv_getIsimPcscf, PrivacyManager.cPhone, Srv.SubInfo));
-
-				// Registry
-				listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cLocation, Srv.Registry));
-				listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cPhone, Srv.Registry));
 			} else {
 				listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, null, className));
 				listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, PrivacyManager.cLocation, className));
@@ -238,6 +235,13 @@ public class XTelephonyManager extends XHook {
 			listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTagForDisplay, PrivacyManager.cPhone, Srv.Phone));
 			listHook.add(new XTelephonyManager(Methods.Srv_getLine1NumberForDisplay, PrivacyManager.cPhone, Srv.Phone));
 		}
+		return listHook;
+	}
+
+	public static List<XHook> getRegistryInstances() {
+		List<XHook> listHook = new ArrayList<XHook>();
+		listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cLocation, Srv.Registry));
+		listHook.add(new XTelephonyManager(Methods.Srv_listen, PrivacyManager.cPhone, Srv.Registry));
 		return listHook;
 	}
 
