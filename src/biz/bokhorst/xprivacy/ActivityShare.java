@@ -632,6 +632,7 @@ public class ActivityShare extends ActivityBase {
 			return apps;
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();

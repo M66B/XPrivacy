@@ -13,13 +13,13 @@ import android.graphics.PorterDuff.Mode;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Process;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.TextView;
 
 @SuppressLint("Registered")
-public class ActivityBase extends ActionBarActivity {
+public class ActivityBase extends AppCompatActivity {
 	private int mThemeId;
 	private Bitmap[] mCheck = null;
 
@@ -118,6 +118,7 @@ public class ActivityBase extends ActionBarActivity {
 			return getOnDemandCheckBox();
 	}
 
+	@SuppressWarnings("deprecation")
 	private void buildCheckBoxes() {
 		mCheck = new Bitmap[4];
 

@@ -1261,6 +1261,7 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 			return ApplicationInfoEx.getXApplicationList(ActivityMain.this, mProgressDialog);
 		}
 
+		@SuppressWarnings("deprecation")
 		@Override
 		protected void onPreExecute() {
 			super.onPreExecute();
