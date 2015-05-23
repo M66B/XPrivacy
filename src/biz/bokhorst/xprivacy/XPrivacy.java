@@ -321,13 +321,15 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XSmsManager.getInstances(true), classLoader, mSecret, false);
 
 		// Telephone service
-		hookAll(XTelephonyManager.getInstances(null, true), classLoader, mSecret, false);
+		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+			hookAll(XTelephonyManager.getInstances(null, true), classLoader, mSecret, false);
 
 		// Usage statistics manager
 		hookAll(XUsageStatsManager.getInstances(true), classLoader, mSecret, false);
 
 		// Wi-Fi service
 		hookAll(XWifiManager.getInstances(null, true), classLoader, mSecret, false);
+
 		/*
 		 * Add pure system server hooks
 		 */
@@ -418,8 +420,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// Phone interface manager
-		if ("com.android.phone".equals(packageName))
+		if ("com.android.phone".equals(packageName)) {
 			hookAll(XTelephonyManager.getPhoneInstances(), classLoader, mSecret, false);
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+				hookAll(XTelephonyManager.getInstances(null, true), classLoader, mSecret, false);
+		}
 
 		// Providers
 		hookAll(XContentResolver.getPackageInstances(packageName, classLoader), classLoader, mSecret, false);
