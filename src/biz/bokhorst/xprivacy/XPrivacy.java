@@ -29,7 +29,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 	private static String mSecret = null;
 	private static List<String> mListHookError = new ArrayList<String>();
 	private static List<CRestriction> mListDisabled = new ArrayList<CRestriction>();
-	private static boolean mInitError = true;
 
 	public void initZygote(StartupParam startupParam) throws Throwable {
 		Util.log(null, Log.WARN, "Init path=" + startupParam.modulePath);
@@ -117,7 +116,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 									hookSystem(param.thisObject, loader);
 								}
 							});
-							mInitError = false;
 						} catch (Throwable ex) {
 							Util.bug(null, ex);
 						}
@@ -133,7 +131,6 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 						hookSystem(param.thisObject, null);
 					}
 				});
-				mInitError = false;
 			}
 
 			hookZygote();
@@ -145,7 +142,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 	public void handleLoadPackage(final LoadPackageParam lpparam) throws Throwable {
 		// Check for LBE security master
-		if (Util.hasLBE() || mInitError)
+		if (Util.hasLBE())
 			return;
 
 		hookPackage(lpparam.packageName, lpparam.classLoader);
