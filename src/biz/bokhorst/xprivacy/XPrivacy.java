@@ -154,35 +154,35 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		 * Add nixed User Space / System Server hooks
 		 */
 
+		// Account manager
+		hookAll(XAccountManager.getInstances(null, false), null, mSecret, false);
+
+		// Activity manager
+		hookAll(XActivityManager.getInstances(null, false), null, mSecret, false);
+
 		// App widget manager
 		hookAll(XAppWidgetManager.getInstances(false), null, mSecret, false);
 
 		// Bluetooth adapater
 		hookAll(XBluetoothAdapter.getInstances(false), null, mSecret, false);
 
+		// Clipboard manager
+		hookAll(XClipboardManager.getInstances(null, false), null, mSecret, false);
+
 		// Content resolver
 		hookAll(XContentResolver.getInstances(false), null, mSecret, false);
-
-		// Usage statistics manager
-		hookAll(XUsageStatsManager.getInstances(false), null, mSecret, false);
-
-		// Telephone service
-		hookAll(XTelephonyManager.getInstances(null, false), null, mSecret, false);
-
-		// SMS manager
-		hookAll(XSmsManager.getInstances(false), null, mSecret, false);
-
-		// Account manager
-		hookAll(XAccountManager.getInstances(null, false), null, mSecret, false);
 
 		// Package manager service
 		hookAll(XPackageManager.getInstances(null, false), null, mSecret, false);
 
-		// Activity manager
-		hookAll(XActivityManager.getInstances(null, false), null, mSecret, false);
+		// SMS manager
+		hookAll(XSmsManager.getInstances(false), null, mSecret, false);
 
-		// Clipboard manager
-		hookAll(XClipboardManager.getInstances(null, false), null, mSecret, false);
+		// Telephone service
+		hookAll(XTelephonyManager.getInstances(null, false), null, mSecret, false);
+
+		// Usage statistics manager
+		hookAll(XUsageStatsManager.getInstances(false), null, mSecret, false);
 
 		/*
 		 * Add pure user space hooks
@@ -213,7 +213,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XCameraDevice2.getInstances(), null, mSecret, false);
 
 		// Connectivity manager
-		hookAll(XConnectivityManager.getInstances(null, true), null, mSecret, false);
+		hookAll(XConnectivityManager.getInstances(null, false), null, mSecret, false);
 
 		// Context wrapper
 		hookAll(XContextImpl.getInstances(), null, mSecret, false);
@@ -237,7 +237,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XLinkProperties.getInstances(), null, mSecret, false);
 
 		// Location manager
-		hookAll(XLocationManager.getInstances(null, true), null, mSecret, false);
+		hookAll(XLocationManager.getInstances(null, false), null, mSecret, false);
 
 		// Media recorder
 		hookAll(XMediaRecorder.getInstances(), null, mSecret, false);
@@ -261,7 +261,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XResources.getInstances(), null, mSecret, false);
 
 		// Sensor manager
-		hookAll(XSensorManager.getInstances(null, true), null, mSecret, false);
+		hookAll(XSensorManager.getInstances(null, false), null, mSecret, false);
 
 		// Settings secure
 		hookAll(XSettingsSecure.getInstances(), null, mSecret, false);
@@ -279,10 +279,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XWebView.getInstances(), null, mSecret, false);
 
 		// Window service
-		hookAll(XWindowManager.getInstances(null, true), null, mSecret, false);
+		hookAll(XWindowManager.getInstances(null, false), null, mSecret, false);
 
 		// Wi-Fi service
-		hookAll(XWifiManager.getInstances(null, true), null, mSecret, false);
+		hookAll(XWifiManager.getInstances(null, false), null, mSecret, false);
 
 		// Intent send
 		hookAll(XActivity.getInstances(), null, mSecret, false);
@@ -293,51 +293,51 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		 * Register the XPrivacy service
 		 */
 
-		PrivacyService.register(mListHookError, null, mSecret, am);
+		PrivacyService.register(mListHookError, classLoader, mSecret, am);
 
 		/*
 		 * Add nixed User Space / System Server hooks
 		 */
 
-		// App widget manager
-		hookAll(XAppWidgetManager.getInstances(true), null, mSecret, false);
-
-		// Bluetooth adapater
-		hookAll(XBluetoothAdapter.getInstances(true), null, mSecret, false);
-
-		// Content resolver
-		hookAll(XContentResolver.getInstances(true), null, mSecret, false);
-
-		// Usage statistics manager
-		hookAll(XUsageStatsManager.getInstances(true), null, mSecret, false);
-
-		// Telephone service
-		hookAll(XTelephonyManager.getInstances(null, true), null, mSecret, false);
-
-		// SMS manager
-		hookAll(XSmsManager.getInstances(true), null, mSecret, false);
-
 		// Account manager
-		hookAll(XAccountManager.getInstances(null, true), null, mSecret, false);
-
-		// Package manager service
-		hookAll(XPackageManager.getInstances(null, true), null, mSecret, false);
+		hookAll(XAccountManager.getInstances(null, true), classLoader, mSecret, false);
 
 		// Activity manager
-		hookAll(XActivityManager.getInstances(null, true), null, mSecret, false);
+		hookAll(XActivityManager.getInstances(null, true), classLoader, mSecret, false);
+
+		// App widget manager
+		hookAll(XAppWidgetManager.getInstances(true), classLoader, mSecret, false);
+
+		// Bluetooth adapater
+		hookAll(XBluetoothAdapter.getInstances(true), classLoader, mSecret, false);
 
 		// Clipboard manager
-		hookAll(XClipboardManager.getInstances(null, true), null, mSecret, false);
+		hookAll(XClipboardManager.getInstances(null, true), classLoader, mSecret, false);
+
+		// Content resolver
+		hookAll(XContentResolver.getInstances(true), classLoader, mSecret, false);
+
+		// Package manager service
+		hookAll(XPackageManager.getInstances(null, true), classLoader, mSecret, false);
+
+		// SMS manager
+		hookAll(XSmsManager.getInstances(true), classLoader, mSecret, false);
+
+		// Telephone service
+		hookAll(XTelephonyManager.getInstances(null, true), classLoader, mSecret, false);
+
+		// Usage statistics manager
+		hookAll(XUsageStatsManager.getInstances(true), classLoader, mSecret, false);
 
 		/*
 		 * Add pure system server hooks
 		 */
 
 		// Activity manager service
-		hookAll(XActivityManagerService.getInstances(), null, mSecret, false);
+		hookAll(XActivityManagerService.getInstances(), classLoader, mSecret, false);
 
 		// Intent firewall
-		hookAll(XIntentFirewall.getInstances(), null, mSecret, false);
+		hookAll(XIntentFirewall.getInstances(), classLoader, mSecret, false);
 	}
 
 	private void bootstrapPackage(String packageName, ClassLoader classLoader) {

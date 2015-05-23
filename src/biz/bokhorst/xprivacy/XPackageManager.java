@@ -122,6 +122,9 @@ public class XPackageManager extends XHook {
 				listHook.add(new XPackageManager(Methods.Srv_queryIntentContentProviders, PrivacyManager.cSystem));
 				listHook.add(new XPackageManager(Methods.Srv_queryIntentReceivers, PrivacyManager.cSystem));
 				listHook.add(new XPackageManager(Methods.Srv_queryIntentServices, PrivacyManager.cSystem));
+
+				listHook.add(new XPackageManager(Methods.checkPermission, PrivacyManager.cSystem));
+				listHook.add(new XPackageManager(Methods.checkUidPermission, PrivacyManager.cSystem));
 			} else {
 				listHook.add(new XPackageManager(Methods.getInstalledApplications, PrivacyManager.cSystem, className));
 				listHook.add(new XPackageManager(Methods.getInstalledPackages, PrivacyManager.cSystem, className));
@@ -136,9 +139,6 @@ public class XPackageManager extends XHook {
 				listHook.add(new XPackageManager(Methods.queryIntentActivityOptions, PrivacyManager.cSystem, className));
 				listHook.add(new XPackageManager(Methods.queryIntentContentProviders, PrivacyManager.cSystem, className));
 				listHook.add(new XPackageManager(Methods.queryIntentServices, PrivacyManager.cSystem, className));
-
-				listHook.add(new XPackageManager(Methods.checkPermission, PrivacyManager.cSystem));
-				listHook.add(new XPackageManager(Methods.checkUidPermission, PrivacyManager.cSystem));
 			}
 		}
 		return listHook;
