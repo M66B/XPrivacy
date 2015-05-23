@@ -133,22 +133,22 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 				} catch (Throwable ex) {
 					Log.w("XPrivacy", ex.toString());
 				}
-		}
 
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-			try {
-				Class<?> libcore = Class.forName("libcore.io.Libcore");
-				Field fOs = libcore.getDeclaredField("os");
-				fOs.setAccessible(true);
-				Object os = fOs.get(null);
-				Method setenv = os.getClass().getMethod("setenv", String.class, String.class, boolean.class);
-				setenv.setAccessible(true);
-				boolean aosp = new File("/data/system/xprivacy/aosp").exists();
-				setenv.invoke(os, "XPrivacy.AOSP", Boolean.toString(aosp), false);
-				Util.log(null, Log.WARN, "AOSP mode forced=" + aosp);
-			} catch (Throwable ex) {
-				Util.bug(null, ex);
-			}
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+				try {
+					Class<?> libcore = Class.forName("libcore.io.Libcore");
+					Field fOs = libcore.getDeclaredField("os");
+					fOs.setAccessible(true);
+					Object os = fOs.get(null);
+					Method setenv = os.getClass().getMethod("setenv", String.class, String.class, boolean.class);
+					setenv.setAccessible(true);
+					boolean aosp = new File("/data/system/xprivacy/aosp").exists();
+					setenv.invoke(os, "XPrivacy.AOSP", Boolean.toString(aosp), false);
+					Util.log(null, Log.WARN, "AOSP mode forced=" + aosp);
+				} catch (Throwable ex) {
+					Util.bug(null, ex);
+				}
+		}
 
 		/*
 		 * Add nixed User Space / System Server hooks

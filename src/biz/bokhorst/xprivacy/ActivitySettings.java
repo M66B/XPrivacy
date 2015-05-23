@@ -283,7 +283,8 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			}
 			cbExpert.setChecked(expert);
 
-			if (PrivacyManager.cVersion3 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+			if (PrivacyManager.cVersion3 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT
+					&& Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
 				cbAOSP.setVisibility(View.VISIBLE);
 
 			if (expert) {
