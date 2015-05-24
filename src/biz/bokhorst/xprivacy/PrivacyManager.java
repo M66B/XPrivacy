@@ -465,10 +465,8 @@ public class PrivacyManager {
 		if (_uid == Process.SYSTEM_UID) {
 			if (PrivacyManager.cIdentification.equals(restrictionName))
 				return false;
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				if (PrivacyManager.cShell.equals(restrictionName) && "loadLibrary".equals(methodName))
-					return false;
-			}
+			if (PrivacyManager.cShell.equals(restrictionName) && "loadLibrary".equals(methodName))
+				return false;
 		}
 
 		if (system)
