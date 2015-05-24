@@ -512,7 +512,7 @@ XPrivacy asks for the following Android permissions:
 * Contacts: to be able to restrict applications' access to contacts
 * Boot: to be able to check if XPrivacy is enabled
 * Internet: to be able to submit and fetch [crowd sourced restrictions](http://crowd.xprivacy.eu/)
-* Storage: to be able to export XPrivacy's settings to the SD card (only with a [pro license](http://www.xprivacy.eu/))
+* Storage: to be able to read the pro license file and to be able to export XPrivacy's settings to the SD card (only with a [pro license](http://www.xprivacy.eu/))
 * Wakelock: to keep the processor running during batch operations
 
 If desired, you can even restrict XPrivacy from accessing any of the above,
