@@ -362,28 +362,47 @@ public class Meta {
 		mListHook.add(new Hook("phone", "getVoiceMailAlphaTag", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("phone", "getVoiceMailNumber", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
 
-		mListHook.add(new Hook("phone", "Srv_getDeviceId", "READ_PHONE_STATE", 10, "2.99", "getDeviceId").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getGroupIdLevel1", "READ_PHONE_STATE", 18, "2.99", "getGroupIdLevel1").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getIsimDomain", "READ_PRIVILEGED_PHONE_STATE", 14, "2.99", "getIsimDomain").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getIsimImpi", "READ_PRIVILEGED_PHONE_STATE", 14, "2.99", "getIsimImpi").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getIsimImpu", "READ_PRIVILEGED_PHONE_STATE", 14, "2.99", "getIsimImpu").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getLine1AlphaTag", "READ_PHONE_STATE", 10, "2.99", "getLine1AlphaTag").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getLine1Number", "READ_PHONE_STATE", 10, "2.99", "getLine1Number").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getMsisdn", "READ_PHONE_STATE", 14, "2.99", "getMsisdn").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getIccSerialNumber", "READ_PHONE_STATE", 10, "2.99", "getSimSerialNumber").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getSubscriberId", "READ_PHONE_STATE", 10, "2.99", "getSubscriberId").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getVoiceMailAlphaTag", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailAlphaTag").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailNumber").AOSP(19));
-		mListHook.add(new Hook("phone", "Srv_getCompleteVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", null).AOSP(19));
+		mListHook.add(new Hook("phone", "Srv_getDeviceId", "READ_PHONE_STATE", 10, "2.99", "getDeviceId").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getGroupIdLevel1", "READ_PHONE_STATE", 18, "2.99", "getGroupIdLevel1").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getIsimDomain", "READ_PRIVILEGED_PHONE_STATE", 14, "2.99", "getIsimDomain").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getIsimImpi", "READ_PRIVILEGED_PHONE_STATE", 14, "2.99", "getIsimImpi").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getIsimImpu", "READ_PRIVILEGED_PHONE_STATE", 14, "2.99", "getIsimImpu").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getLine1AlphaTag", "READ_PHONE_STATE", 10, "2.99", "getLine1AlphaTag").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getLine1Number", "READ_PHONE_STATE", 10, "2.99", "getLine1Number").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getMsisdn", "READ_PHONE_STATE", 14, "2.99", "getMsisdn").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getIccSerialNumber", "READ_PHONE_STATE", 10, "2.99", "getSimSerialNumber").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getSubscriberId", "READ_PHONE_STATE", 10, "2.99", "getSubscriberId").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getVoiceMailAlphaTag", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailAlphaTag").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", "getVoiceMailNumber").AOSP(19).to(20));
+		mListHook.add(new Hook("phone", "Srv_getCompleteVoiceMailNumber", "READ_PHONE_STATE", 10, "2.99", null).AOSP(19).to(20));
 
-		mListHook.add(new Hook("phone", "Srv_getImei", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
-		mListHook.add(new Hook("phone", "Srv_getIsimIst", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
-		mListHook.add(new Hook("phone", "Srv_getIsimPcscf", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("phone", "Srv_getImei", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21).obsolete());
+		mListHook.add(new Hook("phone", "Srv_getIsimIst", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null).AOSP(21).obsolete());
+		mListHook.add(new Hook("phone", "Srv_getIsimPcscf", "READ_PRIVILEGED_PHONE_STATE", 21, "3.5.6", null).AOSP(21).obsolete());
 
 		mListHook.add(new Hook("phone", "Srv_getCdmaMdn", "MODIFY_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
 		mListHook.add(new Hook("phone", "Srv_getCdmaMin", "MODIFY_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
-		mListHook.add(new Hook("phone", "Srv_getLine1AlphaTagForDisplay", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
-		mListHook.add(new Hook("phone", "Srv_getLine1NumberForDisplay", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21));
+		mListHook.add(new Hook("phone", "Srv_getLine1AlphaTagForDisplay", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21).obsolete());
+		mListHook.add(new Hook("phone", "Srv_getLine1NumberForDisplay", "READ_PHONE_STATE", 21, "3.5.6", null).AOSP(21).obsolete());
+
+		mListHook.add(new Hook("phone", "Srv_getCompleteVoiceMailNumberForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getCompleteVoiceMailNumber").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getDeviceId5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getDeviceId").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getDeviceIdForPhone5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getDeviceId").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getGroupIdLevel1ForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getGroupIdLevel1").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getIccSerialNumberForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getIccSerialNumber").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getImeiForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getImei").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getIsimDomain5", "READ_PRIVILEGED_PHONE_STATE", 21, "3.6.12", "Srv_getIsimDomain").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getIsimImpi5", "READ_PRIVILEGED_PHONE_STATE", 21, "3.6.12", "Srv_getIsimImpi").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getIsimImpu5", "READ_PRIVILEGED_PHONE_STATE", 21, "3.6.12", "Srv_getIsimImpu").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getIsimIst5", "READ_PRIVILEGED_PHONE_STATE", 21, "3.6.12", "Srv_getIsimIst").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getIsimPcscf5", "READ_PRIVILEGED_PHONE_STATE", 21, "3.6.12", "Srv_getIsimPcscf").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getLine1AlphaTagForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getLine1AlphaTagForDisplay").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getLine1NumberForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getLine1NumberForDisplay").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getMsisdnForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getMsisdn").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getNaiForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", null).AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getSubscriberIdForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getSubscriberId").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getVoiceMailAlphaTagForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getVoiceMailAlphaTag").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getVoiceMailNumberForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getVoiceMailNumber").AOSP(Build.VERSION_CODES.LOLLIPOP));
 
 		mListHook.add(new Hook("phone", "listen", "READ_PHONE_STATE", 10, null, null).notAOSP(19));
 		mListHook.add(new Hook("phone", "Srv_listen", "READ_PHONE_STATE", 10, null, null).AOSP(19));

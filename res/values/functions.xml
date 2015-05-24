@@ -326,6 +326,26 @@
     <string name="phone_Srv_getLine1AlphaTagForDisplay" translatable="false"><![CDATA[Will restrict access to hidden function to get the alpha identifier for line 1]]></string>
     <string name="phone_Srv_getLine1NumberForDisplay" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getLine1Number()">Google documentation</a>]]></string>
 
+    <!-- Android 5.x -->
+    <string name="phone_Srv_getCompleteVoiceMailNumberForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getVoiceMailNumber()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getDeviceId5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getDeviceId()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getDeviceIdForPhone5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getDeviceId()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getGroupIdLevel1ForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getGroupIdLevel1()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getIccSerialNumberForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getSimSerialNumber()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getImeiForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getDeviceId()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getIsimDomain5" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://en.wikipedia.org/wiki/IP_Multimedia_Services_Identity_Module">ISIM information</a>]]></string>
+    <string name="phone_Srv_getIsimImpi5" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://en.wikipedia.org/wiki/IP_Multimedia_Services_Identity_Module">ISIM information</a>]]></string>
+    <string name="phone_Srv_getIsimImpu5" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://en.wikipedia.org/wiki/IP_Multimedia_Services_Identity_Module">ISIM information</a>]]></string>
+    <string name="phone_Srv_getIsimIst5" translatable="false"><![CDATA[Will restrict access to the IMS Service Table (IST) that was loaded from the ISIM]]></string>
+    <string name="phone_Srv_getIsimPcscf5" translatable="false"><![CDATA[Will restrict access to the IMS Proxy Call Session Control Function(PCSCF) that were loaded from the ISIM]]></string>
+    <string name="phone_Srv_getLine1AlphaTagForSubscriber5" translatable="false"><![CDATA[Will restrict access to hidden function to get the alpha identifier for line 1]]></string>
+    <string name="phone_Srv_getLine1NumberForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getLine1Number()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getMsisdnForSubscriber5" translatable="false"><![CDATA[Will restrict access to hidden function to get <a href="https://en.wikipedia.org/wiki/MSISDN">MSISDN</a>]]></string>
+    <string name="phone_Srv_getNaiForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getDeviceId()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getSubscriberIdForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getSubscriberId()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getVoiceMailAlphaTagForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getVoiceMailAlphaTag()">Google documentation</a>]]></string>
+    <string name="phone_Srv_getVoiceMailNumberForSubscriber5" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/telephony/TelephonyManager.html#getVoiceMailNumber()">Google documentation</a>]]></string>
+
     <!-- sensors -->
     <string name="sensors_getDefaultSensor" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/SensorManager.html#getDefaultSensor(int)">Google documentation</a>]]></string>
     <string name="sensors_getSensorList" translatable="false"><![CDATA[<a href="https://developer.android.com/reference/android/hardware/SensorManager.html#getSensorList(int)">Google documentation</a>]]></string>

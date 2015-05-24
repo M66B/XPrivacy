@@ -20,7 +20,8 @@ Changelog
 
 **Next release**
 
-* ...
+* Fixed Android 5.x *getDeviceId* (IMEI) restriction ([issue](/../../issues/2198))
+* Added Android 5.x multi-SIM restriction support
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

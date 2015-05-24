@@ -24,11 +24,11 @@ public class XTelephonyManager extends XHook {
 	private static final Map<PhoneStateListener, XPhoneStateListener> mListener = new WeakHashMap<PhoneStateListener, XPhoneStateListener>();
 
 	private enum Srv {
-		SubInfo, Registry, Phone
+		SubInfo, Registry, Phone, SICtl
 	};
 
 	private XTelephonyManager(Methods method, String restrictionName, Srv srv) {
-		super(restrictionName, method.name().replace("Srv_", ""), method.name());
+		super(restrictionName, method.name().replace("Srv_", "").replace("5", ""), method.name());
 		mMethod = method;
 		if (srv == Srv.SubInfo)
 			mClassName = "com.android.internal.telephony.PhoneSubInfo";
@@ -36,6 +36,8 @@ public class XTelephonyManager extends XHook {
 			mClassName = "com.android.server.TelephonyRegistry";
 		else if (srv == Srv.Phone)
 			mClassName = "com.android.phone.PhoneInterfaceManager";
+		else if (srv == Srv.SICtl)
+			mClassName = "com.android.internal.telephony.PhoneSubInfoController";
 		else
 			Util.log(null, Log.ERROR, "Unknown srv=" + srv.name());
 	}
@@ -147,7 +149,28 @@ public class XTelephonyManager extends XHook {
 
 		Srv_enableLocationUpdatesForSubscriber, Srv_disableLocationUpdatesForSubscriber,
 		Srv_getCdmaMdn, Srv_getCdmaMin,
-		Srv_getLine1AlphaTagForDisplay, Srv_getLine1NumberForDisplay
+		Srv_getLine1AlphaTagForDisplay, Srv_getLine1NumberForDisplay,
+
+		// Android 5.x
+		// http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.1.0_r1/com/android/internal/telephony/PhoneSubInfoController.java
+		Srv_getCompleteVoiceMailNumberForSubscriber5,
+		Srv_getDeviceId5,
+		Srv_getDeviceIdForPhone5,
+		Srv_getGroupIdLevel1ForSubscriber5,
+		Srv_getIccSerialNumberForSubscriber5,
+		Srv_getImeiForSubscriber5,
+		Srv_getIsimDomain5,
+		Srv_getIsimImpi5,
+		Srv_getIsimImpu5,
+		Srv_getIsimIst5,
+		Srv_getIsimPcscf5,
+		Srv_getLine1AlphaTagForSubscriber5,
+		Srv_getLine1NumberForSubscriber5,
+		Srv_getMsisdnForSubscriber5,
+		Srv_getNaiForSubscriber5, // new
+		Srv_getSubscriberIdForSubscriber5,
+		Srv_getVoiceMailAlphaTagForSubscriber5,
+		Srv_getVoiceMailNumberForSubscriber5
 	};
 	// @formatter:on
 
@@ -158,29 +181,61 @@ public class XTelephonyManager extends XHook {
 				className = cClassName;
 
 			if (server) {
-				// PhoneSubInfo
-				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+				// PhoneSubInfo/Controller
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
 					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.SubInfo));
-				else
-					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId, PrivacyManager.cPhone, Srv.Phone));
+					listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone,
+							Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpi, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpu, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getLine1Number, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getMsisdn, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getSubscriberId, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getCompleteVoiceMailNumber, PrivacyManager.cPhone,
+							Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTag, PrivacyManager.cPhone,
+							Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumber, PrivacyManager.cPhone,
+							Srv.SubInfo));
 
-				listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumber, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpi, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpu, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getLine1Number, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getMsisdn, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getSubscriberId, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getCompleteVoiceMailNumber, PrivacyManager.cPhone,
-						Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTag, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumber, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getImei, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimIst, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimPcscf, PrivacyManager.cPhone, Srv.SubInfo));
+				} else {
+					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceIdForPhone5, PrivacyManager.cPhone,
+							Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1ForSubscriber5,
+							PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIccSerialNumberForSubscriber5,
+							PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimDomain5, PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpi5, PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimImpu5, PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTagForSubscriber5,
+							PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getLine1NumberForSubscriber5, PrivacyManager.cPhone,
+							Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getMsisdnForSubscriber5, PrivacyManager.cPhone,
+							Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getSubscriberIdForSubscriber5,
+							PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getCompleteVoiceMailNumberForSubscriber5,
+							PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailAlphaTagForSubscriber5,
+							PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getVoiceMailNumberForSubscriber5,
+							PrivacyManager.cPhone, Srv.SICtl));
 
-				listHook.add(new XTelephonyManager(Methods.Srv_getImei, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getIsimIst, PrivacyManager.cPhone, Srv.SubInfo));
-				listHook.add(new XTelephonyManager(Methods.Srv_getIsimPcscf, PrivacyManager.cPhone, Srv.SubInfo));
+					listHook.add(new XTelephonyManager(Methods.Srv_getImeiForSubscriber5, PrivacyManager.cPhone,
+							Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimIst5, PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getIsimPcscf5, PrivacyManager.cPhone, Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getNaiForSubscriber5, PrivacyManager.cPhone,
+							Srv.SICtl));
+				}
 			} else {
 				listHook.add(new XTelephonyManager(Methods.disableLocationUpdates, null, className));
 				listHook.add(new XTelephonyManager(Methods.enableLocationUpdates, PrivacyManager.cLocation, className));
@@ -235,6 +290,8 @@ public class XTelephonyManager extends XHook {
 			listHook.add(new XTelephonyManager(Methods.Srv_getLine1AlphaTagForDisplay, PrivacyManager.cPhone, Srv.Phone));
 			listHook.add(new XTelephonyManager(Methods.Srv_getLine1NumberForDisplay, PrivacyManager.cPhone, Srv.Phone));
 		}
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1)
+			listHook.add(new XTelephonyManager(Methods.Srv_getDeviceId5, PrivacyManager.cPhone, Srv.Phone));
 		return listHook;
 	}
 
@@ -359,6 +416,27 @@ public class XTelephonyManager extends XHook {
 		case Srv_getLine1AlphaTagForDisplay:
 		case Srv_getLine1NumberForDisplay:
 			break;
+
+		case Srv_getCompleteVoiceMailNumberForSubscriber5:
+		case Srv_getDeviceId5:
+		case Srv_getDeviceIdForPhone5:
+		case Srv_getGroupIdLevel1ForSubscriber5:
+		case Srv_getIccSerialNumberForSubscriber5:
+		case Srv_getImeiForSubscriber5:
+		case Srv_getIsimDomain5:
+		case Srv_getIsimImpi5:
+		case Srv_getIsimImpu5:
+		case Srv_getIsimIst5:
+		case Srv_getIsimPcscf5:
+		case Srv_getLine1AlphaTagForSubscriber5:
+		case Srv_getLine1NumberForSubscriber5:
+		case Srv_getMsisdnForSubscriber5:
+		case Srv_getNaiForSubscriber5:
+		case Srv_getSubscriberIdForSubscriber5:
+		case Srv_getVoiceMailAlphaTagForSubscriber5:
+		case Srv_getVoiceMailNumberForSubscriber5:
+			break;
+
 		}
 	}
 
@@ -441,9 +519,25 @@ public class XTelephonyManager extends XHook {
 		case Srv_getIsimImpu:
 		case Srv_getSubscriberId:
 		case Srv_getImei:
+		case Srv_getDeviceId5:
+		case Srv_getDeviceIdForPhone5:
+		case Srv_getGroupIdLevel1ForSubscriber5:
+		case Srv_getIccSerialNumberForSubscriber5:
+		case Srv_getImeiForSubscriber5:
+		case Srv_getIsimDomain5:
+		case Srv_getIsimImpi5:
+		case Srv_getIsimImpu5:
+		case Srv_getNaiForSubscriber5:
+		case Srv_getSubscriberIdForSubscriber5:
 			if (param.getResult() != null)
-				if (isRestricted(param))
-					param.setResult(PrivacyManager.getDefacedProp(uid, mMethod.name().replace("Srv_", "")));
+				if (isRestricted(param)) {
+					String name = mMethod.name();
+					name = name.replace("Srv_", "");
+					name = name.replace("ForPhone", "");
+					name = name.replace("ForSubscriber", "");
+					name = name.replace("5", "");
+					param.setResult(PrivacyManager.getDefacedProp(uid, name));
+				}
 			break;
 
 		case Srv_getLine1AlphaTag:
@@ -454,17 +548,29 @@ public class XTelephonyManager extends XHook {
 		case Srv_getVoiceMailAlphaTag:
 		case Srv_getLine1AlphaTagForDisplay:
 		case Srv_getLine1NumberForDisplay:
+		case Srv_getCompleteVoiceMailNumberForSubscriber5:
+		case Srv_getLine1AlphaTagForSubscriber5:
+		case Srv_getLine1NumberForSubscriber5:
+		case Srv_getMsisdnForSubscriber5:
+		case Srv_getVoiceMailAlphaTagForSubscriber5:
+		case Srv_getVoiceMailNumberForSubscriber5:
 			String srvPhoneNumber = (String) param.getResult();
 			if (srvPhoneNumber != null)
-				if (isRestrictedValue(param, srvPhoneNumber))
-					param.setResult(PrivacyManager.getDefacedProp(uid,
-							mMethod.name().replace("Srv_", "").replace("ForDisplay", "")));
+				if (isRestrictedValue(param, srvPhoneNumber)) {
+					String name = mMethod.name();
+					name = name.replace("Srv_", "");
+					name = name.replace("ForSubscriber", "");
+					name = name.replace("5", "");
+					param.setResult(PrivacyManager.getDefacedProp(uid, name));
+				}
 			break;
 
 		case Srv_getIsimIst:
 		case Srv_getIsimPcscf:
 		case Srv_getCdmaMdn:
 		case Srv_getCdmaMin:
+		case Srv_getIsimIst5:
+		case Srv_getIsimPcscf5:
 			if (param.getResult() != null)
 				if (isRestricted(param))
 					param.setResult(null);

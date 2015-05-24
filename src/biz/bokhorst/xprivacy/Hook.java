@@ -23,6 +23,7 @@ public class Hook implements Comparable<Hook> {
 	private int mNotAOSPSdk = 0;
 	private boolean mUnsafe = false;
 	private boolean mOptional = false;
+	private boolean mObsolete = false;
 	private String mAnnotation = null;
 
 	public Hook(String restrictionName, String methodName) {
@@ -116,6 +117,11 @@ public class Hook implements Comparable<Hook> {
 		return this;
 	}
 
+	protected Hook obsolete() {
+		mObsolete = true;
+		return this;
+	}
+
 	public void annotate(String text) {
 		mAnnotation = text;
 	}
@@ -135,6 +141,8 @@ public class Hook implements Comparable<Hook> {
 	}
 
 	public boolean isAvailable() {
+		if (mObsolete)
+			return false;
 		if (Build.VERSION.SDK_INT < mSdkFrom)
 			return false;
 		if (Build.VERSION.SDK_INT > mSdkTo)
