@@ -400,7 +400,7 @@ public class Meta {
 		mListHook.add(new Hook("phone", "Srv_getLine1AlphaTagForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getLine1AlphaTagForDisplay").AOSP(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook("phone", "Srv_getLine1NumberForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getLine1NumberForDisplay").AOSP(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook("phone", "Srv_getMsisdnForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getMsisdn").AOSP(Build.VERSION_CODES.LOLLIPOP));
-		mListHook.add(new Hook("phone", "Srv_getNaiForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", null).AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getNaiForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", null).AOSP(Build.VERSION_CODES.LOLLIPOP_MR1));
 		mListHook.add(new Hook("phone", "Srv_getSubscriberIdForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getSubscriberId").AOSP(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook("phone", "Srv_getVoiceMailAlphaTagForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getVoiceMailAlphaTag").AOSP(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook("phone", "Srv_getVoiceMailNumberForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getVoiceMailNumber").AOSP(Build.VERSION_CODES.LOLLIPOP));
