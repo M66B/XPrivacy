@@ -156,6 +156,7 @@ public class XTelephonyManager extends XHook {
 		Srv_getCompleteVoiceMailNumberForSubscriber5,
 		Srv_getDeviceId5,
 		Srv_getDeviceIdForPhone5,
+		Srv_getDeviceIdForSubscriber5,
 		Srv_getGroupIdLevel1ForSubscriber5,
 		Srv_getIccSerialNumberForSubscriber5,
 		Srv_getImeiForSubscriber5,
@@ -206,6 +207,8 @@ public class XTelephonyManager extends XHook {
 					listHook.add(new XTelephonyManager(Methods.Srv_getIsimPcscf, PrivacyManager.cPhone, Srv.SubInfo));
 				} else {
 					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceIdForPhone5, PrivacyManager.cPhone,
+							Srv.SICtl));
+					listHook.add(new XTelephonyManager(Methods.Srv_getDeviceIdForSubscriber5, PrivacyManager.cPhone,
 							Srv.SICtl));
 					listHook.add(new XTelephonyManager(Methods.Srv_getGroupIdLevel1ForSubscriber5,
 							PrivacyManager.cPhone, Srv.SICtl));
@@ -420,6 +423,7 @@ public class XTelephonyManager extends XHook {
 		case Srv_getCompleteVoiceMailNumberForSubscriber5:
 		case Srv_getDeviceId5:
 		case Srv_getDeviceIdForPhone5:
+		case Srv_getDeviceIdForSubscriber5:
 		case Srv_getGroupIdLevel1ForSubscriber5:
 		case Srv_getIccSerialNumberForSubscriber5:
 		case Srv_getImeiForSubscriber5:
@@ -521,6 +525,7 @@ public class XTelephonyManager extends XHook {
 		case Srv_getImei:
 		case Srv_getDeviceId5:
 		case Srv_getDeviceIdForPhone5:
+		case Srv_getDeviceIdForSubscriber5:
 		case Srv_getGroupIdLevel1ForSubscriber5:
 		case Srv_getIccSerialNumberForSubscriber5:
 		case Srv_getImeiForSubscriber5:

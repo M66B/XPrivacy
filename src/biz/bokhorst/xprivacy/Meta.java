@@ -387,7 +387,8 @@ public class Meta {
 
 		mListHook.add(new Hook("phone", "Srv_getCompleteVoiceMailNumberForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getCompleteVoiceMailNumber").AOSP(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook("phone", "Srv_getDeviceId5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getDeviceId").AOSP(Build.VERSION_CODES.LOLLIPOP));
-		mListHook.add(new Hook("phone", "Srv_getDeviceIdForPhone5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getDeviceId").AOSP(Build.VERSION_CODES.LOLLIPOP));
+		mListHook.add(new Hook("phone", "Srv_getDeviceIdForPhone5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getDeviceId").AOSP(Build.VERSION_CODES.LOLLIPOP_MR1));
+		mListHook.add(new Hook("phone", "Srv_getDeviceIdForSubscriber5", "READ_PHONE_STATE", 21, "3.6.13", "Srv_getDeviceId").AOSP(Build.VERSION_CODES.LOLLIPOP).to(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook("phone", "Srv_getGroupIdLevel1ForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getGroupIdLevel1").AOSP(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook("phone", "Srv_getIccSerialNumberForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getIccSerialNumber").AOSP(Build.VERSION_CODES.LOLLIPOP));
 		mListHook.add(new Hook("phone", "Srv_getImeiForSubscriber5", "READ_PHONE_STATE", 21, "3.6.12", "Srv_getImei").AOSP(Build.VERSION_CODES.LOLLIPOP));

@@ -20,7 +20,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Fixed *getDeviceId* (IMEI) restriction for Android 5.0.x ([issue](/../../issues/2200))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
