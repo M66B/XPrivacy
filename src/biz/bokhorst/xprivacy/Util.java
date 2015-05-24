@@ -278,6 +278,9 @@ public class Util {
 		File licenseFile = new File(storageDir + File.separator + LICENSE_FILE_NAME);
 		if (!licenseFile.exists())
 			licenseFile = new File(storageDir + File.separator + ".xprivacy" + File.separator + LICENSE_FILE_NAME);
+		if (!licenseFile.exists())
+			licenseFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+					+ File.separator + LICENSE_FILE_NAME);
 
 		String importedLicense = importProLicense(licenseFile);
 		if (importedLicense == null)

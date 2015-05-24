@@ -1270,6 +1270,8 @@ Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultim
 If your device doesn't have an SD-card, you will need to put the license file into the root folder of the external storage folder.
 This is the folder you will see if you connect your device to a PC. When in doubt, you can use the menu *Help*, *About* to see the correct folder name.
 
+If it still doesn't work, try to put the license file in the alternate location as shown in the *About* dialog.
+
 <a name="FAQ78"></a>
 **(78) I get "The Play store says not licensed" when I tried to fetch a license**
 

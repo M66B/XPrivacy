@@ -1202,11 +1202,16 @@ public class ActivityMain extends ActivityBase implements OnItemSelectedListener
 
 		// Show license
 		String licensed = Util.hasProLicense(this);
-		TextView tvLicensed = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
-		if (licensed == null)
-			tvLicensed.setText(Environment.getExternalStorageDirectory().getAbsolutePath());
-		else
-			tvLicensed.setText(String.format(getString(R.string.app_licensed), licensed));
+		TextView tvLicensed1 = (TextView) dlgAbout.findViewById(R.id.tvLicensed);
+		TextView tvLicensed2 = (TextView) dlgAbout.findViewById(R.id.tvLicensedAlt);
+		if (licensed == null) {
+			tvLicensed1.setText(Environment.getExternalStorageDirectory().getAbsolutePath());
+			tvLicensed2.setText(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+					.getAbsolutePath());
+		} else {
+			tvLicensed1.setText(String.format(getString(R.string.app_licensed), licensed));
+			tvLicensed2.setVisibility(View.GONE);
+		}
 
 		// Show some build properties
 		String android = String.format("%s (%d)", Build.VERSION.RELEASE, Build.VERSION.SDK_INT);

@@ -46,6 +46,15 @@
             android:textStyle="italic" />
 
         <TextView
+            android:id="@+id/tvLicensedAlt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dip"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textIsSelectable="false"
+            android:textStyle="italic" />
+
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="6dip"
