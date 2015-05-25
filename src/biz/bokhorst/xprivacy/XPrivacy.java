@@ -110,8 +110,8 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 						final ClassLoader loader = Thread.currentThread().getContextClassLoader();
 						try {
-							Class<?> ams = Class.forName("com.android.server.am.ActivityManagerService", false, loader);
-							XposedBridge.hookAllConstructors(ams, new XC_MethodHook() {
+							Class<?> am = Class.forName("com.android.server.am.ActivityManagerService", false, loader);
+							XposedBridge.hookAllConstructors(am, new XC_MethodHook() {
 								@Override
 								protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 									PrivacyService.register(mListHookError, loader, mSecret, param.thisObject);

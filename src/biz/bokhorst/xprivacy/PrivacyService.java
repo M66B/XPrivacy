@@ -167,9 +167,18 @@ public class PrivacyService extends IPrivacyService.Stub {
 			XActivityManagerService.setSemaphore(mOndemandSemaphore);
 
 			// Get context
-			Field fContext = am.getClass().getField("mContext");
-			fContext.setAccessible(true);
-			mContext = (Context) fContext.get(am);
+			Field fContext = null;
+			Class<?> cam = am.getClass();
+			while (cam != null && fContext == null)
+				try {
+					fContext = cam.getDeclaredField("mContext");
+					fContext.setAccessible(true);
+					mContext = (Context) fContext.get(am);
+				} catch (NoSuchFieldException ignored) {
+					cam = cam.getSuperclass();
+				}
+			if (mContext == null)
+				Util.log(null, Log.ERROR, "No am context found");
 
 			// Start a worker thread
 			mWorker = new Thread(new Runnable() {
