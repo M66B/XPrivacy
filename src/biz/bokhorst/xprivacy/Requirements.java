@@ -391,8 +391,7 @@ public class Requirements {
 	public static void sendSupportInfo(final String text, final ActivityBase context) {
 		Util.log(null, Log.WARN, text);
 
-		if (Util.hasValidFingerPrint(context) && !"true".equals(System.getenv("XPrivacy.AOSP"))
-				&& !"htc_europe".equals(Build.PRODUCT)) {
+		if (Util.hasValidFingerPrint(context) && !"true".equals(System.getenv("XPrivacy.AOSP"))) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(R.string.app_name);
 			alertDialogBuilder.setMessage(R.string.msg_support_info);
