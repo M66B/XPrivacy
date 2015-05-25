@@ -115,7 +115,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 								@Override
 								protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 									PrivacyService.register(mListHookError, loader, mSecret, param.thisObject);
-									hookSystem(param.thisObject, loader);
+									hookSystem(loader);
 								}
 							});
 						} catch (Throwable ex) {
@@ -130,12 +130,13 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 					@Override
 					protected void afterHookedMethod(MethodHookParam param) throws Throwable {
 						PrivacyService.register(mListHookError, null, mSecret, param.thisObject);
-						hookSystem(param.thisObject, null);
 					}
 				});
 			}
 
 			hookZygote();
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+				hookSystem(null);
 
 		} catch (Throwable ex) {
 			Util.bug(null, ex);
@@ -291,7 +292,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		hookAll(XActivity.getInstances(), null, mSecret, false);
 	}
 
-	private void hookSystem(Object am, ClassLoader classLoader) throws Throwable {
+	private void hookSystem(ClassLoader classLoader) throws Throwable {
 		Log.w("XPrivacy", "Hooking system");
 
 		/*

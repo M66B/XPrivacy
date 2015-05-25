@@ -21,6 +21,7 @@ Changelog
 **Next release**
 
 * Fixed on demand restricting for some custom ROMs (OPPO)
+* Fixed (telephony) restrictions for Android versions before Lollipop ([issue](/../../issues/2202))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
