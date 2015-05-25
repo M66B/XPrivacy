@@ -282,7 +282,8 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			}
 			cbExpert.setChecked(expert);
 
-			if (PrivacyManager.cVersion3 && !Util.isSELinuxEnforced())
+			if (PrivacyManager.cVersion3
+					&& (!Util.isSELinuxEnforced() || "true".equals(Util.getXOption("ignoreselinux"))))
 				cbAOSP.setVisibility(View.VISIBLE);
 
 			if (expert) {

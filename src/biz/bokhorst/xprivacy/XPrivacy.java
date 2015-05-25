@@ -43,6 +43,10 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 
 		// Reading files with SELinux enabled can result in bootloops
 		boolean selinux = Util.isSELinuxEnforced();
+		if ("true".equals(Util.getXOption("ignoreselinux"))) {
+			selinux = false;
+			Log.w("Xprivacy", "Ignoring SELinux");
+		}
 
 		// Read list of disabled hooks
 		if (mListDisabled.size() == 0 && !selinux) {

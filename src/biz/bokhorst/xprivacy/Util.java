@@ -449,6 +449,27 @@ public class Util {
 		return false;
 	}
 
+	public static String getXOption(String name) {
+		try {
+			Class<?> cSystemProperties = Class.forName("android.os.SystemProperties");
+			Method spGet = cSystemProperties.getDeclaredMethod("get", String.class);
+			String options = (String) spGet.invoke(null, "xprivacy.options");
+			Log.w("XPrivacy", "Options=" + options);
+			if (options != null)
+				for (String option : options.split(",")) {
+					String[] nv = option.split("=");
+					if (nv[0].equals(name))
+						if (nv.length > 1)
+							return nv[1];
+						else
+							return "true";
+				}
+		} catch (Throwable ex) {
+			Log.e("XPrivacy", ex.toString() + "\n" + Log.getStackTraceString(ex));
+		}
+		return null;
+	}
+
 	public static int getSelfVersionCode(Context context) {
 		try {
 			String self = Util.class.getPackage().getName();

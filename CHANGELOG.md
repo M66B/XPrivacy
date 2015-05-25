@@ -22,6 +22,11 @@ Changelog
 
 * Fixed crash on clear cache (flush) on Lollipop
 * Fixed translation of isolated process uids (debug info)
+* Reading property *xprivacy.options=ignoreselinux* from */system/build.prop* to ignore SELinux
+	* Settings this property enables reading of these files again, but might result in a bootloop for some:
+		* */data/system/xprivacy/disabled*
+		* */data/system/xprivacy/aosp*
+			* This file can be created/deleted by toggling the main setting *AOSP mode*
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
