@@ -17,9 +17,9 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Process;
 import android.util.Log;
-
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.IXposedHookLoadPackage;
+import de.robv.android.xposed.SELinuxHelper;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XC_MethodHook;
@@ -42,8 +42,11 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		// Generate secret
 		mSecret = Long.toHexString(new Random().nextLong());
 
+		// Reading files with SELinux enabled can result in bootloops
+		boolean selinux = (SELinuxHelper.isSELinuxEnabled() && SELinuxHelper.isSELinuxEnforced());
+
 		// Read list of disabled hooks
-		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP && mListDisabled.size() == 0) {
+		if (mListDisabled.size() == 0 && !selinux) {
 			File disabled = new File("/data/system/xprivacy/disabled");
 			if (disabled.exists() && disabled.canRead())
 				try {
@@ -71,7 +74,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		}
 
 		// AOSP mode override
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT && !selinux)
 			try {
 				Class<?> libcore = Class.forName("libcore.io.Libcore");
 				Field fOs = libcore.getDeclaredField("os");

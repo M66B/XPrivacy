@@ -1170,6 +1170,7 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 	* [Android Revolution HD](http://forum.xda-developers.com/showthread.php?t=1925402)
 	* [Mahdi ROM](https://plus.google.com/u/0/communities/116540622179206449806)
 	* [Omega ROM](http://omegadroid.co/omega-roms/)
+* AOSP mode = vanilla (Google) Android Lollipop
 * Compatibility mode = all other Android versions/variants
 
 *About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivay 2.
@@ -1177,6 +1178,7 @@ If there is no message about compatibility mode, XPrivacy 3 is running in AOSP m
 XPrivacy 3 will always run in compatibility mode on Android versions before KitKat.
 
 You can force XPrivacy 3 into AOSP mode using the main settings.
+This will work on Lollipop when SELinux is disabled or in permissive mode only.
 There is no need to force AOSP mode if XPrivacy recognizes your ROM as a compatible ROM.
 
 If you force AOSP mode, privacy sensitive data may leak.
