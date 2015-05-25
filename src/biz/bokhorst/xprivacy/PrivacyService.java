@@ -172,13 +172,16 @@ public class PrivacyService extends IPrivacyService.Stub {
 			while (cam != null && fContext == null)
 				try {
 					fContext = cam.getDeclaredField("mContext");
-					fContext.setAccessible(true);
-					mContext = (Context) fContext.get(am);
 				} catch (NoSuchFieldException ignored) {
 					cam = cam.getSuperclass();
 				}
-			if (mContext == null)
-				Util.log(null, Log.ERROR, "No am context found");
+
+			if (fContext == null)
+				Util.log(null, Log.ERROR, am.getClass().getName() + ".mContext not found");
+			else {
+				fContext.setAccessible(true);
+				mContext = (Context) fContext.get(am);
+			}
 
 			// Start a worker thread
 			mWorker = new Thread(new Runnable() {
@@ -2305,18 +2308,20 @@ public class PrivacyService extends IPrivacyService.Stub {
 	private int getIsolatedUid(int uid) {
 		if (PrivacyManager.isIsolated(uid))
 			try {
-				Class<?> cam;
-				Object am;
-				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-					cam = mAm.getClass();
-					am = mAm;
-				} else {
-					cam = Class.forName("com.android.server.am.ActivityManagerService");
-					am = cam.getMethod("self").invoke(null);
-				}
-				Field fmIsolatedProcesses = cam.getDeclaredField("mIsolatedProcesses");
+				Field fmIsolatedProcesses = null;
+				Class<?> cam = mAm.getClass();
+				while (cam != null && fmIsolatedProcesses == null)
+					try {
+						fmIsolatedProcesses = cam.getDeclaredField("mIsolatedProcesses");
+					} catch (NoSuchFieldException ignored) {
+						cam = cam.getSuperclass();
+					}
+
+				if (fmIsolatedProcesses == null)
+					throw new Exception(mAm.getClass().getName() + ".mIsolatedProcesses not found");
+
 				fmIsolatedProcesses.setAccessible(true);
-				SparseArray<?> mIsolatedProcesses = (SparseArray<?>) fmIsolatedProcesses.get(am);
+				SparseArray<?> mIsolatedProcesses = (SparseArray<?>) fmIsolatedProcesses.get(mAm);
 				Object processRecord = mIsolatedProcesses.get(uid);
 				Field fInfo = processRecord.getClass().getDeclaredField("info");
 				fInfo.setAccessible(true);

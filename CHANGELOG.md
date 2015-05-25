@@ -21,6 +21,7 @@ Changelog
 **Next release**
 
 * Fixed crash on clear cache (flush) on Lollipop
+* Fixed translation of isolated process uids (debug info)
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
