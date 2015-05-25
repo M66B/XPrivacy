@@ -20,7 +20,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Fixed crash on clear cache (flush) on Lollipop
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 

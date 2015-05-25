@@ -625,6 +625,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 
 	private void flush() {
 		Intent flushIntent = new Intent(UpdateService.cFlush);
+		flushIntent.setPackage(getPackageName());
 		startService(flushIntent);
 		Toast.makeText(ActivitySettings.this, getString(R.string.msg_done), Toast.LENGTH_LONG).show();
 	}
