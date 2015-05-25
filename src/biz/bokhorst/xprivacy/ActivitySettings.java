@@ -13,7 +13,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Process;
@@ -283,7 +282,7 @@ public class ActivitySettings extends ActivityBase implements OnCheckedChangeLis
 			}
 			cbExpert.setChecked(expert);
 
-			if (PrivacyManager.cVersion3 && Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
+			if (PrivacyManager.cVersion3 && !Util.isSELinuxEnforced())
 				cbAOSP.setVisibility(View.VISIBLE);
 
 			if (expert) {

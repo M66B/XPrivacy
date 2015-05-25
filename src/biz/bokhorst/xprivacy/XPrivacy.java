@@ -19,7 +19,6 @@ import android.os.Process;
 import android.util.Log;
 import de.robv.android.xposed.IXposedHookZygoteInit;
 import de.robv.android.xposed.IXposedHookLoadPackage;
-import de.robv.android.xposed.SELinuxHelper;
 import de.robv.android.xposed.callbacks.XC_LoadPackage.LoadPackageParam;
 import de.robv.android.xposed.XposedBridge;
 import de.robv.android.xposed.XC_MethodHook;
@@ -43,7 +42,7 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 		mSecret = Long.toHexString(new Random().nextLong());
 
 		// Reading files with SELinux enabled can result in bootloops
-		boolean selinux = (SELinuxHelper.isSELinuxEnabled() && SELinuxHelper.isSELinuxEnforced());
+		boolean selinux = Util.isSELinuxEnforced();
 
 		// Read list of disabled hooks
 		if (mListDisabled.size() == 0 && !selinux) {

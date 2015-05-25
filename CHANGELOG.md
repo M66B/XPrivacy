@@ -24,6 +24,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3.6.15 BETA**
+
+* Fixed privacy service not running with older Xposed releases ([issue](/../../issues/2206))
+
 **Version 3.6.14 BETA**
 
 * Fixed on demand restricting for some custom ROMs (OPPO)

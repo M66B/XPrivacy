@@ -438,6 +438,17 @@ public class Util {
 		return mHasLBE;
 	}
 
+	public static boolean isSELinuxEnforced() {
+		try {
+			Class<?> cSELinux = Class.forName("android.os.SELinux");
+			if ((Boolean) cSELinux.getDeclaredMethod("isSELinuxEnabled").invoke(null))
+				if ((Boolean) cSELinux.getDeclaredMethod("isSELinuxEnforced").invoke(null))
+					return true;
+		} catch (Throwable t) {
+		}
+		return false;
+	}
+
 	public static int getSelfVersionCode(Context context) {
 		try {
 			String self = Util.class.getPackage().getName();
