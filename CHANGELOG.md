@@ -20,10 +20,15 @@ Changelog
 
 **Next release**
 
-* Fixed on demand restricting for some custom ROMs (OPPO)
-* Fixed (telephony) restrictions for Android versions before Lollipop ([issue](/../../issues/2202))
+* ...
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.6.14 BETA**
+
+* Fixed on demand restricting for some custom ROMs (OPPO)
+* Fixed (telephony) restrictions for Android versions before Lollipop ([issue](/../../issues/2202))
+* Running XPrivacy in compatibility mode on Android 5.x, except for stock ROMs ([issue](/../../issues/2201))
 
 **Version 3.6.13 BETA**
 
