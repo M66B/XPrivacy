@@ -391,7 +391,7 @@ public class Requirements {
 	public static void sendSupportInfo(final String text, final ActivityBase context) {
 		Util.log(null, Log.WARN, text);
 
-		if (Util.hasValidFingerPrint(context) && !"true".equals(System.getenv("XPrivacy.AOSP"))) {
+		if (Util.hasValidFingerPrint(context) && !"Genymotion".equals(Build.MANUFACTURER)) {
 			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
 			alertDialogBuilder.setTitle(R.string.app_name);
 			alertDialogBuilder.setMessage(R.string.msg_support_info);
@@ -418,8 +418,9 @@ public class Requirements {
 
 							Intent sendEmail = new Intent(Intent.ACTION_SEND);
 							sendEmail.setType("message/rfc822");
-							sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+xprivacy@faircode.eu" });
-							sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy " + ourVersion + " debug info");
+							sendEmail.putExtra(Intent.EXTRA_EMAIL, new String[] { "marcel+support@faircode.eu" });
+							sendEmail.putExtra(Intent.EXTRA_SUBJECT, "XPrivacy " + ourVersion + "/"
+									+ Build.VERSION.RELEASE + " support info");
 							sendEmail.putExtra(Intent.EXTRA_TEXT, sb.toString());
 							try {
 								context.startActivity(sendEmail);
