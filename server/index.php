@@ -379,10 +379,7 @@
 			// Release type
 			$folder = 'release';
 			if (!empty($data->test_versions) && $data->test_versions)
-				if ($data->xprivacy_version >= 418)
-					$folder = 'beta';
-				else
-					$folder = 'test';
+				$folder = 'test';
 
 			// Find latest version
 			$latest = null;
