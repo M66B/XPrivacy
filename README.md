@@ -1178,7 +1178,12 @@ If there is no message about compatibility mode, XPrivacy 3 is running in AOSP m
 XPrivacy 3 will always run in compatibility mode on Android versions before KitKat.
 
 You can force XPrivacy 3 into AOSP mode using the main settings.
-This will work on Lollipop when SELinux is disabled or in permissive mode only.
+This will work on Lollipop when SELinux is disabled or in permissive mode or if you add this build property:
+
+```
+xprivacy.options=ignoreselinux
+```
+
 There is no need to force AOSP mode if XPrivacy recognizes your ROM as a compatible ROM.
 
 If you force AOSP mode, privacy sensitive data may leak.
