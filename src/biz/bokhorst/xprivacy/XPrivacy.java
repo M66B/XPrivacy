@@ -120,8 +120,12 @@ public class XPrivacy implements IXposedHookLoadPackage, IXposedHookZygoteInit {
 							XposedBridge.hookAllConstructors(am, new XC_MethodHook() {
 								@Override
 								protected void afterHookedMethod(MethodHookParam param) throws Throwable {
-									PrivacyService.register(mListHookError, loader, mSecret, param.thisObject);
-									hookSystem(loader);
+									try {
+										PrivacyService.register(mListHookError, loader, mSecret, param.thisObject);
+										hookSystem(loader);
+									} catch (Throwable ex) {
+										Util.bug(null, ex);
+									}
 								}
 							});
 						} catch (Throwable ex) {
