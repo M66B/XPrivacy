@@ -167,20 +167,22 @@ public class PrivacyService extends IPrivacyService.Stub {
 			XActivityManagerService.setSemaphore(mOndemandSemaphore);
 
 			// Get context
-			Field fContext = null;
-			Class<?> cam = am.getClass();
-			while (cam != null && fContext == null)
-				try {
-					fContext = cam.getDeclaredField("mContext");
-				} catch (NoSuchFieldException ignored) {
-					cam = cam.getSuperclass();
-				}
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				Field fContext = null;
+				Class<?> cam = am.getClass();
+				while (cam != null && fContext == null)
+					try {
+						fContext = cam.getDeclaredField("mContext");
+					} catch (NoSuchFieldException ignored) {
+						cam = cam.getSuperclass();
+					}
 
-			if (fContext == null)
-				Util.log(null, Log.ERROR, am.getClass().getName() + ".mContext not found");
-			else {
-				fContext.setAccessible(true);
-				mContext = (Context) fContext.get(am);
+				if (fContext == null)
+					Util.log(null, Log.ERROR, am.getClass().getName() + ".mContext not found");
+				else {
+					fContext.setAccessible(true);
+					mContext = (Context) fContext.get(am);
+				}
 			}
 
 			// Start a worker thread
@@ -2302,7 +2304,26 @@ public class PrivacyService extends IPrivacyService.Stub {
 	}
 
 	private Context getContext() {
-		return mContext;
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
+			return mContext;
+		else {
+			// public static ActivityManagerService self()
+			// frameworks/base/services/java/com/android/server/am/ActivityManagerService.java
+			try {
+				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
+				Object am = cam.getMethod("self").invoke(null);
+				if (am == null) {
+					Util.log(null, Log.ERROR, cam.getName() + ".mContext not found");
+					return null;
+				}
+				Field mContext = cam.getDeclaredField("mContext");
+				mContext.setAccessible(true);
+				return (Context) mContext.get(am);
+			} catch (Throwable ex) {
+				Util.bug(null, ex);
+				return null;
+			}
+		}
 	}
 
 	private int getIsolatedUid(int uid) {
