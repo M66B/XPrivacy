@@ -71,7 +71,7 @@ Depending on the function, XPrivacy skips execution of the original function
 (for example when an application tries to set a proximity alert)
 or alters the result of the original function (for example to return an empty message list).
 
-XPrivacy has been tested with Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop),
+XPrivacy has been tested with Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop),
 and is reported to work with most Android variants, including stock ROMs.
 Root access is needed to install the Xposed framework.
 
@@ -106,7 +106,7 @@ Features
 
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
-* For any (stock) variant of Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop)
+* For any (stock) variant of Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Option to restrict on demand
@@ -347,10 +347,8 @@ You can still restrict the XPrivacy app's access to accounts, contacts, and othe
 Compatibility
 -------------
 
-XPrivacy has been tested with Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop)
+XPrivacy has been tested with Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop)
 and is reported to work with most Android variants, including stock ROMs.
-
-**Android 5.0.x: XPrivacy will cause a bootloop on some ROMs due to a bug in Xposed** ([issue](https://github.com/M66B/XPrivacy/issues/2162)).
 
 **XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231)).
 
@@ -365,29 +363,12 @@ Candy Crush is known to crash on some ROMs, see [here](http://forum.xda-develope
 Installation
 ------------
 
-**Instead of following the steps below, you can use the [XPrivacy Installer](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.installer), except for Android 5.x - Lollipop.**
-
 Installation may seem lengthy, but you can actually do it quickly:
 
 1. Requirements:
-	* Android version 4.0.3 - 5.0.2 (ICS, JellyBean, KitKat, Lollipop); check with *System Settings* > *About phone* > *Android version*
+	* Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop); check with *System Settings* > *About phone* > *Android version*
 	* Read about [compatibility](#compatibility) before installing
 1. **Make a backup**
-1. For Android 5.x (Lollipop) / XPrivacy version 3.6.6 (you can skip this step for later XPrivacy versions):
-	* **This is not optional, unless you are using a custom ROM/kernel with SELinux disabled or in permissive mode!**
-		* Note that applications to set SELinux to permissive mode will probably not work, since this is probably done too late in the boot process
-	* You need to be able to flash a kernel image
-		* Mostly this means the bootloader needs to be unlocked
-	* You need to have/obtain a kernel image (boot.img) for your device
-	* Edit the kernel image and add this line as the second to last to the file *ramdisk/service_contexts* (before the blank line):
-		* *xprivacy453 u:object_r:system_server_service:s0*
-		* You can do this with for example [Android Image Kitchen](http://forum.xda-developers.com/showthread.php?t=2073775)
-		* Make sure you preserve the Linux line endings of the file
-		* My advice is to use [Geany](http://www.geany.org/) to edit the file
-	* Flash the edited kernel image
-		* Mostly this is done using the [fastboot](http://forum.xda-developers.com/showthread.php?t=2277112) command
-	* Download the latest release of XPrivacy [here](https://github.com/M66B/XPrivacy/releases)
-		* **The releases in the Xposed repository do not work on Android 5.x (Lollipop)**
 1. If you haven't already, root your device; the rooting procedure depends on your device's brand and model.
 	* You can find a guide [here](http://www.androidcentral.com/root) for most devices
 1. Enable *System settings* > *Security* > *Unknown sources*
@@ -1241,26 +1222,6 @@ By default system applications and applications without permissions for the sele
 Some applications (components) share data, which mean they share the same uid.
 These applications are shown once only in XPrivacy (this cannot be changed).
 An example is Dolphin browser and its plugins/addons.
-
-<a name="FAQ75"></a>
-**(75) Will XPrivacy work with ART?**
-
-XPrivacy will work if either [Xposed](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053)
-or a similar hooking framework is working.
-
-Xposed has no ART support currently.
-It is unknown to me if Cydia Substrate supports or will support ART.
-
-Android 5.0 (Lollipop) supports [ART](https://source.android.com/devices/tech/dalvik/art.html) only,
-which means that developing/testing XPrivacy for Android 5.0 can only be done
-if either Xposed or a similar hooking framework is available for ART.
-
-Note that I have started the preparations for Android 5.0 [quite some time ago](https://github.com/M66B/XPrivacy/issues/1757).
-
-Some people have asked me to make XPrivacy independent of Xposed.
-This would mean integration of the Xposed features into XPrivacy.
-Apart from the amount of work, this is not a logical step, since there are quite some other useful Xposed modules.
-Therefore it is better to get Xposed working for ART.
 
 <a name="FAQ76"></a>
 **(76) What happened with the import/export enabler?**
