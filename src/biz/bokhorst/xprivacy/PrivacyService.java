@@ -2312,10 +2312,8 @@ public class PrivacyService extends IPrivacyService.Stub {
 			try {
 				Class<?> cam = Class.forName("com.android.server.am.ActivityManagerService");
 				Object am = cam.getMethod("self").invoke(null);
-				if (am == null) {
-					Util.log(null, Log.ERROR, cam.getName() + ".mContext not found");
+				if (am == null)
 					return null;
-				}
 				Field mContext = cam.getDeclaredField("mContext");
 				mContext.setAccessible(true);
 				return (Context) mContext.get(am);
