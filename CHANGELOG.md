@@ -16,7 +16,7 @@ Changelog
 
 **Important**
 
-* **Please send the support info when XPrivacy asks for it**
+* **Please send the support info if XPrivacy asks for it**
 
 **Next release**
 

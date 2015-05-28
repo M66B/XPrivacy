@@ -1263,6 +1263,18 @@ By creating this file:
 Each line should either contain a category name or a category name and function name separated by a slash (/).
 See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/Meta.java#L47) for the correct category and function names.
 
+If SELinux is restrictive you need to add this build property:
+
+```
+xprivacy.options=ignoreselinux
+```
+
+<a name="FAQ80"></a>
+**(80) I get 'Privacy service version mismatch'**
+
+This means the Xposed module part and the application part of XPrivacy have a different version number.
+If a reboot doesn't solve this problem, try to disable and enable XPrivacy in the Xposed installer and reboot again.
+
 Support
 -------
 
