@@ -20,9 +20,13 @@ Changelog
 
 **Next release**
 
-* Fixed bootloop in some cases for Android versions before Lollipop ([issue](/../../issues/2209))
+*...
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
+
+**Version 3.6.17 BETA**
+
+* Fixed bootloop in some cases for Android versions before Lollipop ([issue](/../../issues/2209))
 
 **Version 3.6.16 BETA**
 
