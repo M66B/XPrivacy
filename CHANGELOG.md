@@ -20,7 +20,7 @@ Changelog
 
 **Next release**
 
-*...
+* Fixed location restrictions in AOSP mode on Android Lollipop ([issue](/../../issues/2219))
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
