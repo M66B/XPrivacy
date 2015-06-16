@@ -24,7 +24,7 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
-**Version 3.6.17 STABLE**
+**Version 3.6.18 STABLE**
 
 * Fixed location restrictions in AOSP mode on Android Lollipop ([issue](/../../issues/2219))
 
