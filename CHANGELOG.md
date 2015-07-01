@@ -24,6 +24,10 @@ Changelog
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
+**Version 3.6.19 STABLE**
+
+* Fixed IPC restrictions for Lollipop (compatibility mode only)
+
 **Version 3.6.18 STABLE**
 
 * Fixed location restrictions in AOSP mode on Android Lollipop ([issue](/../../issues/2219))
