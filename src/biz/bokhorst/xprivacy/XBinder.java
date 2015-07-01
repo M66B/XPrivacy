@@ -10,6 +10,7 @@ import java.util.Map;
 
 import android.content.Context;
 import android.os.Binder;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.Process;
@@ -308,7 +309,8 @@ public class XBinder extends XHook {
 				try {
 					// static protected final Parcel obtain(int obj)
 					// frameworks/base/core/java/android/os/Parcel.java
-					Method methodObtain = Parcel.class.getDeclaredMethod("obtain", int.class);
+					Method methodObtain = Parcel.class.getDeclaredMethod("obtain",
+							Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP ? int.class : long.class);
 					methodObtain.setAccessible(true);
 					reply = (Parcel) methodObtain.invoke(null, param.args[2]);
 				} catch (NoSuchMethodException ex) {
