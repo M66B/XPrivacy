@@ -331,6 +331,7 @@ Limitations
 * In some situations the on demand restricting dialog freezes, notably when using volume keys. This cannot be fixed due too limitations of Android.
 * In some situations the on demand restricting dialog is overlayed by other windows, notably notifications. This cannot be fixed due too limitations of Android.
 * Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
+* Android System Webview cannot be restricted on Android Lollipop
 
 *XPrivacy*
 
