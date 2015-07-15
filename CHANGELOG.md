@@ -20,7 +20,7 @@ Changelog
 
 **Next release**
 
-* ...
+* Updated Russian translation
 
 [Open issues](https://github.com/M66B/XPrivacy/issues?state=open)
 
