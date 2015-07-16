@@ -1,4 +1,4 @@
-﻿<resources>
+<resources>
 
     <string name="app_notenabled">Модуль XPrivacy не активирован в Xposed installer</string>
     <string name="app_wrongandroid">Только для Android версии 4.0.3 и выше</string>
@@ -28,7 +28,7 @@
     <string name="menu_toggle">Переключить ограничения</string>
     <string name="menu_clear_all">Очистить все</string>
     <string name="menu_clear_usage">Очистить</string>
-    <string name="menu_clear_db">Очистить все ограничения и данные</string>
+    <string name="menu_clear_db">Очистить все данные XPrivacy</string>
     <string name="menu_usage_all">Переключить фильтр</string>
     <string name="menu_apply">Применить шаблон</string>
     <string name="menu_clear">Очистить</string>
@@ -53,13 +53,13 @@
     <string name="msg_loading">Загрузка &#8230;</string>
     <string name="msg_applying">Применение &#8230;</string>
     <string name="msg_applied">Шаблон применен</string>
-    <string name="msg_saved_to" formatted="false">Сохранено в %1$s</string>
+    <string name="msg_saved_to" >Сохранено в %1$s</string>
     <string name="msg_no_restrictions">Не найдено ограничений</string>
     <string name="msg_sure">Вы уверены?</string>
     <string name="msg_select">Пожалуйста, выберите приложения</string>
     <string name="msg_limit">Можно выбрать не более %1$d приложений</string>
     <string name="msg_done">Готово</string>
-    <string name="msg_reboot">Требуется перезагрузка</string>
+    <string name="msg_reboot">Требуется перезагрузка устройства</string>
     <string name="msg_random_now">Случайные значения</string>
     <string name="msg_random_access">Случайные значения при запросе</string>
     <string name="msg_random_boot">Случайные значения при перезагрузке</string>
@@ -68,9 +68,9 @@
     <string name="msg_email">Введите, пожалуйста, адрес своей почты:</string>
     <string name="msg_registered">Проверьте почту, чтобы активировать устройство</string>
     <string name="msg_service">Сервис обновлений запущен</string>
-    <string name="msg_migrating" formatted="false">Миграция %1$s</string>
-    <string name="msg_randomizing" formatted="false">Генерация случайных значений %1$s</string>
-    <string name="msg_upgrading" formatted="false">Обновление %1$s</string>
+    <string name="msg_migrating" >Миграция %1$s</string>
+    <string name="msg_randomizing" >Генерация случайных значений %1$s</string>
+    <string name="msg_upgrading" >Обновление %1$s</string>
     <string name="msg_support_info">Внутренняя проверка не удалась. Хотите отправить информацию в службу поддержки?</string>
     <string name="msg_restrictedby">Запрещено XPrivacy</string>
     <string name="msg_service_missing">Служба Privacy не найдена; Вы активировали XPrivacy в Xposed и перезагрузили своё устройство?</string>
@@ -84,38 +84,38 @@
     <string name="msg_first"><b>Большое внимание было уделено разработке и тестированию XPrivacy, 
 однако нельзя гарантировать, что оно будет работать безупречно на всех устройствах и со всеми приложениями.
 \n\nИспользуйте исключительно на свой страх и риск.</b>\n\nСм. также лицензию:</string>
-    <string name="restrict_accounts">Учетные записи (Google, Facebook и т.д.)</string>
-    <string name="restrict_browser">Браузер (закладки/история)</string>
+    <string name="restrict_accounts">Учетные записи</string>
+    <string name="restrict_browser">Браузер</string>
     <string name="restrict_calendar">Календарь</string>
-    <string name="restrict_calling">Инициация звонков, отправка СМС/ММС</string>
+    <string name="restrict_calling">Вызовы</string>
     <string name="restrict_clipboard">Буфер обмена</string>
     <string name="restrict_contacts">Контакты</string>
-    <string name="restrict_dictionary">Пользовательский словарь</string>
+    <string name="restrict_dictionary">Словарь</string>
     <string name="restrict_email">E-mail</string>
-    <string name="restrict_identification">Идентификация устройства</string>
+    <string name="restrict_identification">Идентификация</string>
     <string name="restrict_internet">Интернет</string>
     <string name="restrict_location">Местоположение (точное/приблизительное)</string>
-    <string name="restrict_media">Медиа (аудио, фото, видео)</string>
-    <string name="restrict_messages">Сообщения (СМС, ММС)</string>
-    <string name="restrict_network">Сеть (адреса)</string>
+    <string name="restrict_media">Медиа</string>
+    <string name="restrict_messages">Сообщения</string>
+    <string name="restrict_network">Сеть</string>
     <string name="restrict_notifications">Уведомления</string>
     <string name="restrict_overlay">Наложение</string>
-    <string name="restrict_phone">Телефон (ID, номера, журнал вызовов)</string>
+    <string name="restrict_phone">Телефон</string>
     <string name="restrict_sensors">Датчики</string>
-    <string name="restrict_storage">Хранилище (media, sdcard, и т.д.)</string>
-    <string name="restrict_shell">Команды shell (вкл. суперпользователя)</string>
-    <string name="restrict_system">Система (установленные приложения)</string>
-    <string name="restrict_view">Просмотр (браузер)</string>
-    <string name="restrict_help_view">Ограничивает доступ к просмотру и информации (браузер)</string>
+    <string name="restrict_storage">Хранилище</string>
+    <string name="restrict_shell">Команды shell</string>
+    <string name="restrict_system">Система</string>
+    <string name="restrict_view">Просмотр</string>
+    <string name="restrict_help_view">Ограничивает доступ к просмотру и информации</string>
     <string name="restrict_help_system">Ограничивает доступ к системной информации, такой как установленные приложения</string>
-    <string name="restrict_help_shell">Ограничивает доступ к командам терминала, включая команды суперпользователя</string>
+    <string name="restrict_help_shell">Ограничивает доступ к командам shell, включая команды суперпользователя</string>
     <string name="restrict_help_storage">Ограничивает доступ к хранилищу, например файлы в телефоне и на карте памяти</string>
     <string name="restrict_help_sensors">Ограничивает доступ к датчикам, например к датчику движения</string>
     <string name="restrict_help_phone">Ограничивает доступ к информации о телефоне, такой как Ваш номер</string>
-    <string name="restrict_help_overlay">Ограничивает возможность размещения окон поверх других приложений. Для предотвращения фишинга</string>
-    <string name="restrict_help_notifications">Ограничивает доступ к уведомлениям от системы и приложений, а так же Google cloud messaging</string>
+    <string name="restrict_help_overlay">Ограничивает возможность размещения окон поверх других приложений для предотвращения фишинга</string>
+    <string name="restrict_help_notifications">Ограничивает доступ к уведомлениям от системы и приложений, а также Google cloud messaging</string>
     <string name="restrict_help_nfc">Ограничивает доступ к NFC</string>
-    <string name="restrict_help_network">Ограничивает доступ к сетевой информации, например IP/MAC-адреса и информация о Wi-Fi сети</string>
+    <string name="restrict_help_network">Ограничивает доступ к сетевой информации, например IP/MAC-адреса и информация о сети Wi-Fi</string>
     <string name="restrict_help_messages">Ограничивает доступ к сохраненным и получаемым сообщениям СМС/ММС и голосовой почты</string>
     <string name="restrict_help_media">Ограничивает доступ к камере (фото и видео) и микрофону</string>
     <string name="restrict_help_location">Ограничивает доступ к Вашему приблизительному и точному местоположению</string>
@@ -129,7 +129,7 @@
     <string name="restrict_help_calling">Ограничивает возможность набора номера, отправки сообщений (СМС/ММС) и доступа к журналу вызовов</string>
     <string name="restrict_help_calendar">Ограничивает доступ к Вашему календарю, например встречам</string>
     <string name="restrict_help_browser">Ограничивает доступ к информации браузера, такой как закладки и история загрузок </string>
-    <string name="restrict_help_accounts">Ограничивает доступ к информации об аккаунтах, например, к Вашей учётной записи Google, которая содержит ващ G-mail адрес</string>
+    <string name="restrict_help_accounts">Ограничивает доступ к информации об аккаунтах, например, к Вашей учётной записи Google, которая содержит Ваш адрес Gmail</string>
     <string name="whitelist_address">Адреса</string>
     <string name="whitelist_action">Действия</string>
     <string name="whitelist_ipaddress">IP адреса</string>
@@ -162,8 +162,8 @@
     <string name="title_function">Функция:</string>
     <string name="title_parameters">Параметры:</string>
     <string name="title_applycat">Применить ко всей категории</string>
-    <string name="title_whitelist">В исключения &#8216;%1$s&#8217;</string>
     <string name="title_once">Один раз</string>
+    <string name="title_whitelist">В исключения &#8216;%1$s&#8217;</string>
     <string name="title_allow">Разрешить</string>
     <string name="title_deny">Запретить</string>
     <string name="title_dontknow">Не знаю</string>
@@ -176,7 +176,7 @@
     <string name="title_template_merge_reset">Применить шаблон (сброс)</string>
     <string name="title_enable_ondemand">Включить запрос ограничений</string>
     <string name="title_disable_ondemand">Отключить запрос ограничений</string>
-    <string name="title_ondemand_default">Время на выбор:</string>
+    <string name="title_ondemand_default">Временный выбор:</string>
     <string name="title_ondemand_reset">Сбросить</string>
     <string name="title_default">По умолчанию</string>
     <string name="title_alternate">Альтернативный</string>
@@ -231,11 +231,11 @@
     <string name="help_check_ondemand">Вторая галочка: ограничить при запросе; первая галочка является значением по умолчанию</string>
     <string name="help_switch">Переключатель вкл/выкл: включить или выключить все ограничения</string>
     <string name="help_longpress">Долгое нажатие на имени для выбора</string>
-    <string name="help_ondemand">ограничения будут запрошены</string>
+    <string name="help_ondemand">Ограничения будут запрошены</string>
     <string name="help_application">Приложение</string>
     <string name="help_internet">Имеет разрешение на доступ в интернет</string>
     <string name="help_granted">Имеет разрешение Android</string>
-    <string name="help_used">Ксть данные по использованию</string>
+    <string name="help_used">Есть данные по использованию</string>
     <string name="help_used_grayed">Нет данных по использованию</string>
     <string name="help_frozen">Отключено</string>
     <string name="help_dangerous">Ограничения могут привести к проблемам</string>
