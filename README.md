@@ -1326,7 +1326,7 @@ Therefore I will not look into long logcats anymore.
 
 **One bug report per issue please!**
 
-**Do not forget to enable XPrivacy logging using the settings menu!**
+**Do not forget to enable XPrivacy debug logging using the settings menu!**
 
 **Before submitting any issue please make sure you are running the latest version of XPrivacy.**
 
