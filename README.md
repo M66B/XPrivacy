@@ -379,6 +379,7 @@ Installation may seem lengthy, but you can actually do it quickly:
 	* For Android 5.0.x see [this](http://forum.xda-developers.com/showthread.php?t=3034811) XDA thread
 	* For Android 5.1.x see [this](http://forum.xda-developers.com/xposed/super-alpha-posted-permission-xposed-t3072979) XDA thread
 	* For Android 5.0.x Touchwiz ROMs see [this](http://forum.xda-developers.com/xposed/unofficial-xposed-samsung-lollipop-t3113463) XDA thread
+	* For Android 5.x ARM 64 bit devices see [this](http://forum.xda-developers.com/xposed/xposed-android-5-1-successfully-t3074586) XDA thread
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 	* Alternatively download it from [here](https://github.com/M66B/XPrivacy/releases)
 1. Enable XPrivacy from the Xposed installer
