@@ -1298,8 +1298,8 @@ It is okay to use my personal or XDA e-mail for things that cannot be shared in 
 
 It is already enough work to support the official versions from the last stable version.
 
-There is no support for XPrivacy on Ice cream sandwich anymore
-and there is limited support for XPrivacy on Jelly Bean.
+There is no support for XPrivacy on Ice cream sandwich and Jelly Bean anymore
+and there is limited support for XPrivacy on KitKat.
 Limited support means I will try to fix bugs, but only if it doesn't take much time.
 
 **I will not look into issues of applications that have to be paid for.**
