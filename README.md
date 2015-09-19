@@ -475,6 +475,7 @@ Either of these may result in error messages and even cause applications to forc
 
 Function restrictions considered dangerous are marked with a reddish background color.
 These dangerous functions are more likely to cause applications to crash if you restrict them.
+Dangerous functions can be turned into normal functions by long-clicking them in the default template. This is only recommended for experienced users that know how to identify the cause of a crash in the logcat!
 
 Global settings and application specific settings are accessible from the application list's menu
 and from the menu of the application's detailed view. The global settings,
@@ -1280,6 +1281,12 @@ xprivacy.options=ignoreselinux
 
 This means the Xposed module part and the application part of XPrivacy have a different version number.
 If a reboot doesn't solve this problem, try to disable and enable XPrivacy in the Xposed installer and reboot again.
+
+<a name="FAQ81"></a>
+**(81) Restricting a category does not restrict all of its functions! (What are dangerous functions?)**
+
+Some functions are marked 'dangerous' (red background) because they frequently cause apps to crash when they are restricted. When a category is restricted, the dangerous functions within this category will not be restricted. These functions can be restricted directly, if needed.
+Experienced users can change a dangerous function into a normal function by long-clicking it in the default template. Usually, the restriction that caused an app to crash can be identified in the logcat. Again, this is only recommended for experienced users and will cause crashes more frequently!
 
 Support
 -------
