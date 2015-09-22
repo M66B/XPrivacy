@@ -106,7 +106,7 @@ Features
 
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
-* For any (stock) variant of Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop)
+* For any stock variant of Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Option to restrict on demand
@@ -314,22 +314,22 @@ Limitations
 
 *General*
 
-* [/proc](http://linux.die.net/man/5/proc), CID and system (build) properties cannot be restricted for Android (serial number, IMEI, MAC address, etc), because restricting these will result in bootloops
+* [/proc](http://linux.die.net/man/5/proc), CID, system (build) properties, serial number, IMEI, and MAC adresses cannot be restricted for Android itself, because restricting these will result in bootloops
 * */proc/self/cmdline* will not be restricted by */proc*, because it will result in instability
 * The phone number cannot be restricted for the standard phone application
 * The browser bookmarks and history cannot be restricted for the browser itself
 * Internet and storage can only be restricted for applications, providers, and services started by the Android package manager
-* There is no usage data for *inet*, *media* and *sdcard*, since this is technically not possible
+* There is no usage data for *inet*, *media* and *sdcard*, since this is not technically possible
 * Because it is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data
 * Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * It is not possible to restrict external hardware MAC addresses or the external IP address, see also [FAQ 33](#FAQ33)
 * You cannot restrict *Configuration.MCC/MNC* on demand
-* Allowing contacts for SIM-contacts isn't supported (who is using these anyway these days?)
+* Allowing contacts for SIM-contacts isn't supported (who is using these anymore?)
 * Calendars and contacts cannot be restricted for specific accounts; it is all or nothing; however, it is possible to allow individual contacts with a [pro license](http://www.xprivacy.eu/)
 * It is possible to unhook methods in user space using native libraries, see for more details [FAQ 68](#FAQ68)
-* In some situations the on demand restricting dialog freezes, notably when using volume keys. This cannot be fixed due too limitations of Android.
-* In some situations the on demand restricting dialog is overlayed by other windows, notably notifications. This cannot be fixed due too limitations of Android.
+* In some situations, the on demand restricting dialog freezes, notably when using volume keys. This cannot be fixed due to Android limitations.
+* In some situations, the on demand restricting dialog is overlayed by other windows, notably notifications. This cannot be fixed due to Android limitations.
 * Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
 * Android System Webview cannot be restricted on Android Lollipop
 
@@ -340,10 +340,10 @@ Limitations
 	* This means that the crowd sourced restrictions server never gets the serial number nor the Android ID
 * You cannot restrict *IPC* because it is needed for internal checks
 * You cannot restrict *Storage* because it is needed to read the pro license file
-* You cannot restrict *System* because it is needed to get an application list
+* You cannot restrict *System* because it is needed to get the application list
 * You cannot restrict *View* because it is needed to open links to the [crowd sourced restrictions](http://crowd.xprivacy.eu/)
 
-You can still restrict the XPrivacy app's access to accounts, contacts, and other things.
+You can restrict the XPrivacy app's access to accounts, contacts, and other things.
 
 Compatibility
 -------------
@@ -364,7 +364,7 @@ Candy Crush is known to crash on some ROMs, see [here](http://forum.xda-develope
 Installation
 ------------
 
-Installation may seem lengthy, but you can actually do it quickly:
+Installation may seem lengthy, but you can do it quickly:
 
 1. Requirements:
 	* Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop); check with *System Settings* > *About phone* > *Android version*
@@ -430,14 +430,14 @@ Use common sense when restricting, don't expect internet access if you restricte
 
 Get used to XPrivacy before using more advanced features, like function exceptions.
 
-*Longer explanation*
+*Longer tutorial*
 
 The application starts in the main view, where a data category can be selected at the top.
 By ticking one or more check boxes in the list below, you can restrict the selected data category for the chosen applications.
 The default category is *All*, meaning that all data categories will be restricted.
 
-Tapping on an application icon shows the detailed view where you can manage all the data categories for the selected application.
-This view will also appear when you tap on the notification that appears after updating or installing an application.
+Tapping on an application icon shows the detailed view where you can manage each of the data categories for the selected application.
+This view will also appear when you tap on the notification that appears after installing or updating an application.
 By default, all data categories will be restricted for newly installed applications to prevent leaking privacy-sensitive data.
 You can change which data categories will be restricted by changing the *Template* available from the main menu.
 
@@ -445,10 +445,10 @@ Data categories make it easier to manage restrictions.
 You can drill down the data categories in the detailed view to reveal individual functions.
 If the category is restricted, you can un-restrict individual functions by clearing the function's check box.
 
-To see restriction in action, try restricting the category *Identification* for
+To see restrictions in action, try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid).
 
-**Applying some restrictions require restarting applications**
+**Applying some restrictions requires restarting applications**
 
 You can turn on and off all restrictions for an application using the on/off switch.
 
@@ -457,15 +457,15 @@ This means you will be asked to allow or deny a category/function
 when the category/function is used by an application.
 Restricting on demand is the default for newly installed applications.
 You can turn on and off restricting on demand in the application details view
-using either the settings or the check box next to the on/off switch.
+using either the settings or the check box to the right of the on/off switch.
 You can turn on and off restricting on demand for individual categories and functions
 using the second column of check boxes.
 
 If an application has requested Android permissions for a data category,
 the category will be marked with a green key icon.
 If an application has used or tried to use data, the data category will be marked with an orange warning triangle icon.
-If an application has internet permissions, a world globe icon will be shown.
-These icons are just a guideline because an application can still access some privacy sensitive data without Android permissions,
+If an application has internet permissions, a world globe icon will be shown to the left of the application name.
+These icons are just a guideline because an application can still access some privacy-sensitive data without Android permissions,
 such as your device's serial number, and because it is not possible to monitor data usage in each and every situation,
 such as access to the internet or the external storage.
 Be aware that an application can still access the internet through other (sister) applications.
@@ -484,10 +484,10 @@ unless you override them with specific application settings.
 But saving an empty set of specific application settings (you can use the clear button)
 will erase all application specific settings so that the global settings will again be in force.
 
-The restrictions template (in the main menu) is applied automatically to newly installed applications
+The default restrictions template (in the main menu) is applied automatically to newly installed applications
 and manually via the menu item "Apply template" in the application's detailed view.
 
-You can find an overview of all menu items [here](https://github.com/M66B/XPrivacy/blob/master/MENU.md).
+You can find a *very useful overview of all menu items* [here](https://github.com/M66B/XPrivacy/blob/master/MENU.md).
 
 **Using XPrivacy is entirely at your own risk**
 
@@ -506,10 +506,10 @@ XPrivacy asks for the following Android permissions:
 If desired, you can even restrict XPrivacy from accessing any of the above,
 but there are some [limitations](#limitations).
 
-Please note that any Xposed module has basically root permissions and can therefore circumvent any Android permission.
+Please note that any Xposed module has basically root permissions and therefore can circumvent any Android permission.
 
-Frequently asked questions
---------------------------
+Frequently Asked Questions (FAQ)
+--------------------------------
 
 <a name="FAQ1"></a>
 **(1) Will XPrivacy make my device slower?**
@@ -528,19 +528,19 @@ Almost nothing.
 <a name="FAQ3"></a>
 **(3) Can you help me with rooting my device?**
 
-There are already enough [guides](http://www.androidcentral.com/root) to help you to root your device.
+There are many [guides](http://www.androidcentral.com/root) to help you to root your device.
 Use your favorite search engine to find one.
 
 <a name="FAQ4"></a>
 **(4) How can I reset an application's XPrivacy settings?**
 
-While viewing an application's restrictions, do "Menu > Clear" then reboot.
+While viewing an application's restrictions, select "Menu > Clear", then reboot.
 
 <a name="FAQ5"></a>
 **(5) Can I backup XPrivacy's restrictions, settings, and usage data?**
 
 Starting with version 1.11.13, you can no longer backup XPrivacy's data with standard backup tools, such as Titanium Backup.
-This is because database is no longer stored in the XPrivacy data folder, but in a system folder.
+This is because the database is no longer stored in the XPrivacy data folder, but in a system folder.
 I have tried to store the database in the XPrivacy data folder, but this leads to all kinds of permission problems.
 
 The best practice is to use XPrivacy's export function (Main Menu > Export) to backup XPrivacy data,
@@ -552,7 +552,7 @@ You can automate backups by sending an intent:
 adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT
 ```
 
-If you want to specify a file name:
+If you want to specify a file name for the backup:
 
 ```
 adb shell am start -a biz.bokhorst.xprivacy.action.EXPORT -e FileName /sdcard/test.xml
