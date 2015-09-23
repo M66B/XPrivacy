@@ -1195,15 +1195,15 @@ For the benefit of others, please report if XPrivacy 3 works for the ROM you are
 **(69) What do the state colors mean, and when do they change?**
 
 * **Grey**: three cases:
-     1. after clearing restrictions
-     1. after setting on demand restrictions
+     1. after clearing restrictions for an app
+     1. after setting any restriction for an app
      1. after you perform an XPrivacy import
 * **Orange**: four cases:
      1. app is new
      1. app is updated
-     1. after you delete regular restrictions (not on demand restrictions)
-     1. after you fetch restrictions from the crowd sourced XPrivacy server
-* **Green**: after you submit restriction changes to the crowd sourced XPrivacy server
+     1. after you delete all regular (not on demand) restrictions for an app
+     1. after you fetch restrictions from the crowd sourced XPrivacy server for an app
+* **Green**: after you submit restriction changes to the crowd sourced XPrivacy server for an app
 
 <a name="FAQ70"></a>
 **(70) I get '429 Too Many Requests'**
