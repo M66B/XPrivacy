@@ -88,7 +88,7 @@ Features
 
 * Simple to use
 * No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
-* For any stock variant of Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop)
+* For any stock variant of Android version 4.0.3 - 5.1.1 (ICS, Jelly Bean, KitKat, Lollipop)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
 * Option to restrict on demand
@@ -318,13 +318,13 @@ Limitations
 
 *General*
 
-* [/proc](http://linux.die.net/man/5/proc), CID, system (build) properties, serial number, IMEI, and MAC adresses cannot be restricted for Android itself, because restricting these will result in bootloops
+* [*/proc*](http://linux.die.net/man/5/proc), CID, system (build) properties, serial number, IMEI, and MAC addresses cannot be restricted for Android itself, because restricting these will result in bootloops
 * */proc/self/cmdline* will not be restricted by */proc*, because it will result in instability
 * The phone number cannot be restricted for the standard phone application
 * The browser bookmarks and history cannot be restricted for the browser itself
 * Internet and storage can only be restricted for applications, providers, and services started by the Android package manager
 * There is no usage data for *inet*, *media* and *sdcard*, since this is not technically possible
-* Because it is static, [Build.SERIAL](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data
+* Because it is static, [*Build.SERIAL*](http://developer.android.com/reference/android/os/Build.html#SERIAL) can only be randomized when an application starts, and there is no usage data
 * Due to a bug in Chromium, the user agent cannot be restricted in all cases ([issue](https://github.com/M66B/XPrivacy/issues/825))
 * Due to a custom implementation, the clipboard cannot be restricted on some Samsung stock ROMs ([issue](https://github.com/M66B/XPrivacy/issues/857))
 * It is not possible to restrict external hardware MAC addresses or the external IP address, see also [FAQ 33](#FAQ33)
@@ -509,7 +509,7 @@ If desired, you can even restrict XPrivacy from accessing any of the above,
 but there are some [limitations](#limitations).
 
 Please note that any Xposed module has basically root permissions and therefore can circumvent any Android permission.
-
+<a name="frequently-asked-questions"></a>
 Frequently Asked Questions (FAQ)
 --------------------------------
 
