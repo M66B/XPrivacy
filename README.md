@@ -509,8 +509,8 @@ If desired, you can even restrict XPrivacy from accessing any of the above,
 but there are some [limitations](#limitations).
 
 Please note that any Xposed module has basically root permissions and therefore can circumvent any Android permission.
-<a name="frequently-asked-questions"></a>
-Frequently Asked Questions (FAQ)
+
+<a name="frequently-asked-questions"></a>Frequently Asked Questions (FAQ)
 --------------------------------
 
 <a name="FAQ1"></a>
@@ -1440,7 +1440,7 @@ I do not recommend using XPrivacy in combination with any of the similar solutio
 I need all my time developing XPrivacy, so I will not test XPrivacy along side any of the similar solutions.
 If you test XPrivacy along side any of the similar solutions, you can probably help others by reporting your test results.
 
-In The Media
+<a name="news"></a>In The Media
 ------------
 
 * [Manage Individual App Permissions with XPrivacy](http://www.xda-developers.com/android/manage-individual-app-permissions-with-xprivacy/) (June 20, 2013)
