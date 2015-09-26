@@ -571,7 +571,7 @@ You can do this with [Tasker](https://play.google.com/store/apps/details?id=net.
 * Extra: FileName:/sdcard/test.xml (optional, to specify an export location and file name)
 
 <a name="FAQ6"></a>
-**(6) Precisely which functions does XPrivacy restrict?**
+**(6) Precisely which functions can XPrivacy restrict?**
 
 Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/xprivacy/Meta.java) for details.
 
@@ -581,7 +581,7 @@ Many. See [here](https://github.com/M66B/XPrivacy/blob/master/src/biz/bokhorst/x
 Great care has been taken to develop XPrivacy. Nevertheless, on rare occasions, data can leak and applications can crash.
 
 <a name="FAQ8"></a>
-**(8) I get "An internal check failed ..." !**
+**(8) What does "An internal check failed..." error message mean?**
 
 An internal check of XPrivacy failed, resulting in potential data leakage.
 Please press *OK* to send me the support information so I can look into it.
@@ -621,7 +621,7 @@ An example is [Android Terminal Emulator](https://play.google.com/store/apps/det
 Changes to restrictions may require up to 15 seconds to take effect because of caching. Changing internet and storage restrictions requires restarting the application. Please note that in many cases pressing *back* within target applications merely moves the application to the background.
 
 <a name="FAQ12"></a>
-**(12) Does XPrivacy have a firewall?**
+**(12) Does XPrivacy include a firewall?**
 
 You can restrict internet access for any application. But if you want to partly enable internet, for example for Wi-Fi only, you will have to use a firewall application, such as [AFWall+](http://forum.xda-developers.com/showthread.php?t=1957231). XPrivacy works within Android,
 and detailed firewall rules can only be applied within the Linux kernel.
@@ -629,12 +629,12 @@ and detailed firewall rules can only be applied within the Linux kernel.
 The latest versions of XPrivacy allow you to white and black list IP addresses and host names.
 
 <a name="FAQ13"></a>
-**(13) I get "Unable to parse package."**
+**(13) What does the "Unable to parse package." message mean?**
 
 This means XPrivacy's apk file is corrupt. Try disabling your popup blocker or download using another device.
 
 <a name="FAQ14"></a>
-**(14) How can I make a logcat?**
+**(14) How do I make a logcat?**
 
 The simplest way is to use an application, like [Logcat Extreme](https://play.google.com/store/apps/details?id=scd.lcex) or  [Catlog](https://play.google.com/store/apps/details?id=com.nolanlawson.logcat),
 but logcats captured this way are not always sufficient. The best way to capture a logcat is:
@@ -658,7 +658,7 @@ and link to it from the issue you created.
 Don't forget to mention the *uid* of the application to look into, when relevant.
 
 <a name="FAQ15"></a>
-**(15) Where are XPrivacy's settings stored?**
+**(15) Where does XPrivacy store its settings?**
 
 XPrivacy's restrictions, settings, and usage data are stored in an sqlite3 database in this folder:
 
@@ -681,7 +681,7 @@ The export file will contain all restrictions and settings, but note that allowe
 Also see the [above FAQ](#FAQ9) about what to do when updating your ROM.
 
 <a name="FAQ18"></a>
-**(18) I have restricted locations, but my GPS status icon still appears.**
+**(18) Why does a GPS status icon still appear after I have restricted locations?**
 
 That is correct. XPrivacy only replaces the real location with a fake location. It even uses the real location to randomize the fake location. The idea is that everything should appear as normal as possible to an application.
 
@@ -814,7 +814,7 @@ XPrivacy can also restrict access to the Linux shell (including superuser) to pr
 Starting with version 2.0, XPrivacy can protect against direct interprocess communication (IPC).
 
 <a name="FAQ32"></a>
-**(32) I see data usage without Android permissions!**
+**(32) Why do I see data usage when an app does not have the corresponding Android permission?**
 
 Many functions do not require Android permissions, so this is quite normal. Sometimes an application tries to access a function for which it doesn't have an Android permission. Since XPrivacy usually runs prior to the function, such access will be noted.
 
@@ -886,7 +886,7 @@ Yes, but I don't see this as a problem,
 since [security through obscurity](http://en.wikipedia.org/wiki/Security_through_obscurity) is not a good principle.
 
 <a name="FAQ49"></a>
-**(49) I keep getting 'restart required'**
+**(49) Why do I keep getting a 'Restart required' message?**
 
 Things to do / check:
 
@@ -938,7 +938,7 @@ See [here](#support) for more details.
 This will ensure that other applications cannot uninstall XPrivacy without your knowledge.
 
 <a name="FAQ54"></a>
-**(54) Exporting and importing takes a long time**
+**(54) Why do exporting and importing take so long?**
 
 There are more than 400 restrictions per application. 
 Additionally, there can be quite a few application specific settings 
@@ -992,7 +992,7 @@ It makes no sense to restrict something during the day and not during the night,
 or on your work and not at home.
 
 <a name="FAQ60"></a>
-**(60) The upgrade notification is stuck at 100% !**
+**(60) Why is the upgrade notification stuck at 100%?**
 
 This is by design, so you can see the upgrade has completed successfully.
 You can swipe away the notification after you have seen it.
@@ -1051,7 +1051,7 @@ This freeze cannot be fixed by XPrivacy.
 If you want to have the on demand dialog always shown, then you can add the *quirk* "freeze".
 
 <a name="FAQ65"></a>
-**(65) My data is still visible!**
+**(65) Why is my data is still visible?**
 
 The data might be cached by the application, so you might have to wait a while until the cache is updated.
 It may even be necessary to restart the application or reboot your device to clear the cache.
@@ -1123,7 +1123,7 @@ With Tasker, you can create shortcuts on your homescreen:
 * Create icon: tap the back button to finish creating the shortcut (Tasker)
 
 <a name="FAQ67"></a>
-**(67) I get 'refused', 'forbidden' or an error while submitting/fetching/navigating to the crowd sourced restrictions!**
+**(67) Why do I get 'refused', 'forbidden' or an error while submitting/fetching/navigating the crowd sourced restrictions?**
 
 This probably means your IP address has been blacklisted.
 Typically, this is because of spamming or other kind of abuses.
@@ -1204,7 +1204,7 @@ For the benefit of others, please report if XPrivacy 3 works for the ROM you are
 * **Green**: after you submit restriction changes to the crowd sourced XPrivacy server for an app
 
 <a name="FAQ70"></a>
-**(70) I get '429 Too Many Requests'**
+**(70) Why do I get an '429 Too Many Requests' message?**
 
 This can happen when checking for updates using the main menu.
 Everybody can download a new version of XPrivacy five times in 12 hours.
@@ -1214,7 +1214,7 @@ Simply wait 12 hours after the last download, and you can download again.
 Please note that I will not make exceptions to this, because the limit is there for a reason.
 
 <a name="FAQ71"></a>
-**(71) I don't see the changelog**
+**(71) Why don't I see the changelog**
 
 Make sure you have an internet connection and that XPrivacy has internet access (check your firewall).
 The changelog is an in-app display of [this page](https://github.com/M66B/XPrivacy/blob/master/CHANGELOG.md)
@@ -1231,7 +1231,7 @@ should be accessible to almost everybody.
 [F-Droid](https://f-droid.org/) also doesn't allow me to sign the APK with my own signature.
 
 <a name="FAQ74"></a>
-**(74) I do not see an application in the application list!**
+**(74) Why do I do not see a specific application in the application list?**
 
 XPrivacy allows you to restrict each and every application.  XPrivacy even allows you to restrict
 itself as well as core Android system components, although there are a few [limitations](#limitations).
@@ -1251,7 +1251,7 @@ An example is Dolphin browser and its plugins/addons.
 Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultimate-android-privacy-app-t2320783/page1281#post57091458).
 
 <a name="FAQ77"></a>
-**(77) My pro license does not work!**
+**(77) Why does my pro license not work?**
 
 * Make sure that the license file name and contents were not altered while downloading the file (for example by a virus scanner or simply by your e-mail client). The most common problem is that some e-mail clients rename the file.
 * Make sure that you have put the license file into the root folder of the SD-card (this is the folder you will see when you connect your Android device to a PC).
@@ -1263,7 +1263,7 @@ This is the folder you will see if you connect your Android device to a PC. When
 If it still doesn't work, try to put the license file in the alternate location as shown in the *About* dialog.
 
 <a name="FAQ78"></a>
-**(78) I get "The Play store says not licensed" when I tried to fetch a license**
+**(78) Why do I get "The Play store says not licensed" when I tried to fetch a license?**
 
 This message basically means that the Play stores thinks you didn't pay for the [pro license fetcher](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.license).
 
@@ -1292,13 +1292,13 @@ xprivacy.options=ignoreselinux
 ```
 
 <a name="FAQ80"></a>
-**(80) I get 'Privacy service version mismatch'**
+**(80) Why do I get 'Privacy service version mismatch' error?**
 
 When installed, XPrivacy has two parts: the Xposed module part and the application part. This error means the Xposed module part and the application part have different version numbers.
 If a reboot doesn't solve this problem, try to disable and enable XPrivacy in the Xposed installer and reboot again.
 
 <a name="FAQ81"></a>
-**(81) Restricting a category does not restrict all of its functions!  What are 'dangerous' functions?**
+**(81) Why does restricting a category not restrict all of its functions!  What are 'dangerous' functions?**
 
 Some functions are marked 'dangerous' (red background) because they frequently cause apps to crash when they are restricted. When a category is restricted, the dangerous functions within this category will not be restricted. These functions can be restricted directly, if needed.
 Experienced users can change a 'dangerous' function into a normal function by long-clicking it in the default template. Usually, the restriction that caused an app to crash can be identified in the logcat. Again, restricting 'dangerous' functions is only recommended for experienced users and will cause crashes more frequently!
