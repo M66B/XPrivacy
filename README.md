@@ -77,11 +77,11 @@ and is reported to work with most Android variants, including stock ROMs.
 Root access is needed to install the Xposed framework.
 
 
-**XPrivacy was a lot of work, so please support this project**
+**XPrivacy was a lot of work, so please support this project.**
 
 If you want to donate, see [here](http://www.xprivacy.eu/) for all options.
 
-**Using XPrivacy is entirely at your own risk**
+**Using XPrivacy is entirely at your own risk.**
 
 Features
 --------
@@ -306,7 +306,7 @@ For easy usage, data is restricted by category:
 	* return an empty list of running tasks
 	* return an empty list of widgets
 	* return an empty list of applications (provider)
-	* prevent package add, replace, restart and remove notifications
+	* prevent package add, replace, restart, and remove notifications
 <a name="view"></a>
 * View
 	* prevent links from opening in the browser
@@ -316,7 +316,7 @@ For easy usage, data is restricted by category:
 Limitations
 -----------
 
-*General*
+#### General
 
 * [*/proc*](http://linux.die.net/man/5/proc), CID, system (build) properties, serial number, IMEI, and MAC addresses cannot be restricted for Android itself, because restricting these will result in bootloops
 * */proc/self/cmdline* will not be restricted by */proc*, because it will result in instability
@@ -337,7 +337,7 @@ Limitations
 * Restricting *Internet/connect* and/or *View/loadURL* for the stock browser doesn't prevent loading of pages ([issue](https://github.com/M66B/XPrivacy/issues/1685))
 * Android System Webview cannot be restricted on Android Lollipop
 
-*XPrivacy*
+#### XPrivacy
 
 * You cannot restrict some functions in the *Identification* category, because it is used for submitting restrictions
 	* The Android ID is salted with the serial number and MD5 hashed before communicating with the crowd sourced restrictions server
@@ -352,7 +352,7 @@ You can restrict the XPrivacy app's access to accounts, contacts, and other thin
 Compatibility
 -------------
 
-XPrivacy has been tested with Android version 4.0.3 - 5.1.1 (ICS, JellyBean, KitKat, Lollipop)
+XPrivacy has been tested with Android version 4.0.3 - 5.1.1 (ICS, Jelly Bean, KitKat, Lollipop)
 and is reported to work with most Android variants, including stock ROMs.
 
 **XPrivacy is incompatible with LBE Security Master** ([issue](https://github.com/M66B/XPrivacy/issues/1231)).
@@ -422,7 +422,7 @@ When following this procedure, your data will not leak because the Xposed part o
 Usage
 -----
 
-*Brief tutorial*
+#### Brief tutorial
 
 * Find the application to restrict in the main application list
 * Tap on the application icon
@@ -432,7 +432,7 @@ Use common sense when restricting, don't expect internet access if you restricte
 
 Get used to XPrivacy before using more advanced features, like function exceptions.
 
-*Detailed tutorial*
+#### Detailed tutorial
 
 The application starts in the main view, where a data category can be selected at the top.
 By ticking one or more check boxes in the list below, you can restrict the selected data category for the chosen applications.
@@ -450,14 +450,14 @@ If the category is restricted, you can un-restrict individual functions by clear
 To see restrictions in action, try restricting the category *Identification* for
 [Android Id Info](https://play.google.com/store/apps/details?id=com.bzgames.androidid).
 
-**Applying some restrictions requires restarting applications**
+**Applying some restrictions requires restarting applications.**
 
-You can turn on and off all restrictions for an application using the on/off switch.
+You can turn on and off all restrictions for an application using the on/off toggle switch.
 
 Since version 1.99, you can also restrict on demand.
 This means you will be asked to allow or deny a category/function
 when the category/function is used by an application.
-Restricting on demand is the default for newly installed applications.
+Restricting on demand is the default for newly installed applications (when using the default template).
 You can turn on and off restricting on demand in the application details view
 using either the settings or the check box to the right of the on/off switch.
 You can turn on and off restricting on demand for individual categories and functions
@@ -467,9 +467,9 @@ If an application has requested Android permissions for a data category,
 the category will be marked with a green key icon.
 If an application has used or tried to use data, the data category will be marked with an orange warning triangle icon.
 If an application has internet permissions, a world globe icon will be shown to the left of the application name.
-These icons are just a guideline because an application can still access some privacy-sensitive data without Android permissions,
+These icons are just guidelines because an application can still access some privacy-sensitive data without Android permissions,
 such as your device's serial number, and because it is not possible to monitor data usage in each and every situation,
-such as access to the internet or the external storage.
+such as access to the internet or external storage.
 Be aware that an application can still access the internet through other (sister) applications.
 
 Restricting internet or storage means blocking access to the internet and to external storage (typically the SD card), respectively.
@@ -489,9 +489,9 @@ will erase all application specific settings so that the global settings will ag
 The default restrictions template (in the main menu) is applied automatically to newly installed applications
 and manually via the menu item "Apply template" in the application's detailed view.
 
-You can find a *very useful overview of all menu items* [here](https://github.com/M66B/XPrivacy/blob/master/MENU.md).
+You can find a **very useful overview of all menu items** [here](https://github.com/M66B/XPrivacy/blob/master/MENU.md).
 
-**Using XPrivacy is entirely at your own risk**
+**Using XPrivacy is entirely at your own risk.**
 
 Permissions
 -----------
@@ -508,7 +508,7 @@ XPrivacy asks for the following Android permissions:
 If desired, you can even restrict XPrivacy from accessing any of the above,
 but there are some [limitations](#limitations).
 
-Please note that any Xposed module has basically root permissions and therefore can circumvent any Android permission.
+Please note that any Xposed module basically has root permissions and therefore can circumvent any Android permission.
 
 <a name="frequently-asked-questions"></a>Frequently Asked Questions (FAQ)
 --------------------------------
@@ -653,7 +653,7 @@ If you need a logcat from system start, you can run this command on your device 
 killall system_server; logcat | grep -i xprivacy
 ```
 
-Upload the captured logcat somewhere, for example using Google Drive,
+Upload the captured logcat somewhere, for example to Google Drive,
 and link to it from the issue you created.
 Don't forget to mention the *uid* of the application to look into, when relevant.
 
@@ -683,7 +683,7 @@ Also see the [above FAQ](#FAQ9) about what to do when updating your ROM.
 <a name="FAQ18"></a>
 **(18) Why does a GPS status icon still appear after I have restricted locations?**
 
-That is correct. XPrivacy only replaces the real location with a fake location. It even uses the real location to randomize the fake location. The idea is that everything should appear as normal as possible to an application.
+This is by design. XPrivacy only replaces the real location with a fake location. It even uses the real location to randomize the fake location. The idea is that everything should appear as normal as possible to an application.
 
 See [here](http://forum.xda-developers.com/showpost.php?p=57417209&postcount=13097) for some addtional details.
 
@@ -1306,9 +1306,9 @@ Experienced users can change a 'dangerous' function into a normal function by lo
 Support
 -------
 
-*Please read everything below first*
+*Please read everything below first!*
 
-### General
+#### General
 
 **Do not use my personal or XDA e-mail for bug reports, feature requests, or questions.**
 
@@ -1316,9 +1316,9 @@ It is okay to use my personal or XDA e-mail for things that cannot be shared in 
 
 **There is only support for official XPrivacy releases.**
 
-**There is no support for versions prior to the last stable version.**
+**There is no support for versions prior to the latest stable version.**
 
-It is already enough work to support the last stable official version.
+It is already enough work to support the latest stable official version.
 
 There is no support for XPrivacy on Ice Cream Sandwich or Jelly Bean anymore. 
 There is limited support for XPrivacy on KitKat.
@@ -1332,7 +1332,7 @@ Limited support means I will try to fix bugs, but only if it doesn't take much t
 
 Please check [the limitations](#limitations) before reporting a bug, requesting a feature, or asking a question.
 
-### Bugs
+#### Bugs
 
 **First ask if other people have encountered the same bug!** (see questions below)
 
@@ -1356,7 +1356,7 @@ Therefore I will not look into long logcats anymore.
 
 **Before submitting any issue please make sure XPrivacy is causing the problem by disabling XPrivacy.**
 
-### Feature requests
+#### Feature requests
 
 If you have a feature request, please [create an issue](https://github.com/M66B/XPrivacy/issues).
 
@@ -1371,7 +1371,7 @@ Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultim
 
 **One feature request per issue please!**
 
-### Questions
+#### Questions
 
 If you have any question, please leave a message in the [XDA XPrivacy forum thread](http://forum.xda-developers.com/showthread.php?p=42488236).
 More people follow the support forum than the GitHub issue tracker, which increases your chance of receiving a helpful answer.
@@ -1533,9 +1533,9 @@ Testing:
 * [Elixir 2](https://play.google.com/store/apps/details?id=com.bartat.android.elixir)
 * [Network Info II](https://play.google.com/store/apps/details?id=aws.apps.networkInfoIi)
 
-The goal of the project is to provide a decent, free and open source privacy solution for Android to as many as possible people.
+The goal of the project is to provide a free and open source privacy solution for Android to as many as possible people.
 
-To keep XPrivacy maintainable hooking into private/internal classes and methods is undesirable,
+To keep XPrivacy maintainable, hooking into private/internal classes and methods is undesirable,
 since these vary considerably in different Android versions
 and are often customized/modified by manufacturers and custom ROM builders.
 
@@ -1577,4 +1577,3 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with XPrivacy.  If not, see [http://www.gnu.org/licenses/](http://www.gnu.org/licenses/).
-
