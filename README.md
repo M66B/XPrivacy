@@ -1556,8 +1556,8 @@ License
 
 [GNU General Public License version 3](http://www.gnu.org/licenses/gpl.txt)
 
-Copyright (c) 2013-2015 [Marcel Bokhorst](http://blog.bokhorst.biz/about/)
-([M66B](http://forum.xda-developers.com/member.php?u=2799345))
+Copyright (c) 2013-2015 Marcel Bokhorst ([M66B](http://forum.xda-developers.com/member.php?u=2799345))
+
 All rights reserved
 
 This file is part of XPrivacy.
