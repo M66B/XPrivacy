@@ -1169,7 +1169,7 @@ Nevertheless, the most sensitive data, like contacts and your location, can safe
 * AOSP mode = vanilla (Google) Android Lollipop
 * Compatibility mode = all other Android versions/variants
 
-*About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivay 2.
+*About* will show if XPrivacy 3 is running in compatibility mode, which means XPrivacy 3 is behaving as XPrivacy 2.
 If there is no message about compatibility mode, XPrivacy 3 is running in AOSP mode.
 XPrivacy 3 will always run in compatibility mode on Android versions before KitKat.
 
@@ -1187,7 +1187,7 @@ XPrivacy has many internal checks, so if something is going wrong,
 you will probably sooner or later get a debug info popup.
 
 For the benefit of others, please report if XPrivacy 3 works for the ROM you are using
-(also post a screenshot of the *About* of XPrivacy so I can see how the ROM can be recognized).
+(also post a screenshot of the *About* of XPrivacy, so I can see how the ROM is recognized).
 
 <a name="FAQ69"></a>
 **(69) What do the state colors mean, and when do they change?**
@@ -1231,7 +1231,7 @@ should be accessible to almost everybody.
 [F-Droid](https://f-droid.org/) also doesn't allow me to sign the APK with my own signature.
 
 <a name="FAQ74"></a>
-**(74) Why do I do not see a specific application in the application list?**
+**(74) Why do I not see a specific application in the application list?**
 
 XPrivacy allows you to restrict each and every application.  XPrivacy even allows you to restrict
 itself as well as core Android system components, although there are a few [limitations](#limitations).
@@ -1241,8 +1241,8 @@ The application you are searching for is most likely filtered, for example becau
 You can change the filters by using the main menu *Filter*.
 By default, system applications and applications without permissions for the selected category are filtered.
 
-Some applications (components) share data, which mean they share the same UID.
-These applications are shown once only in XPrivacy (this cannot be changed).
+Some applications (components) share data, which means they share the same UID.
+These applications are shown only once in XPrivacy (this cannot be changed).
 An example is Dolphin browser and its plugins/addons.
 
 <a name="FAQ76"></a>
@@ -1295,10 +1295,10 @@ xprivacy.options=ignoreselinux
 **(80) Why do I get 'Privacy service version mismatch' error?**
 
 When installed, XPrivacy has two parts: the Xposed module part and the application part. This error means the Xposed module part and the application part have different version numbers.
-If a reboot doesn't solve this problem, try to disable and enable XPrivacy in the Xposed installer and reboot again.
+If a reboot doesn't solve this problem, try disabling and then enabling XPrivacy in the Xposed installer, and reboot again.
 
 <a name="FAQ81"></a>
-**(81) Why does restricting a category not restrict all of its functions!  What are 'dangerous' functions?**
+**(81) Why does restricting a category not restrict all of its functions?  What are 'dangerous' functions?**
 
 Some functions are marked 'dangerous' (red background) because they frequently cause applications to crash when they are restricted. When a category is restricted, the 'dangerous' functions within this category will not be restricted. These functions can be restricted directly, if needed.
 Experienced users can change a 'dangerous' function into a normal function by long-clicking it in the default template. Usually, the restriction that caused an application to crash can be identified in the logcat. Again, restricting 'dangerous' functions is only recommended for experienced users and will cause crashes more frequently!
@@ -1352,7 +1352,7 @@ Therefore I will not look into long logcats anymore.
 
 **Before submitting any issue, please make sure you are running the latest version of XPrivacy.**
 
-**Before submitting any issue, please make sure XPrivacy is causing the problem by temporarily disabling XPrivacy.**
+**Before submitting any issue, please make sure XPrivacy is causing the problem by temporarily disabling XPrivacy and seeing if that resolves the issue.**
 
 #### Feature requests
 
@@ -1443,10 +1443,11 @@ If you test XPrivacy alongside any of the similar solutions, you can probably he
 * [Manage Individual App Permissions with XPrivacy - XDA Developer](http://www.xda-developers.com/android/manage-individual-app-permissions-with-xprivacy/) (June 20, 2013)
 * [XPrivacy Gives You Massive Control Over What Your Installed Apps Are Allowed To Do - Android Police](http://www.androidpolice.com/2013/06/23/xprivacy-gives-you-massive-control-over-what-your-installed-apps-are-allowed-to-do/) (June 23, 2013)
 * [Protect Your Privacy with XPrivacy - XDA Developer TV](http://www.xda-developers.com/android/protect-your-privacy-with-xprivacy-xda-developer-tv/) (July 17, 2013)
-* [Black Duck Announces Open Source Rookies of the Year Winners](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners) (January 28, 2014)
+* [Black Duck Announces Open Source Rookies of the Year Winners - Black Duck Software](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners) (January 28, 2014)
 * [The Open Source Rookies of the Year Awards - InfoWorld](http://www.infoworld.com/d/open-source-software/the-open-source-rookies-of-the-year-awards-235116) (January 28, 2014)
 * [XPrivacy تطبيق](http://waleedhassan.wordpress.com/2014/01/31/xprivacy/) (January 31, 2014)
-* [Android privacy tool feeds fake data to prying apps](http://www.wired.co.uk/news/archive/2014-04/01/x-privacy-android-app) (April 1, 2014)
+* [Out in the Open: How to Protect Your Secrets From Nosey Android Apps - Wired](http://www.wired.com/2014/03/x-privacy/) (March 31, 2014)
+* [Android privacy tool feeds fake data to prying apps - Wired UK](http://www.wired.co.uk/news/archive/2014-04/01/x-privacy-android-app) (April 1, 2014)
 * [Internet Vandaag](http://www.bnr.nl/radio/bnr-internet-vandaag/708487-1404/internet-vandaag-74) (April 7, 2014)
 * [Protecting Your Privacy: App Ops, Privacy Guard, and XPrivacy - XDA Developers](http://www.xda-developers.com/android/protecting-your-privacy-app-ops-privacy-guard-and-xprivacy/) (June 11, 2014)
 * [XPrivacy – Android ohne Google?! Teil6](http://www.kuketz-blog.de/xprivacy-android-ohne-google-teil6/) (September 23, 2014)
