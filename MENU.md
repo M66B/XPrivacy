@@ -112,7 +112,7 @@
 * On demand ? - this will toggle on demand restrictions for the selected app
 * Category drill down - this will show or hide the individual functions of a category
 * Category info icon - this will open the category restrcions info on GitHub in a browser
-* Function book icon - this will show additional information about the function, possibly with a link to the Google documentaion
+* Function book icon - this will show additional information about the function, possibly with a link to the Google documentation
 * Category restriction check mark - this will restrict/unrestrict the category for the selected app
 * Category on demand check mark - this will enable/disable on demand popups to the functions in the cateogry for the selected app
 * Function restrction check mark - this will restrict/unrestrict the individual function
