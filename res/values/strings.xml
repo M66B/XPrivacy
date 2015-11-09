@@ -34,7 +34,7 @@
     <string name="menu_clear_all">Clear all</string>
     <string name="menu_clear_usage">Clear</string>
     <string name="menu_clear_db">Clear all XPrivacy data</string>
-    <string name="menu_usage_all">Toggle filter</string>
+    <string name="menu_usage_all">Toggle all/restricted</string>
     <string name="menu_apply">Apply template</string>
     <string name="menu_clear">Clear</string>
     <string name="menu_app_launch">Launch</string>
