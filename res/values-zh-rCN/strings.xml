@@ -79,7 +79,7 @@
     <string name="msg_expert">如果可能的话,专家用户都应该解决自己问题的同时关注 XDA XPrivacy 论坛并尽可能帮助他人解决问题</string>
     <string name="msg_method_expert">函数限制专用于专家用户. 您是专家用户吗?</string>
     <string name="msg_longpress_whitelist">长按函数名称将参数添加到黑/白名单</string>
-    <string name="msg_settings_specific">Check marks and values take precedence over global check marks and values; empty check boxes and values do not take precedence</string>
+    <string name="msg_settings_specific">复选标记和值优先于全局中复选标记和值；取消复选框和空值则不采取优先</string>
     <string name="msg_corrupt">因为已损坏, 已经重置隐私数据库</string>
     <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
@@ -162,7 +162,7 @@
     <string name="title_function">功能:</string>
     <string name="title_parameters">参数:</string>
     <string name="title_applycat">应用到整个权限类别</string>
-    <string name="title_once">Once for</string>
+    <string name="title_once">仅一次</string>
     <string name="title_whitelist">白名单/黑名单&#8216;%1$s&#8217;</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>
@@ -195,7 +195,7 @@
     <string name="title_update_install">点击安装更新</string>
     <string name="title_update_none">没有可用更新</string>
     <string name="title_update_legacy">XPrivacy2已经不支持，请考虑升级到XPrivacy3</string>
-    <string name="title_original">Original</string>
+    <string name="title_original">原始</string>
     <string name="settings_serial">序列号</string>
     <string name="settings_lat">纬度</string>
     <string name="settings_lon">经度</string>
@@ -222,7 +222,7 @@
     <string name="settings_syscomponents">限制安卓系统组件</string>
     <string name="settings_usagedata">显示应用权限使用情况</string>
     <string name="settings_parameters">显示使用情况参数</string>
-    <string name="settings_values">Show values of usage data</string>
+    <string name="settings_values">显示使用数据的值</string>
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
