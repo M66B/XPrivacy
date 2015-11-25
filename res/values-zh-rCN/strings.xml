@@ -1,19 +1,13 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Translators: do not include texts with translatable="false" -->
-    <string name="app_name" translatable="false">XPrivacy</string>
     <string name="app_notenabled">XPrivacy 没有在 Xposed 框架中启用</string>
     <string name="app_wrongandroid">仅支持 Android 4.0.3 以上版本</string>
     <string name="app_incompatible">XPrivacy 与 %1$s 不兼容</string>
-    <string name="app_wrongenabler" translatable="false">请升级到专业版</string>
     <string name="app_version">XPrivacy 版本: %1$s (%2$d)</string>
     <string name="app_description">终级隐私管理器</string>
     <string name="app_copyright">版权所有 \u00A9 2013–2015 M. Bokhorst (M66B)</string>
     <string name="app_compatibility">兼容模式运行</string>
     <string name="app_licensed">已授权, 感谢您的支持!</string>
-    <string name="app_help" translatable="false">https://github.com/M66B/XPrivacy#xprivacy</string>
-    <string name="app_support" translatable="false">http://forum.xda-developers.com/showthread.php?t=2320783</string>
     <string name="menu_usage">权限使用记录</string>
     <string name="menu_refresh">刷新应用列表</string>
     <string name="menu_settings">设置</string>
@@ -50,7 +44,7 @@
     <string name="menu_changelog">更新日志</string>
     <string name="menu_flush">清除缓存</string>
     <string name="menu_update">检查更新</string>
-    <string name="menu_batch">操作…</string>
+    <string name="menu_batch">操作&#8230;</string>
     <string name="menu_legend">图例</string>
     <string name="msg_abort">正在中止</string>
     <string name="msg_aborted">已中止</string>
@@ -87,72 +81,65 @@
     <string name="msg_longpress_whitelist">长按函数名称将参数添加到黑/白名单</string>
     <string name="msg_settings_specific">复选标记和值优先于全局中复选标记和值；取消复选框和空值则不采取优先</string>
     <string name="msg_corrupt">因为已损坏, 已经重置隐私数据库</string>
-    <string name="msg_first">XPrivacy 的开发和测试工作已经非常全面和细致,
+    <string name="msg_first"><b>XPrivacy 的开发和测试工作已经非常全面和细致,
 但仍然不可能保证它能完美兼容所有设备及应用。
-
-
-使用者需自行承担风险。
-
-另请参阅使用许可:</string>
-    <string name="restrict_accounts" tools:ignore="UnusedResources">账户（ Google/Facebook 账户）</string>
-    <string name="restrict_browser" tools:ignore="UnusedResources">浏览器（收藏夹/历史）</string>
-    <string name="restrict_calendar" tools:ignore="UnusedResources">日历</string>
-    <string name="restrict_calling" tools:ignore="UnusedResources">通讯（语音呼叫/发送短信/发送彩信）</string>
-    <string name="restrict_clipboard" tools:ignore="UnusedResources">剪贴板</string>
-    <string name="restrict_contacts" tools:ignore="UnusedResources">联系人（通讯录）</string>
-    <string name="restrict_dictionary" tools:ignore="UnusedResources">词典（用户词典）</string>
-    <string name="restrict_email" tools:ignore="UnusedResources">电子邮件</string>
-    <string name="restrict_identification" tools:ignore="UnusedResources">识别码（设备识别信息）</string>
-    <string name="restrict_internet" tools:ignore="UnusedResources">互联网（网络通讯）</string>
-    <string name="restrict_ipc" translatable="false" tools:ignore="UnusedResources">IPC</string>
-    <string name="restrict_location" tools:ignore="UnusedResources">位置（精确/粗略）</string>
-    <string name="restrict_media" tools:ignore="UnusedResources">媒体（声音/图片/视频）</string>
-    <string name="restrict_messages" tools:ignore="UnusedResources">信息（短信/彩信）</string>
-    <string name="restrict_network" tools:ignore="UnusedResources">网络状态（ IP 地址）</string>
-    <string name="restrict_nfc" translatable="false" tools:ignore="UnusedResources">NFC</string>
-    <string name="restrict_notifications" tools:ignore="UnusedResources">通知（通知栏提示）</string>
-    <string name="restrict_overlay" tools:ignore="UnusedResources">浮动窗口（在其他应用之上显示内容）</string>
-    <string name="restrict_phone" tools:ignore="UnusedResources">电话（电话号码/通话状态）</string>
-    <string name="restrict_sensors" tools:ignore="UnusedResources">感应器（重力方向/光线强度）</string>
-    <string name="restrict_storage" tools:ignore="UnusedResources">存储（内置存储器/存储卡）</string>
-    <string name="restrict_shell" tools:ignore="UnusedResources">命令行（执行命令/获得超级用户权限）</string>
-    <string name="restrict_system" tools:ignore="UnusedResources">系统（查看已安装的应用）</string>
-    <string name="restrict_view" tools:ignore="UnusedResources">显示网页（内置浏览器）</string>
-    <string name="restrict_help_view" tools:ignore="UnusedResources">将访问视图操作和信息限制</string>
-    <string name="restrict_help_system" tools:ignore="UnusedResources">将系统信息限制，比如安装的应用程序</string>
-    <string name="restrict_help_shell" tools:ignore="UnusedResources">将访问shell命令限制，包括超级用户命令</string>
-    <string name="restrict_help_storage" tools:ignore="UnusedResources">将访问存储限制，比如SD卡或内部存储文件</string>
-    <string name="restrict_help_sensors" tools:ignore="UnusedResources">将访问传感器限制，比如运动传感器</string>
-    <string name="restrict_help_phone" tools:ignore="UnusedResources">将访问手机信息限制，比如您的电话号码</string>
-    <string name="restrict_help_overlay" tools:ignore="UnusedResources">将叠加窗口限制，以防止网络钓鱼</string>
-    <string name="restrict_help_notifications" tools:ignore="UnusedResources">将访问系统和应用程序通知和谷歌云消息限制</string>
-    <string name="restrict_help_nfc" tools:ignore="UnusedResources">将访问近场通信(NFC)限制</string>
-    <string name="restrict_help_network" tools:ignore="UnusedResources">将访问网络信息限制，比如IP地址和MAC地址和Wi-Fi网络信息</string>
-    <string name="restrict_help_messages" tools:ignore="UnusedResources">将访问存储和接收的短信/彩信和语音邮件限制</string>
-    <string name="restrict_help_media" tools:ignore="UnusedResources">将访问相机（照片和视频）和麦克风限制</string>
-    <string name="restrict_help_location" tools:ignore="UnusedResources">将访问你的粗略位置限制</string>
-    <string name="restrict_help_ipc" tools:ignore="UnusedResources">将进程间通信限制，使用时要规避其他限制</string>
-    <string name="restrict_help_internet" tools:ignore="UnusedResources">将访问互联网限制</string>
-    <string name="restrict_help_identification" tools:ignore="UnusedResources">将识别您的身份信息限制，如您的设备序列号</string>
-    <string name="restrict_help_email" tools:ignore="UnusedResources">将访问电子邮件信息限制，如地址和邮件（仅限标准应用和Gmail）</string>
-    <string name="restrict_help_dictionary" tools:ignore="UnusedResources">将访问用户词典限制</string>
-    <string name="restrict_help_contacts" tools:ignore="UnusedResources">将访问有关您的联系人限制</string>
-    <string name="restrict_help_clipboard" tools:ignore="UnusedResources">将剪贴板上获取的信息限制</string>
-    <string name="restrict_help_calling" tools:ignore="UnusedResources">将主叫电话号码，发送短信/彩信，并访问您的通话记录等限制</string>
-    <string name="restrict_help_calendar" tools:ignore="UnusedResources">将访问您的日历信息限制，比如您的约会</string>
-    <string name="restrict_help_browser" tools:ignore="UnusedResources">将访问浏览器信息限制，比如你的书签和下载历史记录</string>
-    <string name="restrict_help_accounts" tools:ignore="UnusedResources">将访问帐户信息限制，比如您的谷歌帐户，其中包括您的G-mail地址</string>
-    <string name="whitelist_address" tools:ignore="UnusedResources">地址</string>
-    <string name="whitelist_action" tools:ignore="UnusedResources">动作</string>
-    <string name="whitelist_ipaddress" tools:ignore="UnusedResources">IP 地址</string>
-    <string name="whitelist_library" tools:ignore="UnusedResources">本地库文件</string>
-    <string name="whitelist_method" tools:ignore="UnusedResources">特殊方法名字</string>
-    <string name="whitelist_filename" tools:ignore="UnusedResources">文件名称</string>
-    <string name="whitelist_command" tools:ignore="UnusedResources">Shell 命令</string>
-    <string name="whitelist_url" tools:ignore="UnusedResources">URLs</string>
-    <string name="whitelist_transaction" tools:ignore="UnusedResources">交易</string>
-    <string name="whitelist_permission" tools:ignore="UnusedResources">权限</string>
-    <string name="whitelist_proc" translatable="false" tools:ignore="UnusedResources">/proc</string>
+\n\n使用者需自行承担风险。</b>\n\n另请参阅使用许可:</string>
+    <string name="restrict_accounts">账户（ Google/Facebook 账户）</string>
+    <string name="restrict_browser">浏览器（收藏夹/历史）</string>
+    <string name="restrict_calendar">日历</string>
+    <string name="restrict_calling">通讯（语音呼叫/发送短信/发送彩信）</string>
+    <string name="restrict_clipboard">剪贴板</string>
+    <string name="restrict_contacts">联系人（通讯录）</string>
+    <string name="restrict_dictionary">词典（用户词典）</string>
+    <string name="restrict_email">电子邮件</string>
+    <string name="restrict_identification">识别码（设备识别信息）</string>
+    <string name="restrict_internet">互联网（网络通讯）</string>
+    <string name="restrict_location">位置（精确/粗略）</string>
+    <string name="restrict_media">媒体（声音/图片/视频）</string>
+    <string name="restrict_messages">信息（短信/彩信）</string>
+    <string name="restrict_network">网络状态（ IP 地址）</string>
+    <string name="restrict_notifications">通知（通知栏提示）</string>
+    <string name="restrict_overlay">浮动窗口（在其他应用之上显示内容）</string>
+    <string name="restrict_phone">电话（电话号码/通话状态）</string>
+    <string name="restrict_sensors">感应器（重力方向/光线强度）</string>
+    <string name="restrict_storage">存储（内置存储器/存储卡）</string>
+    <string name="restrict_shell">命令行（执行命令/获得超级用户权限）</string>
+    <string name="restrict_system">系统（查看已安装的应用）</string>
+    <string name="restrict_view">显示网页（内置浏览器）</string>
+    <string name="restrict_help_view">将访问视图操作和信息限制</string>
+    <string name="restrict_help_system">将系统信息限制，比如安装的应用程序</string>
+    <string name="restrict_help_shell">将访问shell命令限制，包括超级用户命令</string>
+    <string name="restrict_help_storage">将访问存储限制，比如SD卡或内部存储文件</string>
+    <string name="restrict_help_sensors">将访问传感器限制，比如运动传感器</string>
+    <string name="restrict_help_phone">将访问手机信息限制，比如您的电话号码</string>
+    <string name="restrict_help_overlay">将叠加窗口限制，以防止网络钓鱼</string>
+    <string name="restrict_help_notifications">将访问系统和应用程序通知和谷歌云消息限制</string>
+    <string name="restrict_help_nfc">将访问近场通信(NFC)限制</string>
+    <string name="restrict_help_network">将访问网络信息限制，比如IP地址和MAC地址和Wi-Fi网络信息</string>
+    <string name="restrict_help_messages">将访问存储和接收的短信/彩信和语音邮件限制</string>
+    <string name="restrict_help_media">将访问相机（照片和视频）和麦克风限制</string>
+    <string name="restrict_help_location">将访问你的粗略位置限制</string>
+    <string name="restrict_help_ipc">将进程间通信限制，使用时要规避其他限制</string>
+    <string name="restrict_help_internet">将访问互联网限制</string>
+    <string name="restrict_help_identification">将识别您的身份信息限制，如您的设备序列号</string>
+    <string name="restrict_help_email">将访问电子邮件信息限制，如地址和邮件（仅限标准应用和Gmail）</string>
+    <string name="restrict_help_dictionary">将访问用户词典限制</string>
+    <string name="restrict_help_contacts">将访问有关您的联系人限制</string>
+    <string name="restrict_help_clipboard">将剪贴板上获取的信息限制</string>
+    <string name="restrict_help_calling">将主叫电话号码，发送短信/彩信，并访问您的通话记录等限制</string>
+    <string name="restrict_help_calendar">将访问您的日历信息限制，比如您的约会</string>
+    <string name="restrict_help_browser">将访问浏览器信息限制，比如你的书签和下载历史记录</string>
+    <string name="restrict_help_accounts">将访问帐户信息限制，比如您的谷歌帐户，其中包括您的G-mail地址</string>
+    <string name="whitelist_address">地址</string>
+    <string name="whitelist_action">动作</string>
+    <string name="whitelist_ipaddress">IP 地址</string>
+    <string name="whitelist_library">本地库文件</string>
+    <string name="whitelist_method">特殊方法名字</string>
+    <string name="whitelist_filename">文件名称</string>
+    <string name="whitelist_command">Shell 命令</string>
+    <string name="whitelist_url">URLs</string>
+    <string name="whitelist_transaction">交易</string>
+    <string name="whitelist_permission">权限</string>
     <string name="title_restrict">勾选表示限制:</string>
     <string name="title_check_whitelist">勾选表示允许:</string>
     <string name="title_fused">曾经使用</string>
@@ -176,7 +163,7 @@
     <string name="title_parameters">参数:</string>
     <string name="title_applycat">应用到整个权限类别</string>
     <string name="title_once">仅一次</string>
-    <string name="title_whitelist">白名单/黑名单‘%1$s’</string>
+    <string name="title_whitelist">白名单/黑名单&#8216;%1$s&#8217;</string>
     <string name="title_allow">允许</string>
     <string name="title_deny">拒绝</string>
     <string name="title_dontknow">不确定</string>
@@ -215,18 +202,12 @@
     <string name="settings_alt">海拔</string>
     <string name="settings_mac">MAC 地址</string>
     <string name="settings_ip">IP 地址</string>
-    <string name="settings_imei" translatable="false">IMEI</string>
     <string name="settings_phone">电话号码</string>
     <string name="settings_id">安卓ID</string>
-    <string name="settings_gsfid" translatable="false">GSF ID</string>
     <string name="settings_adid">广告ID</string>
-    <string name="settings_mcc" translatable="false">MCC</string>
-    <string name="settings_mnc" translatable="false">MNC</string>
     <string name="settings_country">国家</string>
     <string name="settings_operator">运营商</string>
-    <string name="settings_iccid" translatable="false">ICC ID</string>
     <string name="settings_subscriber">IMSI</string>
-    <string name="settings_ssid" translatable="false">SSID</string>
     <string name="settings_ua">用户代理</string>
     <string name="settings_general">一般设置</string>
     <string name="settings_fake_data">模拟信息</string>
@@ -264,17 +245,12 @@
     <string name="help_shared">已经分享限制规则的应用</string>
     <string name="help_settings">有特殊应用假值</string>
     <string name="tutorial_mainheader">选择权限类别进行限制</string>
-    <string name="tutorial_mainlist">勾选应用后的复选框以限制所选类别的权限
-
-
-被限制的应用请求该权限时会接收到空或伪造的数据
-
-
-点击应用图标以查看详细权限限制规则和设置</string>
+    <string name="tutorial_mainlist">勾选应用后的复选框以限制所选类别的权限\n
+\n被限制的应用请求该权限时会接收到空或伪造的数据\n
+\n点击应用图标以查看详细权限限制规则和设置</string>
     <string name="tutorial_detailsheader">点击应用图标以查看更多操作</string>
     <string name="tutorial_detailslist">点击左侧向下的箭头以查看该类别的子权限</string>
     <string name="permission_manage">管理应用程序，包括强行停止</string>
     <string name="permission_restrictions">管理XPrivacy限制和设置</string>
-    <string name="fingerprint" translatable="false">10620ae961d78854f6c9cd872c4388232849c799</string>
 
 </resources>
