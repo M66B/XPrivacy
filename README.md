@@ -163,7 +163,7 @@ For easy usage, data is restricted by category:
 <a name="email"></a>
 * E-mail
 	* return an empty list of accounts, e-mails, etc (standard)
-	* return an empty list of accounts, e-mails, etc (G-mail)
+	* return an empty list of accounts, e-mails, etc (Gmail)
 <a name="identification"></a>
 * Identification
 	* return a fake Android ID
@@ -176,7 +176,7 @@ For easy usage, data is restricted by category:
 	* return file not found for /sys/block/.../cid
 	* return file not found for /sys/class/.../cid
 	* return a fake input device descriptor
-	* return a fake USB id/name/number
+	* return a fake USB ID/name/number
 	* return a fake Cast device ID / IP address
 <a name="internet"></a>
 * Internet
@@ -487,7 +487,7 @@ But saving an empty set of specific application settings (you can use the clear 
 will erase all application specific settings so that the global settings will again be in force.
 
 The default restrictions template (in the main menu) is applied automatically to newly installed applications
-and manually via the menu item "Apply template" in the application's detailed view.
+and manually via the menu item 'Apply template' in the application's detailed view.
 
 You can find a **very useful overview of all menu items** [here](https://github.com/M66B/XPrivacy/blob/master/MENU.md).
 
@@ -974,7 +974,7 @@ Expert mode has the following sub-options which can be toggled individually:
 		* *test*: allow the XPrivacy update checker to also check for test versions
 		* *safemode*: hide unsafe function restrictions
 * *Clear cache* will clear settings and restrictions caches for all applications and the privacy service
-* *Clear all data* will erase **all** settings and restrictions.  Use with care!
+* *Clear all data* will erase **all** settings and restrictions. Use with care!
 
 <a name="FAQ58"></a>
 **(58) Can I write a thesis about XPrivacy?**
@@ -1242,7 +1242,7 @@ By default, system applications and applications without permissions for the sel
 
 Some applications (components) share data, which means they share the same UID.
 These applications are shown only once in XPrivacy (this cannot be changed).
-An example is Dolphin browser and its plugins/addons.
+An example is the Dolphin browser and its plugins/addons.
 
 <a name="FAQ76"></a>
 **(76) What happened to the import/export enabler?**
@@ -1259,7 +1259,7 @@ Please read [here](http://forum.xda-developers.com/xposed/modules/xprivacy-ultim
 If your device doesn't have an SD-card, you will need to put the license file into the root folder of the external storage folder.
 This is the folder you will see if you connect your Android device to a PC. When in doubt, you can use the menu *Help*, *About* to see the correct folder name.
 
-If it still doesn't work, try to put the license file in the alternate location as shown in the *About* dialog.
+If it still does not work, try to put the license file in the alternate location as shown in the *About* dialog.
 
 <a name="FAQ78"></a>
 **(78) Why do I get 'The Play store says not licensed' message when I try to fetch a license?**
@@ -1303,12 +1303,17 @@ Some functions are marked 'dangerous' (red background) because they frequently c
 Experienced users can change a 'dangerous' function into a normal function by long-clicking it in the default template. Usually, the restriction that caused an application to crash can be identified in the logcat. Again, restricting 'dangerous' functions is only recommended for experienced users and will cause crashes more frequently!
 
 <a name="FAQ82"></a>
-**(82) Do whitelists override the 'Deny' button?**
+**(82) Do whitelists override function restrictions?**
+
+Yes, whitelists always override function restrictions.
+
+<a name="FAQ83"></a>
+**(83) Do whitelists override the 'Deny' button?**
 
 Yes, whitelists will always override the 'Deny' button.
 
-<a name="FAQ83"></a>
-**(83) What does the 'Don't know' button do?**
+<a name="FAQ84"></a>
+**(84) What does the 'Don't know' button do?**
 
 Nobody knows. That is why it has that name.
 
