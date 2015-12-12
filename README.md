@@ -360,7 +360,7 @@ It is reported to work with most Android variants, including stock ROMs.
 * **XPrivacy is incompatible with the security center of MIUI** ([issue](https://github.com/M66B/XPrivacy/issues/1940)).
 See [here](http://forum.xda-developers.com/showpost.php?p=55810186&postcount=12178) for a solution.
 
-* You need to use the quirk "noresolve" when using [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
+* You need to use the quirk 'noresolve' when using [GoPro](https://play.google.com/store/apps/details?id=com.gopro.smarty)
 and some other wireless cameras, like the Sony QX1/10/30/100 ([issue](https://github.com/M66B/XPrivacy/issues/1751)).
 
 * Candy Crush is known to crash on some ROMs, see [here](http://forum.xda-developers.com/showpost.php?p=58722199&postcount=13666).
@@ -962,19 +962,19 @@ See [here](https://github.com/M66B/XPrivacy/blob/master/DATABASE.md#xprivacydb) 
 Expert mode has the following sub-options which can be toggled individually:
 
 * *Restrict system components (Android)*
-	* Enabling this option will allow you to restrict applications which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc.). Note that restricting these core functions is quite dangerous, and can easily lead to boot loops. Always make a backup (export/nandroid) before changing these restrictions.
+	* Enabling this option allows you to restrict applications which have a UID less than 10000 (Android System, Bluetooth Share, Dialer, NFC, Phone, etc.). Restricting these core functions is quite dangerous, and can easily lead to bootloops. Always make a backup (export/nandroid) before changing these restrictions.
 * *Use secure connections*
-	* This will force communications with the crowd sourced restrictions server (submitting/fetching, device registration) to travel through a secure socket. Note that this is enabled by default and can only be disabled by enabling *Expert mode*.
+	* Enabling this option (default), forces communications with the crowd sourced restrictions server (submitting/fetching, device registration) to travel through a secure socket. This option can only be disabled by first enabling *Expert mode*.
 * *Maximum fetch confidence interval*
-	* Increasing this value will result in fetching less-reliable crowd sourced restrictions
+	* Increasing this value will result in fetching less-reliable crowd sourced restrictions.
 * *Quirks*
 	* Used to fix some application compatibility issues or to enable special or expert features
-		* *freeze*: shows the on demand restriction dialog, even if there is the possibility it will freeze
-		* *resolve*, *noresolve*: enabled/disables resolving IP addresses to names for usage data / on demand restricting
+		* *freeze*: show the on demand restriction dialog, even if there is the possibility it will freeze
+		* *resolve*, *noresolve*: enable/disable resolving IP addresses to names for usage data / on demand restricting
 		* *test*: allow the XPrivacy update checker to also check for test versions
 		* *safemode*: hide unsafe function restrictions
 * *Clear cache* will clear settings and restrictions caches for all applications and the privacy service
-* *Clear all data* will erase all settings and restrictions; use with care!
+* *Clear all data* will erase **all** settings and restrictions.  Use with care!
 
 <a name="FAQ58"></a>
 **(58) Can I write a thesis about XPrivacy?**
@@ -988,8 +988,7 @@ To help you, I want to see an e-mail from your professor with a confirmation he 
 **(59) Will you implement multiple profiles?**
 
 No, because privacy is not something that is optional.
-It makes no sense to restrict something during the day and not during the night,
-or on your work and not at home.
+It makes no sense to restrict something during the day and not during the night, or at work and not at home.
 
 <a name="FAQ60"></a>
 **(60) Why is the upgrade notification stuck at 100%?**
@@ -1002,7 +1001,7 @@ You can swipe away the notification after you have seen it.
 
 Unfortunately this is not possible.
 The on demand restricting dialog is holding up system processes, 
-and Android reboots automatically if too much time has passed without a response.
+and Android may reboot automatically if too much time has passed without a response.
 Recent versions of XPrivacy have a reset button; use at your own risk.
 
 <a name="FAQ62"></a>
@@ -1018,7 +1017,7 @@ You can use this as a powerful way to apply a template to multiple applications.
 You can also use the filters to show the applications you want to act on,
 since toggle restrictions works on the visible applications by default.
 There is one exception to this: exporting will be done for all applications by default,
-since the export is meant as full backup.
+since the export is intended to be a full backup.
 
 <a name="FAQ63"></a>
 **(63) How can I troubleshoot an issue believed to be caused by XPrivacy?**
@@ -1123,7 +1122,7 @@ With Tasker, you can create shortcuts on your homescreen:
 * Create icon: tap the back button to finish creating the shortcut (Tasker)
 
 <a name="FAQ67"></a>
-**(67) Why do I get 'refused', 'forbidden' or an error while submitting/fetching/navigating the crowd sourced restrictions?**
+**(67) Why do I get 'refused', 'forbidden', or an error while submitting/fetching/navigating the crowd sourced restrictions?**
 
 This probably means your IP address has been blacklisted.
 Typically, this is because of spamming or other kind of abuses.
@@ -1204,7 +1203,7 @@ For the benefit of others, please report if XPrivacy 3 works for the ROM you are
 * **Green**: after you submit restriction changes to the crowd sourced XPrivacy server for an application
 
 <a name="FAQ70"></a>
-**(70) Why do I get an '429 Too Many Requests' message?**
+**(70) Why do I get a '429 Too Many Requests' message?**
 
 This can happen when checking for updates using the main menu.
 Everybody can download a new version of XPrivacy five times in 12 hours.
@@ -1263,7 +1262,7 @@ This is the folder you will see if you connect your Android device to a PC. When
 If it still doesn't work, try to put the license file in the alternate location as shown in the *About* dialog.
 
 <a name="FAQ78"></a>
-**(78) Why do I get "The Play store says not licensed" message when I tried to fetch a license?**
+**(78) Why do I get 'The Play store says not licensed' message when I try to fetch a license?**
 
 This message basically means that the Google Play Store thinks you didn't pay for the [pro license fetcher](https://play.google.com/store/apps/details?id=biz.bokhorst.xprivacy.license).
 
@@ -1302,6 +1301,20 @@ If a reboot doesn't solve this problem, try disabling and then enabling XPrivacy
 
 Some functions are marked 'dangerous' (red background) because they frequently cause applications to crash when they are restricted. When a category is restricted, the 'dangerous' functions within this category will not be restricted. These functions can be restricted directly, if needed.
 Experienced users can change a 'dangerous' function into a normal function by long-clicking it in the default template. Usually, the restriction that caused an application to crash can be identified in the logcat. Again, restricting 'dangerous' functions is only recommended for experienced users and will cause crashes more frequently!
+
+<a name="FAQ82"></a>
+**(82) Do whitelists override the 'Deny' button?**
+
+Yes, whitelists will always override the 'Deny' button.
+
+<a name="FAQ83"></a>
+**(83) What does the 'Don't know' button do?**
+
+Nobody knows. That is why it has that name.
+
+Actually, pressing 'Don't know' will, for 15 seconds, deny non-dangerous restrictions and allow dangerous restrictions.
+
+For a non-dangerous restriction with a whitelist, the whitelist will always override the complete denial.
 
 Support
 -------
