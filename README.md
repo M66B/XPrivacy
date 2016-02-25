@@ -379,10 +379,11 @@ Installation may seem lengthy, but you can do it quickly:
 1. Enable *System settings* > *Security* > *Unknown sources*
 1. Install the [Xposed framework](http://forum.xda-developers.com/xposed)
 	* The Xposed fix is **not** needed anymore
-	* For Android 4.0.3 through 4.4.4 see [this XDA thread](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053)
+	* For Android 4.0.3 through 4.4.4 see [this XDA thread](http://forum.xda-developers.com/xposed/xposed-installer-versions-changelog-t2714053). If this does not work for you (red error text in Xposed Installer -> Framework), see [this XDA thread](http://forum.xda-developers.com/xposed/xposed-android-4-4-4-t3249895)
 	* For Android 5.x see [this XDA thread](http://forum.xda-developers.com/showthread.php?t=3034811)
 	* For Android 5.0.x Touchwiz ROMs see [this XDA thread](http://forum.xda-developers.com/xposed/unofficial-xposed-samsung-lollipop-t3113463)
 	* For Android 5.1 Touchwiz ROMs see [this XDA thread](http://forum.xda-developers.com/xposed/unofficial-xposed-samsung-lollipop-t3180960)
+	* For Android 6.0.x see [this XDA thread](http://forum.xda-developers.com/showthread.php?t=3034811)
 1. Download and install XPrivacy from [here](http://repo.xposed.info/module/biz.bokhorst.xprivacy)
 	* Alternatively, download it from [here](https://github.com/M66B/XPrivacy/releases)
 1. Enable XPrivacy in the Xposed installer
