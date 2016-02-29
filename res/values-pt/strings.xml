@@ -1,13 +1,13 @@
 <resources>
 
     <string name="app_notenabled">O XPrivacy não está ativado no Xposed installer</string>
-    <string name="app_wrongandroid">Apenas para a versão do Android 4.0.3+</string>
-    <string name="app_incompatible" formatted="false">XPrivacy is incompatible with %s</string>
-    <string name="app_version" formatted="false">XPrivacy version: %s (%d)</string>
+    <string name="app_wrongandroid">Apenas para a versão de Android 4.0.3+</string>
+    <string name="app_incompatible" formatted="false">O XPrivacy é incompatível com %s</string>
+    <string name="app_version" formatted="false">XPrivacy versão: %s (%d)</string>
     <string name="app_description">The ultimate privacy manager</string>
-    <string name="app_copyright">Direitos de autor \u00A9 2013–2015 by M. Bokhorst (M66B)</string>
-    <string name="app_compatibility">Running in compatibility mode</string>
-    <string name="app_licensed">Licensed, thanks for your support!</string>
+    <string name="app_copyright">Direitos de autor \u00A9 2013–2015 por M. Bokhorst (M66B)</string>
+    <string name="app_compatibility">A correr em modo de compatibilidade</string>
+    <string name="app_licensed">Licenciado, obrigado pelo apoio!</string>
     <string name="menu_usage">Uso</string>
     <string name="menu_refresh">Atualizar</string>
     <string name="menu_settings">Definições</string>
@@ -21,52 +21,52 @@
     <string name="menu_pro">Versão Pro</string>
     <string name="menu_about">Sobre</string>
     <string name="menu_help">Ajuda</string>
-    <string name="menu_select_all">Select all</string>
-    <string name="menu_sort">Sort</string>
-    <string name="menu_filter">Filter</string>
+    <string name="menu_select_all">Selecionar tudo</string>
+    <string name="menu_sort">Ordenar</string>
+    <string name="menu_filter">Filtrar</string>
     <string name="menu_all">Tudo</string>
-    <string name="menu_toggle">Toggle restrictions</string>
-    <string name="menu_clear_all">Clear all</string>
-    <string name="menu_clear_usage">Clear</string>
-    <string name="menu_clear_db">Clear all data</string>
-    <string name="menu_usage_all">Toggle filter</string>
-    <string name="menu_apply">Apply template</string>
+    <string name="menu_toggle">Alternar restrições</string>
+    <string name="menu_clear_all">Apagar tudo</string>
+    <string name="menu_clear_usage">Apagar</string>
+    <string name="menu_clear_db">Apagar todos os dados</string>
+    <string name="menu_usage_all">Alternar filtro</string>
+    <string name="menu_apply">Aplicar modelo</string>
     <string name="menu_clear">Limpar</string>
     <string name="menu_app_launch">Iniciar</string>
     <string name="menu_app_settings">Detalhes da aplicação</string>
     <string name="menu_app_store">Play Store</string>
-    <string name="menu_app_kill">Kill</string>
+    <string name="menu_app_kill">Terminar</string>
     <string name="menu_accounts">Selecione contas a autorizar</string>
-    <string name="menu_applications">Select applications to allow</string>
+    <string name="menu_applications">Selecione aplicações a autorizar</string>
     <string name="menu_contacts">Selecione contactos a autorizar</string>
-    <string name="menu_whitelists">Manage whitelists</string>
-    <string name="menu_tutorial">Tutorial</string>
-    <string name="menu_changelog">Changelog</string>
-    <string name="menu_flush">Flush cache</string>
-    <string name="menu_update">Check for updates</string>
-    <string name="menu_batch">Operations &#8230;</string>
-    <string name="menu_legend">Legend</string>
-    <string name="msg_abort">Aborting</string>
-    <string name="msg_aborted">Aborted</string>
-    <string name="msg_new">New</string>
-    <string name="msg_update">Update</string>
+    <string name="menu_whitelists">Gerir lista de exclusões</string>
+    <string name="menu_tutorial">Guia</string>
+    <string name="menu_changelog">Registo de alterações</string>
+    <string name="menu_flush">Apagar cache</string>
+    <string name="menu_update">Verificar por atualizações</string>
+    <string name="menu_batch">Operações &#8230;</string>
+    <string name="menu_legend">Legenda</string>
+    <string name="msg_abort">Abortando</string>
+    <string name="msg_aborted">Abortado</string>
+    <string name="msg_new">Novo</string>
+    <string name="msg_update">Atualização</string>
     <string name="msg_loading">A carregar</string>
-    <string name="msg_applying">Applying</string>
-    <string name="msg_applied">Template applied</string>
-    <string name="msg_saved_to" formatted="false">Saved to %s</string>
-    <string name="msg_no_restrictions">No restrictions found</string>
+    <string name="msg_applying">A aplicar</string>
+    <string name="msg_applied">Modelo aplicado</string>
+    <string name="msg_saved_to" formatted="false">Guardado em %s</string>
+    <string name="msg_no_restrictions">Nenhuma restrição encontrada</string>
     <string name="msg_sure">Tem a certeza?</string>
-    <string name="msg_select">Please select some applications</string>
-    <string name="msg_limit">Please select fewer than %d applications</string>
+    <string name="msg_select">Selecione algumas aplicações</string>
+    <string name="msg_limit">Selecione menos de %d aplicações</string>
     <string name="msg_done">Concluído</string>
     <string name="msg_reboot">É necessário reiniciar o dispositivo</string>
     <string name="msg_random_now">Aleatório</string>
-    <string name="msg_random_access">Randomize on access</string>
+    <string name="msg_random_access">Randomize ao aceder</string>
     <string name="msg_random_boot">Aleatório depois de iniciar</string>
-    <string name="msg_restart">Application restart required</string>
-    <string name="msg_register">Please register your device</string>
-    <string name="msg_email">Please enter your e-mail address:</string>
-    <string name="msg_registered">Check your e-mail to activate your device</string>
+    <string name="msg_restart">Reinício da aplicação necessário</string>
+    <string name="msg_register">Por favor, registe o seu dispositivo</string>
+    <string name="msg_email">Por favor, insira o seu endereço de e-mail:</string>
+    <string name="msg_registered">Verifique o seu e-mail para ativar o seu dispositivo</string>
     <string name="msg_service">Update service running</string>
     <string name="msg_migrating" formatted="false">Migrating %s</string>
     <string name="msg_randomizing" formatted="false">Randomizing %s</string>
@@ -131,11 +131,11 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="restrict_help_browser">Will restrict access to browser information, like your bookmarks and the download history</string>
     <string name="restrict_help_accounts">Will restrict access to account information, like your Google account, which includes your G-mail address</string>
     <string name="whitelist_address">Addresses</string>
-    <string name="whitelist_action">Action</string>
+    <string name="whitelist_action">Ação</string>
     <string name="whitelist_ipaddress">IP addresses</string>
     <string name="whitelist_library">Native libraries</string>
     <string name="whitelist_method">Method names</string>
-    <string name="whitelist_filename">File names</string>
+    <string name="whitelist_filename">Nomes de ficheiros</string>
     <string name="whitelist_command">Shell commands</string>
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transactions</string>
@@ -158,15 +158,15 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="title_sstate">By state (XPrivacy)</string>
     <string name="title_sinvert">Invert sort order</string>
     <string name="title_attempt">Usage attempt of:</string>
-    <string name="title_category">Category:</string>
-    <string name="title_function">Function:</string>
-    <string name="title_parameters">Parameters:</string>
-    <string name="title_applycat">Apply to entire category</string>
-    <string name="title_once">Once for</string>
+    <string name="title_category">Categoria:</string>
+    <string name="title_function">Função:</string>
+    <string name="title_parameters">Parâmetros:</string>
+    <string name="title_applycat">Aplicar a toda a categoria</string>
+    <string name="title_once">Uma vez por</string>
     <string name="title_whitelist">White/blacklist \'%s\'</string>
-    <string name="title_allow">Allow</string>
-    <string name="title_deny">Deny</string>
-    <string name="title_dontknow">Don\'t know</string>
+    <string name="title_allow">Permitir</string>
+    <string name="title_deny">Bloquear</string>
+    <string name="title_dontknow">Não sei</string>
     <string name="title_pleasesubmit">Please submit your restrictions to help others</string>
     <string name="title_permissions">Permissions</string>
     <string name="title_set_restrict">Restrict</string>
@@ -178,10 +178,10 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="title_disable_ondemand">Disable on demand restricting</string>
     <string name="title_ondemand_default">Timeout will:</string>
     <string name="title_ondemand_reset">Reset</string>
-    <string name="title_default">Default</string>
-    <string name="title_alternate">Alternate</string>
-    <string name="title_rename">Rename</string>
-    <string name="title_usage_header">Usage</string>
+    <string name="title_default">Valor por defeito</string>
+    <string name="title_alternate">Alternativo</string>
+    <string name="title_rename">Mudar o nome</string>
+    <string name="title_usage_header">Uso</string>
     <string name="title_usage_text_1">1. Find the application to restrict in the main application list</string>
     <string name="title_usage_text_2">2. Tap on the application icon</string>
     <string name="title_usage_text_3">3. Tap the first check box of any category you want to restrict</string>
@@ -189,12 +189,12 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="title_toggle_dangerous">Long press on a title to toggle dangerous functions</string>
     <string name="title_ondemand_category">Applying to the category will reset the function exceptions to default values</string>
     <string name="title_function_help">Function documentation</string>
-    <string name="title_unsafe">is unsafe, can be circumvented</string>
-    <string name="title_update_checking">Checking for update</string>
-    <string name="title_update_downloading">Downloading update</string>
-    <string name="title_update_install">Tap to install update</string>
-    <string name="title_update_none">No updates available</string>
-    <string name="title_update_legacy">XPrivacy 2 is not supported anymore, please consider upgrading to XPrivacy 3</string>
+    <string name="title_unsafe">é inseguro, pode ser contornado</string>
+    <string name="title_update_checking">A procurar por atualização</string>
+    <string name="title_update_downloading">A descarregar atualização</string>
+    <string name="title_update_install">Clique para instalar atualização</string>
+    <string name="title_update_none">Não existem atualizações disponíveis</string>
+    <string name="title_update_legacy">O XPrivacy 2 já não é suportado, por favor, considere atualizar para o XPrivacy 3</string>
     <string name="title_original">Original</string>
     <string name="settings_serial">Serial#</string>
     <string name="settings_lat">Latitude</string>
@@ -204,18 +204,18 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_ip">Endereço IP</string>
     <string name="settings_phone">Número de telefone</string>
     <string name="settings_id">Identidade do Android</string>
-    <string name="settings_adid">Advertisement ID</string>
+    <string name="settings_adid">Identificador de publicidade</string>
     <string name="settings_country">País</string>
     <string name="settings_operator">Operador</string>
     <string name="settings_subscriber">Identidade do subscritor</string>
     <string name="settings_ua">User agent</string>
-    <string name="settings_general">General</string>
-    <string name="settings_fake_data">Fake data</string>
-    <string name="settings_notify">Update notifications</string>
+    <string name="settings_general">Geral</string>
+    <string name="settings_fake_data">Dados falsos</string>
+    <string name="settings_notify">Notificações de atualização</string>
     <string name="settings_ondemand">Restrict on demand</string>
     <string name="settings_blacklist">Blacklist accounts, applications and contacts</string>
     <string name="settings_log">Relatório de depuração (requer reinicialização)</string>
-    <string name="settings_expert">Expert mode</string>
+    <string name="settings_expert">Modo avançado</string>
     <string name="settings_confidence">Maximum fetch confidence interval</string>
     <string name="settings_experimental">Experimental functions (requires reboot)</string>
     <string name="settings_https">Use secure connections</string>
@@ -226,7 +226,7 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="settings_cid">GSM Cell ID</string>
     <string name="settings_lac">GSM LAC</string>
     <string name="settings_quirks">Quirks</string>
-    <string name="settings_aosp">AOSP mode (requires reboot)</string>
+    <string name="settings_aosp">Modo AOSP (requer reinício do dispositivo)</string>
     <string name="help_check_restrict">First check box: restrict category or function</string>
     <string name="help_check_ondemand">Second check box: restrict on demand</string>
     <string name="help_switch">On/off switch: enable or disable all restrictions</string>
@@ -239,18 +239,18 @@ porém é impossível garantir que irá funcionar sem problemas em todos os disp
     <string name="help_used_grayed">no usage data available</string>
     <string name="help_frozen">Está desativado</string>
     <string name="help_dangerous">É perigoso</string>
-    <string name="help_half">partly restricted</string>
-    <string name="help_attention">restrictions need attention</string>
-    <string name="help_restricted">restrictions are changed</string>
-    <string name="help_shared">restrictions are submitted</string>
+    <string name="help_half">parcialmente restrito</string>
+    <string name="help_attention">restrições requerem atenção</string>
+    <string name="help_restricted">restrições são alteradas</string>
+    <string name="help_shared">restrições submetidas</string>
     <string name="help_settings">has application specific fake values</string>
-    <string name="tutorial_mainheader">Select the category to restrict</string>
+    <string name="tutorial_mainheader">Selecione a categoria para restringir</string>
     <string name="tutorial_mainlist">Tap a check box to restrict the selected category for an app\n
-\nApps will be fed empty or fake data for restricted categories\n
-\nTap the app icon for detailed restrictions and settings</string>
-    <string name="tutorial_detailsheader">Tap the app icon for more actions</string>
-    <string name="tutorial_detailslist">Tap the down arrow to see the function exceptions of a restriction category</string>
-    <string name="permission_manage">Manage applications, including killing</string>
-    <string name="permission_restrictions">Manage XPrivacy restrictions and settings</string>
+\nAs aplicações não receberão dados ou estes serão falsos para as categorias restritas\n
+\nClique no icon da aplicação para obter informação detalhada sobre restrições e definições</string>
+    <string name="tutorial_detailsheader">Clique no icon da aplicação para mais ações</string>
+    <string name="tutorial_detailslist">Clique na seta para baixo para ver as exceções das funções de uma categoria restrita</string>
+    <string name="permission_manage">Gerir aplicações, incluindo terminar</string>
+    <string name="permission_restrictions">Gerir restrições e definições do XPrivacy</string>
 
 </resources>
