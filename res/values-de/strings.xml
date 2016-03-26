@@ -1,13 +1,14 @@
-<resources>
-
     <string name="app_notenabled">XPrivacy ist im Xposed Installer nicht aktiviert</string>
     <string name="app_wrongandroid">Nur ab Android-Version 4.0.3+</string>
     <string name="app_incompatible">XPrivacy ist mit %1$s nicht kompatibel</string>
+
     <string name="app_version">XPrivacy Version: %1$s (%2$d)</string>
     <string name="app_description">Der ultimative Privacy Manager</string>
     <string name="app_copyright">Copyright \u00A9 2013–2015\n\t by M. Bokhorst (M66B)</string>
     <string name="app_compatibility">Läuft im Kompatibilitätsmodus</string>
     <string name="app_licensed">Lizenz vorhanden, vielen Dank für Ihre Unterstützung!</string>
+
+
     <string name="menu_usage">Aktivitätslog</string>
     <string name="menu_refresh">Aktualisieren</string>
     <string name="menu_settings">Einstellungen</string>
@@ -29,7 +30,7 @@
     <string name="menu_clear_all">Alles löschen</string>
     <string name="menu_clear_usage">Löschen</string>
     <string name="menu_clear_db">Alle XPrivacy Daten löschen</string>
-    <string name="menu_usage_all">Filter invertieren</string>
+    <string name="menu_usage_all">Filter ein/aus</string>
     <string name="menu_apply">Vorlage übernehmen</string>
     <string name="menu_clear">Einstellungen löschen</string>
     <string name="menu_app_launch">Öffnen</string>
@@ -39,7 +40,7 @@
     <string name="menu_accounts">Konten für Zugriff freigeben</string>
     <string name="menu_applications">Apps für Zugriff freigeben</string>
     <string name="menu_contacts">Kontakte für Zugriff freigeben</string>
-    <string name="menu_whitelists">Positivlisten verwalten</string>
+    <string name="menu_whitelists">Weisse Listen verwalten</string>
     <string name="menu_tutorial">Anleitung</string>
     <string name="menu_changelog">Änderungsprotokoll</string>
     <string name="menu_flush">Cache Speicher löschen</string>
@@ -61,7 +62,7 @@
     <string name="msg_done">Fertig</string>
     <string name="msg_reboot">Geräteneustart erforderlich</string>
     <string name="msg_random_now">Zufallswerte erzeugen</string>
-    <string name="msg_random_access">Zufallswerte bei Zugriff</string>
+    <string name="msg_random_access">Zufallswerte bei Zugriff erzeugen</string>
     <string name="msg_random_boot">Zufallswerte bei Geräteneustart erzeugen</string>
     <string name="msg_restart">App-Neustart erforderlich</string>
     <string name="msg_register">Bitte registrieren Sie ihr Gerät</string>
@@ -76,11 +77,16 @@
     <string name="msg_service_missing">Privacy Service nicht gefunden. Haben Sie XPrivacy im Xposed Installer aktiviert und Ihr Gerät neu gestartet?</string>
     <string name="msg_service_version">Privacy Service Versionsunterschied festgestellt. Haben Sie nach dem Upgrade von XPrivacy Ihr Gerät neu gestartet?</string>
     <string name="msg_service_updating">Bitte warten Sie, bis der Update-Dienst beendet worden ist</string>
+
     <string name="msg_expert">Erfahrene Anwender werden gebeten, ihre Probleme weitgehend selbst zu lösen und anderen Anwendern im XDA XPrivacy Forum soweit wie möglich zu helfen</string>
     <string name="msg_method_expert">Funktionsbeschränkungen sind für Experten vorgesehen. Sind Sie ein Experte?</string>
     <string name="msg_longpress_whitelist">Drücken Sie lange auf den Funktionsnamen um einen Parameter auf die schwarze oder weiße Liste zu setzen</string>
+
     <string name="msg_settings_specific">App-spezifische Optionen und Werte haben Vorrang vor globalen Einstellungen; leere Kontrollkästchen oder nicht gesetzte Werte haben keinen Einfluss</string>
     <string name="msg_corrupt">The privacy database was reset, because it was corrupt</string>
+
+
+
     <string name="msg_first"><b>XPrivacy wurde mit größter Sorgfalt entwickelt und getestet.\nDennoch kann nicht gewährleistet werden, 
 dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne App funktioniert.
 \n\nSie verwenden XPrivacy ausschließlich auf eigenes Risiko!</b>\n\nBitte beachten Sie auch die Lizenz:</string>
@@ -94,9 +100,13 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="restrict_email">E-Mail</string>
     <string name="restrict_identification">Identifikation (Gerät)</string>
     <string name="restrict_internet">Internet</string>
+
+
     <string name="restrict_location">Standort (genau/ungenau)</string>
     <string name="restrict_media">Medien (Audio, Fotos, Videos)</string>
     <string name="restrict_messages">Nachrichten (SMS, MMS)</string>
+
+
     <string name="restrict_network">Netzwerk (-Adressen)</string>
     <string name="restrict_notifications">Benachrichtigungen</string>
     <string name="restrict_overlay">Overlay</string>
@@ -106,6 +116,12 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="restrict_shell">Shell (Kommandos, Superuser)</string>
     <string name="restrict_system">System (installierte Apps)</string>
     <string name="restrict_view">Anzeigen (mittels Browser)</string>
+
+
+
+
+
+
     <string name="restrict_help_view">Beschränkt Zugriff auf &#8216;View&#8217; Aktionen und Informationen</string>
     <string name="restrict_help_system">Beschränkt Zugriff auf System Informationen, wie z.B. installierte Apps</string>
     <string name="restrict_help_shell">Beschränkt Zugriff auf Shell Befehle, inklusive SuperUser-Befehle</string>
@@ -113,19 +129,30 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="restrict_help_sensors">Beschränkt Zugriff auf Sensoren, wie z.B. den Bewegungssensor</string>
     <string name="restrict_help_phone">Beschränkt Zugriff auf Telefon Informationen, wie die Telefonnummer</string>
     <string name="restrict_help_overlay">Beschränkt Overlay-Fenster, um Phishing zu verhindern</string>
+
+
+
     <string name="restrict_help_notifications">Beschränkt Zugriff auf System- und Anwendungsbenachrichtigungen und Google Cloud Messaging</string>
     <string name="restrict_help_nfc">Beschränkt Zugriff auf NFC (Nahfeldkommunikation)</string>
     <string name="restrict_help_network">Beschränkt Zugriff auf Netzwerkinformationen, wie die IP- und MAC-Adressen sowie WLAN Netzwerkinformationen</string>
     <string name="restrict_help_messages">Beschränkt Zugriff auf gespeicherte und eingehende Nachrichten (SMS/MMS) und Voicemails</string>
+
     <string name="restrict_help_media">Beschränkt Zugriff auf die Kamera (Photos und Videos) und das Mikrofon</string>
     <string name="restrict_help_location">Beschränkt Zugriff auf den ungenauen und genauen Standort</string>
+
     <string name="restrict_help_ipc">Beschränkt Zugriff auf Interprozess-Kommunikation, wenn dieser benutzt wird, um andere Beschränkungen zu umgehen</string>
     <string name="restrict_help_internet">Beschränkt Zugriff auf das Internet</string>
+
+
     <string name="restrict_help_identification">Beschränkt Zugriff auf Informationen, die Sie identifizieren können, wie die Seriennummer des Gerätes</string>
     <string name="restrict_help_email">Beschränkt Zugriff auf E-mail Informationen, wie die Adresse und Nachrichten (nur für Standard- und G-Mail Applikationen)</string>
     <string name="restrict_help_dictionary">Beschränkt Zugriff auf das Benutzerwörterbuch</string>
     <string name="restrict_help_contacts">Beschränkt Zugriff auf Informationen über Ihre Kontakte</string>
     <string name="restrict_help_clipboard">Beschränkt Zugriff auf Informationen in der Zwischenablage</string>
+
+
+
+
     <string name="restrict_help_calling">Beschränkt ausgehende Anrufe, das Versenden von Nachrichten (SMS/MMS) sowie Zugriff auf die Anrufprotokolle</string>
     <string name="restrict_help_calendar">Beschränkt Zugriff auf Kalender-Informationen wie Ihre Termine</string>
     <string name="restrict_help_browser">Beschränkt Zugriff auf Browser-Informationen wie die Favoriten und Download-Verlauf</string>
@@ -140,16 +167,17 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="whitelist_url">URLs</string>
     <string name="whitelist_transaction">Transaktionen</string>
     <string name="whitelist_permission">Berechtigungen</string>
-    <string name="title_restrict">Zum Beschränken markieren:</string>
-    <string name="title_check_whitelist">Zum Freigeben markieren</string>
-    <string name="title_fused">Datennutzung</string>
-    <string name="title_finternet">Internetzugang</string>
-    <string name="title_fpermission">Berechtigungen</string>
-    <string name="title_frestricted">Beschränkungen</string>
+
+    <string name="title_restrict">Zum Beschränken anhaken:</string>
+    <string name="title_check_whitelist">Zum Freigeben anhaken</string>
+    <string name="title_fused">Filter: hat Daten abgerufen</string>
+    <string name="title_finternet">Filter: hat Internetzugang</string>
+    <string name="title_fpermission">Filter: hat Berechtigung</string>
+    <string name="title_frestricted">Filter: ist beschränkt</string>
     <string name="title_fuser">Nach Benutzer-Apps filtern</string>
-    <string name="title_fondemand">Beschränkung nach Aufforderung</string>
+    <string name="title_fondemand">Filter: beschränkt nach Aufforderung</string>
     <string name="title_fsystem">Nach System-Apps filtern</string>
-    <string name="title_fnot">Negieren</string>
+    <string name="title_fnot">Invertieren</string>
     <string name="title_sname">nach Name</string>
     <string name="title_suid">nach UID</string>
     <string name="title_sinstalled">nach Installationsdatum</string>
@@ -163,7 +191,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_parameters">Parameter:</string>
     <string name="title_applycat">Auf die gesamte Kategorie anwenden</string>
     <string name="title_once">Nur einmalig für</string>
-    <string name="title_whitelist">Positivliste \'%1$s\'</string>
+    <string name="title_whitelist">Weisse Liste \'%1$s\'</string>
     <string name="title_allow">Zulassen</string>
     <string name="title_deny">Blockieren</string>
     <string name="title_dontknow">Ich weiß nicht</string>
@@ -172,8 +200,8 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_set_restrict">Auswahl beschränken (Kategorien)</string>
     <string name="title_template_category">Vorlage übernehmen (nur Kategorien)</string>
     <string name="title_template_full">Vorlage übernehmen (Kategorien und Funktionen)</string>
-    <string name="title_template_merge">Vorlage übernehmen (verschmelzen)</string>
-    <string name="title_template_merge_reset">Vorlage übernehmen (invers verschmelzen)</string>
+    <string name="title_template_merge">Vorlage übernehmen (angehakte zusammenführen)</string>
+    <string name="title_template_merge_reset">Vorlage übernehmen (abgehakte zusammenführen)</string>
     <string name="title_enable_ondemand">\"Beschränken nach Aufforderung\" aktivieren</string>
     <string name="title_disable_ondemand">\"Beschränken nach Aufforderung\" deaktivieren</string>
     <string name="title_ondemand_default">Bei Timeout:</string>
@@ -186,6 +214,7 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="title_usage_text_2">2. Tippen Sie auf das App Icon</string>
     <string name="title_usage_text_3">3. Tippen Sie auf das erste Kontrollkästchen der Kategorien, die Sie beschränken möchten</string>
     <string name="title_usage_footer">Nutzen Sie Ihren gesunden Menschenverstand beim Beschränken. Wenn Sie die Internet Kategorie beschränken, sollten Sie keine Internetzugriffe mehr erwarten.</string>
+
     <string name="title_toggle_dangerous">Auf einen Titel lange drücken, um bedenkliche Beschränkungen umzuschalten</string>
     <string name="title_ondemand_category">Bei Anwendung auf die gesamte Kategorie werden die Ausnahmen der Funktionen auf die Standardwerte zurückgesetzt</string>
     <string name="title_function_help">Dokumentation der Funktion</string>
@@ -202,17 +231,24 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="settings_alt">Höhe über NN</string>
     <string name="settings_mac">MAC-Adresse</string>
     <string name="settings_ip">IP-Adresse</string>
+
     <string name="settings_phone">Telefonnummer</string>
     <string name="settings_id">Android-ID</string>
+
     <string name="settings_adid">Werbungs-ID</string>
+
     <string name="settings_country">Land</string>
+
     <string name="settings_operator">Mobilfunkanbieter</string>
+
     <string name="settings_subscriber">Subscriber-ID</string>
+
     <string name="settings_ua">User-Agent (Browser)</string>
-    <string name="settings_general">Allgemein</string>
-    <string name="settings_fake_data">Daten manipulieren</string>
+ 
+	<string name="settings_general">Allgemein</string>
+    <string name="settings_fake_data">Manipulierte Daten</string>
     <string name="settings_notify">Update-Benachrichtigungen</string>
-    <string name="settings_ondemand">Beschränkungen nach Aufforderung festlegen</string>
+    <string name="settings_ondemand">Beschränken nach Aufforderung</string>
     <string name="settings_blacklist">Schwarze Liste für Konten, Anwendungen und Kontakte</string>
     <string name="settings_log">Debug-Log (erfordert Geräteneustart)</string>
     <string name="settings_expert">Experten-Modus</string>
@@ -243,14 +279,20 @@ dass es einwandfrei auf wirklich JEDEM einzelnen Gerät und für JEDE einzelne A
     <string name="help_attention">Beschränkungen sollten überprüft werden</string>
     <string name="help_restricted">Beschränkungen wurden geändert</string>
     <string name="help_shared">Beschränkungen wurden gesendet (Crowd)</string>
-    <string name="help_settings">hat applikationsspezifisch fingierte Werte</string>
+    <string name="help_settings">hat applikationsspezifisch manipulierte Daten</string>
     <string name="tutorial_mainheader">Wählen Sie die zu beschränkende Kategorie</string>
     <string name="tutorial_mainlist">Tippen Sie auf ein Kontrollkästchen, um die ausgewählte Kategorie für eine App zu beschränken\n
 \nApps werden mit leeren Listen oder manipulierten Daten für die beschränkten Kategorien \"gefüttert\" \n
 \nTippen Sie auf das App-Icon für detaillierte Beschränkungen und Einstellungen</string>
+
+
+
+
     <string name="tutorial_detailsheader">Tippen Sie auf das App-Icon für weitere Aktionen</string>
     <string name="tutorial_detailslist">Tippen Sie auf den Pfeil, um die Ausnahmen der Funktionen einer beschränkten Kategorie zu sehen</string>
     <string name="permission_manage">Verwalte Apps, inklusive Beenden (kill)</string>
     <string name="permission_restrictions">Verwalte XPrivacy Beschränkungen und Einstellungen</string>
 
+
 </resources>
+
