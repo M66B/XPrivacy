@@ -87,7 +87,7 @@ Features
 --------
 
 * Simple to use
-* No need to patch anything (no source, no [smali](https://code.google.com/p/smali/) or anything else)
+* No need to patch anything (no source, no [smali](https://github.com/JesusFreke/smali) or anything else)
 * For any stock variant of Android version 4.0.3 - 6.0.1 (ICS, Jelly Bean, KitKat, Lollipop, Marshmallow)
 * Newly installed applications are restricted by default
 * Displays data actually used by an application
