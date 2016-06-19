@@ -907,7 +907,7 @@ If these suggestions don't help, please create an issue and provide a logcat (se
 **(50) Do you have suggestions about additional privacy-related software?**
 
 IMHO, in addition to XPrivacy, you should at least install an ad blocker and a firewall:
-* [AdAway](http://sufficientlysecure.org/index.php/adaway/) ([source code](https://github.com/dschuermann/ad-away))
+* [AdAway](https://free-software-for-android.github.io/AdAway//) ([source code](https://github.com/Free-Software-for-Android/AdAway))
 * [AFWall+](https://play.google.com/store/apps/details?id=dev.ukanth.ufirewall) ([source code](https://github.com/ukanth/afwall))
 
 Here is a list of additional privacy-related software:
