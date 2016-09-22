@@ -365,6 +365,8 @@ and some other wireless cameras, like the Sony QX1/10/30/100 ([issue](https://gi
 
 * Candy Crush is known to crash on some ROMs, see [here](http://forum.xda-developers.com/showpost.php?p=58722199&postcount=13666).
 
+* Applications with overlay windows crash on MIUI 8, see for a solution ([here](https://github.com/M66B/XPrivacy/issues/2374)).
+
 Installation
 ------------
 
