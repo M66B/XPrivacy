@@ -1,4 +1,4 @@
-﻿<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <string name="app_notenabled">XPrivacy är inte aktiverad i Xposed Installer</string>
     <string name="app_wrongandroid">Endast för Android 4.0.3+</string>
