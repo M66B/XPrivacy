@@ -1,3 +1,4 @@
+<resources>
     <string name="app_notenabled">XPrivacy ist im Xposed Installer nicht aktiviert</string>
     <string name="app_wrongandroid">Nur ab Android-Version 4.0.3+</string>
     <string name="app_incompatible">XPrivacy ist mit %1$s nicht kompatibel</string>
