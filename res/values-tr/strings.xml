@@ -73,7 +73,7 @@
     <string name="msg_upgrading">Yükseltiliyor %s</string>
     <string name="msg_support_info">Bir iç denetimi başarısız, destek için bilgi göndermek ister misiniz?</string>
     <string name="msg_restrictedby">XPrivacy tarafından sınırlandı</string>
-    <string name="msg_service_missing">Privacy servisi bulunmadı; Xposed Installer'da XPrivacy'i etkinleştirmek için cihazınızı yeniden başlatınız mı?</string>
+    <string name="msg_service_missing">Privacy servisi bulunmadı; Xposed Installer\'da XPrivacy\'i etkinleştirmek için cihazınızı yeniden başlatınız mı?</string>
     <string name="msg_service_version">Privacy hizmeti sürüm uyuşmazlığı; Eğer XPrivacy yükselttikten sonra cihazınızı yeniden başlatınız mı?</string>
     <string name="msg_service_updating">Güncelleme hizmeti tamamlanana kadar bekleyin</string>
     <string name="msg_expert">Uzman kullanıcılar mümkünse kendi sorunlarını çözmek için ve XDA XPrivacy forumu takip etmeli ve mümkün olduğunca başkalarına yardım edebilmeli</string>
@@ -150,7 +150,7 @@
     <string name="title_fsystem">Sistem uygulamalarını filtrele</string>
     <string name="title_fnot">Reddet</string>
     <string name="title_sname">İsme göre</string>
-    <string name="title_suid">Uid'e göre</string>
+    <string name="title_suid">Uid\'e göre</string>
     <string name="title_sinstalled">Kurulum tarihine göre</string>
     <string name="title_supdated">Güncelleme tarihine göre</string>
     <string name="title_smodified">Düzenleme tarihine göre (XPrivacy)</string>
@@ -187,14 +187,13 @@
     <string name="title_usage_footer">İnternet kısıtlaması için internet erişimi beklemeyin</string>
     <string name="title_toggle_dangerous">Bir başlık üzerinde tehlikeli işlevler arasında geçiş yapmak için uzun basın</string>
     <string name="title_ondemand_category">Kategoriye uygulanan varsayılan değerler sıfırlanır</string>
-    <string name="title_function_help">İşlev Belgeleri/string>
+    <string name="title_function_help">İşlev Belgeleri</string>
     <string name="title_unsafe">güvensizdir, atlatılabilir</string>
     <string name="title_update_checking">Güncelleme kontrol ediliyor</string>
     <string name="title_update_downloading">Güncelleme indiriliyor</string>
     <string name="title_update_install">Güncelleştirmeyi yüklemek için dokunun</string>
     <string name="title_update_none">Mevcut güncelleştirme yok</string>
-    <string name="title_update_legacy">XPrivacy 2 daha fazla desteklemiyor, lütfen XPrivacy 3'e yükseltin</string>
-    <string name="title_original">Orijinal</string>
+    <string name="title_update_legacy">XPrivacy 2 daha fazla desteklemiyor, lütfen XPrivacy 3\'e yükseltin</string>
     <string name="title_original">Orijinal</string>
     <string name="settings_serial">Seri no</string>
     <string name="settings_lat">Enlem</string>
