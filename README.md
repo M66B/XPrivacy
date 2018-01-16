@@ -6,6 +6,7 @@ The ultimate, yet easy to use, privacy manager for Android
 **You can use the successor [XPrivacyLua](https://forum.xda-developers.com/xposed/modules/xprivacylua6-0-android-privacy-manager-t3730663) on Android 6.0 Marshmallow and later.**
 
 <img src="http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png" width="315" height="333" alt="Open source Rookie of the year" />
+
 [Publication](http://www.blackducksoftware.com/news/releases/black-duck-announces-open-source-rookies-year-winners)
 
 Index
