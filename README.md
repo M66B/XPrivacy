@@ -3,6 +3,8 @@ XPrivacy
 
 The ultimate, yet easy to use, privacy manager for Android
 
+**XPrivacy is not maintained and supported anymore.**
+
 **You can use the successor [XPrivacyLua](https://forum.xda-developers.com/xposed/modules/xprivacylua6-0-android-privacy-manager-t3730663) on Android 6.0 Marshmallow and later.**
 
 <img src="http://www.xprivacy.eu/open-source-rookie-of-the-year-resized.png" width="315" height="333" alt="Open source Rookie of the year" />
